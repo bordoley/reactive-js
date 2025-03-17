@@ -18,7 +18,7 @@
 
 ### \[CacheLike\_get\]()
 
-> **\[CacheLike\_get\]**(`index`): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+> **\[CacheLike\_get\]**(`index`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
 
 #### Parameters
 
@@ -28,4 +28,4 @@
 
 #### Returns
 
-[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>

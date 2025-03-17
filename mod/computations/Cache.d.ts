@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { DeferredObservableLike, ObservableLike } from "../computations.js";
+import { BroadcasterLike, DeferredObservableLike } from "../computations.js";
 import { Optional, Updater } from "../functions.js";
 import { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, SchedulerLike } from "../utils.js";
 export declare const CacheLike_get: unique symbol;
@@ -7,7 +7,7 @@ export declare const CacheLike_get: unique symbol;
  * @noInheritDoc
  */
 export interface CacheLike<T> extends ConsumerLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>, DisposableContainerLike {
-    [CacheLike_get](index: string): ObservableLike<T>;
+    [CacheLike_get](index: string): BroadcasterLike<T>;
 }
 interface CacheModule {
     create<T>(scheduler: SchedulerLike, options?: {
@@ -20,7 +20,7 @@ interface CacheModule {
             store(updates: Readonly<ReadonlyObjectMapLike<string, T>>): DeferredObservableLike<void>;
         };
     }): CacheLike<T> & DisposableLike;
-    get<T>(cache: CacheLike<T>, key: string): ObservableLike<T>;
+    get<T>(cache: CacheLike<T>, key: string): BroadcasterLike<T>;
     remove<T>(cache: CacheLike<T>, key: string): void;
     removeMany<T>(cache: CacheLike<T>, keys: ReadonlyArray<string>): void;
     set<T>(cache: CacheLike<T>, key: string, v: Optional<T>): void;
@@ -30,7 +30,7 @@ interface CacheModule {
 }
 export type Signature = CacheModule;
 export declare const create: CacheModule["create"];
-export declare const get: <T>(cache: CacheLike<T>, key: string) => ObservableLike<T>;
+export declare const get: <T>(cache: CacheLike<T>, key: string) => BroadcasterLike<T>;
 export declare const remove: <T>(cache: CacheLike<T>, key: string) => void;
 export declare const removeMany: <T>(cache: CacheLike<T>, keys: ReadonlyArray<string>) => void;
 export declare const set: <T>(cache: CacheLike<T>, key: string, v: Optional<T>) => void;

@@ -1,5 +1,12 @@
 import * as Computation from "../../../computations/Computation.js";
-import { BroadcasterLike_connect, ComputationLike_isDeferred, ComputationLike_isSynchronous, MulticastObservableLike, ObservableLike_observe, SubjectLike } from "../../../computations.js";
+import {
+  BroadcasterLike_connect,
+  ComputationLike_isDeferred,
+  ComputationLike_isSynchronous,
+  MulticastObservableLike,
+  ObservableLike_observe,
+  SubjectLike,
+} from "../../../computations.js";
 import { newInstance, pipe } from "../../../functions.js";
 import AbstractDelegatingDisposable from "../../../utils/Disposable/__internal__/AbstractDelegatingDisposable.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -14,12 +21,15 @@ const ObservableModule = {
 };
 
 // FIXME: Temporary while we work to get rid of multicast observable.
-class MulticastObservable<T> extends AbstractDelegatingDisposable implements MulticastObservableLike<T> {
+class MulticastObservable<T>
+  extends AbstractDelegatingDisposable
+  implements MulticastObservableLike<T>
+{
   [ComputationLike_isDeferred]: false = false as const;
   [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(private readonly s: SubjectLike<T>) {
-    super(s)
+    super(s);
   }
 
   [ObservableLike_observe](observer: ObserverLike<T>): void {

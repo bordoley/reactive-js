@@ -3,11 +3,14 @@ import {
   BroadcasterLike_connect,
   DeferredObservableWithSideEffectsLike,
 } from "../computations.js";
-import { Function1, bindMethod, returns } from "../functions.js";
+import { Function1, returns } from "../functions.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 
 export interface BroadcasterModule {
-  toObservable<T>(): Function1<BroadcasterLike<T>, DeferredObservableWithSideEffectsLike<T>>;
+  toObservable<T>(): Function1<
+    BroadcasterLike<T>,
+    DeferredObservableWithSideEffectsLike<T>
+  >;
 }
 
 export type Signature = BroadcasterModule;

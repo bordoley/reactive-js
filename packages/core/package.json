@@ -85,6 +85,7 @@
     "./react/web": "./react/web.js",
 
     "./utils": "./utils.js",
+    "./utils/Consumer": "./utils/Consumer.js",
     "./utils/Disposable": "./utils/Disposable.js",
     "./utils/DisposableContainer": "./utils/DisposableContainer.js",
     "./utils/HostScheduler": "./utils/HostScheduler.js",

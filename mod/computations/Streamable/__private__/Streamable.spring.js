@@ -12,6 +12,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import { EventListenerLike_notify, PauseableLike_resume, } from "../../../utils.js";
+import * as Broadcaster from "../../Broadcaster.js";
 import * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
@@ -29,7 +30,8 @@ const Streamable_spring = /*@__PURE__*/ (() => {
         const pauseableScheduler = PauseableScheduler.create(animationScheduler);
         const publisher = Publisher.create();
         const accFeedbackStream = Subject.create({ replay: 1 });
-        const operator = compose(Observable.withLatestFrom(accFeedbackStream, (updater, acc) => {
+        const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable());
+        const operator = compose(Observable.withLatestFrom(otherObs, (updater, acc) => {
             const command = isFunction(updater) ? updater(acc) : updater;
             const springCommandOptions = isNumber(command) || isReadonlyArray(command)
                 ? springOptions

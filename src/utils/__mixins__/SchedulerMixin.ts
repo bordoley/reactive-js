@@ -28,10 +28,10 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EventListenerLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -182,7 +182,7 @@ const SchedulerMixin: Mixin<
       const parent = findNearestNonDisposedParent(continuation);
 
       if (isSome(parent)) {
-        parent[EventListenerLike_notify](continuation);
+        parent[QueueLike_enqueue](continuation);
       } else {
         continuation[SchedulerContinuationLike_dueTime] =
           scheduler[SchedulerLike_now];
@@ -206,7 +206,7 @@ const SchedulerMixin: Mixin<
         if (head[DisposableLike_isDisposed]) {
           // continue
         } else if (isSome(parent)) {
-          parent[EventListenerLike_notify](head);
+          parent[QueueLike_enqueue](head);
         } else {
           scheduler[SchedulerMixinLike_schedule](head);
         }
@@ -502,7 +502,7 @@ const SchedulerMixin: Mixin<
         ) {
           this[SchedulerMixinHostLike_schedule](continuation);
         } else {
-          activeContinuation[EventListenerLike_notify](continuation);
+          activeContinuation[QueueLike_enqueue](continuation);
         }
       },
 

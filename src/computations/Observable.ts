@@ -241,7 +241,7 @@ export interface ObservableModule
     >,
     SequentialReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation>,
-    ConcurrentDeferredComputationModule<ObservableComputation>  {
+    ConcurrentDeferredComputationModule<ObservableComputation> {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,

@@ -6,7 +6,7 @@
 
 # Function: createSorted()
 
-> **createSorted**\<`T`\>(`comparator`, `options`?): [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
+> **createSorted**\<`T`\>(`comparator`): [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -17,12 +17,6 @@
 ### comparator
 
 [`Comparator`](../../../functions/type-aliases/Comparator.md)\<`T`\>
-
-### options?
-
-#### autoDispose?
-
-`boolean`
 
 ## Returns
 

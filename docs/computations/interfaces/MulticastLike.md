@@ -14,6 +14,7 @@
 
 - [`EventSourceLike`](EventSourceLike.md)
 - [`MulticastObservableLike`](MulticastObservableLike.md)
+- [`BroadcasterLike`](BroadcasterLike.md)
 
 ## Properties
 

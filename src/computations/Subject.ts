@@ -34,15 +34,15 @@ import {
 import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import QueueMixin from "../utils/__mixins__/QueueMixin.js";
+import QueueingConsumerMixin from "../utils/__mixins__/QueueingConsumerMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
-  SinkLike,
   QueueLike,
+  SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../utils.js";
@@ -56,9 +56,7 @@ export const create: <T>(options?: {
   const Subject_onSinkDisposed = Symbol("Subject_onSinkDisposed");
 
   type TProperties = {
-    [Subject_sinks]: Optional<
-      Set<SinkLike<T>> | Optional<SinkLike<T>>
-    >;
+    [Subject_sinks]: Optional<Set<SinkLike<T>> | Optional<SinkLike<T>>>;
     readonly [Subject_onSinkDisposed]: Method<SinkLike<T>>;
   };
 
@@ -82,7 +80,7 @@ export const create: <T>(options?: {
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, QueueMixin()),
+    include(DisposableMixin, QueueingConsumerMixin()),
     function Subject(
       this: Pick<
         SubjectLike<T>,
@@ -101,7 +99,7 @@ export const create: <T>(options?: {
       const replay = clampPositiveInteger(options?.replay ?? 0);
 
       init(DisposableMixin, this);
-      init(QueueMixin<T>(), this, {
+      init(QueueingConsumerMixin<T>(), this, {
         backpressureStrategy: DropOldestBackpressureStrategy,
         capacity: replay,
       });
@@ -124,8 +122,7 @@ export const create: <T>(options?: {
         }
 
         if (maybeSinks instanceof Set && maybeSinks[Set_size] == 1) {
-          instance[Subject_sinks] =
-            Iterable.first<SinkLike<T>>()(maybeSinks);
+          instance[Subject_sinks] = Iterable.first<SinkLike<T>>()(maybeSinks);
         }
 
         if (autoDispose && isNone(instance[Subject_sinks])) {
@@ -154,7 +151,12 @@ export const create: <T>(options?: {
           return;
         }
 
-        super_(QueueMixin<T>(), this, EventListenerLike_notify, next);
+        super_(
+          QueueingConsumerMixin<T>(),
+          this,
+          EventListenerLike_notify,
+          next,
+        );
 
         const maybeSinks = this[Subject_sinks];
         const sinks =
@@ -187,8 +189,7 @@ export const create: <T>(options?: {
         const maybeSinks = this[Subject_sinks];
 
         if (
-          (maybeSinks instanceof Set &&
-            maybeSinks[Set_has](sink)) ||
+          (maybeSinks instanceof Set && maybeSinks[Set_has](sink)) ||
           maybeSinks === sink
         ) {
           return;

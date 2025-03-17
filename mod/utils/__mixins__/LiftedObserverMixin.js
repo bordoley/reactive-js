@@ -9,7 +9,7 @@ import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import LiftedConsumerMixin, { LiftedConsumerLike_consumer, } from "./LiftedConsumerMixin.js";
 import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "./LiftedEventListenerMixin.js";
 import { LiftedSinkLike_complete, } from "./LiftedSinkMixin.js";
-import QueueMixin from "./QueueMixin.js";
+import QueueingConsumerMixin from "./QueueingConsumerMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 const LiftedObserverMixin = /*@__PURE__*/ (() => {
     function liftedObserverSchedulerContinuation(ctx) {
@@ -63,9 +63,9 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     function pushDelegate(next) {
         this[LiftedEventListenerLike_delegate][EventListenerLike_notify](next);
     }
-    return returns(mix(include(LiftedConsumerMixin(), QueueMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin), function LiftedObserverMixin(delegate, options) {
+    return returns(mix(include(LiftedConsumerMixin(), QueueingConsumerMixin(), SerialDisposableMixin(), DelegatingSchedulerMixin), function LiftedObserverMixin(delegate, options) {
         init(LiftedConsumerMixin(), this, delegate);
-        init(QueueMixin(), this, {
+        init(QueueingConsumerMixin(), this, {
             backpressureStrategy: delegate[ConsumerLike_backpressureStrategy],
             capacity: delegate[ConsumerLike_capacity],
             ...(options ?? {}),
@@ -100,7 +100,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 this[LiftedEventListenerLike_notify](next);
             }
             else if (!shouldIgnore) {
-                super_(QueueMixin(), this, EventListenerLike_notify, next);
+                super_(QueueingConsumerMixin(), this, EventListenerLike_notify, next);
                 scheduleDrainQueue(this);
             }
         },
@@ -111,11 +111,11 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             if (isCompleted) {
                 return;
             }
-            // Note, QueueMixin overrides all the ConsumerLike methods
+            // Note, QueueingConsumerMixin overrides all the ConsumerLike methods
             // that are implemented by LiftedConsumerMixin so its
             // only necessary to call its complete function to tag
             // the observer complete
-            super_(QueueMixin(), this, SinkLike_complete);
+            super_(QueueingConsumerMixin(), this, SinkLike_complete);
             if (inSchedulerContinuation && count == 0) {
                 this[LiftedSinkLike_complete]();
             }

@@ -1,8 +1,8 @@
 import { ObservableLike, ProducerLike_consume } from "../../../computations.js";
 import { invoke, isNone, none, pipe } from "../../../functions.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
-import * as Queue from "../../../utils/Queue.js";
 import { SchedulerLike } from "../../../utils.js";
 import Iterable_first from "../../Iterable/__private__/Iterable.first.js";
 import type * as Observable from "../../Observable.js";
@@ -14,7 +14,7 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
     let scheduler = options?.scheduler;
     using hostScheduler = isNone(scheduler) ? HostScheduler.create() : none;
     scheduler = scheduler ?? (hostScheduler as SchedulerLike);
-    const queue = Queue.createDropOldestWithoutBackpressure<T>(1, {
+    const queue = Consumer.createDropOldestWithoutBackpressure<T>(1, {
       autoDispose: true,
     });
 

@@ -77,7 +77,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
       const publisher = Publisher.create<number>();
       const accFeedbackStream = Subject.create<number>({ replay: 1 });
-      const otherObs =pipe(accFeedbackStream,  Broadcaster.toObservable());
+      const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable());
 
       const operator = compose(
         Observable.withLatestFrom<
@@ -144,7 +144,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
               )
             : Observable.empty();
         }),
-        Observable.switchAll()
+        Observable.switchAll(),
       );
 
       init(

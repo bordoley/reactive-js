@@ -15,10 +15,10 @@ import { clampPositiveNonZeroInteger, max } from "../math.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
-  EventListenerLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   QueueLike_head,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
@@ -121,14 +121,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             if (continuation[SchedulerContinuationLike_dueTime] > currentTime) {
               // copy the task and all other remaining tasks back to the scheduler queue
 
-              this[VirtualTimeScheduler_queue][EventListenerLike_notify](
-                continuation,
-              );
+              this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
               while (
                 ((continuation = queue[QueueLike_dequeue]()),
                 isSome(continuation))
               ) {
-                this[VirtualTimeScheduler_queue][EventListenerLike_notify](
+                this[VirtualTimeScheduler_queue][QueueLike_enqueue](
                   continuation,
                 );
               }
@@ -154,9 +152,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           SchedulerLike,
         continuation: SchedulerContinuationLike,
       ) {
-        this[VirtualTimeScheduler_queue][EventListenerLike_notify](
-          continuation,
-        );
+        this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
       },
     },
   ))();

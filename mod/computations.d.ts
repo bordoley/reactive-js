@@ -338,7 +338,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     withLatestFrom<TA, TB>(other: PureDeferredComputationOf<TComputationType, TB>): StatefulAsynchronousComputationOperator<TComputationType, TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: PureDeferredComputationOf<TComputationType, TB>, selector: Function2<TA, TB, T>): StatefulAsynchronousComputationOperator<TComputationType, TA, T>;
     withLatestFrom<TA, TB>(other: DeferredComputationWithSideEffectsOf<TComputationType, TB>): Function1<ComputationOf<TComputationType, TA>, DeferredComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>>;
-    withLatestFrom<TA, TB, T>(other: DeferredComputationWithSideEffectsOf<TComputationType, TB>, selector: Function2<TA, TB, T>): Function1<ComputationOf<TComputationType, TA>, DeferredComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>>;
+    withLatestFrom<TA, TB, T>(other: DeferredComputationWithSideEffectsOf<TComputationType, TB>, selector: Function2<TA, TB, T>): Function1<ComputationOf<TComputationType, TA>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
     withLatestFrom<TA, TB>(other: MulticastComputationOf<TComputationType, TB>): StatelessAsynchronousComputationOperator<TComputationType, TA, Tuple2<TA, TB>>;
     withLatestFrom<TA, TB, T>(other: MulticastComputationOf<TComputationType, TB>, selector: Function2<TA, TB, T>): StatelessAsynchronousComputationOperator<TComputationType, TA, T>;
     zipLatest: CombineConstructor<TComputationType>;
@@ -496,10 +496,17 @@ export interface MulticastObservableLike<out T = unknown> extends PureObservable
     readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isSynchronous]: false;
 }
+export declare const BroadcasterLike_connect: unique symbol;
+export interface BroadcasterLike<out T = unknown> extends ComputationLike, MulticastLike {
+    readonly [ComputationLike_isDeferred]: false;
+    readonly [ComputationLike_isPure]?: true;
+    readonly [ComputationLike_isSynchronous]: false;
+    [BroadcasterLike_connect](sink: SinkLike<T>): void;
+}
 /**
  * @noInheritDoc
  */
-export interface SubjectLike<out T = unknown> extends MulticastObservableLike<T>, EventListenerLike<T> {
+export interface SubjectLike<out T = unknown> extends BroadcasterLike<T>, SinkLike<T> {
 }
 /**
  * @noInheritDoc

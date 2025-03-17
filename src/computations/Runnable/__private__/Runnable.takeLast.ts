@@ -1,18 +1,12 @@
-import {
-  Optional,
-  isSome,
-  newInstance,
-  none,
-  pipe,
-} from "../../../functions.js";
+import { Optional, isSome, newInstance, none } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
   EventListenerLike_notify,
   QueueLike,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -33,14 +27,11 @@ class TakeLastSink<T>
   ) {
     super(sink);
 
-    this.q = pipe(
-      Queue.createDropOldestWithoutBackpressure<T>(cnt),
-      Disposable.addTo(this),
-    );
+    this.q = Queue.createDropOldest<T>(cnt);
   }
 
   [EventListenerLike_notify](next: T): void {
-    this.q[EventListenerLike_notify](next);
+    this.q[QueueLike_enqueue](next);
   }
 
   [SinkLike_complete](): void {

@@ -9,7 +9,7 @@ import * as HostScheduler from "../utils/HostScheduler.js";
 import * as Queue from "../utils/Queue.js";
 import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
 import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
+import { QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
@@ -40,7 +40,7 @@ export const get = /*@__PURE__*/ (() => {
             let continuation = none;
             while (((continuation = newWorkQueue[QueueLike_dequeue]()),
                 isSome(continuation))) {
-                workQueue[EventListenerLike_notify](continuation);
+                workQueue[QueueLike_enqueue](continuation);
             }
             animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
         }
@@ -74,7 +74,7 @@ export const get = /*@__PURE__*/ (() => {
                 pipe(HostScheduler.get(), invoke(SchedulerLike_schedule, pipeLazy(this, invoke(SchedulerMixinHostLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
             }
             else {
-                this[AnimationFrameScheduler_rafQueue][EventListenerLike_notify](continuation);
+                this[AnimationFrameScheduler_rafQueue][QueueLike_enqueue](continuation);
                 if (!this[AnimationFrameScheduler_rafIsRunning]) {
                     this[AnimationFrameScheduler_rafIsRunning] = true;
                     raf(rafCallback);

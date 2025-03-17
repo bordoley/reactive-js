@@ -15,6 +15,7 @@
 - [`MulticastComputationLike`](MulticastComputationLike.md)
 - [`ProducerLike`](ProducerLike.md)
 - [`ObservableLike`](ObservableLike.md)
+- [`BroadcasterLike`](BroadcasterLike.md)
 
 ## Properties
 

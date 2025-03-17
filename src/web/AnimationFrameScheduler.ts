@@ -30,10 +30,10 @@ import {
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
   DisposableLike,
-  EventListenerLike_notify,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -98,7 +98,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         ((continuation = newWorkQueue[QueueLike_dequeue]()),
         isSome(continuation))
       ) {
-        workQueue[EventListenerLike_notify](continuation);
+        workQueue[QueueLike_enqueue](continuation);
       }
       animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
     }
@@ -160,7 +160,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
             Disposable.addTo(continuation),
           );
         } else {
-          this[AnimationFrameScheduler_rafQueue][EventListenerLike_notify](
+          this[AnimationFrameScheduler_rafQueue][QueueLike_enqueue](
             continuation,
           );
 

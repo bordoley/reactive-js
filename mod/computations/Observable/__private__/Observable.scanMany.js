@@ -5,6 +5,7 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { EventListenerLike_notify } from "../../../utils.js";
+import * as Broadcaster from "../../Broadcaster.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -28,7 +29,8 @@ const Observable_scanMany = ((scanner, initialValue, options) => {
             observable[ComputationLike_isSynchronous];
         return Observable_createWithConfig(observer => {
             const accFeedbackStream = pipe(Subject.create(), Disposable.addTo(observer));
-            pipe(observable, Observable_withLatestFrom(accFeedbackStream), Computation.flatMap(ObservableModule)("switchAll", ([next, acc]) => scanner(acc, next), {
+            const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable());
+            pipe(observable, Observable_withLatestFrom(otherObs), Computation.flatMap(ObservableModule)("switchAll", ([next, acc]) => scanner(acc, next), {
                 innerType: {
                     [ComputationLike_isDeferred]: true,
                     [ComputationLike_isPure]: false,

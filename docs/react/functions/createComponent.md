@@ -16,7 +16,7 @@
 
 ### fn
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`MulticastObservableLike`](../../computations/interfaces/MulticastObservableLike.md)\<`TProps`\>, [`ObservableLike`](../../computations/interfaces/ObservableLike.md)\<`ReactElement`\<`unknown`, `string` \| `JSXElementConstructor`\<`any`\>\>\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../computations/interfaces/BroadcasterLike.md)\<`TProps`\>, [`ObservableLike`](../../computations/interfaces/ObservableLike.md)\<`ReactElement`\<`unknown`, `string` \| `JSXElementConstructor`\<`any`\>\>\>\>
 
 ### options?
 

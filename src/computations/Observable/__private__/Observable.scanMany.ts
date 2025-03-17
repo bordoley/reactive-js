@@ -52,7 +52,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           Disposable.addTo(observer),
         );
 
-        const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable())
+        const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable());
 
         pipe(
           observable,

@@ -10,7 +10,7 @@ import {
   pipe,
   raise,
 } from "../../../functions.js";
-import * as Queue from "../../../utils/Queue.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
 import {
   DisposableLike_error,
@@ -26,7 +26,7 @@ const Observable_last: Observable.Signature["last"] =
   }): Function1<SynchronousObservableLike<T>, Optional<T>> =>
   observable => {
     using vts = VirtualTimeScheduler.create(options);
-    const queue = Queue.createDropOldestWithoutBackpressure<T>(1, {
+    const queue = Consumer.createDropOldestWithoutBackpressure<T>(1, {
       autoDispose: true,
     });
 

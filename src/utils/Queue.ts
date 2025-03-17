@@ -5,40 +5,29 @@ import {
   mixInstanceFactory,
   props,
   proto,
-  unsafeCast,
+  super_,
 } from "../__internal__/mixins.js";
-import { Comparator, Optional } from "../functions.js";
+import { Comparator, Optional, none } from "../functions.js";
 import {
   BackpressureStrategy,
-  ConsumerLike,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
-  DropOldestBackpressureStrategy,
-  OverflowBackpressureStrategy,
   QueueLike,
-  SinkLike_isCompleted,
+  QueueLike_count,
+  QueueLike_dequeue,
+  QueueLike_enqueue,
 } from "../utils.js";
-import DisposableMixin from "./__mixins__/DisposableMixin.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 
 const createInternal: <T>(options?: {
-  autoDispose?: boolean;
-  capacity?: number;
   comparator?: Comparator<T>;
-  backpressureStrategy?: BackpressureStrategy;
 }) => QueueLike<T> = /*@__PURE__*/ (<T>() => {
   const createQueue = mixInstanceFactory(
-    include(DisposableMixin, QueueMixin()),
+    include(QueueMixin()),
     function Queue(
       this: unknown,
       options: Optional<{
-        autoDispose?: boolean;
-        capacity?: number;
         comparator?: Comparator<T>;
-        backpressureStrategy?: BackpressureStrategy;
       }>,
     ): QueueLike<T> {
-      init(DisposableMixin, this);
       init(QueueMixin<T>(), this, options);
 
       return this;
@@ -61,65 +50,47 @@ const createInternal: <T>(options?: {
   };
 })();
 
-export const create = <T>(options?: {
-  autoDispose?: boolean;
-  capacity?: number;
-  backpressureStrategy?: BackpressureStrategy;
-}): QueueLike<T> =>
-  createInternal({
-    autoDispose: options?.autoDispose,
-    capacity: options?.capacity,
-    backpressureStrategy: options?.backpressureStrategy,
-  });
+export const create = <T>(): QueueLike<T> => createInternal();
 
-export const createSorted = <T>(
-  comparator: Comparator<T>,
-  options?: {
-    autoDispose?: boolean;
-  },
-): QueueLike<T> =>
+export const createSorted = <T>(comparator: Comparator<T>): QueueLike<T> =>
   createInternal({
-    autoDispose: options?.autoDispose,
-    capacity: MAX_SAFE_INTEGER,
-    backpressureStrategy: OverflowBackpressureStrategy,
     comparator,
   });
 
-export const createDropOldestWithoutBackpressure: <T>(
-  capacity: number,
-  options?: {
-    autoDispose?: boolean;
-  },
-) => QueueLike<T> = /*@__PURE__*/ (<T>() =>
-  mixInstanceFactory(
-    include(DisposableMixin, QueueMixin()),
-    function Queue(
-      this: unknown,
-      capacity: number,
-      options: Optional<{
-        autoDispose?: boolean;
-      }>,
-    ): QueueLike<T> {
-      init(DisposableMixin, this);
-      init(QueueMixin<T>(), this, {
-        autoDispose: options?.autoDispose,
-        backpressureStrategy: DropOldestBackpressureStrategy,
-        capacity,
-      });
+export const createDropOldest: <T>(capacity: number) => QueueLike<T> =
+  /*@__PURE__*/ (<T>() => {
+    const DropOldestQueue_capacity = Symbol("DropOldestQueue_capacity");
+    type TProperties = {
+      [DropOldestQueue_capacity]: number;
+    };
+    return mixInstanceFactory(
+      include(QueueMixin()),
+      function DropOldestQueue(
+        this: TProperties,
+        capacity: number,
+      ): QueueLike<T> {
+        init(QueueMixin<T>(), this, none);
 
-      return this;
-    },
-    props(),
-    proto({
-      get [ConsumerLike_isReady](): boolean {
-        unsafeCast<ConsumerLike<T>>(this);
-        const isCompleted = this[SinkLike_isCompleted];
+        this[DropOldestQueue_capacity] = capacity;
 
-        return !isCompleted;
+        return this;
       },
+      props<TProperties>({
+        [DropOldestQueue_capacity]: MAX_SAFE_INTEGER,
+      }),
+      proto({
+        [QueueLike_enqueue](this: TProperties & QueueLike<T>, v: T) {
+          const capacity = this[DropOldestQueue_capacity];
+          const applyBackpressure = this[QueueLike_count] >= capacity;
 
-      get [ConsumerLike_capacity](): number {
-        return MAX_SAFE_INTEGER;
-      },
-    }),
-  ))();
+          if (applyBackpressure) {
+            this[QueueLike_dequeue]();
+          }
+
+          if (capacity > 0) {
+            super_(QueueMixin(), this, QueueLike_enqueue, v);
+          }
+        },
+      }),
+    );
+  })();

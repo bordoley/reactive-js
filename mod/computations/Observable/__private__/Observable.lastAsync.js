@@ -54,9 +54,9 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { ProducerLike_consume } from "../../../computations.js";
 import { invoke, isNone, none, pipe } from "../../../functions.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
-import * as Queue from "../../../utils/Queue.js";
 import Iterable_first from "../../Iterable/__private__/Iterable.first.js";
 import Observable_toProducer from "./Observable.toProducer.js";
 const Observable_lastAsync = (options) => async (observable) => {
@@ -65,7 +65,7 @@ const Observable_lastAsync = (options) => async (observable) => {
         let scheduler = options?.scheduler;
         const hostScheduler = __addDisposableResource(env_1, isNone(scheduler) ? HostScheduler.create() : none, false);
         scheduler = scheduler ?? hostScheduler;
-        const queue = Queue.createDropOldestWithoutBackpressure(1, {
+        const queue = Consumer.createDropOldestWithoutBackpressure(1, {
             autoDispose: true,
         });
         pipe(observable, Observable_toProducer(scheduler), invoke(ProducerLike_consume, queue));

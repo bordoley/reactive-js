@@ -54,7 +54,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { ProducerLike_consume, } from "../../../computations.js";
 import { invoke, isSome, pipe, raise } from "../../../functions.js";
-import * as Queue from "../../../utils/Queue.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_error, VirtualTimeSchedulerLike_run, } from "../../../utils.js";
 import Observable_toProducer from "./Observable.toProducer.js";
@@ -62,7 +62,7 @@ const Observable_toReadonlyArray = (options) => observable => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(options), false);
-        const queue = Queue.create({ autoDispose: true });
+        const queue = Consumer.create({ autoDispose: true });
         pipe(observable, Observable_toProducer(vts), invoke(ProducerLike_consume, queue));
         vts[VirtualTimeSchedulerLike_run]();
         const err = queue[DisposableLike_error];

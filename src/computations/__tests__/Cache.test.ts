@@ -26,7 +26,7 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
-import * as Broadcaster from "../Broadcaster.js"
+import * as Broadcaster from "../Broadcaster.js";
 
 testModule(
   "Cache",

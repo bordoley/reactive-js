@@ -16,7 +16,6 @@ import {
   pipe,
 } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -31,11 +30,11 @@ import {
   LiftedSinkLike_completeDelegate,
 } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
-  EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueLike_enqueue,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
@@ -77,10 +76,7 @@ const createTakeLastObserver: <T>(
       init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
-      this[TakeLastObserver_queue] = pipe(
-        Queue.createDropOldestWithoutBackpressure<T>(takeLastCount),
-        Disposable.addTo(this),
-      );
+      this[TakeLastObserver_queue] = Queue.createDropOldest<T>(takeLastCount);
 
       return this;
     },
@@ -92,7 +88,7 @@ const createTakeLastObserver: <T>(
         this: TProperties & LiftedObserverLike<T>,
         next: T,
       ) {
-        this[TakeLastObserver_queue][EventListenerLike_notify](next);
+        this[TakeLastObserver_queue][QueueLike_enqueue](next);
       },
       [LiftedSinkLike_complete](this: TProperties & LiftedObserverLike<T>) {
         const count = this[TakeLastObserver_queue][QueueLike_count];

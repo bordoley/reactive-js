@@ -6,9 +6,9 @@ import * as Computation from "../../../computations/Computation.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { bind, isSome, none, pipe, } from "../../../functions.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../math.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedConsumerMixin.js";
 import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
@@ -45,7 +45,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const createMergeAllObserver = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function MergeAllObserver(delegate, capacity, backpressureStrategy, concurrency) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        this[MergeAllObserver_observablesQueue] = pipe(Queue.create({
+        this[MergeAllObserver_observablesQueue] = pipe(Consumer.create({
             capacity,
             backpressureStrategy,
         }), Disposable.addTo(this));

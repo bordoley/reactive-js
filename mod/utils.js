@@ -24,6 +24,7 @@ export const ConsumerLike_backpressureStrategy = Symbol("ConsumerLike_backpressu
 export const ConsumerLike_capacity = Symbol("ConsumerLike_capacity");
 export const ConsumerLike_isReady = Symbol("ConsumerLike_isReady");
 export const ConsumerLike_addOnReadyListener = Symbol("ConsumerLike_addOnReadyListener");
+export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
 export const QueueLike_count = Symbol("QueueLike_count");

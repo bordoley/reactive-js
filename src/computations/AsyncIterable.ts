@@ -730,7 +730,7 @@ export const toEventSource: Signature["toEventSource"] =
       ),
     );
 
-    /*
+/*
 export const toPauseableObservable: Signature["toPauseableObservable"] =
   <T>(
     scheduler: SchedulerLike,

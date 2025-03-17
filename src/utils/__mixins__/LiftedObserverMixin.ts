@@ -62,7 +62,7 @@ import {
   LiftedSinkLike_complete,
   LiftedSinkLike_completeDelegate,
 } from "./LiftedSinkMixin.js";
-import QueueMixin from "./QueueMixin.js";
+import QueueingConsumerMixin from "./QueueingConsumerMixin.js";
 import SerialDisposableMixin from "./SerialDisposableMixin.js";
 
 export interface LiftedObserverLike<TA = unknown, TB = TA>
@@ -223,7 +223,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     >(
       include(
         LiftedConsumerMixin(),
-        QueueMixin(),
+        QueueingConsumerMixin(),
         SerialDisposableMixin(),
         DelegatingSchedulerMixin,
       ),
@@ -261,7 +261,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           this,
           delegate,
         );
-        init(QueueMixin<TA>(), this, {
+        init(QueueingConsumerMixin<TA>(), this, {
           backpressureStrategy: delegate[ConsumerLike_backpressureStrategy],
           capacity: delegate[ConsumerLike_capacity],
           ...(options ?? {}),
@@ -315,7 +315,12 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           if (shouldNotify) {
             this[LiftedEventListenerLike_notify](next);
           } else if (!shouldIgnore) {
-            super_(QueueMixin<TA>(), this, EventListenerLike_notify, next);
+            super_(
+              QueueingConsumerMixin<TA>(),
+              this,
+              EventListenerLike_notify,
+              next,
+            );
             scheduleDrainQueue(this);
           }
         },
@@ -335,11 +340,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
             return;
           }
 
-          // Note, QueueMixin overrides all the ConsumerLike methods
+          // Note, QueueingConsumerMixin overrides all the ConsumerLike methods
           // that are implemented by LiftedConsumerMixin so its
           // only necessary to call its complete function to tag
           // the observer complete
-          super_(QueueMixin<TA>(), this, SinkLike_complete);
+          super_(QueueingConsumerMixin<TA>(), this, SinkLike_complete);
 
           if (inSchedulerContinuation && count == 0) {
             this[LiftedSinkLike_complete]();

@@ -6,8 +6,9 @@ import Observable_subscribeOn from "./Observable.subscribeOn.js";
 const Observable_fromObservable: Observable.Signature["fromObservable"] = ((
     scheduler: SchedulerLike,
   ) =>
-  obs => Observable_subscribeOn(scheduler)(
-          obs,
-        )) as Observable.Signature["fromObservable"];
+  obs =>
+    Observable_subscribeOn(scheduler)(
+      obs,
+    )) as Observable.Signature["fromObservable"];
 
 export default Observable_fromObservable;

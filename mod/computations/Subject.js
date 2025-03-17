@@ -2,67 +2,66 @@
 
 import { Set, Set_add, Set_delete, Set_has, Set_size, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, super_, } from "../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../computations.js";
+import { BroadcasterLike_connect, ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../computations.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import QueueMixin from "../utils/__mixins__/QueueMixin.js";
+import QueueingConsumerMixin from "../utils/__mixins__/QueueingConsumerMixin.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as Iterable from "./Iterable.js";
 export const create = /*@__PURE__*/ (() => {
-    const Subject_observers = Symbol("Subject_observers");
-    const Subject_onObserverDisposed = Symbol("Subject_onObserverDisposed");
+    const Subject_sinks = Symbol("Subject_sinks");
+    const Subject_onSinkDisposed = Symbol("Subject_onSinkDisposed");
     function onSubjectDisposed(e) {
-        const maybeObservers = this[Subject_observers];
-        const observers = maybeObservers instanceof Set
-            ? maybeObservers
-            : isSome(maybeObservers)
-                ? [maybeObservers]
+        const maybeSinks = this[Subject_sinks];
+        const sinks = maybeSinks instanceof Set
+            ? maybeSinks
+            : isSome(maybeSinks)
+                ? [maybeSinks]
                 : [];
-        for (const observer of observers) {
+        for (const sink of sinks) {
             if (isSome(e)) {
-                observer[DisposableLike_dispose](e);
+                sink[DisposableLike_dispose](e);
             }
             else {
-                observer[SinkLike_complete]();
+                sink[SinkLike_complete]();
             }
         }
-        this[Subject_observers] = none;
+        this[Subject_sinks] = none;
     }
-    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function Subject(options) {
+    return mixInstanceFactory(include(DisposableMixin, QueueingConsumerMixin()), function Subject(options) {
         const replay = clampPositiveInteger(options?.replay ?? 0);
         init(DisposableMixin, this);
-        init(QueueMixin(), this, {
+        init(QueueingConsumerMixin(), this, {
             backpressureStrategy: DropOldestBackpressureStrategy,
             capacity: replay,
         });
-        this[Subject_observers] = newInstance(Set);
+        this[Subject_sinks] = newInstance(Set);
         const autoDispose = options?.autoDispose ?? false;
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
-        this[Subject_onObserverDisposed] = function onObserverDisposed() {
-            const maybeObservers = instance[Subject_observers];
-            if (maybeObservers instanceof Set) {
-                maybeObservers[Set_delete](this);
+        this[Subject_onSinkDisposed] = function onSinkDisposed() {
+            const maybeSinks = instance[Subject_sinks];
+            if (maybeSinks instanceof Set) {
+                maybeSinks[Set_delete](this);
             }
-            else if (maybeObservers === this) {
-                instance[Subject_observers] = none;
+            else if (maybeSinks === this) {
+                instance[Subject_sinks] = none;
             }
-            if (maybeObservers instanceof Set && maybeObservers[Set_size] == 1) {
-                instance[Subject_observers] =
-                    Iterable.first()(maybeObservers);
+            if (maybeSinks instanceof Set && maybeSinks[Set_size] == 1) {
+                instance[Subject_sinks] = Iterable.first()(maybeSinks);
             }
-            if (autoDispose && isNone(instance[Subject_observers])) {
+            if (autoDispose && isNone(instance[Subject_sinks])) {
                 instance[DisposableLike_dispose]();
-                instance[Subject_observers] = none;
+                instance[Subject_sinks] = none;
             }
         };
         pipe(this, DisposableContainer.onDisposed(onSubjectDisposed));
         return this;
     }, props({
-        [Subject_observers]: none,
-        [Subject_onObserverDisposed]: none,
+        [Subject_sinks]: none,
+        [Subject_onSinkDisposed]: none,
     }), {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
@@ -70,60 +69,59 @@ export const create = /*@__PURE__*/ (() => {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            super_(QueueMixin(), this, EventListenerLike_notify, next);
-            const maybeObservers = this[Subject_observers];
-            const observers = maybeObservers instanceof Set
-                ? maybeObservers
-                : isSome(maybeObservers)
-                    ? [maybeObservers]
+            super_(QueueingConsumerMixin(), this, EventListenerLike_notify, next);
+            const maybeSinks = this[Subject_sinks];
+            const sinks = maybeSinks instanceof Set
+                ? maybeSinks
+                : isSome(maybeSinks)
+                    ? [maybeSinks]
                     : [];
-            for (const observer of observers) {
-                if (observer[SinkLike_isCompleted]) {
-                    // be sure to remove completed observers
-                    // ideally we would get notified when an observer
+            for (const sink of sinks) {
+                if (sink[SinkLike_isCompleted]) {
+                    // be sure to remove completed sinks
+                    // ideally we would get notified when an sink
                     // is completed but this api does not yet exist.
-                    call(this[Subject_onObserverDisposed], observer);
+                    call(this[Subject_onSinkDisposed], sink);
                     continue;
                 }
                 try {
-                    observer[EventListenerLike_notify](next);
+                    sink[EventListenerLike_notify](next);
                 }
                 catch (e) {
-                    observer[DisposableLike_dispose](error(e));
+                    sink[DisposableLike_dispose](error(e));
                 }
             }
         },
-        [ObservableLike_observe](observer) {
-            const maybeObservers = this[Subject_observers];
-            if ((maybeObservers instanceof Set &&
-                maybeObservers[Set_has](observer)) ||
-                maybeObservers === observer) {
+        [BroadcasterLike_connect](sink) {
+            const maybeSinks = this[Subject_sinks];
+            if ((maybeSinks instanceof Set && maybeSinks[Set_has](sink)) ||
+                maybeSinks === sink) {
                 return;
             }
             if (isSome(this[DisposableLike_error])) {
-                observer[DisposableLike_dispose](this[DisposableLike_error]);
+                sink[DisposableLike_dispose](this[DisposableLike_error]);
                 return;
             }
             if (!this[DisposableLike_isDisposed]) {
-                if (maybeObservers instanceof Set) {
-                    maybeObservers[Set_add](observer);
+                if (maybeSinks instanceof Set) {
+                    maybeSinks[Set_add](sink);
                 }
-                else if (isSome(maybeObservers)) {
-                    const listeners = (this[Subject_observers] =
+                else if (isSome(maybeSinks)) {
+                    const listeners = (this[Subject_sinks] =
                         newInstance(Set));
-                    listeners[Set_add](maybeObservers);
-                    listeners[Set_add](observer);
+                    listeners[Set_add](maybeSinks);
+                    listeners[Set_add](sink);
                 }
                 else {
-                    this[Subject_observers] = observer;
+                    this[Subject_sinks] = sink;
                 }
-                pipe(observer, DisposableContainer.onDisposed(this[Subject_onObserverDisposed]));
+                pipe(sink, DisposableContainer.onDisposed(this[Subject_onSinkDisposed]));
             }
             for (const next of this) {
-                observer[EventListenerLike_notify](next);
+                sink[EventListenerLike_notify](next);
             }
             if (this[DisposableLike_isDisposed]) {
-                observer[SinkLike_complete]();
+                sink[SinkLike_complete]();
             }
         },
     });

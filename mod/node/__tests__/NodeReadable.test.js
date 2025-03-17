@@ -58,10 +58,10 @@ import * as Iterable from "../../computations/Iterable.js";
 import * as Observable from "../../computations/Observable.js";
 import { ProducerLike_consume } from "../../computations.js";
 import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../functions.js";
+import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-import * as Queue from "../../utils/Queue.js";
 import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
 testModule("NodeReadable", describe("toEventSource", testAsync("reading from readable", async () => {
@@ -98,7 +98,7 @@ testModule("NodeReadable", describe("toEventSource", testAsync("reading from rea
         }
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
         const src = pipe(Readable.from(generate()), NodeReadable.toEventSource, Disposable.addTo(scheduler));
-        const queue = Queue.createDropOldestWithoutBackpressure(1, {
+        const queue = Consumer.createDropOldestWithoutBackpressure(1, {
             autoDispose: true,
         });
         pipe(src, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.toProducer(scheduler), invoke(ProducerLike_consume, queue));

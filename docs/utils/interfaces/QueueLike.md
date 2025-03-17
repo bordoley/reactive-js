@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ConsumerLike`](ConsumerLike.md)\<`T`\>.`Iterable`\<`T`\>
+- `Iterable`\<`T`\>
 
 ## Type Parameters
 
@@ -35,3 +35,19 @@
 #### Returns
 
 [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>
+
+***
+
+### \[QueueLike\_enqueue\]()
+
+> **\[QueueLike\_enqueue\]**(`v`): `void`
+
+#### Parameters
+
+##### v
+
+`T`
+
+#### Returns
+
+`void`

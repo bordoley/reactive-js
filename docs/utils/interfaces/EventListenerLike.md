@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`PublisherLike`](../../computations/interfaces/PublisherLike.md)
-- [`SubjectLike`](../../computations/interfaces/SubjectLike.md)
 - [`SinkLike`](SinkLike.md)
 
 ## Type Parameters

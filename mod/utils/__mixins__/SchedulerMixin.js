@@ -4,7 +4,7 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
@@ -51,7 +51,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             const scheduler = continuation[ConsumerContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
-                parent[EventListenerLike_notify](continuation);
+                parent[QueueLike_enqueue](continuation);
             }
             else {
                 continuation[SchedulerContinuationLike_dueTime] =
@@ -69,7 +69,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                     // continue
                 }
                 else if (isSome(parent)) {
-                    parent[EventListenerLike_notify](head);
+                    parent[QueueLike_enqueue](head);
                 }
                 else {
                     scheduler[SchedulerMixinLike_schedule](head);
@@ -240,7 +240,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 this[SchedulerMixinHostLike_schedule](continuation);
             }
             else {
-                activeContinuation[EventListenerLike_notify](continuation);
+                activeContinuation[QueueLike_enqueue](continuation);
             }
         },
         [SchedulerLike_schedule](effect, options) {

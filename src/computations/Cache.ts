@@ -59,6 +59,7 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
 } from "../utils.js";
@@ -179,10 +180,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       const store = newInstance<Map<string, T>>(Map);
       const subscriptions =
         newInstance<Map<string, SubjectLike<Optional<T>>>>(Map);
-      const cleanupQueue = pipe(
-        Queue.create<string>(),
-        Disposable.addTo(consumer),
-      );
+      const cleanupQueue = Queue.create<string>();
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
         while (store[Map_size] > maxEntries) {
@@ -334,7 +332,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
           return;
         }
 
-        cleanupQueue[EventListenerLike_notify](key);
+        cleanupQueue[QueueLike_enqueue](key);
 
         if (!cleanupJob[DisposableLike_isDisposed]) {
           return;

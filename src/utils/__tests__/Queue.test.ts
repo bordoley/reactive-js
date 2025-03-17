@@ -3,19 +3,16 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectToThrow,
   test,
   testModule,
 } from "../../__internal__/testing.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { floor, random } from "../../math.js";
 import {
-  DropLatestBackpressureStrategy,
-  EventListenerLike_notify,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   QueueLike_head,
-  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Queue from "../Queue.js";
 
@@ -53,7 +50,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 127; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
     }
 
     for (let i = 0; i < 62; i++) {
@@ -61,7 +58,7 @@ testModule(
     }
 
     for (let i = 128; i < 255; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
     }
 
     pipe(queue[QueueLike_count], expectEquals(192));
@@ -73,7 +70,7 @@ testModule(
     pipe(queue[QueueLike_dequeue](), expectEquals(none as Optional<number>));
 
     for (let i = 0; i < 8; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
       pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
     }
 
@@ -89,7 +86,7 @@ testModule(
     pipe(queue[QueueLike_head], expectEquals(3 as Optional<number>));
 
     for (let i = 8; i < 16; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
       pipe(queue[QueueLike_head], expectEquals(3 as Optional<number>));
     }
 
@@ -103,7 +100,7 @@ testModule(
     pipe(queue[QueueLike_head], expectEquals(6 as Optional<number>));
 
     for (let i = 16; i < 32; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
       pipe(queue[QueueLike_head], expectEquals(6 as Optional<number>));
     }
 
@@ -117,7 +114,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 300; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
     }
 
     for (let i = 0; i < 50; i++) {
@@ -127,7 +124,7 @@ testModule(
     pipe(queue[QueueLike_head], expectEquals(50 as Optional<number>));
 
     for (let i = 300; i < 500; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
     }
 
     for (let i = 0; i < 200; i++) {
@@ -140,7 +137,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 31; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
     }
 
     for (let i = 0; i < 10; i++) {
@@ -148,7 +145,7 @@ testModule(
     }
 
     for (let i = 31; i < 40; i++) {
-      queue[EventListenerLike_notify](i);
+      queue[QueueLike_enqueue](i);
     }
 
     let prev = 9;
@@ -163,7 +160,7 @@ testModule(
       const queue = createSorted();
       const shuffledArray = makeShuffledArray(100);
       for (let i = 0; i < shuffledArray[Array_length]; i++) {
-        queue[EventListenerLike_notify](shuffledArray[i]);
+        queue[QueueLike_enqueue](shuffledArray[i]);
       }
 
       const acc: number[] = [];
@@ -172,42 +169,6 @@ testModule(
       }
 
       pipe(acc, expectArrayEquals(makeSortedArray(100)));
-    }),
-    test("drop-latest backpressure", () => {
-      const queue = Queue.create<number>({
-        capacity: 1,
-        backpressureStrategy: DropLatestBackpressureStrategy,
-      });
-
-      queue[EventListenerLike_notify](0);
-      queue[EventListenerLike_notify](1);
-
-      pipe(queue[QueueLike_count], expectEquals(1));
-      pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
-    }),
-    test("drop-oldest backpressure", () => {
-      const queue = Queue.createDropOldestWithoutBackpressure<number>(1);
-
-      queue[EventListenerLike_notify](0);
-      queue[EventListenerLike_notify](1);
-
-      pipe(queue[QueueLike_count], expectEquals(1));
-      pipe(queue[QueueLike_head], expectEquals<Optional<number>>(1));
-    }),
-    test("throw backpressure", () => {
-      const queue = Queue.create<number>({
-        capacity: 1,
-        backpressureStrategy: ThrowBackpressureStrategy,
-      });
-
-      queue[EventListenerLike_notify](0);
-
-      expectToThrow(() => {
-        queue[EventListenerLike_notify](1);
-      });
-
-      pipe(queue[QueueLike_count], expectEquals(1));
-      pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
     }),
   ),
 );

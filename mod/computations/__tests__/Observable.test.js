@@ -59,7 +59,7 @@ import { __await, __constant, __do, __memo, __observe, __state, __stream, } from
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import * as Subject from "../../computations/Subject.js";
-import { Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, MulticastComputation, PureDeferredComputation, PureSynchronousDeferredComputation, StoreLike_value, SynchronousDeferredComputationWithSideEffects, } from "../../computations.js";
+import { Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, DeferredComputationWithSideEffects, PureDeferredComputation, PureSynchronousDeferredComputation, StoreLike_value, SynchronousDeferredComputationWithSideEffects, } from "../../computations.js";
 import { bindMethod, error, ignore, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { increment, scale } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -68,13 +68,13 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, ThrowBackpressureStrategy, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
+import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
-import MulticastedComputationModuleTests from "./fixtures/MulticastComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
@@ -83,21 +83,19 @@ import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/Comput
 import HigherOrderComputationOperatorTests from "./fixtures/operators/HigherOrderComputationOperatorTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
 import StatefulSynchronousComputationOperatorTests from "./fixtures/operators/StatefulSynchronousComputationOperatorTests.js";
-import StatelessComputationOperatorTests from "./fixtures/operators/StatelessComputationOperatorTests.js";
 const ObservableTypes = {
     [Computation_pureSynchronousOfT]: Observable.empty({ delay: 1 }),
     [Computation_synchronousWithSideEffectsOfT]: pipe(Observable.empty(), Observable.forEach(ignore)),
     [Computation_pureDeferredOfT]: pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create())),
     [Computation_deferredWithSideEffectsOfT]: pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create()), Observable.forEach(ignore)),
-    [Computation_multicastOfT]: Observable.never(),
 };
 const CombineConstructorTests = (operator) => {
-    const { [Computation_pureSynchronousOfT]: pureSynchronousComputationOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, [Computation_deferredWithSideEffectsOfT]: deferredWithSideEffectsOfT, [Computation_multicastOfT]: multicastOfT, } = ObservableTypes;
-    return describe("CombineConstructorTests", ComputationTest.isPureSynchronous(operator(pureSynchronousComputationOfT, pureSynchronousComputationOfT), " when all inputs are pureSynchronous"), ComputationTest.isSynchronousWithSideEffects(operator(pureSynchronousComputationOfT, synchronousWithSideEffectsOfT), " when combining pureSynchronous and synchronousWithSideEffects inputs"), ComputationTest.isSynchronousWithSideEffects(operator(synchronousWithSideEffectsOfT, synchronousWithSideEffectsOfT), " when all inputs are synchronousWithSideEffects"), ComputationTest.isPureDeferred(operator(pureDeferredOfT, pureDeferredOfT), " when all inputs are PureDeferred"), ComputationTest.isPureDeferred(operator(pureSynchronousComputationOfT, pureDeferredOfT), " when combining pureSynchronous and pureDeferred inputs"), ComputationTest.isPureDeferred(operator(multicastOfT, pureDeferredOfT), " when combining pureDeferred and multicast inputs"), ComputationTest.isDeferredWithSideEffects(operator(pureDeferredOfT, deferredWithSideEffectsOfT, multicastOfT), " when combining multicast, pureDeferred and deferredWithSideEffect inputs"), ComputationTest.isPureDeferred(operator(multicastOfT, multicastOfT, multicastOfT), " when combining multicast inputs"));
+    const { [Computation_pureSynchronousOfT]: pureSynchronousComputationOfT, [Computation_synchronousWithSideEffectsOfT]: synchronousWithSideEffectsOfT, [Computation_pureDeferredOfT]: pureDeferredOfT, } = ObservableTypes;
+    return describe("CombineConstructorTests", ComputationTest.isPureSynchronous(operator(pureSynchronousComputationOfT, pureSynchronousComputationOfT), " when all inputs are pureSynchronous"), ComputationTest.isSynchronousWithSideEffects(operator(pureSynchronousComputationOfT, synchronousWithSideEffectsOfT), " when combining pureSynchronous and synchronousWithSideEffects inputs"), ComputationTest.isSynchronousWithSideEffects(operator(synchronousWithSideEffectsOfT, synchronousWithSideEffectsOfT), " when all inputs are synchronousWithSideEffects"), ComputationTest.isPureDeferred(operator(pureDeferredOfT, pureDeferredOfT), " when all inputs are PureDeferred"), ComputationTest.isPureDeferred(operator(pureSynchronousComputationOfT, pureDeferredOfT), " when combining pureSynchronous and pureDeferred inputs"));
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), SequentialComputationModuleTests(Observable, ObservableTypes), SequentialReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), MulticastedComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
+})), ComputationModuleTests(Observable, ObservableTypes), SequentialComputationModuleTests(Observable, ObservableTypes), SequentialReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
     capacity: 0,
     backpressureStrategy: DropLatestBackpressureStrategy,
 }), Observable.backpressureStrategy({
@@ -241,8 +239,9 @@ testModule("Observable", describe("effects", test("calling an effect from outsid
         const subject = Subject.create({ replay: 2 });
         subject[EventListenerLike_notify](200);
         subject[EventListenerLike_notify](100);
+        const subjectObs = pipe(subject, Broadcaster.toObservable());
         await pipeAsync(Observable.computeDeferred(() => {
-            const result = __await(subject);
+            const result = __await(subjectObs);
             // Need to dispose the subject or the test will hang
             __do(bindMethod(subject, DisposableLike_dispose));
             return result;
@@ -333,7 +332,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_8);
     }
-}), ComputationTest.isPureDeferred(Observable.defer(Subject.create))), describe("empty", test("with delay", () => {
+})), describe("empty", test("with delay", () => {
     const env_9 = { stack: [], error: void 0, hasError: false };
     try {
         let disposedTime = -1;
@@ -389,9 +388,7 @@ expectArrayEquals([0, 0, 0, 0, 0]))), ComputationTest.isPureSynchronous(Observab
     finally {
         __disposeResources(env_11);
     }
-})), describe("forkMerge", StatelessComputationOperatorTests(ObservableTypes, Observable.forkMerge(_ => ObservableTypes[Computation_multicastOfT], _ => ObservableTypes[Computation_multicastOfT], {
-    innerType: MulticastComputation,
-}))), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", async () => {
+})), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", async () => {
     const env_12 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_12, HostScheduler.create(), false);

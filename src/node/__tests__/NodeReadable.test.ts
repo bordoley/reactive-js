@@ -18,10 +18,10 @@ import {
   pipeAsync,
   returns,
 } from "../../functions.js";
+import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-import * as Queue from "../../utils/Queue.js";
 import {
   DisposableLike_isDisposed,
   PauseableLike_pause,
@@ -80,7 +80,7 @@ testModule(
         Disposable.addTo(scheduler),
       );
 
-      const queue = Queue.createDropOldestWithoutBackpressure<string>(1, {
+      const queue = Consumer.createDropOldestWithoutBackpressure<string>(1, {
         autoDispose: true,
       });
       pipe(

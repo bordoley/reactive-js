@@ -3,7 +3,7 @@ import {
   SynchronousObservableLike,
 } from "../../../computations.js";
 import { Function1, invoke, isSome, pipe, raise } from "../../../functions.js";
-import * as Queue from "../../../utils/Queue.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
 import {
   DisposableLike_error,
@@ -18,7 +18,7 @@ const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =
   }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>> =>
   observable => {
     using vts = VirtualTimeScheduler.create(options);
-    const queue = Queue.create<T>({ autoDispose: true });
+    const queue = Consumer.create<T>({ autoDispose: true });
 
     pipe(
       observable,

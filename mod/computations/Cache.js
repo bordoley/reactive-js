@@ -13,7 +13,7 @@ import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
 import DelegatingConsumerMixin from "../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, SchedulerLike_schedule, } from "../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, QueueLike_enqueue, SchedulerLike_schedule, } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as ConsumerObservable from "./__internal__/ConsumerObservable.js";
@@ -32,7 +32,7 @@ export const create = /*@__PURE__*/ (() => {
         const consumer = ConsumerObservable.create(options);
         const store = newInstance(Map);
         const subscriptions = newInstance(Map);
-        const cleanupQueue = pipe(Queue.create(), Disposable.addTo(consumer));
+        const cleanupQueue = Queue.create();
         const cleanupContinuation = (ctx) => {
             while (store[Map_size] > maxEntries) {
                 const key = cleanupQueue[QueueLike_dequeue]();
@@ -87,7 +87,7 @@ export const create = /*@__PURE__*/ (() => {
             if (isNone(this[CacheStream_store][Map_get](key))) {
                 return;
             }
-            cleanupQueue[EventListenerLike_notify](key);
+            cleanupQueue[QueueLike_enqueue](key);
             if (!cleanupJob[DisposableLike_isDisposed]) {
                 return;
             }

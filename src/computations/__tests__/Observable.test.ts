@@ -364,8 +364,7 @@ testModule(
       subject[EventListenerLike_notify](200);
       subject[EventListenerLike_notify](100);
 
-
-      const subjectObs = pipe( subject, Broadcaster.toObservable())
+      const subjectObs = pipe(subject, Broadcaster.toObservable());
 
       await pipeAsync(
         Observable.computeDeferred(

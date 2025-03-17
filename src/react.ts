@@ -70,10 +70,7 @@ interface ReactModule {
   }): React.ReactNode;
 
   createComponent<TProps>(
-    fn: Function1<
-      BroadcasterLike<TProps>,
-      ObservableLike<ReactElement>
-    >,
+    fn: Function1<BroadcasterLike<TProps>, ObservableLike<ReactElement>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
     },

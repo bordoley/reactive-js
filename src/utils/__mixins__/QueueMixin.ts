@@ -1,8 +1,4 @@
-import {
-  Array,
-  Array_length,
-  MAX_SAFE_INTEGER,
-} from "../../__internal__/constants.js";
+import { Array, Array_length } from "../../__internal__/constants.js";
 import {
   Mixin1,
   Mutable,
@@ -10,90 +6,44 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import EventSource_addEventHandler from "../../computations/EventSource/__private__/EventSource.addEventHandler.js";
-import * as Publisher from "../../computations/Publisher.js";
-import { PublisherLike } from "../../computations.js";
 import {
   Comparator,
   Optional,
-  SideEffect1,
   isSome,
   newInstance,
   none,
-  pipe,
-  raiseError,
   returns,
 } from "../../functions.js";
-import { clampPositiveInteger, floor } from "../../math.js";
+import { floor } from "../../math.js";
 import {
-  BackPressureError,
-  BackpressureStrategy,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
-  DisposableLike,
-  DisposableLike_dispose,
-  DropLatestBackpressureStrategy,
-  DropOldestBackpressureStrategy,
-  EventListenerLike_notify,
-  OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   QueueLike_head,
-  SinkLike_complete,
-  SinkLike_isCompleted,
-  ThrowBackpressureStrategy,
 } from "../../utils.js";
-import * as Disposable from "../Disposable.js";
 
 const QueueMixin: <T>() => Mixin1<
   QueueLike<T>,
   Optional<{
-    autoDispose?: boolean;
-    capacity?: number;
     comparator?: Comparator<T>;
-    backpressureStrategy?: BackpressureStrategy;
   }>,
-  DisposableLike,
-  Pick<
-    QueueLike<T>,
-    | typeof QueueLike_head
-    | typeof ConsumerLike_isReady
-    | typeof ConsumerLike_capacity
-    | typeof ConsumerLike_backpressureStrategy
-    | typeof QueueLike_dequeue
-    | typeof Symbol.iterator
-    | typeof EventListenerLike_notify
-    | typeof SinkLike_complete
-  >
+  unknown,
+  Omit<QueueLike<T>, typeof QueueLike_count>
 > = /*@__PURE__*/ (<T>() => {
-  const QueueMixin_autoDispose = Symbol("QueueMixin_autoDispose");
   const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
   const QueueMixin_head = Symbol("QueueMixin_head");
   const QueueMixin_tail = Symbol("QueueMixin_tail");
   const QueueMixin_values = Symbol("QueueMixin_values");
   const QueueMixin_comparator = Symbol("QueueMixin_comparator");
-  const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
-  const QueueMixin_backpressureStrategy = Symbol(
-    "QueueMixin_backpressureStrategy",
-  );
-  const QueueMixin_capacity = Symbol("QueueMixin_capacity");
-  const QueueMixin_isCompleted = Symbol("QueueMixin_isCompleted");
 
   type TProperties = {
-    [QueueMixin_autoDispose]: boolean;
     [QueueLike_count]: number;
-    [QueueMixin_backpressureStrategy]: BackpressureStrategy;
-    [QueueMixin_capacity]: number;
     [QueueMixin_head]: number;
     [QueueMixin_tail]: number;
     [QueueMixin_capacityMask]: number;
     [QueueMixin_values]: Optional<Optional<T>[] | T>;
     readonly [QueueMixin_comparator]: Optional<Comparator<T>>;
-    [QueueMixin_isCompleted]: boolean;
-    [QueueMixin_onReadyPublisher]: Optional<PublisherLike<void>>;
   };
 
   const computeIndex = (
@@ -138,80 +88,27 @@ const QueueMixin: <T>() => Mixin1<
   };
 
   return returns(
-    mix<
-      QueueLike<T>,
-      TProperties,
-      Pick<
-        QueueLike<T>,
-        | typeof SinkLike_isCompleted
-        | typeof QueueLike_head
-        | typeof ConsumerLike_isReady
-        | typeof QueueLike_dequeue
-        | typeof Symbol.iterator
-        | typeof EventListenerLike_notify
-        | typeof SinkLike_complete
-        | typeof ConsumerLike_addOnReadyListener
-        | typeof ConsumerLike_capacity
-        | typeof ConsumerLike_backpressureStrategy
-      >,
-      DisposableLike,
-      Optional<{
-        autoDispose?: boolean;
-        capacity?: number;
-        comparator?: Comparator<T>;
-        backpressureStrategy?: BackpressureStrategy;
-      }>
-    >(
+    mix(
       function QueueMixin(
-        this: Omit<QueueLike<T>, typeof QueueLike_count> & Mutable<TProperties>,
+        this: QueueLike<T> & Mutable<TProperties>,
         config: Optional<{
-          autoDispose?: boolean;
-          capacity?: number;
           comparator?: Comparator<T>;
-          backpressureStrategy?: BackpressureStrategy;
         }>,
       ): QueueLike<T> {
-        this[QueueMixin_backpressureStrategy] =
-          config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        this[QueueMixin_capacity] = clampPositiveInteger(
-          config?.capacity ?? MAX_SAFE_INTEGER,
-        );
-        this[QueueMixin_autoDispose] = config?.autoDispose ?? false;
-
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
 
         return this;
       },
       props<TProperties>({
-        [QueueMixin_autoDispose]: false,
         [QueueLike_count]: 0,
-        [QueueMixin_backpressureStrategy]: OverflowBackpressureStrategy,
-        [QueueMixin_capacity]: MAX_SAFE_INTEGER,
         [QueueMixin_head]: 0,
         [QueueMixin_tail]: 0,
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-        [QueueMixin_isCompleted]: false,
-        [QueueMixin_onReadyPublisher]: none,
       }),
       {
-        get [SinkLike_isCompleted]() {
-          unsafeCast<TProperties>(this);
-          return this[QueueMixin_isCompleted];
-        },
-
-        get [ConsumerLike_capacity]() {
-          unsafeCast<TProperties>(this);
-          return this[QueueMixin_capacity];
-        },
-
-        get [ConsumerLike_backpressureStrategy]() {
-          unsafeCast<TProperties>(this);
-          return this[QueueMixin_backpressureStrategy];
-        },
-
         get [QueueLike_head]() {
           unsafeCast<TProperties>(this);
           const count = this[QueueLike_count];
@@ -233,29 +130,14 @@ const QueueMixin: <T>() => Mixin1<
           return head === tail ? none : values[index];
         },*/
 
-        get [ConsumerLike_isReady]() {
-          unsafeCast<TProperties & QueueLike<T>>(this);
-          const count = this[QueueLike_count];
-          const capacity = this[QueueMixin_capacity];
-          const isCompleted = this[SinkLike_isCompleted];
-
-          return !isCompleted && count < capacity;
-        },
-
         [QueueLike_dequeue](this: TProperties & QueueLike<T>) {
           const count = this[QueueLike_count];
           const values = this[QueueMixin_values];
-          const capacity = this[QueueMixin_capacity];
-          const isCompleted = this[SinkLike_isCompleted];
-          const shouldNotifyReady = count === capacity && !isCompleted;
-          const onReadySignal = this[QueueMixin_onReadyPublisher];
 
           if (count <= 1) {
             const item = this[QueueMixin_values] as Optional<T>;
             this[QueueLike_count] = 0;
             this[QueueMixin_values] = none;
-
-            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
             return item;
           }
@@ -273,8 +155,6 @@ const QueueMixin: <T>() => Mixin1<
           if (newCount === 1) {
             const newHead = (head + 1) & capacityMask;
             this[QueueMixin_values] = values[newHead];
-
-            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
             return item;
           }
@@ -363,8 +243,6 @@ const QueueMixin: <T>() => Mixin1<
 
           this[QueueMixin_capacityMask] = newCapacityMask;
 
-          shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
-
           return item;
         },
 
@@ -392,36 +270,7 @@ const QueueMixin: <T>() => Mixin1<
           }
         },
 
-        [EventListenerLike_notify](this: TProperties & QueueLike<T>, item: T) {
-          const backpressureStrategy = this[QueueMixin_backpressureStrategy];
-          const capacity = this[QueueMixin_capacity];
-          const applyBackpressure = this[QueueLike_count] >= capacity;
-          const isCompleted = this[SinkLike_isCompleted];
-
-          if (
-            isCompleted ||
-            (backpressureStrategy === DropLatestBackpressureStrategy &&
-              applyBackpressure) ||
-            // Special case the 0 capacity queue so that we don't fall through
-            // to pushing an item onto the queue
-            (backpressureStrategy === DropOldestBackpressureStrategy &&
-              capacity === 0)
-          ) {
-            return;
-          } else if (
-            backpressureStrategy === DropOldestBackpressureStrategy &&
-            applyBackpressure
-          ) {
-            // We want to pop off the oldest value first, before enqueueing
-            // to avoid unintentionally growing the queue.
-            this[QueueLike_dequeue]();
-          } else if (
-            backpressureStrategy === ThrowBackpressureStrategy &&
-            applyBackpressure
-          ) {
-            raiseError(newInstance(BackPressureError, this));
-          }
-
+        [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
           // Assign these after applying backpressure because backpressure
           // can mutate the state of the queue.
           const newCount = ++this[QueueLike_count];
@@ -499,39 +348,6 @@ const QueueMixin: <T>() => Mixin1<
           }
 
           this[QueueMixin_capacityMask] = newCapacityMask;
-        },
-
-        [SinkLike_complete](this: TProperties & DisposableLike) {
-          this[QueueMixin_isCompleted] = true;
-
-          this[QueueMixin_onReadyPublisher]?.[DisposableLike_dispose]();
-          this[QueueMixin_onReadyPublisher] = none;
-
-          if (this[QueueMixin_autoDispose]) {
-            this[DisposableLike_dispose]();
-          }
-        },
-
-        [ConsumerLike_addOnReadyListener](
-          this: TProperties & DisposableLike,
-          callback: SideEffect1<void>,
-        ) {
-          const publisher =
-            this[QueueMixin_onReadyPublisher] ??
-            (() => {
-              const publisher = pipe(
-                Publisher.create<void>(),
-                Disposable.addTo(this),
-              );
-              this[QueueMixin_onReadyPublisher] = publisher;
-              return publisher;
-            })();
-
-          return pipe(
-            publisher,
-            EventSource_addEventHandler(callback),
-            Disposable.addTo(this),
-          );
         },
       },
     ),

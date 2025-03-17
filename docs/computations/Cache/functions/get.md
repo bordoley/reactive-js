@@ -6,7 +6,7 @@
 
 # Function: get()
 
-> **get**\<`T`\>(`cache`, `key`): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+> **get**\<`T`\>(`cache`, `key`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>

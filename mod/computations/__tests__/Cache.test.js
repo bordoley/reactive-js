@@ -62,6 +62,7 @@ import { bindMethod, none, pipe, tuple, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import * as Broadcaster from "../Broadcaster.js";
 testModule("Cache", describe("inMemory", test("it publishes none on subscribe when the key is missing", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
@@ -70,7 +71,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
         const result = [];
         pipe([
             tuple(2, () => {
-                pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+                pipe(Cache.get(cache, "abc"), Broadcaster.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
             }),
         ], ReadonlyArray.forEach(([time, f]) => {
             vts[SchedulerLike_schedule](f, { delay: time });
@@ -95,7 +96,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
             tuple(0, () => Cache.set(cache, "abc", 1)),
             tuple(1, () => Cache.removeMany(cache, ["abc"])),
             tuple(2, () => {
-                pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
+                pipe(Cache.get(cache, "abc"), Broadcaster.toObservable(), Observable.forEach(bindMethod(result, Array_push)), Observable.subscribe(vts));
             }),
             tuple(3, () => Cache.set(cache, "abc", 2)),
             tuple(4, () => Cache.remove(cache, "abc")),
@@ -118,7 +119,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
         const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const cache = Cache.create(vts);
         const result1 = [];
-        const abcSubscription1 = pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
+        const abcSubscription1 = pipe(Cache.get(cache, "abc"), Broadcaster.toObservable(), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
         const result2 = [];
         let abcSubscription2 = Disposable.disposed;
         const result3 = [];
@@ -126,7 +127,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
         pipe([
             tuple(1, () => Cache.set(cache, "abc", 1)),
             tuple(3, () => {
-                abcSubscription2 = pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result2, Array_push)), Observable.subscribe(vts));
+                abcSubscription2 = pipe(Cache.get(cache, "abc"), Broadcaster.toObservable(), Observable.forEach(bindMethod(result2, Array_push)), Observable.subscribe(vts));
             }),
             tuple(5, () => Cache.set(cache, "abc", 2)),
             tuple(7, () => {
@@ -139,7 +140,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
             }),
             tuple(15, () => Cache.set(cache, "abc", 3)),
             tuple(17, () => {
-                abcSubscription3 = pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result3, Array_push)), Observable.subscribe(vts));
+                abcSubscription3 = pipe(Cache.get(cache, "abc"), Broadcaster.toObservable(), Observable.forEach(bindMethod(result3, Array_push)), Observable.subscribe(vts));
             }),
             tuple(19, () => {
                 abcSubscription3[DisposableLike_dispose]();
@@ -182,7 +183,7 @@ testModule("Cache", describe("inMemory", test("it publishes none on subscribe wh
         const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
         const cache = Cache.create(vts, { persistentStore, maxEntries: 1 });
         const result1 = [];
-        pipe(Cache.get(cache, "abc"), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
+        pipe(Cache.get(cache, "abc"), Broadcaster.toObservable(), Observable.forEach(bindMethod(result1, Array_push)), Observable.subscribe(vts));
         pipe([[2, () => Cache.setMany(cache, { abc: 4, hgi: 6 })]], ReadonlyArray.forEach(([time, f]) => {
             vts[SchedulerLike_schedule](f, { delay: time });
         }));

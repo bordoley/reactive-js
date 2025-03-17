@@ -65,9 +65,17 @@ testModule(
 
       const subject = Subject.create({ autoDispose: true });
       pipe(subject[DisposableLike_isDisposed], expectFalse());
-      const sub1 = pipe(subject,  Broadcaster.toObservable(),  Observable.subscribe(vts));
+      const sub1 = pipe(
+        subject,
+        Broadcaster.toObservable(),
+        Observable.subscribe(vts),
+      );
       pipe(subject[DisposableLike_isDisposed], expectFalse());
-      const sub2 = pipe(subject, Broadcaster.toObservable(), Observable.subscribe(vts));
+      const sub2 = pipe(
+        subject,
+        Broadcaster.toObservable(),
+        Observable.subscribe(vts),
+      );
       pipe(subject[DisposableLike_isDisposed], expectFalse());
       const sub3 = pipe(
         Observable.create(observer => {
@@ -137,7 +145,11 @@ testModule(
       const e = new Error();
       subject[DisposableLike_dispose](e);
 
-      const subscription = pipe(subject,  Broadcaster.toObservable(), Observable.subscribe(vts));
+      const subscription = pipe(
+        subject,
+        Broadcaster.toObservable(),
+        Observable.subscribe(vts),
+      );
 
       vts[VirtualTimeSchedulerLike_run]();
 

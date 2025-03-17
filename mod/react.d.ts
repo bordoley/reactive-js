@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import * as Cache from "./computations/Cache.js";
-import { DeferredObservableLike, EventSourceLike, MulticastObservableLike, ObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
+import { BroadcasterLike, DeferredObservableLike, EventSourceLike, ObservableLike, StoreLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Function1, Optional, SideEffect } from "./functions.js";
 import { BackpressureStrategy, DisposableLike, PauseableLike, SinkLike } from "./utils.js";
 interface ReactModule {
@@ -17,7 +17,7 @@ interface ReactModule {
         };
         readonly children: React.ReactNode;
     }): React.ReactNode;
-    createComponent<TProps>(fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>, options?: {
+    createComponent<TProps>(fn: Function1<BroadcasterLike<TProps>, ObservableLike<ReactElement>>, options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
     }): Function1<TProps, React.ReactNode>;
     useSink<TReq>(sink: Optional<SinkLike<TReq>>): {

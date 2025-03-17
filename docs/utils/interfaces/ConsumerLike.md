@@ -17,7 +17,6 @@ be consumed.
 
 - [`CacheLike`](../../computations/Cache/interfaces/CacheLike.md)
 - [`StreamLike`](../../computations/interfaces/StreamLike.md)
-- [`QueueLike`](QueueLike.md)
 - [`ObserverLike`](ObserverLike.md)
 
 ## Type Parameters

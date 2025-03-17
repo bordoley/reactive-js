@@ -148,19 +148,24 @@ export interface ConsumerLike<T = unknown> extends SinkLike<T> {
   ): DisposableLike;
 }
 
+export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
 export const QueueLike_count = Symbol("QueueLike_count");
 
+// FIXME: Need a few interfaces here. A consumer only view of a queue (eg. no enqueu method)
+// add a consumer that is a read/consume only view.
+
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends ConsumerLike<T>, Iterable<T> {
+export interface QueueLike<T = unknown> extends Iterable<T> {
   readonly [QueueLike_count]: number;
 
   readonly [QueueLike_head]: Optional<T>;
 
   [QueueLike_dequeue](): Optional<T>;
+  [QueueLike_enqueue](v: T): void;
 }
 
 /**

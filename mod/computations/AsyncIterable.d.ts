@@ -1,6 +1,6 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PauseableEventSourceLike, PauseableObservableLike, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PauseableEventSourceLike, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { DisposableLike, SchedulerLike } from "../utils.js";
+import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -13,9 +13,6 @@ export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
     toEventSource<T>(): Function1<AsyncIterableLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
-    toPauseableObservable<T>(scheduler: SchedulerLike, options?: {
-        readonly replay?: number;
-    }): Function1<AsyncIterableLike<T>, PauseableObservableLike<T> & DisposableLike>;
 }
 export type Signature = AsyncIterableModule;
 export declare const catchError: Signature["catchError"];
@@ -44,6 +41,5 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toEventSource: Signature["toEventSource"];
-export declare const toPauseableObservable: Signature["toPauseableObservable"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const zip: Signature["zip"];

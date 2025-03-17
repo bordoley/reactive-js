@@ -3,8 +3,8 @@
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../computations.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
+import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, EventListenerLike_notify, QueueLike_dequeue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
@@ -15,7 +15,7 @@ export const create = (() => {
     return mixInstanceFactory(include(DisposableMixin), function ConsumerObservable(config) {
         init(DisposableMixin, this);
         const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
-        const queue = pipe(Queue.create(config), Disposable.addTo(this));
+        const queue = pipe(Consumer.create(config), Disposable.addTo(this));
         this[ConsumerObservable_delegate] = queue;
         this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
         pipe(queue[ConsumerLike_addOnReadyListener](bindMethod(onReadyPublisher, EventListenerLike_notify)), Disposable.addTo(this));

@@ -9,5 +9,5 @@
 ## Functions
 
 - [create](functions/create.md)
-- [createDropOldestWithoutBackpressure](functions/createDropOldestWithoutBackpressure.md)
+- [createDropOldest](functions/createDropOldest.md)
 - [createSorted](functions/createSorted.md)

@@ -50,6 +50,7 @@
 - [PauseableLike\_resume](variables/PauseableLike_resume.md)
 - [QueueLike\_count](variables/QueueLike_count.md)
 - [QueueLike\_dequeue](variables/QueueLike_dequeue.md)
+- [QueueLike\_enqueue](variables/QueueLike_enqueue.md)
 - [QueueLike\_head](variables/QueueLike_head.md)
 - [SchedulerLike\_inContinuation](variables/SchedulerLike_inContinuation.md)
 - [SchedulerLike\_maxYieldInterval](variables/SchedulerLike_maxYieldInterval.md)

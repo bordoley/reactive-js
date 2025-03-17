@@ -10,9 +10,7 @@ import {
   Computation_pureDeferredOfT,
 } from "../../computations.js";
 import { error, pipe, pipeLazy, pipeLazyAsync } from "../../functions.js";
-import {
-  PauseableLike_resume,
-} from "../../utils.js";
+import { PauseableLike_resume } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";

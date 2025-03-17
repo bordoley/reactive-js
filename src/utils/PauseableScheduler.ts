@@ -17,13 +17,13 @@ import {
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_isDisposed,
-  EventListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableSchedulerLike,
   QueueLike,
   QueueLike_dequeue,
+  QueueLike_enqueue,
   QueueLike_head,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -277,7 +277,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           QueueLike<SchedulerContinuationLike>,
         continuation: SchedulerContinuationLike,
       ) {
-        this[EventListenerLike_notify](continuation);
+        this[QueueLike_enqueue](continuation);
 
         scheduleOnHost(this);
       },

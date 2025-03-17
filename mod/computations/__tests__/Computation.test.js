@@ -1,14 +1,13 @@
 /// <reference types="./Computation.test.d.ts" />
 
 import { describe, expectArrayEquals, expectFalse, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
-import { ComputationLike_isPure, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
+import { ComputationLike_isPure, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
 import { ignore, isSome, none, pick, pipe, pipeLazy, pipeLazyAsync, } from "../../functions.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
 import * as Observable from "../Observable.js";
-import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
@@ -18,7 +17,6 @@ const ObservableTypes = {
     [Computation_synchronousWithSideEffectsOfT]: pipe(Observable.empty(), Observable.forEach(ignore)),
     [Computation_pureDeferredOfT]: pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create())),
     [Computation_deferredWithSideEffectsOfT]: pipe(Observable.empty(), Observable.subscribeOn(HostScheduler.create()), Observable.forEach(ignore)),
-    [Computation_multicastOfT]: Observable.never(),
 };
 testModule("Computation", describe("concatMany", test("concats the input containers in order", pipeLazy(Computation.concatMany(Iterable)([
     [1, 2, 3],
@@ -48,7 +46,7 @@ testModule("Computation", describe("concatMany", test("concats the input contain
     ["a", "b"],
     ["c", "d"],
     ["e", "f"],
-], Computation.mapTo(Iterable)(2), Iterable.toReadonlyArray(), expectArrayEquals([2, 2, 2])))), describe("mergeWith", StatefulSynchronousComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(Observable.empty(), Observable.empty())), ComputationOperatorWithSideEffectsTests(ObservableTypes, Computation.mergeWith(Observable)(pipe(Observable.empty(), Observable.forEach(ignore)), Observable.empty())), StatefulAsynchronousComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(ObservableTypes[Computation_pureDeferredOfT], Observable.empty())), AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(ObservableTypes[Computation_deferredWithSideEffectsOfT], Observable.empty())), ComputationTest.isMulticasted(pipe(ObservableTypes[Computation_multicastOfT], Computation.mergeWith(Observable)(ObservableTypes[Computation_multicastOfT])))), describe("pick", test("with object and symbol keys", () => {
+], Computation.mapTo(Iterable)(2), Iterable.toReadonlyArray(), expectArrayEquals([2, 2, 2])))), describe("mergeWith", StatefulSynchronousComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(Observable.empty(), Observable.empty())), ComputationOperatorWithSideEffectsTests(ObservableTypes, Computation.mergeWith(Observable)(pipe(Observable.empty(), Observable.forEach(ignore)), Observable.empty())), StatefulAsynchronousComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(ObservableTypes[Computation_pureDeferredOfT], Observable.empty())), AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests(ObservableTypes, Computation.mergeWith(Observable)(ObservableTypes[Computation_deferredWithSideEffectsOfT], Observable.empty()))), describe("pick", test("with object and symbol keys", () => {
     const keyA = Symbol();
     const keyB = Symbol();
     const obj = {

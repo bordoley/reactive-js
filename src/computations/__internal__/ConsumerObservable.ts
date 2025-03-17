@@ -20,8 +20,8 @@ import {
   none,
   pipe,
 } from "../../functions.js";
+import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as Queue from "../../utils/Queue.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   BackpressureStrategy,
@@ -74,7 +74,7 @@ export const create: <T>(config?: {
       init(DisposableMixin, this);
 
       const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
-      const queue = pipe(Queue.create(config), Disposable.addTo(this));
+      const queue = pipe(Consumer.create(config), Disposable.addTo(this));
 
       this[ConsumerObservable_delegate] = queue;
       this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;

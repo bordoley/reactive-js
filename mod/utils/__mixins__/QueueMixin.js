@@ -1,24 +1,16 @@
 /// <reference types="./QueueMixin.d.ts" />
 
-import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
+import { Array, Array_length } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import EventSource_addEventHandler from "../../computations/EventSource/__private__/EventSource.addEventHandler.js";
-import * as Publisher from "../../computations/Publisher.js";
-import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
-import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_head, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
-import * as Disposable from "../Disposable.js";
+import { isSome, newInstance, none, returns, } from "../../functions.js";
+import { floor } from "../../math.js";
+import { QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, QueueLike_head, } from "../../utils.js";
 const QueueMixin = /*@__PURE__*/ (() => {
-    const QueueMixin_autoDispose = Symbol("QueueMixin_autoDispose");
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
     const QueueMixin_tail = Symbol("QueueMixin_tail");
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
-    const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
-    const QueueMixin_backpressureStrategy = Symbol("QueueMixin_backpressureStrategy");
-    const QueueMixin_capacity = Symbol("QueueMixin_capacity");
-    const QueueMixin_isCompleted = Symbol("QueueMixin_isCompleted");
     const computeIndex = (values, count, head, index) => {
         const valuesLength = values[Array_length];
         const headOffsetIndex = index + head;
@@ -44,38 +36,17 @@ const QueueMixin = /*@__PURE__*/ (() => {
         return dest;
     };
     return returns(mix(function QueueMixin(config) {
-        this[QueueMixin_backpressureStrategy] =
-            config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        this[QueueMixin_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
-        this[QueueMixin_autoDispose] = config?.autoDispose ?? false;
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
         return this;
     }, props({
-        [QueueMixin_autoDispose]: false,
         [QueueLike_count]: 0,
-        [QueueMixin_backpressureStrategy]: OverflowBackpressureStrategy,
-        [QueueMixin_capacity]: MAX_SAFE_INTEGER,
         [QueueMixin_head]: 0,
         [QueueMixin_tail]: 0,
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-        [QueueMixin_isCompleted]: false,
-        [QueueMixin_onReadyPublisher]: none,
     }), {
-        get [SinkLike_isCompleted]() {
-            unsafeCast(this);
-            return this[QueueMixin_isCompleted];
-        },
-        get [ConsumerLike_capacity]() {
-            unsafeCast(this);
-            return this[QueueMixin_capacity];
-        },
-        get [ConsumerLike_backpressureStrategy]() {
-            unsafeCast(this);
-            return this[QueueMixin_backpressureStrategy];
-        },
         get [QueueLike_head]() {
             unsafeCast(this);
             const count = this[QueueLike_count];
@@ -94,25 +65,13 @@ const QueueMixin = /*@__PURE__*/ (() => {
 
           return head === tail ? none : values[index];
         },*/
-        get [ConsumerLike_isReady]() {
-            unsafeCast(this);
-            const count = this[QueueLike_count];
-            const capacity = this[QueueMixin_capacity];
-            const isCompleted = this[SinkLike_isCompleted];
-            return !isCompleted && count < capacity;
-        },
         [QueueLike_dequeue]() {
             const count = this[QueueLike_count];
             const values = this[QueueMixin_values];
-            const capacity = this[QueueMixin_capacity];
-            const isCompleted = this[SinkLike_isCompleted];
-            const shouldNotifyReady = count === capacity && !isCompleted;
-            const onReadySignal = this[QueueMixin_onReadyPublisher];
             if (count <= 1) {
                 const item = this[QueueMixin_values];
                 this[QueueLike_count] = 0;
                 this[QueueMixin_values] = none;
-                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
                 return item;
             }
             unsafeCast(values);
@@ -126,7 +85,6 @@ const QueueMixin = /*@__PURE__*/ (() => {
             if (newCount === 1) {
                 const newHead = (head + 1) & capacityMask;
                 this[QueueMixin_values] = values[newHead];
-                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
                 return item;
             }
             if (isSorted) {
@@ -190,7 +148,6 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
-            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
             return item;
         },
         *[Symbol.iterator]() {
@@ -214,30 +171,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 }
             }
         },
-        [EventListenerLike_notify](item) {
-            const backpressureStrategy = this[QueueMixin_backpressureStrategy];
-            const capacity = this[QueueMixin_capacity];
-            const applyBackpressure = this[QueueLike_count] >= capacity;
-            const isCompleted = this[SinkLike_isCompleted];
-            if (isCompleted ||
-                (backpressureStrategy === DropLatestBackpressureStrategy &&
-                    applyBackpressure) ||
-                // Special case the 0 capacity queue so that we don't fall through
-                // to pushing an item onto the queue
-                (backpressureStrategy === DropOldestBackpressureStrategy &&
-                    capacity === 0)) {
-                return;
-            }
-            else if (backpressureStrategy === DropOldestBackpressureStrategy &&
-                applyBackpressure) {
-                // We want to pop off the oldest value first, before enqueueing
-                // to avoid unintentionally growing the queue.
-                this[QueueLike_dequeue]();
-            }
-            else if (backpressureStrategy === ThrowBackpressureStrategy &&
-                applyBackpressure) {
-                raiseError(newInstance(BackPressureError, this));
-            }
+        [QueueLike_enqueue](item) {
             // Assign these after applying backpressure because backpressure
             // can mutate the state of the queue.
             const newCount = ++this[QueueLike_count];
@@ -290,23 +224,6 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
-        },
-        [SinkLike_complete]() {
-            this[QueueMixin_isCompleted] = true;
-            this[QueueMixin_onReadyPublisher]?.[DisposableLike_dispose]();
-            this[QueueMixin_onReadyPublisher] = none;
-            if (this[QueueMixin_autoDispose]) {
-                this[DisposableLike_dispose]();
-            }
-        },
-        [ConsumerLike_addOnReadyListener](callback) {
-            const publisher = this[QueueMixin_onReadyPublisher] ??
-                (() => {
-                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
-                    this[QueueMixin_onReadyPublisher] = publisher;
-                    return publisher;
-                })();
-            return pipe(publisher, EventSource_addEventHandler(callback), Disposable.addTo(this));
         },
     }));
 })();

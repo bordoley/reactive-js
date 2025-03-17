@@ -10,6 +10,7 @@
 
 - [AsyncIterableLike](interfaces/AsyncIterableLike.md)
 - [AsyncIterableWithSideEffectsLike](interfaces/AsyncIterableWithSideEffectsLike.md)
+- [BroadcasterLike](interfaces/BroadcasterLike.md)
 - [ComputationLike](interfaces/ComputationLike.md)
 - [ComputationModule](interfaces/ComputationModule.md)
 - [ComputationModuleLike](interfaces/ComputationModuleLike.md)
@@ -106,6 +107,7 @@
 
 ## Variables
 
+- [BroadcasterLike\_connect](variables/BroadcasterLike_connect.md)
 - [Computation\_baseOfT](variables/Computation_baseOfT.md)
 - [Computation\_deferredWithSideEffectsOfT](variables/Computation_deferredWithSideEffectsOfT.md)
 - [Computation\_multicastOfT](variables/Computation_multicastOfT.md)

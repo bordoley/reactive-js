@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`EventSourceModule`](../EventSource/interfaces/EventSourceModule.md)
-- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 
 ## Type Parameters
 

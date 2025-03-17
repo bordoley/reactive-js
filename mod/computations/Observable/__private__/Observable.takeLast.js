@@ -4,13 +4,12 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { ObservableLike_observe } from "../../../computations.js";
 import { call, invoke, isSome, none, partial, pipe, } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
-import { EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, } from "../../../utils.js";
+import { QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import Observable_gen from "./Observable.gen.js";
 import Observable_genWithSideEffects from "./Observable.genWithSideEffects.js";
@@ -31,13 +30,13 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeLastObserver(delegate, takeLastCount) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedObserverMixin(), this, delegate, none);
-        this[TakeLastObserver_queue] = pipe(Queue.createDropOldestWithoutBackpressure(takeLastCount), Disposable.addTo(this));
+        this[TakeLastObserver_queue] = Queue.createDropOldest(takeLastCount);
         return this;
     }, props({
         [TakeLastObserver_queue]: none,
     }), proto({
         [LiftedEventListenerLike_notify](next) {
-            this[TakeLastObserver_queue][EventListenerLike_notify](next);
+            this[TakeLastObserver_queue][QueueLike_enqueue](next);
         },
         [LiftedSinkLike_complete]() {
             const count = this[TakeLastObserver_queue][QueueLike_count];

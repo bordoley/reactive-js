@@ -54,9 +54,9 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { ProducerLike_consume } from "../../../computations.js";
 import { invoke, isNone, none, pipe } from "../../../functions.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../../utils/HostScheduler.js";
-import * as Queue from "../../../utils/Queue.js";
 import Observable_toProducer from "./Observable.toProducer.js";
 const Observable_toReadonlyArrayAsync = (options) => async (observable) => {
     const env_1 = { stack: [], error: void 0, hasError: false };
@@ -64,7 +64,7 @@ const Observable_toReadonlyArrayAsync = (options) => async (observable) => {
         let scheduler = options?.scheduler;
         const hostScheduler = __addDisposableResource(env_1, isNone(scheduler) ? HostScheduler.create() : none, false);
         scheduler = scheduler ?? hostScheduler;
-        const queue = Queue.create({ autoDispose: true });
+        const queue = Consumer.create({ autoDispose: true });
         pipe(observable, Observable_toProducer(scheduler), invoke(ProducerLike_consume, queue));
         await DisposableContainer.toPromise(queue);
         return Array.from(queue);

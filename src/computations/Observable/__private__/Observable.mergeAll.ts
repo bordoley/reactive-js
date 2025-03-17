@@ -28,9 +28,9 @@ import {
   clampPositiveInteger,
   clampPositiveNonZeroInteger,
 } from "../../../math.js";
+import * as Consumer from "../../../utils/Consumer.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedConsumerMixin.js";
 import {
@@ -46,6 +46,7 @@ import {
 } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   BackpressureStrategy,
+  ConsumerLike,
   EventListenerLike_notify,
   ObserverLike,
   OverflowBackpressureStrategy,
@@ -79,7 +80,10 @@ const createMergeAllObserverOperator: <T>(options?: {
   type TProperties = {
     [MergeAllObserver_activeCount]: number;
     readonly [MergeAllObserver_concurrency]: number;
-    readonly [MergeAllObserver_observablesQueue]: QueueLike<ObservableLike<T>>;
+    readonly [MergeAllObserver_observablesQueue]: ConsumerLike<
+      ObservableLike<T>
+    > &
+      QueueLike<ObservableLike<T>>;
   };
 
   const subscribeToObservable = (
@@ -141,7 +145,7 @@ const createMergeAllObserverOperator: <T>(options?: {
       init(LiftedObserverMixin<ObservableLike<T>, T>(), this, delegate, none);
 
       this[MergeAllObserver_observablesQueue] = pipe(
-        Queue.create<ObservableLike<T>>({
+        Consumer.create<ObservableLike<T>>({
           capacity,
           backpressureStrategy,
         }),

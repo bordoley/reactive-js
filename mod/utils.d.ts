@@ -100,16 +100,18 @@ export interface ConsumerLike<T = unknown> extends SinkLike<T> {
     readonly [ConsumerLike_capacity]: number;
     [ConsumerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
 }
+export declare const QueueLike_enqueue: unique symbol;
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_dequeue: unique symbol;
 export declare const QueueLike_count: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends ConsumerLike<T>, Iterable<T> {
+export interface QueueLike<T = unknown> extends Iterable<T> {
     readonly [QueueLike_count]: number;
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_dequeue](): Optional<T>;
+    [QueueLike_enqueue](v: T): void;
 }
 /**
  * @noInheritDoc
