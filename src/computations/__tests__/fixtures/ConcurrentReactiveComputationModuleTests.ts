@@ -2,9 +2,7 @@ import { Array_push } from "../../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
-  expectEquals,
   expectToThrow,
-  expectToThrowAsync,
   expectToThrowError,
   test,
   testAsync,
@@ -24,7 +22,6 @@ import {
   ConcurrentReactiveComputationModule,
 } from "../../../computations.js";
 import {
-  Optional,
   Tuple2,
   arrayEquality,
   bind,
@@ -105,24 +102,6 @@ const ConcurrentReactiveComputationModuleTests = <
     ),
     describe(
       "forkMerge",
-      testAsync(
-        "with pure src and inner runnables with side-effects",
-        async () => {
-          using scheduler = HostScheduler.create();
-
-          await pipeAsync(
-            [1, 2, 3],
-            Observable.fromReadonlyArray<number>({ delay: 1 }),
-            m.fromObservable<number>(scheduler),
-            m.forkMerge<number, number>(
-              _ => pipe(Promise.resolve(1), m.fromPromise()),
-              _ => pipe(Promise.resolve(2), m.fromPromise()),
-            ),
-            m.toReadonlyArrayAsync(),
-            expectArrayEquals([1, 2]),
-          );
-        },
-      ),
       test("with pure src and inner runnables with side-effects", () => {
         using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
         const result: number[] = [];
@@ -154,41 +133,6 @@ const ConcurrentReactiveComputationModuleTests = <
 
         pipe(result, expectArrayEquals([1, 2, 3, 4]));
       }),
-    ),
-    describe(
-      "fromPromise",
-      testAsync("when the promise resolves", async () => {
-        using scheduler = HostScheduler.create();
-        const promise = Promise.resolve(1);
-
-        await pipeAsync(
-          promise,
-          m.fromPromise(),
-          m.toObservable<number>(),
-          Observable.lastAsync({ scheduler }),
-          expectEquals<Optional<number>>(1),
-        );
-      }),
-
-      testAsync("when the promise reject", async () => {
-        using scheduler = HostScheduler.create();
-
-        const error = newInstance(Error);
-        const promise = Promise.reject(error);
-
-        await expectToThrowAsync(() =>
-          pipe(
-            promise,
-            m.fromPromise(),
-            m.toObservable(),
-            Observable.lastAsync({ scheduler }),
-          ),
-        );
-      }),
-
-      ComputationTest.isMulticastedAndNotDisposable(
-        pipe(Promise.resolve(true), m.fromPromise()),
-      ),
     ),
     describe(
       "merge",
@@ -354,7 +298,6 @@ const ConcurrentReactiveComputationModuleTests = <
           m.merge(multicastOfT, pureDeferredOfT, deferredWithSideEffectsOfT),
         ),
     ),
-    describe("never", ComputationTest.isMulticasted(m.never())),
     describe(
       "takeUntil",
       test("takes until the notifier notifies its first notification", () => {

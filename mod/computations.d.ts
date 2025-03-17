@@ -310,12 +310,15 @@ export interface SequentialReactiveComputationModule<TComputationType extends Co
         readonly count?: number;
     }): StatefulSynchronousComputationOperator<TComputationType, T, T>;
 }
+export interface MulticastedComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+    fromPromise<T>(): Function1<Promise<T>, MulticastComputationOf<TComputationType, T>>;
+    never<T>(): MulticastComputationOf<TComputationType, T>;
+}
 export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     combineLatest: CombineConstructor<TComputationType>;
     forkMerge: ForkMerge<TComputationType>;
     fromAsyncIterable<T>(): FromAsyncIterableOperator<TComputationType, T>;
     fromObservable: <T>(scheduler: SchedulerLike) => FromObservableOperator<TComputationType, T>;
-    fromPromise<T>(): Function1<Promise<T>, MulticastComputationOf<TComputationType, T>>;
     merge<T>(...computations: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureSynchronousComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly SynchronousComputationOf<TComputationType, T>[]): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
     merge<T>(...computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
@@ -323,7 +326,6 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     merge<T>(...computations: readonly MulticastComputationOf<TComputationType, T>[]): MulticastComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly PureComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly ComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
-    never<T>(): MulticastComputationOf<TComputationType, T>;
     takeUntil<T>(notifier: PureSynchronousComputationOf<TComputationType, unknown>): StatefulSynchronousComputationOperator<TComputationType, T, T>;
     takeUntil<T>(notifier: SynchronousComputationWithSideEffectsOf<TComputationType, unknown>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
     takeUntil<T>(notifier: PureDeferredComputationOf<TComputationType, unknown>): StatefulAsynchronousComputationOperator<TComputationType, T, T>;

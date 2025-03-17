@@ -1281,6 +1281,17 @@ export interface SequentialReactiveComputationModule<
   }): StatefulSynchronousComputationOperator<TComputationType, T, T>;
 }
 
+export interface MulticastedComputationModule<
+  TComputationType extends ComputationType,
+> extends ComputationModuleLike<TComputationType> {
+  fromPromise<T>(): Function1<
+    Promise<T>,
+    MulticastComputationOf<TComputationType, T>
+  >;
+
+  never<T>(): MulticastComputationOf<TComputationType, T>;
+}
+
 export interface ConcurrentReactiveComputationModule<
   TComputationType extends ComputationType,
 > extends ComputationModuleLike<TComputationType> {
@@ -1293,11 +1304,6 @@ export interface ConcurrentReactiveComputationModule<
   fromObservable: <T>(
     scheduler: SchedulerLike,
   ) => FromObservableOperator<TComputationType, T>;
-
-  fromPromise<T>(): Function1<
-    Promise<T>,
-    MulticastComputationOf<TComputationType, T>
-  >;
 
   merge<T>(
     ...computations: readonly PureSynchronousComputationOf<
@@ -1323,8 +1329,6 @@ export interface ConcurrentReactiveComputationModule<
   merge<T>(
     ...computations: readonly ComputationOf<TComputationType, T>[]
   ): DeferredComputationWithSideEffectsOf<TComputationType, T>;
-
-  never<T>(): MulticastComputationOf<TComputationType, T>;
 
   takeUntil<T>(
     notifier: PureSynchronousComputationOf<TComputationType, unknown>,

@@ -90,6 +90,7 @@ import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
+import MulticastedComputationModuleTests from "./fixtures/MulticastComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
@@ -187,6 +188,7 @@ testModule(
   SynchronousComputationModuleTests<Observable.Computation>(Observable),
   ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes),
   ConcurrentDeferredComputationModuleTests(Observable),
+  MulticastedComputationModuleTests(Observable),
   describe(
     "backpressureStrategy",
     test(

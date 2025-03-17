@@ -74,6 +74,7 @@ import * as WritableStore from "../WritableStore.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
+import MulticastedComputationModuleTests from "./fixtures/MulticastComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
@@ -96,7 +97,7 @@ const CombineConstructorTests = (operator) => {
 };
 testModule("Observable", describe("effects", test("calling an effect from outside a computation expression throws", () => {
     expectToThrow(() => __constant(0));
-})), ComputationModuleTests(Observable, ObservableTypes), SequentialComputationModuleTests(Observable, ObservableTypes), SequentialReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
+})), ComputationModuleTests(Observable, ObservableTypes), SequentialComputationModuleTests(Observable, ObservableTypes), SequentialReactiveComputationModuleTests(Observable, ObservableTypes), SynchronousComputationModuleTests(Observable), ConcurrentReactiveComputationModuleTests(Observable, ObservableTypes), ConcurrentDeferredComputationModuleTests(Observable), MulticastedComputationModuleTests(Observable), describe("backpressureStrategy", test("with a capacity of 0", pipeLazy([1, 2, 3, 4], Observable.fromReadonlyArray(), Observable.backpressureStrategy({
     capacity: 0,
     backpressureStrategy: DropLatestBackpressureStrategy,
 }), Observable.backpressureStrategy({

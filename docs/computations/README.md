@@ -28,6 +28,7 @@
 - [IterableLike](interfaces/IterableLike.md)
 - [IterableWithSideEffectsLike](interfaces/IterableWithSideEffectsLike.md)
 - [MulticastComputationLike](interfaces/MulticastComputationLike.md)
+- [MulticastedComputationModule](interfaces/MulticastedComputationModule.md)
 - [MulticastLike](interfaces/MulticastLike.md)
 - [MulticastObservableLike](interfaces/MulticastObservableLike.md)
 - [ObservableLike](interfaces/ObservableLike.md)

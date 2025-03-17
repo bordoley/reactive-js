@@ -17,6 +17,7 @@ import {
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
   MulticastObservableLike,
+  MulticastedComputationModule,
   ObservableLike,
   PauseableEventSourceLike,
   PauseableObservableLike,
@@ -243,7 +244,8 @@ export interface ObservableModule
     >,
     SequentialReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation>,
-    ConcurrentDeferredComputationModule<ObservableComputation> {
+    ConcurrentDeferredComputationModule<ObservableComputation>,
+    MulticastedComputationModule<ObservableComputation> {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,

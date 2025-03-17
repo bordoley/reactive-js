@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike } from "../computations.js";
+import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike, MulticastedComputationModule } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
@@ -12,7 +12,7 @@ export type Computation = EventSourceComputation;
 /**
  * @noInheritDoc
  */
-export interface EventSourceModule extends ComputationModule<EventSourceComputation>, ConcurrentReactiveComputationModule<EventSourceComputation> {
+export interface EventSourceModule extends ComputationModule<EventSourceComputation>, ConcurrentReactiveComputationModule<EventSourceComputation>, MulticastedComputationModule<EventSourceComputation> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;
