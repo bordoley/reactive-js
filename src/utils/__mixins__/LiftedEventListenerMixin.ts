@@ -106,7 +106,7 @@ const LiftedEventListenerMixin: LiftedEventListenerMixinModule =
               LiftedEventListenerLike_delegate
             ] as unknown as LiftedEventListenerLike<TB>;
 
-            delegate[LiftedEventListenerLike_notify](next);
+            delegate[EventListenerLike_notify](next);
           },
 
           [EventListenerLike_notify](

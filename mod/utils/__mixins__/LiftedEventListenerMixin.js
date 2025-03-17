@@ -16,7 +16,7 @@ const LiftedEventListenerMixin =
     }), proto({
         [LiftedEventListenerLike_notifyDelegate](next) {
             const delegate = this[LiftedEventListenerLike_delegate];
-            delegate[LiftedEventListenerLike_notify](next);
+            delegate[EventListenerLike_notify](next);
         },
         [EventListenerLike_notify](next) {
             this[LiftedEventListenerLike_notify](next);
