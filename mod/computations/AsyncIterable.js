@@ -11,7 +11,6 @@ import { ConsumerLike_isReady, DisposableLike_dispose, DisposableLike_isDisposed
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
-import EventSource_fromAsyncIterable from "./EventSource/__private__/EventSource.fromAsyncIterable.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
@@ -420,9 +419,8 @@ class ThrowIfEmptyAsyncIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyAsyncIterable, iter, factory));
-export const toEventSource = EventSource_fromAsyncIterable;
 export const toObservable = Observable_fromAsyncIterable;
-export const toPauseableEventSource = () => (iterable) => PauseableEventSource.create((modeObs) => pipe(EventSource_create((listener) => {
+export const toEventSource = () => (iterable) => PauseableEventSource.create((mode) => pipe(EventSource_create((listener) => {
     const iterator = iterable[Symbol.asyncIterator]();
     let isPaused = true;
     const continuation = async () => {
@@ -442,14 +440,14 @@ export const toPauseableEventSource = () => (iterable) => PauseableEventSource.c
             listener[DisposableLike_dispose](error(e));
         }
     };
-    pipe(modeObs, EventSource_addEventHandler(async (mode) => {
+    pipe(mode, EventSource_addEventHandler((mode) => {
         const wasPaused = isPaused;
         isPaused = mode;
         if (!isPaused && wasPaused) {
-            await continuation();
+            continuation();
         }
     }), Disposable.bindTo(listener));
-}), Disposable.addToContainer(modeObs)));
+}), Disposable.addToContainer(mode)));
 export const toPauseableObservable = (scheduler, options) => (iterable) => PauseableObservable.create((modeObs) => pipe(Observable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];

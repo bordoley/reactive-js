@@ -8,4 +8,5 @@
 
 ## Functions
 
-- [toPauseableEventSource](functions/toPauseableEventSource.md)
+- [toEventSource](functions/toEventSource.md)
+- [toProducer](functions/toProducer.md)

@@ -63,7 +63,7 @@ import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
 import * as PauseableEventSource from "../PauseableEventSource.js";
 import * as Streamable from "../Streamable.js";
-testModule("PauseableEventSource", describe("enqueue", test("a pauseable observable enqueueing into a stream with backpressure", () => {
+testModule("PauseableEventSource", describe("create", test("a pauseable observable enqueueing into a stream with backpressure", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);

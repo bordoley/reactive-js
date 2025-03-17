@@ -28,7 +28,7 @@ import * as Streamable from "../Streamable.js";
 testModule(
   "PauseableEventSource",
   describe(
-    "enqueue",
+    "create",
     test("a pauseable observable enqueueing into a stream with backpressure", () => {
       using vts = VirtualTimeScheduler.create();
 

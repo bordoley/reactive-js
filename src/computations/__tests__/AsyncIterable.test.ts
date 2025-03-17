@@ -55,9 +55,6 @@ testModule(
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
-  ),
-  describe(
-    "toPauseableEventSource",
     testAsync("iterable that completes", async () => {
       const flowed = pipe(
         (async function* foo() {
@@ -66,7 +63,7 @@ testModule(
           yield 3;
         })(),
         AsyncIterable.of(),
-        AsyncIterable.toPauseableEventSource(),
+        AsyncIterable.toEventSource(),
       );
       flowed[PauseableLike_resume]();
 
@@ -84,7 +81,7 @@ testModule(
             throw e;
           })(),
           AsyncIterable.of(),
-          AsyncIterable.toPauseableEventSource(),
+          AsyncIterable.toEventSource(),
         );
         flowed[PauseableLike_resume]();
 

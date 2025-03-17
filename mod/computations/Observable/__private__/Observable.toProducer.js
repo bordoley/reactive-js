@@ -25,7 +25,6 @@ const Observable_toProducer =
             this.o = o;
             this.s = s;
             this[ComputationLike_isPure] = Computation.isPure(o);
-            this[ComputationLike_isDeferred] = Computation.isDeferred(o);
             this[ComputationLike_isSynchronous] = Computation.isSynchronous(o);
         }
         [ProducerLike_consume](consumer) {

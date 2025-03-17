@@ -69,7 +69,6 @@ import {
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
-import EventSource_fromAsyncIterable from "./EventSource/__private__/EventSource.fromAsyncIterable.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
@@ -102,11 +101,6 @@ export interface AsyncIterableModule
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 
   toEventSource<T>(): Function1<
-    AsyncIterableLike<T>,
-    EventSourceLike<T> & DisposableLike
-  >;
-
-  toPauseableEventSource<T>(): Function1<
     AsyncIterableLike<T>,
     PauseableEventSourceLike<T> & DisposableLike
   >;
@@ -712,16 +706,13 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
-export const toEventSource: Signature["toEventSource"] =
-  EventSource_fromAsyncIterable;
-
 export const toObservable: Signature["toObservable"] =
   Observable_fromAsyncIterable as Signature["toObservable"];
 
-export const toPauseableEventSource: Signature["toPauseableEventSource"] =
+export const toEventSource: Signature["toEventSource"] =
   <T>() =>
   (iterable: AsyncIterableLike<T>) =>
-    PauseableEventSource.create<T>((modeObs: EventSourceLike<boolean>) =>
+    PauseableEventSource.create<T>((mode: EventSourceLike<boolean>) =>
       pipe(
         EventSource_create((listener: EventListenerLike<T>) => {
           const iterator = iterable[Symbol.asyncIterator]();
@@ -746,19 +737,19 @@ export const toPauseableEventSource: Signature["toPauseableEventSource"] =
           };
 
           pipe(
-            modeObs,
-            EventSource_addEventHandler(async (mode: boolean) => {
+            mode,
+            EventSource_addEventHandler((mode: boolean) => {
               const wasPaused = isPaused;
               isPaused = mode;
 
               if (!isPaused && wasPaused) {
-                await continuation();
+                continuation();
               }
             }),
             Disposable.bindTo(listener),
           );
         }),
-        Disposable.addToContainer(modeObs),
+        Disposable.addToContainer(mode),
       ),
     );
 

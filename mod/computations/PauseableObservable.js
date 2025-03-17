@@ -34,7 +34,7 @@ class ProducerFromPauseableObservable {
     o;
     s;
     [ComputationLike_isPure] = true;
-    [ComputationLike_isDeferred] = false;
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(o, s) {
         this.o = o;

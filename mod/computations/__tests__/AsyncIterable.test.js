@@ -70,12 +70,12 @@ const AsyncIterableTypes = {
     [Computation_deferredWithSideEffectsOfT]: pipe((async function* () { })(), AsyncIterable.of()),
     [Computation_pureDeferredOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
 };
-testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), SequentialComputationModuleTests(AsyncIterable, AsyncIterableTypes), InteractiveComputationModuleTests(AsyncIterable), ConcurrentDeferredComputationModuleTests(AsyncIterable), describe("toEventSource", testAsync("notifies all the values produced by the iterable", pipeLazyAsync([1, 2, 3, 4], Computation.fromIterable(AsyncIterable), AsyncIterable.toEventSource(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4])))), describe("toPauseableEventSource", testAsync("iterable that completes", async () => {
+testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableTypes), SequentialComputationModuleTests(AsyncIterable, AsyncIterableTypes), InteractiveComputationModuleTests(AsyncIterable), ConcurrentDeferredComputationModuleTests(AsyncIterable), describe("toEventSource", testAsync("notifies all the values produced by the iterable", pipeLazyAsync([1, 2, 3, 4], Computation.fromIterable(AsyncIterable), AsyncIterable.toEventSource(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4]))), testAsync("iterable that completes", async () => {
     const flowed = pipe((async function* foo() {
         yield 1;
         yield 2;
         yield 3;
-    })(), AsyncIterable.of(), AsyncIterable.toPauseableEventSource());
+    })(), AsyncIterable.of(), AsyncIterable.toEventSource());
     flowed[PauseableLike_resume]();
     const result = await pipe(flowed, EventSource.toReadonlyArrayAsync());
     pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -83,7 +83,7 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable, AsyncIterableT
     const e = error();
     const flowed = pipe((async function* foo() {
         throw e;
-    })(), AsyncIterable.of(), AsyncIterable.toPauseableEventSource());
+    })(), AsyncIterable.of(), AsyncIterable.toEventSource());
     flowed[PauseableLike_resume]();
     await pipe(flowed, EventSource.toReadonlyArrayAsync());
 }, expectToThrowAsync))), describe("toPauseableObservable", testAsync("infinite immediately resolving iterable", async () => {

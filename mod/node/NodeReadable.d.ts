@@ -1,9 +1,11 @@
 import { Readable } from "stream";
-import { PauseableEventSourceLike } from "../computations.js";
+import { PauseableEventSourceLike, ProducerWithSideEffectsLike } from "../computations.js";
 import { DisposableLike } from "../utils.js";
 interface NodeReadable {
-    toPauseableEventSource(readable: Readable): PauseableEventSourceLike<Uint8Array> & DisposableLike;
+    toEventSource(readable: Readable): PauseableEventSourceLike<Uint8Array> & DisposableLike;
+    toProducer(readable: Readable): ProducerWithSideEffectsLike<Uint8Array>;
 }
 type Signature = NodeReadable;
-export declare const toPauseableEventSource: Signature["toPauseableEventSource"];
+export declare const toEventSource: Signature["toEventSource"];
+export declare const toProducer: Signature["toProducer"];
 export {};

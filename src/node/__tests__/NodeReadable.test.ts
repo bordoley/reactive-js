@@ -32,7 +32,7 @@ import * as NodeReadable from "../NodeReadable.js";
 testModule(
   "NodeReadable",
   describe(
-    "toPauseableEventSource",
+    "toEventSource",
     testAsync("reading from readable", async () => {
       function* generate() {
         yield Buffer.from("abc", "utf8");
@@ -47,7 +47,7 @@ testModule(
 
       const src = pipe(
         readable,
-        NodeReadable.toPauseableEventSource,
+        NodeReadable.toEventSource,
         Disposable.addTo(scheduler),
       );
 
@@ -76,7 +76,7 @@ testModule(
 
       const src = pipe(
         Readable.from(generate()),
-        NodeReadable.toPauseableEventSource,
+        NodeReadable.toEventSource,
         Disposable.addTo(scheduler),
       );
 
@@ -114,7 +114,7 @@ testModule(
       const src = pipe(
         generate(),
         Readable.from,
-        NodeReadable.toPauseableEventSource,
+        NodeReadable.toEventSource,
         Disposable.addTo(scheduler),
       );
 

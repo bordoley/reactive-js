@@ -12,14 +12,22 @@
 
 ## Extended by
 
-- [`MulticastProducerLike`](MulticastProducerLike.md)
-- [`DeferredProducerLike`](DeferredProducerLike.md)
-- [`PureDeferredProducerLike`](PureDeferredProducerLike.md)
-- [`DeferredProducerWithSideEffectsLike`](DeferredProducerWithSideEffectsLike.md)
+- [`PureProducerLike`](PureProducerLike.md)
+- [`ProducerWithSideEffectsLike`](ProducerWithSideEffectsLike.md)
 
 ## Type Parameters
 
 • **T** = `unknown`
+
+## Properties
+
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+
+#### Overrides
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
 
 ## Methods
 

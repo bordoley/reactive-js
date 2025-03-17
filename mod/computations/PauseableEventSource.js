@@ -16,6 +16,7 @@ export const create = /*@__PURE__*/ (() => {
         const delegate = pipe(writableStore, op);
         init(DelegatingDisposableMixin, this, writableStore);
         init(DelegatingEventSourceMixin(), this, delegate);
+        this[PauseableLike_resume]();
         return this;
     }, props({
         [PauseableLike_isPaused]: none,
@@ -31,7 +32,7 @@ export const create = /*@__PURE__*/ (() => {
 class ProducerFromPauseableEventSource {
     e;
     [ComputationLike_isPure] = true;
-    [ComputationLike_isDeferred] = false;
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(e) {
         this.e = e;

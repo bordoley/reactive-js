@@ -77,6 +77,8 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
       init(DelegatingDisposableMixin, this, writableStore);
       init(DelegatingEventSourceMixin<T>(), this, delegate);
 
+      this[PauseableLike_resume]();
+
       return this;
     },
     props<TProperties>({
@@ -96,7 +98,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
 
 class ProducerFromPauseableEventSource<T> implements ProducerLike<T> {
   public readonly [ComputationLike_isPure] = true;
-  public readonly [ComputationLike_isDeferred] = false;
+  public readonly [ComputationLike_isDeferred] = true;
   public readonly [ComputationLike_isSynchronous] = false;
 
   constructor(private readonly e: PauseableEventSourceLike<T>) {}

@@ -64,7 +64,7 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Queue from "../../utils/Queue.js";
 import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
-testModule("NodeReadable", describe("toPauseableEventSource", testAsync("reading from readable", async () => {
+testModule("NodeReadable", describe("toEventSource", testAsync("reading from readable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         function* generate() {
@@ -75,7 +75,7 @@ testModule("NodeReadable", describe("toPauseableEventSource", testAsync("reading
         const readable = Readable.from(generate(), {
             autoDestroy: false,
         });
-        const src = pipe(readable, NodeReadable.toPauseableEventSource, Disposable.addTo(scheduler));
+        const src = pipe(readable, NodeReadable.toEventSource, Disposable.addTo(scheduler));
         src[PauseableLike_resume]();
         src[PauseableLike_pause]();
         src[PauseableLike_resume]();
@@ -97,7 +97,7 @@ testModule("NodeReadable", describe("toPauseableEventSource", testAsync("reading
             yield Buffer.from("defg", "utf8");
         }
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
-        const src = pipe(Readable.from(generate()), NodeReadable.toPauseableEventSource, Disposable.addTo(scheduler));
+        const src = pipe(Readable.from(generate()), NodeReadable.toEventSource, Disposable.addTo(scheduler));
         const queue = Queue.createDropOldestWithoutBackpressure(1, {
             autoDispose: true,
         });
@@ -123,7 +123,7 @@ testModule("NodeReadable", describe("toPauseableEventSource", testAsync("reading
             throw err;
         }
         const scheduler = __addDisposableResource(env_3, HostScheduler.create(), false);
-        const src = pipe(generate(), Readable.from, NodeReadable.toPauseableEventSource, Disposable.addTo(scheduler));
+        const src = pipe(generate(), Readable.from, NodeReadable.toEventSource, Disposable.addTo(scheduler));
         src[PauseableLike_resume]();
         await pipe(src, Observable.fromEventSource(), Observable.lastAsync({ scheduler }), expectPromiseToThrow);
     }

@@ -15,7 +15,6 @@
 - [`PureDeferredComputationLike`](PureDeferredComputationLike.md)
 - [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
 - [`IterableLike`](IterableLike.md)
-- [`DeferredProducerLike`](DeferredProducerLike.md)
 - [`DeferredObservableLike`](DeferredObservableLike.md)
 - [`AsyncIterableLike`](AsyncIterableLike.md)
 

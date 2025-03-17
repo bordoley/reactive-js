@@ -44,7 +44,6 @@
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toEventSource](functions/toEventSource.md)
 - [toObservable](functions/toObservable.md)
-- [toPauseableEventSource](functions/toPauseableEventSource.md)
 - [toPauseableObservable](functions/toPauseableObservable.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [zip](functions/zip.md)

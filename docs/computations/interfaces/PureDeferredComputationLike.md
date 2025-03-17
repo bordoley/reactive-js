@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`PureDeferredProducerLike`](PureDeferredProducerLike.md)
+- [`PureProducerLike`](PureProducerLike.md)
 
 ## Properties
 

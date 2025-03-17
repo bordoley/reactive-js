@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`DeferredProducerWithSideEffectsLike`](DeferredProducerWithSideEffectsLike.md)
+- [`ProducerWithSideEffectsLike`](ProducerWithSideEffectsLike.md)
 
 ## Properties
 
