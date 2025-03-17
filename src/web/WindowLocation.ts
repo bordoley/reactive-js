@@ -14,7 +14,6 @@ import * as WritableStore from "../computations/WritableStore.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  DeferredObservableLike,
   ObservableLike_observe,
   StoreLike_value,
   StreamLike,
@@ -75,6 +74,10 @@ const ObservableModule = {
   keep: Observable.keep,
   map: Observable.map,
   merge: Observable.merge,
+};
+
+const EventSourceModule = {
+  merge: EventSource.merge,
 };
 
 const serializableWindowLocationPrototype = {
@@ -151,7 +154,7 @@ const createSyncToHistoryStream = (
         f({ title, counter }, "", String(serializableURI));
       }),
     ),
-  )[StreamableLike_stream](scheduler, options);
+  )[StreamableLike_stream](options);
 
 export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const WindowLocation_delegate = Symbol("WindowLocation_delegate");
@@ -301,18 +304,17 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
 
               return { counter, replace: true, uri };
             }),
-            Observable.fromEventSource(),
-            Computation.mergeWith(ObservableModule)(
+            Computation.mergeWith(EventSourceModule)(
               pipe(
                 {
                   counter: 0,
                   replace: true,
                   uri: state.uri,
                 },
-                Observable.fromValue(),
+                EventSource.fromValue(),
               ),
             ),
-            Observable.map<TState, Updater<TState>>(returns),
+            EventSource.map<TState, Updater<TState>>(returns),
           ),
 
         (oldState, state) => {

@@ -36,7 +36,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
   (streamable: StreamableLike<Updater<T>, T>) => ({
     [StreamableLike_stream](scheduler, options) {
       const throttleDuration = syncStateOptions?.throttleDuration ?? 0;
-      const subscriber = streamable[StreamableLike_stream](scheduler, options);
+      const consumer = streamable[StreamableLike_stream](scheduler, options);
 
       pipe(
         subscriber,
@@ -63,7 +63,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           { innerType: DeferredComputationWithSideEffects },
         ),
         Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, subscriber),
+        invoke(ProducerLike_consume, consumer),
       );
 
       return subscriber;

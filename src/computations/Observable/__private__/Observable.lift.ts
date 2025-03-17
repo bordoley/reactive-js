@@ -12,10 +12,9 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationOperatorWithSideEffects,
-  DeferredObservableWithSideEffectsLike,
-  MulticastObservableLike,
   ObservableLike,
   ObservableLike_observe,
+  ObservableWithSideEffectsLike,
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
 } from "../../../computations.js";
@@ -26,7 +25,6 @@ import {
   none,
   pipeUnsafe,
 } from "../../../functions.js";
-import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
@@ -123,25 +121,6 @@ const createLiftedObservable: <TA, TB>(
     }),
   );
 
-  const createMulticastLiftedObservable = mixInstanceFactory(
-    include(LiftedObservableMixin, DelegatingDisposableContainerMixin),
-    function DeferredLiftedObservable(
-      this: Omit<ObservableLike<TB>, typeof ObservableLike_observe>,
-      source: MulticastObservableLike<TA>,
-      ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-    ): LiftedObservableLike<TA, TB> {
-      init(LiftedObservableMixin, this, source, ops);
-      init(DelegatingDisposableContainerMixin, this, source);
-
-      return this;
-    },
-    props(),
-    {
-      [ComputationLike_isDeferred]: false as const,
-      [ComputationLike_isSynchronous]: false as const,
-    },
-  );
-
   return (
     obs: ObservableLike<TA>,
     ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
@@ -151,21 +130,11 @@ const createLiftedObservable: <TA, TB>(
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
-  ) =>
-    Computation.isDeferred(config)
-      ? createDeferredLiftedObservable(obs, ops, config)
-      : createMulticastLiftedObservable(
-          obs as MulticastObservableLike<TA>,
-          ops,
-        );
+  ) => createDeferredLiftedObservable(obs, ops, config);
 })();
-
-export const ObservableLift_isStateless = Symbol("ObservableLift_isStateless");
 
 interface ObservableLift {
   lift(options: {
-    [ObservableLift_isStateless]: true;
-    [ComputationLike_isDeferred]: boolean;
     [ComputationLike_isPure]: true;
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
@@ -173,7 +142,6 @@ interface ObservableLift {
   ) => StatelessComputationOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
-    [ComputationLike_isDeferred]: true;
     [ComputationLike_isPure]: true;
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
@@ -181,7 +149,6 @@ interface ObservableLift {
   ) => StatefulSynchronousComputationOperator<Observable.Computation, TA, TB>;
 
   lift(options: {
-    [ComputationLike_isDeferred]: true;
     [ComputationLike_isPure]: false;
     [ComputationLike_isSynchronous]: true;
   }): <TA, TB>(
@@ -189,16 +156,13 @@ interface ObservableLift {
   ) => ComputationOperatorWithSideEffects<Observable.Computation, TA, TB>;
 
   lift(options: {
-    [ComputationLike_isDeferred]: true;
     [ComputationLike_isPure]: false;
     [ComputationLike_isSynchronous]: false;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
+  ) => Function1<ObservableLike<TA>, ObservableWithSideEffectsLike<TB>>;
 
   lift(options: {
-    [ObservableLift_isStateless]: boolean;
-    [ComputationLike_isDeferred]: boolean;
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
   }): <TA, TB>(
@@ -209,12 +173,8 @@ interface ObservableLift {
 const Observable_lift: ObservableLift["lift"] = ((
     config: Pick<
       ObservableLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
-    > & {
-      [ObservableLift_isStateless]?: boolean;
-    },
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
+    >,
   ) =>
   <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) =>
   (source: ObservableLike<TA>) => {
@@ -224,19 +184,12 @@ const Observable_lift: ObservableLift["lift"] = ((
       ...((source as any)[LiftedObservableLike_operators] ?? []),
     ];
 
-    const isStateless = config[ObservableLift_isStateless] ?? false;
-
-    const isDeferred = !isStateless || Computation.isDeferred(source);
-
     const isSynchronousObservable =
       config[ComputationLike_isSynchronous] &&
-      source[ComputationLike_isSynchronous];
-    const isPure =
-      !isDeferred ||
-      (config[ComputationLike_isPure] && source[ComputationLike_isPure]);
+      Computation.isSynchronous(source);
+    const isPure = Computation.isPure(source) && config[ComputationLike_isPure];
 
     const liftedConfig = {
-      [ComputationLike_isDeferred]: isDeferred,
       [ComputationLike_isPure]: isPure,
       [ComputationLike_isSynchronous]: isSynchronousObservable,
     };

@@ -97,13 +97,13 @@ const createBufferObserver: <T>(
   );
 })();
 
-const Observable_buffer: Observable.Signature["buffer"] = <T>(options?: {
+const Observable_buffer: Observable.Signature["buffer"] = (<T>(options?: {
   count?: number;
 }) =>
   pipe(
     createBufferObserver<T>,
     partial(options?.count),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["buffer"];
 
 export default Observable_buffer;

@@ -51,7 +51,6 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
       animation:
         | Function1<TEvent, PureSynchronousObservableLike<T>>
         | PureSynchronousObservableLike<T>,
-      scheduler: SchedulerLike,
       animationScheduler: SchedulerLike,
       options: Optional<{
         readonly autoDispose?: boolean;
@@ -83,7 +82,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
         },
       );
 
-      init(StreamMixin<TEvent, boolean>(), this, operator, scheduler, options);
+      init(StreamMixin<TEvent, boolean>(), this, operator, options);
 
       init(DelegatingPauseableMixin, this, pauseableScheduler);
 

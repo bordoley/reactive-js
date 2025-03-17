@@ -23,8 +23,8 @@ import * as Computation from "../computations/Computation.js";
 import {
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
-  DeferredObservableLike,
   ObservableLike,
+  ProducerLike,
   SubjectLike,
 } from "../computations.js";
 import {
@@ -64,7 +64,7 @@ import {
 } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
-import * as ConsumerObservable from "./__internal__/ConsumerObservable.js";
+import * as ConsumerProducer from "./__internal__/ConsumerProducer.js";
 
 export const CacheLike_get = Symbol("CacheLike_get");
 
@@ -74,7 +74,7 @@ export const CacheLike_get = Symbol("CacheLike_get");
 export interface CacheLike<T>
   extends ConsumerLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
     DisposableContainerLike {
-  [CacheLike_get](index: string): ObservableLike<T>;
+  [CacheLike_get](index: string): ProducerLike<T>;
 }
 
 interface CacheModule {
@@ -88,12 +88,10 @@ interface CacheModule {
       readonly persistentStore?: {
         load(
           keys: ReadonlySet<string>,
-        ): DeferredObservableLike<
-          Readonly<ReadonlyObjectMapLike<string, Optional<T>>>
-        >;
+        ): ObservableLike<Readonly<ReadonlyObjectMapLike<string, Optional<T>>>>;
         store(
           updates: Readonly<ReadonlyObjectMapLike<string, T>>,
-        ): DeferredObservableLike<void>;
+        ): ObservableLike<void>;
       };
     },
   ): CacheLike<T> & DisposableLike;
@@ -156,12 +154,12 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
         readonly persistentStore?: {
           load(
             keys: ReadonlySet<string>,
-          ): DeferredObservableLike<
+          ): ObservableLike<
             Readonly<ReadonlyObjectMapLike<string, Optional<T>>>
           >;
           store(
             updates: Readonly<ReadonlyObjectMapLike<string, T>>,
-          ): DeferredObservableLike<void>;
+          ): ObservableLike<void>;
         };
       }>,
     ): CacheLike<T> & DisposableLike {
@@ -172,7 +170,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       } = options ?? {};
 
       const consumer =
-        ConsumerObservable.create<
+        ConsumerProducer.create<
           ReadonlyObjectMapLike<string, Updater<Optional<T>>>
         >(options);
 
@@ -364,7 +362,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       [CacheLike_get](
         this: TProperties<T> & CacheLike<T>,
         key: string,
-      ): ObservableLike<T> {
+      ): ProducerLike<T> {
         const {
           [CacheStream_scheduleCleanup]: scheduleCleanup,
           [CacheStream_store]: store,
@@ -408,7 +406,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export const get = <T>(cache: CacheLike<T>, key: string): ObservableLike<T> =>
+export const get = <T>(cache: CacheLike<T>, key: string): ProducerLike<T> =>
   cache[CacheLike_get](key);
 
 export const remove = <T>(cache: CacheLike<T>, key: string) =>

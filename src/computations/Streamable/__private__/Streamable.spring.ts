@@ -8,7 +8,6 @@ import * as Computation from "../../../computations/Computation.js";
 import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
-  DeferredObservableLike,
   PureSynchronousObservableLike,
   StreamableLike,
   StreamableLike_stream,

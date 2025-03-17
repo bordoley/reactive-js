@@ -1,73 +1,37 @@
 import {
-  include,
-  init,
-  mixInstanceFactory,
-  props,
-} from "../__internal__/mixins.js";
-import {
-  ComputationLike_isDeferred,
-  ComputationLike_isPure,
-  ComputationLike_isSynchronous,
+  BroadcasterLike,
   EventSourceLike,
-  MulticastObservableLike,
-  PauseableObservableLike,
+  PauseableBroadcasterLike,
   ProducerLike,
-  ProducerLike_consume,
-  StoreLike_value,
-  WritableStoreLike,
 } from "../computations.js";
-import {
-  Function1,
-  bindMethod,
-  newInstance,
-  none,
-  pipe,
-} from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
-import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import {
-  ConsumerLike,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_isReady,
-  DisposableLike,
-  EventListenerLike_notify,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  SchedulerLike,
-} from "../utils.js";
-import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
-import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
-import * as WritableStore from "./WritableStore.js";
-import DelegatingMulticastObservableMixin from "./__mixins__/DelegatingMulticastObservableMixin.js";
+import { Function1 } from "../functions.js";
+import { DisposableLike } from "../utils.js";
 
-interface PauseableObservableModule {
+export interface PauseableProducerModule {
   create<T>(
-    op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
-  ): PauseableObservableLike<T> & DisposableLike;
+    op: Function1<EventSourceLike<boolean>, BroadcasterLike<T>>,
+  ): PauseableBroadcasterLike<T> & DisposableLike;
 
-  toProducer<T>(
-    scheduler: SchedulerLike,
-  ): Function1<PauseableObservableLike<T>, ProducerLike<T>>;
+  toProducer<T>(): Function1<PauseableBroadcasterLike<T>, ProducerLike<T>>;
 }
 
-export type Signature = PauseableObservableModule;
+export type Signature = PauseableProducerModule;
 
-export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
+export const create: Signature["create"] = null as any; /* (<T>() => {
   type TProperties = {
     [PauseableLike_isPaused]: WritableStoreLike<boolean>;
   };
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, DelegatingMulticastObservableMixin()),
+    include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()),
     function PauseableObservable(
       this: Pick<
-        PauseableObservableLike<T>,
+        PauseableProducerLike<T>,
         typeof PauseableLike_pause | typeof PauseableLike_resume
       > &
         TProperties,
-      op: Function1<EventSourceLike<boolean>, MulticastObservableLike<T>>,
-    ): PauseableObservableLike<T> & DisposableLike {
+      op: Function1<EventSourceLike<boolean>, MulticastProducerLike<T>>,
+    ): PauseableProducerLike<T> & DisposableLike {
       const writableStore = (this[PauseableLike_isPaused] =
         WritableStore.create(true));
 
@@ -75,7 +39,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
       pipe(writableStore, Disposable.addToContainer(observableDelegate));
 
       init(DelegatingDisposableMixin, this, writableStore);
-      init(DelegatingMulticastObservableMixin<T>(), this, observableDelegate);
+      init(DelegatingBroadcasterMixin<T>(), this, observableDelegate);
 
       return this;
     },
@@ -93,14 +57,16 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
     },
   );
 })();
+*/
 
+/*
 class ProducerFromPauseableObservable<T> implements ProducerLike<T> {
   public readonly [ComputationLike_isPure] = true;
   public readonly [ComputationLike_isDeferred] = false;
   public readonly [ComputationLike_isSynchronous] = false;
 
   constructor(
-    private readonly o: PauseableObservableLike<T>,
+    private readonly o: PauseableProducerLike<T>,
     private readonly s: SchedulerLike,
   ) {}
 
@@ -134,5 +100,6 @@ class ProducerFromPauseableObservable<T> implements ProducerLike<T> {
 
 export const toProducer: Signature["toProducer"] =
   <T>(scheduler: SchedulerLike) =>
-  (pauseable: PauseableObservableLike<T>) =>
+  (pauseable: PauseableProducerLike<T>) =>
     newInstance(ProducerFromPauseableObservable, pauseable, scheduler);
+*/

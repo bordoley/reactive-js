@@ -9,12 +9,11 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredObservableWithSideEffectsLike,
   HigherOrderInnerComputationLike,
   ObservableLike,
+  ObservableWithSideEffectsLike,
 } from "../../../computations.js";
 import {
   Function1,
@@ -57,9 +56,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift, {
-  ObservableLift_isStateless,
-} from "./Observable.lift.js";
+import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const createMergeAllObserverOperator: <T>(options?: {
@@ -68,7 +65,7 @@ const createMergeAllObserverOperator: <T>(options?: {
   readonly concurrency?: number;
 }) => Function1<
   ObserverLike<T>,
-  ObserverLike<DeferredObservableWithSideEffectsLike<T>>
+  ObserverLike<ObservableWithSideEffectsLike<T>>
 > = /*@__PURE__*/ (<T>() => {
   const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
   const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
@@ -124,11 +121,11 @@ const createMergeAllObserverOperator: <T>(options?: {
   const createMergeAllObserver = mixInstanceFactory(
     include(
       DelegatingDisposableMixin,
-      LiftedObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
+      LiftedObserverMixin<ObservableWithSideEffectsLike<T>>(),
     ),
     function MergeAllObserver(
       this: Pick<
-        LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>>,
+        LiftedObserverLike<ObservableWithSideEffectsLike<T>>,
         typeof LiftedEventListenerLike_notify
       > &
         Mutable<TProperties>,
@@ -160,8 +157,8 @@ const createMergeAllObserverOperator: <T>(options?: {
     proto({
       [LiftedEventListenerLike_notify](
         this: TProperties &
-          LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>, T>,
-        next: DeferredObservableWithSideEffectsLike<T>,
+          LiftedObserverLike<ObservableWithSideEffectsLike<T>, T>,
+        next: ObservableWithSideEffectsLike<T>,
       ) {
         if (
           this[MergeAllObserver_activeCount] <
@@ -219,10 +216,6 @@ const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
   readonly concurrency?: number;
 }) =>
   Observable_lift({
-    [ObservableLift_isStateless]: false,
-    [ComputationLike_isDeferred]: Computation.isDeferred(
-      options?.innerType ?? {},
-    ),
     [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
     [ComputationLike_isSynchronous]: Computation.isSynchronous(
       options?.innerType ?? {},

@@ -5,7 +5,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   PureSynchronousObservableLike,
@@ -20,9 +19,7 @@ import LiftedObserverMixin, {
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_lift, {
-  ObservableLift_isStateless,
-} from "./Observable.lift.js";
+import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
@@ -56,8 +53,6 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = /*@__PURE__*/ (<
       createTakeUntilObserver,
       partial(notifier),
       Observable_lift({
-        [ObservableLift_isStateless]: Computation.isMulticasted(notifier),
-        [ComputationLike_isDeferred]: !Computation.isMulticasted(notifier),
         [ComputationLike_isPure]: Computation.isPure(notifier),
         [ComputationLike_isSynchronous]: Computation.isSynchronous(notifier),
       }),

@@ -8,7 +8,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   HigherOrderInnerComputationLike,
@@ -41,9 +40,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift, {
-  ObservableLift_isStateless,
-} from "./Observable.lift.js";
+import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const createSwitchAllObserver: <T>(
@@ -134,10 +131,6 @@ const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
   readonly innerType?: HigherOrderInnerComputationLike;
 }) =>
   Observable_lift({
-    [ObservableLift_isStateless]: false,
-    [ComputationLike_isDeferred]: Computation.isDeferred(
-      options?.innerType ?? {},
-    ),
     [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
     [ComputationLike_isSynchronous]: Computation.isSynchronous(
       options?.innerType ?? {},

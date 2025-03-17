@@ -8,9 +8,9 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  ObservableLike_observe,
+  ProducerLike_consume,
   PublisherLike,
-  PureDeferredObservableLike,
+  PureProducerLike,
 } from "../../computations.js";
 import {
   Optional,
@@ -31,8 +31,8 @@ import {
   ConsumerLike_capacity,
   ConsumerLike_isReady,
   DisposableLike,
+  DisposableLike_dispose,
   EventListenerLike_notify,
-  ObserverLike,
   QueueLike,
   QueueLike_dequeue,
   SinkLike_complete,
@@ -41,8 +41,8 @@ import {
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 
-export interface ConsumerObservableLike<out T>
-  extends PureDeferredObservableLike<T>,
+export interface ConsumerProducerLike<out T>
+  extends PureProducerLike<T>,
     ConsumerLike,
     DisposableLike {}
 
@@ -50,34 +50,41 @@ export const create: <T>(config?: {
   autoDispose?: boolean;
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => ConsumerObservableLike<T> = (<T>() => {
-  const ConsumerObservable_delegate = Symbol("ConsumerObservable_delegate");
-  const ConsumerObservable_onReadyPublisher = Symbol(
-    "ConsumerObservable_onReadyPublisher",
+}) => ConsumerProducerLike<T> = (<T>() => {
+  const ConsumerProducer_delegate = Symbol("ConsumerProducer_delegate");
+  const ConsumerProducer_onReadyPublisher = Symbol(
+    "ConsumerProducer_onReadyPublisher",
   );
+  const ConsumerProducer_autoDispose = Symbol("ConsumerProducer_autoDispose");
 
   type TProperties = {
-    [ConsumerObservable_delegate]: ConsumerLike<T>;
-    [ConsumerObservable_onReadyPublisher]: PublisherLike<void>;
+    [ConsumerProducer_delegate]: ConsumerLike<T>;
+    [ConsumerProducer_onReadyPublisher]: PublisherLike<void>;
+    [ConsumerProducer_autoDispose]: boolean;
   };
 
   return mixInstanceFactory(
     include(DisposableMixin),
-    function ConsumerObservable(
-      this: Omit<ConsumerObservableLike<T>, keyof DisposableLike> & TProperties,
+    function ConsumerProducer(
+      this: Omit<ConsumerProducerLike<T>, keyof DisposableLike> & TProperties,
       config: Optional<{
         autoDispose?: boolean;
-        capacity?: number;
-        backpressureStrategy?: BackpressureStrategy;
       }>,
-    ): ConsumerObservableLike<T> {
+    ): ConsumerProducerLike<T> {
       init(DisposableMixin, this);
 
       const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
-      const queue = pipe(Queue.create(config), Disposable.addTo(this));
+      const queue = pipe(
+        Queue.create({
+          ...(config ?? {}),
+          autoDispose: true,
+        }),
+        Disposable.addTo(this),
+      );
 
-      this[ConsumerObservable_delegate] = queue;
-      this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
+      this[ConsumerProducer_delegate] = queue;
+      this[ConsumerProducer_onReadyPublisher] = onReadyPublisher;
+      this[ConsumerProducer_autoDispose] = config?.autoDispose ?? false;
 
       pipe(
         queue[ConsumerLike_addOnReadyListener](
@@ -89,8 +96,9 @@ export const create: <T>(config?: {
       return this;
     },
     props<TProperties>({
-      [ConsumerObservable_delegate]: none,
-      [ConsumerObservable_onReadyPublisher]: none,
+      [ConsumerProducer_delegate]: none,
+      [ConsumerProducer_onReadyPublisher]: none,
+      [ConsumerProducer_autoDispose]: false,
     }),
     {
       [ComputationLike_isDeferred]: true as const,
@@ -98,38 +106,38 @@ export const create: <T>(config?: {
 
       get [ConsumerLike_backpressureStrategy]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][
+        return this[ConsumerProducer_delegate][
           ConsumerLike_backpressureStrategy
         ];
       },
 
       get [ConsumerLike_capacity]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][ConsumerLike_capacity];
+        return this[ConsumerProducer_delegate][ConsumerLike_capacity];
       },
 
       get [ConsumerLike_isReady]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][ConsumerLike_isReady];
+        return this[ConsumerProducer_delegate][ConsumerLike_isReady];
       },
 
       get [SinkLike_isCompleted]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][SinkLike_isCompleted];
+        return this[ConsumerProducer_delegate][SinkLike_isCompleted];
       },
 
-      [ObservableLike_observe](
-        this: ConsumerObservableLike<T> & TProperties,
-        observer: ObserverLike<T>,
+      [ProducerLike_consume](
+        this: ConsumerProducerLike<T> & TProperties,
+        consumer: ConsumerLike<T>,
       ) {
-        const oldDelegate = this[ConsumerObservable_delegate];
-        this[ConsumerObservable_delegate] = observer;
-        pipe(this, Disposable.bindTo(observer));
+        const oldDelegate = this[ConsumerProducer_delegate];
+        this[ConsumerProducer_delegate] = consumer;
+        pipe(this, Disposable.bindTo(consumer));
 
         pipe(
-          observer[ConsumerLike_addOnReadyListener](
+          consumer[ConsumerLike_addOnReadyListener](
             bindMethod(
-              this[ConsumerObservable_onReadyPublisher],
+              this[ConsumerProducer_onReadyPublisher],
               EventListenerLike_notify,
             ),
           ),
@@ -141,23 +149,27 @@ export const create: <T>(config?: {
 
           let v: Optional<T> = none;
           while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
-            observer[EventListenerLike_notify](v);
+            consumer[EventListenerLike_notify](v);
           }
         }
 
         if (oldDelegate[SinkLike_isCompleted]) {
-          observer[SinkLike_complete]();
+          consumer[SinkLike_complete]();
         }
 
         oldDelegate[SinkLike_complete]();
       },
 
       [SinkLike_complete](this: TProperties & DisposableLike) {
-        this[ConsumerObservable_delegate][SinkLike_complete]();
+        this[ConsumerProducer_delegate][SinkLike_complete]();
+
+        if (this[ConsumerProducer_autoDispose]) {
+          this[DisposableLike_dispose]();
+        }
       },
 
       [EventListenerLike_notify](this: TProperties, v: T): void {
-        this[ConsumerObservable_delegate][EventListenerLike_notify](v);
+        this[ConsumerProducer_delegate][EventListenerLike_notify](v);
       },
 
       [ConsumerLike_addOnReadyListener](
@@ -165,7 +177,7 @@ export const create: <T>(config?: {
         callback: SideEffect1<void>,
       ) {
         return pipe(
-          this[ConsumerObservable_onReadyPublisher],
+          this[ConsumerProducer_onReadyPublisher],
           EventSource.addEventHandler(callback),
           Disposable.addTo(this),
         );

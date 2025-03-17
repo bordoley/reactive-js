@@ -5,7 +5,6 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   EventSourceLike,
@@ -96,7 +95,6 @@ export const create: Signature["create"] = /*@__PURE__*/ (<T>() => {
 
 class ProducerFromPauseableEventSource<T> implements ProducerLike<T> {
   public readonly [ComputationLike_isPure] = true;
-  public readonly [ComputationLike_isDeferred] = false;
   public readonly [ComputationLike_isSynchronous] = false;
 
   constructor(private readonly e: PauseableEventSourceLike<T>) {}

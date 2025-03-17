@@ -42,8 +42,8 @@ const Observable_toProducer: Observable.Signature["toProducer"] =
     );
 
     class ProducerFromObservable implements ProducerLike<T> {
+      public readonly [ComputationLike_isDeferred]: true = true as const;
       public readonly [ComputationLike_isPure]?: boolean;
-      public readonly [ComputationLike_isDeferred]?: boolean;
       public readonly [ComputationLike_isSynchronous]?: boolean;
 
       constructor(
@@ -51,7 +51,6 @@ const Observable_toProducer: Observable.Signature["toProducer"] =
         private readonly s: SchedulerLike,
       ) {
         this[ComputationLike_isPure] = Computation.isPure(o);
-        this[ComputationLike_isDeferred] = Computation.isDeferred(o);
         this[ComputationLike_isSynchronous] = Computation.isSynchronous(o);
       }
 

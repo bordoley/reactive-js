@@ -1,6 +1,5 @@
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   HigherOrderInnerComputationLike,
@@ -25,9 +24,7 @@ import {
   SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_lift, {
-  ObservableLift_isStateless,
-} from "./Observable.lift.js";
+import Observable_lift from "./Observable.lift.js";
 
 const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
@@ -56,10 +53,6 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
         }),
       ),
     Observable_lift({
-      [ObservableLift_isStateless]: false,
-      [ComputationLike_isDeferred]: Computation.isDeferred(
-        options?.innerType ?? {},
-      ),
       [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
       [ComputationLike_isSynchronous]: Computation.isSynchronous(
         options?.innerType ?? {},

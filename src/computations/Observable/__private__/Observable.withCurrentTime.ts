@@ -69,7 +69,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
   );
 })();
 
-const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
+const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = (<
   TA,
   TB,
 >(
@@ -79,6 +79,6 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
     createWithCurrentTimeObserver<TA, TB>,
     partial(selector),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["withCurrentTime"];
 
 export default Observable_withCurrentTime;

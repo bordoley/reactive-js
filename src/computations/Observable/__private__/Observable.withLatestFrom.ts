@@ -7,7 +7,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
@@ -39,9 +38,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift, {
-  ObservableLift_isStateless,
-} from "./Observable.lift.js";
+import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const createWithLatestFromObserver: <TA, TB, T>(
@@ -143,8 +140,6 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
     createWithLatestFromObserver,
     partial(other, selector),
     Observable_lift({
-      [ObservableLift_isStateless]: Computation.isMulticasted(other),
-      [ComputationLike_isDeferred]: !Computation.isMulticasted(other),
       [ComputationLike_isPure]: Computation.isPure(other),
       [ComputationLike_isSynchronous]: Computation.isSynchronous(other),
     }),

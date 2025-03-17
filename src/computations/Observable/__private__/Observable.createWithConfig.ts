@@ -6,10 +6,10 @@ import {
 import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredObservableWithSideEffectsLike,
   ObservableLike,
   ObservableLike_observe,
-  PureDeferredObservableLike,
+  ObservableWithSideEffectsLike,
+  PureObservableLike,
   PureSynchronousObservableLike,
   SynchronousObservableWithSideEffectsLike,
 } from "../../../computations.js";
@@ -37,18 +37,18 @@ interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      PureDeferredObservableLike,
+      PureObservableLike,
       typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
-  ): PureDeferredObservableLike<T>;
+  ): PureObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      DeferredObservableWithSideEffectsLike,
+      ObservableWithSideEffectsLike,
       typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
-  ): DeferredObservableWithSideEffectsLike<T>;
+  ): ObservableWithSideEffectsLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
