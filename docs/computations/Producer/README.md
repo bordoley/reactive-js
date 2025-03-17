@@ -17,3 +17,4 @@
 ## Functions
 
 - [create](functions/create.md)
+- [toObservable](functions/toObservable.md)
