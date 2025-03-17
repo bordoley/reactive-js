@@ -1,6 +1,5 @@
 import { Mixin1, mix, props } from "../../../__internal__/mixins.js";
 import { Function1, none, returns } from "../../../functions.js";
-import { EventListenerLike } from "../../../utils.js";
 import {
   LiftedEventListenerLike,
   LiftedEventListenerLike_notify,
@@ -10,11 +9,7 @@ import {
 const MapMixin: <TA, TB>() => Mixin1<
   Pick<LiftedEventListenerLike<TA, TB>, typeof LiftedEventListenerLike_notify>,
   Function1<TA, TB>
-> = /*@__PURE__*/ (<
-  TA,
-  TB,
-  TDelegateEventListener extends EventListenerLike<TB>,
->() => {
+> = /*@__PURE__*/ (<TA, TB>() => {
   const MapMixin_selector = Symbol("MapMixin_selector");
 
   interface TProperties<TA, TB> {
@@ -25,13 +20,13 @@ const MapMixin: <TA, TB>() => Mixin1<
     mix(
       function MapMixin(
         this: Pick<
-          LiftedEventListenerLike<TA, TB, TDelegateEventListener>,
+          LiftedEventListenerLike<TA, TB>,
           typeof LiftedEventListenerLike_notify
         > &
           TProperties<TA, TB>,
         selector: Function1<TA, TB>,
       ): Pick<
-        LiftedEventListenerLike<TA, TB, TDelegateEventListener>,
+        LiftedEventListenerLike<TA, TB>,
         typeof LiftedEventListenerLike_notify
       > {
         this[MapMixin_selector] = selector;
@@ -43,8 +38,7 @@ const MapMixin: <TA, TB>() => Mixin1<
       }),
       {
         [LiftedEventListenerLike_notify](
-          this: TProperties<TA, TB> &
-            LiftedEventListenerLike<TA, TB, TDelegateEventListener>,
+          this: TProperties<TA, TB> & LiftedEventListenerLike<TA, TB>,
           next: TA,
         ) {
           const mapped = this[MapMixin_selector](next);

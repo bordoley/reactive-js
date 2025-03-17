@@ -1,27 +1,17 @@
 /// <reference types="./EventSource.keep.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { EventListenerLike_notify } from "../../../utils.js";
+import KeepMixin from "../../../utils/__mixins__/EventListeners/KeepMixin.js";
+import LiftedEventListenerMixin from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_keep = /*@__PURE__*/ (() => {
-    const KeepEventListener_predicate = Symbol("KeepEventListener_predicate");
-    const KeepEventListener_delegate = Symbol("KeepEventListener_delegate");
-    const createKeepEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin), function KeepEventListener(delegate, predicate) {
+    const createKeepEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedEventListenerMixin(), KeepMixin()), function KeepEventListener(delegate, predicate) {
         init(DelegatingDisposableMixin, this, delegate);
-        this[KeepEventListener_predicate] = predicate;
-        this[KeepEventListener_delegate] = delegate;
+        init(LiftedEventListenerMixin(), this, delegate, none);
+        init(KeepMixin(), this, predicate);
         return this;
-    }, props({
-        [KeepEventListener_predicate]: none,
-        [KeepEventListener_delegate]: none,
-    }), {
-        [EventListenerLike_notify](next) {
-            if (this[KeepEventListener_predicate](next)) {
-                this[KeepEventListener_delegate][EventListenerLike_notify](next);
-            }
-        },
     }))();
     return (predicate) => pipe((createKeepEventListener), partial(predicate), EventSource_lift);
 })();
