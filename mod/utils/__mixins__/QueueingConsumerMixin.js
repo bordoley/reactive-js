@@ -6,7 +6,7 @@ import EventSource_addEventHandler from "../../computations/EventSource/__privat
 import * as Publisher from "../../computations/Publisher.js";
 import { newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger } from "../../math.js";
-import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, CollectionEnumeratorLike_count, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 const QueueingConsumerMixin = /*@__PURE__*/ (() => {
@@ -24,7 +24,7 @@ const QueueingConsumerMixin = /*@__PURE__*/ (() => {
         return this;
     }, props({
         [QueueingConsumerMixin_autoDispose]: false,
-        [QueueLike_count]: 0,
+        [CollectionEnumeratorLike_count]: 0,
         [QueueingConsumerMixin_backpressureStrategy]: OverflowBackpressureStrategy,
         [QueueingConsumerMixin_capacity]: MAX_SAFE_INTEGER,
         [QueueingConsumerMixin_isCompleted]: false,
@@ -44,18 +44,18 @@ const QueueingConsumerMixin = /*@__PURE__*/ (() => {
         },
         get [ConsumerLike_isReady]() {
             unsafeCast(this);
-            const count = this[QueueLike_count];
+            const count = this[CollectionEnumeratorLike_count];
             const capacity = this[QueueingConsumerMixin_capacity];
             const isCompleted = this[SinkLike_isCompleted];
             return !isCompleted && count < capacity;
         },
-        [QueueLike_dequeue]() {
-            const count = this[QueueLike_count];
+        [EnumeratorLike_moveNext]() {
+            const count = this[CollectionEnumeratorLike_count];
             const isCompleted = this[SinkLike_isCompleted];
             const capacity = this[ConsumerLike_capacity];
             const shouldNotifyReady = count === capacity && capacity > 0 && !isCompleted;
             const onReadySignal = this[QueueingConsumerMixin_onReadyPublisher];
-            const result = super_(QueueMixin(), this, QueueLike_dequeue);
+            const result = super_(QueueMixin(), this, EnumeratorLike_moveNext);
             if (shouldNotifyReady) {
                 onReadySignal?.[EventListenerLike_notify]();
             }
@@ -64,7 +64,7 @@ const QueueingConsumerMixin = /*@__PURE__*/ (() => {
         [EventListenerLike_notify](item) {
             const backpressureStrategy = this[QueueingConsumerMixin_backpressureStrategy];
             const capacity = this[QueueingConsumerMixin_capacity];
-            const applyBackpressure = this[QueueLike_count] >= capacity;
+            const applyBackpressure = this[CollectionEnumeratorLike_count] >= capacity;
             const isCompleted = this[SinkLike_isCompleted];
             if (isCompleted ||
                 (backpressureStrategy === DropLatestBackpressureStrategy &&
@@ -79,7 +79,7 @@ const QueueingConsumerMixin = /*@__PURE__*/ (() => {
                 applyBackpressure) {
                 // We want to pop off the oldest value first, before enqueueing
                 // to avoid unintentionally growing the queue.
-                this[QueueLike_dequeue]();
+                this[EnumeratorLike_moveNext]();
             }
             else if (backpressureStrategy === ThrowBackpressureStrategy &&
                 applyBackpressure) {

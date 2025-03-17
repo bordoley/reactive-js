@@ -7,6 +7,7 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
+import * as Iterable from "../computations/Iterable.js";
 import {
   Optional,
   isNone,
@@ -22,10 +23,10 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_dequeue,
   QueueLike_enqueue,
-  QueueLike_head,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -82,13 +83,13 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
     while (true) {
-      continuation = instance[QueueLike_head];
+      continuation = pipe(instance, Iterable.first());
 
       if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
         break;
       }
 
-      instance[QueueLike_dequeue]();
+      instance[EnumeratorLike_moveNext]();
     }
 
     return continuation;
@@ -122,7 +123,8 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         break;
       }
 
-      const continuation = instance[QueueLike_dequeue]();
+      instance[EnumeratorLike_moveNext]();
+      const continuation = instance[EnumeratorLike_current];
 
       instance[HostScheduler_activeContinuation] = continuation;
       continuation?.[SchedulerContinuationLike_run]();

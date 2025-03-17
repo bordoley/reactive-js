@@ -1,10 +1,10 @@
 /// <reference types="./Runnable.takeLast.d.ts" />
 
-import { isSome, newInstance, none } from "../../../functions.js";
+import { newInstance } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
-import { EventListenerLike_notify, QueueLike_dequeue, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import Runnable_lift from "./Runnable.lift.js";
 class TakeLastSink extends AbstractDelegatingDisposableSink {
     sink;
@@ -22,9 +22,8 @@ class TakeLastSink extends AbstractDelegatingDisposableSink {
         this[SinkLike_isCompleted] = true;
         const queue = this.q;
         const sink = this.sink;
-        let v = none;
-        while (((v = queue[QueueLike_dequeue]()),
-            !sink[SinkLike_isCompleted] && isSome(v))) {
+        while (!sink[SinkLike_isCompleted] && queue[EnumeratorLike_moveNext]()) {
+            let v = queue[EnumeratorLike_current];
             sink[EventListenerLike_notify](v);
         }
         sink[SinkLike_complete]();

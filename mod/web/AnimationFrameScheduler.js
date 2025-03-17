@@ -3,13 +3,13 @@
 import * as CurrentTime from "../__internal__/CurrentTime.js";
 import { globalObject } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
-import { invoke, isNone, isSome, none, pipe, pipeLazy, raiseIfNone, } from "../functions.js";
+import { invoke, isNone, none, pipe, pipeLazy, raiseIfNone, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as HostScheduler from "../utils/HostScheduler.js";
 import * as Queue from "../utils/Queue.js";
 import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
 import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
+import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
@@ -21,30 +21,30 @@ export const get = /*@__PURE__*/ (() => {
         const workQueue = animationFrameScheduler[AnimationFrameScheduler_rafQueue];
         animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
         let continuation = none;
-        while (((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))) {
+        while (workQueue[EnumeratorLike_moveNext]()) {
+            continuation = workQueue[EnumeratorLike_current];
             continuation[SchedulerContinuationLike_run]();
             const elapsedTime = CurrentTime.now() - startTime;
             if (elapsedTime > 5 /*ms*/) {
                 break;
             }
         }
-        const continuationsCount = workQueue[QueueLike_count];
+        const continuationsCount = workQueue[CollectionEnumeratorLike_count];
         const newWorkQueue = animationFrameScheduler[AnimationFrameScheduler_rafQueue];
-        const newContinuationsCount = newWorkQueue[QueueLike_count];
+        const newContinuationsCount = newWorkQueue[CollectionEnumeratorLike_count];
         if (continuationsCount > 0 && newContinuationsCount === 0) {
             animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
         }
         else if (continuationsCount > 0) {
             // Merge the job queues copying the newly enqueued jobs
             // onto the original queue.
-            let continuation = none;
-            while (((continuation = newWorkQueue[QueueLike_dequeue]()),
-                isSome(continuation))) {
+            while (newWorkQueue[EnumeratorLike_moveNext]()) {
+                const continuation = newWorkQueue[EnumeratorLike_current];
                 workQueue[QueueLike_enqueue](continuation);
             }
             animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
         }
-        const continuationsQueueCount = animationFrameScheduler[AnimationFrameScheduler_rafQueue][QueueLike_count];
+        const continuationsQueueCount = animationFrameScheduler[AnimationFrameScheduler_rafQueue][CollectionEnumeratorLike_count];
         if (continuationsQueueCount > 0) {
             raf(rafCallback);
         }

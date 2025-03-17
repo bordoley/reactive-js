@@ -46,13 +46,14 @@ import {
 } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   BackpressureStrategy,
+  CollectionEnumeratorLike,
+  CollectionEnumeratorLike_count,
   ConsumerLike,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   ObserverLike,
   OverflowBackpressureStrategy,
-  QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   SchedulerLike_requestYield,
   SinkLike_isCompleted,
 } from "../../../utils.js";
@@ -83,7 +84,7 @@ const createMergeAllObserverOperator: <T>(options?: {
     readonly [MergeAllObserver_observablesQueue]: ConsumerLike<
       ObservableLike<T>
     > &
-      QueueLike<ObservableLike<T>>;
+      CollectionEnumeratorLike<ObservableLike<T>>;
   };
 
   const subscribeToObservable = (
@@ -111,9 +112,10 @@ const createMergeAllObserverOperator: <T>(options?: {
   function onMergeAllObserverInnerObservableComplete(
     this: LiftedObserverLike<ObservableLike<T>, T> & TProperties,
   ) {
+    const queue = this[MergeAllObserver_observablesQueue];
     this[MergeAllObserver_activeCount]--;
-    const nextObs: Optional<ObservableLike<T>> =
-      this[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
+    queue[EnumeratorLike_moveNext]();
+    const nextObs: Optional<ObservableLike<T>> = queue[EnumeratorLike_current];
 
     if (isSome(nextObs)) {
       subscribeToObservable(this, nextObs);
@@ -183,7 +185,9 @@ const createMergeAllObserverOperator: <T>(options?: {
         this: LiftedObserverLike<ObservableLike<T>, T> & TProperties,
       ) {
         if (
-          this[MergeAllObserver_observablesQueue][QueueLike_count] +
+          this[MergeAllObserver_observablesQueue][
+            CollectionEnumeratorLike_count
+          ] +
             this[MergeAllObserver_activeCount] ===
           0
         ) {

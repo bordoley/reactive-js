@@ -1,11 +1,12 @@
-import { Optional, isSome, newInstance, none } from "../../../functions.js";
+import { Optional, newInstance } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   QueueLike,
-  QueueLike_dequeue,
   QueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
@@ -39,11 +40,8 @@ class TakeLastSink<T>
     const queue = this.q;
     const sink = this.sink;
 
-    let v: Optional<T> = none;
-    while (
-      ((v = queue[QueueLike_dequeue]()),
-      !sink[SinkLike_isCompleted] && isSome(v))
-    ) {
+    while (!sink[SinkLike_isCompleted] && queue[EnumeratorLike_moveNext]()) {
+      let v: Optional<T> = queue[EnumeratorLike_current];
       sink[EventListenerLike_notify](v as T);
     }
 

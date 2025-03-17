@@ -57,8 +57,9 @@ import {
   DisposableContainerLike,
   DisposableLike,
   DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  QueueLike_dequeue,
   QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
@@ -184,7 +185,8 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
 
       const cleanupContinuation = (ctx: ContinuationContextLike) => {
         while (store[Map_size] > maxEntries) {
-          const key = cleanupQueue[QueueLike_dequeue]();
+          cleanupQueue[EnumeratorLike_moveNext]();
+          const key = cleanupQueue[EnumeratorLike_current];
           if (isNone(key)) {
             break;
           }

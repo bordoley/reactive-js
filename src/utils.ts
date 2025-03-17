@@ -148,23 +148,32 @@ export interface ConsumerLike<T = unknown> extends SinkLike<T> {
   ): DisposableLike;
 }
 
-export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
-export const QueueLike_head = Symbol("QueueLike_head");
-export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
-export const QueueLike_count = Symbol("QueueLike_count");
+export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
+export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+export interface EnumeratorLike<T = unknown> {
+  readonly [EnumeratorLike_current]: T;
+  readonly [EnumeratorLike_hasCurrent]: boolean;
 
-// FIXME: Need a few interfaces here. A consumer only view of a queue (eg. no enqueu method)
-// add a consumer that is a read/consume only view.
+  [EnumeratorLike_moveNext](): boolean;
+}
+
+export const CollectionEnumeratorLike_count = Symbol(
+  "CollectionEnumeratorLike_count",
+);
+
+export interface CollectionEnumeratorLike<T = unknown>
+  extends EnumeratorLike<T>,
+    Iterable<T> {
+  readonly [CollectionEnumeratorLike_count]: number;
+}
+
+export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends Iterable<T> {
-  readonly [QueueLike_count]: number;
-
-  readonly [QueueLike_head]: Optional<T>;
-
-  [QueueLike_dequeue](): Optional<T>;
+export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
   [QueueLike_enqueue](v: T): void;
 }
 

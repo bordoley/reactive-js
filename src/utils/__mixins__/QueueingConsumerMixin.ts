@@ -26,6 +26,7 @@ import { clampPositiveInteger } from "../../math.js";
 import {
   BackPressureError,
   BackpressureStrategy,
+  CollectionEnumeratorLike_count,
   ConsumerLike,
   ConsumerLike_addOnReadyListener,
   ConsumerLike_backpressureStrategy,
@@ -35,11 +36,10 @@ import {
   DisposableLike_dispose,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   OverflowBackpressureStrategy,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   QueueLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -62,7 +62,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
     | typeof ConsumerLike_isReady
     | typeof ConsumerLike_capacity
     | typeof ConsumerLike_backpressureStrategy
-    | typeof QueueLike_dequeue
+    | typeof EnumeratorLike_moveNext
     | typeof EventListenerLike_notify
     | typeof SinkLike_complete
   >
@@ -85,7 +85,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
 
   type TProperties = {
     [QueueingConsumerMixin_autoDispose]: boolean;
-    [QueueLike_count]: number;
+    [CollectionEnumeratorLike_count]: number;
     [QueueingConsumerMixin_backpressureStrategy]: BackpressureStrategy;
     [QueueingConsumerMixin_capacity]: number;
     [QueueingConsumerMixin_isCompleted]: boolean;
@@ -100,7 +100,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
         QueueLike<T> & ConsumerLike<T>,
         | typeof SinkLike_isCompleted
         | typeof ConsumerLike_isReady
-        | typeof QueueLike_dequeue
+        | typeof EnumeratorLike_moveNext
         | typeof EventListenerLike_notify
         | typeof SinkLike_complete
         | typeof ConsumerLike_addOnReadyListener
@@ -137,7 +137,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
       },
       props<TProperties>({
         [QueueingConsumerMixin_autoDispose]: false,
-        [QueueLike_count]: 0,
+        [CollectionEnumeratorLike_count]: 0,
         [QueueingConsumerMixin_backpressureStrategy]:
           OverflowBackpressureStrategy,
         [QueueingConsumerMixin_capacity]: MAX_SAFE_INTEGER,
@@ -162,24 +162,24 @@ const QueueingConsumerMixin: <T>() => Mixin1<
 
         get [ConsumerLike_isReady]() {
           unsafeCast<TProperties & QueueLike<T> & ConsumerLike<T>>(this);
-          const count = this[QueueLike_count];
+          const count = this[CollectionEnumeratorLike_count];
           const capacity = this[QueueingConsumerMixin_capacity];
           const isCompleted = this[SinkLike_isCompleted];
 
           return !isCompleted && count < capacity;
         },
 
-        [QueueLike_dequeue](
+        [EnumeratorLike_moveNext](
           this: TProperties & QueueLike<T> & ConsumerLike<T>,
-        ): Optional<T> {
-          const count = this[QueueLike_count];
+        ): boolean {
+          const count = this[CollectionEnumeratorLike_count];
           const isCompleted = this[SinkLike_isCompleted];
           const capacity = this[ConsumerLike_capacity];
           const shouldNotifyReady =
             count === capacity && capacity > 0 && !isCompleted;
           const onReadySignal = this[QueueingConsumerMixin_onReadyPublisher];
 
-          const result = super_(QueueMixin<T>(), this, QueueLike_dequeue);
+          const result = super_(QueueMixin<T>(), this, EnumeratorLike_moveNext);
 
           if (shouldNotifyReady) {
             onReadySignal?.[EventListenerLike_notify]();
@@ -195,7 +195,8 @@ const QueueingConsumerMixin: <T>() => Mixin1<
           const backpressureStrategy =
             this[QueueingConsumerMixin_backpressureStrategy];
           const capacity = this[QueueingConsumerMixin_capacity];
-          const applyBackpressure = this[QueueLike_count] >= capacity;
+          const applyBackpressure =
+            this[CollectionEnumeratorLike_count] >= capacity;
           const isCompleted = this[SinkLike_isCompleted];
 
           if (
@@ -214,7 +215,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
           ) {
             // We want to pop off the oldest value first, before enqueueing
             // to avoid unintentionally growing the queue.
-            this[QueueLike_dequeue]();
+            this[EnumeratorLike_moveNext]();
           } else if (
             backpressureStrategy === ThrowBackpressureStrategy &&
             applyBackpressure

@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, super_, } from "../../__internal__/mixins.js";
 import { bind, isSome, memoize, none, pipe, pipeLazy, raiseIf, returns, } from "../../functions.js";
-import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_count, QueueLike_dequeue, SchedulerLike_inContinuation, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, SchedulerLike_inContinuation, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import LiftedConsumerMixin, { LiftedConsumerLike_consumer, } from "./LiftedConsumerMixin.js";
@@ -15,7 +15,8 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
     function liftedObserverSchedulerContinuation(ctx) {
         // This is the ultimate downstream consumer of events.
         const consumer = this[LiftedConsumerLike_consumer];
-        while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
+        while (this[CollectionEnumeratorLike_count] > 0 &&
+            !this[DisposableLike_isDisposed]) {
             // Avoid dequeing values if the downstream consumer
             // is applying backpressure.
             if (!consumer[ConsumerLike_isReady]) {
@@ -23,9 +24,10 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 scheduleDrainQueue(this);
                 break;
             }
-            const next = this[QueueLike_dequeue]();
+            this[EnumeratorLike_moveNext]();
+            const next = this[EnumeratorLike_current];
             this[LiftedEventListenerLike_notify](next);
-            if (this[QueueLike_count] > 0) {
+            if (this[CollectionEnumeratorLike_count] > 0) {
                 ctx[ContinuationContextLike_yield]();
             }
         }
@@ -89,7 +91,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
             // notifications and never queue in practice.
             const scheduler = this[LiftedConsumerLike_consumer];
             const isDelegateReady = scheduler[ConsumerLike_isReady];
-            const count = this[QueueLike_count];
+            const count = this[CollectionEnumeratorLike_count];
             const capacity = this[ConsumerLike_capacity];
             const shouldNotify = inSchedulerContinuation &&
                 !shouldIgnore &&
@@ -107,7 +109,7 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
         [SinkLike_complete]() {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
             const isCompleted = this[SinkLike_isCompleted];
-            const count = this[QueueLike_count];
+            const count = this[CollectionEnumeratorLike_count];
             if (isCompleted) {
                 return;
             }

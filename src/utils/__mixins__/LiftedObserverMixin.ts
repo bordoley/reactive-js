@@ -22,6 +22,7 @@ import {
 } from "../../functions.js";
 import {
   BackpressureStrategy,
+  CollectionEnumeratorLike_count,
   ConsumerLike_addOnReadyListener,
   ConsumerLike_backpressureStrategy,
   ConsumerLike_capacity,
@@ -30,11 +31,11 @@ import {
   ContinuationContextLike_yield,
   DisposableLike,
   DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -113,7 +114,10 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
     // This is the ultimate downstream consumer of events.
     const consumer = this[LiftedConsumerLike_consumer];
 
-    while (this[QueueLike_count] > 0 && !this[DisposableLike_isDisposed]) {
+    while (
+      this[CollectionEnumeratorLike_count] > 0 &&
+      !this[DisposableLike_isDisposed]
+    ) {
       // Avoid dequeing values if the downstream consumer
       // is applying backpressure.
       if (!consumer[ConsumerLike_isReady]) {
@@ -122,10 +126,11 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         break;
       }
 
-      const next = this[QueueLike_dequeue]() as TA;
+      this[EnumeratorLike_moveNext]();
+      const next = this[EnumeratorLike_current] as TA;
       this[LiftedEventListenerLike_notify](next);
 
-      if (this[QueueLike_count] > 0) {
+      if (this[CollectionEnumeratorLike_count] > 0) {
         ctx[ContinuationContextLike_yield]();
       }
     }
@@ -302,7 +307,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           // notifications and never queue in practice.
           const scheduler = this[LiftedConsumerLike_consumer];
           const isDelegateReady = scheduler[ConsumerLike_isReady];
-          const count = this[QueueLike_count];
+          const count = this[CollectionEnumeratorLike_count];
           const capacity = this[ConsumerLike_capacity];
 
           const shouldNotify =
@@ -334,7 +339,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         ) {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[SinkLike_isCompleted];
-          const count = this[QueueLike_count];
+          const count = this[CollectionEnumeratorLike_count];
 
           if (isCompleted) {
             return;

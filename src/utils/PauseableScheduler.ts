@@ -7,9 +7,10 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
+import * as Iterable from "../computations/Iterable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value, WritableStoreLike } from "../computations.js";
-import { Optional, bind, isNone, isSome, none } from "../functions.js";
+import { Optional, bind, isNone, isSome, none, pipe } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import {
   ContinuationContextLike,
@@ -17,14 +18,14 @@ import {
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableSchedulerLike,
   QueueLike,
-  QueueLike_dequeue,
   QueueLike_enqueue,
-  QueueLike_head,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -82,13 +83,13 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
     while (true) {
-      continuation = instance[QueueLike_head];
+      continuation = pipe(instance, Iterable.first());
 
       if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
         break;
       }
 
-      instance[QueueLike_dequeue]();
+      instance[EnumeratorLike_moveNext]();
     }
 
     return continuation;
@@ -157,7 +158,8 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       if (delay > 0) {
         this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
       } else {
-        const continuation = this[QueueLike_dequeue]();
+        this[EnumeratorLike_moveNext]();
+        const continuation = this[EnumeratorLike_current];
 
         this[PauseableScheduler_activeContinuation] = continuation;
         continuation?.[SchedulerContinuationLike_run]();

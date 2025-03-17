@@ -6,7 +6,7 @@
 
 # Function: create()
 
-> **create**\<`T`\>(`options`?): [`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
+> **create**\<`T`\>(`options`?): [`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`CollectionEnumeratorLike`](../../interfaces/CollectionEnumeratorLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -30,4 +30,4 @@
 
 ## Returns
 
-[`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
+[`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`CollectionEnumeratorLike`](../../interfaces/CollectionEnumeratorLike.md)\<`T`\>

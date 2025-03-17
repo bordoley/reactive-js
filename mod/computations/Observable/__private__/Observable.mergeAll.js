@@ -14,7 +14,7 @@ import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedCons
 import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
-import { EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_count, QueueLike_dequeue, SchedulerLike_requestYield, SinkLike_isCompleted, } from "../../../utils.js";
+import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, SchedulerLike_requestYield, SinkLike_isCompleted, } from "../../../utils.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift, { ObservableLift_isStateless, } from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -32,8 +32,10 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         }), Observable_subscribe(observer), Disposable.addTo(observer), DisposableContainer.onComplete(bind(onMergeAllObserverInnerObservableComplete, observer)));
     };
     function onMergeAllObserverInnerObservableComplete() {
+        const queue = this[MergeAllObserver_observablesQueue];
         this[MergeAllObserver_activeCount]--;
-        const nextObs = this[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
+        queue[EnumeratorLike_moveNext]();
+        const nextObs = queue[EnumeratorLike_current];
         if (isSome(nextObs)) {
             subscribeToObservable(this, nextObs);
         }
@@ -67,7 +69,7 @@ const createMergeAllObserverOperator = /*@__PURE__*/ (() => {
             }
         },
         [LiftedSinkLike_complete]() {
-            if (this[MergeAllObserver_observablesQueue][QueueLike_count] +
+            if (this[MergeAllObserver_observablesQueue][CollectionEnumeratorLike_count] +
                 this[MergeAllObserver_activeCount] ===
                 0) {
                 this[LiftedSinkLike_completeDelegate]();

@@ -10,9 +10,9 @@ import {
 import { Comparator, Optional, none } from "../functions.js";
 import {
   BackpressureStrategy,
+  CollectionEnumeratorLike_count,
+  EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   QueueLike_enqueue,
 } from "../utils.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -81,10 +81,11 @@ export const createDropOldest: <T>(capacity: number) => QueueLike<T> =
       proto({
         [QueueLike_enqueue](this: TProperties & QueueLike<T>, v: T) {
           const capacity = this[DropOldestQueue_capacity];
-          const applyBackpressure = this[QueueLike_count] >= capacity;
+          const applyBackpressure =
+            this[CollectionEnumeratorLike_count] >= capacity;
 
           if (applyBackpressure) {
-            this[QueueLike_dequeue]();
+            this[EnumeratorLike_moveNext]();
           }
 
           if (capacity > 0) {

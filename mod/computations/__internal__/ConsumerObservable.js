@@ -6,7 +6,7 @@ import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, EventListenerLike_notify, QueueLike_dequeue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
@@ -47,10 +47,10 @@ export const create = (() => {
             this[ConsumerObservable_delegate] = observer;
             pipe(this, Disposable.bindTo(observer));
             pipe(observer[ConsumerLike_addOnReadyListener](bindMethod(this[ConsumerObservable_onReadyPublisher], EventListenerLike_notify)), Disposable.addTo(this));
-            if (isSome(oldDelegate[QueueLike_dequeue])) {
+            if (isSome(oldDelegate[EnumeratorLike_moveNext])) {
                 unsafeCast(oldDelegate);
-                let v = none;
-                while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
+                while (oldDelegate[EnumeratorLike_moveNext]()) {
+                    const v = oldDelegate[EnumeratorLike_current];
                     observer[EventListenerLike_notify](v);
                 }
             }

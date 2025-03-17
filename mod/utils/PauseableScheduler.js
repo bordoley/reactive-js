@@ -2,11 +2,12 @@
 
 import { MAX_VALUE } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
+import * as Iterable from "../computations/Iterable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
-import { bind, isNone, isSome, none } from "../functions.js";
+import { bind, isNone, isSome, none, pipe } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { ContinuationContextLike_yield, DisposableContainerLike_add, DisposableLike_isDisposed, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_dequeue, QueueLike_enqueue, QueueLike_head, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
+import { ContinuationContextLike_yield, DisposableContainerLike_add, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -20,11 +21,11 @@ export const create = /*@PURE__*/ (() => {
     const peek = (instance) => {
         let continuation = none;
         while (true) {
-            continuation = instance[QueueLike_head];
+            continuation = pipe(instance, Iterable.first());
             if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
                 break;
             }
-            instance[QueueLike_dequeue]();
+            instance[EnumeratorLike_moveNext]();
         }
         return continuation;
     };
@@ -63,7 +64,8 @@ export const create = /*@PURE__*/ (() => {
                 this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
             }
             else {
-                const continuation = this[QueueLike_dequeue]();
+                this[EnumeratorLike_moveNext]();
+                const continuation = this[EnumeratorLike_current];
                 this[PauseableScheduler_activeContinuation] = continuation;
                 continuation?.[SchedulerContinuationLike_run]();
                 this[PauseableScheduler_activeContinuation] = none;

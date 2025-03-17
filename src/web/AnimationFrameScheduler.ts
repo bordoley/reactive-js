@@ -10,7 +10,6 @@ import {
   Optional,
   invoke,
   isNone,
-  isSome,
   none,
   pipe,
   pipeLazy,
@@ -29,10 +28,11 @@ import {
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
+  CollectionEnumeratorLike_count,
   DisposableLike,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
@@ -72,9 +72,8 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
 
     let continuation: Optional<SchedulerContinuationLike> = none;
-    while (
-      ((continuation = workQueue[QueueLike_dequeue]()), isSome(continuation))
-    ) {
+    while (workQueue[EnumeratorLike_moveNext]()) {
+      continuation = workQueue[EnumeratorLike_current];
       continuation[SchedulerContinuationLike_run]();
 
       const elapsedTime = CurrentTime.now() - startTime;
@@ -83,21 +82,18 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       }
     }
 
-    const continuationsCount = workQueue[QueueLike_count];
+    const continuationsCount = workQueue[CollectionEnumeratorLike_count];
     const newWorkQueue =
       animationFrameScheduler[AnimationFrameScheduler_rafQueue];
-    const newContinuationsCount = newWorkQueue[QueueLike_count];
+    const newContinuationsCount = newWorkQueue[CollectionEnumeratorLike_count];
 
     if (continuationsCount > 0 && newContinuationsCount === 0) {
       animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
     } else if (continuationsCount > 0) {
       // Merge the job queues copying the newly enqueued jobs
       // onto the original queue.
-      let continuation: Optional<SchedulerContinuationLike> = none;
-      while (
-        ((continuation = newWorkQueue[QueueLike_dequeue]()),
-        isSome(continuation))
-      ) {
+      while (newWorkQueue[EnumeratorLike_moveNext]()) {
+        const continuation = newWorkQueue[EnumeratorLike_current];
         workQueue[QueueLike_enqueue](continuation);
       }
       animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
@@ -105,7 +101,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
 
     const continuationsQueueCount =
       animationFrameScheduler[AnimationFrameScheduler_rafQueue][
-        QueueLike_count
+        CollectionEnumeratorLike_count
       ];
     if (continuationsQueueCount > 0) {
       raf(rafCallback);

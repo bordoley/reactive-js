@@ -23,14 +23,15 @@ import {
 } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
 import {
+  CollectionEnumeratorLike_count,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -198,11 +199,8 @@ const SchedulerMixin: Mixin<
       const scheduler = continuation[ConsumerContinuation_scheduler];
       const parent = findNearestNonDisposedParent(continuation);
 
-      for (
-        let head: Optional<ConsumerSchedulerContinuationLike> = none;
-        (head = continuation[QueueLike_dequeue]()), isSome(head);
-
-      ) {
+      while (continuation[EnumeratorLike_moveNext]()) {
+        const head = continuation[EnumeratorLike_current];
         if (head[DisposableLike_isDisposed]) {
           // continue
         } else if (isSome(parent)) {
@@ -303,11 +301,8 @@ const SchedulerMixin: Mixin<
           let rescheduled = false;
 
           // Run any inner continuations first.
-          for (
-            let head: Optional<ConsumerSchedulerContinuationLike> = none;
-            (head = this[QueueLike_dequeue]()), isSome(head);
-
-          ) {
+          while (this[EnumeratorLike_moveNext]()) {
+            const head = this[EnumeratorLike_current];
             head[ConsumerSchedulerContinuationLike_parent] = this;
             head[SchedulerContinuationLike_run]();
             head[ConsumerSchedulerContinuationLike_parent] = none;
@@ -463,7 +458,7 @@ const SchedulerMixin: Mixin<
             this[
               SchedulerMixinLike_currentContinuation
             ] as ConsumerSchedulerContinuationLike
-          )[QueueLike_count] > 0;
+          )[CollectionEnumeratorLike_count] > 0;
 
         return (
           isDisposed ||

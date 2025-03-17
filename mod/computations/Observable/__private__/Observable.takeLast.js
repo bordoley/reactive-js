@@ -2,14 +2,14 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { ObservableLike_observe } from "../../../computations.js";
-import { call, invoke, isSome, none, partial, pipe, } from "../../../functions.js";
+import { call, invoke, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
-import { QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, } from "../../../utils.js";
+import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import Observable_gen from "./Observable.gen.js";
 import Observable_genWithSideEffects from "./Observable.genWithSideEffects.js";
@@ -22,9 +22,8 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
     function* notifyLast() {
         const queue = this[TakeLastObserver_queue];
-        let v = none;
-        while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-            yield v;
+        while (queue[EnumeratorLike_moveNext]()) {
+            yield queue[EnumeratorLike_current];
         }
     }
     return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function TakeLastObserver(delegate, takeLastCount) {
@@ -39,7 +38,7 @@ const createTakeLastObserver = /*@__PURE__*/ (() => {
             this[TakeLastObserver_queue][QueueLike_enqueue](next);
         },
         [LiftedSinkLike_complete]() {
-            const count = this[TakeLastObserver_queue][QueueLike_count];
+            const count = this[TakeLastObserver_queue][CollectionEnumeratorLike_count];
             if (count === 0) {
                 this[LiftedSinkLike_completeDelegate]();
             }

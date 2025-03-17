@@ -2,10 +2,11 @@
 
 import { MAX_VALUE, globalObject } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
+import * as Iterable from "../computations/Iterable.js";
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_enqueue, QueueLike_head, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -18,11 +19,11 @@ export const create = /*@PURE__*/ (() => {
     const peek = (instance) => {
         let continuation = none;
         while (true) {
-            continuation = instance[QueueLike_head];
+            continuation = pipe(instance, Iterable.first());
             if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
                 break;
             }
-            instance[QueueLike_dequeue]();
+            instance[EnumeratorLike_moveNext]();
         }
         return continuation;
     };
@@ -41,7 +42,8 @@ export const create = /*@PURE__*/ (() => {
                 scheduleOnHost(instance);
                 break;
             }
-            const continuation = instance[QueueLike_dequeue]();
+            instance[EnumeratorLike_moveNext]();
+            const continuation = instance[EnumeratorLike_current];
             instance[HostScheduler_activeContinuation] = continuation;
             continuation?.[SchedulerContinuationLike_run]();
             instance[HostScheduler_activeContinuation] = none;

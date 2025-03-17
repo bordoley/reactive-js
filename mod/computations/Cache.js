@@ -13,7 +13,7 @@ import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Queue from "../utils/Queue.js";
 import DelegatingConsumerMixin from "../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_dequeue, QueueLike_enqueue, SchedulerLike_schedule, } from "../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, SchedulerLike_schedule, } from "../utils.js";
 import * as Observable from "./Observable.js";
 import * as Subject from "./Subject.js";
 import * as ConsumerObservable from "./__internal__/ConsumerObservable.js";
@@ -35,7 +35,8 @@ export const create = /*@__PURE__*/ (() => {
         const cleanupQueue = Queue.create();
         const cleanupContinuation = (ctx) => {
             while (store[Map_size] > maxEntries) {
-                const key = cleanupQueue[QueueLike_dequeue]();
+                cleanupQueue[EnumeratorLike_moveNext]();
+                const key = cleanupQueue[EnumeratorLike_current];
                 if (isNone(key)) {
                     break;
                 }

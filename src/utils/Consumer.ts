@@ -7,9 +7,11 @@ import {
   proto,
   unsafeCast,
 } from "../__internal__/mixins.js";
+import { IterableLike } from "../computations.js";
 import { Comparator, Optional } from "../functions.js";
 import {
   BackpressureStrategy,
+  CollectionEnumeratorLike,
   ConsumerLike,
   ConsumerLike_capacity,
   ConsumerLike_isReady,
@@ -25,7 +27,7 @@ const createInternal: <T>(options?: {
   capacity?: number;
   comparator?: Comparator<T>;
   backpressureStrategy?: BackpressureStrategy;
-}) => ConsumerLike<T> & QueueLike<T> = /*@__PURE__*/ (<T>() => {
+}) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   const createQueue = mixInstanceFactory(
     include(DisposableMixin, QueueingConsumerMixin()),
     function ConsumerQueue(
@@ -56,7 +58,7 @@ export const create = <T>(options?: {
   autoDispose?: boolean;
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}): ConsumerLike<T> & QueueLike<T> =>
+}): ConsumerLike<T> & CollectionEnumeratorLike<T> =>
   createInternal({
     autoDispose: options?.autoDispose,
     capacity: options?.capacity,
@@ -68,7 +70,7 @@ export const createDropOldestWithoutBackpressure: <T>(
   options?: {
     autoDispose?: boolean;
   },
-) => ConsumerLike<T> & QueueLike<T> = /*@__PURE__*/ (<T>() =>
+) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(DisposableMixin, QueueingConsumerMixin()),
     function ConsumerQueueDropOldestWithoutBackpressur(
@@ -77,7 +79,7 @@ export const createDropOldestWithoutBackpressure: <T>(
       options: Optional<{
         autoDispose?: boolean;
       }>,
-    ): ConsumerLike & QueueLike<T> {
+    ): ConsumerLike<T> & QueueLike<T> & IterableLike<T> {
       init(DisposableMixin, this);
       init(QueueingConsumerMixin<T>(), this, {
         autoDispose: options?.autoDispose,

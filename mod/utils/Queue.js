@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, super_, } from "../__internal__/mixins.js";
 import { none } from "../functions.js";
-import { QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, } from "../utils.js";
+import { CollectionEnumeratorLike_count, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../utils.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 const createInternal = /*@__PURE__*/ (() => {
     const createQueue = mixInstanceFactory(include(QueueMixin()), function Queue(options) {
@@ -30,9 +30,9 @@ export const createDropOldest =
     }), proto({
         [QueueLike_enqueue](v) {
             const capacity = this[DropOldestQueue_capacity];
-            const applyBackpressure = this[QueueLike_count] >= capacity;
+            const applyBackpressure = this[CollectionEnumeratorLike_count] >= capacity;
             if (applyBackpressure) {
-                this[QueueLike_dequeue]();
+                this[EnumeratorLike_moveNext]();
             }
             if (capacity > 0) {
                 super_(QueueMixin(), this, QueueLike_enqueue, v);

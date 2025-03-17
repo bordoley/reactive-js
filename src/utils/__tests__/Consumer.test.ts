@@ -4,12 +4,12 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Iterable from "../../computations/Iterable.js";
 import { Optional, pipe } from "../../functions.js";
 import {
+  CollectionEnumeratorLike_count,
   DropLatestBackpressureStrategy,
   EventListenerLike_notify,
-  QueueLike_count,
-  QueueLike_head,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Consumer from "../Consumer.js";
@@ -26,8 +26,8 @@ testModule(
     consumer[EventListenerLike_notify](0);
     consumer[EventListenerLike_notify](1);
 
-    pipe(consumer[QueueLike_count], expectEquals(1));
-    pipe(consumer[QueueLike_head], expectEquals<Optional<number>>(0));
+    pipe(consumer[CollectionEnumeratorLike_count], expectEquals(1));
+    pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(0));
   }),
   test("drop-oldest backpressure", () => {
     const consumer = Consumer.createDropOldestWithoutBackpressure<number>(1);
@@ -35,8 +35,8 @@ testModule(
     consumer[EventListenerLike_notify](0);
     consumer[EventListenerLike_notify](1);
 
-    pipe(consumer[QueueLike_count], expectEquals(1));
-    pipe(consumer[QueueLike_head], expectEquals<Optional<number>>(1));
+    pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(1));
+    pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(1));
   }),
   test("throw backpressure", () => {
     const consumer = Consumer.create<number>({
@@ -50,7 +50,7 @@ testModule(
       consumer[EventListenerLike_notify](1);
     });
 
-    pipe(consumer[QueueLike_count], expectEquals(1));
-    pipe(consumer[QueueLike_head], expectEquals<Optional<number>>(0));
+    pipe(consumer[CollectionEnumeratorLike_count], expectEquals(1));
+    pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(0));
   }),
 );

@@ -12,10 +12,12 @@
 
 ## Interfaces
 
+- [CollectionEnumeratorLike](interfaces/CollectionEnumeratorLike.md)
 - [ConsumerLike](interfaces/ConsumerLike.md)
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
 - [DisposableContainerLike](interfaces/DisposableContainerLike.md)
 - [DisposableLike](interfaces/DisposableLike.md)
+- [EnumeratorLike](interfaces/EnumeratorLike.md)
 - [EventListenerLike](interfaces/EventListenerLike.md)
 - [ObserverLike](interfaces/ObserverLike.md)
 - [PauseableLike](interfaces/PauseableLike.md)
@@ -32,6 +34,7 @@
 
 ## Variables
 
+- [CollectionEnumeratorLike\_count](variables/CollectionEnumeratorLike_count.md)
 - [ConsumerLike\_addOnReadyListener](variables/ConsumerLike_addOnReadyListener.md)
 - [ConsumerLike\_backpressureStrategy](variables/ConsumerLike_backpressureStrategy.md)
 - [ConsumerLike\_capacity](variables/ConsumerLike_capacity.md)
@@ -43,15 +46,15 @@
 - [DisposableLike\_isDisposed](variables/DisposableLike_isDisposed.md)
 - [DropLatestBackpressureStrategy](variables/DropLatestBackpressureStrategy.md)
 - [DropOldestBackpressureStrategy](variables/DropOldestBackpressureStrategy.md)
+- [EnumeratorLike\_current](variables/EnumeratorLike_current.md)
+- [EnumeratorLike\_hasCurrent](variables/EnumeratorLike_hasCurrent.md)
+- [EnumeratorLike\_moveNext](variables/EnumeratorLike_moveNext.md)
 - [EventListenerLike\_notify](variables/EventListenerLike_notify.md)
 - [OverflowBackpressureStrategy](variables/OverflowBackpressureStrategy.md)
 - [PauseableLike\_isPaused](variables/PauseableLike_isPaused.md)
 - [PauseableLike\_pause](variables/PauseableLike_pause.md)
 - [PauseableLike\_resume](variables/PauseableLike_resume.md)
-- [QueueLike\_count](variables/QueueLike_count.md)
-- [QueueLike\_dequeue](variables/QueueLike_dequeue.md)
 - [QueueLike\_enqueue](variables/QueueLike_enqueue.md)
-- [QueueLike\_head](variables/QueueLike_head.md)
 - [SchedulerLike\_inContinuation](variables/SchedulerLike_inContinuation.md)
 - [SchedulerLike\_maxYieldInterval](variables/SchedulerLike_maxYieldInterval.md)
 - [SchedulerLike\_now](variables/SchedulerLike_now.md)

@@ -4,7 +4,7 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
-import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_dequeue, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
@@ -64,7 +64,8 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 true;
             const scheduler = continuation[ConsumerContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
-            for (let head = none; (head = continuation[QueueLike_dequeue]()), isSome(head);) {
+            while (continuation[EnumeratorLike_moveNext]()) {
+                const head = continuation[EnumeratorLike_current];
                 if (head[DisposableLike_isDisposed]) {
                     // continue
                 }
@@ -126,7 +127,8 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 // Flag whether the continuation has been rescheduled
                 let rescheduled = false;
                 // Run any inner continuations first.
-                for (let head = none; (head = this[QueueLike_dequeue]()), isSome(head);) {
+                while (this[EnumeratorLike_moveNext]()) {
+                    const head = this[EnumeratorLike_current];
                     head[ConsumerSchedulerContinuationLike_parent] = this;
                     head[SchedulerContinuationLike_run]();
                     head[ConsumerSchedulerContinuationLike_parent] = none;
@@ -214,7 +216,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             const exceededMaxYieldInterval = this[SchedulerLike_now] >
                 this[SchedulerMixinLike_startTime] +
                     this[SchedulerLike_maxYieldInterval];
-            const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][QueueLike_count] > 0;
+            const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][CollectionEnumeratorLike_count] > 0;
             return (isDisposed ||
                 yieldRequested ||
                 exceededMaxYieldInterval ||

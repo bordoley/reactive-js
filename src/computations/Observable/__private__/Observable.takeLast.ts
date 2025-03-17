@@ -6,15 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { ObservableLike_observe } from "../../../computations.js";
-import {
-  Optional,
-  call,
-  invoke,
-  isSome,
-  none,
-  partial,
-  pipe,
-} from "../../../functions.js";
+import { call, invoke, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -30,10 +22,11 @@ import {
   LiftedSinkLike_completeDelegate,
 } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
+  CollectionEnumeratorLike_count,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   ObserverLike,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   QueueLike_enqueue,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
@@ -59,9 +52,8 @@ const createTakeLastObserver: <T>(
 
   function* notifyLast(this: TProperties) {
     const queue = this[TakeLastObserver_queue];
-    let v: Optional<T> = none;
-    while (((v = queue[QueueLike_dequeue]()), isSome(v))) {
-      yield v;
+    while (queue[EnumeratorLike_moveNext]()) {
+      yield queue[EnumeratorLike_current];
     }
   }
 
@@ -91,7 +83,8 @@ const createTakeLastObserver: <T>(
         this[TakeLastObserver_queue][QueueLike_enqueue](next);
       },
       [LiftedSinkLike_complete](this: TProperties & LiftedObserverLike<T>) {
-        const count = this[TakeLastObserver_queue][QueueLike_count];
+        const count =
+          this[TakeLastObserver_queue][CollectionEnumeratorLike_count];
 
         if (count === 0) {
           this[LiftedSinkLike_completeDelegate]();

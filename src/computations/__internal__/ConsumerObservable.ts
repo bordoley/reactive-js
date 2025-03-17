@@ -31,10 +31,11 @@ import {
   ConsumerLike_capacity,
   ConsumerLike_isReady,
   DisposableLike,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
-  QueueLike_dequeue,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -136,11 +137,11 @@ export const create: <T>(config?: {
           Disposable.addTo(this),
         );
 
-        if (isSome((oldDelegate as any)[QueueLike_dequeue])) {
+        if (isSome((oldDelegate as any)[EnumeratorLike_moveNext])) {
           unsafeCast<QueueLike<T>>(oldDelegate);
 
-          let v: Optional<T> = none;
-          while (((v = oldDelegate[QueueLike_dequeue]()), isSome(v))) {
+          while (oldDelegate[EnumeratorLike_moveNext]()) {
+            const v = oldDelegate[EnumeratorLike_current];
             observer[EventListenerLike_notify](v);
           }
         }

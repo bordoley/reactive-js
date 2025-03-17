@@ -6,7 +6,7 @@
 
 # Function: createDropOldestWithoutBackpressure()
 
-> **createDropOldestWithoutBackpressure**\<`T`\>(`capacity`, `options`?): [`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
+> **createDropOldestWithoutBackpressure**\<`T`\>(`capacity`, `options`?): [`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`CollectionEnumeratorLike`](../../interfaces/CollectionEnumeratorLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
+[`ConsumerLike`](../../interfaces/ConsumerLike.md)\<`T`\> & [`CollectionEnumeratorLike`](../../interfaces/CollectionEnumeratorLike.md)\<`T`\>

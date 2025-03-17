@@ -16,11 +16,12 @@ import {
 } from "../../functions.js";
 import { floor } from "../../math.js";
 import {
+  CollectionEnumeratorLike_count,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_count,
-  QueueLike_dequeue,
   QueueLike_enqueue,
-  QueueLike_head,
 } from "../../utils.js";
 
 const QueueMixin: <T>() => Mixin1<
@@ -29,7 +30,12 @@ const QueueMixin: <T>() => Mixin1<
     comparator?: Comparator<T>;
   }>,
   unknown,
-  Omit<QueueLike<T>, typeof QueueLike_count>
+  Omit<
+    QueueLike<T>,
+    | typeof CollectionEnumeratorLike_count
+    | typeof EnumeratorLike_current
+    | typeof EnumeratorLike_hasCurrent
+  >
 > = /*@__PURE__*/ (<T>() => {
   const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
   const QueueMixin_head = Symbol("QueueMixin_head");
@@ -38,7 +44,9 @@ const QueueMixin: <T>() => Mixin1<
   const QueueMixin_comparator = Symbol("QueueMixin_comparator");
 
   type TProperties = {
-    [QueueLike_count]: number;
+    [EnumeratorLike_current]: T;
+    [EnumeratorLike_hasCurrent]: boolean;
+    [CollectionEnumeratorLike_count]: number;
     [QueueMixin_head]: number;
     [QueueMixin_tail]: number;
     [QueueMixin_capacityMask]: number;
@@ -101,7 +109,9 @@ const QueueMixin: <T>() => Mixin1<
         return this;
       },
       props<TProperties>({
-        [QueueLike_count]: 0,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+        [CollectionEnumeratorLike_count]: 0,
         [QueueMixin_head]: 0,
         [QueueMixin_tail]: 0,
         [QueueMixin_capacityMask]: 31,
@@ -109,17 +119,6 @@ const QueueMixin: <T>() => Mixin1<
         [QueueMixin_comparator]: none,
       }),
       {
-        get [QueueLike_head]() {
-          unsafeCast<TProperties>(this);
-          const count = this[QueueLike_count];
-          const head = this[QueueMixin_head];
-          const values = this[QueueMixin_values];
-
-          return count <= 1
-            ? (values as Optional<T>)
-            : (values as Array<Optional<T>>)[head];
-        },
-
         /*get [QueueLike_tail]() {
           unsafeCast<TProperties>(this);
           const head = this[QueueMixin_head];
@@ -130,16 +129,24 @@ const QueueMixin: <T>() => Mixin1<
           return head === tail ? none : values[index];
         },*/
 
-        [QueueLike_dequeue](this: TProperties & QueueLike<T>) {
-          const count = this[QueueLike_count];
+        [EnumeratorLike_moveNext](this: TProperties & QueueLike<T>) {
+          const count = this[CollectionEnumeratorLike_count];
           const values = this[QueueMixin_values];
 
-          if (count <= 1) {
+          if (count < 1) {
+            this[EnumeratorLike_current] = none as T;
+            this[EnumeratorLike_hasCurrent] = false;
+            return this[EnumeratorLike_hasCurrent];
+          }
+
+          if (count === 1) {
             const item = this[QueueMixin_values] as Optional<T>;
-            this[QueueLike_count] = 0;
+            this[CollectionEnumeratorLike_count] = 0;
             this[QueueMixin_values] = none;
 
-            return item;
+            this[EnumeratorLike_current] = item as T;
+            this[EnumeratorLike_hasCurrent] = true;
+            return this[EnumeratorLike_hasCurrent];
           }
 
           unsafeCast<Optional<T>[]>(values);
@@ -148,7 +155,7 @@ const QueueMixin: <T>() => Mixin1<
           const tail = this[QueueMixin_tail];
           const head = this[QueueMixin_head];
           const capacityMask = this[QueueMixin_capacityMask];
-          const newCount = --this[QueueLike_count];
+          const newCount = --this[CollectionEnumeratorLike_count];
           const valuesLength = values[Array_length];
           const item = values[head];
 
@@ -156,7 +163,9 @@ const QueueMixin: <T>() => Mixin1<
             const newHead = (head + 1) & capacityMask;
             this[QueueMixin_values] = values[newHead];
 
-            return item;
+            this[EnumeratorLike_current] = item as T;
+            this[EnumeratorLike_hasCurrent] = true;
+            return this[EnumeratorLike_hasCurrent];
           }
 
           if (isSorted) {
@@ -243,12 +252,14 @@ const QueueMixin: <T>() => Mixin1<
 
           this[QueueMixin_capacityMask] = newCapacityMask;
 
-          return item;
+          this[EnumeratorLike_current] = item as T;
+          this[EnumeratorLike_hasCurrent] = true;
+          return this[EnumeratorLike_hasCurrent];
         },
 
         *[Symbol.iterator](this: QueueLike<T> & TProperties): Iterator<T> {
           const values = this[QueueMixin_values];
-          const count = this[QueueLike_count];
+          const count = this[CollectionEnumeratorLike_count];
 
           if (count === 1) {
             yield values as T;
@@ -273,7 +284,7 @@ const QueueMixin: <T>() => Mixin1<
         [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
           // Assign these after applying backpressure because backpressure
           // can mutate the state of the queue.
-          const newCount = ++this[QueueLike_count];
+          const newCount = ++this[CollectionEnumeratorLike_count];
           if (newCount === 1) {
             this[QueueMixin_values] = item;
             return;
