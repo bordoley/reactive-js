@@ -21,10 +21,10 @@ import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../collections.js";
 import * as Computation from "../computations/Computation.js";
 import {
+  BroadcasterLike,
   DeferredComputationWithSideEffects,
   DeferredComputationWithSideEffectsLike,
   DeferredObservableLike,
-  ObservableLike,
   SubjectLike,
 } from "../computations.js";
 import {
@@ -74,7 +74,7 @@ export const CacheLike_get = Symbol("CacheLike_get");
 export interface CacheLike<T>
   extends ConsumerLike<ReadonlyObjectMapLike<string, Updater<Optional<T>>>>,
     DisposableContainerLike {
-  [CacheLike_get](index: string): ObservableLike<T>;
+  [CacheLike_get](index: string): BroadcasterLike<T>;
 }
 
 interface CacheModule {
@@ -97,7 +97,7 @@ interface CacheModule {
       };
     },
   ): CacheLike<T> & DisposableLike;
-  get<T>(cache: CacheLike<T>, key: string): ObservableLike<T>;
+  get<T>(cache: CacheLike<T>, key: string): BroadcasterLike<T>;
   remove<T>(cache: CacheLike<T>, key: string): void;
   removeMany<T>(cache: CacheLike<T>, keys: ReadonlyArray<string>): void;
   set<T>(cache: CacheLike<T>, key: string, v: Optional<T>): void;
@@ -364,7 +364,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
       [CacheLike_get](
         this: TProperties<T> & CacheLike<T>,
         key: string,
-      ): ObservableLike<T> {
+      ): BroadcasterLike<T> {
         const {
           [CacheStream_scheduleCleanup]: scheduleCleanup,
           [CacheStream_store]: store,
@@ -408,7 +408,7 @@ export const create: CacheModule["create"] = /*@__PURE__*/ (<T>() => {
   );
 })();
 
-export const get = <T>(cache: CacheLike<T>, key: string): ObservableLike<T> =>
+export const get = <T>(cache: CacheLike<T>, key: string): BroadcasterLike<T> =>
   cache[CacheLike_get](key);
 
 export const remove = <T>(cache: CacheLike<T>, key: string) =>

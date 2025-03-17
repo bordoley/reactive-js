@@ -11,7 +11,7 @@ import {
 } from "../../__internal__/testing.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Subject from "../../computations/Subject.js";
-import { ObservableLike_observe } from "../../computations.js";
+import { BroadcasterLike_connect } from "../../computations.js";
 import {
   Optional,
   bindMethod,
@@ -30,6 +30,7 @@ import {
   ThrowBackpressureStrategy,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 
 testModule(
@@ -49,6 +50,7 @@ testModule(
       const result: number[] = [];
       pipe(
         subject,
+        Broadcaster.toObservable(),
         Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
@@ -63,14 +65,14 @@ testModule(
 
       const subject = Subject.create({ autoDispose: true });
       pipe(subject[DisposableLike_isDisposed], expectFalse());
-      const sub1 = pipe(subject, Observable.subscribe(vts));
+      const sub1 = pipe(subject,  Broadcaster.toObservable(),  Observable.subscribe(vts));
       pipe(subject[DisposableLike_isDisposed], expectFalse());
-      const sub2 = pipe(subject, Observable.subscribe(vts));
+      const sub2 = pipe(subject, Broadcaster.toObservable(), Observable.subscribe(vts));
       pipe(subject[DisposableLike_isDisposed], expectFalse());
       const sub3 = pipe(
         Observable.create(observer => {
-          subject[ObservableLike_observe](observer);
-          subject[ObservableLike_observe](observer);
+          subject[BroadcasterLike_connect](observer);
+          subject[BroadcasterLike_connect](observer);
         }),
         Observable.subscribe(vts),
       );
@@ -90,6 +92,7 @@ testModule(
 
       const subjectSubscription = pipe(
         subject,
+        Broadcaster.toObservable(),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
@@ -134,7 +137,7 @@ testModule(
       const e = new Error();
       subject[DisposableLike_dispose](e);
 
-      const subscription = pipe(subject, Observable.subscribe(vts));
+      const subscription = pipe(subject,  Broadcaster.toObservable(), Observable.subscribe(vts));
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -150,6 +153,7 @@ testModule(
 
       const subscription = pipe(
         subject,
+        Broadcaster.toObservable(),
         Observable.forEach(ignore),
         Observable.backpressureStrategy({
           backpressureStrategy: ThrowBackpressureStrategy,
@@ -178,6 +182,7 @@ testModule(
       const result: number[] = [];
       const subscription = pipe(
         subject,
+        Broadcaster.toObservable(),
         Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );

@@ -11,7 +11,6 @@ import {
 import {
   ComputationLike_isPure,
   Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
@@ -32,7 +31,6 @@ import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
 import * as Observable from "../Observable.js";
-import * as ComputationTest from "./fixtures/helpers/ComputationTest.js";
 import AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests from "./fixtures/operators/AlwaysReturnsDeferredComputationWithSideEffectsComputationOperatorTests.js";
 import ComputationOperatorWithSideEffectsTests from "./fixtures/operators/ComputationOperatorWithSideEffectsTests.js";
 import StatefulAsynchronousComputationOperatorTests from "./fixtures/operators/StatefulAsynchronousComputationOperatorTests.js";
@@ -53,7 +51,6 @@ const ObservableTypes = {
     Observable.subscribeOn(HostScheduler.create()),
     Observable.forEach(ignore),
   ),
-  [Computation_multicastOfT]: Observable.never(),
 };
 
 testModule(
@@ -294,14 +291,6 @@ testModule(
       Computation.mergeWith<Observable.Computation>(Observable)(
         ObservableTypes[Computation_deferredWithSideEffectsOfT],
         Observable.empty(),
-      ),
-    ),
-    ComputationTest.isMulticasted(
-      pipe(
-        ObservableTypes[Computation_multicastOfT],
-        Computation.mergeWith(Observable)(
-          ObservableTypes[Computation_multicastOfT],
-        ),
       ),
     ),
   ),

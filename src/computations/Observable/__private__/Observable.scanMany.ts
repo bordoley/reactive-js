@@ -5,12 +5,12 @@ import {
   ComputationLike_isSynchronous,
   DeferredObservableLike,
   HigherOrderInnerComputationLike,
-  ObservableLike,
   ObservableLike_observe,
 } from "../../../computations.js";
 import { Factory, Function2, invoke, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { EventListenerLike_notify } from "../../../utils.js";
+import * as Broadcaster from "../../Broadcaster.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -38,7 +38,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
     [ComputationLike_isSynchronous]: true,
   };
 
-  return (observable: ObservableLike<T>) => {
+  return (observable: DeferredObservableLike<T>) => {
     const isPure =
       innerType[ComputationLike_isPure] && observable[ComputationLike_isPure];
     const isSynchronousObservable =
@@ -48,13 +48,15 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
     return Observable_createWithConfig(
       observer => {
         const accFeedbackStream = pipe(
-          Subject.create(),
+          Subject.create<TAcc>(),
           Disposable.addTo(observer),
         );
 
+        const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable())
+
         pipe(
           observable,
-          Observable_withLatestFrom<T, TAcc>(accFeedbackStream),
+          Observable_withLatestFrom<T, TAcc>(otherObs),
           Computation.flatMap(ObservableModule)(
             "switchAll",
             ([next, acc]) => scanner(acc, next),

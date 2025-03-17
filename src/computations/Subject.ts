@@ -14,10 +14,10 @@ import {
   super_,
 } from "../__internal__/mixins.js";
 import {
+  BroadcasterLike_connect,
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ObservableLike_observe,
   SubjectLike,
 } from "../computations.js";
 import {
@@ -41,7 +41,7 @@ import {
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
-  ObserverLike,
+  SinkLike,
   QueueLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -52,33 +52,33 @@ export const create: <T>(options?: {
   readonly replay?: number;
   readonly autoDispose?: boolean;
 }) => SubjectLike<T> = /*@__PURE__*/ (<T>() => {
-  const Subject_observers = Symbol("Subject_observers");
-  const Subject_onObserverDisposed = Symbol("Subject_onObserverDisposed");
+  const Subject_sinks = Symbol("Subject_sinks");
+  const Subject_onSinkDisposed = Symbol("Subject_onSinkDisposed");
 
   type TProperties = {
-    [Subject_observers]: Optional<
-      Set<ObserverLike<T>> | Optional<ObserverLike<T>>
+    [Subject_sinks]: Optional<
+      Set<SinkLike<T>> | Optional<SinkLike<T>>
     >;
-    readonly [Subject_onObserverDisposed]: Method<ObserverLike<T>>;
+    readonly [Subject_onSinkDisposed]: Method<SinkLike<T>>;
   };
 
   function onSubjectDisposed(this: TProperties, e: Optional<Error>) {
-    const maybeObservers = this[Subject_observers];
-    const observers =
-      maybeObservers instanceof Set
-        ? maybeObservers
-        : isSome(maybeObservers)
-          ? [maybeObservers]
+    const maybeSinks = this[Subject_sinks];
+    const sinks =
+      maybeSinks instanceof Set
+        ? maybeSinks
+        : isSome(maybeSinks)
+          ? [maybeSinks]
           : [];
 
-    for (const observer of observers) {
+    for (const sink of sinks) {
       if (isSome(e)) {
-        observer[DisposableLike_dispose](e);
+        sink[DisposableLike_dispose](e);
       } else {
-        observer[SinkLike_complete]();
+        sink[SinkLike_complete]();
       }
     }
-    this[Subject_observers] = none;
+    this[Subject_sinks] = none;
   }
 
   return mixInstanceFactory(
@@ -86,7 +86,7 @@ export const create: <T>(options?: {
     function Subject(
       this: Pick<
         SubjectLike<T>,
-        | typeof ObservableLike_observe
+        | typeof BroadcasterLike_connect
         | typeof ComputationLike_isDeferred
         | typeof ComputationLike_isPure
         | typeof ComputationLike_isSynchronous
@@ -106,31 +106,31 @@ export const create: <T>(options?: {
         capacity: replay,
       });
 
-      this[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
+      this[Subject_sinks] = newInstance<Set<SinkLike>>(Set);
 
       const autoDispose = options?.autoDispose ?? false;
 
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const instance = this;
-      this[Subject_onObserverDisposed] = function onObserverDisposed(
-        this: ObserverLike<T>,
+      this[Subject_onSinkDisposed] = function onSinkDisposed(
+        this: SinkLike<T>,
       ) {
-        const maybeObservers = instance[Subject_observers];
+        const maybeSinks = instance[Subject_sinks];
 
-        if (maybeObservers instanceof Set) {
-          maybeObservers[Set_delete](this);
-        } else if (maybeObservers === this) {
-          instance[Subject_observers] = none;
+        if (maybeSinks instanceof Set) {
+          maybeSinks[Set_delete](this);
+        } else if (maybeSinks === this) {
+          instance[Subject_sinks] = none;
         }
 
-        if (maybeObservers instanceof Set && maybeObservers[Set_size] == 1) {
-          instance[Subject_observers] =
-            Iterable.first<ObserverLike<T>>()(maybeObservers);
+        if (maybeSinks instanceof Set && maybeSinks[Set_size] == 1) {
+          instance[Subject_sinks] =
+            Iterable.first<SinkLike<T>>()(maybeSinks);
         }
 
-        if (autoDispose && isNone(instance[Subject_observers])) {
+        if (autoDispose && isNone(instance[Subject_sinks])) {
           instance[DisposableLike_dispose]();
-          instance[Subject_observers] = none;
+          instance[Subject_sinks] = none;
         }
       };
 
@@ -139,8 +139,8 @@ export const create: <T>(options?: {
       return this;
     },
     props<TProperties>({
-      [Subject_observers]: none,
-      [Subject_onObserverDisposed]: none,
+      [Subject_sinks]: none,
+      [Subject_onSinkDisposed]: none,
     }),
     {
       [ComputationLike_isDeferred]: false as const,
@@ -156,73 +156,73 @@ export const create: <T>(options?: {
 
         super_(QueueMixin<T>(), this, EventListenerLike_notify, next);
 
-        const maybeObservers = this[Subject_observers];
-        const observers =
-          maybeObservers instanceof Set
-            ? maybeObservers
-            : isSome(maybeObservers)
-              ? [maybeObservers]
+        const maybeSinks = this[Subject_sinks];
+        const sinks =
+          maybeSinks instanceof Set
+            ? maybeSinks
+            : isSome(maybeSinks)
+              ? [maybeSinks]
               : [];
 
-        for (const observer of observers) {
-          if (observer[SinkLike_isCompleted]) {
-            // be sure to remove completed observers
-            // ideally we would get notified when an observer
+        for (const sink of sinks) {
+          if (sink[SinkLike_isCompleted]) {
+            // be sure to remove completed sinks
+            // ideally we would get notified when an sink
             // is completed but this api does not yet exist.
-            call(this[Subject_onObserverDisposed], observer);
+            call(this[Subject_onSinkDisposed], sink);
             continue;
           }
           try {
-            observer[EventListenerLike_notify](next);
+            sink[EventListenerLike_notify](next);
           } catch (e) {
-            observer[DisposableLike_dispose](error(e));
+            sink[DisposableLike_dispose](error(e));
           }
         }
       },
 
-      [ObservableLike_observe](
+      [BroadcasterLike_connect](
         this: TProperties & SubjectLike<T> & QueueLike<T>,
-        observer: ObserverLike<T>,
+        sink: SinkLike<T>,
       ) {
-        const maybeObservers = this[Subject_observers];
+        const maybeSinks = this[Subject_sinks];
 
         if (
-          (maybeObservers instanceof Set &&
-            maybeObservers[Set_has](observer)) ||
-          maybeObservers === observer
+          (maybeSinks instanceof Set &&
+            maybeSinks[Set_has](sink)) ||
+          maybeSinks === sink
         ) {
           return;
         }
 
         if (isSome(this[DisposableLike_error])) {
-          observer[DisposableLike_dispose](this[DisposableLike_error]);
+          sink[DisposableLike_dispose](this[DisposableLike_error]);
           return;
         }
 
         if (!this[DisposableLike_isDisposed]) {
-          if (maybeObservers instanceof Set) {
-            maybeObservers[Set_add](observer);
-          } else if (isSome(maybeObservers)) {
-            const listeners = (this[Subject_observers] =
-              newInstance<Set<ObserverLike<T>>>(Set));
-            listeners[Set_add](maybeObservers);
-            listeners[Set_add](observer);
+          if (maybeSinks instanceof Set) {
+            maybeSinks[Set_add](sink);
+          } else if (isSome(maybeSinks)) {
+            const listeners = (this[Subject_sinks] =
+              newInstance<Set<SinkLike<T>>>(Set));
+            listeners[Set_add](maybeSinks);
+            listeners[Set_add](sink);
           } else {
-            this[Subject_observers] = observer;
+            this[Subject_sinks] = sink;
           }
 
           pipe(
-            observer,
-            DisposableContainer.onDisposed(this[Subject_onObserverDisposed]),
+            sink,
+            DisposableContainer.onDisposed(this[Subject_onSinkDisposed]),
           );
         }
 
         for (const next of this) {
-          observer[EventListenerLike_notify](next);
+          sink[EventListenerLike_notify](next);
         }
 
         if (this[DisposableLike_isDisposed]) {
-          observer[SinkLike_complete]();
+          sink[SinkLike_complete]();
         }
       },
     },

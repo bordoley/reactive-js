@@ -13,9 +13,9 @@ import * as EventSource from "./computations/EventSource.js";
 import * as Observable from "./computations/Observable.js";
 import * as Subject from "./computations/Subject.js";
 import {
+  BroadcasterLike,
   DeferredObservableLike,
   EventSourceLike,
-  MulticastObservableLike,
   ObservableLike,
   StoreLike,
   StoreLike_value,
@@ -71,7 +71,7 @@ interface ReactModule {
 
   createComponent<TProps>(
     fn: Function1<
-      MulticastObservableLike<TProps>,
+      BroadcasterLike<TProps>,
       ObservableLike<ReactElement>
     >,
     options?: {
@@ -155,7 +155,7 @@ interface ReactModule {
 type Signature = ReactModule;
 
 export const createComponent: Signature["createComponent"] = <TProps>(
-  fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>,
+  fn: Function1<BroadcasterLike<TProps>, ObservableLike<ReactElement>>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: BackpressureStrategy;

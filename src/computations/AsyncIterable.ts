@@ -23,7 +23,6 @@ import {
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   PauseableEventSourceLike,
-  PauseableObservableLike,
   PureAsyncIterableLike,
   SequentialComputationModule,
 } from "../computations.js";
@@ -36,7 +35,6 @@ import {
   SideEffect,
   SideEffect1,
   alwaysTrue,
-  bindMethod,
   error,
   invoke,
   isFunction,
@@ -51,29 +49,18 @@ import {
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as DisposableContainer from "../utils/DisposableContainer.js";
 import {
-  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
-  ObserverLike,
-  SchedulerLike,
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  SinkLike_complete,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
-import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
-import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
 import * as PauseableEventSource from "./PauseableEventSource.js";
-import * as PauseableObservable from "./PauseableObservable.js";
 
 /**
  * @noInheritDoc
@@ -103,16 +90,6 @@ export interface AsyncIterableModule
   toEventSource<T>(): Function1<
     AsyncIterableLike<T>,
     PauseableEventSourceLike<T> & DisposableLike
-  >;
-
-  toPauseableObservable<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-    },
-  ): Function1<
-    AsyncIterableLike<T>,
-    PauseableObservableLike<T> & DisposableLike
   >;
 }
 
@@ -753,6 +730,7 @@ export const toEventSource: Signature["toEventSource"] =
       ),
     );
 
+    /*
 export const toPauseableObservable: Signature["toPauseableObservable"] =
   <T>(
     scheduler: SchedulerLike,
@@ -830,7 +808,7 @@ export const toPauseableObservable: Signature["toPauseableObservable"] =
         Observable_multicast(scheduler, options),
         Disposable.addToContainer(modeObs),
       ),
-    );
+    );*/
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/

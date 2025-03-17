@@ -35,6 +35,7 @@ import {
   PauseableLike_resume,
   SchedulerLike,
 } from "../../../utils.js";
+import * as Broadcaster from "../../Broadcaster.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
@@ -76,13 +77,14 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       const pauseableScheduler = PauseableScheduler.create(animationScheduler);
       const publisher = Publisher.create<number>();
       const accFeedbackStream = Subject.create<number>({ replay: 1 });
+      const otherObs =pipe(accFeedbackStream,  Broadcaster.toObservable());
 
       const operator = compose(
         Observable.withLatestFrom<
           Streamable.SpringEvent,
           number,
           DeferredObservableLike<boolean>
-        >(accFeedbackStream, (updater, acc) => {
+        >(otherObs, (updater, acc) => {
           const command = isFunction(updater) ? updater(acc) : updater;
           const springCommandOptions =
             isNumber(command) || isReadonlyArray(command)
@@ -142,7 +144,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
               )
             : Observable.empty();
         }),
-        Observable.switchAll(),
+        Observable.switchAll()
       );
 
       init(

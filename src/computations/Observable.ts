@@ -17,7 +17,6 @@ import {
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
   MulticastObservableLike,
-  MulticastedComputationModule,
   ObservableLike,
   PauseableEventSourceLike,
   PauseableObservableLike,
@@ -80,7 +79,6 @@ import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fro
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_fromObservable from "./Observable/__private__/Observable.fromObservable.js";
-import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
@@ -94,7 +92,6 @@ import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_merge from "./Observable/__private__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__private__/Observable.mergeAll.js";
 import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
-import Observable_never from "./Observable/__private__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__private__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_raise from "./Observable/__private__/Observable.raise.js";
@@ -244,8 +241,7 @@ export interface ObservableModule
     >,
     SequentialReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation>,
-    ConcurrentDeferredComputationModule<ObservableComputation>,
-    MulticastedComputationModule<ObservableComputation> {
+    ConcurrentDeferredComputationModule<ObservableComputation>  {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
@@ -467,7 +463,6 @@ export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromObservable: Signature["fromObservable"] =
   Observable_fromObservable;
-export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;
 export const fromStore: Signature["fromStore"] = Observable_fromStore;
@@ -483,7 +478,6 @@ export const map: Signature["map"] = Observable_map;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
 export const merge: Signature["merge"] = Observable_merge;
 export const multicast: Signature["multicast"] = Observable_multicast;
-export const never: Signature["never"] = Observable_never;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const raise: Signature["raise"] = Observable_raise;

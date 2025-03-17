@@ -5,18 +5,13 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
 import {
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
 } from "../../computations.js";
-import { error, none, pipe, pipeLazy, pipeLazyAsync } from "../../functions.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
-import * as HostScheduler from "../../utils/HostScheduler.js";
+import { error, pipe, pipeLazy, pipeLazyAsync } from "../../functions.js";
 import {
-  PauseableLike_pause,
   PauseableLike_resume,
-  SchedulerLike_schedule,
 } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
@@ -89,6 +84,7 @@ testModule(
       }, expectToThrowAsync),
     ),
   ),
+  /*
   describe(
     "toPauseableObservable",
     testAsync("infinite immediately resolving iterable", async () => {
@@ -171,7 +167,7 @@ testModule(
         await pipe(stream, Observable.lastAsync({ scheduler }));
       }, expectToThrowAsync),
     ),
-  ),
+  ),*/
 );
 
 ((_: AsyncIterable.Signature) => {})(AsyncIterable);

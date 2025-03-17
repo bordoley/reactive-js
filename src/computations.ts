@@ -1392,7 +1392,7 @@ export interface ConcurrentReactiveComputationModule<
     selector: Function2<TA, TB, T>,
   ): Function1<
     ComputationOf<TComputationType, TA>,
-    DeferredComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>
+    DeferredComputationWithSideEffectsOf<TComputationType, T>
   >;
   withLatestFrom<TA, TB>(
     other: MulticastComputationOf<TComputationType, TB>,
@@ -1663,12 +1663,24 @@ export interface MulticastObservableLike<out T = unknown>
   readonly [ComputationLike_isSynchronous]: false;
 }
 
+export const BroadcasterLike_connect = Symbol("BroadcasterLike_connect");
+
+export interface BroadcasterLike<out T = unknown>
+  extends ComputationLike,
+    MulticastLike {
+  readonly [ComputationLike_isDeferred]: false;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]: false;
+
+  [BroadcasterLike_connect](sink: SinkLike<T>): void;
+}
+
 /**
  * @noInheritDoc
  */
 export interface SubjectLike<out T = unknown>
-  extends MulticastObservableLike<T>,
-    EventListenerLike<T> {}
+  extends BroadcasterLike<T>,
+    SinkLike<T> {}
 
 /**
  * @noInheritDoc

@@ -26,6 +26,7 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as Broadcaster from "../Broadcaster.js"
 
 testModule(
   "Cache",
@@ -43,6 +44,7 @@ testModule(
           tuple(2, () => {
             pipe(
               Cache.get(cache, "abc"),
+              Broadcaster.toObservable(),
               Observable.forEach(bindMethod(result, Array_push)),
               Observable.subscribe(vts),
             );
@@ -71,6 +73,7 @@ testModule(
           tuple(2, () => {
             pipe(
               Cache.get(cache, "abc"),
+              Broadcaster.toObservable(),
               Observable.forEach(bindMethod(result, Array_push)),
               Observable.subscribe(vts),
             );
@@ -95,6 +98,7 @@ testModule(
       const result1: number[] = [];
       const abcSubscription1 = pipe(
         Cache.get(cache, "abc"),
+        Broadcaster.toObservable(),
         Observable.forEach(bindMethod(result1, Array_push)),
         Observable.subscribe(vts),
       );
@@ -111,6 +115,7 @@ testModule(
           tuple(3, () => {
             abcSubscription2 = pipe(
               Cache.get(cache, "abc"),
+              Broadcaster.toObservable(),
               Observable.forEach(bindMethod(result2, Array_push)),
               Observable.subscribe(vts),
             );
@@ -128,6 +133,7 @@ testModule(
           tuple(17, () => {
             abcSubscription3 = pipe(
               Cache.get(cache, "abc"),
+              Broadcaster.toObservable(),
               Observable.forEach(bindMethod(result3, Array_push)),
               Observable.subscribe(vts),
             );
@@ -187,6 +193,7 @@ testModule(
       const result1: number[] = [];
       pipe(
         Cache.get(cache, "abc"),
+        Broadcaster.toObservable(),
         Observable.forEach(bindMethod(result1, Array_push)),
         Observable.subscribe(vts),
       );
