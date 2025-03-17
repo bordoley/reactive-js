@@ -1,31 +1,35 @@
-import { Predicate, newInstance } from "../../../functions.js";
-import AbstractSink, {
-  AbstractSink_delegate,
-} from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+} from "../../../__internal__/mixins.js";
+import { Predicate, none, partial, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import KeepMixin from "../../../utils/__mixins__/EventListeners/KeepMixin.js";
+import LiftedSinkMixin from "../../../utils/__mixins__/LiftedSinkMixin.js";
+import { SinkLike } from "../../../utils.js";
 
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-class KeepSink<T> extends AbstractSink<T> {
-  constructor(
-    sink: SinkLike<T>,
-    private readonly p: Predicate<T>,
-  ) {
-    super(sink);
-  }
-  [EventListenerLike_notify](next: T): void {
-    if (this.p(next)) {
-      this[AbstractSink_delegate][EventListenerLike_notify](next);
-    }
-  }
-}
+const Runnable_keep: Runnable.Signature["keep"] = /*@__PURE__*/ (<T>() => {
+  const createKeepSink = mixInstanceFactory(
+    include(DelegatingDisposableMixin, LiftedSinkMixin(), KeepMixin()),
+    function KeepEventListener(
+      this: unknown,
+      delegate: SinkLike<T>,
+      predicate: Predicate<T>,
+    ): SinkLike<T> {
+      init(DelegatingDisposableMixin, this, delegate);
+      init(LiftedSinkMixin<T>(), this, delegate, none);
+      init(KeepMixin(), this, predicate);
 
-const Runnable_keep: Runnable.Signature["keep"] = <T>(
-  predicate: Predicate<T>,
-) =>
-  Runnable_lift((sink: SinkLike<T>) =>
-    newInstance(KeepSink<T>, sink, predicate),
+      return this;
+    },
   );
+
+  return (predicate: Predicate<T>) =>
+    pipe(createKeepSink, partial(predicate), Runnable_lift);
+})() as Runnable.Signature["keep"];
 
 export default Runnable_keep;

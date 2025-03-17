@@ -12,32 +12,27 @@ import { EventListenerLike } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
-  const createMapEventListener: <TA, TB>(
-    delegate: EventListenerLike<TB>,
-    predicate: Function1<TA, TB>,
-  ) => EventListenerLike<TA> = (<TA, TB>() =>
-    mixInstanceFactory(
-      include(
-        DelegatingDisposableMixin,
-        LiftedEventListenerMixin(),
-        MapMixin(),
-      ),
-      function MapEventListener(
-        this: unknown,
-        delegate: EventListenerLike<TB>,
-        selector: Function1<TA, TB>,
-      ): EventListenerLike<TA> {
-        init(DelegatingDisposableMixin, this, delegate);
-        init(LiftedEventListenerMixin<TA, TB>(), this, delegate, none);
-        init(MapMixin<TA, TB>(), this, selector);
+const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (<
+  TA,
+  TB,
+>() => {
+  const createMapEventListener = mixInstanceFactory(
+    include(DelegatingDisposableMixin, LiftedEventListenerMixin(), MapMixin()),
+    function MapEventListener(
+      this: unknown,
+      delegate: EventListenerLike<TB>,
+      selector: Function1<TA, TB>,
+    ): EventListenerLike<TA> {
+      init(DelegatingDisposableMixin, this, delegate);
+      init(LiftedEventListenerMixin<TA, TB>(), this, delegate, none);
+      init(MapMixin<TA, TB>(), this, selector);
 
-        return this;
-      },
-    ))();
+      return this;
+    },
+  );
 
-  return <TA, TB>(selector: Function1<TA, TB>) =>
-    pipe(createMapEventListener<TA, TB>, partial(selector), EventSource_lift);
+  return (selector: Function1<TA, TB>) =>
+    pipe(createMapEventListener, partial(selector), EventSource_lift);
 })();
 
 export default EventSource_map;

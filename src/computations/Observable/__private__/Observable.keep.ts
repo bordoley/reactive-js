@@ -6,10 +6,7 @@ import {
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import KeepMixin from "../../../utils/__mixins__/EventListeners/KeepMixin.js";
-import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
-import LiftedObserverMixin, {
-  LiftedObserverLike,
-} from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
@@ -21,7 +18,7 @@ const createKeepObserver: <T>(
   mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin(), KeepMixin()),
     function KeepObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify>,
+      this: unknown,
       delegate: ObserverLike<T>,
       predicate: Predicate<T>,
     ): ObserverLike<T> {

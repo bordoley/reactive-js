@@ -7,12 +7,12 @@ import MapMixin from "../../../utils/__mixins__/EventListeners/MapMixin.js";
 import LiftedEventListenerMixin from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_map = /*@__PURE__*/ (() => {
-    const createMapEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedEventListenerMixin(), MapMixin()), function MapEventListener(delegate, selector) {
+    const createMapEventListener = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedEventListenerMixin(), MapMixin()), function MapEventListener(delegate, selector) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedEventListenerMixin(), this, delegate, none);
         init(MapMixin(), this, selector);
         return this;
-    }))();
-    return (selector) => pipe((createMapEventListener), partial(selector), EventSource_lift);
+    });
+    return (selector) => pipe(createMapEventListener, partial(selector), EventSource_lift);
 })();
 export default EventSource_map;

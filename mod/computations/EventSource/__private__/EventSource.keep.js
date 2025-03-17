@@ -7,12 +7,12 @@ import KeepMixin from "../../../utils/__mixins__/EventListeners/KeepMixin.js";
 import LiftedEventListenerMixin from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_keep = /*@__PURE__*/ (() => {
-    const createKeepEventListener = (() => mixInstanceFactory(include(DelegatingDisposableMixin, LiftedEventListenerMixin(), KeepMixin()), function KeepEventListener(delegate, predicate) {
+    const createKeepEventListener = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedEventListenerMixin(), KeepMixin()), function KeepEventListener(delegate, predicate) {
         init(DelegatingDisposableMixin, this, delegate);
         init(LiftedEventListenerMixin(), this, delegate, none);
         init(KeepMixin(), this, predicate);
         return this;
-    }))();
-    return (predicate) => pipe((createKeepEventListener), partial(predicate), EventSource_lift);
+    });
+    return (predicate) => pipe(createKeepEventListener, partial(predicate), EventSource_lift);
 })();
 export default EventSource_keep;

@@ -1,19 +1,18 @@
 /// <reference types="./Runnable.map.d.ts" />
 
-import { newInstance } from "../../../functions.js";
-import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { EventListenerLike_notify } from "../../../utils.js";
+import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
+import { none, partial, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import MapMixin from "../../../utils/__mixins__/EventListeners/MapMixin.js";
+import LiftedSinkMixin from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import Runnable_lift from "./Runnable.lift.js";
-class MapSink extends AbstractSink {
-    s;
-    constructor(sink, s) {
-        super(sink);
-        this.s = s;
-    }
-    [EventListenerLike_notify](next) {
-        const mapped = this.s(next);
-        this[AbstractSink_delegate][EventListenerLike_notify](mapped);
-    }
-}
-const Runnable_map = (selector) => Runnable_lift((sink) => newInstance((MapSink), sink, selector));
+const Runnable_map = /*@__PURE__*/ (() => {
+    const createMapEventListener = mixInstanceFactory(include(DelegatingDisposableMixin, LiftedSinkMixin(), MapMixin()), function MapEventListener(delegate, selector) {
+        init(DelegatingDisposableMixin, this, delegate);
+        init(LiftedSinkMixin(), this, delegate, none);
+        init(MapMixin(), this, selector);
+        return this;
+    });
+    return (selector) => pipe(createMapEventListener, partial(selector), Runnable_lift);
+})();
 export default Runnable_map;
