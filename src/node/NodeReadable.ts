@@ -1,18 +1,14 @@
 import { Readable } from "stream";
-import * as EventSource from "../computations/EventSource.js";
-import * as PauseableEventSource from "../computations/PauseableEventSource.js";
 import * as Producer from "../computations/Producer.js";
 import {
   PauseableEventSourceLike,
   ProducerWithSideEffectsLike,
 } from "../computations.js";
-import { bindMethod, pipe } from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
+import { bindMethod, compose, pipe } from "../functions.js";
 import {
   ConsumerLike_addOnReadyListener,
   ConsumerLike_isReady,
   DisposableLike,
-  DisposableLike_dispose,
   EventListenerLike_notify,
   SinkLike_complete,
 } from "../utils.js";
@@ -27,37 +23,6 @@ interface NodeReadable {
 }
 
 type Signature = NodeReadable;
-
-// FIXME: Ideally this would be implemented as a wrapper around toProducer
-export const toEventSource: Signature["toEventSource"] = readable =>
-  PauseableEventSource.create(mode =>
-    pipe(
-      EventSource.create<Uint8Array>(listener => {
-        pipe(readable, NodeStream.addTo(listener), NodeStream.add(listener));
-
-        readable.pause();
-
-        pipe(
-          mode,
-          EventSource.addEventHandler(isPaused => {
-            if (isPaused) {
-              readable.pause();
-            } else {
-              readable.resume();
-            }
-          }),
-          NodeStream.addToNodeStream(readable),
-        );
-
-        const onData = bindMethod(listener, EventListenerLike_notify);
-        const onEnd = bindMethod(listener, DisposableLike_dispose);
-
-        readable.on("data", onData);
-        readable.on("end", onEnd);
-      }),
-      Disposable.bindTo(mode),
-    ),
-  );
 
 export const toProducer: Signature["toProducer"] = readable =>
   Producer.create(consumer => {
@@ -82,3 +47,6 @@ export const toProducer: Signature["toProducer"] = readable =>
       readable.resume();
     }
   });
+
+export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ (() =>
+  compose(toProducer, Producer.toEventSource()))();

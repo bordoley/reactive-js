@@ -30,11 +30,15 @@
 
 ### toEventSource()
 
-> **toEventSource**(): [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+> **toEventSource**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+#### Type Parameters
+
+• **T**
 
 #### Returns
 
-[`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ***
 

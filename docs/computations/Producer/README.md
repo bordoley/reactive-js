@@ -17,4 +17,5 @@
 ## Functions
 
 - [create](functions/create.md)
+- [toEventSource](functions/toEventSource.md)
 - [toObservable](functions/toObservable.md)

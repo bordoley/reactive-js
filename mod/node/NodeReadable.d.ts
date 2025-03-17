@@ -6,6 +6,6 @@ interface NodeReadable {
     toProducer(readable: Readable): ProducerWithSideEffectsLike<Uint8Array>;
 }
 type Signature = NodeReadable;
-export declare const toEventSource: Signature["toEventSource"];
 export declare const toProducer: Signature["toProducer"];
+export declare const toEventSource: Signature["toEventSource"];
 export {};
