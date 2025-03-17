@@ -41,7 +41,7 @@ const createBackpressureObserver: <T>(
   ))();
 
 const Observable_backpressureStrategy: Observable.Signature["backpressureStrategy"] =
-  <T>(options: {
+  (<T>(options: {
     capacity: number;
     backpressureStrategy: BackpressureStrategy;
   }) =>
@@ -49,6 +49,6 @@ const Observable_backpressureStrategy: Observable.Signature["backpressureStrateg
       createBackpressureObserver<T>,
       partial(options),
       Observable_liftPureDeferred<T, T>,
-    );
+    )) as Observable.Signature["backpressureStrategy"];
 
 export default Observable_backpressureStrategy;

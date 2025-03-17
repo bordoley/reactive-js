@@ -71,7 +71,7 @@ const createTakeWhileObserver: <T>(
     }),
   ))();
 
-const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
+const Observable_takeWhile: Observable.Signature["takeWhile"] = (<T>(
   predicate: Predicate<T>,
   options: { readonly inclusive?: boolean } = {},
 ) =>
@@ -79,6 +79,6 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
     createTakeWhileObserver<T>,
     partial(predicate, options?.inclusive),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["takeWhile"];
 
 export default Observable_takeWhile;

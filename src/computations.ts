@@ -13,7 +13,6 @@ import type {
   Tuple4,
 } from "./functions.js";
 import type {
-  BackpressureStrategy,
   ConsumerLike,
   DisposableContainerLike,
   DisposableLike,
@@ -527,18 +526,14 @@ export type FromObservableOperator<
   T,
 > = <TObservable extends ObservableLike<T>>(
   iterable: TObservable,
-) => TObservable extends PureDeferredObservableLike ? (  
+) => TObservable extends PureObservableLike ? (  
   PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
     PureDeferredComputationOf<TComputationType, T> :
     MulticastComputationOf<TComputationType, T> & DisposableLike
-) : TObservable extends DeferredObservableWithSideEffectsLike ? (
+) : TObservable extends ObservableWithSideEffectsLike ? (
   DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ? 
   DeferredComputationWithSideEffectsOf<TComputationType, T> :
   MulticastComputationOf<TComputationType, T> & DisposableLike
-) : TObservable extends MulticastObservableLike ? (
-  MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-    MulticastComputationOf<TComputationType, T> & DisposableLike :
-    PureDeferredComputationOf<TComputationType, T>
 ) : never;
 
 // prettier-ignore
@@ -621,15 +616,13 @@ export type ToObservableOperator<
       >
     ? SynchronousObservableWithSideEffectsLike<T>
     : TComputationBaseOf extends PureDeferredComputationOf<TComputationType, T>
-      ? PureDeferredObservableLike<T>
+      ? PureObservableLike<T>
       : TComputationBaseOf extends DeferredComputationWithSideEffectsOf<
             TComputationType,
             T
           >
-        ? DeferredObservableWithSideEffectsLike<T>
-        : TComputationBaseOf extends MulticastComputationOf<TComputationType, T>
-          ? MulticastObservableLike<T>
-          : never;
+        ? ObservableWithSideEffectsLike<T>
+        : never;
 
 export type ToRunnableOperator<TComputationType extends ComputationType, T> = <
   TComputationBaseOf extends ComputationBaseOf<TComputationType, T>,
@@ -1281,6 +1274,15 @@ export interface SequentialReactiveComputationModule<
   }): StatefulSynchronousComputationOperator<TComputationType, T, T>;
 }
 
+export interface MulticastedComputationModule<
+  TComputationType extends ComputationType,
+> extends ComputationModuleLike<TComputationType> {
+  fromPromise<T>(): Function1<
+    Promise<T>,
+    MulticastComputationOf<TComputationType, T>
+  >;
+}
+
 export interface ConcurrentReactiveComputationModule<
   TComputationType extends ComputationType,
 > extends ComputationModuleLike<TComputationType> {
@@ -1293,11 +1295,6 @@ export interface ConcurrentReactiveComputationModule<
   fromObservable: <T>(
     scheduler: SchedulerLike,
   ) => FromObservableOperator<TComputationType, T>;
-
-  fromPromise<T>(): Function1<
-    Promise<T>,
-    MulticastComputationOf<TComputationType, T>
-  >;
 
   merge<T>(
     ...computations: readonly PureSynchronousComputationOf<
@@ -1509,48 +1506,51 @@ export const ProducerLike_consume = Symbol("ProducerLike_consume");
  * @noInheritDoc
  */
 export interface ProducerLike<out T = unknown> extends ComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+
   [ProducerLike_consume](consumer: ConsumerLike<T>): void;
 }
 
 /**
  * @noInheritDoc
  */
-export interface MulticastProducerLike<out T = unknown>
-  extends ProducerLike<T>,
-    MulticastLike {
-  readonly [ComputationLike_isDeferred]: false;
-  readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-/**
- * @noInheritDoc
- */
-export interface DeferredProducerLike<out T = unknown>
-  extends ProducerLike<T>,
-    DeferredComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface PureDeferredProducerLike<out T = unknown>
+export interface PureProducerLike<out T = unknown>
   extends ProducerLike<T>,
     PureDeferredComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]?: true;
 }
 
 /**
  * @noInheritDoc
  */
-export interface DeferredProducerWithSideEffectsLike<out T = unknown>
+export interface ProducerWithSideEffectsLike<out T = unknown>
   extends ProducerLike<T>,
     DeferredComputationWithSideEffectsLike {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]: false;
 }
+
+export const BroadcasterLike_connect = Symbol("BroadcasterLike_connect");
+
+/**
+ * @noInheritDoc
+ */
+export interface BroadcasterLike<out T = unknown>
+  extends ComputationLike,
+    MulticastLike {
+  readonly [ComputationLike_isDeferred]: false;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]: false;
+
+  [BroadcasterLike_connect](sink: SinkLike<T>): void;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface PauseableBroadcasterLike<out T = unknown>
+  extends BroadcasterLike<T>,
+    PauseableLike {}
 
 // FIXME: Runnable producers are possible if we validate schedulers are VTS in observable
 
@@ -1591,7 +1591,8 @@ export const ObservableLike_observe = Symbol("ObservableLike_observe");
 /**
  * @noInheritDoc
  */
-export interface ObservableLike<out T = unknown> extends ComputationLike {
+export interface ObservableLike<out T = unknown>
+  extends DeferredComputationLike {
   /**
    * Subscribes the given `ObserverLike` to the `ObservableLike` source.
    *
@@ -1603,17 +1604,8 @@ export interface ObservableLike<out T = unknown> extends ComputationLike {
 /**
  * @noInheritDoc
  */
-export interface DeferredObservableLike<out T = unknown>
-  extends ObservableLike<T>,
-    DeferredComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-}
-
-/**
- * @noInheritDoc
- */
 export interface SynchronousObservableLike<out T = unknown>
-  extends DeferredObservableLike<T>,
+  extends ObservableLike<T>,
     SynchronousComputationLike {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isSynchronous]?: true;
@@ -1625,24 +1617,15 @@ export interface SynchronousObservableLike<out T = unknown>
 export interface PureObservableLike<out T = unknown>
   extends ObservableLike<T>,
     PureComputationLike {
-  readonly [ComputationLike_isPure]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface PureDeferredObservableLike<out T = unknown>
-  extends DeferredObservableLike<T>,
-    PureObservableLike<T> {
-  readonly [ComputationLike_isPure]?: true;
   readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]?: true;
 }
 
 /**
  * @noInheritDoc
  */
-export interface DeferredObservableWithSideEffectsLike<out T = unknown>
-  extends DeferredObservableLike<T> {
+export interface ObservableWithSideEffectsLike<out T = unknown>
+  extends ObservableLike<T> {
   readonly [ComputationLike_isPure]: false;
 }
 
@@ -1651,7 +1634,7 @@ export interface DeferredObservableWithSideEffectsLike<out T = unknown>
  */
 export interface PureSynchronousObservableLike<out T = unknown>
   extends SynchronousObservableLike<T>,
-    PureDeferredObservableLike<T> {
+    ObservableLike<T> {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]?: true;
   readonly [ComputationLike_isSynchronous]?: true;
@@ -1662,7 +1645,7 @@ export interface PureSynchronousObservableLike<out T = unknown>
  */
 export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
   extends SynchronousObservableLike<T>,
-    DeferredObservableWithSideEffectsLike<T> {
+    ObservableWithSideEffectsLike<T> {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]: false;
   readonly [ComputationLike_isSynchronous]?: true;
@@ -1671,26 +1654,9 @@ export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableLike<out T = unknown>
-  extends PureObservableLike<T>,
-    MulticastLike {
-  readonly [ComputationLike_isDeferred]: false;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-/**
- * @noInheritDoc
- */
 export interface SubjectLike<out T = unknown>
-  extends MulticastObservableLike<T>,
-    EventListenerLike<T> {}
-
-/**
- * @noInheritDoc
- */
-export interface PauseableObservableLike<out T = unknown>
-  extends MulticastObservableLike<T>,
-    PauseableLike {}
+  extends BroadcasterLike<T>,
+    SinkLike<T> {}
 
 /**
  * Represents a duplex stream
@@ -1699,7 +1665,7 @@ export interface PauseableObservableLike<out T = unknown>
  */
 export interface StreamLike<TReq, out T>
   extends ConsumerLike<TReq>,
-    MulticastObservableLike<T> {}
+    BroadcasterLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
@@ -1723,24 +1689,10 @@ export interface StreamableLike<
    * @param scheduler - The scheduler to subscribe to the stream with.
    * @param options
    */
-  [StreamableLike_stream](
-    scheduler: SchedulerLike,
-    options?: {
-      readonly autoDispose?: boolean;
-      /**
-       * The number of items to buffer for replay when an observer subscribes
-       * to the stream.
-       */
-      readonly replay?: number;
-
-      /**
-       * The capacity of the stream's request queue.
-       */
-      readonly capacity?: number;
-
-      readonly backpressureStrategy?: BackpressureStrategy;
-    },
-  ): TStream & DisposableLike;
+  [StreamableLike_stream](options?: {
+    autoDispose?: boolean;
+    replay?: number;
+  }): TStream & DisposableLike;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<

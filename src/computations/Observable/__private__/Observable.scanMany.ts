@@ -3,7 +3,6 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredObservableLike,
   HigherOrderInnerComputationLike,
   ObservableLike,
   ObservableLike_observe,

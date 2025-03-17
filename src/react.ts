@@ -13,9 +13,8 @@ import * as EventSource from "./computations/EventSource.js";
 import * as Observable from "./computations/Observable.js";
 import * as Subject from "./computations/Subject.js";
 import {
-  DeferredObservableLike,
+  BroadcasterLike,
   EventSourceLike,
-  MulticastObservableLike,
   ObservableLike,
   StoreLike,
   StoreLike_value,
@@ -63,17 +62,14 @@ interface ReactModule {
     readonly persistentStore?: {
       load(
         keys: ReadonlySet<string>,
-      ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-      store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+      ): ObservableLike<Readonly<Record<string, Optional<T>>>>;
+      store(updates: Readonly<Record<string, T>>): ObservableLike<void>;
     };
     readonly children: React.ReactNode;
   }): React.ReactNode;
 
   createComponent<TProps>(
-    fn: Function1<
-      MulticastObservableLike<TProps>,
-      ObservableLike<ReactElement>
-    >,
+    fn: Function1<BroadcasterLike<TProps>, ObservableLike<ReactElement>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
     },
@@ -155,7 +151,7 @@ interface ReactModule {
 type Signature = ReactModule;
 
 export const createComponent: Signature["createComponent"] = <TProps>(
-  fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>,
+  fn: Function1<BroadcasterLike<TProps>, ObservableLike<ReactElement>>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -361,16 +357,10 @@ export const useStream: Signature["useStream"] = <
   streamableOrFactory: TStreamable | Factory<TStreamable>,
   optionsOrDeps:
     | Optional<{
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
         readonly replay?: number;
       }>
     | readonly unknown[],
   optionsOrNone?: {
-    readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: BackpressureStrategy;
-    readonly capacity?: number;
     readonly replay?: number;
   },
 ) => {
@@ -378,28 +368,22 @@ export const useStream: Signature["useStream"] = <
     ? useMemo(streamableOrFactory, optionsOrDeps as readonly unknown[])
     : streamableOrFactory;
 
-  const {
-    backpressureStrategy,
-    capacity,
-    priority,
-    replay = 1,
-  } = (isFunction(streamableOrFactory)
-    ? optionsOrNone
-    : (optionsOrDeps as Optional<{
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
-        readonly backpressureStrategy?: BackpressureStrategy;
-        readonly capacity?: number;
-        readonly replay?: number;
-      }>)) ?? {};
+  const { replay = 1 } =
+    (isFunction(streamableOrFactory)
+      ? optionsOrNone
+      : (optionsOrDeps as Optional<{
+          readonly priority?: 1 | 2 | 3 | 4 | 5;
+          readonly backpressureStrategy?: BackpressureStrategy;
+          readonly capacity?: number;
+          readonly replay?: number;
+        }>)) ?? {};
 
   const stream = useDisposable(
     () =>
-      streamable[StreamableLike_stream](ReactScheduler.get(priority), {
+      streamable[StreamableLike_stream]({
         replay,
-        backpressureStrategy,
-        capacity,
       }),
-    [streamable, priority, replay, backpressureStrategy, capacity],
+    [streamable, replay],
   );
 
   return stream;
@@ -415,8 +399,8 @@ export const CacheProvider: Signature["CacheProvider"] = <T>(props: {
   readonly persistentStore?: {
     load(
       keys: ReadonlySet<string>,
-    ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-    store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+    ): ObservableLike<Readonly<Record<string, Optional<T>>>>;
+    store(updates: Readonly<Record<string, T>>): ObservableLike<void>;
   };
   children: React.ReactNode;
 }) => {

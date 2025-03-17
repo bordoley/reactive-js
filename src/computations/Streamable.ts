@@ -1,8 +1,9 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
-  DeferredObservableLike,
   EventSourceLike,
-  PureDeferredObservableLike,
+  ObservableLike,
+  ProducerLike,
+  PureProducerLike,
   PureSynchronousObservableLike,
   StreamLike,
   StreamableLike,
@@ -95,7 +96,7 @@ export interface StreamableModule {
   ): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
 
   create<TReq, T>(
-    op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+    op: Function1<PureProducerLike<TReq>, ProducerLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
@@ -123,8 +124,8 @@ export interface StreamableModule {
   ): StreamableLike<Updater<T>, T>;
 
   syncState<T>(
-    onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
-    onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
+    onInit: Function1<T, ObservableLike<Updater<T>>>,
+    onChange: Function2<T, T, ObservableLike<Updater<T>>>,
     options?: {
       readonly throttleDuration?: number;
     },

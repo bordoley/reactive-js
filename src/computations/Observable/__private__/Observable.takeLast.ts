@@ -116,13 +116,13 @@ const createTakeLastObserver: <T>(
   );
 })();
 
-const Observable_takeLast: Observable.Signature["takeLast"] = <T>(
+const Observable_takeLast: Observable.Signature["takeLast"] = (<T>(
   options: { readonly count?: number } = {},
 ) =>
   pipe(
     createTakeLastObserver<T>,
     partial(clampPositiveInteger(options.count ?? 1)),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["takeLast"];
 
 export default Observable_takeLast;

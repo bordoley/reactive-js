@@ -1,7 +1,11 @@
 import { Readable } from "stream";
 import * as EventSource from "../computations/EventSource.js";
 import * as PauseableEventSource from "../computations/PauseableEventSource.js";
-import { PauseableEventSourceLike } from "../computations.js";
+import {
+  PauseableBroadcasterLike,
+  PauseableEventSourceLike,
+  ProducerLike,
+} from "../computations.js";
 import { bindMethod, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import {
@@ -12,14 +16,20 @@ import {
 import * as NodeStream from "./NodeStream.js";
 
 interface NodeReadable {
-  toPauseableEventSource(
+  broadcast(
+    readable: Readable,
+  ): PauseableBroadcasterLike<Uint8Array> & DisposableLike;
+
+  toEventSource(
     readable: Readable,
   ): PauseableEventSourceLike<Uint8Array> & DisposableLike;
 
-  // FIXME: add toProducer()
+  toProducer(readable: Readable): ProducerLike<Uint8Array> & DisposableLike;
 }
 
 type Signature = NodeReadable;
+
+export const broadcast: Signature["broadcast"] = null as any;
 
 export const toPauseableEventSource: Signature["toPauseableEventSource"] =
   readable =>
@@ -51,3 +61,5 @@ export const toPauseableEventSource: Signature["toPauseableEventSource"] =
         Disposable.bindTo(mode),
       ),
     );
+
+export const toProducer: Signature["broadcast"] = null as any;

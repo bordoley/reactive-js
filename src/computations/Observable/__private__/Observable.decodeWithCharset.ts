@@ -95,11 +95,11 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 })();
 
 const Observable_decodeWithCharset: Observable.Signature["decodeWithCharset"] =
-  options =>
+  (options =>
     pipe(
       createDecodeWithCharsetObserver,
       partial(options?.charset ?? "utf-8", options),
       Observable_liftPureDeferred,
-    );
+    )) as Observable.Signature["decodeWithCharset"];
 
 export default Observable_decodeWithCharset;

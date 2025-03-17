@@ -6,6 +6,7 @@ import {
   Computation_multicastOfT,
   ConcurrentReactiveComputationModule,
   EventSourceLike,
+  MulticastedComputationModule,
 } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike } from "../utils.js";
@@ -31,7 +32,6 @@ import EventSource_takeUntil from "./EventSource/__private__/EventSource.takeUnt
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
 import EventSource_zipLatest from "./EventSource/__private__/EventSource.zipLatest.js";
-import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 
 /**
@@ -52,7 +52,8 @@ export type Computation = EventSourceComputation;
  */
 export interface EventSourceModule
   extends ComputationModule<EventSourceComputation>,
-    ConcurrentReactiveComputationModule<EventSourceComputation> {
+    ConcurrentReactiveComputationModule<EventSourceComputation>,
+    MulticastedComputationModule<EventSourceComputation> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
@@ -94,8 +95,6 @@ export const never: Signature["never"] = EventSource_never;
 export const raise: Signature["raise"] = EventSource_raise;
 export const reduceAsync: Signature["reduceAsync"] = EventSource_reduceAsync;
 export const takeUntil: Signature["takeUntil"] = EventSource_takeUntil;
-export const toObservable: Signature["toObservable"] =
-  Observable_fromEventSource as Signature["toObservable"];
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   EventSource_toReadonlyArrayAsync;
 export const withLatestFrom: Signature["withLatestFrom"] =

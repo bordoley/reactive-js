@@ -22,8 +22,9 @@ import {
   EventSourceLike,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
+  PauseableBroadcasterLike,
   PauseableEventSourceLike,
-  PauseableObservableLike,
+  ProducerLike,
   PureAsyncIterableLike,
   SequentialComputationModule,
 } from "../computations.js";
@@ -59,22 +60,20 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
-  ObserverLike,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
+  SinkLike,
   SinkLike_complete,
 } from "../utils.js";
+import * as Broadcaster from "./Broadcaster.js";
 import * as ComputationM from "./Computation.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
-import EventSource_fromAsyncIterable from "./EventSource/__private__/EventSource.fromAsyncIterable.js";
-import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
-import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
+import * as PauseableBroadcaster from "./PauseableBroadcaster.js";
 import * as PauseableEventSource from "./PauseableEventSource.js";
-import * as PauseableObservable from "./PauseableObservable.js";
 
 /**
  * @noInheritDoc
@@ -99,30 +98,95 @@ export interface AsyncIterableModule
     SequentialComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
+  broadcast<T>(scheduler: SchedulerLike): Function1<
+    AsyncIterableLike<T>,
+    PauseableBroadcasterLike<T> & DisposableLike
+  >;
+
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 
   toEventSource<T>(): Function1<
     AsyncIterableLike<T>,
-    EventSourceLike<T> & DisposableLike
-  >;
-
-  toPauseableEventSource<T>(): Function1<
-    AsyncIterableLike<T>,
     PauseableEventSourceLike<T> & DisposableLike
   >;
 
-  toPauseableObservable<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-    },
-  ): Function1<
-    AsyncIterableLike<T>,
-    PauseableObservableLike<T> & DisposableLike
-  >;
+  toProducer<T>(options?: {
+    readonly replay?: number;
+  }): Function1<AsyncIterableLike<T>, ProducerLike<T>>;
 }
 
 export type Signature = AsyncIterableModule;
+
+export const broadcast: Signature["broadcast"] =
+  <T>(scheduler: SchedulerLike) =>
+  (iterable: AsyncIterableLike<T>) =>
+    PauseableBroadcaster.create<T>((modeObs: EventSourceLike<boolean>) =>
+      pipe(
+        Broadcaster.create((sink: SinkLike<T>) => {
+          const iterator = iterable[Symbol.asyncIterator]();
+          const maxYieldInterval = scheduler[SchedulerLike_maxYieldInterval];
+
+          let isPaused = true;
+
+          const continuation = async () => {
+            const startTime = scheduler[SchedulerLike_now];
+
+            try {
+              while (
+                !sink[DisposableLike_isDisposed] &&
+                !isPaused &&
+                scheduler[SchedulerLike_now] - startTime < maxYieldInterval
+              ) {
+                const next = await iterator[Iterator_next]();
+
+                if (next[Iterator_done]) {
+                  sink[SinkLike_complete]();
+                  break;
+                } else if (
+                  (sink[EventListenerLike_notify](next[Iterator_value]),
+                  !sink[ConsumerLike_isReady])
+                ) {
+                  // An async iterable can produce resolved promises which are immediately
+                  // scheduled on the microtask queue. This prevents the sink's scheduler
+                  // from running and draining queued events.
+                  //
+                  // Check the sink's buffer size so we can avoid queueing forever
+                  // in this situation.
+                  break;
+                }
+              }
+            } catch (e) {
+              sink[DisposableLike_dispose](error(e));
+            }
+
+            if (!isPaused) {
+              pipe(
+                sink[SchedulerLike_schedule](continuation),
+                Disposable.addTo(sink),
+              );
+            }
+          };
+
+          pipe(
+            modeObs,
+            EventSource_addEventHandler((mode: boolean) => {
+              const wasPaused = isPaused;
+              isPaused = mode;
+
+              if (!isPaused && wasPaused) {
+                pipe(
+                  scheduler[SchedulerLike_schedule](continuation),
+                  Disposable.addTo(sink),
+                );
+              }
+            }),
+            Disposable.addTo(sink),
+            DisposableContainer.onComplete(bindMethod(sink, SinkLike_complete)),
+          );
+        }),
+        Disposable.addToContainer(modeObs),
+      ),
+    );
 
 class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -713,12 +777,6 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
     )) as Signature["throwIfEmpty"];
 
 export const toEventSource: Signature["toEventSource"] =
-  EventSource_fromAsyncIterable;
-
-export const toObservable: Signature["toObservable"] =
-  Observable_fromAsyncIterable as Signature["toObservable"];
-
-export const toPauseableEventSource: Signature["toPauseableEventSource"] =
   <T>() =>
   (iterable: AsyncIterableLike<T>) =>
     PauseableEventSource.create<T>((modeObs: EventSourceLike<boolean>) =>
@@ -762,84 +820,8 @@ export const toPauseableEventSource: Signature["toPauseableEventSource"] =
       ),
     );
 
-export const toPauseableObservable: Signature["toPauseableObservable"] =
-  <T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-    },
-  ) =>
-  (iterable: AsyncIterableLike<T>) =>
-    PauseableObservable.create<T>((modeObs: EventSourceLike<boolean>) =>
-      pipe(
-        Observable_create((observer: ObserverLike<T>) => {
-          const iterator = iterable[Symbol.asyncIterator]();
-          const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
-
-          let isPaused = true;
-
-          const continuation = async () => {
-            const startTime = observer[SchedulerLike_now];
-
-            try {
-              while (
-                !observer[DisposableLike_isDisposed] &&
-                !isPaused &&
-                observer[SchedulerLike_now] - startTime < maxYieldInterval
-              ) {
-                const next = await iterator[Iterator_next]();
-
-                if (next[Iterator_done]) {
-                  observer[SinkLike_complete]();
-                  break;
-                } else if (
-                  (observer[EventListenerLike_notify](next[Iterator_value]),
-                  !observer[ConsumerLike_isReady])
-                ) {
-                  // An async iterable can produce resolved promises which are immediately
-                  // scheduled on the microtask queue. This prevents the observer's scheduler
-                  // from running and draining queued events.
-                  //
-                  // Check the observer's buffer size so we can avoid queueing forever
-                  // in this situation.
-                  break;
-                }
-              }
-            } catch (e) {
-              observer[DisposableLike_dispose](error(e));
-            }
-
-            if (!isPaused) {
-              pipe(
-                observer[SchedulerLike_schedule](continuation),
-                Disposable.addTo(observer),
-              );
-            }
-          };
-
-          pipe(
-            modeObs,
-            EventSource_addEventHandler((mode: boolean) => {
-              const wasPaused = isPaused;
-              isPaused = mode;
-
-              if (!isPaused && wasPaused) {
-                pipe(
-                  observer[SchedulerLike_schedule](continuation),
-                  Disposable.addTo(observer),
-                );
-              }
-            }),
-            Disposable.addTo(observer),
-            DisposableContainer.onComplete(
-              bindMethod(observer, SinkLike_complete),
-            ),
-          );
-        }),
-        Observable_multicast(scheduler, options),
-        Disposable.addToContainer(modeObs),
-      ),
-    );
+export const toObservable: Signature["toObservable"] =
+  Observable_fromAsyncIterable as Signature["toObservable"];
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/

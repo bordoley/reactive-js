@@ -1,33 +1,30 @@
 import {
+  BroadcasterLike,
   ComputationModule,
   ComputationOperatorWithSideEffects,
   ComputationType,
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
-  DeferredObservableWithSideEffectsLike,
   EventSourceLike,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
-  MulticastObservableLike,
   ObservableLike,
-  PauseableEventSourceLike,
-  PauseableObservableLike,
+  ObservableWithSideEffectsLike,
+  PauseableBroadcasterLike,
   ProducerLike,
-  PureDeferredObservableLike,
+  PureObservableLike,
   PureSynchronousObservableLike,
   SequentialComputationModule,
   SequentialReactiveComputationModule,
   StatefulAsynchronousComputationOperator,
   StatefulSynchronousComputationOperator,
-  StoreLike,
   SynchronousComputationModule,
   SynchronousObservableLike,
   SynchronousObservableWithSideEffectsLike,
@@ -52,6 +49,7 @@ import {
 } from "../utils.js";
 import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
+import Observable_broadcast from "./Observable/__private__/Observable.broadcast.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__private__/Observable.combineLatest.js";
@@ -66,7 +64,6 @@ import Observable_concatAll from "./Observable/__private__/Observable.concatAll.
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
-import Observable_defer from "./Observable/__private__/Observable.defer.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__private__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
@@ -77,11 +74,8 @@ import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__private__/Observable.fromAsyncFactory.js";
 import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
-import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_fromObservable from "./Observable/__private__/Observable.fromObservable.js";
-import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
-import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__private__/Observable.fromValue.js";
 import Observable_gen from "./Observable/__private__/Observable.gen.js";
 import Observable_genWithSideEffects from "./Observable/__private__/Observable.genWithSideEffects.js";
@@ -92,7 +86,6 @@ import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_merge from "./Observable/__private__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__private__/Observable.mergeAll.js";
-import Observable_multicast from "./Observable/__private__/Observable.multicast.js";
 import Observable_never from "./Observable/__private__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__private__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
@@ -120,8 +113,6 @@ import Observable_throttle, {
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
-import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
-import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -133,10 +124,10 @@ import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.
 export interface ObservableComputation extends ComputationType {
   readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
 
-  readonly [Computation_pureDeferredOfT]?: PureDeferredObservableLike<
+  readonly [Computation_pureDeferredOfT]?: PureObservableLike<
     this[typeof Computation_T]
   >;
-  readonly [Computation_deferredWithSideEffectsOfT]?: DeferredObservableWithSideEffectsLike<
+  readonly [Computation_deferredWithSideEffectsOfT]?: ObservableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
 
@@ -144,10 +135,6 @@ export interface ObservableComputation extends ComputationType {
     this[typeof Computation_T]
   >;
   readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousObservableWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
-
-  readonly [Computation_multicastOfT]: MulticastObservableLike<
     this[typeof Computation_T]
   >;
 }
@@ -255,12 +242,24 @@ export interface ObservableModule
     backpressureStrategy: BackpressureStrategy;
   }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
 
+  broadcast<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly replay?: number;
+    },
+  ): <TObservableIn extends ObservableLike<T>>(
+    obs: TObservableIn,
+  ) => TObservableIn extends SynchronousObservableLike<T>
+    ? PauseableBroadcasterLike<T> & DisposableLike
+    : BroadcasterLike<T> & DisposableLike;
+
   computeDeferred<T>(
     computation: Factory<T>,
     options?: {
       readonly mode?: ComputeMode;
     },
-  ): DeferredObservableWithSideEffectsLike<T>;
+  ): ObservableWithSideEffectsLike<T>;
 
   computeSynchronous<T>(
     computation: Factory<T>,
@@ -269,15 +268,9 @@ export interface ObservableModule
     },
   ): SynchronousObservableWithSideEffectsLike<T>;
 
-  create<T>(
-    f: SideEffect1<ObserverLike<T>>,
-  ): DeferredObservableWithSideEffectsLike<T>;
+  create<T>(f: SideEffect1<ObserverLike<T>>): ObservableWithSideEffectsLike<T>;
 
   currentTime: PureSynchronousObservableLike<number>;
-
-  defer<T>(
-    f: Factory<MulticastObservableLike<T> & DisposableLike>,
-  ): PureDeferredObservableLike<T>;
 
   exhaust<T>(): HigherOrderComputationOperator<
     ObservableComputation,
@@ -293,13 +286,6 @@ export interface ObservableModule
     HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
   >;
-
-  fromEventSource<T>(): Function1<
-    EventSourceLike<T>,
-    MulticastObservableLike<T>
-  >;
-
-  fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 
   keyFrame(
     duration: number,
@@ -329,14 +315,6 @@ export interface ObservableModule
     HigherOrderInnerComputationOf<ObservableComputation, TInnerLike, T>,
     T
   >;
-
-  multicast<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly autoDispose?: boolean;
-      readonly replay?: number;
-    },
-  ): Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
 
   onSubscribe<T>(
     f: Factory<DisposableLike | SideEffect1<Optional<Error>>> | SideEffect,
@@ -401,23 +379,6 @@ export interface ObservableModule
     scheduler: SchedulerLike,
   ): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
 
-  toPauseableEventSource<T>(
-    scheduler: SchedulerLike,
-  ): Function1<
-    SynchronousObservableLike<T>,
-    PauseableEventSourceLike<T> & DisposableLike
-  >;
-
-  toPauseableObservable<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-    },
-  ): Function1<
-    SynchronousObservableLike<T>,
-    PauseableObservableLike<T> & DisposableLike
-  >;
-
   toProducer<T>(
     scheduler: SchedulerLike,
   ): Function1<ObservableLike<T>, ProducerLike<T>>;
@@ -433,6 +394,7 @@ export const actionReducer: Signature["actionReducer"] =
   Observable_actionReducer;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
+export const broadcast: Signature["broadcast"] = Observable_broadcast;
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
 export const combineLatest: Signature["combineLatest"] =
@@ -447,7 +409,6 @@ export const create: Signature["create"] = Observable_create;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
-export const defer: Signature["defer"] = Observable_defer;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
@@ -461,14 +422,10 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   Observable_fromAsyncIterable;
-export const fromEventSource: Signature["fromEventSource"] =
-  Observable_fromEventSource;
 export const fromObservable: Signature["fromObservable"] =
   Observable_fromObservable;
-export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;
-export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const gen: Signature["gen"] = Observable_gen;
 export const genWithSideEffects: Signature["genWithSideEffects"] =
@@ -480,7 +437,6 @@ export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
 export const merge: Signature["merge"] = Observable_merge;
-export const multicast: Signature["multicast"] = Observable_multicast;
 export const never: Signature["never"] = Observable_never;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
@@ -508,10 +464,6 @@ export const toEventSource: Signature["toEventSource"] =
 export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toObservable"];
-export const toPauseableEventSource: Signature["toPauseableEventSource"] =
-  Observable_toPauseableEventSource;
-export const toPauseableObservable: Signature["toPauseableObservable"] =
-  Observable_toPauseableObservable;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;

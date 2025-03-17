@@ -23,9 +23,9 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
+import Observable_multicast from "./Observable.broadcast.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_merge from "./Observable.merge.js";
-import Observable_multicast from "./Observable.multicast.js";
 
 const ObservableModule = { merge: Observable_merge };
 
@@ -77,32 +77,26 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<
     const isSynchronous =
       Computation.isMulticasted(innerType) && Computation.isSynchronous(obs);
 
-    return Computation.isMulticasted(obs)
-      ? pipe(
-          ops,
-          ReadonlyArray.map(op => op(obs as MulticastObservableLike<TIn>)),
-          Computation.mergeMany(ObservableModule),
-        )
-      : Observable_createWithConfig<TOut>(
-          observer => {
-            const src = pipe(
-              obs as DeferredObservableLike<TIn>,
-              Observable_multicast(observer, { autoDispose: true }),
-              Disposable.addTo(observer),
-            );
-
-            pipe(
-              ops,
-              ReadonlyArray.map(op => op(src)),
-              Computation.mergeMany(ObservableModule),
-              invoke(ObservableLike_observe, observer),
-            );
-          },
-          {
-            [ComputationLike_isPure]: isPure,
-            [ComputationLike_isSynchronous]: isSynchronous,
-          },
+    return Observable_createWithConfig<TOut>(
+      observer => {
+        const src = pipe(
+          obs as DeferredObservableLike<TIn>,
+          Observable_multicast(observer, { autoDispose: true }),
+          Disposable.addTo(observer),
         );
+
+        pipe(
+          ops,
+          ReadonlyArray.map(op => op(src)),
+          Computation.mergeMany(ObservableModule),
+          invoke(ObservableLike_observe, observer),
+        );
+      },
+      {
+        [ComputationLike_isPure]: isPure,
+        [ComputationLike_isSynchronous]: isSynchronous,
+      },
+    );
   }) as unknown as Observable.Signature["forkMerge"];
 
 export default Observable_forkMerge;

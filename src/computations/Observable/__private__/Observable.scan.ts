@@ -79,7 +79,7 @@ const createScanObserver: <T, TAcc>(
   );
 })();
 
-const Observable_scan: Observable.Signature["scan"] = <T, TAcc>(
+const Observable_scan: Observable.Signature["scan"] = (<T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) =>
@@ -87,6 +87,6 @@ const Observable_scan: Observable.Signature["scan"] = <T, TAcc>(
     createScanObserver<T, TAcc>,
     partial(reducer, initialValue),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["scan"];
 
 export default Observable_scan;

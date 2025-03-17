@@ -1,7 +1,7 @@
 import { SchedulerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
-import Observable_multicast from "./Observable.multicast.js";
+import Observable_multicast from "./Observable.broadcast.js";
 import Observable_subscribeOn from "./Observable.subscribeOn.js";
 
 // Intentionally convoluted implementation to match the spec of the type signature.

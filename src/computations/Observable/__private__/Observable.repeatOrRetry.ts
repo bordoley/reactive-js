@@ -1,5 +1,4 @@
 import {
-  DeferredObservableLike,
   ObservableLike,
   ProducerLike_consume,
   StatelessComputationOperator,
@@ -79,7 +78,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   };
 
   return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (observable: DeferredObservableLike<T>) =>
+    (observable: ObservableLike<T>) =>
       Observable_liftPure(
         pipe(createRepeatObserver, partial(observable, shouldRepeat)),
       )(observable)) as ObservableRepeatOrRetry;

@@ -88,13 +88,13 @@ const createThrowIfEmptyObserver: <T>(
   );
 })();
 
-const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = <T>(
+const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = (<T>(
   factory: Factory<unknown>,
 ) =>
   pipe(
     createThrowIfEmptyObserver<T>,
     partial(factory),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["throwIfEmpty"];
 
 export default Observable_throwIfEmpty;

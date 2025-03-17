@@ -4,7 +4,7 @@ import {
   mixInstanceFactory,
   props,
 } from "../../../__internal__/mixins.js";
-import { Tuple2, none, tuple } from "../../../functions.js";
+import { Tuple2, none, returns, tuple } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
@@ -62,7 +62,11 @@ const createPairwiseObserver: <T>(
     },
   ))();
 
-const Observable_pairwise: Observable.Signature["pairwise"] = <T>() =>
-  Observable_liftPureDeferred<T, Tuple2<T, T>>(createPairwiseObserver<T>);
+const Observable_pairwise: Observable.Signature["pairwise"] = /*@__PURE__*/ (<
+  T,
+>() =>
+  returns(
+    Observable_liftPureDeferred<T, Tuple2<T, T>>(createPairwiseObserver<T>),
+  ))() as Observable.Signature["pairwise"];
 
 export default Observable_pairwise;

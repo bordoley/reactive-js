@@ -68,13 +68,13 @@ const createTakeFirstObserver: <T>(
     }),
   ))();
 
-const Observable_takeFirst: Observable.Signature["takeFirst"] = <T>(options?: {
+const Observable_takeFirst: Observable.Signature["takeFirst"] = (<T>(options?: {
   readonly count?: number;
 }) =>
   pipe(
     createTakeFirstObserver<T>,
     partial(options?.count),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["takeFirst"];
 
 export default Observable_takeFirst;

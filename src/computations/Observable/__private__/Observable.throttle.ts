@@ -175,7 +175,7 @@ const createThrottleObserver: <T>(
   );
 })();
 
-const Observable_throttle: Observable.Signature["throttle"] = <T>(
+const Observable_throttle: Observable.Signature["throttle"] = (<T>(
   duration: number,
   options: { readonly mode?: Observable.ThrottleMode } = {},
 ) => {
@@ -191,6 +191,6 @@ const Observable_throttle: Observable.Signature["throttle"] = <T>(
     partial(durationObservable, mode),
     Observable_liftPureDeferred,
   );
-};
+}) as Observable.Signature["throttle"];
 
 export default Observable_throttle;

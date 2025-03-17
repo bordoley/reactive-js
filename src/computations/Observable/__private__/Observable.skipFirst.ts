@@ -66,12 +66,12 @@ const createSkipFirstObserver: <T>(
     }),
   ))();
 
-const Observable_skipFirst: Observable.Signature["skipFirst"] = <T>(options?: {
+const Observable_skipFirst: Observable.Signature["skipFirst"] = (<T>(options?: {
   readonly count?: number;
 }) =>
   pipe(
     createSkipFirstObserver<T>,
     partial(options?.count),
     Observable_liftPureDeferred,
-  );
+  )) as Observable.Signature["skipFirst"];
 export default Observable_skipFirst;

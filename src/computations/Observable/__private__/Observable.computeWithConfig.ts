@@ -7,8 +7,8 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredObservableWithSideEffectsLike,
   ObservableLike,
+  ObservableWithSideEffectsLike,
   SynchronousObservableWithSideEffectsLike,
 } from "../../../computations.js";
 import {
@@ -402,20 +402,20 @@ interface ObservableComputeWithConfig {
   computeWithConfig<T>(
     computation: Factory<T>,
     config: Pick<
-      DeferredObservableWithSideEffectsLike,
+      ObservableWithSideEffectsLike,
       | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
     >,
     options?: { readonly mode?: Observable.ComputeMode },
-  ): DeferredObservableWithSideEffectsLike<T>;
+  ): ObservableWithSideEffectsLike<T>;
 }
 
 const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
   (<T>(
     computation: Factory<T>,
     config: Pick<
-      DeferredObservableWithSideEffectsLike,
+      ObservableWithSideEffectsLike,
       | typeof ComputationLike_isDeferred
       | typeof ComputationLike_isPure
       | typeof ComputationLike_isSynchronous
