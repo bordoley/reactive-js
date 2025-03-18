@@ -16,10 +16,10 @@ const ScanMixin: <T, TAcc>() => Mixin2<
   const ScanMixin_acc = Symbol("ScanMixin_acc");
   const ScanMixin_reducer = Symbol("ScanMixin_reducer");
 
-  interface TProperties {
+  type TProperties = {
     [ScanMixin_acc]: TAcc;
     [ScanMixin_reducer]: Reducer<T, TAcc>;
-  }
+  };
 
   return returns(
     mix<

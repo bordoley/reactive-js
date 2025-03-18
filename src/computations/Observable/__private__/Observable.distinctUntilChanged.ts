@@ -2,8 +2,6 @@ import {
   include,
   init,
   mixInstanceFactory,
-  props,
-  proto,
 } from "../../../__internal__/mixins.js";
 import {
   Equality,
@@ -12,10 +10,8 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
-import {
-  LiftedEventListenerLike_notify,
-  LiftedEventListenerLike_notifyDelegate,
-} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+import DistinctUntilChangedMixin from "../../../utils/__mixins__/EventListeners/DistinctUntilChangedMixin.js";
+import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
@@ -23,72 +19,33 @@ import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
 
-const DistinctUntilChangedObserver_equality = Symbol(
-  "DistinctUntilChangedObserver_equality",
-);
-const DistinctUntilChangedObserver_prev = Symbol(
-  "DistinctUntilChangedObserver_prev",
-);
-const DistinctUntilChangedObserver_hasValue = Symbol(
-  "DistinctUntilChangedObserver_hasValue",
-);
-
-interface TProps<T> {
-  [DistinctUntilChangedObserver_equality]: Equality<T>;
-  [DistinctUntilChangedObserver_prev]: T;
-  [DistinctUntilChangedObserver_hasValue]: boolean;
-}
-
-const createDistinctUntilChangedObserver: <T>(
-  delegate: ObserverLike<T>,
-  equality: Equality<T>,
-) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
-  mixInstanceFactory(
-    include(LiftedObserverMixin()),
-    function DistinctUntilChangedObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
-        TProps<T>,
+const Observable_distinctUntilChanged: Observable.Signature["distinctUntilChanged"] =
+  /*@__PURE__*/ (<T>() => {
+    const createDistinctUntilChangedObserver: (
       delegate: ObserverLike<T>,
       equality: Equality<T>,
-    ): ObserverLike<T> {
-      init(LiftedObserverMixin<T>(), this, delegate, none);
+    ) => ObserverLike<T> = mixInstanceFactory(
+      include(LiftedObserverMixin(), DistinctUntilChangedMixin()),
+      function DistinctUntilChangedObserver(
+        this: Pick<
+          LiftedObserverLike<T>,
+          typeof LiftedEventListenerLike_notify
+        >,
+        delegate: ObserverLike<T>,
+        equality: Equality<T>,
+      ): ObserverLike<T> {
+        init(LiftedObserverMixin<T>(), this, delegate, none);
+        init(DistinctUntilChangedMixin(), this, equality);
 
-      this[DistinctUntilChangedObserver_equality] = equality;
-
-      return this;
-    },
-    props<TProps<T>>({
-      [DistinctUntilChangedObserver_equality]: none,
-      [DistinctUntilChangedObserver_prev]: none,
-      [DistinctUntilChangedObserver_hasValue]: false,
-    }),
-    proto({
-      [LiftedEventListenerLike_notify](
-        this: TProps<T> & LiftedObserverLike<T>,
-        next: T,
-      ) {
-        const shouldEmit =
-          !this[DistinctUntilChangedObserver_hasValue] ||
-          !this[DistinctUntilChangedObserver_equality](
-            this[DistinctUntilChangedObserver_prev],
-            next,
-          );
-
-        if (shouldEmit) {
-          this[DistinctUntilChangedObserver_prev] = next;
-          this[DistinctUntilChangedObserver_hasValue] = true;
-          this[LiftedEventListenerLike_notifyDelegate](next);
-        }
+        return this;
       },
-    }),
-  ))();
-
-const Observable_distinctUntilChanged: Observable.Signature["distinctUntilChanged"] =
-  <T>(options?: { readonly equality?: Equality<T> }) =>
-    pipe(
-      createDistinctUntilChangedObserver<T>,
-      partial(options?.equality ?? strictEquality),
-      Observable_liftPureDeferred,
     );
+    return (options?: { readonly equality?: Equality<T> }) =>
+      pipe(
+        createDistinctUntilChangedObserver,
+        partial(options?.equality ?? strictEquality),
+        Observable_liftPureDeferred,
+      );
+  })() as Observable.Signature["distinctUntilChanged"];
 
 export default Observable_distinctUntilChanged;
