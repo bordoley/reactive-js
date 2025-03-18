@@ -1683,13 +1683,6 @@ export interface SubjectLike<out T = unknown>
     SinkLike<T> {}
 
 /**
- * @noInheritDoc
- */
-export interface PauseableObservableLike<out T = unknown>
-  extends MulticastObservableLike<T>,
-    PauseableLike {}
-
-/**
  * Represents a duplex stream
  *
  * @noInheritDoc

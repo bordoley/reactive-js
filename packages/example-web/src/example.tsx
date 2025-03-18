@@ -48,7 +48,10 @@ import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
 import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
-import { BroadcasterLike, ObservableLike } from "@reactive-js/core/computations";
+import {
+  BroadcasterLike,
+  ObservableLike,
+} from "@reactive-js/core/computations";
 import {
   EventSourceLike,
   StoreLike_value,

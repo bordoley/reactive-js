@@ -3,6 +3,9 @@
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
 import { ConsumerLike_capacity, ConsumerLike_isReady, DropOldestBackpressureStrategy, SinkLike_isCompleted, } from "../utils.js";
+import DelegatingConsumerMixin from "./__mixins__/DelegatingConsumerMixin.js";
+import DelegatingDisposableMixin from "./__mixins__/DelegatingDisposableMixin.js";
+import DelegatingSchedulerMixin from "./__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "./__mixins__/DisposableMixin.js";
 import QueueingConsumerMixin from "./__mixins__/QueueingConsumerMixin.js";
 const createInternal = /*@__PURE__*/ (() => {
@@ -36,3 +39,12 @@ export const createDropOldestWithoutBackpressure = /*@__PURE__*/ (() => mixInsta
         return MAX_SAFE_INTEGER;
     },
 })))();
+export const toObserver = /*@__PURE__*/ (() => {
+    const createProducerConsumerObserver = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingSchedulerMixin, DelegatingConsumerMixin()), function ProducerConsumerObserver(scheduler, consumer) {
+        init(DelegatingDisposableMixin, this, consumer);
+        init(DelegatingSchedulerMixin, this, scheduler);
+        init(DelegatingConsumerMixin(), this, consumer);
+        return this;
+    });
+    return (scheduler) => (consumer) => createProducerConsumerObserver(scheduler, consumer);
+})();

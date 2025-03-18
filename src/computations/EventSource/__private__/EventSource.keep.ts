@@ -4,7 +4,6 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import KeepMixin from "../../../utils/__mixins__/EventListeners/KeepMixin.js";
 import LiftedEventListenerMixin from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import { EventListenerLike } from "../../../utils.js";
@@ -16,13 +15,12 @@ const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (<
   T,
 >() => {
   const createKeepEventListener = mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedEventListenerMixin(), KeepMixin()),
+    include(LiftedEventListenerMixin(), KeepMixin()),
     function KeepEventListener(
       this: unknown,
       delegate: EventListenerLike<T>,
       predicate: Predicate<T>,
     ): EventListenerLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedEventListenerMixin<T>(), this, delegate, none);
       init(KeepMixin(), this, predicate);
 

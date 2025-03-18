@@ -77,8 +77,7 @@ interface LiftedObserverMixinModule {
     Optional<{
       capacity?: number;
       backpressureStrategy?: BackpressureStrategy;
-    }>,
-    Pick<LiftedObserverLike<TA, TB>, keyof DisposableLike>
+    }>
   >;
 
   <T, TDelegateObserver extends ObserverLike<T> = ObserverLike<T>>(): Mixin2<
@@ -87,11 +86,7 @@ interface LiftedObserverMixinModule {
     Optional<{
       capacity?: number;
       backpressureStrategy?: BackpressureStrategy;
-    }>,
-    Pick<
-      LiftedObserverLike<T, T>,
-      keyof DisposableLike | typeof LiftedEventListenerLike_notify
-    >
+    }>
   >;
 }
 
@@ -104,11 +99,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   };
 
   function liftedObserverSchedulerContinuation(
-    this: TProperties &
-      ObserverLike<TA> &
-      QueueLike<TA> &
-      SerialDisposableLike &
-      LiftedObserverLike<TA, TB>,
+    this: QueueLike<TA> & SerialDisposableLike & LiftedObserverLike<TA, TB>,
     ctx: ContinuationContextLike,
   ) {
     // This is the ultimate downstream consumer of events.
@@ -144,9 +135,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   // we already have a consumer lister setup. Not that performant.
   const setUpOnConsumerReadyListenerMemoized = memoize(
     (
-      observer: TProperties &
-        ObserverLike<TA> &
-        QueueLike<TA> &
+      observer: QueueLike<TA> &
         SerialDisposableLike &
         LiftedObserverLike<TA, TB>,
     ) => {
@@ -161,11 +150,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   );
 
   const scheduleDrainQueue = (
-    observer: TProperties &
-      ObserverLike<TA> &
-      QueueLike<TA> &
-      SerialDisposableLike &
-      LiftedObserverLike<TA, TB>,
+    observer: QueueLike<TA> & SerialDisposableLike & LiftedObserverLike<TA, TB>,
   ) => {
     const consumer = observer[LiftedConsumerLike_consumer];
     const isConsumerReady = consumer[ConsumerLike_isReady];
@@ -204,28 +189,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
   }
 
   return returns(
-    mix<
-      LiftedObserverLike<TA, TB>,
-      TProperties,
-      Pick<
-        LiftedObserverLike<TA, TB>,
-        | typeof EventListenerLike_notify
-        | typeof SinkLike_complete
-        | typeof LiftedEventListenerLike_notify
-      >,
-      Pick<
-        LiftedObserverLike<TA, TB>,
-        | keyof DisposableLike
-        | typeof LiftedEventListenerLike_notify
-        | typeof LiftedSinkLike_complete
-        | typeof LiftedSinkLike_completeDelegate
-      >,
-      ObserverLike<TB>,
-      Optional<{
-        capacity?: number;
-        backpressureStrategy?: BackpressureStrategy;
-      }>
-    >(
+    mix(
       include(
         LiftedConsumerMixin(),
         QueueingConsumerMixin(),
@@ -236,12 +200,15 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         this: TProperties &
           Omit<
             LiftedObserverLike<TA, TB>,
+            | keyof DisposableLike
             | typeof LiftedEventListenerLike_notify
             | typeof LiftedEventListenerLike_delegate
             | typeof EventListenerLike_notify
             | typeof LiftedEventListenerLike_notifyDelegate
             | typeof SinkLike_isCompleted
             | typeof SinkLike_complete
+            | typeof LiftedSinkLike_complete
+            | typeof LiftedSinkLike_completeDelegate
             | typeof LiftedConsumerLike_consumer
             | typeof ConsumerLike_isReady
             | typeof LiftedConsumerLike_isReady
@@ -291,9 +258,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
       }),
       proto({
         [EventListenerLike_notify](
-          this: TProperties &
-            ObserverLike<TA> &
-            QueueLike<TA> &
+          this: QueueLike<TA> &
             SerialDisposableLike &
             LiftedObserverLike<TA, TB>,
           next: TA,
@@ -331,9 +296,7 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
         },
 
         [SinkLike_complete](
-          this: TProperties &
-            ObserverLike<TA> &
-            QueueLike<TA> &
+          this: QueueLike<TA> &
             SerialDisposableLike &
             LiftedObserverLike<TA, TB>,
         ) {
@@ -356,10 +319,6 @@ const LiftedObserverMixin: LiftedObserverMixinModule = /*@__PURE__*/ (<
           } else {
             scheduleDrainQueue(this);
           }
-        },
-
-        [LiftedEventListenerLike_notify](this: TProperties, next: TA) {
-          this[LiftedEventListenerLike_notifyDelegate](next as unknown as TB);
         },
       }),
     ),

@@ -125,9 +125,6 @@ const LiftedObserverMixin = /*@__PURE__*/ (() => {
                 scheduleDrainQueue(this);
             }
         },
-        [LiftedEventListenerLike_notify](next) {
-            this[LiftedEventListenerLike_notifyDelegate](next);
-        },
     })));
 })();
 export default LiftedObserverMixin;

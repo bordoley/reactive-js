@@ -87,6 +87,12 @@ export interface AsyncIterableModule
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 
+  /*
+  broadcast<T>(): Function1<
+    AsyncIterableLike<T>,
+    PauseableEventSourceLike<T> & DisposableLike
+  >;*/
+
   toEventSource<T>(): Function1<
     AsyncIterableLike<T>,
     PauseableEventSourceLike<T> & DisposableLike

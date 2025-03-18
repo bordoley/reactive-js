@@ -4,7 +4,6 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import MapMixin from "../../../utils/__mixins__/EventListeners/MapMixin.js";
 import LiftedSinkMixin from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import { SinkLike } from "../../../utils.js";
@@ -14,13 +13,12 @@ import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_map: Runnable.Signature["map"] = /*@__PURE__*/ (<TA, TB>() => {
   const createMapEventListener = mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedSinkMixin(), MapMixin()),
+    include(LiftedSinkMixin(), MapMixin()),
     function MapEventListener(
       this: unknown,
       delegate: SinkLike<TB>,
       selector: Function1<TA, TB>,
     ): SinkLike<TA> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedSinkMixin<TA, TB>(), this, delegate, none);
       init(MapMixin<TA, TB>(), this, selector);
 

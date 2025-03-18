@@ -1,4 +1,5 @@
 import {
+  BroadcasterLike,
   ComputationModule,
   ComputationOperatorWithSideEffects,
   ComputationType,
@@ -19,7 +20,6 @@ import {
   MulticastObservableLike,
   ObservableLike,
   PauseableEventSourceLike,
-  PauseableObservableLike,
   ProducerLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
@@ -48,10 +48,12 @@ import {
   BackpressureStrategy,
   DisposableLike,
   ObserverLike,
+  PauseableLike,
   SchedulerLike,
 } from "../utils.js";
 import Observable_actionReducer from "./Observable/__private__/Observable.actionReducer.js";
 import Observable_backpressureStrategy from "./Observable/__private__/Observable.backpressureStrategy.js";
+import Observable_broadcast from "./Observable/__private__/Observable.broadcast.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__private__/Observable.combineLatest.js";
@@ -119,7 +121,6 @@ import Observable_throttle, {
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
 import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
-import Observable_toPauseableObservable from "./Observable/__private__/Observable.toPauseableObservable.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -252,6 +253,18 @@ export interface ObservableModule
     capacity: number;
     backpressureStrategy: BackpressureStrategy;
   }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
+
+  broadcast<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly replay?: number;
+    },
+  ): <TObservable extends ObservableLike<T>>(
+    obs: TObservable,
+  ) => TObservable extends SynchronousObservableLike<T>
+    ? PauseableLike & BroadcasterLike<T> & DisposableLike
+    : BroadcasterLike<T> & DisposableLike;
 
   computeDeferred<T>(
     computation: Factory<T>,
@@ -406,16 +419,6 @@ export interface ObservableModule
     PauseableEventSourceLike<T> & DisposableLike
   >;
 
-  toPauseableObservable<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-    },
-  ): Function1<
-    SynchronousObservableLike<T>,
-    PauseableObservableLike<T> & DisposableLike
-  >;
-
   toProducer<T>(
     scheduler: SchedulerLike,
   ): Function1<ObservableLike<T>, ProducerLike<T>>;
@@ -431,6 +434,7 @@ export const actionReducer: Signature["actionReducer"] =
   Observable_actionReducer;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
+export const broadcast: Signature["broadcast"] = Observable_broadcast;
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
 export const combineLatest: Signature["combineLatest"] =
@@ -506,8 +510,6 @@ export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
 ) as Signature["toObservable"];
 export const toPauseableEventSource: Signature["toPauseableEventSource"] =
   Observable_toPauseableEventSource;
-export const toPauseableObservable: Signature["toPauseableObservable"] =
-  Observable_toPauseableObservable;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;

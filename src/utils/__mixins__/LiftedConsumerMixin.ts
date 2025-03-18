@@ -54,11 +54,7 @@ interface LiftedConsumerMixinModule {
     TConsumer extends ConsumerLike = ConsumerLike,
   >(): Mixin1<
     LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
-    TDelegateConsumer,
-    Pick<
-      LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
-      keyof DisposableLike
-    >
+    TDelegateConsumer
   >;
 
   <
@@ -67,11 +63,7 @@ interface LiftedConsumerMixinModule {
     TConsumer extends ConsumerLike = ConsumerLike,
   >(): Mixin1<
     LiftedConsumerLike<T, T, TDelegateConsumer, TConsumer>,
-    TDelegateConsumer,
-    Pick<
-      LiftedConsumerLike<T, T, TDelegateConsumer, TConsumer>,
-      keyof DisposableLike | typeof LiftedEventListenerLike_notify
-    >
+    TDelegateConsumer
   >;
 }
 
@@ -85,37 +77,21 @@ const LiftedConsumerMixin: LiftedConsumerMixinModule = /*@__PURE__*/ (<
     [LiftedConsumerLike_consumer]: TConsumer;
   };
   return returns(
-    mix<
-      LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
-      TProperties,
-      Pick<
-        LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
-        | typeof LiftedConsumerLike_isReady
-        | typeof ConsumerLike_isReady
-        | typeof ConsumerLike_backpressureStrategy
-        | typeof ConsumerLike_capacity
-        | typeof ConsumerLike_addOnReadyListener
-      >,
-      Pick<
-        LiftedConsumerLike<TA, TB, TDelegateConsumer>,
-        | keyof DisposableLike
-        | typeof LiftedEventListenerLike_notify
-        | typeof LiftedSinkLike_complete
-        | typeof LiftedSinkLike_completeDelegate
-      >,
-      TDelegateConsumer
-    >(
+    mix(
       include(LiftedSinkMixin()),
       function LiftedConsumerMixin(
         this: TProperties &
           Omit<
             LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
+            | keyof DisposableLike
             | typeof LiftedEventListenerLike_notify
             | typeof LiftedEventListenerLike_delegate
             | typeof EventListenerLike_notify
             | typeof LiftedEventListenerLike_notifyDelegate
             | typeof SinkLike_isCompleted
             | typeof SinkLike_complete
+            | typeof LiftedSinkLike_complete
+            | typeof LiftedSinkLike_completeDelegate
           >,
         delegate: TDelegateConsumer,
       ): LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer> {

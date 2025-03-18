@@ -31,6 +31,7 @@
 
 - [actionReducer](functions/actionReducer.md)
 - [backpressureStrategy](functions/backpressureStrategy.md)
+- [broadcast](functions/broadcast.md)
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
 - [combineLatest](functions/combineLatest.md)
@@ -90,7 +91,6 @@
 - [toEventSource](functions/toEventSource.md)
 - [toObservable](functions/toObservable.md)
 - [toPauseableEventSource](functions/toPauseableEventSource.md)
-- [toPauseableObservable](functions/toPauseableObservable.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

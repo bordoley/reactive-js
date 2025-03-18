@@ -34,7 +34,6 @@
 - [MulticastObservableLike](interfaces/MulticastObservableLike.md)
 - [ObservableLike](interfaces/ObservableLike.md)
 - [PauseableEventSourceLike](interfaces/PauseableEventSourceLike.md)
-- [PauseableObservableLike](interfaces/PauseableObservableLike.md)
 - [ProducerLike](interfaces/ProducerLike.md)
 - [ProducerWithSideEffectsLike](interfaces/ProducerWithSideEffectsLike.md)
 - [PublisherLike](interfaces/PublisherLike.md)

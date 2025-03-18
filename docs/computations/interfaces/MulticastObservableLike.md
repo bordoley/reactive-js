@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`PauseableObservableLike`](PauseableObservableLike.md)
 - [`StreamLike`](StreamLike.md)
 - [`WindowLocationLike`](../../web/interfaces/WindowLocationLike.md)
 

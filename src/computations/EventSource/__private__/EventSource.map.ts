@@ -4,7 +4,6 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import MapMixin from "../../../utils/__mixins__/EventListeners/MapMixin.js";
 import LiftedEventListenerMixin from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import { EventListenerLike } from "../../../utils.js";
@@ -17,13 +16,12 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (<
   TB,
 >() => {
   const createMapEventListener = mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedEventListenerMixin(), MapMixin()),
+    include(LiftedEventListenerMixin(), MapMixin()),
     function MapEventListener(
       this: unknown,
       delegate: EventListenerLike<TB>,
       selector: Function1<TA, TB>,
     ): EventListenerLike<TA> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedEventListenerMixin<TA, TB>(), this, delegate, none);
       init(MapMixin<TA, TB>(), this, selector);
 

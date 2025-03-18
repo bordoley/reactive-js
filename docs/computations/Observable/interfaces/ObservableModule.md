@@ -76,6 +76,50 @@
 
 ***
 
+### broadcast()
+
+> **broadcast**\<`T`\>(`scheduler`, `options`?): \<`TObservable`\>(`obs`) => `TObservable` *extends* [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> ? [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md) : [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+##### options?
+
+###### autoDispose?
+
+`boolean`
+
+###### replay?
+
+`number`
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **TObservable** *extends* [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+
+##### Parameters
+
+###### obs
+
+`TObservable`
+
+##### Returns
+
+`TObservable` *extends* [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> ? [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md) : [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+***
+
 ### computeDeferred()
 
 > **computeDeferred**\<`T`\>(`computation`, `options`?): [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>
@@ -599,32 +643,6 @@
 #### Returns
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableEventSourceLike`](../../interfaces/PauseableEventSourceLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-***
-
-### toPauseableObservable()
-
-> **toPauseableObservable**\<`T`\>(`scheduler`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### scheduler
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-##### options?
-
-###### replay?
-
-`number`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\>, [`PauseableObservableLike`](../../interfaces/PauseableObservableLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ***
 

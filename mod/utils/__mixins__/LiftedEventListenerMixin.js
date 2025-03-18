@@ -1,14 +1,16 @@
 /// <reference types="./LiftedEventListenerMixin.d.ts" />
 
-import { mix, props, proto } from "../../__internal__/mixins.js";
+import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import { EventListenerLike_notify, } from "../../utils.js";
+import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 export const LiftedEventListenerLike_notify = Symbol("LiftedEventListenerLike_notify");
 export const LiftedEventListenerLike_notifyDelegate = Symbol("LiftedEventListenerLike_notifyDelegate");
 export const LiftedEventListenerLike_delegate = Symbol("LiftedEventListenerLike_delegate");
 const LiftedEventListenerMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(function LiftedEventListenerMixin(delegate) {
+    return returns(mix(include(DelegatingDisposableMixin), function LiftedEventListenerMixin(delegate) {
+        init(DelegatingDisposableMixin, this, delegate);
         this[LiftedEventListenerLike_delegate] = delegate;
         return this;
     }, props({

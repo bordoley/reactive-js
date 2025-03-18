@@ -10,3 +10,4 @@
 
 - [create](functions/create.md)
 - [createDropOldestWithoutBackpressure](functions/createDropOldestWithoutBackpressure.md)
+- [toObserver](functions/toObserver.md)

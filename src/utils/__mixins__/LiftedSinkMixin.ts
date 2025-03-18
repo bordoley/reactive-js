@@ -41,19 +41,12 @@ export interface LiftedSinkLike<
 interface LiftedSinkMixinModule {
   <TA, TB = TA, TDelegateSink extends SinkLike<TB> = SinkLike<TB>>(): Mixin1<
     LiftedSinkLike<TA, TB, TDelegateSink>,
-    TDelegateSink,
-    Pick<LiftedSinkLike<TA, TB, TDelegateSink>, keyof DisposableLike>,
-    Pick<LiftedSinkLike<TA, TB, TDelegateSink>, typeof SinkLike_complete>
+    TDelegateSink
   >;
 
   <T, TDelegateSink extends SinkLike<T> = SinkLike<T>>(): Mixin1<
     LiftedSinkLike<T, T, TDelegateSink>,
-    TDelegateSink,
-    Pick<
-      LiftedSinkLike<T, T, TDelegateSink>,
-      keyof DisposableLike | typeof LiftedEventListenerLike_notify
-    >,
-    Pick<LiftedSinkLike<T, T, TDelegateSink>, typeof SinkLike_complete>
+    TDelegateSink
   >;
 }
 
@@ -67,29 +60,12 @@ const LiftedSinkMixin: LiftedSinkMixinModule = /*@__PURE__*/ (<
     [LiftedSinkMixin_isCompleted]: boolean;
   };
   return returns(
-    mix<
-      LiftedSinkLike<TA, TB, TDelegateSink>,
-      unknown,
-      Pick<
-        LiftedSinkLike<TA, TB, TDelegateSink>,
-        | typeof SinkLike_isCompleted
-        | typeof LiftedSinkLike_completeDelegate
-        | typeof LiftedSinkLike_complete
-        | typeof SinkLike_complete
-      >,
-      Pick<
-        LiftedSinkLike<TA, TB, TDelegateSink>,
-        | keyof DisposableLike
-        | typeof LiftedEventListenerLike_notify
-        | typeof LiftedSinkLike_complete
-        | typeof LiftedSinkLike_completeDelegate
-      >,
-      TDelegateSink
-    >(
+    mix(
       include(LiftedEventListenerMixin()),
       function LiftedSinkMixin(
         this: Omit<
           LiftedSinkLike<TA, TB, TDelegateSink>,
+          | keyof DisposableLike
           | typeof LiftedEventListenerLike_notify
           | typeof LiftedEventListenerLike_delegate
           | typeof EventListenerLike_notify
@@ -126,7 +102,7 @@ const LiftedSinkMixin: LiftedSinkMixinModule = /*@__PURE__*/ (<
           this[LiftedSinkLike_completeDelegate]();
         },
 
-        [SinkLike_complete](this: LiftedSinkLike<TA, TB, TDelegateSink>) {
+        [SinkLike_complete](this: LiftedSinkLike) {
           const isCompleted = this[SinkLike_isCompleted];
 
           if (isCompleted) {
