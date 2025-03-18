@@ -7,7 +7,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -30,14 +29,13 @@ const createSkipFirstObserver: <T>(
   count?: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function SkipFirstObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       skipCount?: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[SkipFirstObserver_count] = clampPositiveInteger(skipCount ?? 1);

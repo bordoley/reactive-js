@@ -4,7 +4,6 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import MapMixin from "../../../utils/__mixins__/EventListeners/MapMixin.js";
 import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
@@ -16,13 +15,12 @@ const createMapObserver: <TA, TB>(
   selector: Function1<TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
   mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin(), MapMixin()),
+    include(LiftedObserverMixin(), MapMixin()),
     function MapObserver(
       this: unknown,
       delegate: ObserverLike<TB>,
       selector: Function1<TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<TA, TB>(), this, delegate, none);
       init(MapMixin<TA, TB>(), this, selector);
 

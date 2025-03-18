@@ -65,8 +65,8 @@ export interface StreamableModule {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
-     // FIXME: Short term, until the inners can be replace with non observable implementations.
-     scheduler: SchedulerLike,
+    // FIXME: Short term, until the inners can be replace with non observable implementations.
+    scheduler: SchedulerLike,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<TAction, T>;
 
@@ -129,8 +129,8 @@ export interface StreamableModule {
    */
   stateStore<T>(
     initialState: Factory<T>,
-     // FIXME: Short term, until the inners can be replace with non observable implementations.
-     scheduler: SchedulerLike,
+    // FIXME: Short term, until the inners can be replace with non observable implementations.
+    scheduler: SchedulerLike,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<Updater<T>, T>;
 

@@ -38,6 +38,7 @@ const Runnable_reduce: Runnable.Signature["reduce"] =
     const sink = newInstance(ReducerSink, reducer, initialValue());
     deferable[RunnableLike_eval](sink);
     sink[DisposableLike_dispose]();
+    Disposable.raiseIfDisposedWithError(sink);
     return sink.acc;
   };
 

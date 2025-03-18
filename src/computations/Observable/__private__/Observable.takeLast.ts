@@ -9,7 +9,6 @@ import { ObservableLike_observe } from "../../../computations.js";
 import { call, invoke, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import * as Queue from "../../../utils/Queue.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_delegate,
   LiftedEventListenerLike_notify,
@@ -58,14 +57,13 @@ const createTakeLastObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function TakeLastObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties,
       delegate: ObserverLike<T>,
       takeLastCount: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[TakeLastObserver_queue] = Queue.createDropOldest<T>(takeLastCount);

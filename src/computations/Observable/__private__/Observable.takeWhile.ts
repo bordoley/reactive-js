@@ -6,7 +6,6 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -32,7 +31,7 @@ const createTakeWhileObserver: <T>(
   inclusive?: boolean,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function TakeWhileObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProperties<T>,
@@ -40,7 +39,6 @@ const createTakeWhileObserver: <T>(
       predicate: Predicate<T>,
       inclusive?: boolean,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[TakeWhileObserver_predicate] = predicate;

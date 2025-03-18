@@ -12,7 +12,6 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -45,14 +44,13 @@ const createDistinctUntilChangedObserver: <T>(
   equality: Equality<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function DistinctUntilChangedObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         TProps<T>,
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[DistinctUntilChangedObserver_equality] = equality;

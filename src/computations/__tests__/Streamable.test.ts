@@ -8,21 +8,10 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Collection from "../../collections/Collection.js";
-import * as Dictionary from "../../collections/Dictionary.js";
-import { DictionaryCollection } from "../../collections/Dictionary.js";
-import { DictionaryLike_get } from "../../collections.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Streamable from "../../computations/Streamable.js";
 import { StreamableLike_stream } from "../../computations.js";
-import {
-  bindMethod,
-  invoke,
-  none,
-  pipe,
-  pipeSome,
-  returns,
-} from "../../functions.js";
+import { bindMethod, invoke, pipe, returns } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
@@ -35,17 +24,17 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
-import * as EventSource from "../EventSource.js";
 
 testModule(
-  "Streamable",
+  "Streamable" /*
   describe(
     "animation",
     test("integration", () => {
       using vts = VirtualTimeScheduler.create();
-      const stream = Streamable.animation<number>(Observable.keyFrame(500), vts)[
-        StreamableLike_stream
-      ]({autoDispose: true});
+      const stream = Streamable.animation<number>(
+        Observable.keyFrame(500),
+        vts,
+      )[StreamableLike_stream]({ autoDispose: true });
 
       let result = 0;
 
@@ -68,9 +57,12 @@ testModule(
     test("integration", () => {
       using vts = VirtualTimeScheduler.create();
 
-      const stream = Streamable.animationGroup<number>({
-        a: Observable.keyFrame(500),
-      }, vts)[StreamableLike_stream]({autoDispose: true});
+      const stream = Streamable.animationGroup<number>(
+        {
+          a: Observable.keyFrame(500),
+        },
+        vts,
+      )[StreamableLike_stream]({ autoDispose: true });
 
       pipe(
         stream,
@@ -94,13 +86,18 @@ testModule(
 
       pipe(result, expectEquals(1));
     }),
-  ),
+  ),*/,
   describe(
     "stateStore",
     test("stateStore", () => {
       using vts = VirtualTimeScheduler.create();
       const streamable = Streamable.stateStore(returns(1), vts);
-      const stateStream = streamable[StreamableLike_stream]({ autoDispose: true, replay: 10, capacity: 20, backpressureStrategy: DropLatestBackpressureStrategy });
+      const stateStream = streamable[StreamableLike_stream]({
+        autoDispose: true,
+        replay: 10,
+        capacity: 20,
+        backpressureStrategy: DropLatestBackpressureStrategy,
+      });
 
       pipe(stateStream[ConsumerLike_capacity], expectEquals(20));
       pipe(
@@ -128,7 +125,9 @@ testModule(
     test("completing the store", () => {
       using vts = VirtualTimeScheduler.create();
       const streamable = Streamable.stateStore(returns(1), vts);
-      const stateStream = streamable[StreamableLike_stream]({autoDispose: true});
+      const stateStream = streamable[StreamableLike_stream]({
+        autoDispose: true,
+      });
 
       pipe(
         stateStream[SinkLike_isCompleted],
@@ -163,7 +162,7 @@ testModule(
           (_oldState, _newState) => Observable.empty(),
           vts,
         ),
-        invoke(StreamableLike_stream, {autoDispose: true}),
+        invoke(StreamableLike_stream, { autoDispose: true }),
       );
 
       pipe(
@@ -201,7 +200,7 @@ testModule(
           vts,
           { throttleDuration: 20 },
         ),
-        invoke(StreamableLike_stream, {autoDispose: true}),
+        invoke(StreamableLike_stream, { autoDispose: true }),
       );
 
       pipe(

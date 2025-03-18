@@ -440,7 +440,10 @@ testModule(
           const stream = __stream(Streamable.identity<number>());
           const push = bindMethod(stream, EventListenerLike_notify);
 
-           const streamObs = __constant(pipe(stream, Broadcaster.toObservable()), stream);
+          const streamObs = __constant(
+            pipe(stream, Broadcaster.toObservable()),
+            stream,
+          );
 
           const result = __observe(streamObs) ?? 0;
           __do(push, result + 1);
@@ -462,7 +465,10 @@ testModule(
           const state = __state(initialState);
           const push = bindMethod(state, EventListenerLike_notify);
 
-          const stateObs = __constant(pipe(state, Broadcaster.toObservable()), state);
+          const stateObs = __constant(
+            pipe(state, Broadcaster.toObservable()),
+            state,
+          );
 
           const result = __observe(stateObs) ?? -1;
 
@@ -1410,7 +1416,9 @@ testModule(
     test("to a pauseable eventsource enqueueing into a stream with backpressure", () => {
       using vts = VirtualTimeScheduler.create();
 
-      const dest = Streamable.identity<number>()[StreamableLike_stream]({autoDispose: true});
+      const dest = Streamable.identity<number>()[StreamableLike_stream]({
+        autoDispose: true,
+      });
 
       pipe(
         Computation.generate<Observable.Computation>(Observable)(

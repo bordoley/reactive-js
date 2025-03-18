@@ -15,11 +15,11 @@ const Streamable_actionReducer: Streamable.Signature["actionReducer"] = <
   options?: { readonly equality?: Equality<T> },
 ) =>
   Streamable_create<TAction, T>(
-   compose(
-    Producer.toObservable<TAction>(),
-    Observable.actionReducer<TAction, T>(reducer, initialState, options),
-    Observable.toProducer<T>(scheduler)
-   )
+    compose(
+      Producer.toObservable<TAction>(),
+      Observable.actionReducer<TAction, T>(reducer, initialState, options),
+      Observable.toProducer<T>(scheduler),
+    ),
   );
 
 export default Streamable_actionReducer;

@@ -25,8 +25,7 @@ export const WindowLocationLike_replace = Symbol("WindowLocationLike_replace");
 /**
  * @noInheritDoc
  */
-export interface WindowLocationLike
-  extends BroadcasterLike<WindowLocationURI> {
+export interface WindowLocationLike extends BroadcasterLike<WindowLocationURI> {
   readonly [WindowLocationLike_canGoBack]: StoreLike<boolean>;
 
   [WindowLocationLike_goBack](): void;

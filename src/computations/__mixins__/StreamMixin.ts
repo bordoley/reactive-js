@@ -17,7 +17,7 @@ const StreamMixin: <TReq, T>() => Mixin2<
   StreamLike<TReq, T> & DisposableLike,
   Function1<PureProducerLike<TReq>, ProducerLike<T>>,
   Optional<{
-    autoDispose?:boolean;
+    autoDispose?: boolean;
     replay?: number;
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
@@ -43,16 +43,16 @@ const StreamMixin: <TReq, T>() => Mixin2<
         const consumer = ConsumerProducer.create<TReq>(options);
 
         const delegate = pipe(
-          consumer,/*
+          consumer /*
           Observable.backpressureStrategy({
             backpressureStrategy:
               options?.backpressureStrategy ?? OverflowBackpressureStrategy,
             capacity: clampPositiveInteger(
               options?.capacity ?? MAX_SAFE_INTEGER,
             ),
-          }),*/
+          }),*/,
 
-          // FIXME: Backpressure 
+          // FIXME: Backpressure
           op,
           Producer.broadcast(options),
           Disposable.addTo(consumer),

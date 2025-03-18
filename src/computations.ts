@@ -1536,7 +1536,29 @@ export interface ProducerWithSideEffectsLike<out T = unknown>
   readonly [ComputationLike_isPure]: false;
 }
 
-// FIXME: Runnable producers are possible if we validate schedulers are VTS in observable
+/**
+ * @noInheritDoc
+ */
+export interface PureSynchronousProducerLike<out T = unknown>
+  extends PureProducerLike<T>,
+    PureDeferredComputationLike,
+    PureSynchronousComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]?: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface SynchronousProducerWithSideEffectsLike<out T = unknown>
+  extends ProducerLike<T>,
+    DeferredComputationWithSideEffectsLike,
+    SynchronousComputationWithSideEffectsLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]: false;
+  readonly [ComputationLike_isSynchronous]?: true;
+}
 
 /**
  * @noInheritDoc

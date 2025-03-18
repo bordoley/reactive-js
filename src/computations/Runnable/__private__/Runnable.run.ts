@@ -34,6 +34,8 @@ const Runnable_run: Runnable.Signature["run"] =
     const sink = newInstance(RunSink<T>);
     deferable[RunnableLike_eval](sink);
     sink[DisposableLike_dispose]();
+
+    Disposable.raiseIfDisposedWithError(sink);
   };
 
 export default Runnable_run;

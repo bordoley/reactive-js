@@ -10,6 +10,11 @@ const Streamable_stateStore: Streamable.Signature["stateStore"] = <T>(
   scheduler: SchedulerLike,
   options?: { readonly equality?: Equality<T> },
 ) =>
-  Streamable_actionReducer<Updater<T>, T>(updateReducer, initialState, scheduler, options);
+  Streamable_actionReducer<Updater<T>, T>(
+    updateReducer,
+    initialState,
+    scheduler,
+    options,
+  );
 
 export default Streamable_stateStore;

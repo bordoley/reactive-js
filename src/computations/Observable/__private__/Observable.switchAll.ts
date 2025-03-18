@@ -18,7 +18,6 @@ import { bind, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedConsumerMixin.js";
 import {
   LiftedEventListenerLike_notify,
@@ -64,10 +63,7 @@ const createSwitchAllObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin,
-      LiftedObserverMixin<ObservableLike<T>>(),
-    ),
+    include(LiftedObserverMixin<ObservableLike<T>>()),
     function SwitchAllObserver(
       this: Pick<
         LiftedObserverLike<ObservableLike<T>>,
@@ -76,7 +72,6 @@ const createSwitchAllObserver: <T>(
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
     ): ObserverLike<ObservableLike<T>> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<ObservableLike<T>, T>(), this, delegate, none);
 
       this[SwitchAllObserver_currentRef] = pipe(

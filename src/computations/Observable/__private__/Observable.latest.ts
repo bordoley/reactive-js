@@ -20,7 +20,6 @@ import {
   ObservableLike_observe,
 } from "../../../computations.js";
 import { none, pick, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
@@ -60,14 +59,13 @@ const Observable_latest = /*@__PURE__*/ (() => {
   };
 
   const createLatestObserver = mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function LatestObserver(
       this: Pick<LiftedObserverLike, typeof LiftedEventListenerLike_notify> &
         Mutable<TProperties>,
       ctx: LatestCtx,
       delegate: ObserverLike,
     ): ObserverLike & TProperties {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin(), this, delegate, none);
 
       this[LatestObserver_ctx] = ctx;

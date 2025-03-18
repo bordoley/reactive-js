@@ -10,11 +10,23 @@ import {
   BroadcasterLike,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredObservableLike,
+  ComputationModule,
+  ComputationType,
+  Computation_T,
+  Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
   EventSourceLike,
   ProducerLike,
   ProducerLike_consume,
   ProducerWithSideEffectsLike,
+  PureProducerLike,
+  PureSynchronousProducerLike,
+  SequentialComputationModule,
+  SequentialReactiveComputationModule,
+  SynchronousProducerWithSideEffectsLike,
 } from "../computations.js";
 import {
   Function1,
@@ -51,7 +63,33 @@ import * as Broadcaster from "./Broadcaster.js";
 import * as EventSource from "./EventSource.js";
 import * as Observable from "./Observable.js";
 
-export interface ProducerModule {
+/**
+ * @noInheritDoc
+ */
+export interface ProducerComputation extends ComputationType {
+  readonly [Computation_baseOfT]?: ProducerLike<this[typeof Computation_T]>;
+
+  readonly [Computation_pureDeferredOfT]?: PureProducerLike<
+    this[typeof Computation_T]
+  >;
+  readonly [Computation_deferredWithSideEffectsOfT]?: ProducerWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+
+  readonly [Computation_pureSynchronousOfT]?: PureSynchronousProducerLike<
+    this[typeof Computation_T]
+  >;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousProducerWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+}
+
+export type Computation = ProducerComputation;
+
+export interface ProducerModule
+  extends ComputationModule<ProducerComputation>,
+    SequentialComputationModule<ProducerComputation>,
+    SequentialReactiveComputationModule<ProducerComputation> {
   create<T>(
     f: (consumer: ConsumerLike<T>) => void,
   ): ProducerWithSideEffectsLike<T>;
@@ -63,9 +101,6 @@ export interface ProducerModule {
     ProducerLike<T>,
     PauseableLike & BroadcasterLike<T> & DisposableLike
   >;
-
-  // FIXME improve type to maintain side effects
-  toObservable<T>(): Function1<ProducerLike<T>, DeferredObservableLike<T>>;
 }
 
 export type Signature = ProducerModule;
@@ -189,4 +224,4 @@ export const broadcast: Signature["broadcast"] =
 export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
   (producer: ProducerLike) =>
     Observable.create(bindMethod(producer, ProducerLike_consume)),
-);
+) as Signature["toObservable"];

@@ -7,7 +7,6 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -32,7 +31,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function WithCurrentTimeObserver(
       this: Pick<
         LiftedObserverLike<TA, TB>,
@@ -42,7 +41,6 @@ const createWithCurrentTimeObserver: <TA, TB>(
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<TA, TB>(), this, delegate, none);
 
       this[WithCurrentTimeObserver_selector] = selector;

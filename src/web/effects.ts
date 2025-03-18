@@ -126,8 +126,13 @@ export const __animate: Signature["__animate"] = (
   const memoizedSelector = __constant(selector);
   const htmlElementState = __state<Optional<HTMLElement | null>>(returnsNone);
   const setRef = __memo(makeRefSetter, htmlElementState);
-  const elementStateObservable = __constant(pipe(htmlElementState, Broadcaster.toObservable()), htmlElementState)
-  const htmlElement: Optional<HTMLElement | null> = __observe(elementStateObservable);
+  const elementStateObservable = __constant(
+    pipe(htmlElementState, Broadcaster.toObservable()),
+    htmlElementState,
+  );
+  const htmlElement: Optional<HTMLElement | null> = __observe(
+    elementStateObservable,
+  );
 
   __using(
     animateHtmlElement,
@@ -153,7 +158,7 @@ export const __animation: Signature["__animation"] = <T, TEvent = unknown>(
   const scheduler = __currentScheduler();
 
   const animationStreamable = __constant(
-    Streamable.animation<T, TEvent>(animation, scheduler,{
+    Streamable.animation<T, TEvent>(animation, scheduler, {
       animationScheduler,
     }),
     scheduler,
@@ -180,10 +185,10 @@ export const __animationGroup: Signature["__animationGroup"] = <
   const animationScheduler =
     options?.animationScheduler ?? AnimationFrameScheduler.get();
 
-    const scheduler = __currentScheduler();
+  const scheduler = __currentScheduler();
 
   const animationGroupStreamable = __constant(
-    Streamable.animationGroup(animationGroup,scheduler, {
+    Streamable.animationGroup(animationGroup, scheduler, {
       animationScheduler,
     }),
     scheduler,

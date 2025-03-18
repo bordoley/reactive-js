@@ -17,7 +17,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import { SchedulerLike } from "../../../utils.js";
-import * as Broadcaster from "../../Broadcaster.js"
+import * as Broadcaster from "../../Broadcaster.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 

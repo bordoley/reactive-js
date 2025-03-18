@@ -17,6 +17,7 @@ import {
   Optional,
   Tuple2,
   compose,
+  identity,
   isFunction,
   isNumber,
   isReadonlyArray,
@@ -81,7 +82,8 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable());
 
       const operator = compose(
-        Producer.toObservable(),
+        Producer.toObservable<Streamable.SpringEvent>(),
+        identity,
         Observable.withLatestFrom<
           Streamable.SpringEvent,
           number,

@@ -345,7 +345,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             Computation.ignoreElements(ObservableModule)(),
           );
         },
-        scheduler
+        scheduler,
       ),
       invoke(StreamableLike_stream, {
         autoDispose: false,
