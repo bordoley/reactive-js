@@ -16,4 +16,7 @@
 
 ## Functions
 
+- [create](functions/create.md)
+- [createPauseable](functions/createPauseable.md)
+- [toEventSource](functions/toEventSource.md)
 - [toObservable](functions/toObservable.md)

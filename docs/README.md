@@ -39,6 +39,7 @@
 - [utils/Consumer](utils/Consumer/README.md)
 - [utils/Disposable](utils/Disposable/README.md)
 - [utils/DisposableContainer](utils/DisposableContainer/README.md)
+- [utils/EventListener](utils/EventListener/README.md)
 - [utils/HostScheduler](utils/HostScheduler/README.md)
 - [utils/PauseableScheduler](utils/PauseableScheduler/README.md)
 - [utils/Queue](utils/Queue/README.md)

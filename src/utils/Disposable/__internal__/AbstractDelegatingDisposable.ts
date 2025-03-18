@@ -1,49 +1,36 @@
-import { Optional, SideEffect1, bind, isFunction } from "../../../functions.js";
+import { Optional } from "../../../functions.js";
 import {
-  DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
+import AbstractDelegatingDisposableContainer, {
+  AbstractDelegatingDisposableContainer_delegate,
+} from "../../DisposableContainer/__internal__/AbstractDelegatingDisposableContainer.js";
 
-const AbstractDelegatingDisposable_delegate = Symbol(
-  "AbstractDelegatingDisposable_delegate",
-);
-
-class AbstractDelegatingDisposable implements DisposableLike {
-  private readonly [AbstractDelegatingDisposable_delegate]: DisposableLike;
-
-  constructor(delegate: DisposableLike) {
-    this[AbstractDelegatingDisposable_delegate] =
-      (delegate as unknown as AbstractDelegatingDisposable)[
-        AbstractDelegatingDisposable_delegate
-      ] ?? delegate;
-  }
-
+class AbstractDelegatingDisposable<
+    TDisposable extends DisposableLike = DisposableLike,
+  >
+  extends AbstractDelegatingDisposableContainer<TDisposable>
+  implements DisposableLike
+{
   get [DisposableLike_error](): Optional<Error> {
-    return this[AbstractDelegatingDisposable_delegate][DisposableLike_error];
+    return this[AbstractDelegatingDisposableContainer_delegate][
+      DisposableLike_error
+    ];
   }
 
   get [DisposableLike_isDisposed](): boolean {
-    return this[AbstractDelegatingDisposable_delegate][
+    return this[AbstractDelegatingDisposableContainer_delegate][
       DisposableLike_isDisposed
     ];
   }
 
   [DisposableLike_dispose](error?: Error): void {
-    this[AbstractDelegatingDisposable_delegate][DisposableLike_dispose](error);
-  }
-
-  [DisposableContainerLike_add](
-    disposable: Disposable | SideEffect1<Optional<Error>>,
-  ): void {
-    this[AbstractDelegatingDisposable_delegate][DisposableContainerLike_add](
-      // Cast to make the typechecker happy even though its a lie.
-      (isFunction(disposable)
-        ? bind(disposable, this)
-        : disposable) as Disposable,
-    );
+    this[AbstractDelegatingDisposableContainer_delegate][
+      DisposableLike_dispose
+    ](error);
   }
 }
 

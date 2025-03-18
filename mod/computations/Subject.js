@@ -32,13 +32,14 @@ export const create = /*@__PURE__*/ (() => {
     }
     return mixInstanceFactory(include(DisposableMixin, QueueingConsumerMixin()), function Subject(options) {
         const replay = clampPositiveInteger(options?.replay ?? 0);
+        const autoDispose = options?.autoDispose ?? false;
         init(DisposableMixin, this);
         init(QueueingConsumerMixin(), this, {
+            autoDispose,
             backpressureStrategy: DropOldestBackpressureStrategy,
             capacity: replay,
         });
         this[Subject_sinks] = newInstance(Set);
-        const autoDispose = options?.autoDispose ?? false;
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[Subject_onSinkDisposed] = function onSinkDisposed() {

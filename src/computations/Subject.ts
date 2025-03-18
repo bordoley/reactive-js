@@ -97,16 +97,16 @@ export const create: <T>(options?: {
       },
     ): SubjectLike<T> {
       const replay = clampPositiveInteger(options?.replay ?? 0);
+      const autoDispose = options?.autoDispose ?? false;
 
       init(DisposableMixin, this);
       init(QueueingConsumerMixin<T>(), this, {
+        autoDispose,
         backpressureStrategy: DropOldestBackpressureStrategy,
         capacity: replay,
       });
 
       this[Subject_sinks] = newInstance<Set<SinkLike>>(Set);
-
-      const autoDispose = options?.autoDispose ?? false;
 
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const instance = this;

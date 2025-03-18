@@ -1,6 +1,6 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, EventSourceLike, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, BroadcasterLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, EventSourceLike, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { DisposableLike, PauseableLike } from "../utils.js";
+import { DisposableLike, PauseableLike, SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -12,9 +12,19 @@ export interface AsyncIterableComputation extends ComputationType {
 export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
-    toEventSource<T>(): Function1<AsyncIterableLike<T>, PauseableLike & EventSourceLike<T> & DisposableLike>;
+    broadcast<T>(options?: {
+        readonly autoDispose?: boolean;
+        readonly replay?: number;
+        readonly scheduler?: SchedulerLike;
+    }): Function1<AsyncIterableLike<T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;
+    toEventSource<T>(options?: {
+        readonly autoDispose?: boolean;
+        readonly replay?: number;
+        readonly scheduler?: SchedulerLike;
+    }): Function1<AsyncIterableLike<T>, PauseableLike & EventSourceLike<T> & DisposableLike>;
 }
 export type Signature = AsyncIterableModule;
+export declare const broadcast: Signature["broadcast"];
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
