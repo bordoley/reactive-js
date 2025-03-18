@@ -37,7 +37,6 @@ import {
   SideEffect1,
   alwaysTrue,
   bindMethod,
-  compose,
   error,
   invoke,
   isFunction,
@@ -104,15 +103,6 @@ export interface AsyncIterableModule
   }): Function1<
     AsyncIterableLike<T>,
     PauseableLike & BroadcasterLike<T> & DisposableLike
-  >;
-
-  toEventSource<T>(options?: {
-    readonly autoDispose?: boolean;
-    readonly replay?: number;
-    readonly scheduler?: SchedulerLike;
-  }): Function1<
-    AsyncIterableLike<T>,
-    PauseableLike & EventSourceLike<T> & DisposableLike
   >;
 }
 
@@ -779,16 +769,6 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
 
 export const toObservable: Signature["toObservable"] =
   Observable_fromAsyncIterable as Signature["toObservable"];
-
-export const toEventSource: Signature["toEventSource"] = (<T>(options?: {
-  readonly autoDispose?: boolean;
-  readonly replay?: number;
-  readonly scheduler?: SchedulerLike;
-}) =>
-  compose(
-    broadcast<T>(options),
-    Broadcaster.toEventSource<T>(),
-  )) as Signature["toEventSource"];
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/

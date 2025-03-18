@@ -8,5 +8,4 @@
 
 ## Functions
 
-- [toEventSource](functions/toEventSource.md)
-- [toProducer](functions/toProducer.md)
+- [create](functions/create.md)

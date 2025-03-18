@@ -43,7 +43,6 @@
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
-- [toEventSource](functions/toEventSource.md)
 - [toObservable](functions/toObservable.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [zip](functions/zip.md)

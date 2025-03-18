@@ -1,32 +1,24 @@
 import { Readable } from "stream";
 import * as Producer from "../computations/Producer.js";
-import {
-  EventSourceLike,
-  ProducerWithSideEffectsLike,
-} from "../computations.js";
-import { bindMethod, compose, pipe } from "../functions.js";
+import { ProducerWithSideEffectsLike } from "../computations.js";
+import { Factory, bindMethod, pipe } from "../functions.js";
 import {
   ConsumerLike_addOnReadyListener,
   ConsumerLike_isReady,
-  DisposableLike,
   EventListenerLike_notify,
-  PauseableLike,
   SinkLike_complete,
 } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 
 interface NodeReadable {
-  toEventSource(
-    readable: Readable,
-  ): PauseableLike & EventSourceLike<Uint8Array> & DisposableLike;
-
-  toProducer(readable: Readable): ProducerWithSideEffectsLike<Uint8Array>;
+  create(factory: Factory<Readable>): ProducerWithSideEffectsLike<Uint8Array>;
 }
 
 type Signature = NodeReadable;
 
-export const toProducer: Signature["toProducer"] = readable =>
+export const create: Signature["create"] = factory =>
   Producer.create(consumer => {
+    const readable = factory();
     pipe(readable, NodeStream.addTo(consumer), NodeStream.add(consumer));
 
     readable.pause();
@@ -48,6 +40,3 @@ export const toProducer: Signature["toProducer"] = readable =>
       readable.resume();
     }
   });
-
-export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ (() =>
-  compose(toProducer, Producer.toEventSource()))();

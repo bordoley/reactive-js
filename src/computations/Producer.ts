@@ -7,6 +7,7 @@ import {
   proto,
 } from "../__internal__/mixins.js";
 import {
+  BroadcasterLike,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   EventSourceLike,
@@ -38,14 +39,15 @@ import {
   ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
-  EventListenerLike,
   EventListenerLike_notify,
   PauseableLike,
   SchedulerLike,
+  SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
 } from "../utils.js";
+import * as Broadcaster from "./Broadcaster.js";
 import * as EventSource from "./EventSource.js";
 import * as Observable from "./Observable.js";
 
@@ -54,9 +56,12 @@ export interface ProducerModule {
     f: (consumer: ConsumerLike<T>) => void,
   ): ProducerWithSideEffectsLike<T>;
 
-  toEventSource<T>(): Function1<
+  broadcast<T>(options?: {
+    readonly autoDispose?: boolean;
+    readonly replay?: number;
+  }): Function1<
     ProducerLike<T>,
-    PauseableLike & EventSourceLike<T> & DisposableLike
+    PauseableLike & BroadcasterLike<T> & DisposableLike
   >;
 
   toObservable<T>(): Function1<ProducerLike<T>, ObservableLike<T>>;
@@ -81,9 +86,7 @@ class CreateProducer<T> implements ProducerWithSideEffectsLike<T> {
 
 export const create: Signature["create"] = f => newInstance(CreateProducer, f);
 
-export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ (<
-  T,
->() => {
+const createPauseableConsumer = /*@__PURE__*/ (<T>() => {
   const EventListenerToPauseableConsumer_delegate = Symbol(
     "EventListenerToPauseableConsumer_delegate",
   );
@@ -93,23 +96,23 @@ export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ (<
   );
 
   type TProperties = {
-    [EventListenerToPauseableConsumer_delegate]: EventListenerLike<T>;
+    [EventListenerToPauseableConsumer_delegate]: SinkLike<T>;
     [SinkLike_isCompleted]: boolean;
     [ConsumerLike_isReady]: boolean;
     [EventListenerToPauseableConsumer_mode]: EventSourceLike<boolean>;
   };
 
-  const createPauseableConsumer = mixInstanceFactory(
+  return mixInstanceFactory(
     include(DelegatingDisposableMixin),
     function EventListenerToPauseableConsumer(
       this: TProperties &
         Omit<ConsumerLike<T>, keyof DisposableLike | keyof SchedulerLike>,
-      listener: EventListenerLike<T>,
+      sink: SinkLike<T>,
       mode: EventSourceLike<boolean>,
     ): ConsumerLike<T> {
-      init(DelegatingDisposableMixin, this, listener);
+      init(DelegatingDisposableMixin, this, sink);
 
-      this[EventListenerToPauseableConsumer_delegate] = listener;
+      this[EventListenerToPauseableConsumer_delegate] = sink;
       this[EventListenerToPauseableConsumer_mode] = mode;
 
       pipe(
@@ -162,23 +165,25 @@ export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ (<
       },
       [SinkLike_complete](this: TProperties & ConsumerLike<T>) {
         this[SinkLike_isCompleted] = true;
-        this[DisposableLike_dispose]();
+        const delegate = this[EventListenerToPauseableConsumer_delegate];
+        delegate[SinkLike_complete]();
       },
     }),
   );
+})();
 
-  return returns((producer: ProducerLike<T>) =>
-    EventSource.createPauseable<T>(mode =>
+export const broadcast: Signature["broadcast"] =
+  <T>(options?: { readonly autoDispose?: boolean; readonly replay?: number }) =>
+  (producer: ProducerLike<T>) =>
+    Broadcaster.createPauseable<T>(mode =>
       pipe(
-        EventSource.create<T>(listener => {
-          const consumer = createPauseableConsumer(listener, mode);
+        Broadcaster.create<T>(sink => {
+          const consumer = createPauseableConsumer(sink, mode);
           producer[ProducerLike_consume](consumer);
-        }),
+        }, options),
         Disposable.bindTo(mode),
       ),
-    ),
-  );
-})();
+    );
 
 export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
   (producer: ProducerLike) =>

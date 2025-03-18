@@ -1,4 +1,4 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, BroadcasterLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, EventSourceLike, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, BroadcasterLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { DisposableLike, PauseableLike, SchedulerLike } from "../utils.js";
 /**
@@ -17,11 +17,6 @@ export interface AsyncIterableModule extends ComputationModule<AsyncIterableComp
         readonly replay?: number;
         readonly scheduler?: SchedulerLike;
     }): Function1<AsyncIterableLike<T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;
-    toEventSource<T>(options?: {
-        readonly autoDispose?: boolean;
-        readonly replay?: number;
-        readonly scheduler?: SchedulerLike;
-    }): Function1<AsyncIterableLike<T>, PauseableLike & EventSourceLike<T> & DisposableLike>;
 }
 export type Signature = AsyncIterableModule;
 export declare const broadcast: Signature["broadcast"];
@@ -50,6 +45,5 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toObservable: Signature["toObservable"];
-export declare const toEventSource: Signature["toEventSource"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const zip: Signature["zip"];

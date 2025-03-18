@@ -54,8 +54,10 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Readable } from "node:stream";
 import { describe, expectEquals, expectPromiseToThrow, expectTrue, testAsync, testModule, } from "../../__internal__/testing.js";
+import * as Broadcaster from "../../computations/Broadcaster.js";
 import * as Iterable from "../../computations/Iterable.js";
 import * as Observable from "../../computations/Observable.js";
+import * as Producer from "../../computations/Producer.js";
 import { ProducerLike_consume } from "../../computations.js";
 import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../functions.js";
 import * as Consumer from "../../utils/Consumer.js";
@@ -64,7 +66,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
-testModule("NodeReadable", describe("toEventSource", testAsync("reading from readable", async () => {
+testModule("NodeReadable", describe("create", testAsync("reading from readable", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         function* generate() {
@@ -75,11 +77,11 @@ testModule("NodeReadable", describe("toEventSource", testAsync("reading from rea
         const readable = Readable.from(generate(), {
             autoDestroy: false,
         });
-        const src = pipe(readable, NodeReadable.toEventSource, Disposable.addTo(scheduler));
+        const src = pipe(readable, returns, NodeReadable.create, Producer.broadcast({ autoDispose: true }), Disposable.addTo(scheduler));
         src[PauseableLike_resume]();
         src[PauseableLike_pause]();
         src[PauseableLike_resume]();
-        await pipeAsync(src, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync({ scheduler }), expectEquals("abcdefg"));
+        await pipeAsync(src, Broadcaster.toObservable(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.lastAsync({ scheduler }), expectEquals("abcdefg"));
         pipe(readable.destroyed, expectTrue("expected readable to be destroyed"));
     }
     catch (e_1) {
@@ -97,11 +99,11 @@ testModule("NodeReadable", describe("toEventSource", testAsync("reading from rea
             yield Buffer.from("defg", "utf8");
         }
         const scheduler = __addDisposableResource(env_2, HostScheduler.create(), false);
-        const src = pipe(Readable.from(generate()), NodeReadable.toEventSource, Disposable.addTo(scheduler));
+        const src = pipe(Readable.from(generate()), returns, NodeReadable.create, Producer.broadcast({ autoDispose: true }), Disposable.addTo(scheduler));
         const queue = Consumer.createDropOldestWithoutBackpressure(1, {
             autoDispose: true,
         });
-        pipe(src, Observable.fromEventSource(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.toProducer(scheduler), invoke(ProducerLike_consume, queue));
+        pipe(src, Broadcaster.toObservable(), Observable.decodeWithCharset(), Observable.scan((acc, next) => acc + next, returns("")), Observable.toProducer(scheduler), invoke(ProducerLike_consume, queue));
         src[PauseableLike_resume]();
         await DisposableContainer.toPromise(queue);
         pipe(queue, Iterable.first(), expectEquals("abcdefg"));
@@ -123,9 +125,9 @@ testModule("NodeReadable", describe("toEventSource", testAsync("reading from rea
             throw err;
         }
         const scheduler = __addDisposableResource(env_3, HostScheduler.create(), false);
-        const src = pipe(generate(), Readable.from, NodeReadable.toEventSource, Disposable.addTo(scheduler));
+        const src = pipe(generate(), Readable.from, returns, NodeReadable.create, Producer.broadcast({ autoDispose: true }), Disposable.addTo(scheduler));
         src[PauseableLike_resume]();
-        await pipe(src, Observable.fromEventSource(), Observable.lastAsync({ scheduler }), expectPromiseToThrow);
+        await pipe(src, Broadcaster.toObservable(), Observable.lastAsync({ scheduler }), expectPromiseToThrow);
     }
     catch (e_3) {
         env_3.error = e_3;

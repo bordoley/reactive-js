@@ -7,6 +7,7 @@ import { bindMethod, error, newInstance, none, pipe, raise, returns, } from "../
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
+import * as Broadcaster from "./Broadcaster.js";
 import * as EventSource from "./EventSource.js";
 import * as Observable from "./Observable.js";
 class CreateProducer {
@@ -26,12 +27,12 @@ class CreateProducer {
     }
 }
 export const create = f => newInstance(CreateProducer, f);
-export const toEventSource = /*@__PURE__*/ (() => {
+const createPauseableConsumer = /*@__PURE__*/ (() => {
     const EventListenerToPauseableConsumer_delegate = Symbol("EventListenerToPauseableConsumer_delegate");
     const EventListenerToPauseableConsumer_mode = Symbol("EventListenerToPauseableConsumer_mode");
-    const createPauseableConsumer = mixInstanceFactory(include(DelegatingDisposableMixin), function EventListenerToPauseableConsumer(listener, mode) {
-        init(DelegatingDisposableMixin, this, listener);
-        this[EventListenerToPauseableConsumer_delegate] = listener;
+    return mixInstanceFactory(include(DelegatingDisposableMixin), function EventListenerToPauseableConsumer(sink, mode) {
+        init(DelegatingDisposableMixin, this, sink);
+        this[EventListenerToPauseableConsumer_delegate] = sink;
         this[EventListenerToPauseableConsumer_mode] = mode;
         pipe(mode, EventSource.addEventHandler(isPaused => {
             this[ConsumerLike_isReady] = !isPaused;
@@ -63,12 +64,13 @@ export const toEventSource = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             this[SinkLike_isCompleted] = true;
-            this[DisposableLike_dispose]();
+            const delegate = this[EventListenerToPauseableConsumer_delegate];
+            delegate[SinkLike_complete]();
         },
     }));
-    return returns((producer) => EventSource.createPauseable(mode => pipe(EventSource.create(listener => {
-        const consumer = createPauseableConsumer(listener, mode);
-        producer[ProducerLike_consume](consumer);
-    }), Disposable.bindTo(mode))));
 })();
+export const broadcast = (options) => (producer) => Broadcaster.createPauseable(mode => pipe(Broadcaster.create(sink => {
+    const consumer = createPauseableConsumer(sink, mode);
+    producer[ProducerLike_consume](consumer);
+}, options), Disposable.bindTo(mode)));
 export const toObservable = /*@__PURE__*/ returns((producer) => Observable.create(bindMethod(producer, ProducerLike_consume)));

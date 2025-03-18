@@ -7,8 +7,10 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Broadcaster from "../../computations/Broadcaster.js";
 import * as Iterable from "../../computations/Iterable.js";
 import * as Observable from "../../computations/Observable.js";
+import * as Producer from "../../computations/Producer.js";
 import { ProducerLike_consume } from "../../computations.js";
 import {
   Optional,
@@ -32,7 +34,7 @@ import * as NodeReadable from "../NodeReadable.js";
 testModule(
   "NodeReadable",
   describe(
-    "toEventSource",
+    "create",
     testAsync("reading from readable", async () => {
       function* generate() {
         yield Buffer.from("abc", "utf8");
@@ -47,7 +49,9 @@ testModule(
 
       const src = pipe(
         readable,
-        NodeReadable.toEventSource,
+        returns,
+        NodeReadable.create,
+        Producer.broadcast({ autoDispose: true }),
         Disposable.addTo(scheduler),
       );
 
@@ -57,7 +61,7 @@ testModule(
 
       await pipeAsync(
         src,
-        Observable.fromEventSource(),
+        Broadcaster.toObservable(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
         Observable.lastAsync<string>({ scheduler }),
@@ -76,7 +80,9 @@ testModule(
 
       const src = pipe(
         Readable.from(generate()),
-        NodeReadable.toEventSource,
+        returns,
+        NodeReadable.create,
+        Producer.broadcast({ autoDispose: true }),
         Disposable.addTo(scheduler),
       );
 
@@ -85,7 +91,7 @@ testModule(
       });
       pipe(
         src,
-        Observable.fromEventSource(),
+        Broadcaster.toObservable(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
         Observable.toProducer(scheduler),
@@ -114,7 +120,9 @@ testModule(
       const src = pipe(
         generate(),
         Readable.from,
-        NodeReadable.toEventSource,
+        returns,
+        NodeReadable.create,
+        Producer.broadcast({ autoDispose: true }),
         Disposable.addTo(scheduler),
       );
 
@@ -122,7 +130,7 @@ testModule(
 
       await pipe(
         src,
-        Observable.fromEventSource(),
+        Broadcaster.toObservable(),
         Observable.lastAsync({ scheduler }),
         expectPromiseToThrow,
       );

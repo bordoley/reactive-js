@@ -3,7 +3,7 @@
 import { Array_map, Array_push, Iterator_done, Iterator_next, Iterator_value, MAX_SAFE_INTEGER, } from "../__internal__/constants.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
-import { alwaysTrue, bindMethod, compose, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, pipeSome, raiseError, returns, } from "../functions.js";
+import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, pipeSome, raiseError, returns, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -452,7 +452,6 @@ class ThrowIfEmptyAsyncIterable {
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyAsyncIterable, iter, factory));
 export const toObservable = Observable_fromAsyncIterable;
-export const toEventSource = ((options) => compose(broadcast(options), Broadcaster.toEventSource()));
 export const toReadonlyArrayAsync = 
 /*@__PURE__*/
 returns(async (iter) => {

@@ -130,9 +130,6 @@ testModule(
         );
       }, expectToThrowAsync),
     ),
-  ),
-  describe(
-    "toEventSource",
     testAsync(
       "notifies all the values produced by the iterable",
       pipeLazyAsync(
@@ -140,43 +137,11 @@ testModule(
         Computation.fromIterable<AsyncIterable.Computation, number>(
           AsyncIterable,
         ),
-        AsyncIterable.toEventSource({ autoDispose: true }),
+        AsyncIterable.broadcast({ autoDispose: true }),
+        Broadcaster.toEventSource(),
         EventSource.toReadonlyArrayAsync<number>(),
         expectArrayEquals([1, 2, 3, 4]),
       ),
-    ),
-    testAsync("iterable that completes", async () => {
-      const flowed = pipe(
-        (async function* foo() {
-          yield 1;
-          yield 2;
-          yield 3;
-        })(),
-        AsyncIterable.of(),
-        AsyncIterable.toEventSource({ autoDispose: true }),
-      );
-      flowed[PauseableLike_resume]();
-
-      const result = await pipe(flowed, EventSource.toReadonlyArrayAsync());
-
-      pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-    }),
-    testAsync(
-      "iterable that throws",
-      pipeLazy(async () => {
-        const e = error();
-
-        const flowed = pipe(
-          (async function* foo() {
-            throw e;
-          })(),
-          AsyncIterable.of(),
-          AsyncIterable.toEventSource(),
-        );
-        flowed[PauseableLike_resume]();
-
-        await pipe(flowed, EventSource.toReadonlyArrayAsync());
-      }, expectToThrowAsync),
     ),
   ),
 );
