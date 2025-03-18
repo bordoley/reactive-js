@@ -141,8 +141,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     throttle<T>(duration: number, options?: {
         readonly mode?: ThrottleMode;
     }): StatefulSynchronousComputationOperator<ObservableComputation, T, T>;
-    toEventSource<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
-    toPauseableEventSource<T>(scheduler: SchedulerLike): Function1<SynchronousObservableLike<T>, PauseableLike & EventSourceLike<T> & DisposableLike>;
+    toEventSource<T>(scheduler: SchedulerLike): <TObservable extends ObservableLike<T>>(obs: TObservable) => TObservable extends SynchronousObservableLike<T> ? PauseableLike & EventSourceLike<T> & DisposableLike : EventSourceLike<T> & DisposableLike;
     toProducer<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, ProducerLike<T>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): StatefulSynchronousComputationOperator<ObservableComputation, TA, TB>;
 }
@@ -209,7 +208,6 @@ export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];
-export declare const toPauseableEventSource: Signature["toPauseableEventSource"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

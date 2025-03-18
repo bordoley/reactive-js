@@ -35,10 +35,12 @@ import {
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   DeferredComputationWithSideEffects,
+  ProducerLike_consume,
   PureDeferredComputation,
   PureSynchronousDeferredComputation,
   PureSynchronousObservableLike,
   StoreLike_value,
+  StreamableLike_stream,
   SynchronousDeferredComputationWithSideEffects,
   SynchronousObservableLike,
 } from "../../computations.js";
@@ -48,6 +50,7 @@ import {
   bindMethod,
   error,
   ignore,
+  invoke,
   isSome,
   lessThan,
   newInstance,
@@ -1397,6 +1400,40 @@ testModule(
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([0, 1, 2]));
+    }),
+
+    test("to a pauseable eventsource enqueueing into a stream with backpressure", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const dest = Streamable.identity<number>()[StreamableLike_stream](vts, {
+        backpressureStrategy: ThrowBackpressureStrategy,
+        capacity: 1,
+      });
+
+      pipe(
+        Computation.generate<Observable.Computation>(Observable)(
+          increment,
+          returns(-1),
+          { delay: 1, delayStart: true },
+        ),
+        Observable.takeFirst<number>({ count: 5 }),
+        Observable.toEventSource(vts),
+        EventSource.toProducer(),
+        invoke(ProducerLike_consume, dest),
+      );
+
+      const result: number[] = [];
+      pipe(
+        dest,
+        Observable.forEach<number>(bindMethod(result, Array_push)),
+        Observable.subscribe(vts),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(dest[DisposableLike_isDisposed], expectTrue());
+      pipe(dest[DisposableLike_error], expectIsNone);
+      pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     }),
   ),
   describe(

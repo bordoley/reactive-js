@@ -119,7 +119,6 @@ import Observable_throttle, {
 } from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__private__/Observable.toEventSource.js";
-import Observable_toPauseableEventSource from "./Observable/__private__/Observable.toPauseableEventSource.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArray from "./Observable/__private__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -409,14 +408,11 @@ export interface ObservableModule
 
   toEventSource<T>(
     scheduler: SchedulerLike,
-  ): Function1<ObservableLike<T>, EventSourceLike<T> & DisposableLike>;
-
-  toPauseableEventSource<T>(
-    scheduler: SchedulerLike,
-  ): Function1<
-    SynchronousObservableLike<T>,
-    PauseableLike & EventSourceLike<T> & DisposableLike
-  >;
+  ): <TObservable extends ObservableLike<T>>(
+    obs: TObservable,
+  ) => TObservable extends SynchronousObservableLike<T>
+    ? PauseableLike & EventSourceLike<T> & DisposableLike
+    : EventSourceLike<T> & DisposableLike;
 
   toProducer<T>(
     scheduler: SchedulerLike,
@@ -507,8 +503,6 @@ export const toEventSource: Signature["toEventSource"] =
 export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toObservable"];
-export const toPauseableEventSource: Signature["toPauseableEventSource"] =
-  Observable_toPauseableEventSource;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;

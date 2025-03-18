@@ -90,7 +90,6 @@
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toEventSource](functions/toEventSource.md)
 - [toObservable](functions/toObservable.md)
-- [toPauseableEventSource](functions/toPauseableEventSource.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
