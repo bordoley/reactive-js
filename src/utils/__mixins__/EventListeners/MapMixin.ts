@@ -12,9 +12,9 @@ const MapMixin: <TA, TB>() => Mixin1<
 > = /*@__PURE__*/ (<TA, TB>() => {
   const MapMixin_selector = Symbol("MapMixin_selector");
 
-  interface TProperties<TA, TB> {
+  type TProperties = {
     [MapMixin_selector]: Function1<TA, TB>;
-  }
+  };
 
   return returns(
     mix(
@@ -23,7 +23,7 @@ const MapMixin: <TA, TB>() => Mixin1<
           LiftedEventListenerLike<TA, TB>,
           typeof LiftedEventListenerLike_notify
         > &
-          TProperties<TA, TB>,
+          TProperties,
         selector: Function1<TA, TB>,
       ): Pick<
         LiftedEventListenerLike<TA, TB>,
@@ -33,12 +33,12 @@ const MapMixin: <TA, TB>() => Mixin1<
 
         return this;
       },
-      props<TProperties<TA, TB>>({
+      props<TProperties>({
         [MapMixin_selector]: none,
       }),
       {
         [LiftedEventListenerLike_notify](
-          this: TProperties<TA, TB> & LiftedEventListenerLike<TA, TB>,
+          this: TProperties & LiftedEventListenerLike<TA, TB>,
           next: TA,
         ) {
           const mapped = this[MapMixin_selector](next);

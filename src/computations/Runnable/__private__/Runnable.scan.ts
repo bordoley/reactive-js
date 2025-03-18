@@ -1,35 +1,36 @@
-import { Factory, Reducer, newInstance } from "../../../functions.js";
-import AbstractSink, {
-  AbstractSink_delegate,
-} from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+} from "../../../__internal__/mixins.js";
+import { Factory, Reducer, none, partial, pipe } from "../../../functions.js";
+import ScanMixin from "../../../utils/__mixins__/EventListeners/ScanMixin.js";
+import LiftedSinkMixin from "../../../utils/__mixins__/LiftedSinkMixin.js";
+import { SinkLike } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
-import Runnable_lift from "./Runnable.lift.js";
+import { Runnable_liftPure } from "./Runnable.lift.js";
 
-class ScanSink<T, TAcc> extends AbstractSink<T, TAcc> {
-  constructor(
-    sink: SinkLike<TAcc>,
-    private r: Reducer<T, TAcc>,
-    private acc: TAcc,
-  ) {
-    super(sink);
-  }
+const Runnable_scan: Runnable.Signature["scan"] = /*@__PURE__*/ (<
+  T,
+  TAcc,
+>() => {
+  const createScanSink = mixInstanceFactory(
+    include(LiftedSinkMixin(), ScanMixin()),
+    function ScanSink(
+      this: unknown,
+      delegate: SinkLike<TAcc>,
+      reducer: Reducer<T, TAcc>,
+      initialValue: Factory<TAcc>,
+    ): SinkLike<T> {
+      init(LiftedSinkMixin<T, TAcc>(), this, delegate, none);
+      init(ScanMixin<T, TAcc>(), this, reducer, initialValue);
 
-  [EventListenerLike_notify](next: T): void {
-    const nextAcc = this.r(this.acc, next);
-    this.acc = nextAcc;
-    this[AbstractSink_delegate][EventListenerLike_notify](nextAcc);
-  }
-}
-
-const Runnable_scan: Runnable.Signature["scan"] = <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-) =>
-  Runnable_lift(
-    (sink: SinkLike<TAcc>) =>
-      newInstance(ScanSink<T, TAcc>, sink, reducer, initialValue()),
-    true,
+      return this;
+    },
   );
+
+  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(createScanSink, partial(reducer, initialValue), Runnable_liftPure);
+})() as Runnable.Signature["scan"];
 
 export default Runnable_scan;

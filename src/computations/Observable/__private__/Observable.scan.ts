@@ -2,91 +2,39 @@ import {
   include,
   init,
   mixInstanceFactory,
-  props,
-  proto,
 } from "../../../__internal__/mixins.js";
-import {
-  Factory,
-  Reducer,
-  error,
-  none,
-  partial,
-  pipe,
-} from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import {
-  LiftedEventListenerLike_notify,
-  LiftedEventListenerLike_notifyDelegate,
-} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
-import LiftedObserverMixin, {
-  LiftedObserverLike,
-} from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
+import { Factory, Reducer, none, partial, pipe } from "../../../functions.js";
+import ScanMixin from "../../../utils/__mixins__/EventListeners/ScanMixin.js";
+import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import Observable_liftPure from "./Observable.liftPure.js";
 
-const ScanObserver_acc = Symbol("ScanObserver_acc");
-const ScanObserver_reducer = Symbol("ScanObserver_reducer");
-
-interface TProperties<T, TAcc> {
-  [ScanObserver_acc]: TAcc;
-  [ScanObserver_reducer]: Reducer<T, TAcc>;
-}
-
-const createScanObserver: <T, TAcc>(
-  delegate: ObserverLike<TAcc>,
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
-  return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+const Observable_scan: Observable.Signature["scan"] = /*@__PURE__*/ (<
+  T,
+  TAcc,
+>() => {
+  const createScanObserver = mixInstanceFactory(
+    include(LiftedObserverMixin(), ScanMixin()),
     function ScanObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
-        TProperties<T, TAcc>,
+      this: unknown,
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T, TAcc>(), this, delegate, none);
-
-      this[ScanObserver_reducer] = reducer;
-
-      try {
-        this[ScanObserver_acc] = initialValue();
-      } catch (e) {
-        this[DisposableLike_dispose](error(e));
-      }
+      init(ScanMixin<T, TAcc>(), this, reducer, initialValue);
 
       return this;
     },
-    props<TProperties<T, TAcc>>({
-      [ScanObserver_acc]: none,
-      [ScanObserver_reducer]: none,
-    }),
-    proto({
-      [LiftedEventListenerLike_notify](
-        this: TProperties<T, TAcc> & LiftedObserverLike<T, TAcc>,
-        next: T,
-      ) {
-        const oldAcc = this[ScanObserver_acc];
-        const nextAcc = this[ScanObserver_reducer](oldAcc, next);
-        this[ScanObserver_acc] = nextAcc;
-
-        this[LiftedEventListenerLike_notifyDelegate](nextAcc);
-      },
-    }),
   );
-})();
 
-const Observable_scan: Observable.Signature["scan"] = <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-) =>
-  pipe(
-    createScanObserver<T, TAcc>,
-    partial(reducer, initialValue),
-    Observable_liftPureDeferred,
-  );
+  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(
+      createScanObserver,
+      partial(reducer, initialValue),
+      Observable_liftPure,
+    );
+})() as Observable.Signature["scan"];
 
 export default Observable_scan;

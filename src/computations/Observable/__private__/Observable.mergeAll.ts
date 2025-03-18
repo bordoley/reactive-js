@@ -31,7 +31,6 @@ import {
 import * as Consumer from "../../../utils/Consumer.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedConsumerLike_isReady } from "../../../utils/__mixins__/LiftedConsumerMixin.js";
 import {
   LiftedEventListenerLike_notify,
@@ -128,10 +127,7 @@ const createMergeAllObserverOperator: <T>(options?: {
   }
 
   const createMergeAllObserver = mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin,
-      LiftedObserverMixin<DeferredObservableWithSideEffectsLike<T>>(),
-    ),
+    include(LiftedObserverMixin<DeferredObservableWithSideEffectsLike<T>>()),
     function MergeAllObserver(
       this: Pick<
         LiftedObserverLike<DeferredObservableWithSideEffectsLike<T>>,
@@ -143,7 +139,6 @@ const createMergeAllObserverOperator: <T>(options?: {
       backpressureStrategy: BackpressureStrategy,
       concurrency: number,
     ): ObserverLike<ObservableLike<T>> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<ObservableLike<T>, T>(), this, delegate, none);
 
       this[MergeAllObserver_observablesQueue] = pipe(

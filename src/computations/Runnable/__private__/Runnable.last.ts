@@ -36,6 +36,8 @@ const Runnable_last: Runnable.Signature["last"] =
     const sink = newInstance(LastSink<T>);
     deferable[RunnableLike_eval](sink);
     sink[DisposableLike_dispose]();
+    Disposable.raiseIfDisposedWithError(sink);
+
     return sink.v;
   };
 

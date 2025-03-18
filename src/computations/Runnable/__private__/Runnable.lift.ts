@@ -68,3 +68,7 @@ const Runnable_lift: RunnableLift["lift"] = (<TA, TB>(
   }) as RunnableLift["lift"];
 
 export default Runnable_lift;
+
+export const Runnable_liftPure = <TA, TB>(
+  operator: Function1<SinkLike<TB>, SinkLike<TA>>,
+) => Runnable_lift(operator, true);

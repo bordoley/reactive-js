@@ -5,7 +5,6 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -28,14 +27,13 @@ const createForEachObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function ForEachObserver(
       this: TProperties &
         Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify>,
       delegate: ObserverLike<T>,
       effect: SideEffect1<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[ForEachObserver_effect] = effect;

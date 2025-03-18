@@ -12,9 +12,9 @@ const KeepMixin: <T>() => Mixin1<
 > = /*@__PURE__*/ (<T>() => {
   const KeepMixin_predicate = Symbol("KeepMixin_predicate");
 
-  interface TProperties<T> {
+  type TProperties<T> = {
     [KeepMixin_predicate]: Predicate<T>;
-  }
+  };
 
   return returns(
     mix(

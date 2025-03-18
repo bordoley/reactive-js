@@ -1512,31 +1512,67 @@ export const ProducerLike_consume = Symbol("ProducerLike_consume");
  * @noInheritDoc
  */
 export interface ProducerLike<out T = unknown> extends ComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
   [ProducerLike_consume](consumer: ConsumerLike<T>): void;
 }
 
+export interface DeferredProducerLike<out T = unknown>
+  extends ProducerLike<T>,
+    DeferredComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+}
+
 /**
  * @noInheritDoc
  */
-export interface PureProducerLike<out T = unknown>
-  extends ProducerLike<T>,
+export interface PureDeferredProducerLike<out T = unknown>
+  extends DeferredProducerLike<T>,
     PureDeferredComputationLike {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
 /**
  * @noInheritDoc
  */
-export interface ProducerWithSideEffectsLike<out T = unknown>
-  extends ProducerLike<T>,
+export interface DeferredProducerWithSideEffectsLike<out T = unknown>
+  extends DeferredProducerLike<T>,
     DeferredComputationWithSideEffectsLike {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]: false;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
-// FIXME: Runnable producers are possible if we validate schedulers are VTS in observable
+/**
+ * @noInheritDoc
+ */
+export interface SynchronousProducerLike<out T = unknown>
+  extends ProducerLike<T>,
+    SynchronousComputationLike {
+  readonly [ComputationLike_isSynchronous]?: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface PureSynchronousProducerLike<out T = unknown>
+  extends SynchronousProducerLike<T>,
+    PureSynchronousComputationLike {
+  readonly [ComputationLike_isDeferred]: false;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]?: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface SynchronousProducerWithSideEffectsLike<out T = unknown>
+  extends SynchronousProducerLike<T>,
+    SynchronousComputationWithSideEffectsLike {
+  readonly [ComputationLike_isDeferred]: false;
+  readonly [ComputationLike_isPure]: false;
+  readonly [ComputationLike_isSynchronous]?: true;
+}
 
 /**
  * @noInheritDoc
@@ -1681,7 +1717,7 @@ export interface SubjectLike<out T = unknown>
  */
 export interface StreamLike<TReq, out T>
   extends ConsumerLike<TReq>,
-    MulticastObservableLike<T> {}
+    BroadcasterLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
@@ -1705,24 +1741,16 @@ export interface StreamableLike<
    * @param scheduler - The scheduler to subscribe to the stream with.
    * @param options
    */
-  [StreamableLike_stream](
-    scheduler: SchedulerLike,
-    options?: {
-      readonly autoDispose?: boolean;
-      /**
-       * The number of items to buffer for replay when an observer subscribes
-       * to the stream.
-       */
-      readonly replay?: number;
-
-      /**
-       * The capacity of the stream's request queue.
-       */
-      readonly capacity?: number;
-
-      readonly backpressureStrategy?: BackpressureStrategy;
-    },
-  ): TStream & DisposableLike;
+  [StreamableLike_stream](options?: {
+    readonly autoDispose?: boolean;
+    /**
+     * The number of items to buffer for replay when an observer subscribes
+     * to the stream.
+     */
+    readonly replay?: number;
+    capacity?: number;
+    backpressureStrategy?: BackpressureStrategy;
+  }): TStream & DisposableLike;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<

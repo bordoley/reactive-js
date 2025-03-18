@@ -7,7 +7,6 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -33,7 +32,7 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   };
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin<ArrayBuffer>()),
+    include(LiftedObserverMixin<ArrayBuffer>()),
     function DecodeWithCharsetObserver(
       this: Pick<
         LiftedObserverLike<ArrayBuffer, string>,
@@ -47,7 +46,6 @@ const createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         ignoreBOM?: boolean;
       },
     ): ObserverLike<ArrayBuffer> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<ArrayBuffer, string>(), this, delegate, none);
 
       const textDecoder = newInstance(TextDecoder, charset, options);

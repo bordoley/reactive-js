@@ -4,12 +4,14 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import { nullObject } from "../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../collections.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
 import * as EventSource from "../computations/EventSource.js";
 import * as Streamable from "../computations/Streamable.js";
 import {
@@ -57,6 +59,7 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
+import * as ReactScheduler from "./Scheduler.js";
 
 interface ReactWebModule {
   WindowLocationProvider(props: {
@@ -194,13 +197,14 @@ export const useAnimation: Signature["useAnimation"] = <T, TEvent = unknown>(
   const animationScheduler =
     options?.animationScheduler ?? AnimationFrameScheduler.get();
 
+  const scheduler = ReactScheduler.get(options?.priority);
+
   return useStream(
     () =>
-      Streamable.animation(animation, {
+      Streamable.animation(animation, scheduler, {
         animationScheduler,
       }),
-    [animationScheduler],
-    options,
+    [scheduler, animationScheduler],
   );
 };
 
@@ -222,13 +226,14 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
   const animationScheduler =
     options?.animationScheduler ?? AnimationFrameScheduler.get();
 
+  const scheduler = ReactScheduler.get(options?.priority);
+
   return useStream(
     () =>
-      Streamable.animationGroup(animationGroup, {
+      Streamable.animationGroup(animationGroup, scheduler, {
         animationScheduler,
       }),
-    [animationScheduler],
-    options,
+    [scheduler, animationScheduler],
   );
 };
 
@@ -269,22 +274,26 @@ export const useSpring: Signature["useSpring"] = (options?: {
   readonly precision?: number;
 }) => {
   const animationScheduler = AnimationFrameScheduler.get();
-
+  const scheduler = ReactScheduler.get(options?.priority);
   return useStream(
     () =>
-      Streamable.spring({
+      Streamable.spring(scheduler, {
         ...options,
         animationScheduler,
       }),
-    [animationScheduler],
-    options,
+    [scheduler, animationScheduler],
   );
 };
 
 export const useWindowLocation: Signature["useWindowLocation"] = () => {
   const windowLocation = useContext(WindowLocationContext);
 
-  const uri = useObserve(windowLocation);
+  const windowLocationObservable = useMemo(
+    () => pipe(windowLocation, Broadcaster.toObservable()),
+    [windowLocation],
+  );
+
+  const uri = useObserve(windowLocationObservable);
 
   const stableWindowLocationRef = useRef<Optional<WindowLocationLike>>(none);
   useEffect(() => {

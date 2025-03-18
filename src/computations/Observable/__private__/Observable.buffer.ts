@@ -12,7 +12,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none, partial, pipe } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -41,7 +40,7 @@ const createBufferObserver: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function BufferObserver(
       this: Pick<
         LiftedObserverLike<T, readonly T[]>,
@@ -51,7 +50,6 @@ const createBufferObserver: <T>(
       delegate: ObserverLike<readonly T[]>,
       count?: number,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T, readonly T[]>(), this, delegate, none);
 
       this[BufferObserver_count] = clampPositiveNonZeroInteger(

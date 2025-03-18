@@ -23,7 +23,6 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -79,7 +78,7 @@ const createWithLatestFromObserver: <TA, TB, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
+    include(LiftedObserverMixin()),
     function WithLatestFromObserver(
       this: Pick<
         LiftedObserverLike<TA>,
@@ -90,7 +89,6 @@ const createWithLatestFromObserver: <TA, TB, T>(
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ): ObserverLike<TA> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<TA, T>(), this, delegate, none);
 
       this[WithLatestFromObserver_selector] = selector;

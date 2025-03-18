@@ -1,6 +1,6 @@
 import { Readable } from "stream";
 import * as Producer from "../computations/Producer.js";
-import { ProducerWithSideEffectsLike } from "../computations.js";
+import { DeferredProducerWithSideEffectsLike } from "../computations.js";
 import { Factory, bindMethod, pipe } from "../functions.js";
 import {
   ConsumerLike_addOnReadyListener,
@@ -11,7 +11,9 @@ import {
 import * as NodeStream from "./NodeStream.js";
 
 interface NodeReadable {
-  create(factory: Factory<Readable>): ProducerWithSideEffectsLike<Uint8Array>;
+  create(
+    factory: Factory<Readable>,
+  ): DeferredProducerWithSideEffectsLike<Uint8Array>;
 }
 
 type Signature = NodeReadable;

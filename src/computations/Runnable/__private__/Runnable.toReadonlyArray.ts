@@ -36,6 +36,8 @@ const Runnable_toReadonlyArray: Runnable.Signature["toReadonlyArray"] =
     const sink = newInstance(ToReadonlyArraySink<T>);
     deferable[RunnableLike_eval](sink);
     sink[DisposableLike_dispose]();
+    Disposable.raiseIfDisposedWithError(sink);
+
     return sink.acc;
   };
 

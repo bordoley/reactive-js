@@ -131,7 +131,7 @@ interface ReactModule {
   useStream<TStreamable extends StreamableLike>(
     streamable: TStreamable,
     options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly autoDispose?: boolean;
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly replay?: number;
@@ -141,7 +141,7 @@ interface ReactModule {
     factory: Factory<TStreamable>,
     dep: readonly unknown[],
     options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly autoDispose?: boolean;
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
       readonly replay?: number;
@@ -358,14 +358,14 @@ export const useStream: Signature["useStream"] = <
   streamableOrFactory: TStreamable | Factory<TStreamable>,
   optionsOrDeps:
     | Optional<{
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly autoDispose?: boolean;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
       }>
     | readonly unknown[],
   optionsOrNone?: {
-    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly autoDispose?: boolean;
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly replay?: number;
@@ -376,14 +376,14 @@ export const useStream: Signature["useStream"] = <
     : streamableOrFactory;
 
   const {
+    autoDispose,
     backpressureStrategy,
     capacity,
-    priority,
     replay = 1,
   } = (isFunction(streamableOrFactory)
     ? optionsOrNone
     : (optionsOrDeps as Optional<{
-        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly autoDispose?: boolean;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly replay?: number;
@@ -391,12 +391,13 @@ export const useStream: Signature["useStream"] = <
 
   const stream = useDisposable(
     () =>
-      streamable[StreamableLike_stream](ReactScheduler.get(priority), {
+      streamable[StreamableLike_stream]({
+        autoDispose,
         replay,
         backpressureStrategy,
         capacity,
       }),
-    [streamable, priority, replay, backpressureStrategy, capacity],
+    [streamable, autoDispose, replay, backpressureStrategy, capacity],
   );
 
   return stream;

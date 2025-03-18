@@ -1,7 +1,7 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
-  DeferredObservableLike,
-  PureDeferredObservableLike,
+  DeferredProducerLike,
+  PureDeferredProducerLike,
   StreamableLike_stream,
 } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
@@ -16,10 +16,9 @@ const Streamable_create: Streamable.Signature["create"] = /*@__PURE__*/ (<
   const Stream_create = createInstanceFactory(StreamMixin<TReq, T>());
 
   return (
-    op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+    op: Function1<PureDeferredProducerLike<TReq>, DeferredProducerLike<T>>,
   ) => ({
-    [StreamableLike_stream]: (scheduler, options) =>
-      Stream_create(op, scheduler, options),
+    [StreamableLike_stream]: options => Stream_create(op, options),
   });
 })();
 

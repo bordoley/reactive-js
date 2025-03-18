@@ -14,7 +14,6 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   LiftedEventListenerLike_notify,
   LiftedEventListenerLike_notifyDelegate,
@@ -43,14 +42,13 @@ const createThrowIfEmptyObserver: <T>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin<T>()),
+    include(LiftedObserverMixin<T>()),
     function ThrowIfEmptyObserver(
       this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       factory: Factory<unknown>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin, this, delegate);
       init(LiftedObserverMixin<T>(), this, delegate, none);
 
       this[ThrowIfEmptyObserver_factory] = factory;

@@ -29,6 +29,7 @@ import {
   Function1,
   Optional,
   Tuple2,
+  compose,
   isFunction,
   none,
   pipe,
@@ -43,6 +44,7 @@ import {
   SchedulerLike,
 } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
+import * as Producer from "../../Producer.js";
 import type * as Streamable from "../../Streamable.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
@@ -93,48 +95,46 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
       ): Streamable.AnimationGroupStreamLike<TEvent, TKey, T> & DisposableLike {
         const pauseableScheduler =
           PauseableScheduler.create(animationScheduler);
-        const operator = Computation.flatMap(ObservableModule)<
-          TEvent,
-          boolean,
-          DeferredComputationWithSideEffectsLike
-        >(
-          "switchAll",
-          (event: TEvent) =>
-            pipe(
-              animationGroup,
-              ReadonlyObjectMap.entries(),
-              Iterable.map(
-                ([key, factory]: Tuple2<
-                  string,
-                  | Function1<TEvent, PureSynchronousObservableLike<T>>
-                  | PureSynchronousObservableLike<T>
-                >) => {
-                  const publisher = publishers[key] as PublisherLike<T>;
-                  return pipe(
-                    isFunction(factory) ? factory(event) : factory,
-                    Computation.notify(ObservableModule)(publisher),
-                    Observable.subscribeOn(pauseableScheduler),
-                  );
-                },
+        const operator = compose(
+          Producer.toObservable<TEvent>(),
+          Computation.flatMap(ObservableModule)<
+            TEvent,
+            boolean,
+            DeferredComputationWithSideEffectsLike
+          >(
+            "switchAll",
+            (event: TEvent) =>
+              pipe(
+                animationGroup,
+                ReadonlyObjectMap.entries(),
+                Iterable.map(
+                  ([key, factory]: Tuple2<
+                    string,
+                    | Function1<TEvent, PureSynchronousObservableLike<T>>
+                    | PureSynchronousObservableLike<T>
+                  >) => {
+                    const publisher = publishers[key] as PublisherLike<T>;
+                    return pipe(
+                      isFunction(factory) ? factory(event) : factory,
+                      Computation.notify(ObservableModule)(publisher),
+                      Observable.subscribeOn(pauseableScheduler),
+                    );
+                  },
+                ),
+                ReadonlyArray.fromIterable(),
+                Computation.mergeMany(ObservableModule),
+                Computation.ignoreElements(ObservableModule)(),
+                Computation.startWith(ObservableModule)(true),
+                Computation.endWith(ObservableModule)(false),
               ),
-              ReadonlyArray.fromIterable(),
-              Computation.mergeMany(ObservableModule),
-              Computation.ignoreElements(ObservableModule)(),
-              Computation.startWith(ObservableModule)(true),
-              Computation.endWith(ObservableModule)(false),
-            ),
-          {
-            innerType: DeferredComputationWithSideEffects,
-          },
+            {
+              innerType: DeferredComputationWithSideEffects,
+            },
+          ),
+          Observable.toProducer<boolean>(scheduler),
         );
 
-        init(
-          StreamMixin<TEvent, boolean>(),
-          this,
-          operator,
-          scheduler,
-          options,
-        );
+        init(StreamMixin<TEvent, boolean>(), this, operator, options);
 
         init(DelegatingPauseableMixin, this, pauseableScheduler);
 
@@ -178,6 +178,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
         | Function1<TEvent, PureSynchronousObservableLike<T>>
         | PureSynchronousObservableLike<T>
       >,
+      scheduler: SchedulerLike,
       creationOptions?: {
         readonly animationScheduler?: SchedulerLike;
       },
@@ -186,7 +187,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
       boolean,
       Streamable.AnimationGroupStreamLike<TEvent, TKey, T>
     > => ({
-      [StreamableLike_stream]: (scheduler, options) =>
+      [StreamableLike_stream]: options =>
         AnimationGroupStream_create(
           animationGroup,
           scheduler,
