@@ -9,7 +9,6 @@ import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableM
 import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as Observable from "./Observable.js";
-import * as PauseableEventSource from "./PauseableEventSource.js";
 class CreateProducer {
     f;
     [ComputationLike_isPure] = false;
@@ -67,7 +66,7 @@ export const toEventSource = /*@__PURE__*/ (() => {
             this[DisposableLike_dispose]();
         },
     }));
-    return returns((producer) => PauseableEventSource.create(mode => pipe(EventSource.create(listener => {
+    return returns((producer) => EventSource.createPauseable(mode => pipe(EventSource.create(listener => {
         const consumer = createPauseableConsumer(listener, mode);
         producer[ProducerLike_consume](consumer);
     }), Disposable.bindTo(mode))));

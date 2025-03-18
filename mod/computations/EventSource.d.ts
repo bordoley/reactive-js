@@ -1,6 +1,6 @@
-import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike, MulticastedComputationModule } from "../computations.js";
+import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_multicastOfT, ConcurrentReactiveComputationModule, EventSourceLike, MulticastedComputationModule, ProducerLike } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike, EventListenerLike } from "../utils.js";
+import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -17,11 +17,14 @@ export interface EventSourceModule extends ComputationModule<EventSourceComputat
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;
     }): EventSourceLike<T> & DisposableLike;
+    createPauseable<T>(op: Function1<EventSourceLike<boolean> & DisposableLike, EventSourceLike<T>>): PauseableLike & EventSourceLike<T> & DisposableLike;
+    toProducer<T>(): Function1<EventSourceLike<T>, ProducerLike<T>>;
 }
 export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const combineLatest: Signature["combineLatest"];
 export declare const create: Signature["create"];
+export declare const createPauseable: Signature["createPauseable"];
 export declare const empty: Signature["empty"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const forkMerge: Signature["forkMerge"];
@@ -41,6 +44,7 @@ export declare const raise: Signature["raise"];
 export declare const reduceAsync: Signature["reduceAsync"];
 export declare const takeUntil: Signature["takeUntil"];
 export declare const toObservable: Signature["toObservable"];
+export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];

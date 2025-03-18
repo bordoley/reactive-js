@@ -19,7 +19,6 @@ import type {
   DisposableLike,
   EventListenerLike,
   ObserverLike,
-  PauseableLike,
   SchedulerLike,
   SinkLike,
 } from "./utils.js";
@@ -1563,13 +1562,6 @@ export interface WritableStoreLike<T = unknown>
     PublisherLike<T> {
   [StoreLike_value]: T;
 }
-
-/**
- * @noInheritDoc
- */
-export interface PauseableEventSourceLike<out T = unknown>
-  extends EventSourceLike<T>,
-    PauseableLike {}
 
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 

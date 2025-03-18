@@ -1,5 +1,5 @@
 import type { AsyncFunction1, Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
-import type { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
+import type { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
@@ -423,11 +423,6 @@ export interface StoreLike<T = unknown> extends EventSourceLike<T> {
  */
 export interface WritableStoreLike<T = unknown> extends StoreLike<T>, PublisherLike<T> {
     [StoreLike_value]: T;
-}
-/**
- * @noInheritDoc
- */
-export interface PauseableEventSourceLike<out T = unknown> extends EventSourceLike<T>, PauseableLike {
 }
 export declare const ObservableLike_observe: unique symbol;
 /**

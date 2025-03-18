@@ -1,7 +1,7 @@
 import { Readable } from "stream";
 import * as Producer from "../computations/Producer.js";
 import {
-  PauseableEventSourceLike,
+  EventSourceLike,
   ProducerWithSideEffectsLike,
 } from "../computations.js";
 import { bindMethod, compose, pipe } from "../functions.js";
@@ -10,6 +10,7 @@ import {
   ConsumerLike_isReady,
   DisposableLike,
   EventListenerLike_notify,
+  PauseableLike,
   SinkLike_complete,
 } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
@@ -17,7 +18,7 @@ import * as NodeStream from "./NodeStream.js";
 interface NodeReadable {
   toEventSource(
     readable: Readable,
-  ): PauseableEventSourceLike<Uint8Array> & DisposableLike;
+  ): PauseableLike & EventSourceLike<Uint8Array> & DisposableLike;
 
   toProducer(readable: Readable): ProducerWithSideEffectsLike<Uint8Array>;
 }

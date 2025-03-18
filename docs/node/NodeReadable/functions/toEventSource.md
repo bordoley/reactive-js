@@ -6,7 +6,7 @@
 
 # Function: toEventSource()
 
-> **toEventSource**(`readable`): [`PauseableEventSourceLike`](../../../computations/interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+> **toEventSource**(`readable`): [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`PauseableEventSourceLike`](../../../computations/interfaces/PauseableEventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+[`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)

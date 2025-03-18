@@ -15,7 +15,6 @@ import "./mod/computations/__tests__/Cache.test.js";
 import "./mod/computations/__tests__/Computation.test.js";
 import "./mod/computations/__tests__/EventSource.test.js";
 import "./mod/computations/__tests__/Observable.test.js";
-import "./mod/computations/__tests__/PauseableEventSource.test.js";
 import "./mod/computations/__tests__/Runnable.test.js";
 import "./mod/computations/__tests__/Iterable.test.js";
 import "./mod/computations/__tests__/Publisher.test.js";

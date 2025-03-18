@@ -11,7 +11,6 @@ import {
   ComputationLike_isSynchronous,
   EventSourceLike,
   ObservableLike,
-  PauseableEventSourceLike,
   ProducerLike,
   ProducerLike_consume,
   ProducerWithSideEffectsLike,
@@ -41,6 +40,7 @@ import {
   DisposableLike_dispose,
   EventListenerLike,
   EventListenerLike_notify,
+  PauseableLike,
   SchedulerLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -48,7 +48,6 @@ import {
 } from "../utils.js";
 import * as EventSource from "./EventSource.js";
 import * as Observable from "./Observable.js";
-import * as PauseableEventSource from "./PauseableEventSource.js";
 
 export interface ProducerModule {
   create<T>(
@@ -57,7 +56,7 @@ export interface ProducerModule {
 
   toEventSource<T>(): Function1<
     ProducerLike<T>,
-    PauseableEventSourceLike<T> & DisposableLike
+    PauseableLike & EventSourceLike<T> & DisposableLike
   >;
 
   toObservable<T>(): Function1<ProducerLike<T>, ObservableLike<T>>;
@@ -169,7 +168,7 @@ export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ (<
   );
 
   return returns((producer: ProducerLike<T>) =>
-    PauseableEventSource.create<T>(mode =>
+    EventSource.createPauseable<T>(mode =>
       pipe(
         EventSource.create<T>(listener => {
           const consumer = createPauseableConsumer(listener, mode);

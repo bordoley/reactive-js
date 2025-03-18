@@ -1,9 +1,9 @@
-import { ObservableLike, PauseableEventSourceLike, ProducerLike, ProducerWithSideEffectsLike } from "../computations.js";
+import { EventSourceLike, ObservableLike, ProducerLike, ProducerWithSideEffectsLike } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { ConsumerLike, DisposableLike } from "../utils.js";
+import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
 export interface ProducerModule {
     create<T>(f: (consumer: ConsumerLike<T>) => void): ProducerWithSideEffectsLike<T>;
-    toEventSource<T>(): Function1<ProducerLike<T>, PauseableEventSourceLike<T> & DisposableLike>;
+    toEventSource<T>(): Function1<ProducerLike<T>, PauseableLike & EventSourceLike<T> & DisposableLike>;
     toObservable<T>(): Function1<ProducerLike<T>, ObservableLike<T>>;
 }
 export type Signature = ProducerModule;

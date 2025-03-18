@@ -14,7 +14,6 @@
 
 - [`AnimationGroupStreamLike`](../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)
 - [`AnimationStreamLike`](../../computations/Streamable/interfaces/AnimationStreamLike.md)
-- [`PauseableEventSourceLike`](../../computations/interfaces/PauseableEventSourceLike.md)
 - [`PauseableSchedulerLike`](PauseableSchedulerLike.md)
 
 ## Properties

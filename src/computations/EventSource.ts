@@ -7,12 +7,14 @@ import {
   ConcurrentReactiveComputationModule,
   EventSourceLike,
   MulticastedComputationModule,
+  ProducerLike,
 } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike, EventListenerLike } from "../utils.js";
+import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
 import EventSource_combineLatest from "./EventSource/__private__/EventSource.combineLatest.js";
 import EventSource_create from "./EventSource/__private__/EventSource.create.js";
+import EventSource_createPauseable from "./EventSource/__private__/EventSource.createPauseable.js";
 import EventSource_empty from "./EventSource/__private__/EventSource.empty.js";
 import EventSource_firstAsync from "./EventSource/__private__/EventSource.firstAsync.js";
 import EventSource_forkMerge from "./EventSource/__private__/EventSource.forkMerge.js";
@@ -29,6 +31,7 @@ import EventSource_never from "./EventSource/__private__/EventSource.never.js";
 import EventSource_raise from "./EventSource/__private__/EventSource.raise.js";
 import EventSource_reduceAsync from "./EventSource/__private__/EventSource.reduceAsync.js";
 import EventSource_takeUntil from "./EventSource/__private__/EventSource.takeUntil.js";
+import EventSource_toProducer from "./EventSource/__private__/EventSource.toProducer.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 import EventSource_withLatestFrom from "./EventSource/__private__/EventSource.withLatestFrom.js";
 import EventSource_zipLatest from "./EventSource/__private__/EventSource.zipLatest.js";
@@ -65,6 +68,15 @@ export interface EventSourceModule
       readonly autoDispose?: boolean;
     },
   ): EventSourceLike<T> & DisposableLike;
+
+  createPauseable<T>(
+    op: Function1<
+      EventSourceLike<boolean> & DisposableLike,
+      EventSourceLike<T>
+    >,
+  ): PauseableLike & EventSourceLike<T> & DisposableLike;
+
+  toProducer<T>(): Function1<EventSourceLike<T>, ProducerLike<T>>;
 }
 
 export type Signature = EventSourceModule;
@@ -74,6 +86,8 @@ export const addEventHandler: Signature["addEventHandler"] =
 export const combineLatest: Signature["combineLatest"] =
   EventSource_combineLatest;
 export const create: Signature["create"] = EventSource_create;
+export const createPauseable: Signature["createPauseable"] =
+  EventSource_createPauseable;
 export const empty: Signature["empty"] = EventSource_empty;
 export const firstAsync: Signature["firstAsync"] = EventSource_firstAsync;
 export const forkMerge: Signature["forkMerge"] = EventSource_forkMerge;
@@ -98,6 +112,7 @@ export const reduceAsync: Signature["reduceAsync"] = EventSource_reduceAsync;
 export const takeUntil: Signature["takeUntil"] = EventSource_takeUntil;
 export const toObservable: Signature["toObservable"] =
   Observable_fromEventSource as Signature["toObservable"];
+export const toProducer: Signature["toProducer"] = EventSource_toProducer;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   EventSource_toReadonlyArrayAsync;
 export const withLatestFrom: Signature["withLatestFrom"] =

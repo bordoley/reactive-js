@@ -21,7 +21,6 @@
 - [computations/Iterable](computations/Iterable/README.md)
 - [computations/Observable](computations/Observable/README.md)
 - [computations/Observable/effects](computations/Observable/effects/README.md)
-- [computations/PauseableEventSource](computations/PauseableEventSource/README.md)
 - [computations/Producer](computations/Producer/README.md)
 - [computations/Publisher](computations/Publisher/README.md)
 - [computations/Runnable](computations/Runnable/README.md)

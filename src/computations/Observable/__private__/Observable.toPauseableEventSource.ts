@@ -4,7 +4,7 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import {
-  PauseableEventSourceLike,
+  EventSourceLike,
   SynchronousObservableLike,
 } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
@@ -14,6 +14,7 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
   DisposableLike,
+  PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -34,14 +35,14 @@ const Observable_toPauseableEventSource: Observable.Signature["toPauseableEventS
         ),
         function PauseableEventSourceFromSynchronousObservable(
           this: Pick<
-            PauseableEventSourceLike<T>,
+            PauseableLike,
             | typeof PauseableLike_pause
             | typeof PauseableLike_resume
             | typeof PauseableLike_isPaused
           >,
           obs: SynchronousObservableLike<T>,
           scheduler: SchedulerLike,
-        ): PauseableEventSourceLike<T> & DisposableLike {
+        ): PauseableLike & EventSourceLike<T> & DisposableLike {
           const pauseableScheduler = PauseableScheduler.create(scheduler);
 
           const eventSource = pipe(

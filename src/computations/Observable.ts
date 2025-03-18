@@ -19,7 +19,6 @@ import {
   HigherOrderInnerComputationOf,
   MulticastObservableLike,
   ObservableLike,
-  PauseableEventSourceLike,
   ProducerLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
@@ -416,7 +415,7 @@ export interface ObservableModule
     scheduler: SchedulerLike,
   ): Function1<
     SynchronousObservableLike<T>,
-    PauseableEventSourceLike<T> & DisposableLike
+    PauseableLike & EventSourceLike<T> & DisposableLike
   >;
 
   toProducer<T>(

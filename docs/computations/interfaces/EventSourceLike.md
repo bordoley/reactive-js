@@ -15,7 +15,6 @@
 - [`AnimationStreamLike`](../Streamable/interfaces/AnimationStreamLike.md)
 - [`PublisherLike`](PublisherLike.md)
 - [`StoreLike`](StoreLike.md)
-- [`PauseableEventSourceLike`](PauseableEventSourceLike.md)
 
 ## Type Parameters
 
