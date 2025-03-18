@@ -1,7 +1,7 @@
 import { Mixin2, include, init, mix } from "../../__internal__/mixins.js";
 import {
-  ProducerLike,
-  PureProducerLike,
+  DeferredProducerLike,
+  PureDeferredProducerLike,
   StreamLike,
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
@@ -15,7 +15,7 @@ import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin2<
   StreamLike<TReq, T> & DisposableLike,
-  Function1<PureProducerLike<TReq>, ProducerLike<T>>,
+  Function1<PureDeferredProducerLike<TReq>, DeferredProducerLike<T>>,
   Optional<{
     autoDispose?: boolean;
     replay?: number;
@@ -32,7 +32,7 @@ const StreamMixin: <TReq, T>() => Mixin2<
       ),
       function Stream(
         this: unknown,
-        op: Function1<PureProducerLike<TReq>, ProducerLike<T>>,
+        op: Function1<PureDeferredProducerLike<TReq>, DeferredProducerLike<T>>,
         options?: {
           autoDispose?: boolean;
           replay?: number;

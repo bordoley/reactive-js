@@ -12,9 +12,9 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationOperatorWithSideEffects,
+  DeferredProducerWithSideEffectsLike,
   ProducerLike,
   ProducerLike_consume,
-  ProducerWithSideEffectsLike,
   StatefulSynchronousComputationOperator,
   StatelessComputationOperator,
 } from "../../../computations.js";
@@ -88,6 +88,7 @@ const createLiftedProducer: <TA, TB>(
   );
 
   type TPropertiesDeferred = {
+    [ComputationLike_isDeferred]: Optional<boolean>;
     [ComputationLike_isPure]: Optional<boolean>;
     [ComputationLike_isSynchronous]: Optional<boolean>;
   };
@@ -100,12 +101,14 @@ const createLiftedProducer: <TA, TB>(
       source: ProducerLike<TA>,
       ops: readonly Function1<ConsumerLike<any>, ConsumerLike<any>>[],
       config: {
+        [ComputationLike_isDeferred]?: boolean;
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
       },
     ): LiftedProducerLike<TA, TB> {
       init(LiftedProducerMixin, this, source, ops);
 
+      this[ComputationLike_isDeferred] = config[ComputationLike_isDeferred];
       this[ComputationLike_isPure] = config[ComputationLike_isPure];
       this[ComputationLike_isSynchronous] =
         config[ComputationLike_isSynchronous];
@@ -113,9 +116,19 @@ const createLiftedProducer: <TA, TB>(
       return this;
     },
     props<TPropertiesDeferred>({
+      [ComputationLike_isDeferred]: true,
       [ComputationLike_isPure]: true,
       [ComputationLike_isSynchronous]: true,
     }),
+    {
+      [ProducerLike_consume](this: TProperties, consumer: ConsumerLike<TB>) {
+        pipeUnsafe(
+          consumer,
+          ...this[LiftedProducerLike_operators],
+          bindMethod(this[LiftedProducerLike_source], ProducerLike_consume),
+        );
+      },
+    },
   );
 
   return (
@@ -157,7 +170,7 @@ interface ProducerLift {
     [ComputationLike_isSynchronous]: false;
   }): <TA, TB>(
     operator: Function1<ConsumerLike<TB>, ConsumerLike<TA>>,
-  ) => Function1<ProducerLike<TA>, ProducerWithSideEffectsLike<TB>>;
+  ) => Function1<ProducerLike<TA>, DeferredProducerWithSideEffectsLike<TB>>;
 
   lift(options: {
     [ComputationLike_isPure]: boolean;
@@ -187,6 +200,7 @@ const Producer_lift: ProducerLift["lift"] = ((
     const isPure = Computation.isPure(source) && config[ComputationLike_isPure];
 
     const liftedConfig = {
+      [ComputationLike_isDeferred]: source[ComputationLike_isDeferred],
       [ComputationLike_isPure]: isPure,
       [ComputationLike_isSynchronous]: isSynchronousProducer,
     };

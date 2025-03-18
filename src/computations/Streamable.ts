@@ -1,9 +1,9 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
   DeferredObservableLike,
+  DeferredProducerLike,
   EventSourceLike,
-  ProducerLike,
-  PureProducerLike,
+  PureDeferredProducerLike,
   PureSynchronousObservableLike,
   StreamLike,
   StreamableLike,
@@ -65,8 +65,6 @@ export interface StreamableModule {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
-    // FIXME: Short term, until the inners can be replace with non observable implementations.
-    scheduler: SchedulerLike,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<TAction, T>;
 
@@ -102,7 +100,7 @@ export interface StreamableModule {
   ): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
 
   create<TReq, T>(
-    op: Function1<PureProducerLike<TReq>, ProducerLike<T>>,
+    op: Function1<PureDeferredProducerLike<TReq>, DeferredProducerLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
@@ -129,8 +127,6 @@ export interface StreamableModule {
    */
   stateStore<T>(
     initialState: Factory<T>,
-    // FIXME: Short term, until the inners can be replace with non observable implementations.
-    scheduler: SchedulerLike,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<Updater<T>, T>;
 

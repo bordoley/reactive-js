@@ -8,31 +8,28 @@ import {
 } from "../__internal__/mixins.js";
 import {
   BroadcasterLike,
-  ComputationLike_isPure,
-  ComputationLike_isSynchronous,
   ComputationModule,
   ComputationType,
   Computation_T,
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
+  DeferredProducerWithSideEffectsLike,
   EventSourceLike,
   ProducerLike,
   ProducerLike_consume,
-  ProducerWithSideEffectsLike,
-  PureProducerLike,
-  PureSynchronousProducerLike,
+  PureDeferredProducerLike,
   SequentialComputationModule,
   SequentialReactiveComputationModule,
-  SynchronousProducerWithSideEffectsLike,
+  StatefulSynchronousComputationOperator,
 } from "../computations.js";
 import {
+  Equality,
+  Factory,
   Function1,
+  Reducer,
   SideEffect1,
   bindMethod,
-  error,
   newInstance,
   none,
   pipe,
@@ -50,7 +47,6 @@ import {
   ConsumerLike_capacity,
   ConsumerLike_isReady,
   DisposableLike,
-  DisposableLike_dispose,
   EventListenerLike_notify,
   PauseableLike,
   SchedulerLike,
@@ -62,6 +58,8 @@ import {
 import * as Broadcaster from "./Broadcaster.js";
 import * as EventSource from "./EventSource.js";
 import * as Observable from "./Observable.js";
+import Producer_create from "./Producer/__private__/Producer.create.js";
+import Producer_actionReducer from "./Producer/__private__/Producer.actionReducer.js";
 
 /**
  * @noInheritDoc
@@ -69,19 +67,19 @@ import * as Observable from "./Observable.js";
 export interface ProducerComputation extends ComputationType {
   readonly [Computation_baseOfT]?: ProducerLike<this[typeof Computation_T]>;
 
-  readonly [Computation_pureDeferredOfT]?: PureProducerLike<
+  readonly [Computation_pureDeferredOfT]?: PureDeferredProducerLike<
     this[typeof Computation_T]
   >;
-  readonly [Computation_deferredWithSideEffectsOfT]?: ProducerWithSideEffectsLike<
+  readonly [Computation_deferredWithSideEffectsOfT]?: DeferredProducerWithSideEffectsLike<
     this[typeof Computation_T]
   >;
-
+  /*
   readonly [Computation_pureSynchronousOfT]?: PureSynchronousProducerLike<
     this[typeof Computation_T]
   >;
   readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousProducerWithSideEffectsLike<
     this[typeof Computation_T]
-  >;
+  >;*/
 }
 
 export type Computation = ProducerComputation;
@@ -90,9 +88,11 @@ export interface ProducerModule
   extends ComputationModule<ProducerComputation>,
     SequentialComputationModule<ProducerComputation>,
     SequentialReactiveComputationModule<ProducerComputation> {
-  create<T>(
-    f: (consumer: ConsumerLike<T>) => void,
-  ): ProducerWithSideEffectsLike<T>;
+  actionReducer<TAction, T>(
+    reducer: Reducer<TAction, T>,
+    initialState: Factory<T>,
+    options?: { readonly equality?: Equality<T> },
+  ): StatefulSynchronousComputationOperator<ProducerComputation, TAction, T>;
 
   broadcast<T>(options?: {
     readonly autoDispose?: boolean;
@@ -101,26 +101,16 @@ export interface ProducerModule
     ProducerLike<T>,
     PauseableLike & BroadcasterLike<T> & DisposableLike
   >;
+
+  create<T>(
+    f: SideEffect1<ConsumerLike<T>>,
+  ): DeferredProducerWithSideEffectsLike<T>;
 }
 
 export type Signature = ProducerModule;
 
-class CreateProducer<T> implements ProducerWithSideEffectsLike<T> {
-  [ComputationLike_isPure]: false = false as const;
-  [ComputationLike_isSynchronous] = false;
-
-  constructor(private readonly f: (consumer: ConsumerLike<T>) => void) {}
-
-  [ProducerLike_consume](consumer: ConsumerLike<T>): void {
-    try {
-      this.f(consumer);
-    } catch (e) {
-      consumer[DisposableLike_dispose](error(e));
-    }
-  }
-}
-
-export const create: Signature["create"] = f => newInstance(CreateProducer, f);
+export const actionReducer: Signature["actionReducer"] =Producer_actionReducer;
+export const create: Signature["create"] = Producer_create;
 
 const createPauseableConsumer = /*@__PURE__*/ (<T>() => {
   const EventListenerToPauseableConsumer_delegate = Symbol(

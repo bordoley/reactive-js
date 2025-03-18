@@ -1512,38 +1512,53 @@ export const ProducerLike_consume = Symbol("ProducerLike_consume");
  * @noInheritDoc
  */
 export interface ProducerLike<out T = unknown> extends ComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
   [ProducerLike_consume](consumer: ConsumerLike<T>): void;
 }
 
-/**
- * @noInheritDoc
- */
-export interface PureProducerLike<out T = unknown>
+export interface DeferredProducerLike<out T = unknown>
   extends ProducerLike<T>,
-    PureDeferredComputationLike {
+    DeferredComputationLike {
   readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]?: true;
 }
 
 /**
  * @noInheritDoc
  */
-export interface ProducerWithSideEffectsLike<out T = unknown>
-  extends ProducerLike<T>,
+export interface PureDeferredProducerLike<out T = unknown>
+  extends DeferredProducerLike<T>,
+    PureDeferredComputationLike {
+  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface DeferredProducerWithSideEffectsLike<out T = unknown>
+  extends DeferredProducerLike<T>,
     DeferredComputationWithSideEffectsLike {
   readonly [ComputationLike_isDeferred]?: true;
   readonly [ComputationLike_isPure]: false;
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface SynchronousProducerLike<out T = unknown>
+  extends ProducerLike<T>,
+    SynchronousComputationLike {
+  readonly [ComputationLike_isSynchronous]?: true;
 }
 
 /**
  * @noInheritDoc
  */
 export interface PureSynchronousProducerLike<out T = unknown>
-  extends PureProducerLike<T>,
-    PureDeferredComputationLike,
+  extends SynchronousProducerLike<T>,
     PureSynchronousComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isPure]?: true;
   readonly [ComputationLike_isSynchronous]?: true;
 }
@@ -1552,10 +1567,9 @@ export interface PureSynchronousProducerLike<out T = unknown>
  * @noInheritDoc
  */
 export interface SynchronousProducerWithSideEffectsLike<out T = unknown>
-  extends ProducerLike<T>,
-    DeferredComputationWithSideEffectsLike,
+  extends SynchronousProducerLike<T>,
     SynchronousComputationWithSideEffectsLike {
-  readonly [ComputationLike_isDeferred]?: true;
+  readonly [ComputationLike_isDeferred]: false;
   readonly [ComputationLike_isPure]: false;
   readonly [ComputationLike_isSynchronous]?: true;
 }

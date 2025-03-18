@@ -90,8 +90,9 @@ testModule(
   describe(
     "stateStore",
     test("stateStore", () => {
+      // FIXME: test needs to be async
       using vts = VirtualTimeScheduler.create();
-      const streamable = Streamable.stateStore(returns(1), vts);
+      const streamable = Streamable.stateStore(returns(1));
       const stateStream = streamable[StreamableLike_stream]({
         autoDispose: true,
         replay: 10,
@@ -123,8 +124,9 @@ testModule(
       pipe(result, expectArrayEquals([1, 2, 3]));
     }),
     test("completing the store", () => {
+      // FIXME: Test needs to be async
       using vts = VirtualTimeScheduler.create();
-      const streamable = Streamable.stateStore(returns(1), vts);
+      const streamable = Streamable.stateStore(returns(1));
       const stateStream = streamable[StreamableLike_stream]({
         autoDispose: true,
       });
@@ -147,10 +149,11 @@ testModule(
   describe(
     "syncState",
     test("without throttling", () => {
+      // FIXMe: test needs to be async
       using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
 
       const stream = pipe(
-        Streamable.stateStore(returns(-1), vts),
+        Streamable.stateStore(returns(-1)),
         Streamable.syncState(
           _ =>
             pipe(
@@ -185,12 +188,13 @@ testModule(
       pipe(result, expectArrayEquals([-1, 9, 10, 12]));
     }),
     test("with throttling", () => {
+      // FIXMe: Test needs to be async
       using vts = VirtualTimeScheduler.create();
 
       let updateCnt = 0;
 
       const stream = pipe(
-        Streamable.stateStore(returns(0), vts),
+        Streamable.stateStore(returns(0)),
         Streamable.syncState(
           state => pipe((_: number) => state, Observable.fromValue()),
           (_oldState, _newState) => {

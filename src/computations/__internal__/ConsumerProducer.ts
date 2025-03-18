@@ -10,7 +10,7 @@ import {
   ComputationLike_isSynchronous,
   ProducerLike_consume,
   PublisherLike,
-  PureProducerLike,
+  PureDeferredProducerLike,
 } from "../../computations.js";
 import {
   Optional,
@@ -42,7 +42,7 @@ import * as EventSource from "../EventSource.js";
 import * as Publisher from "../Publisher.js";
 
 export interface ConsumerProducerLike<out T>
-  extends PureProducerLike<T>,
+  extends PureDeferredProducerLike<T>,
     ConsumerLike,
     DisposableLike {}
 

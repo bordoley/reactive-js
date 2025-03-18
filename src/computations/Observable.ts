@@ -13,13 +13,13 @@ import {
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredObservableWithSideEffectsLike,
+  DeferredProducerLike,
   EventSourceLike,
   HigherOrderComputationOperator,
   HigherOrderInnerComputationLike,
   HigherOrderInnerComputationOf,
   MulticastObservableLike,
   ObservableLike,
-  ProducerLike,
   PureDeferredObservableLike,
   PureSynchronousObservableLike,
   SequentialComputationModule,
@@ -416,7 +416,7 @@ export interface ObservableModule
 
   toProducer<T>(
     scheduler: SchedulerLike,
-  ): Function1<ObservableLike<T>, ProducerLike<T>>;
+  ): Function1<ObservableLike<T>, DeferredProducerLike<T>>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,

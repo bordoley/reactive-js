@@ -290,7 +290,6 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           // get pushed through the updater.
           counter: -1,
         }),
-        scheduler,
         { equality: areWindowLocationStatesEqual },
       ),
       Streamable.syncState(
