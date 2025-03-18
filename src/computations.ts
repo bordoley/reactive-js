@@ -1681,7 +1681,7 @@ export interface SubjectLike<out T = unknown>
  */
 export interface StreamLike<TReq, out T>
   extends ConsumerLike<TReq>,
-    MulticastObservableLike<T> {}
+    BroadcasterLike<T> {}
 
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
@@ -1705,24 +1705,16 @@ export interface StreamableLike<
    * @param scheduler - The scheduler to subscribe to the stream with.
    * @param options
    */
-  [StreamableLike_stream](
-    scheduler: SchedulerLike,
-    options?: {
-      readonly autoDispose?: boolean;
-      /**
-       * The number of items to buffer for replay when an observer subscribes
-       * to the stream.
-       */
-      readonly replay?: number;
-
-      /**
-       * The capacity of the stream's request queue.
-       */
-      readonly capacity?: number;
-
-      readonly backpressureStrategy?: BackpressureStrategy;
-    },
-  ): TStream & DisposableLike;
+  [StreamableLike_stream](options?: {
+    readonly autoDispose?: boolean;
+    /**
+     * The number of items to buffer for replay when an observer subscribes
+     * to the stream.
+     */
+    readonly replay?: number;
+    capacity?: number;
+    backpressureStrategy?: BackpressureStrategy;
+  }): TStream & DisposableLike;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<

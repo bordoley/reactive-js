@@ -1,9 +1,11 @@
 import { nullObject } from "../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../collections.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
 import * as EventSource from "../computations/EventSource.js";
 import {
   __constant,
+  __currentScheduler,
   __memo,
   __observe,
   __state,
@@ -124,7 +126,8 @@ export const __animate: Signature["__animate"] = (
   const memoizedSelector = __constant(selector);
   const htmlElementState = __state<Optional<HTMLElement | null>>(returnsNone);
   const setRef = __memo(makeRefSetter, htmlElementState);
-  const htmlElement: Optional<HTMLElement | null> = __observe(htmlElementState);
+  const elementStateObservable = __constant(pipe(htmlElementState, Broadcaster.toObservable()), htmlElementState)
+  const htmlElement: Optional<HTMLElement | null> = __observe(elementStateObservable);
 
   __using(
     animateHtmlElement,
@@ -147,10 +150,13 @@ export const __animation: Signature["__animation"] = <T, TEvent = unknown>(
   const animationScheduler =
     options?.animationScheduler ?? AnimationFrameScheduler.get();
 
+  const scheduler = __currentScheduler();
+
   const animationStreamable = __constant(
-    Streamable.animation<T, TEvent>(animation, {
+    Streamable.animation<T, TEvent>(animation, scheduler,{
       animationScheduler,
     }),
+    scheduler,
     animationScheduler,
   );
 
@@ -174,10 +180,13 @@ export const __animationGroup: Signature["__animationGroup"] = <
   const animationScheduler =
     options?.animationScheduler ?? AnimationFrameScheduler.get();
 
+    const scheduler = __currentScheduler();
+
   const animationGroupStreamable = __constant(
-    Streamable.animationGroup(animationGroup, {
+    Streamable.animationGroup(animationGroup,scheduler, {
       animationScheduler,
     }),
+    scheduler,
     animationScheduler,
   );
 

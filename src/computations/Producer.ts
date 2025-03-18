@@ -10,8 +10,8 @@ import {
   BroadcasterLike,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  DeferredObservableLike,
   EventSourceLike,
-  ObservableLike,
   ProducerLike,
   ProducerLike_consume,
   ProducerWithSideEffectsLike,
@@ -64,7 +64,8 @@ export interface ProducerModule {
     PauseableLike & BroadcasterLike<T> & DisposableLike
   >;
 
-  toObservable<T>(): Function1<ProducerLike<T>, ObservableLike<T>>;
+  // FIXME improve type to maintain side effects
+  toObservable<T>(): Function1<ProducerLike<T>, DeferredObservableLike<T>>;
 }
 
 export type Signature = ProducerModule;

@@ -6,12 +6,15 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Computation from "../computations/Computation.js";
 import * as EventSource from "../computations/EventSource.js";
 import * as Observable from "../computations/Observable.js";
+import * as Producer from "../computations/Producer.js";
 import * as Streamable from "../computations/Streamable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import {
+  BroadcasterLike_connect,
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
   DeferredObservableLike,
@@ -143,6 +146,7 @@ const createSyncToHistoryStream = (
 ) =>
   Streamable.create<TState, TState & { uri: SerializableWindowLocationURI }>(
     compose(
+      Producer.toObservable(),
       Observable.throttle(100),
       Observable.forEach<TState>(({ counter, uri }) => {
         const serializableURI = createSerializableWindowLocationURI(uri);
@@ -150,8 +154,9 @@ const createSyncToHistoryStream = (
         document.title = title;
         f({ title, counter }, "", String(serializableURI));
       }),
+      Observable.toProducer(scheduler),
     ),
-  )[StreamableLike_stream](scheduler, options);
+  )[StreamableLike_stream](options);
 
 export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const WindowLocation_delegate = Symbol("WindowLocation_delegate");
@@ -181,6 +186,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
 
       pipe(
         delegate,
+        Broadcaster.toObservable(),
         Observable.forEach<TState>(({ counter }) => {
           this[WindowLocationLike_canGoBack][StoreLike_value] = counter > 0;
         }),
@@ -236,13 +242,17 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         history.back();
       },
 
-      [ObservableLike_observe](
+      [BroadcasterLike_connect](
         this: TProperties,
         observer: ObserverLike<WindowLocationURI>,
       ): void {
         pipe(
           this[WindowLocation_delegate],
+          Broadcaster.toObservable(),
           Computation.pick(ObservableModule)<TState, "uri">("uri"),
+
+          // FIXME: This is hosed
+
           invoke(ObservableLike_observe, observer),
         );
       },
@@ -280,6 +290,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           // get pushed through the updater.
           counter: -1,
         }),
+        scheduler,
         { equality: areWindowLocationStatesEqual },
       ),
       Streamable.syncState(
@@ -334,8 +345,10 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             Computation.ignoreElements(ObservableModule)(),
           );
         },
+        scheduler
       ),
-      invoke(StreamableLike_stream, scheduler, {
+      invoke(StreamableLike_stream, {
+        autoDispose: false,
         replay: 1,
         capacity: 1,
         backpressureStrategy: DropOldestBackpressureStrategy,

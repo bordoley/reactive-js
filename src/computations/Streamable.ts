@@ -2,7 +2,8 @@ import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
   DeferredObservableLike,
   EventSourceLike,
-  PureDeferredObservableLike,
+  ProducerLike,
+  PureProducerLike,
   PureSynchronousObservableLike,
   StreamLike,
   StreamableLike,
@@ -64,17 +65,21 @@ export interface StreamableModule {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
+     // FIXME: Short term, until the inners can be replace with non observable implementations.
+     scheduler: SchedulerLike,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<TAction, T>;
 
   animation<T>(
     animation: PureSynchronousObservableLike<T>,
+    scheduler: SchedulerLike,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<void, boolean, AnimationStreamLike<void, T>>;
   animation<T, TEvent>(
     animation:
       | Function1<TEvent, PureSynchronousObservableLike<T>>
       | PureSynchronousObservableLike<T>,
+    scheduler: SchedulerLike,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>>;
 
@@ -83,6 +88,7 @@ export interface StreamableModule {
       TKey,
       PureSynchronousObservableLike<T>
     >,
+    scheduler: SchedulerLike,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<void, boolean, AnimationGroupStreamLike<void, TKey, T>>;
   animationGroup<T, TKey extends string, TEvent>(
@@ -91,21 +97,25 @@ export interface StreamableModule {
       | Function1<TEvent, PureSynchronousObservableLike<T>>
       | PureSynchronousObservableLike<T>
     >,
+    scheduler: SchedulerLike,
     options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
 
   create<TReq, T>(
-    op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+    op: Function1<PureProducerLike<TReq>, ProducerLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 
-  spring(options?: {
-    readonly animationScheduler?: SchedulerLike;
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  }): StreamableLike<SpringEvent, boolean, SpringStreamLike>;
+  spring(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly animationScheduler?: SchedulerLike;
+      readonly stiffness?: number;
+      readonly damping?: number;
+      readonly precision?: number;
+    },
+  ): StreamableLike<SpringEvent, boolean, SpringStreamLike>;
 
   /**
    * Returns a new `StateStoreLike` instance that stores state which can
@@ -119,12 +129,17 @@ export interface StreamableModule {
    */
   stateStore<T>(
     initialState: Factory<T>,
+     // FIXME: Short term, until the inners can be replace with non observable implementations.
+     scheduler: SchedulerLike,
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<Updater<T>, T>;
 
   syncState<T>(
     onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
     onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
+
+    // FIXME: change the sync functions to you Producer and get rid of the scheduler.
+    scheduler: SchedulerLike,
     options?: {
       readonly throttleDuration?: number;
     },

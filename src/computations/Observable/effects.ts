@@ -232,13 +232,12 @@ export const __currentScheduler = (): SchedulerLike => {
 export const __stream = /*@__PURE__*/ (() => {
   const streamOnSchedulerFactory = <TStreamable extends StreamableLike>(
     streamable: TStreamable,
-    scheduler: SchedulerLike,
     autoDispose: Optional<boolean>,
     replay: Optional<number>,
     capacity: Optional<number>,
     backpressureStrategy: Optional<BackpressureStrategy>,
   ): StreamOf<TStreamable> =>
-    streamable[StreamableLike_stream](scheduler, {
+    streamable[StreamableLike_stream]({
       autoDispose,
       replay,
       backpressureStrategy,
@@ -252,20 +251,16 @@ export const __stream = /*@__PURE__*/ (() => {
       replay,
       backpressureStrategy,
       capacity,
-      scheduler,
     }: {
       readonly autoDispose?: boolean;
       readonly replay?: number;
-      readonly scheduler?: SchedulerLike;
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
     } = {},
   ): StreamOf<TStreamable> => {
-    const currentScheduler = __currentScheduler();
     return __using(
       streamOnSchedulerFactory,
       streamable,
-      scheduler ?? currentScheduler,
       autoDispose,
       replay,
       capacity,
@@ -282,14 +277,16 @@ export const __state = /*@__PURE__*/ (() => {
     initialState: () => T,
     options: {
       readonly equality?: Optional<Equality<T>>;
+      readonly  autoDispose?: boolean;
       readonly replay?: number;
       readonly scheduler?: SchedulerLike;
       readonly capacity?: number;
     } = {},
   ): StreamLike<Updater<T>, T> => {
     const { equality } = options;
+    const scheduler = __currentScheduler();
     const optionsMemo = __memo(createStateOptions, equality);
-    const streamable = __memo(Streamable.stateStore, initialState, optionsMemo);
+    const streamable = __memo(Streamable.stateStore, initialState, scheduler, optionsMemo);
     return __stream(streamable, options) as StreamLike<Updater<T>, T>;
   };
 })();

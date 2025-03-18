@@ -37,6 +37,7 @@ import {
 } from "../../../utils.js";
 import * as Broadcaster from "../../Broadcaster.js";
 import * as Observable from "../../Observable.js";
+import * as Producer from "../../Producer.js";
 import type * as Streamable from "../../Streamable.js";
 import * as Subject from "../../Subject.js";
 import DelegatingEventSourceMixin from "../../__mixins__/DelegatingEventSourceMixin.js";
@@ -80,6 +81,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
       const otherObs = pipe(accFeedbackStream, Broadcaster.toObservable());
 
       const operator = compose(
+        Producer.toObservable(),
         Observable.withLatestFrom<
           Streamable.SpringEvent,
           number,
@@ -145,13 +147,13 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
             : Observable.empty();
         }),
         Observable.switchAll(),
+        Observable.toProducer<boolean>(scheduler),
       );
 
       init(
         StreamMixin<Streamable.SpringEvent, boolean>(),
         this,
         operator,
-        scheduler,
         options,
       );
 
@@ -174,17 +176,20 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
     },
   );
 
-  return (creationOptions?: {
-    readonly animationScheduler?: SchedulerLike;
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  }): StreamableLike<
+  return (
+    scheduler: SchedulerLike,
+    creationOptions?: {
+      readonly animationScheduler?: SchedulerLike;
+      readonly stiffness?: number;
+      readonly damping?: number;
+      readonly precision?: number;
+    },
+  ): StreamableLike<
     Streamable.SpringEvent,
     boolean,
     Streamable.SpringStreamLike
   > => ({
-    [StreamableLike_stream]: (scheduler, options) =>
+    [StreamableLike_stream]: options =>
       SpringStream_create(
         scheduler,
         creationOptions?.animationScheduler ?? scheduler,

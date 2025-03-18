@@ -34,6 +34,7 @@ import {
   SinkLike_isCompleted,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
+import * as Broadcaster from "../Broadcaster.js";
 import * as EventSource from "../EventSource.js";
 
 testModule(
@@ -41,10 +42,10 @@ testModule(
   describe(
     "animation",
     test("integration", () => {
-      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
-      const stream = Streamable.animation<number>(Observable.keyFrame(500))[
+      using vts = VirtualTimeScheduler.create();
+      const stream = Streamable.animation<number>(Observable.keyFrame(500), vts)[
         StreamableLike_stream
-      ](vts);
+      ]({autoDispose: true});
 
       let result = 0;
 
@@ -65,16 +66,17 @@ testModule(
   describe(
     "animationGroup",
     test("integration", () => {
-      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
+      using vts = VirtualTimeScheduler.create();
+
       const stream = Streamable.animationGroup<number>({
         a: Observable.keyFrame(500),
-      })[StreamableLike_stream](vts);
+      }, vts)[StreamableLike_stream]({autoDispose: true});
 
       pipe(
         stream,
         Collection.keySet<DictionaryCollection>(Dictionary.keys),
         invoke("has", "a"),
-        expectTrue("expect collection tot contain the key 'a'"),
+        expectTrue("expect collection not contain the key 'a'"),
       );
 
       let result = 0;
@@ -97,11 +99,8 @@ testModule(
     "stateStore",
     test("stateStore", () => {
       using vts = VirtualTimeScheduler.create();
-      const streamable = Streamable.stateStore(returns(1));
-      const stateStream = streamable[StreamableLike_stream](vts, {
-        capacity: 20,
-        backpressureStrategy: DropLatestBackpressureStrategy,
-      });
+      const streamable = Streamable.stateStore(returns(1), vts);
+      const stateStream = streamable[StreamableLike_stream]({ autoDispose: true, replay: 10, capacity: 20, backpressureStrategy: DropLatestBackpressureStrategy });
 
       pipe(stateStream[ConsumerLike_capacity], expectEquals(20));
       pipe(
@@ -117,6 +116,7 @@ testModule(
 
       pipe(
         stateStream,
+        Broadcaster.toObservable(),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
@@ -127,11 +127,8 @@ testModule(
     }),
     test("completing the store", () => {
       using vts = VirtualTimeScheduler.create();
-      const streamable = Streamable.stateStore(returns(1));
-      const stateStream = streamable[StreamableLike_stream](vts, {
-        capacity: 20,
-        backpressureStrategy: DropLatestBackpressureStrategy,
-      });
+      const streamable = Streamable.stateStore(returns(1), vts);
+      const stateStream = streamable[StreamableLike_stream]({autoDispose: true});
 
       pipe(
         stateStream[SinkLike_isCompleted],
@@ -139,6 +136,8 @@ testModule(
       );
 
       stateStream[SinkLike_complete]();
+
+      vts[VirtualTimeSchedulerLike_run]();
 
       pipe(
         stateStream[SinkLike_isCompleted],
@@ -152,7 +151,7 @@ testModule(
       using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
 
       const stream = pipe(
-        Streamable.stateStore(returns(-1)),
+        Streamable.stateStore(returns(-1), vts),
         Streamable.syncState(
           _ =>
             pipe(
@@ -162,8 +161,9 @@ testModule(
               Observable.takeFirst({ count: 2 }),
             ),
           (_oldState, _newState) => Observable.empty(),
+          vts,
         ),
-        invoke(StreamableLike_stream, vts),
+        invoke(StreamableLike_stream, {autoDispose: true}),
       );
 
       pipe(
@@ -176,6 +176,7 @@ testModule(
       const result: number[] = [];
       pipe(
         stream,
+        Broadcaster.toObservable(),
         Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
@@ -190,16 +191,17 @@ testModule(
       let updateCnt = 0;
 
       const stream = pipe(
-        Streamable.stateStore(returns(0)),
+        Streamable.stateStore(returns(0), vts),
         Streamable.syncState(
           state => pipe((_: number) => state, Observable.fromValue()),
           (_oldState, _newState) => {
             updateCnt++;
             return Observable.empty({ delay: 1 });
           },
+          vts,
           { throttleDuration: 20 },
         ),
-        invoke(StreamableLike_stream, vts),
+        invoke(StreamableLike_stream, {autoDispose: true}),
       );
 
       pipe(

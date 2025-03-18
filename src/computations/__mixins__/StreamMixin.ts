@@ -1,30 +1,23 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
-import { Mixin3, include, init, mix } from "../../__internal__/mixins.js";
+import { Mixin2, include, init, mix } from "../../__internal__/mixins.js";
 import {
-  DeferredObservableLike,
-  PureDeferredObservableLike,
+  ProducerLike,
+  PureProducerLike,
   StreamLike,
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
-import { clampPositiveInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingConsumerMixin from "../../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import {
-  BackpressureStrategy,
-  DisposableLike,
-  OverflowBackpressureStrategy,
-  SchedulerLike,
-} from "../../utils.js";
-import * as Observable from "../Observable.js";
-import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
-import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
+import { BackpressureStrategy, DisposableLike } from "../../utils.js";
+import * as Producer from "../Producer.js";
+import * as ConsumerProducer from "../__internal__/ConsumerProducer.js";
+import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
 
-const StreamMixin: <TReq, T>() => Mixin3<
+const StreamMixin: <TReq, T>() => Mixin2<
   StreamLike<TReq, T> & DisposableLike,
-  Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
-  SchedulerLike,
+  Function1<PureProducerLike<TReq>, ProducerLike<T>>,
   Optional<{
+    autoDispose?:boolean;
     replay?: number;
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
@@ -35,40 +28,39 @@ const StreamMixin: <TReq, T>() => Mixin3<
       include(
         DelegatingDisposableMixin,
         DelegatingConsumerMixin(),
-        DelegatingMulticastObservableMixin<T>(),
+        DelegatingBroadcasterMixin<T>(),
       ),
       function Stream(
         this: unknown,
-        op: Function1<
-          PureDeferredObservableLike<TReq>,
-          DeferredObservableLike<T>
-        >,
-        scheduler: SchedulerLike,
+        op: Function1<PureProducerLike<TReq>, ProducerLike<T>>,
         options?: {
+          autoDispose?: boolean;
           replay?: number;
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         },
       ): StreamLike<TReq, T> & DisposableLike {
-        const consumer = ConsumerObservable.create<TReq>(options);
+        const consumer = ConsumerProducer.create<TReq>(options);
 
         const delegate = pipe(
-          consumer,
+          consumer,/*
           Observable.backpressureStrategy({
             backpressureStrategy:
               options?.backpressureStrategy ?? OverflowBackpressureStrategy,
             capacity: clampPositiveInteger(
               options?.capacity ?? MAX_SAFE_INTEGER,
             ),
-          }),
+          }),*/
+
+          // FIXME: Backpressure 
           op,
-          Observable.multicast<T>(scheduler, options),
+          Producer.broadcast(options),
           Disposable.addTo(consumer),
         );
 
         init(DelegatingDisposableMixin, this, consumer);
         init(DelegatingConsumerMixin<TReq>(), this, consumer);
-        init(DelegatingMulticastObservableMixin<T>(), this, delegate);
+        init(DelegatingBroadcasterMixin<T>(), this, delegate);
 
         return this;
       },
