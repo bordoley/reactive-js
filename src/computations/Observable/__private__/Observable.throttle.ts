@@ -21,28 +21,27 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  LiftedEventListenerLike_delegate,
-  LiftedEventListenerLike_notify,
-  LiftedEventListenerLike_notifyDelegate,
-} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+  LiftedListenerLike_notify,
+  LiftedListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import {
   LiftedSinkLike_complete,
   LiftedSinkLike_completeDelegate,
+  LiftedSinkLike_isDelegateCompleted,
 } from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
   SerialDisposableLike,
   SerialDisposableLike_current,
-  SinkLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromValue from "./Observable.fromValue.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 export const ThrottleFirstMode = "first";
@@ -76,15 +75,14 @@ const createThrottleObserver: <T>(
     this: LiftedObserverLike<T> & TProperties,
     _?: unknown,
   ) {
-    const delegate = this[LiftedEventListenerLike_delegate];
-    const delegateIsCompleted = delegate[SinkLike_isCompleted];
+    const delegateIsCompleted = this[LiftedSinkLike_isDelegateCompleted];
 
     if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
       const value = this[ThrottleObserver_value] as T;
       this[ThrottleObserver_value] = none;
       this[ThrottleObserver_hasValue] = false;
 
-      this[LiftedEventListenerLike_notifyDelegate](value);
+      this[LiftedListenerLike_notifyDelegate](value);
 
       setupDurationSubscription(this, value);
     }
@@ -98,8 +96,9 @@ const createThrottleObserver: <T>(
       SerialDisposableLike_current
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
+      // FIXME: Does this mean we're ignoring back pressure from the consumer?
       Observable_forEach(bind(notifyThrottleObserverDelegate, observer)),
-      Observable_subscribe(observer),
+      Observable_subscribe({ scheduler: observer }),
       Disposable.addTo(observer),
     );
   };
@@ -107,7 +106,7 @@ const createThrottleObserver: <T>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function ThrottleObserver(
-      this: Pick<LiftedObserverLike<T>, typeof LiftedEventListenerLike_notify> &
+      this: Pick<LiftedObserverLike<T>, typeof LiftedListenerLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       durationFunction: Function1<T, ObservableLike>,
@@ -134,7 +133,7 @@ const createThrottleObserver: <T>(
       [ThrottleObserver_mode]: ThrottleIntervalMode,
     }),
     proto({
-      [LiftedEventListenerLike_notify](
+      [LiftedListenerLike_notify](
         this: LiftedObserverLike<T> & TProperties,
         next: T,
       ) {
@@ -157,17 +156,16 @@ const createThrottleObserver: <T>(
       },
 
       [LiftedSinkLike_complete](this: TProperties & LiftedObserverLike<T>) {
-        const delegate = this[LiftedEventListenerLike_delegate];
         if (
           this[ThrottleObserver_mode] !== ThrottleFirstMode &&
           this[ThrottleObserver_hasValue] &&
-          !delegate[SinkLike_isCompleted] &&
+          !this[LiftedSinkLike_isDelegateCompleted] &&
           isSome(this[ThrottleObserver_value])
         ) {
           const value = this[ThrottleObserver_value];
           this[ThrottleObserver_value] = none;
           this[ThrottleObserver_hasValue] = false;
-          this[LiftedEventListenerLike_notifyDelegate](value);
+          this[LiftedListenerLike_notifyDelegate](value);
         }
         this[LiftedSinkLike_completeDelegate]();
       },
@@ -189,7 +187,7 @@ const Observable_throttle: Observable.Signature["throttle"] = <T>(
   return pipe(
     createThrottleObserver<T>,
     partial(durationObservable, mode),
-    Observable_liftPureDeferred,
+    Observable_lift(),
   );
 };
 

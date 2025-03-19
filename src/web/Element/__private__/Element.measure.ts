@@ -1,9 +1,9 @@
 import { Array_every } from "../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import * as EventSource from "../../../computations/EventSource.js";
+import * as Broadcaster from "../../../computations/Broadcaster.js";
 import * as WritableStore from "../../../computations/WritableStore.js";
 import {
-  EventSourceLike_addEventListener,
+  SourceLike_subscribe,
   WritableStoreLike,
 } from "../../../computations.js";
 import {
@@ -104,13 +104,13 @@ const Element_measure: Element.Signature["measure"] = /*@__PURE__*/ (() => {
         );
 
         pipe(
-          EventSource.merge(
+          Broadcaster.merge(
             windowResizeEventSource,
             windowScrollEventSource,
             ...scrollContainerEventSources,
           ),
-          EventSource.map(pipeLazy(element, measureElement)),
-          invoke(EventSourceLike_addEventListener, store),
+          Broadcaster.map(pipeLazy(element, measureElement)),
+          invoke(SourceLike_subscribe, store),
         );
 
         return store;

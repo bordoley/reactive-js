@@ -20,8 +20,6 @@ import {
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
-import * as EventSource from "../EventSource.js";
-import * as Observable from "../Observable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
@@ -79,10 +77,8 @@ testModule(
 
       const result = await pipe(
         obs,
-        Broadcaster.toObservable(),
-        Observable.takeFirst({ count: 10 }),
-        Observable.buffer(),
-        Observable.lastAsync<readonly number[]>({ scheduler }),
+        Broadcaster.takeFirst({ count: 10 }),
+        Broadcaster.toReadonlyArrayAsync<number>(),
       );
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }),
@@ -101,9 +97,7 @@ testModule(
 
       const result = await pipe(
         stream,
-        Broadcaster.toObservable(),
-        Observable.buffer<number>(),
-        Observable.lastAsync({ scheduler }),
+        Broadcaster.toReadonlyArrayAsync<number>(),
       );
 
       pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -123,11 +117,7 @@ testModule(
         );
         stream[PauseableLike_resume]();
 
-        await pipe(
-          stream,
-          Broadcaster.toObservable(),
-          Observable.lastAsync({ scheduler }),
-        );
+        await pipe(stream, Broadcaster.lastAsync());
       }, expectToThrowAsync),
     ),
     testAsync(
@@ -138,8 +128,7 @@ testModule(
           AsyncIterable,
         ),
         AsyncIterable.broadcast({ autoDispose: true }),
-        Broadcaster.toEventSource(),
-        EventSource.toReadonlyArrayAsync<number>(),
+        Broadcaster.toReadonlyArrayAsync<number>(),
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),

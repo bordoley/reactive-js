@@ -15,7 +15,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { EventListenerLike_notify } from "../../../utils.js";
+import { ListenerLike_notify } from "../../../utils.js";
 import type * as Element from "../../Element.js";
 
 const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
@@ -32,7 +32,7 @@ const Element_resizeEventSource: Element.Signature["resizeEventSource"] =
           continue;
         }
 
-        publisher[EventListenerLike_notify](entry);
+        publisher[ListenerLike_notify](entry);
       }
     };
 

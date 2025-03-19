@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   BroadcasterLike,
-  EventSourceLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../../../computations.js";
@@ -38,12 +37,15 @@ export const Broadcaster_createPauseable: Broadcaster.Signature["createPauseable
         > &
           TProperties,
         op: Function1<
-          EventSourceLike<boolean> & DisposableLike,
+          BroadcasterLike<boolean> & DisposableLike,
           BroadcasterLike<T>
         >,
+        options?: {
+          readonly autoDispose?: boolean;
+        },
       ): PauseableLike & BroadcasterLike<T> & DisposableLike {
         const writableStore = (this[PauseableLike_isPaused] =
-          WritableStore.create(true));
+          WritableStore.create(true, options));
 
         const delegate = pipe(writableStore, op);
 

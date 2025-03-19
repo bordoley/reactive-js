@@ -9,15 +9,15 @@ import {
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  LiftedEventListenerLike_notify,
-  LiftedEventListenerLike_notifyDelegate,
-} from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
+  LiftedListenerLike_notify,
+  LiftedListenerLike_notifyDelegate,
+} from "../../../utils/__mixins__/LiftedListenerMixin.js";
 import LiftedObserverMixin, {
   LiftedObserverLike,
 } from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { ObserverLike, SchedulerLike_now } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import Observable_lift from "./Observable.lift.js";
 
 const createWithCurrentTimeObserver: <TA, TB>(
   delegate: ObserverLike<TB>,
@@ -34,10 +34,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
   return mixInstanceFactory(
     include(DelegatingDisposableMixin, LiftedObserverMixin()),
     function WithCurrentTimeObserver(
-      this: Pick<
-        LiftedObserverLike<TA, TB>,
-        typeof LiftedEventListenerLike_notify
-      > &
+      this: Pick<LiftedObserverLike<TA, TB>, typeof LiftedListenerLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<TB>,
       selector: Function2<number, TA, TB>,
@@ -53,7 +50,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
       [WithCurrentTimeObserver_selector]: none,
     }),
     proto({
-      [LiftedEventListenerLike_notify](
+      [LiftedListenerLike_notify](
         this: TProperties & LiftedObserverLike<TA, TB>,
         next: TA,
       ) {
@@ -63,7 +60,7 @@ const createWithCurrentTimeObserver: <TA, TB>(
           next,
         );
 
-        this[LiftedEventListenerLike_notifyDelegate](mapped);
+        this[LiftedListenerLike_notifyDelegate](mapped);
       },
     }),
   );
@@ -78,7 +75,7 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
   pipe(
     createWithCurrentTimeObserver<TA, TB>,
     partial(selector),
-    Observable_liftPureDeferred,
+    Observable_lift(),
   );
 
 export default Observable_withCurrentTime;

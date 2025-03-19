@@ -50,10 +50,6 @@ import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 
 interface Signature {
   create(): SchedulerLike & DisposableLike;
-
-  get(): SchedulerLike;
-
-  setMaxYieldInterval(maxYieldInterval: number): void;
 }
 
 export const create: Signature["create"] = /*@PURE__*/ (() => {
@@ -245,7 +241,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       return this;
     },
     props<TProperties>({
-      [SchedulerLike_maxYieldInterval]: 300,
+      [SchedulerLike_maxYieldInterval]: 5,
       [HostScheduler_hostSchedulerContinuationDueTime]: 0,
       [HostScheduler_activeContinuation]: none,
       [HostScheduler_messageChannel]: none,
@@ -293,22 +289,3 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     return createHostSchedulerInstance(clampPositiveInteger(maxYieldInterval));
   };
 })();
-
-let globalHostScheduler: Optional<SchedulerLike & DisposableLike> = none;
-
-export const get: Signature["get"] = () => {
-  if (isNone(globalHostScheduler)) {
-    const scheduler = create();
-    globalHostScheduler = scheduler;
-  }
-
-  return globalHostScheduler;
-};
-
-export const setMaxYieldInterval: Signature["setMaxYieldInterval"] = (
-  maxYieldInterval: number,
-) => {
-  const scheduler = get();
-  (scheduler as Mutable<SchedulerLike>)[SchedulerLike_maxYieldInterval] =
-    clampPositiveInteger(maxYieldInterval);
-};

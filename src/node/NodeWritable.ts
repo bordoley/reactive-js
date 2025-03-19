@@ -8,7 +8,7 @@ import {
   proto,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as EventSource from "../computations/EventSource.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Publisher from "../computations/Publisher.js";
 import { PublisherLike } from "../computations.js";
 import {
@@ -28,13 +28,14 @@ import {
   BackPressureError,
   BackpressureStrategy,
   ConsumerLike,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
-  EventListenerLike_notify,
+  ListenerLike_notify,
+  QueueableLike,
+  QueueableLike_addOnReadyListener,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+  QueueableLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
@@ -98,11 +99,11 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       [WritableConsumer_onReadyPublisher]: none,
     }),
     proto({
-      [ConsumerLike_backpressureStrategy]:
+      [QueueableLike_backpressureStrategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
-      [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
+      [QueueableLike_capacity]: MAX_SAFE_INTEGER,
 
-      get [ConsumerLike_isReady]() {
+      get [QueueableLike_isReady]() {
         unsafeCast<TProperties>(this);
         const writable = this[WritableConsumer_writable];
         const needsDrain = writable.writableNeedDrain;
@@ -111,7 +112,7 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
         return result;
       },
 
-      [ConsumerLike_addOnReadyListener](
+      [QueueableLike_addOnReadyListener](
         this: TProperties & ConsumerLike,
         callback: SideEffect1<void>,
       ) {
@@ -124,7 +125,7 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
               Disposable.addTo(this),
             );
 
-            const onDrain = bindMethod(publisher, EventListenerLike_notify);
+            const onDrain = bindMethod(publisher, ListenerLike_notify);
             writable.on("drain", onDrain);
 
             this[WritableConsumer_onReadyPublisher] = publisher;
@@ -133,16 +134,16 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
 
         return pipe(
           publisher,
-          EventSource.addEventHandler(callback),
+          Broadcaster.addEventHandler(callback),
           Disposable.addTo(this),
         );
       },
 
-      [EventListenerLike_notify](
-        this: TProperties & ConsumerLike,
+      [ListenerLike_notify](
+        this: TProperties & QueueableLike,
         data: Uint8Array,
       ) {
-        if (this[ConsumerLike_isReady]) {
+        if (this[QueueableLike_isReady]) {
           const writable = this[WritableConsumer_writable];
           writable.write(Buffer.from(data));
         } else {

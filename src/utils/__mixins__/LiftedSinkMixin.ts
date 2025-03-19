@@ -10,30 +10,34 @@ import {
 import { bindMethod, pipe, returns } from "../../functions.js";
 import {
   DisposableLike,
-  EventListenerLike_notify,
+  ListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
 import * as DisposableContainer from "../DisposableContainer.js";
-import LiftedEventListenerMixin, {
-  LiftedEventListenerLike,
-  LiftedEventListenerLike_delegate,
-  LiftedEventListenerLike_notify,
-  LiftedEventListenerLike_notifyDelegate,
-} from "./LiftedEventListenerMixin.js";
+import LiftedListenerMixin, {
+  LiftedListenerLike,
+  LiftedListenerLike_delegate,
+  LiftedListenerLike_notify,
+  LiftedListenerLike_notifyDelegate,
+} from "./LiftedListenerMixin.js";
 
 export const LiftedSinkLike_complete = Symbol("LiftedSinkLike_complete");
 export const LiftedSinkLike_completeDelegate = Symbol(
-  "LiftedSinkLike_complete",
+  "LiftedSinkLike_completeDelegate",
+);
+export const LiftedSinkLike_isDelegateCompleted = Symbol(
+  "LiftedSinkLike_isDelegateCompleted",
 );
 
 export interface LiftedSinkLike<
   TA = unknown,
   TB = TA,
   TDelegateSink extends SinkLike<TB> = SinkLike<TB>,
-> extends LiftedEventListenerLike<TA, TB, TDelegateSink>,
+> extends LiftedListenerLike<TA, TB, TDelegateSink>,
     SinkLike<TA> {
+  readonly [LiftedSinkLike_isDelegateCompleted]: boolean;
   [LiftedSinkLike_complete](): void;
   [LiftedSinkLike_completeDelegate](): void;
 }
@@ -56,24 +60,27 @@ const LiftedSinkMixin: LiftedSinkMixinModule = /*@__PURE__*/ (<
   TDelegateSink extends SinkLike<TB> = SinkLike<TB>,
 >() => {
   const LiftedSinkMixin_isCompleted = Symbol("LiftedSinkMixin_isCompleted");
+
   type TProperties = {
     [LiftedSinkMixin_isCompleted]: boolean;
   };
+
   return returns(
     mix(
-      include(LiftedEventListenerMixin()),
+      include(LiftedListenerMixin()),
       function LiftedSinkMixin(
-        this: Omit<
-          LiftedSinkLike<TA, TB, TDelegateSink>,
-          | keyof DisposableLike
-          | typeof LiftedEventListenerLike_notify
-          | typeof LiftedEventListenerLike_delegate
-          | typeof EventListenerLike_notify
-          | typeof LiftedEventListenerLike_notifyDelegate
-        >,
+        this: TProperties &
+          Omit<
+            LiftedSinkLike<TA, TB, TDelegateSink>,
+            | keyof DisposableLike
+            | typeof LiftedListenerLike_notify
+            | typeof LiftedListenerLike_delegate
+            | typeof ListenerLike_notify
+            | typeof LiftedListenerLike_notifyDelegate
+          >,
         delegate: TDelegateSink,
       ): LiftedSinkLike<TA, TB, TDelegateSink> {
-        init(LiftedEventListenerMixin<TA, TB, TDelegateSink>(), this, delegate);
+        init(LiftedListenerMixin<TA, TB, TDelegateSink>(), this, delegate);
 
         pipe(
           this,
@@ -90,15 +97,19 @@ const LiftedSinkMixin: LiftedSinkMixinModule = /*@__PURE__*/ (<
           unsafeCast<TProperties>(this);
           return this[LiftedSinkMixin_isCompleted];
         },
+        get [LiftedSinkLike_isDelegateCompleted](): boolean {
+          unsafeCast<LiftedSinkLike<TA, TB, TDelegateSink>>(this);
+          return this[LiftedListenerLike_delegate][SinkLike_isCompleted];
+        },
+
         [LiftedSinkLike_completeDelegate](
           this: LiftedSinkLike<TA, TB, TDelegateSink>,
         ) {
           // We always want to call SinkLike_complete to ensure
           // cleanup code is invoked.
-          this[LiftedEventListenerLike_delegate][SinkLike_complete]();
+          this[LiftedListenerLike_delegate][SinkLike_complete]();
         },
-
-        [LiftedSinkLike_complete](this: LiftedSinkLike) {
+        [LiftedSinkLike_complete](this: LiftedSinkLike<TA, TB, TDelegateSink>) {
           this[LiftedSinkLike_completeDelegate]();
         },
 

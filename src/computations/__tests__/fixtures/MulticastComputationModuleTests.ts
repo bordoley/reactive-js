@@ -4,7 +4,6 @@ import {
   expectToThrowAsync,
   testAsync,
 } from "../../../__internal__/testing.js";
-import * as Observable from "../../../computations/Observable.js";
 import {
   ComputationModule,
   ComputationType,
@@ -31,8 +30,7 @@ const MulticastedComputationModuleTests = <
         await pipeAsync(
           promise,
           m.fromPromise(),
-          m.toObservable<number>(),
-          Observable.lastAsync({ scheduler }),
+          m.lastAsync<number>(),
           expectEquals<Optional<number>>(1),
         );
       }),
@@ -47,8 +45,7 @@ const MulticastedComputationModuleTests = <
           pipe(
             promise,
             m.fromPromise(),
-            m.toObservable(),
-            Observable.lastAsync({ scheduler }),
+            m.toReadonlyArrayAsync(),
           ),
         );
       }),
@@ -57,7 +54,6 @@ const MulticastedComputationModuleTests = <
         pipe(Promise.resolve(true), m.fromPromise()),
       ),
     ),
-    describe("never", ComputationTest.isMulticasted(m.never())),
   );
 };
 

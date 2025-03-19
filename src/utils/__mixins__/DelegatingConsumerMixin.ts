@@ -11,13 +11,13 @@ import { SideEffect1, returns } from "../../functions.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
   DisposableLike,
+  QueueableLike_addOnReadyListener,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+  QueueableLike_isReady,
 } from "../../utils.js";
-import { DelegatingEventListenerLike_delegate } from "./DelegatingEventListenerMixin.js";
+import { DelegatingListenerLike_delegate } from "./DelegatingListenerMixin.js";
 import DelegatingSinkMixin, {
   DelegatingSinkLike,
 } from "./DelegatingSinkMixin.js";
@@ -45,10 +45,10 @@ const DelegatingConsumerMixin: <
       unknown,
       Pick<
         DelegatingConsumerLike<T, TDelegateConsumer>,
-        | typeof ConsumerLike_backpressureStrategy
-        | typeof ConsumerLike_capacity
-        | typeof ConsumerLike_isReady
-        | typeof ConsumerLike_addOnReadyListener
+        | typeof QueueableLike_backpressureStrategy
+        | typeof QueueableLike_capacity
+        | typeof QueueableLike_isReady
+        | typeof QueueableLike_addOnReadyListener
       >,
       DisposableLike,
       TDelegateConsumer
@@ -57,10 +57,10 @@ const DelegatingConsumerMixin: <
       function DelegatingConsumerMixin(
         this: Pick<
           DelegatingConsumerLike<T, TDelegateConsumer>,
-          | typeof ConsumerLike_backpressureStrategy
-          | typeof ConsumerLike_capacity
-          | typeof ConsumerLike_isReady
-          | typeof ConsumerLike_addOnReadyListener
+          | typeof QueueableLike_backpressureStrategy
+          | typeof QueueableLike_capacity
+          | typeof QueueableLike_isReady
+          | typeof QueueableLike_addOnReadyListener
         > &
           DisposableLike,
         delegate: TDelegateConsumer,
@@ -70,33 +70,29 @@ const DelegatingConsumerMixin: <
       },
       props(),
       proto({
-        get [ConsumerLike_isReady](): boolean {
+        get [QueueableLike_isReady](): boolean {
           unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
-          return this[DelegatingEventListenerLike_delegate][
-            ConsumerLike_isReady
+          return this[DelegatingListenerLike_delegate][QueueableLike_isReady];
+        },
+
+        get [QueueableLike_backpressureStrategy](): BackpressureStrategy {
+          unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
+          return this[DelegatingListenerLike_delegate][
+            QueueableLike_backpressureStrategy
           ];
         },
 
-        get [ConsumerLike_backpressureStrategy](): BackpressureStrategy {
+        get [QueueableLike_capacity](): number {
           unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
-          return this[DelegatingEventListenerLike_delegate][
-            ConsumerLike_backpressureStrategy
-          ];
+          return this[DelegatingListenerLike_delegate][QueueableLike_capacity];
         },
 
-        get [ConsumerLike_capacity](): number {
-          unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
-          return this[DelegatingEventListenerLike_delegate][
-            ConsumerLike_capacity
-          ];
-        },
-
-        [ConsumerLike_addOnReadyListener](
+        [QueueableLike_addOnReadyListener](
           this: DelegatingConsumerLike<T, TDelegateConsumer>,
           callback: SideEffect1<void>,
         ) {
-          return this[DelegatingEventListenerLike_delegate][
-            ConsumerLike_addOnReadyListener
+          return this[DelegatingListenerLike_delegate][
+            QueueableLike_addOnReadyListener
           ](callback);
         },
       }),

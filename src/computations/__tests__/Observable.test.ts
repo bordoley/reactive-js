@@ -17,6 +17,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+/*
 import {
   __await,
   __constant,
@@ -25,24 +26,22 @@ import {
   __observe,
   __state,
   __stream,
-} from "../../computations/Observable/effects.js";
+} from "../../computations/Observable/effects.js";*/
 import * as Observable from "../../computations/Observable.js";
+import * as Publisher from "../../computations/Publisher.js";
 import * as Streamable from "../../computations/Streamable.js";
-import * as Subject from "../../computations/Subject.js";
 import {
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   DeferredComputationWithSideEffects,
-  ProducerLike_consume,
   PureDeferredComputation,
   PureSynchronousDeferredComputation,
   PureSynchronousObservableLike,
   StoreLike_value,
   StreamableLike_stream,
   SynchronousDeferredComputationWithSideEffects,
-  SynchronousObservableLike,
 } from "../../computations.js";
 import {
   Optional,
@@ -74,7 +73,7 @@ import {
   DisposableLike_isDisposed,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
-  EventListenerLike_notify,
+  ListenerLike_notify,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -214,7 +213,7 @@ testModule(
 
             try {
               for (let i = 0; i < 10; i++) {
-                observer[EventListenerLike_notify](i);
+                observer[ListenerLike_notify](i);
               }
 
               observer[SinkLike_complete]();
@@ -236,7 +235,7 @@ testModule(
         Observable.create(async observer => {
           await Promise.resolve();
           for (let i = 0; i < 10; i++) {
-            observer[EventListenerLike_notify](i);
+            observer[ListenerLike_notify](i);
           }
           observer[SinkLike_complete]();
         }),
@@ -255,7 +254,7 @@ testModule(
           await Promise.resolve();
 
           for (let i = 0; i < 10; i++) {
-            observer[EventListenerLike_notify](i);
+            observer[ListenerLike_notify](i);
           }
           observer[SinkLike_complete]();
         }),
@@ -438,7 +437,7 @@ testModule(
       await pipeAsync(
         Observable.computeDeferred(() => {
           const stream = __stream(Streamable.identity<number>());
-          const push = bindMethod(stream, EventListenerLike_notify);
+          const push = bindMethod(stream, ListenerLike_notify);
 
           const result = __observe(stream) ?? 0;
           __do(push, result + 1);
@@ -447,7 +446,7 @@ testModule(
         }),
         Observable.takeFirst<number>({ count: 10 }),
         Observable.buffer<number>(),
-        Observable.lastAsync({ scheduler }),
+        Observable.lastAsync<number[]>({ scheduler }),
         x => x ?? [],
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       );
@@ -458,7 +457,7 @@ testModule(
         Observable.computeDeferred(() => {
           const initialState = __constant((): number => 0);
           const state = __state(initialState);
-          const push = bindMethod(state, EventListenerLike_notify);
+          const push = bindMethod(state, ListenerLike_notify);
           const result = __observe(state) ?? -1;
 
           if (result > -1) {
@@ -476,9 +475,9 @@ testModule(
     }),
     testAsync("awaiting a Multicast Observable", async () => {
       using scheduler = HostScheduler.create();
-      const subject = Subject.create<number>({ replay: 2 });
-      subject[EventListenerLike_notify](200);
-      subject[EventListenerLike_notify](100);
+      const subject = Publisher.create<number>({ replay: 2 });
+      subject[ListenerLike_notify](200);
+      subject[ListenerLike_notify](100);
 
       const subjectObs = pipe(subject, Broadcaster.toObservable());
 
@@ -1419,7 +1418,7 @@ testModule(
         Observable.takeFirst<number>({ count: 5 }),
         Observable.toEventSource(vts),
         EventSource.toProducer(),
-        invoke(ProducerLike_consume, dest),
+        invoke(ListenerLike_notify, dest),
       );
 
       const result: number[] = [];

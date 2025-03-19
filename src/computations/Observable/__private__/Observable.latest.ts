@@ -1,158 +1,44 @@
+import { Array_push } from "../../../__internal__/constants.js";
+
+import { ObservableLike, SourceLike_subscribe } from "../../../computations.js";
+import { pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import { ObserverLike } from "../../../utils.js";
+import type * as Observable from "../../Observable.js";
+import * as Source from "../../__internal__/Source.js";
+import * as Latest from "../../__internal__/operators/Latest.js";
 import {
-  Array_every,
-  Array_length,
-  Array_push,
-} from "../../../__internal__/constants.js";
-import {
-  Mutable,
-  include,
-  init,
-  mixInstanceFactory,
-  props,
-  proto,
-} from "../../../__internal__/mixins.js";
-import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import * as Computation from "../../../computations/Computation.js";
-import {
-  ComputationLike_isPure,
-  ComputationLike_isSynchronous,
-  ObservableLike,
-  ObservableLike_observe,
-} from "../../../computations.js";
-import { none, pick, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { LiftedEventListenerLike_notify } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
-import LiftedObserverMixin, {
-  LiftedObserverLike,
-} from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { LiftedSinkLike_complete } from "../../../utils/__mixins__/LiftedSinkMixin.js";
-import {
-  EventListenerLike_notify,
-  ObserverLike,
-  SinkLike_complete,
-} from "../../../utils.js";
-import Observable_createWithConfig from "./Observable.createWithConfig.js";
+  LatestCtx_completedCount,
+  LatestCtx_mode,
+  LatestCtx_values,
+} from "../../__internal__/operators/Latest.js";
 
-type LatestMode = 1 | 2;
-const zipMode = 2;
-
-const Observable_latest = /*@__PURE__*/ (() => {
-  const LatestCtx_completedCount = Symbol("LatestCtx_completedCount");
-  const LatestCtx_delegate = Symbol("LatestCtx_delegate");
-  const LatestCtx_mode = Symbol("LatestCtx_mode");
-  const LatestCtx_observers = Symbol("LatestCtx_observers");
-
-  type LatestCtx = {
-    [LatestCtx_delegate]: ObserverLike<readonly unknown[]>;
-    [LatestCtx_mode]: LatestMode;
-    [LatestCtx_completedCount]: number;
-    [LatestCtx_observers]: TProperties[];
-  };
-
-  const LatestObserver_ctx = Symbol("LatestObserver_ctx");
-  const LatestObserver_latest = Symbol("LatestObserver_latest");
-  const LatestObserver_ready = Symbol("LatestObserver_ready");
-
-  type TProperties = {
-    [LatestObserver_ready]: boolean;
-    [LatestObserver_latest]: unknown;
-    readonly [LatestObserver_ctx]: LatestCtx;
-  };
-
-  const createLatestObserver = mixInstanceFactory(
-    include(DelegatingDisposableMixin, LiftedObserverMixin()),
-    function LatestObserver(
-      this: Pick<LiftedObserverLike, typeof LiftedEventListenerLike_notify> &
-        Mutable<TProperties>,
-      ctx: LatestCtx,
-      delegate: ObserverLike,
-    ): ObserverLike & TProperties {
-      init(DelegatingDisposableMixin, this, delegate);
-      init(LiftedObserverMixin(), this, delegate, none);
-
-      this[LatestObserver_ctx] = ctx;
-
-      return this;
-    },
-    props<TProperties>({
-      [LatestObserver_ready]: false,
-      [LatestObserver_latest]: none,
-      [LatestObserver_ctx]: none,
-    }),
-    proto({
-      [LiftedEventListenerLike_notify](
-        this: TProperties & ObserverLike,
-        next: unknown,
-      ) {
-        const ctx = this[LatestObserver_ctx];
-        const mode = ctx[LatestCtx_mode];
-        const observers = ctx[LatestCtx_observers];
-
-        this[LatestObserver_latest] = next;
-        this[LatestObserver_ready] = true;
-
-        const isReady = observers[Array_every](pick(LatestObserver_ready));
-
-        if (isReady) {
-          const value = pipe(
-            observers,
-            ReadonlyArray.map(pick(LatestObserver_latest)),
-          );
-
-          ctx[LatestCtx_delegate][EventListenerLike_notify](value);
-
-          if (mode === zipMode) {
-            for (const sub of observers) {
-              sub[LatestObserver_ready] = false;
-              sub[LatestObserver_latest] = none as any;
-            }
-          }
-        }
-      },
-
-      [LiftedSinkLike_complete](this: TProperties) {
-        const ctx = this[LatestObserver_ctx];
-        ctx[LatestCtx_completedCount]++;
-
-        if (
-          ctx[LatestCtx_completedCount] ===
-          ctx[LatestCtx_observers][Array_length]
-        ) {
-          ctx[LatestCtx_delegate][SinkLike_complete]();
-        }
-      },
-    }),
-  );
-
-  return (
-    observables: readonly ObservableLike<any>[],
-    mode: LatestMode,
-  ): ObservableLike<readonly unknown[]> => {
-    const onSubscribe = (delegate: ObserverLike<readonly unknown[]>) => {
-      const ctx: LatestCtx = {
-        [LatestCtx_completedCount]: 0,
-        [LatestCtx_observers]: [],
-        [LatestCtx_delegate]: delegate,
-        [LatestCtx_mode]: mode,
-      };
-
-      for (const observable of observables) {
-        const innerObserver = createLatestObserver(ctx, delegate);
-
-        ctx[LatestCtx_observers][Array_push](innerObserver);
-        observable[ObservableLike_observe](innerObserver);
-      }
+const Observable_latest = (
+  Observables: readonly ObservableLike<any>[],
+  mode: Latest.LatestMode,
+): ObservableLike<readonly unknown[]> =>
+  Source.create((delegate: ObserverLike<readonly unknown[]>) => {
+    const ctx: Latest.LatestCtx = {
+      [LatestCtx_completedCount]: 0,
+      [LatestCtx_values]: [],
+      [LatestCtx_mode]: mode,
     };
 
-    const isPure = Computation.areAllPure(observables);
-    const isSynchronous = Computation.areAllSynchronous(observables);
-    //const isMulticasted = Computation.areAllMulticasted(observables);
+    for (const observable of Observables) {
+      const innerSink = pipe(
+        Latest.createObserver(delegate, ctx),
+        Disposable.addTo(delegate),
+      );
 
-    return Observable_createWithConfig(onSubscribe, {
-      [ComputationLike_isPure]: isPure,
-      [ComputationLike_isSynchronous]: isSynchronous,
-    });
-  };
-})();
+      ctx[LatestCtx_values][Array_push](innerSink);
+      observable[SourceLike_subscribe](innerSink);
+    }
+  });
 
-export default Observable_latest;
+export const Observable_combineLatest: Observable.Signature["combineLatest"] =
+  ((...observables: readonly ObservableLike<any>[]) =>
+    Observable_latest(observables, 1)) as Observable.Signature["combineLatest"];
+
+export const Observable_zipLatest: Observable.Signature["zipLatest"] = ((
+  ...observables: readonly ObservableLike<any>[]
+) => Observable_latest(observables, 2)) as Observable.Signature["zipLatest"];

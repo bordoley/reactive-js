@@ -4,11 +4,11 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
-import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
 import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
 import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
+import Observable_lift from "./Observable.lift.js";
 
 const createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
@@ -31,7 +31,7 @@ const createBackpressureObserver: <T>(
       // notifications from bypassing the backpressure queue.
       // LiftedObserverMixin bypasses EventListnerLike_notify calls
       // when chained. The delegate here prevents it from doing so.
-      const wrappedDelegate = DelegatingObserver.create(delegate);
+      const wrappedDelegate = Observer.createDelegating(delegate);
       init(LiftedObserverMixin<T>(), this, wrappedDelegate, options);
 
       return this;
@@ -46,7 +46,7 @@ const Observable_backpressureStrategy: Observable.Signature["backpressureStrateg
     pipe(
       createBackpressureObserver<T>,
       partial(options),
-      Observable_liftPureDeferred<T, T>,
+      Observable_lift<T, T>(),
     );
 
 export default Observable_backpressureStrategy;

@@ -1,19 +1,61 @@
-import { isNone, isSome } from "../../../functions.js";
+import { ObservableLike, SourceLike_subscribe } from "../../../computations.js";
+import {
+  compose,
+  error,
+  invoke,
+  isSome,
+  partial,
+  pipe,
+} from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
+import { DisposableLike_dispose, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
+import Observable_lift from "./Observable.lift.js";
 
-const Observable_retry: Observable.Signature["retry"] = /*@__PURE__*/ (() => {
-  const defaultRetryPredicate = (_: number, error?: Error): boolean =>
-    isSome(error);
+const createRetryObserver = <T>(
+  delegate: ObserverLike<T>,
+  observable: ObservableLike<T>,
+  retryPredicate: (count: number, error: Error) => boolean,
+) => {
+  let count = 1;
 
-  return (predicate?: (count: number, error: Error) => boolean) => {
-    const retryPredicate = isNone(predicate)
-      ? defaultRetryPredicate
-      : (count: number, error?: Error) =>
-          isSome(error) && predicate(count, error);
+  const doOnError = (err: Error) => {
+    let shouldRetry = false;
+    try {
+      shouldRetry = !retryPredicate(count, err);
+    } catch (e) {
+      shouldRetry = false;
+      err = isSome(err) ? error([error(e), err]) : error(e);
+    }
 
-    return Observable_repeatOrRetry(retryPredicate);
+    if (!shouldRetry) {
+      delegate[DisposableLike_dispose](err);
+    } else {
+      count++;
+
+      const newDelegate = createRetryOnDisposedObserver(delegate);
+      pipe(observable, invoke(SourceLike_subscribe, newDelegate));
+    }
   };
-})();
+
+  const createRetryOnDisposedObserver = compose(
+    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    Disposable.addToContainer(delegate),
+    DisposableContainer.onError(doOnError),
+  );
+
+  return createRetryOnDisposedObserver(delegate);
+};
+
+const Observable_retry: Observable.Signature["retry"] =
+  <T>(shouldRetry: (count: number, error: Error) => boolean) =>
+  (observable: ObservableLike<T>) =>
+    pipe(
+      createRetryObserver,
+      partial(observable, shouldRetry),
+      Observable_lift(),
+    )(observable);
 
 export default Observable_retry;

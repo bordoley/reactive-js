@@ -1,39 +1,11 @@
-import { newInstance } from "../../../functions.js";
-import { clampPositiveInteger, max } from "../../../math.js";
-import AbstractSink, {
-  AbstractSink_delegate,
-} from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
+import { partial, pipe } from "../../../functions.js";
 import type * as Runnable from "../../Runnable.js";
+import * as SkipFirst from "../../__internal__/operators/SkipFirst.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-class SkipFirstSink<T> extends AbstractSink<T> {
-  constructor(
-    sink: SinkLike<T>,
-    private cnt: number,
-  ) {
-    super(sink);
-  }
-
-  [EventListenerLike_notify](next: T): void {
-    this.cnt = max(this.cnt - 1, -1);
-    if (this.cnt < 0) {
-      this[AbstractSink_delegate][EventListenerLike_notify](next);
-    }
-  }
-}
-
-const Runnable_skipFirst: Runnable.Signature["skipFirst"] = <T>(options?: {
-  readonly count?: number;
+const Runnable_takeFirst: Runnable.Signature["takeFirst"] = <T>(options?: {
+  count?: number;
 }) =>
-  Runnable_lift(
-    (sink: SinkLike<T>) =>
-      newInstance(
-        SkipFirstSink<T>,
-        sink,
-        clampPositiveInteger(options?.count ?? 1),
-      ),
-    true,
-  );
+  pipe(SkipFirst.createSink, partial(options?.count), Runnable_lift<T, T>());
 
-export default Runnable_skipFirst;
+export default Runnable_takeFirst;

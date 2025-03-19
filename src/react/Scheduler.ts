@@ -17,6 +17,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { bindMethod, newInstance, none, pipe } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import SchedulerMixin, {
   SchedulerContinuationLike,
@@ -88,10 +89,10 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   );
 })();
 
-export const get: Signature["get"] = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
-    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
-  return (priority = unstable_NormalPriority) =>
+export const getImpl = /*@__PURE__*/ (() => {
+  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike & DisposableLike> =
+    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike & DisposableLike>>(Map);
+  return (priority: 1 | 2 | 3 | 4 | 5 = unstable_NormalPriority) =>
     schedulerCache[Map_get](priority) ??
     (() => {
       const scheduler = createReactScheduler(priority);
@@ -104,3 +105,8 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       );
     })();
 })();
+
+export const get: Signature["get"] = (priority = unstable_NormalPriority) =>
+  getImpl(priority);
+
+DefaultScheduler.set(getImpl(unstable_NormalPriority));

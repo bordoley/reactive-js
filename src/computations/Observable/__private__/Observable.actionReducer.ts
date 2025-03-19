@@ -1,7 +1,4 @@
-import {
-  ObservableLike,
-  ObservableLike_observe,
-} from "../../../computations.js";
+import { ComputationOf, SourceLike_subscribe } from "../../../computations.js";
 import {
   Equality,
   Factory,
@@ -10,13 +7,11 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
+import { ObserverLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
+import * as Source from "../../__internal__/Source.js";
 import Observable_concat from "./Observable.concat.js";
-import Observable_create from "./Observable.create.js";
-import Observable_createPureDeferredObservable from "./Observable.createPureDeferredObservable.js";
-import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
-import Observable_createSynchronousObservableWithSideEffects from "./Observable.createSynchronousObservableWithSideEffects.js";
 import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.js";
 import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray.js";
 import Observable_scan from "./Observable.scan.js";
@@ -34,16 +29,8 @@ const Observable_actionReducer: Observable.Signature["actionReducer"] = (<
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
   ) =>
-  (obs: ObservableLike<TAction>) => {
-    const create = Computation.isPureSynchronous(obs)
-      ? Observable_createPureSynchronousObservable
-      : Computation.isSynchronousWithSideEffects(obs)
-        ? Observable_createSynchronousObservableWithSideEffects
-        : Computation.isPureDeferred(obs)
-          ? Observable_createPureDeferredObservable
-          : Observable_create;
-
-    return create<T>(observer => {
+  (obs: ComputationOf<Observable.Computation, TAction>) => {
+    return Source.create<T, ObserverLike<T>>(observer => {
       const acc: T = initialState();
 
       pipe(
@@ -51,9 +38,9 @@ const Observable_actionReducer: Observable.Signature["actionReducer"] = (<
         Observable_scan<TAction, T>(reducer, returns(acc)),
         Computation.startWith(ObservableModule)<T>(acc),
         Observable_distinctUntilChanged<T>(options),
-        invoke(ObservableLike_observe, observer),
+        invoke(SourceLike_subscribe, observer),
       );
-    });
+    }, obs);
   }) as Observable.Signature["actionReducer"];
 
 export default Observable_actionReducer;

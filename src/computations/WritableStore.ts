@@ -9,12 +9,12 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventSourceLike_addEventListener,
+  PublisherLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
 import { Equality, none, strictEquality } from "../functions.js";
-import { DisposableLike, EventListenerLike_notify } from "../utils.js";
+import { ListenerLike_notify } from "../utils.js";
 import PublisherMixin from "./__mixins__/PublisherMixin.js";
 
 export const create: <T>(
@@ -35,11 +35,7 @@ export const create: <T>(
   return mixInstanceFactory(
     include(PublisherMixin<T>()),
     function WritableStore(
-      this: TProperties &
-        Omit<
-          WritableStoreLike<T>,
-          keyof DisposableLike | typeof EventSourceLike_addEventListener
-        >,
+      this: TProperties & Omit<WritableStoreLike<T>, keyof PublisherLike<T>>,
       initialValue: T,
       options?: {
         readonly equality?: Equality<T>;
@@ -67,16 +63,13 @@ export const create: <T>(
       },
       set [StoreLike_value](value: T) {
         unsafeCast<TProperties & WritableStoreLike<T>>(this);
-        this[EventListenerLike_notify](value);
+        this[ListenerLike_notify](value);
       },
-      [EventListenerLike_notify](
-        this: TProperties & WritableStoreLike<T>,
-        v: T,
-      ) {
+      [ListenerLike_notify](this: TProperties & WritableStoreLike<T>, v: T) {
         if (!this[WritableStore_equality](this[WritableStore_value], v)) {
           this[WritableStore_value] = v;
 
-          super_(PublisherMixin<T>(), this, EventListenerLike_notify, v);
+          super_(PublisherMixin<T>(), this, ListenerLike_notify, v);
         }
       },
     },

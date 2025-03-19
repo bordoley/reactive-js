@@ -13,7 +13,7 @@ import {
   SynchronousComputationModule,
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
-import Observable_fromRunnable from "./Observable/__private__/Observable.fromRunnable.js";
+import Runnable_actionReducer from "./Runnable/__private__/Runnable.actionReducer.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -27,19 +27,19 @@ import Runnable_firstAsync from "./Runnable/__private__/Runnable.firstAsync.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
 import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
 import Runnable_fromValue from "./Runnable/__private__/Runnable.fromValue.js";
-import Runnable_gen from "./Runnable/__private__/Runnable.gen.js";
-import Runnable_genWithSideEffects from "./Runnable/__private__/Runnable.genWithSideEffects.js";
+import {
+  Runnable_gen,
+  Runnable_genPure,
+} from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_lastAsync from "./Runnable/__private__/Runnable.lastAsync.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
-import Runnable_raise from "./Runnable/__private__/Runnable.raise.js";
 import Runnable_reduce from "./Runnable/__private__/Runnable.reduce.js";
 import Runnable_reduceAsync from "./Runnable/__private__/Runnable.reduceAsync.js";
 import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
-import Runnable_run from "./Runnable/__private__/Runnable.run.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
 import Runnable_skipFirst from "./Runnable/__private__/Runnable.skipFirst.js";
 import Runnable_takeFirst from "./Runnable/__private__/Runnable.takeFirst.js";
@@ -72,6 +72,7 @@ export interface RunnableModule
 
 export type Signature = RunnableModule;
 
+export const actionReducer: Signature["actionReducer"] = Runnable_actionReducer;
 export const buffer: Signature["buffer"] = Runnable_buffer;
 export const catchError: Signature["catchError"] = Runnable_catchError;
 export const concatAll: Signature["concatAll"] = Runnable_concatAll;
@@ -89,27 +90,22 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Runnable_fromReadonlyArray;
 export const fromValue: Signature["fromValue"] = Runnable_fromValue;
 export const gen: Signature["gen"] = Runnable_gen;
-export const genWithSideEffects: Signature["genWithSideEffects"] =
-  Runnable_genWithSideEffects;
+export const genPure: Signature["genPure"] = Runnable_genPure;
 export const keep: Signature["keep"] = Runnable_keep;
 export const last: Signature["last"] = Runnable_last;
 export const lastAsync: Signature["lastAsync"] = Runnable_lastAsync;
 export const map: Signature["map"] = Runnable_map;
 export const pairwise: Signature["pairwise"] = Runnable_pairwise;
-export const raise: Signature["raise"] = Runnable_raise;
 export const reduce: Signature["reduce"] = Runnable_reduce;
 export const reduceAsync: Signature["reduceAsync"] = Runnable_reduceAsync;
 export const repeat: Signature["repeat"] = Runnable_repeat;
 export const retry: Signature["retry"] = Runnable_retry;
-export const run: Signature["run"] = Runnable_run;
 export const scan: Signature["scan"] = Runnable_scan;
 export const skipFirst: Signature["skipFirst"] = Runnable_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Runnable_takeFirst;
 export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Runnable_throwIfEmpty;
-export const toObservable: Signature["toObservable"] =
-  Observable_fromRunnable as Signature["toObservable"];
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =

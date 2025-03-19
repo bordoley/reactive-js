@@ -8,8 +8,8 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
-import { ProducerLike_consume } from "../../computations.js";
+import * as Producer from "../../computations/Producer.js";
+import { SourceLike_subscribe } from "../../computations.js";
 import { invoke, newInstance, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -25,7 +25,6 @@ testModule(
       "writing to writable",
 
       async () => {
-        using scheduler = HostScheduler.create();
         let data = "";
 
         const writable = newInstance(Writable, {
@@ -45,11 +44,10 @@ testModule(
 
         pipe(
           ["abc", "defg", "xyz"],
-          Observable.fromReadonlyArray<string>(),
-          Observable.keep<string>(x => x !== "xyz"),
-          Observable.encodeUtf8(),
-          Observable.toProducer(scheduler),
-          invoke(ProducerLike_consume, consumer),
+          Producer.fromReadonlyArray<string>(),
+          Producer.keep<string>(x => x !== "xyz"),
+          Producer.encodeUtf8(),
+          invoke(SourceLike_subscribe, consumer),
         );
 
         await DisposableContainer.toPromise(consumer);
@@ -63,7 +61,6 @@ testModule(
       },
     ),
     testAsync("writing to writable that throws", async () => {
-      using scheduler = HostScheduler.create();
       const err = newInstance(Error);
       const writable = newInstance(Writable, {
         autoDestroy: true,
@@ -81,10 +78,9 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Observable.fromReadonlyArray(),
-        Observable.encodeUtf8(),
-        Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, consumer),
+        Producer.fromReadonlyArray(),
+        Producer.encodeUtf8(),
+        invoke(SourceLike_subscribe, consumer),
       );
 
       await pipe(consumer, DisposableContainer.toPromise, expectPromiseToThrow);
@@ -118,10 +114,9 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Observable.fromReadonlyArray(),
-        Observable.encodeUtf8(),
-        Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, consumer),
+        Producer.fromReadonlyArray(),
+        Producer.encodeUtf8(),
+        invoke(SourceLike_subscribe, consumer),
       );
 
       await DisposableContainer.toPromise(consumer);

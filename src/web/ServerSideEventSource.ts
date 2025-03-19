@@ -1,10 +1,10 @@
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
-import * as EventSource from "../computations/EventSource.js";
-import { EventSourceLike } from "../computations.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
+import { BroadcasterLike } from "../computations.js";
 import { bindMethod, newInstance, pipe } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
-import { DisposableLike, EventListenerLike_notify } from "../utils.js";
+import { DisposableLike, ListenerLike_notify } from "../utils.js";
 
 const errorEvent = "error";
 
@@ -15,19 +15,19 @@ export const create = (
   options: EventSourceInit & {
     readonly events?: readonly string[];
   } = {},
-): EventSourceLike<MessageEvent> & DisposableLike => {
+): BroadcasterLike<MessageEvent> & DisposableLike => {
   const events = pipe(
     options.events ?? ["message"],
     ReadonlyArray.keep(x => !reservedEvents.includes(x)),
   );
   const requestURL = String(url);
 
-  return EventSource.create(listener => {
+  return Broadcaster.create(sink => {
     const eventSource = newInstance(global.EventSource, requestURL, options);
 
-    const onMessage = bindMethod(listener, EventListenerLike_notify);
+    const onMessage = bindMethod(sink, ListenerLike_notify);
 
-    const onError = Disposable.toErrorHandler(listener);
+    const onError = Disposable.toErrorHandler(sink);
 
     for (const ev of events) {
       eventSource.addEventListener(ev, onMessage);
@@ -36,7 +36,7 @@ export const create = (
     eventSource.addEventListener(errorEvent, onError);
 
     pipe(
-      listener,
+      sink,
       DisposableContainer.onDisposed(_ => {
         eventSource.removeEventListener(errorEvent, onError);
 

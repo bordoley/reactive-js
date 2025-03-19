@@ -1,12 +1,12 @@
-import { EventSourceLike } from "../../../computations.js";
+import { BroadcasterLike } from "../../../computations.js";
 import { Optional, none, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import Element_eventSource from "./Element.eventSource.js";
 
 const Element_windowResizeEventSource = /*@__PURE__*/ (() => {
-  let windowResizeEventSourceRef: Optional<EventSourceLike<Event>> = none;
+  let windowResizeEventSourceRef: Optional<BroadcasterLike<Event>> = none;
 
-  return (): EventSourceLike<Event> =>
+  return (): BroadcasterLike<Event> =>
     windowResizeEventSourceRef ??
     (() => {
       windowResizeEventSourceRef = pipe(

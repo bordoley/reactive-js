@@ -125,10 +125,10 @@ const SequentialComputationModuleTests = <
         "when error handler returns a computation",
         pipeLazyAsync(
           [1, 2, 3],
-          m.fromReadonlyArray<number>(),
+          m.fromReadonlyArray(),
           Computation.concatWith(m)<number>(m.raise()),
-          m.catchError(pipeLazy([4, 5, 6], m.fromReadonlyArray())),
-          m.toReadonlyArrayAsync<number>(),
+          m.catchError<number>(pipeLazy([4, 5, 6], m.fromReadonlyArray())),
+          m.toReadonlyArrayAsync(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
         ),
       ),

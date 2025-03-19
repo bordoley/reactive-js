@@ -11,7 +11,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../utils.js";
-import * as EventSource from "../EventSource.js";
+import * as Broadcaster from "../Broadcaster.js";
 
 testModule(
   "WritableStore",
@@ -21,7 +21,7 @@ testModule(
     let current = 0;
     pipe(
       store,
-      EventSource.addEventHandler(v => {
+      Broadcaster.addEventHandler(v => {
         current = v;
       }),
     );

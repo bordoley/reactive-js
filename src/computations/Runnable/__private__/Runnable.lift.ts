@@ -2,11 +2,11 @@ import {
   ComputationBaseOf,
   ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   ComputationOperatorWithSideEffects,
+  PureComputationOperator,
   RunnableLike,
   RunnableLike_eval,
-  StatefulSynchronousComputationOperator,
-  StatelessComputationOperator,
 } from "../../../computations.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import { SinkLike } from "../../../utils.js";
@@ -16,13 +16,16 @@ import type * as Runnable from "../../Runnable.js";
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
   readonly [ComputationLike_isDeferred]: false = false as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     public readonly src: RunnableLike<any>,
     public readonly ops: readonly Function1<SinkLike<any>, SinkLike<any>>[],
-    isPure: boolean,
+    config?: {
+      [ComputationLike_isPure]?: boolean;
+    },
   ) {
-    this[ComputationLike_isPure] = isPure && Computation.isPure(src);
+    this[ComputationLike_isPure] = Computation.isPure(config ?? {});
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
@@ -31,40 +34,48 @@ class LiftedRunnable<T> implements RunnableLike<T> {
 }
 
 interface RunnableLift {
-  lift<TA, TB>(
+  lift<TA, TB>(): (
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-  ): StatelessComputationOperator<Runnable.Computation, TA, TB>;
-  lift<TA, TB>(
+  ) => PureComputationOperator<Runnable.Computation, TA, TB>;
+
+  lift<TA, TB>(config: {
+    [ComputationLike_isPure]: true;
+  }): (
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-    isPure: true,
-  ): StatefulSynchronousComputationOperator<Runnable.Computation, TA, TB>;
-  lift<TA, TB>(
+  ) => PureComputationOperator<Runnable.Computation, TA, TB>;
+
+  lift<TA, TB>(config: {
+    [ComputationLike_isPure]: false;
+  }): (
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-    isPure: false,
-  ): ComputationOperatorWithSideEffects<Runnable.Computation, TA, TB>;
-  lift<TA, TB>(
+  ) => ComputationOperatorWithSideEffects<Runnable.Computation, TA, TB>;
+
+  lift<TA, TB>(config: {
+    [ComputationLike_isPure]: boolean;
+  }): (
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-    isPure: boolean,
-  ): Function1<
+  ) => Function1<
     ComputationBaseOf<Runnable.Computation, TA>,
     ComputationBaseOf<Runnable.Computation, TB>
   >;
 }
 
-const Runnable_lift: RunnableLift["lift"] = (<TA, TB>(
+const Runnable_lift: RunnableLift["lift"] = (<TA, TB>(config?: {
+    [ComputationLike_isPure]?: boolean;
+  }) =>
+  (
     operator: Function1<SinkLike<TB>, SinkLike<TA>>,
-    isPure?: boolean,
   ): Function1<RunnableLike<TA>, RunnableLike<TB>> =>
   (source: RunnableLike<TA>) => {
     const src: RunnableLike<any> = (source as any).src ?? source;
     const ops = [operator, ...((source as any).ops ?? [])];
 
-    return newInstance(
-      LiftedRunnable,
-      src,
-      ops,
-      (isPure ?? true) && Computation.isPure(source),
-    );
+    const liftedConfig = {
+      [ComputationLike_isPure]:
+        Computation.isPure(source) && Computation.isPure(config ?? {}),
+    };
+
+    return newInstance(LiftedRunnable, src, ops, liftedConfig);
   }) as RunnableLift["lift"];
 
 export default Runnable_lift;

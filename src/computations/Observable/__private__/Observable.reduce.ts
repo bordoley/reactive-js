@@ -1,29 +1,20 @@
-import { SynchronousObservableLike } from "../../../computations.js";
-import { Factory, Reducer, pipe } from "../../../functions.js";
-import type * as Observable from "../../Observable.js";
-import Observable_forEach from "./Observable.forEach.js";
-import Observable_run from "./Observable.run.js";
+import { SynchronousComputationOf } from "../../../computations.js";
+import { Factory, Reducer, compose, identity } from "../../../functions.js";
+import * as Observable from "../../Observable.js";
+import Observable_actionReducer from "./Observable.actionReducer.js";
+import Observable_last from "./Observable.last.js";
 
-const Observable_reduce: Observable.Signature["reduce"] =
-  <T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-    options: {
-      readonly maxMicroTaskTicks?: number;
-    },
-  ) =>
-  (runnable: SynchronousObservableLike<T>) => {
-    let acc = initialValue();
-
-    pipe(
-      runnable,
-      Observable_forEach((next: T) => {
-        acc = reducer(acc, next);
-      }),
-      Observable_run(options),
-    );
-
-    return acc;
-  };
+const Observable_reduce: Observable.Signature["reduce"] = (<T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+  options: {
+    readonly maxMicroTaskTicks?: number;
+  },
+) =>
+  compose(
+    identity<SynchronousComputationOf<Observable.Computation, T>>,
+    Observable_actionReducer<T, TAcc>(reducer, initialValue),
+    Observable_last<TAcc>(options),
+  )) as Observable.Signature["reduce"];
 
 export default Observable_reduce;

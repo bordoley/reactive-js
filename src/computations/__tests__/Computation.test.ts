@@ -1,8 +1,10 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectFalse,
   expectToHaveBeenCalledTimes,
+  expectTrue,
   mockFn,
   test,
   testAsync,
@@ -338,6 +340,64 @@ testModule(
         expectArrayEquals<number>([4]),
       ),
     ),
+  ),
+  describe(
+    "raise",
+    test("when raise function returns an value", () => {
+      const e1 = "e1";
+
+      try {
+        pipe(
+          Computation.raise<Iterable.Computation>(Iterable)({ raise: () => e1 }),
+          Iterable.toReadonlyArray(),
+        );
+        expectFalse()(true);
+      } catch (e) {
+        pipe(
+          e instanceof Error,
+          expectTrue("expected e to be instance of an Error"),
+        );
+        pipe((e as Error).message, expectEquals(e1));
+      }
+    }),
+    test("when raise function throws an exception", () => {
+      const e1 = new Error();
+
+      try {
+         pipe(
+          Computation.raise<Iterable.Computation>(Iterable)({
+            raise: () => {
+              throw e1;
+            },
+          }),
+          Iterable.toReadonlyArrayAsync(),
+        );
+        expectFalse()(true);
+      } catch (e) {
+        pipe(
+          e instanceof Error,
+          expectTrue("expected e to be instance of an Error"),
+        );
+        pipe(e, expectEquals<unknown>(e1));
+      }
+    }),
+    test("when raise function returns an exception", () => {
+      const e1 = new Error();
+
+      try {
+         pipe(
+          Computation.raise<Iterable.Computation>(Iterable)({ raise: () => e1 }),
+          Iterable.toReadonlyArrayAsync(),
+        );
+        expectFalse()(true);
+      } catch (e) {
+        pipe(
+          e instanceof Error,
+          expectTrue("expected e to be instance of an Error"),
+        );
+        pipe(e, expectEquals<unknown>(e1));
+      }
+    }),
   ),
   describe(
     "startWith",
