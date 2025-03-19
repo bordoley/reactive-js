@@ -6,16 +6,17 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
-  ObservableLike_observe,
+  SourceLike_subscribe,
 } from "../../../computations.js";
 import { bind, bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
 import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_empty from "./Observable.empty.js";
 
+// FIXME: In theory, this could share implementation code with Producer.concat and maybe even runnable
 const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
   T,
 >() => {
@@ -36,7 +37,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
     if (next < observables[Array_length]) {
       this[ConcatObserverCtx_nextIndex]++;
       const concatObserver = createConcatObserver(this);
-      observables[next][ObservableLike_observe](concatObserver);
+      observables[next][SourceLike_subscribe](concatObserver);
     } else {
       delegate[SinkLike_complete]();
     }
@@ -45,7 +46,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
   const createConcatObserver = (ctx: ConcatObserverCtx) => {
     const delegate = ctx[ConcatObserverCtx_delegate];
     return pipe(
-      DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate),
+      Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing(delegate),
       Disposable.addTo(delegate),
       DisposableContainer.onComplete(bind(onConcatObserverComplete, ctx)),
     );
@@ -95,7 +96,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
     {
       [ComputationLike_isDeferred]: true as const,
 
-      [ObservableLike_observe](
+      [SourceLike_subscribe](
         this: TProperties<T>,
         observer: ObserverLike<T>,
       ): void {
@@ -107,7 +108,7 @@ const Observable_concat: Observable.Signature["concat"] = /*@__PURE__*/ (<
             [ConcatObserverCtx_observables]: observables,
             [ConcatObserverCtx_nextIndex]: 1,
           }),
-          bindMethod(observables[0], ObservableLike_observe),
+          bindMethod(observables[0], SourceLike_subscribe),
         );
       },
     },

@@ -9,7 +9,7 @@ import {
   super_,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import EventSource_addEventHandler from "../../computations/EventSource/__private__/EventSource.addEventHandler.js";
+import Broadcaster_addEventHandler from "../../computations/Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { PublisherLike } from "../../computations.js";
 import {
@@ -29,18 +29,18 @@ import {
   CollectionEnumeratorLike_count,
   ConsumerLike,
   ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
   DropLatestBackpressureStrategy,
   DropOldestBackpressureStrategy,
   EnumeratorLike_moveNext,
-  EventListenerLike_notify,
+  ListenerLike_notify,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_enqueue,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+  QueueableLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
@@ -59,11 +59,11 @@ const QueueingConsumerMixin: <T>() => Mixin1<
   DisposableLike,
   Pick<
     QueueLike<T> & ConsumerLike<T>,
-    | typeof ConsumerLike_isReady
-    | typeof ConsumerLike_capacity
-    | typeof ConsumerLike_backpressureStrategy
+    | typeof QueueableLike_isReady
+    | typeof QueueableLike_capacity
+    | typeof QueueableLike_backpressureStrategy
     | typeof EnumeratorLike_moveNext
-    | typeof EventListenerLike_notify
+    | typeof ListenerLike_notify
     | typeof SinkLike_complete
   >
 > = /*@__PURE__*/ (<T>() => {
@@ -99,13 +99,13 @@ const QueueingConsumerMixin: <T>() => Mixin1<
       Pick<
         QueueLike<T> & ConsumerLike<T>,
         | typeof SinkLike_isCompleted
-        | typeof ConsumerLike_isReady
+        | typeof QueueableLike_isReady
         | typeof EnumeratorLike_moveNext
-        | typeof EventListenerLike_notify
+        | typeof ListenerLike_notify
         | typeof SinkLike_complete
         | typeof ConsumerLike_addOnReadyListener
-        | typeof ConsumerLike_capacity
-        | typeof ConsumerLike_backpressureStrategy
+        | typeof QueueableLike_capacity
+        | typeof QueueableLike_backpressureStrategy
       >,
       DisposableLike,
       Optional<{
@@ -150,17 +150,17 @@ const QueueingConsumerMixin: <T>() => Mixin1<
           return this[QueueingConsumerMixin_isCompleted];
         },
 
-        get [ConsumerLike_capacity]() {
+        get [QueueableLike_capacity]() {
           unsafeCast<TProperties>(this);
           return this[QueueingConsumerMixin_capacity];
         },
 
-        get [ConsumerLike_backpressureStrategy]() {
+        get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[QueueingConsumerMixin_backpressureStrategy];
         },
 
-        get [ConsumerLike_isReady]() {
+        get [QueueableLike_isReady]() {
           unsafeCast<TProperties & QueueLike<T> & ConsumerLike<T>>(this);
           const count = this[CollectionEnumeratorLike_count];
           const capacity = this[QueueingConsumerMixin_capacity];
@@ -174,7 +174,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
         ): boolean {
           const count = this[CollectionEnumeratorLike_count];
           const isCompleted = this[SinkLike_isCompleted];
-          const capacity = this[ConsumerLike_capacity];
+          const capacity = this[QueueableLike_capacity];
           const shouldNotifyReady =
             count === capacity && capacity > 0 && !isCompleted;
           const onReadySignal = this[QueueingConsumerMixin_onReadyPublisher];
@@ -182,13 +182,13 @@ const QueueingConsumerMixin: <T>() => Mixin1<
           const result = super_(QueueMixin<T>(), this, EnumeratorLike_moveNext);
 
           if (shouldNotifyReady) {
-            onReadySignal?.[EventListenerLike_notify]();
+            onReadySignal?.[ListenerLike_notify]();
           }
 
           return result;
         },
 
-        [EventListenerLike_notify](
+        [ListenerLike_notify](
           this: TProperties & QueueLike<T> & ConsumerLike<T>,
           item: T,
         ) {
@@ -256,7 +256,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
 
           return pipe(
             publisher,
-            EventSource_addEventHandler(callback),
+            Broadcaster_addEventHandler(callback),
             Disposable.addTo(this),
           );
         },

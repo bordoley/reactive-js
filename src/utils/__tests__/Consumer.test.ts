@@ -9,22 +9,21 @@ import { Optional, pipe } from "../../functions.js";
 import {
   CollectionEnumeratorLike_count,
   DropLatestBackpressureStrategy,
-  EventListenerLike_notify,
+  ListenerLike_notify,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
-import * as Consumer from "../Consumer.js";
+import * as Consumer from "../__internal__/Consumer.js";
 
 testModule(
   "Consumer",
-
   test("drop-latest backpressure", () => {
     const consumer = Consumer.create<number>({
       capacity: 1,
       backpressureStrategy: DropLatestBackpressureStrategy,
     });
 
-    consumer[EventListenerLike_notify](0);
-    consumer[EventListenerLike_notify](1);
+    consumer[ListenerLike_notify](0);
+    consumer[ListenerLike_notify](1);
 
     pipe(consumer[CollectionEnumeratorLike_count], expectEquals(1));
     pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(0));
@@ -32,8 +31,8 @@ testModule(
   test("drop-oldest backpressure", () => {
     const consumer = Consumer.createDropOldestWithoutBackpressure<number>(1);
 
-    consumer[EventListenerLike_notify](0);
-    consumer[EventListenerLike_notify](1);
+    consumer[ListenerLike_notify](0);
+    consumer[ListenerLike_notify](1);
 
     pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(1));
     pipe(consumer, Iterable.first(), expectEquals<Optional<number>>(1));
@@ -44,10 +43,10 @@ testModule(
       backpressureStrategy: ThrowBackpressureStrategy,
     });
 
-    consumer[EventListenerLike_notify](0);
+    consumer[ListenerLike_notify](0);
 
     expectToThrow(() => {
-      consumer[EventListenerLike_notify](1);
+      consumer[ListenerLike_notify](1);
     });
 
     pipe(consumer[CollectionEnumeratorLike_count], expectEquals(1));

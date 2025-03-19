@@ -1,4 +1,4 @@
-import * as EventSource from "../../../computations/EventSource.js";
+import * as Broadcaster from "../../../computations/Broadcaster.js";
 import { Function1, SideEffect1, compose } from "../../../functions.js";
 import { DisposableLike } from "../../../utils.js";
 import type * as Element from "../../Element.js";
@@ -12,7 +12,7 @@ const Element_addResizeHandler: Element.Signature["addResizeHandler"] = <
 ): Function1<TElement, DisposableLike> =>
   compose(
     Element_resizeEventSource(options),
-    EventSource.addEventHandler(handler),
+    Broadcaster.addEventHandler(handler),
   );
 
 export default Element_addResizeHandler;

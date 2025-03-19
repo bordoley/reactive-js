@@ -15,8 +15,8 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventSourceLike_addEventListener,
   PublisherLike,
+  SourceLike_subscribe,
 } from "../../computations.js";
 import {
   Method,
@@ -29,14 +29,16 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
+  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EventListenerLike,
-  EventListenerLike_notify,
+  ListenerLike,
+  ListenerLike_notify,
+  SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../utils.js";
 import * as Iterable from "../Iterable.js";
 
@@ -46,20 +48,21 @@ const PublisherMixin: <T>() => Mixin1<
   unknown,
   Pick<
     PublisherLike<T>,
-    typeof EventSourceLike_addEventListener | typeof EventListenerLike_notify
+    | typeof SourceLike_subscribe
+    | typeof ListenerLike_notify
+    | typeof SinkLike_complete
   >
 > = /*@__PURE__*/ (<T>() => {
   const Publisher_listeners = Symbol("Publisher_listeners");
-  const Publisher_onListenerDisposed = Symbol("Publisher_onListenerDisposed");
+  const Publisher_onSinkDisposed = Symbol("Publisher_onSinkDisposed");
 
   type TProperties = {
-    [Publisher_listeners]: Optional<
-      Set<EventListenerLike<T>> | EventListenerLike<T>
-    >;
-    readonly [Publisher_onListenerDisposed]: Method<EventListenerLike<T>>;
+    [SinkLike_isCompleted]: boolean;
+    [Publisher_listeners]: Optional<Set<ListenerLike<T>> | ListenerLike<T>>;
+    readonly [Publisher_onSinkDisposed]: Method<ListenerLike<T>>;
   };
 
-  function onEventPublisherDisposed(this: TProperties, e: Optional<Error>) {
+  function onPublisherDisposed(this: TProperties, e: Optional<Error>) {
     const maybeListeners = this[Publisher_listeners];
     const listeners =
       maybeListeners instanceof Set
@@ -68,24 +71,21 @@ const PublisherMixin: <T>() => Mixin1<
           ? [maybeListeners]
           : [];
 
-    for (const listener of listeners) {
-      listener[DisposableLike_dispose](e);
+    if (isSome(e)) {
+      for (const listener of listeners) {
+        listener[DisposableLike_dispose](e);
+      }
     }
 
     this[Publisher_listeners] = none;
+    this[SinkLike_isCompleted] = true;
   }
 
   return returns(
     mix(
       include(DisposableMixin),
-      function EventPublisher(
-        this: Pick<
-          PublisherLike<T>,
-          | typeof EventSourceLike_addEventListener
-          | typeof EventListenerLike_notify
-          | typeof ComputationLike_isSynchronous
-          | typeof ComputationLike_isDeferred
-        > &
+      function PublisherMixin(
+        this: Omit<PublisherLike<T>, keyof DisposableLike> &
           Mutable<TProperties>,
         options: Optional<{ readonly autoDispose?: boolean }>,
       ): PublisherLike<T> {
@@ -93,12 +93,12 @@ const PublisherMixin: <T>() => Mixin1<
 
         const autoDispose = options?.autoDispose ?? false;
 
-        pipe(this, DisposableContainer.onDisposed(onEventPublisherDisposed));
+        pipe(this, DisposableContainer.onDisposed(onPublisherDisposed));
 
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
-        this[Publisher_onListenerDisposed] = function onListenerDisposed(
-          this: EventListenerLike<T>,
+        this[Publisher_onSinkDisposed] = function onSinkDisposed(
+          this: ListenerLike<T>,
         ) {
           const maybeListeners = instance[Publisher_listeners];
 
@@ -110,30 +110,27 @@ const PublisherMixin: <T>() => Mixin1<
 
           if (maybeListeners instanceof Set && maybeListeners[Set_size] == 1) {
             instance[Publisher_listeners] =
-              Iterable.first<EventListenerLike<T>>()(maybeListeners);
+              Iterable.first<ListenerLike<T>>()(maybeListeners);
           }
 
           if (autoDispose && isNone(instance[Publisher_listeners])) {
             instance[DisposableLike_dispose]();
-            instance[Publisher_listeners] = none;
           }
         };
 
         return this;
       },
       props<TProperties>({
+        [SinkLike_isCompleted]: false,
         [Publisher_listeners]: none,
-        [Publisher_onListenerDisposed]: none,
+        [Publisher_onSinkDisposed]: none,
       }),
       {
         [ComputationLike_isDeferred]: false as const,
         [ComputationLike_isSynchronous]: false as const,
 
-        [EventListenerLike_notify](
-          this: TProperties & PublisherLike<T>,
-          next: T,
-        ) {
-          if (this[DisposableLike_isDisposed]) {
+        [ListenerLike_notify](this: TProperties & PublisherLike<T>, next: T) {
+          if (this[SinkLike_isCompleted]) {
             return;
           }
 
@@ -147,19 +144,40 @@ const PublisherMixin: <T>() => Mixin1<
 
           for (const listener of listeners) {
             try {
-              listener[EventListenerLike_notify](next);
+              listener[ListenerLike_notify](next);
             } catch (e) {
               listener[DisposableLike_dispose](error(e));
             }
           }
         },
 
-        [EventSourceLike_addEventListener](
-          this: TProperties & PublisherLike<T>,
-          listener: EventListenerLike<T>,
-        ) {
-          pipe(listener, Disposable.addToContainer(this));
+        [SinkLike_complete](this: TProperties & PublisherLike<T>) {
+          const isCompleted = this[SinkLike_isCompleted];
+          this[SinkLike_isCompleted] = true;
 
+          if (isCompleted) {
+            return;
+          }
+
+          const maybeListeners = this[Publisher_listeners];
+          const listeners =
+            maybeListeners instanceof Set
+              ? maybeListeners
+              : isSome(maybeListeners)
+                ? [maybeListeners]
+                : [];
+
+          for (const listener of listeners) {
+            listener[DisposableLike_dispose]();
+          }
+
+          this[DisposableLike_dispose]();
+        },
+
+        [SourceLike_subscribe](
+          this: TProperties & PublisherLike<T>,
+          listener: ListenerLike<T>,
+        ) {
           const maybeListeners = this[Publisher_listeners];
 
           if (
@@ -176,7 +194,7 @@ const PublisherMixin: <T>() => Mixin1<
             maybeListeners[Set_add](listener);
           } else if (isSome(maybeListeners)) {
             const listeners = (this[Publisher_listeners] =
-              newInstance<Set<EventListenerLike<T>>>(Set));
+              newInstance<Set<ListenerLike<T>>>(Set));
             listeners[Set_add](maybeListeners);
             listeners[Set_add](listener);
           } else {
@@ -185,7 +203,7 @@ const PublisherMixin: <T>() => Mixin1<
 
           pipe(
             listener,
-            DisposableContainer.onDisposed(this[Publisher_onListenerDisposed]),
+            DisposableContainer.onDisposed(this[Publisher_onSinkDisposed]),
           );
         },
       },

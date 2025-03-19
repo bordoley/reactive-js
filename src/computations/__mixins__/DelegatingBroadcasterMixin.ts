@@ -1,9 +1,10 @@
 import { Mixin1, mix, props } from "../../__internal__/mixins.js";
 import {
   BroadcasterLike,
-  BroadcasterLike_connect,
   ComputationLike_isDeferred,
+  ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  SourceLike_subscribe,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
 import { DisposableContainerLike, SinkLike } from "../../utils.js";
@@ -37,12 +38,11 @@ const DelegatingBroadcasterMixin: <T>() => Mixin1<
       }),
       {
         [ComputationLike_isDeferred]: false as const,
+        [ComputationLike_isPure]: true as const,
         [ComputationLike_isSynchronous]: false as const,
 
-        [BroadcasterLike_connect](this: TProperties, sink: SinkLike<T>) {
-          this[DelegatingBroadcasterMixin_delegate][BroadcasterLike_connect](
-            sink,
-          );
+        [SourceLike_subscribe](this: TProperties, sink: SinkLike<T>) {
+          this[DelegatingBroadcasterMixin_delegate][SourceLike_subscribe](sink);
         },
       },
     ),

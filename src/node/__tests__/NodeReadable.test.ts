@@ -11,7 +11,7 @@ import * as Broadcaster from "../../computations/Broadcaster.js";
 import * as Iterable from "../../computations/Iterable.js";
 import * as Observable from "../../computations/Observable.js";
 import * as Producer from "../../computations/Producer.js";
-import { ProducerLike_consume } from "../../computations.js";
+import { SourceLike_subscribe } from "../../computations.js";
 import {
   Optional,
   invoke,
@@ -20,10 +20,10 @@ import {
   pipeAsync,
   returns,
 } from "../../functions.js";
-import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as Consumer from "../../utils/__internal__/Consumer.js";
 import {
   DisposableLike_isDisposed,
   PauseableLike_pause,
@@ -91,11 +91,11 @@ testModule(
       });
       pipe(
         src,
-        Broadcaster.toObservable(),
+        Broadcaster.toObservable<Uint8Array>(),
         Observable.decodeWithCharset(),
         Observable.scan((acc: string, next: string) => acc + next, returns("")),
-        Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, queue),
+        Observable.toProducer({ scheduler }),
+        invoke(SourceLike_subscribe, queue),
       );
       src[PauseableLike_resume]();
 
@@ -130,8 +130,7 @@ testModule(
 
       await pipe(
         src,
-        Broadcaster.toObservable(),
-        Observable.lastAsync({ scheduler }),
+        Broadcaster.lastAsync({ scheduler }),
         expectPromiseToThrow,
       );
     }),

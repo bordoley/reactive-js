@@ -41,7 +41,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "produces no results",
         pipeLazyAsync(
           m.empty<number>(),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals<number>([]),
         ),
       ),
@@ -87,7 +87,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         pipeLazyAsync(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 1 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
@@ -96,7 +96,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         pipeLazyAsync(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 1, count: 2 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3]),
         ),
       ),
@@ -105,7 +105,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         pipeLazyAsync(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 1, count: 10 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
@@ -114,7 +114,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         pipeLazyAsync(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ count: -2 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([4, 3]),
         ),
       ),
@@ -123,7 +123,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         pipeLazyAsync(
           [1, 2, 3, 4],
           m.fromReadonlyArray({ start: 2, count: -2 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([3, 2]),
         ),
       ),
@@ -135,7 +135,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         pipeLazyAsync(
           1,
           m.fromValue(),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1]),
         ),
       ),

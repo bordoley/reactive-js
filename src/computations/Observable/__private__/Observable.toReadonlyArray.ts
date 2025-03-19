@@ -1,39 +1,36 @@
 import {
-  ProducerLike_consume,
-  SynchronousObservableLike,
+  SourceLike_subscribe,
+  SynchronousComputationOf,
 } from "../../../computations.js";
-import { Function1, invoke, isSome, pipe, raise } from "../../../functions.js";
-import * as Consumer from "../../../utils/Consumer.js";
+import { Function1, invoke, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
-import {
-  DisposableLike_error,
-  VirtualTimeSchedulerLike_run,
-} from "../../../utils.js";
+import * as Consumer from "../../../utils/__internal__/Consumer.js";
+import { VirtualTimeSchedulerLike_run } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_toProducer from "./Observable.toProducer.js";
 
 const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =
   <T>(options?: {
     readonly maxMicroTaskTicks?: number;
-  }): Function1<SynchronousObservableLike<T>, ReadonlyArray<T>> =>
+  }): Function1<
+    SynchronousComputationOf<Observable.Computation, T>,
+    ReadonlyArray<T>
+  > =>
   observable => {
-    using vts = VirtualTimeScheduler.create(options);
-    const queue = Consumer.create<T>({ autoDispose: true });
+    using scheduler = VirtualTimeScheduler.create(options);
+    const consumer = Consumer.create<T>({ autoDispose: true });
 
     pipe(
       observable,
-      Observable_toProducer(vts),
-      invoke(ProducerLike_consume, queue),
+      Observable_toProducer({ scheduler }),
+      invoke(SourceLike_subscribe, consumer),
     );
 
-    vts[VirtualTimeSchedulerLike_run]();
+    scheduler[VirtualTimeSchedulerLike_run]();
+    Disposable.raiseIfDisposedWithError(consumer);
 
-    const err = queue[DisposableLike_error];
-    if (isSome(err)) {
-      raise(err);
-    }
-
-    return Array.from(queue);
+    return Array.from(consumer);
   };
 
 export default Observable_toReadonlyArray;

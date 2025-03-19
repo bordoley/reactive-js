@@ -42,7 +42,7 @@ const SequentialReactiveComputationModuleTests = <
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
           m.fromReadonlyArray(),
-          m.buffer({ count: 3 }),
+          m.buffer<number>({ count: 3 }),
           m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>(
             [
@@ -76,7 +76,7 @@ const SequentialReactiveComputationModuleTests = <
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8],
           m.fromReadonlyArray(),
-          m.buffer(),
+          m.buffer<number>(),
           m.toReadonlyArray<readonly number[]>(),
           expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
             valuesEquality: arrayEquality(),

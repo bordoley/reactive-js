@@ -26,17 +26,17 @@ import {
   MulticastComputationLike,
   MulticastComputationOf,
   MulticastComputationOfModule,
+  NewPureInstanceOf,
   PickComputationModule,
+  PureAsynchronousComputationOperator,
   PureComputationLike,
+  PureComputationOperator,
   PureDeferredComputationLike,
   PureDeferredComputationOf,
   PureIterableLike,
   PureSynchronousComputationLike,
   PureSynchronousComputationOf,
   SequentialComputationModule,
-  StatefulAsynchronousComputationOperator,
-  StatefulSynchronousComputationOperator,
-  StatelessComputationOperator,
   SynchronousComputationLike,
   SynchronousComputationOf,
   SynchronousComputationWithSideEffectsLike,
@@ -45,6 +45,7 @@ import {
 import {
   Factory,
   Function1,
+  raise as Functions_raise,
   TypePredicate,
   Updater,
   alwaysFalse,
@@ -52,16 +53,13 @@ import {
   debug as breakPoint,
   compose,
   log as consoleLog,
+  error,
   memoize,
   pickUnsafe,
   pipe,
   returns,
 } from "../functions.js";
-import {
-  DisposableLike,
-  EventListenerLike,
-  EventListenerLike_notify,
-} from "../utils.js";
+import { DisposableLike, ListenerLike_notify, SinkLike } from "../utils.js";
 
 export interface ConcatManyOperator<TComputationType extends ComputationType> {
   <T>(
@@ -180,7 +178,7 @@ export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
     snd: PureSynchronousComputationOf<TComputationType, T>,
     ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]
-  ): StatelessComputationOperator<TComputationType, T, T>;
+  ): PureComputationOperator<TComputationType, T, T>;
   <T>(
     snd: SynchronousComputationOf<TComputationType, T>,
     ...tail: readonly SynchronousComputationOf<TComputationType, T>[]
@@ -188,7 +186,7 @@ export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
     snd: PureDeferredComputationOf<TComputationType, T>,
     ...tail: readonly PureDeferredComputationOf<TComputationType, T>[]
-  ): StatefulAsynchronousComputationOperator<TComputationType, T, T>;
+  ): PureAsynchronousComputationOperator<TComputationType, T, T>;
   <T>(
     snd: DeferredComputationOf<TComputationType, T>,
     ...tail: readonly DeferredComputationOf<TComputationType, T>[]
@@ -240,7 +238,7 @@ export interface MergeWithOperator<TComputationType extends ComputationType> {
   <T>(
     snd: PureSynchronousComputationOf<TComputationType, T>,
     ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]
-  ): StatefulSynchronousComputationOperator<TComputationType, T, T>;
+  ): PureComputationOperator<TComputationType, T, T>;
   <T>(
     snd: SynchronousComputationOf<TComputationType, T>,
     ...tail: readonly SynchronousComputationOf<TComputationType, T>[]
@@ -248,7 +246,7 @@ export interface MergeWithOperator<TComputationType extends ComputationType> {
   <T>(
     snd: PureDeferredComputationOf<TComputationType, T>,
     ...tail: readonly PureDeferredComputationOf<TComputationType, T>[]
-  ): StatefulAsynchronousComputationOperator<TComputationType, T, T>;
+  ): PureAsynchronousComputationOperator<TComputationType, T, T>;
   <T>(
     snd: DeferredComputationOf<TComputationType, T>,
     ...tail: readonly DeferredComputationOf<TComputationType, T>[]
@@ -276,11 +274,11 @@ export interface MergeWithOperator<TComputationType extends ComputationType> {
 export interface PickOperator<TComputationType extends ComputationType> {
   <T, TKeyOfT extends keyof T>(
     key: TKeyOfT,
-  ): StatelessComputationOperator<TComputationType, T, T[TKeyOfT]>;
+  ): PureComputationOperator<TComputationType, T, T[TKeyOfT]>;
   <T, TKeyOfTA extends keyof T, TKeyOfTB extends keyof T[TKeyOfTA]>(
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
-  ): StatelessComputationOperator<TComputationType, T, T[TKeyOfTA][TKeyOfTB]>;
+  ): PureComputationOperator<TComputationType, T, T[TKeyOfTA][TKeyOfTB]>;
   <
     T,
     TKeyOfTA extends keyof T,
@@ -290,7 +288,7 @@ export interface PickOperator<TComputationType extends ComputationType> {
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
     keyC: TKeyOfTC,
-  ): StatelessComputationOperator<
+  ): PureComputationOperator<
     TComputationType,
     T,
     T[TKeyOfTA][TKeyOfTB][TKeyOfTC]
@@ -346,7 +344,7 @@ export interface Signature {
       TComputationType,
       ComputationModule<TComputationType> &
         SequentialComputationModule<TComputationType>,
-      "concatAll" | "map" | "gen" | "genWithSideEffects"
+      "concatAll" | "map" | "gen" | "genPure"
     >,
   ): ConcatMapIterableOperator<TComputationType>;
 
@@ -384,7 +382,7 @@ export interface Signature {
   ): <T>(
     value: T,
     ...values: readonly T[]
-  ) => StatelessComputationOperator<TComputationType, T, T>;
+  ) => PureComputationOperator<TComputationType, T, T>;
 
   flatMap<
     TComputationType extends ComputationType,
@@ -440,7 +438,7 @@ export interface Signature {
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType>,
-      "map" | "gen" | "genWithSideEffects"
+      "map" | "gen" | "genPure"
     > & {
       readonly [key in
         | TFlattenKey
@@ -456,7 +454,7 @@ export interface Signature {
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType>,
-      "gen" | "genWithSideEffects"
+      "gen" | "genPure"
     >,
     options?: Parameters<(typeof m)["gen"]>[1],
   ): FromIterableOperator<TComputationType, T>;
@@ -483,7 +481,7 @@ export interface Signature {
       ComputationModule<TComputationType>,
       "keep"
     >,
-  ): <T>() => StatelessComputationOperator<TComputationType, any, T>;
+  ): <T>() => PureComputationOperator<TComputationType, any, T>;
 
   isDeferred<TComputationType extends ComputationLike = ComputationLike>(
     computation: TComputationType,
@@ -530,7 +528,7 @@ export interface Signature {
     >,
   ): <TA, TB>(
     predicate: TypePredicate<TA, TB>,
-  ) => StatelessComputationOperator<TComputationType, TA, TB>;
+  ) => PureComputationOperator<TComputationType, TA, TB>;
 
   log<TComputationType extends ComputationType>(
     m: PickComputationModule<
@@ -546,9 +544,7 @@ export interface Signature {
       ComputationModule<TComputationType>,
       "map"
     >,
-  ): <T>(
-    value: T,
-  ) => StatelessComputationOperator<TComputationType, unknown, T>;
+  ): <T>(value: T) => PureComputationOperator<TComputationType, unknown, T>;
 
   mergeMany<TComputationType extends ComputationType>(
     m: PickComputationModule<
@@ -573,7 +569,7 @@ export interface Signature {
       "forEach"
     >,
   ): <T>(
-    eventListener: EventListenerLike<T>,
+    eventSink: SinkLike<T>,
   ) => ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
   pick<TComputationType extends ComputationType>(
@@ -583,6 +579,18 @@ export interface Signature {
       "map"
     >,
   ): PickOperator<TComputationType>;
+
+  raise<TComputationType extends ComputationType>(
+    m: PickComputationModule<
+      TComputationType,
+      ComputationModule<TComputationType>,
+      "genPure"
+    >,
+  ): <T>(
+    options?: {
+      readonly raise?: Factory<unknown>;
+    } & Parameters<typeof m.genPure>[1],
+  ) => NewPureInstanceOf<TComputationType, T>;
 
   startWith<TComputationType extends ComputationType>(
     m: PickComputationModule<
@@ -594,7 +602,7 @@ export interface Signature {
   ): <T>(
     value: T,
     ...values: readonly T[]
-  ) => StatelessComputationOperator<TComputationType, T, T>;
+  ) => PureComputationOperator<TComputationType, T, T>;
 }
 
 export const areAllDeferred: Signature["areAllDeferred"] = <
@@ -638,7 +646,7 @@ export const concatMapIterable: Signature["concatMapIterable"] =
           TComputationType,
           ComputationModule<TComputationType> &
             SequentialComputationModule<TComputationType>,
-          "concatAll" | "map" | "gen" | "genWithSideEffects"
+          "concatAll" | "map" | "gen" | "genPure"
         >,
       ) =>
         (selector, options) =>
@@ -669,7 +677,7 @@ export const debug: Signature["debug"] = /*@__PURE__*/ memoize(m =>
 export const endWith: Signature["endWith"] = /*@__PURE__*/ memoize(
   m =>
     <T>(...values: readonly T[]) =>
-      concatWith(m)(m.fromReadonlyArray<T>()(values)),
+      pipe(values, m.fromReadonlyArray<T>(), concatWith(m)),
 ) as Signature["endWith"];
 
 export const flatMap: Signature["flatMap"] = /*@__PURE__*/ (<
@@ -749,7 +757,7 @@ export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
       m: PickComputationModule<
         TComputationType,
         ComputationModule<TComputationType>,
-        "map" | "gen" | "genWithSideEffects"
+        "map" | "gen" | "genPure"
       > & {
         readonly [key in
           | TFlattenKey
@@ -773,13 +781,13 @@ export const fromIterable: Signature["fromIterable"] = (<
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType>,
-      "gen" | "genWithSideEffects"
+      "gen" | "genPure"
     >,
     options?: any, //FIXME: for now
   ) =>
   // FIXME: Memoize if no options
   (iterable: IterableLike<T>) => {
-    const gen = isPure(iterable) ? m.gen : m.genWithSideEffects;
+    const gen = isPure(iterable) ? m.genPure : m.gen;
 
     return gen(function* FromIterable() {
       yield* iterable;
@@ -912,14 +920,27 @@ export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoize(
 
 export const notify: Signature["notify"] = /*@__PURE__*/ memoize(
   m =>
-    <T>(eventListener: EventListenerLike<T>) =>
-      m.forEach(bindMethod(eventListener, EventListenerLike_notify)),
+    <T>(sink: SinkLike<T>) =>
+      m.forEach(bindMethod(sink, ListenerLike_notify)),
 );
 
 export const pick: Signature["pick"] = /*@__PURE__*/ memoize(
   m =>
     (...keys: (string | number | symbol)[]) =>
       m.map(pickUnsafe(...keys)),
+);
+
+export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
+  m =>
+    <T>(
+      options?: {
+        readonly raise?: Factory<unknown>;
+      } & Parameters<typeof m.genPure>[1],
+    ) =>
+      m.genPure<T>(function* ComputationRaise() {
+        const { raise: factory = Functions_raise } = options ?? {};
+        pipe(factory, error, Functions_raise);
+      }),
 );
 
 export const startWith: Signature["startWith"] = /*@__PURE__*/ memoize(

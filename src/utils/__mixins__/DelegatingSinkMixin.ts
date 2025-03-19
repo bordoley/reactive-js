@@ -1,6 +1,5 @@
 import {
   Mixin1,
-  include,
   init,
   mix,
   props,
@@ -14,15 +13,15 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import DelegatingEventListenerMixin, {
-  DelegatingEventListenerLike,
-  DelegatingEventListenerLike_delegate,
-} from "./DelegatingEventListenerMixin.js";
+import DelegatingListenerMixin, {
+  DelegatingListenerLike,
+  DelegatingListenerLike_delegate,
+} from "./DelegatingListenerMixin.js";
 
 export interface DelegatingSinkLike<
   T,
   TDelegateSink extends SinkLike<T> = SinkLike<T>,
-> extends DelegatingEventListenerLike<T, TDelegateSink>,
+> extends DelegatingListenerLike<T, TDelegateSink>,
     SinkLike<T> {}
 
 const DelegatingSinkMixin: <
@@ -32,19 +31,18 @@ const DelegatingSinkMixin: <
   DelegatingSinkLike<T, TDelegateSink>,
   TDelegateSink,
   DisposableLike
-> = /*@__PURE__*/ (<T, TDelegateSink extends SinkLike<T> = SinkLike<T>>() =>
-  returns(
+> = /*@__PURE__*/ (<T, TDelegateSink extends SinkLike<T> = SinkLike<T>>() => {
+  return returns(
     mix<
       DelegatingSinkLike<T, TDelegateSink>,
       unknown,
       Pick<
         DelegatingSinkLike<T, TDelegateSink>,
-        typeof SinkLike_complete | typeof SinkLike_isCompleted
+        typeof SinkLike_isCompleted | typeof SinkLike_complete
       >,
       DisposableLike,
       TDelegateSink
     >(
-      include(DelegatingEventListenerMixin()),
       function DelegatingSinkMixin(
         this: Pick<
           DelegatingSinkLike<T, TDelegateSink>,
@@ -53,7 +51,7 @@ const DelegatingSinkMixin: <
           DisposableLike,
         delegate: TDelegateSink,
       ): DelegatingSinkLike<T, TDelegateSink> {
-        init(DelegatingEventListenerMixin<T, TDelegateSink>(), this, delegate);
+        init(DelegatingListenerMixin<T, TDelegateSink>(), this, delegate);
 
         return this;
       },
@@ -61,16 +59,15 @@ const DelegatingSinkMixin: <
       proto({
         get [SinkLike_isCompleted](): boolean {
           unsafeCast<DelegatingSinkLike<T, TDelegateSink>>(this);
-          return this[DelegatingEventListenerLike_delegate][
-            SinkLike_isCompleted
-          ];
+          return this[DelegatingListenerLike_delegate][SinkLike_isCompleted];
         },
 
         [SinkLike_complete](this: DelegatingSinkLike<T, TDelegateSink>) {
-          this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
+          this[DelegatingListenerLike_delegate][SinkLike_complete]();
         },
       }),
     ),
-  ))();
+  );
+})();
 
 export default DelegatingSinkMixin;

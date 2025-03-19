@@ -1,16 +1,15 @@
 import { SideEffect1, error } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike } from "../../../utils.js";
+import { DisposableLike_dispose, ListenerLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
-import * as Subject from "../../Subject.js";
+import * as Publisher from "../../Publisher.js";
 
 const Broadcaster_create: Broadcaster.Signature["create"] = <T>(
-  setup: SideEffect1<SinkLike<T>>,
+  setup: SideEffect1<ListenerLike<T>>,
   options?: {
     readonly autoDispose?: boolean;
-    readonly replay?: number;
   },
 ) => {
-  const delegate = Subject.create<T>(options);
+  const delegate = Publisher.create<T>(options);
 
   try {
     setup(delegate);

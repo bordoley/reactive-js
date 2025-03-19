@@ -5,7 +5,7 @@ import {
   RunnableLike_eval,
 } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
-import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import { SinkLike, SinkLike_complete } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
@@ -24,7 +24,8 @@ class RetryRunnable<T> implements RunnableLike<T> {
   [RunnableLike_eval](sink: SinkLike<T>): void {
     const source = this.s;
     const predicate = this.p;
-    const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);
+    const delegatingSink =
+      Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink);
 
     let cnt = 0;
     while (true) {

@@ -1,9 +1,10 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import {
-  DeferredObservableLike,
-  EventSourceLike,
-  PureDeferredObservableLike,
+  BroadcasterLike,
+  ObservableLike,
+  PureObservableLike,
   PureSynchronousObservableLike,
+  StoreLike,
   StreamLike,
   StreamableLike,
 } from "../computations.js";
@@ -25,21 +26,22 @@ import Streamable_spring from "./Streamable/__private__/Streamable.spring.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
+export const AnimationLike_isRunning = Symbol("AnimationLike_isRunning");
 /**
  * @noInheritDoc
  */
-export interface AnimationGroupStreamLike<TEvent, TKey extends string, out T>
-  extends StreamLike<TEvent, boolean>,
-    DictionaryLike<TKey, EventSourceLike<T>>,
-    PauseableLike {}
+export interface AnimationLike<TEvent, out T>
+  extends StreamLike<TEvent, T>,
+    PauseableLike {
+  readonly [AnimationLike_isRunning]: StoreLike<boolean>;
+}
 
 /**
  * @noInheritDoc
  */
-export interface AnimationStreamLike<TEvent, out T>
-  extends StreamLike<TEvent, boolean>,
-    EventSourceLike<T>,
-    PauseableLike {}
+export interface AnimationGroupLike<TEvent, TKey extends string, out T>
+  extends AnimationLike<TEvent, number>,
+    DictionaryLike<TKey, BroadcasterLike<T>> {}
 
 export type SpringCommand =
   | number
@@ -54,8 +56,7 @@ export type SpringCommand =
 
 export type SpringEvent = SpringCommand | Function1<number, SpringCommand>;
 
-export interface SpringStreamLike
-  extends AnimationStreamLike<SpringEvent, number> {}
+export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {}
 
 /**
  * @noInheritDoc
@@ -70,13 +71,13 @@ export interface StreamableModule {
   animation<T>(
     animation: PureSynchronousObservableLike<T>,
     options?: { readonly animationScheduler?: SchedulerLike },
-  ): StreamableLike<void, boolean, AnimationStreamLike<void, T>>;
+  ): StreamableLike<void, T, AnimationLike<void, T>>;
   animation<T, TEvent>(
     animation:
       | Function1<TEvent, PureSynchronousObservableLike<T>>
       | PureSynchronousObservableLike<T>,
     options?: { readonly animationScheduler?: SchedulerLike },
-  ): StreamableLike<TEvent, boolean, AnimationStreamLike<TEvent, T>>;
+  ): StreamableLike<TEvent, T, AnimationLike<TEvent, T>>;
 
   animationGroup<T, TKey extends string = string>(
     animationGroup: ReadonlyObjectMapLike<
@@ -84,7 +85,7 @@ export interface StreamableModule {
       PureSynchronousObservableLike<T>
     >,
     options?: { readonly animationScheduler?: SchedulerLike },
-  ): StreamableLike<void, boolean, AnimationGroupStreamLike<void, TKey, T>>;
+  ): StreamableLike<void, number, AnimationGroupLike<void, TKey, T>>;
   animationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -92,10 +93,10 @@ export interface StreamableModule {
       | PureSynchronousObservableLike<T>
     >,
     options?: { readonly animationScheduler?: SchedulerLike },
-  ): StreamableLike<TEvent, boolean, AnimationGroupStreamLike<TEvent, TKey, T>>;
+  ): StreamableLike<TEvent, number, AnimationGroupLike<TEvent, TKey, T>>;
 
   create<TReq, T>(
-    op: Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+    op: Function1<PureObservableLike<TReq>, ObservableLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
@@ -105,7 +106,7 @@ export interface StreamableModule {
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
-  }): StreamableLike<SpringEvent, boolean, SpringStreamLike>;
+  }): StreamableLike<SpringEvent, number, SpringStreamLike>;
 
   /**
    * Returns a new `StateStoreLike` instance that stores state which can
@@ -123,8 +124,8 @@ export interface StreamableModule {
   ): StreamableLike<Updater<T>, T>;
 
   syncState<T>(
-    onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
-    onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
+    onInit: Function1<T, ObservableLike<Updater<T>>>,
+    onChange: Function2<T, T, ObservableLike<Updater<T>>>,
     options?: {
       readonly throttleDuration?: number;
     },

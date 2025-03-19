@@ -4,8 +4,8 @@ import { ProducerWithSideEffectsLike } from "../computations.js";
 import { Factory, bindMethod, pipe } from "../functions.js";
 import {
   ConsumerLike_addOnReadyListener,
-  ConsumerLike_isReady,
-  EventListenerLike_notify,
+  ListenerLike_notify,
+  QueueableLike_isReady,
   SinkLike_complete,
 } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
@@ -26,9 +26,9 @@ export const create: Signature["create"] = factory =>
     consumer[ConsumerLike_addOnReadyListener](bindMethod(readable, "resume"));
 
     const onData = (data: Uint8Array) => {
-      consumer[EventListenerLike_notify](data);
+      consumer[ListenerLike_notify](data);
 
-      if (!consumer[ConsumerLike_isReady]) {
+      if (!consumer[QueueableLike_isReady]) {
         readable.pause();
       }
     };
@@ -36,7 +36,7 @@ export const create: Signature["create"] = factory =>
 
     readable.on("end", bindMethod(consumer, SinkLike_complete));
 
-    if (consumer[ConsumerLike_isReady]) {
+    if (consumer[QueueableLike_isReady]) {
       readable.resume();
     }
   });

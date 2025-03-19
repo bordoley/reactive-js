@@ -1,18 +1,27 @@
 import {
+  include,
+  init,
+  mixInstanceFactory,
+  props,
+  proto,
+} from "../../../__internal__/mixins.js";
+import {
   ComputationLike_isPure,
   HigherOrderInnerComputationLike,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
-import AbstractSink, {
-  AbstractSink_delegate,
-} from "../../../utils/Sink/__internal__/AbstractSink.js";
-import DelegatingNonCompletingSink, {
-  DelegatingNonCompletingSink_inner,
-} from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import { pipe } from "../../../functions.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
+import { DelegatingListenerLike_delegate } from "../../../utils/__mixins__/DelegatingListenerMixin.js";
+import { DelegatingSinkLike } from "../../../utils/__mixins__/DelegatingSinkMixin.js";
+import { LiftedListenerLike_delegate } from "../../../utils/__mixins__/LiftedListenerMixin.js";
+import LiftedSinkMixin, {
+  LiftedSinkLike,
+  LiftedSinkLike_complete,
+} from "../../../utils/__mixins__/LiftedSinkMixin.js";
 import {
-  EventListenerLike_notify,
+  ListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -20,27 +29,54 @@ import {
 import type * as Runnable from "../../Runnable.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-class ConcatAllSink<T> extends AbstractSink<
-  RunnableLike<T>,
-  T,
-  DelegatingNonCompletingSink<T>
-> {
-  [EventListenerLike_notify](next: RunnableLike<T>): void {
-    const sink = this[AbstractSink_delegate];
-    next[RunnableLike_eval](sink);
+export const createConcatAllSink: <T>(
+  o: SinkLike<T>,
+) => SinkLike<RunnableLike<T>> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(LiftedSinkMixin()),
+    function ConcatAllSink(
+      this: unknown,
+      innerSink: SinkLike<T>,
+    ): SinkLike<RunnableLike<T>> {
+      const delegate =
+        Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(innerSink);
 
-    if (sink[DelegatingNonCompletingSink_inner][SinkLike_isCompleted]) {
-      this[SinkLike_complete]();
-    }
-  }
+      init(LiftedSinkMixin(), this, delegate);
 
-  [SinkLike_complete]() {
-    super[SinkLike_complete]();
-    this[AbstractSink_delegate][DelegatingNonCompletingSink_inner][
-      SinkLike_complete
-    ]();
-  }
-}
+      return this;
+    },
+    props(),
+    proto({
+      [ListenerLike_notify](
+        this: LiftedSinkLike<
+          RunnableLike<T>,
+          T,
+          DelegatingSinkLike<T, SinkLike<T>>
+        >,
+        next: RunnableLike<T>,
+      ): void {
+        const sink = this[LiftedListenerLike_delegate];
+        next[RunnableLike_eval](sink);
+
+        if (sink[SinkLike_isCompleted]) {
+          this[SinkLike_complete]();
+        }
+      },
+      [SinkLike_complete](
+        this: LiftedSinkLike<
+          RunnableLike<T>,
+          T,
+          DelegatingSinkLike<T, SinkLike<T>>
+        >,
+      ) {
+        this[LiftedSinkLike_complete]();
+
+        this[LiftedListenerLike_delegate][DelegatingListenerLike_delegate][
+          SinkLike_complete
+        ]();
+      },
+    }),
+  ))();
 
 const Runnable_concatAll: Runnable.Signature["concatAll"] = (<
   T,
@@ -48,9 +84,13 @@ const Runnable_concatAll: Runnable.Signature["concatAll"] = (<
 >(options?: {
   readonly innerType: TInnerLike;
 }) =>
-  Runnable_lift((sink: SinkLike<T>) => {
-    const innerSink = newInstance(DelegatingNonCompletingSink, sink);
-    return newInstance(ConcatAllSink<T>, innerSink);
-  }, options?.innerType?.[ComputationLike_isPure] ?? true)) as Runnable.Signature["concatAll"];
+  pipe(
+    createConcatAllSink,
+    Runnable_lift<RunnableLike<T>, T>(
+      options?.innerType as {
+        [ComputationLike_isPure]: boolean;
+      },
+    ),
+  )) as Runnable.Signature["concatAll"];
 
 export default Runnable_concatAll;

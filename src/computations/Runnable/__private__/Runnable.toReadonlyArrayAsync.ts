@@ -9,5 +9,4 @@ const Runnable_toReadonlyArrayAsync: Runnable.Signature["toReadonlyArrayAsync"] 
 
     return pipe(runnable, Runnable_toReadonlyArray());
   }) as Runnable.Signature["toReadonlyArrayAsync"];
-
 export default Runnable_toReadonlyArrayAsync;
