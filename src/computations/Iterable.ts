@@ -31,7 +31,6 @@ import {
   Optional,
   Predicate,
   Reducer,
-  SideEffect,
   SideEffect1,
   alwaysTrue,
   error,
@@ -50,8 +49,6 @@ import {
 import { clampPositiveInteger } from "../math.js";
 import * as ComputationM from "./Computation.js";
 import Iterable_first from "./Iterable/__private__/Iterable.first.js";
-import Iterable_toObservable from "./Iterable/__private__/Iterable.toObservable.js";
-import Iterable_toRunnable from "./Iterable/__private__/Iterable.toRunnable.js";
 
 /**
  * @noInheritDoc
@@ -212,10 +209,9 @@ class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
   }
 }
 
-export const forEach: Signature["forEach"] =
-  <T>(effect: SideEffect1<T>) =>
+export const forEach: Signature["forEach"] = (<T>(effect: SideEffect1<T>) =>
   (iterable: IterableLike<T>) =>
-    newInstance(ForEachIterable, iterable, effect);
+    newInstance(ForEachIterable, iterable, effect)) as Signature["forEach"];
 
 export const fromValue: Signature["fromValue"] = /*@__PURE__*/ returns(tuple);
 
@@ -248,23 +244,7 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
       : newInstance(FromReadonlyArrayIterable, arr, count, start);
   };
 
-class GenIterable<T> implements PureIterableLike<T> {
-  public readonly [ComputationLike_isSynchronous]: true = true as const;
-  public readonly [ComputationLike_isDeferred]: true = true as const;
-  public readonly [ComputationLike_isPure]: true = true as const;
-
-  constructor(readonly f: Factory<Generator<T>>) {}
-
-  *[Symbol.iterator]() {
-    const iter = this.f();
-    yield* iter;
-  }
-}
-
-export const gen: Signature["gen"] = (<T>(factory: Factory<Generator<T>>) =>
-  newInstance(GenIterable<T>, factory)) as Signature["gen"];
-
-class GenWithSideEffectsIterable<T> implements IterableWithSideEffectsLike<T> {
+class GenIterable<T> implements IterableWithSideEffectsLike<T> {
   public readonly [ComputationLike_isSynchronous]: true = true as const;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isPure]: false = false as const;
@@ -277,13 +257,25 @@ class GenWithSideEffectsIterable<T> implements IterableWithSideEffectsLike<T> {
   }
 }
 
-export const genWithSideEffects: Signature["genWithSideEffects"] = (<T>(
+export const gen: Signature["gen"] = (<T>(factory: Factory<Generator<T>>) =>
+  newInstance(GenIterable<T>, factory)) as Signature["gen"];
+
+class GenPureIterable<T> implements PureIterableLike<T> {
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: true = true as const;
+
+  constructor(readonly f: Factory<Generator<T>>) {}
+
+  *[Symbol.iterator]() {
+    const iter = this.f();
+    yield* iter;
+  }
+}
+
+export const genPure: Signature["genPure"] = (<T>(
   factory: Factory<Generator<T>>,
-) =>
-  newInstance(
-    GenWithSideEffectsIterable<T>,
-    factory,
-  )) as Signature["genWithSideEffects"];
+) => newInstance(GenPureIterable<T>, factory)) as Signature["genPure"];
 
 class KeepIterable<T> implements IterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -350,20 +342,6 @@ class MapIterable<TA, TB> implements IterableLike<TB> {
 export const map: Signature["map"] = (<TA, TB>(mapper: Function1<TA, TB>) =>
   (iterable: IterableLike<TA>) =>
     newInstance(MapIterable, iterable, mapper)) as Signature["map"];
-
-class RaiseIterable<T> {
-  constructor(private r: SideEffect) {}
-
-  *[Symbol.iterator](): Iterator<T> {
-    raiseError(error(this.r()));
-  }
-}
-export const raise: Signature["raise"] = <T>(options?: {
-  readonly raise?: SideEffect;
-}) => {
-  const { raise: factory = raise } = options ?? {};
-  return newInstance(RaiseIterable<T>, factory);
-};
 
 export const reduce: Signature["reduce"] =
   <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
@@ -483,14 +461,6 @@ class ScanIterable<T, TAcc> {
     }
   }
 }
-
-export const run: Signature["run"] =
-  <T>() =>
-  (iter: IterableLike<T>) => {
-    for (const _v of iter) {
-      // no op
-    }
-  };
 
 export const scan: Signature["scan"] = (<T, TAcc>(
     scanner: Reducer<T, TAcc>,
@@ -615,8 +585,6 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
-export const toObservable: Signature["toObservable"] = Iterable_toObservable;
-
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray.fromIterable;
 
@@ -625,7 +593,7 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
     pipe(iter, toReadonlyArray<unknown>()),
   ) as Signature["toReadonlyArrayAsync"];
 
-export const toRunnable: Signature["toRunnable"] = Iterable_toRunnable;
+//export const toRunnable: Signature["toRunnable"] = Iterable_toRunnable;
 
 class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;

@@ -9,7 +9,7 @@ import * as Publisher from "../../../computations/Publisher.js";
 import { PublisherLike } from "../../../computations.js";
 import { isNone, newInstance, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { EventListenerLike_notify } from "../../../utils.js";
+import { ListenerLike_notify } from "../../../utils.js";
 import type * as Element from "../../Element.js";
 
 const Element_intersectionEventSource: Element.Signature["intersectionEventSource"] =
@@ -51,14 +51,14 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
               const cb = (entries: IntersectionObserverEntry[]) => {
                 for (const entry of entries) {
                   const { target } = entry;
-                  const listener =
+                  const sink =
                     eventPublishers[Map_get](root)?.[Map_get](target);
 
-                  if (isNone(listener)) {
+                  if (isNone(sink)) {
                     continue;
                   }
 
-                  listener[EventListenerLike_notify](entry);
+                  sink[ListenerLike_notify](entry);
                 }
               };
 

@@ -1,13 +1,14 @@
 import { RunnableLike } from "../../../computations.js";
-import { pipe, returns } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import type * as Runnable from "../../Runnable.js";
-import Runnable_first from "./Runnable.first.js";
+import Runnable_lastAsync from "./Runnable.lastAsync.js";
+import Runnable_takeFirst from "./Runnable.takeFirst.js";
 
-const Runnable_firstAsync: Runnable.Signature["firstAsync"] =
-  /*@__PURE__*/ returns(async (runnable: RunnableLike) => {
-    await Promise.resolve();
-
-    return pipe(runnable, Runnable_first());
-  }) as Runnable.Signature["firstAsync"];
-
+const Runnable_firstAsync: Runnable.Signature["firstAsync"] = (<T>() =>
+  (producer: RunnableLike<T>) =>
+    pipe(
+      producer,
+      Runnable_takeFirst<T>(),
+      Runnable_lastAsync(),
+    )) as Runnable.Signature["firstAsync"];
 export default Runnable_firstAsync;

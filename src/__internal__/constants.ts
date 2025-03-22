@@ -87,6 +87,7 @@ export const Array_map = "map";
 export const Array_push = "push";
 export const Iterator_done = "done";
 export const Iterator_next = "next";
+export const Iterator_return = "return";
 export const Iterator_value = "value";
 export const Map_delete = "delete";
 export const Map_get = "get";

@@ -26,15 +26,15 @@ import {
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
   DropLatestBackpressureStrategy,
-  EventListenerLike_notify,
+  ListenerLike_notify,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SinkLike_complete,
   SinkLike_isCompleted,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
-import * as EventSource from "../EventSource.js";
+import * as Broadcaster from "../Broadcaster.js";
 
 testModule(
   "Streamable",
@@ -50,12 +50,12 @@ testModule(
 
       pipeSome(
         stream,
-        EventSource.addEventHandler(ev => {
+        Broadcaster.addEventHandler(ev => {
           result = ev;
         }),
       );
 
-      stream[EventListenerLike_notify](none);
+      stream[ListenerLike_notify](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -81,12 +81,12 @@ testModule(
 
       pipeSome(
         stream[DictionaryLike_get]("a"),
-        EventSource.addEventHandler(ev => {
+        Broadcaster.addEventHandler(ev => {
           result = ev;
         }),
       );
 
-      stream[EventListenerLike_notify](none);
+      stream[ListenerLike_notify](none);
 
       vts[VirtualTimeSchedulerLike_run]();
 
@@ -103,20 +103,21 @@ testModule(
         backpressureStrategy: DropLatestBackpressureStrategy,
       });
 
-      pipe(stateStream[ConsumerLike_capacity], expectEquals(20));
+      pipe(stateStream[QueueableLike_capacity], expectEquals(20));
       pipe(
-        stateStream[ConsumerLike_backpressureStrategy],
+        stateStream[QueueableLike_backpressureStrategy],
         expectEquals(DropLatestBackpressureStrategy),
       );
 
-      stateStream[EventListenerLike_notify](returns(2));
-      stateStream[EventListenerLike_notify](returns(3));
+      stateStream[ListenerLike_notify](returns(2));
+      stateStream[ListenerLike_notify](returns(3));
       stateStream[SinkLike_complete]();
 
       let result: number[] = [];
 
       pipe(
         stateStream,
+        Broadcaster.toObservable(),
         Observable.forEach<number>(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
@@ -169,13 +170,14 @@ testModule(
       pipe(
         (x: number) => x + 2,
         Observable.fromValue({ delay: 5 }),
-        Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
+        Observable.forEach(bindMethod(stream, ListenerLike_notify)),
         Observable.subscribe(vts),
       );
 
       const result: number[] = [];
       pipe(
         stream,
+        Broadcaster.toObservable(),
         Observable.forEach(bindMethod(result, Array_push)),
         Observable.subscribe(vts),
       );
@@ -206,7 +208,7 @@ testModule(
         increment,
         Observable.fromValue({ delay: 1 }),
         Observable.repeat(24),
-        Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
+        Observable.forEach(bindMethod(stream, ListenerLike_notify)),
         Observable.subscribe(vts),
       );
 

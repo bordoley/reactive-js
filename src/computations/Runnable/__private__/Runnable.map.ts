@@ -1,33 +1,10 @@
-import {
-  include,
-  init,
-  mixInstanceFactory,
-} from "../../../__internal__/mixins.js";
-import { Function1, none, partial, pipe } from "../../../functions.js";
-import MapMixin from "../../../utils/__mixins__/EventListeners/MapMixin.js";
-import LiftedSinkMixin from "../../../utils/__mixins__/LiftedSinkMixin.js";
-import { SinkLike } from "../../../utils.js";
-
+import { Function1, partial, pipe } from "../../../functions.js";
 import type * as Runnable from "../../Runnable.js";
+import * as Map from "../../__internal__/operators/Map.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-const Runnable_map: Runnable.Signature["map"] = /*@__PURE__*/ (<TA, TB>() => {
-  const createMapEventListener = mixInstanceFactory(
-    include(LiftedSinkMixin(), MapMixin()),
-    function MapEventListener(
-      this: unknown,
-      delegate: SinkLike<TB>,
-      selector: Function1<TA, TB>,
-    ): SinkLike<TA> {
-      init(LiftedSinkMixin<TA, TB>(), this, delegate, none);
-      init(MapMixin<TA, TB>(), this, selector);
-
-      return this;
-    },
-  );
-
-  return (selector: Function1<TA, TB>) =>
-    pipe(createMapEventListener, partial(selector), Runnable_lift);
-})() as Runnable.Signature["map"];
+const Runnable_map: Runnable.Signature["map"] = <TA, TB>(
+  selector: Function1<TA, TB>,
+) => pipe(Map.createSink<TA, TB>, partial(selector), Runnable_lift<TA, TB>());
 
 export default Runnable_map;

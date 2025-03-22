@@ -1,11 +1,10 @@
 import * as Computation from "../../../computations/Computation.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   HigherOrderInnerComputationLike,
   ObservableLike,
-  ObservableLike_observe,
+  SourceLike_subscribe,
 } from "../../../computations.js";
 import {
   Function1,
@@ -18,16 +17,14 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
   SinkLike_complete,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_lift, {
-  ObservableLift_isStateless,
-} from "./Observable.lift.js";
+import Observable_lift from "./Observable.lift.js";
 
 const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
@@ -38,7 +35,7 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   pipe(
     (delegate: ObserverLike<T>) =>
       pipe(
-        DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(delegate),
+        Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing(delegate),
         Disposable.addToContainer(delegate),
         DisposableContainer.onError(err => {
           let action: Optional<ObservableLike<T>> = none;
@@ -49,17 +46,13 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
           }
 
           if (isSome(action)) {
-            action[ObservableLike_observe](delegate);
+            action[SourceLike_subscribe](delegate);
           } else {
             delegate[SinkLike_complete]();
           }
         }),
       ),
     Observable_lift({
-      [ObservableLift_isStateless]: false,
-      [ComputationLike_isDeferred]: Computation.isDeferred(
-        options?.innerType ?? {},
-      ),
       [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
       [ComputationLike_isSynchronous]: Computation.isSynchronous(
         options?.innerType ?? {},

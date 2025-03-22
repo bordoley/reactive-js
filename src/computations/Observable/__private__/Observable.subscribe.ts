@@ -1,90 +1,14 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import {
-  include,
-  init,
-  mixInstanceFactory,
-  props,
-  proto,
-  unsafeCast,
-} from "../../../__internal__/mixins.js";
-import {
-  ObservableLike,
-  ObservableLike_observe,
-} from "../../../computations.js";
-import { SideEffect1, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import {
-  BackpressureStrategy,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
-  DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-  EventListenerLike_notify,
-  ObserverLike,
-  OverflowBackpressureStrategy,
-  SchedulerLike,
-  SinkLike_complete,
-  SinkLike_isCompleted,
-} from "../../../utils.js";
-import type * as Observable from "../../Observable.js";
+import { ObservableLike, SourceLike_subscribe } from "../../../computations.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
+import { SchedulerLike } from "../../../utils.js";
+import * as Observable from "../../Observable.js";
 
-const Observable_subscribe: Observable.Signature["subscribe"] = /*@__PURE__*/ (<
-  T,
->() => {
-  const createSubscribeObserver = mixInstanceFactory(
-    include(DisposableMixin, DelegatingSchedulerMixin),
-    function SubscribeObserver(
-      this: Omit<ObserverLike<T>, keyof DisposableLike | keyof SchedulerLike>,
-      scheduler: SchedulerLike,
-    ): ObserverLike<T> {
-      init(DisposableMixin, this);
-      init(DelegatingSchedulerMixin, this, scheduler);
-
-      return this;
-    },
-    props(),
-    proto({
-      [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
-      [ConsumerLike_backpressureStrategy]:
-        OverflowBackpressureStrategy as BackpressureStrategy,
-
-      get [SinkLike_isCompleted]() {
-        unsafeCast<DisposableLike>(this);
-        return this[DisposableLike_isDisposed];
-      },
-
-      get [ConsumerLike_isReady](): boolean {
-        unsafeCast<DisposableLike>(this);
-        return !this[DisposableLike_isDisposed];
-      },
-
-      [ConsumerLike_addOnReadyListener](_: SideEffect1<void>): DisposableLike {
-        return Disposable.disposed;
-      },
-
-      [EventListenerLike_notify](_: T) {},
-
-      [SinkLike_complete](this: DisposableLike) {
-        this[DisposableLike_dispose]();
-      },
-    }),
-  );
-
-  return (scheduler: SchedulerLike) => (observable: ObservableLike<T>) => {
-    const observer = pipe(
-      createSubscribeObserver(scheduler),
-      Disposable.addToContainer(scheduler),
-    );
-
-    observable[ObservableLike_observe](observer);
-
+const Observable_subscribe: Observable.Signature["subscribe"] =
+  <T>(options?: { scheduler?: SchedulerLike }) =>
+  (observable: ObservableLike<T>) => {
+    const observer = Observer.createDropOldestWithoutBackpressure(0, options);
+    observable[SourceLike_subscribe](observer);
     return observer;
   };
-})();
 
 export default Observable_subscribe;

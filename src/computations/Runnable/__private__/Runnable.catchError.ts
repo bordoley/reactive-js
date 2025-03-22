@@ -14,7 +14,11 @@ import {
   newInstance,
   none,
 } from "../../../functions.js";
-import { SinkLike, SinkLike_complete } from "../../../utils.js";
+import {
+  DisposableLike_dispose,
+  SinkLike,
+  SinkLike_complete,
+} from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -41,14 +45,13 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
 
       try {
         action = this.onError(err) as Optional<RunnableLike<T>>;
+        if (isSome(action)) {
+          action[RunnableLike_eval](sink);
+        }
+        sink[SinkLike_complete]();
       } catch (e) {
-        throw error([error(e), err]);
+        sink[DisposableLike_dispose](error([error(e), err]));
       }
-
-      if (isSome(action)) {
-        action[RunnableLike_eval](sink);
-      }
-      sink[SinkLike_complete]();
     }
   }
 }

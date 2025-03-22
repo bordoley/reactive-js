@@ -1,8 +1,8 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { Mixin3, include, init, mix } from "../../__internal__/mixins.js";
 import {
-  DeferredObservableLike,
-  PureDeferredObservableLike,
+  ObservableLike,
+  PureObservableLike,
   StreamLike,
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
@@ -18,13 +18,14 @@ import {
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
-import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
+import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
-  Function1<PureDeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+  Function1<PureObservableLike<TReq>, ObservableLike<T>>,
   SchedulerLike,
   Optional<{
+    autoDispose?: boolean;
     replay?: number;
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
@@ -35,16 +36,14 @@ const StreamMixin: <TReq, T>() => Mixin3<
       include(
         DelegatingDisposableMixin,
         DelegatingConsumerMixin(),
-        DelegatingMulticastObservableMixin<T>(),
+        DelegatingBroadcasterMixin<T>(),
       ),
       function Stream(
         this: unknown,
-        op: Function1<
-          PureDeferredObservableLike<TReq>,
-          DeferredObservableLike<T>
-        >,
+        op: Function1<PureObservableLike<TReq>, ObservableLike<T>>,
         scheduler: SchedulerLike,
         options?: {
+          autoDispose?: boolean;
           replay?: number;
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
@@ -62,13 +61,16 @@ const StreamMixin: <TReq, T>() => Mixin3<
             ),
           }),
           op,
-          Observable.multicast<T>(scheduler, options),
+          Observable.broadcast({
+            ...options,
+            scheduler,
+          }),
           Disposable.addTo(consumer),
         );
 
         init(DelegatingDisposableMixin, this, consumer);
         init(DelegatingConsumerMixin<TReq>(), this, consumer);
-        init(DelegatingMulticastObservableMixin<T>(), this, delegate);
+        init(DelegatingBroadcasterMixin<T>(), this, delegate);
 
         return this;
       },

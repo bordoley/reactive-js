@@ -12,22 +12,14 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredObservableLike,
-  MulticastObservableLike,
   ObservableLike,
-  ObservableLike_observe,
+  SourceLike_subscribe,
 } from "../../../computations.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as DelegatingObserver from "../../../utils/__internal__/DelegatingObserver.js";
-import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import {
-  DisposableContainerLike,
-  DisposableLike_dispose,
-  ObserverLike,
-  SinkLike_complete,
-} from "../../../utils.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
+import { ObserverLike, SinkLike_complete } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 
 const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
@@ -82,7 +74,9 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
       [MergeObservable_observables]: none,
     }),
     {
-      [ObservableLike_observe](
+      [ComputationLike_isDeferred]: true,
+
+      [SourceLike_subscribe](
         this: TProperties<T>,
         observer: ObserverLike<T>,
       ): void {
@@ -92,7 +86,7 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
 
         for (const observable of observables) {
           pipe(
-            DelegatingObserver.createNotifyOnlyNonCompletingNonDisposing(
+            Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing(
               observer,
             ),
             Disposable.addTo(observer),
@@ -102,67 +96,27 @@ const Observable_merge: Observable.Signature["merge"] = /*@__PURE__*/ (<
                 observer[SinkLike_complete]();
               }
             }),
-            bindMethod(observable, ObservableLike_observe),
+            bindMethod(observable, SourceLike_subscribe),
           );
         }
       },
     },
   );
 
-  const createDeferredMergeObservable = mixInstanceFactory(
+  const createMergeObservable = mixInstanceFactory(
     include(MergeObservableMixin),
     function DeferredMergeObservable(
-      this: TProperties<T> & DeferredObservableLike<T>,
+      this: TProperties<T> & ObservableLike<T>,
       observables: readonly ObservableLike<T>[],
-    ): DeferredObservableLike<T> {
+    ): ObservableLike<T> {
       init(MergeObservableMixin, this, observables);
 
       return this;
-    },
-  );
-
-  const createMulticastMergeObservable = mixInstanceFactory(
-    include(MergeObservableMixin, DelegatingDisposableContainerMixin),
-    function MulticastMergeObservable(
-      this: Omit<
-        MulticastObservableLike<T>,
-        keyof DisposableContainerLike | typeof ObservableLike_observe
-      >,
-      observables: readonly MulticastObservableLike<T>[],
-    ): MulticastObservableLike<T> {
-      const disposable = Disposable.create();
-
-      init(DelegatingDisposableContainerMixin, this, disposable);
-      init(MergeObservableMixin, this, observables);
-
-      const count = observables[Array_length];
-      let completed = 0;
-      for (const observable of observables) {
-        pipe(
-          observable,
-          DisposableContainer.onDisposed(e => {
-            completed++;
-            if (completed >= count || isSome(e)) {
-              disposable[DisposableLike_dispose](e);
-            }
-          }),
-        );
-      }
-      return this;
-    },
-    props(),
-    {
-      [ComputationLike_isDeferred]: false as const,
-      [ComputationLike_isSynchronous]: false as const,
     },
   );
 
   return (...observables: readonly ObservableLike<T>[]) =>
-    Computation.areAllMulticasted(observables)
-      ? createMulticastMergeObservable(
-          observables as readonly MulticastObservableLike<T>[],
-        )
-      : createDeferredMergeObservable(observables);
+    createMergeObservable(observables);
 })() as Observable.Signature["merge"];
 
 export default Observable_merge;

@@ -15,8 +15,8 @@ import {
   pipeLazy,
   raiseIfNone,
 } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as HostScheduler from "../utils/HostScheduler.js";
 import * as Queue from "../utils/Queue.js";
 import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
 import {
@@ -144,7 +144,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         // if its not more than a frame.
         if (delay > 16) {
           pipe(
-            HostScheduler.get(),
+            DefaultScheduler.get(),
             invoke(
               SchedulerLike_schedule,
               pipeLazy(

@@ -11,26 +11,29 @@ import { SideEffect1, none, returns } from "../../functions.js";
 import {
   ConsumerLike,
   ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
   DisposableLike,
-  EventListenerLike_notify,
+  ListenerLike_notify,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+  QueueableLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
 import {
-  LiftedEventListenerLike_delegate,
-  LiftedEventListenerLike_notify,
-  LiftedEventListenerLike_notifyDelegate,
-} from "./LiftedEventListenerMixin.js";
+  LiftedListenerLike_delegate,
+  LiftedListenerLike_notify,
+  LiftedListenerLike_notifyDelegate,
+} from "./LiftedListenerMixin.js";
 import LiftedSinkMixin, {
   LiftedSinkLike,
   LiftedSinkLike_complete,
   LiftedSinkLike_completeDelegate,
+  LiftedSinkLike_isDelegateCompleted,
 } from "./LiftedSinkMixin.js";
 
-export const LiftedConsumerLike_isReady = Symbol("LiftedConsumerLike_isReady");
+export const LiftedQueueableLike_isReady = Symbol(
+  "LiftedQueueableLike_isReady",
+);
 export const LiftedConsumerLike_consumer = Symbol(
   "LiftedConsumerLike_consumer",
 );
@@ -42,7 +45,7 @@ export interface LiftedConsumerLike<
   TConsumer extends ConsumerLike = ConsumerLike,
 > extends LiftedSinkLike<TA, TB, TDelegateConsumer>,
     ConsumerLike<TA> {
-  readonly [LiftedConsumerLike_isReady]: boolean;
+  readonly [LiftedQueueableLike_isReady]: boolean;
   readonly [LiftedConsumerLike_consumer]: TConsumer;
 }
 
@@ -84,12 +87,13 @@ const LiftedConsumerMixin: LiftedConsumerMixinModule = /*@__PURE__*/ (<
           Omit<
             LiftedConsumerLike<TA, TB, TDelegateConsumer, TConsumer>,
             | keyof DisposableLike
-            | typeof LiftedEventListenerLike_notify
-            | typeof LiftedEventListenerLike_delegate
-            | typeof EventListenerLike_notify
-            | typeof LiftedEventListenerLike_notifyDelegate
+            | typeof LiftedListenerLike_notify
+            | typeof LiftedListenerLike_delegate
+            | typeof ListenerLike_notify
+            | typeof LiftedListenerLike_notifyDelegate
             | typeof SinkLike_isCompleted
             | typeof SinkLike_complete
+            | typeof LiftedSinkLike_isDelegateCompleted
             | typeof LiftedSinkLike_complete
             | typeof LiftedSinkLike_completeDelegate
           >,
@@ -107,25 +111,25 @@ const LiftedConsumerMixin: LiftedConsumerMixinModule = /*@__PURE__*/ (<
         [LiftedConsumerLike_consumer]: none,
       }),
       proto({
-        get [LiftedConsumerLike_isReady]() {
+        get [LiftedQueueableLike_isReady]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedConsumerLike_consumer][ConsumerLike_isReady];
+          return this[LiftedConsumerLike_consumer][QueueableLike_isReady];
         },
-        get [ConsumerLike_isReady]() {
+        get [QueueableLike_isReady]() {
           unsafeCast<TProperties>(this);
-          return this[LiftedConsumerLike_consumer][ConsumerLike_isReady];
+          return this[LiftedConsumerLike_consumer][QueueableLike_isReady];
         },
 
-        get [ConsumerLike_backpressureStrategy]() {
+        get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[LiftedConsumerLike_consumer][
-            ConsumerLike_backpressureStrategy
+            QueueableLike_backpressureStrategy
           ];
         },
 
-        get [ConsumerLike_capacity](): number {
+        get [QueueableLike_capacity](): number {
           unsafeCast<TProperties>(this);
-          return this[LiftedConsumerLike_consumer][ConsumerLike_capacity];
+          return this[LiftedConsumerLike_consumer][QueueableLike_capacity];
         },
 
         [ConsumerLike_addOnReadyListener](

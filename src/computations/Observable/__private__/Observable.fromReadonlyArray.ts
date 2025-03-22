@@ -1,52 +1,22 @@
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { none, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
-  EventListenerLike_notify,
-  ObserverLike,
-  SchedulerLike_schedule,
-  SinkLike_complete,
-  SinkLike_isCompleted,
-} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
+import { Observable_genPure } from "./Observable.gen.js";
 
 const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
   <T>(options?: {
-    delay?: number;
-    delayStart?: boolean;
     count?: number;
     start?: number;
+    delay: number;
+    delayStart: boolean;
   }) =>
   (arr: readonly T[]) =>
-    Observable_createPureSynchronousObservable((observer: ObserverLike<T>) => {
-      const { delay = 0, delayStart = false } = options ?? {};
-
+    Observable_genPure<T>(function* ObservableFromReadonlyArray() {
       let [start, count] = parseArrayBounds(arr, options);
 
-      const continuation = (ctx: ContinuationContextLike) => {
-        while (!observer[SinkLike_isCompleted] && count !== 0) {
-          const next = arr[start];
-          observer[EventListenerLike_notify](next);
-
-          count > 0 ? (start++, count--) : (start--, count++);
-
-          if (count !== 0) {
-            ctx[ContinuationContextLike_yield](delay);
-          }
-        }
-        observer[SinkLike_complete]();
-      };
-
-      pipe(
-        observer[SchedulerLike_schedule](
-          continuation,
-          delayStart ? { delay } : none,
-        ),
-        Disposable.addTo(observer),
-      );
-    });
+      while (count !== 0) {
+        yield arr[start];
+        count > 0 ? (start++, count--) : (start--, count++);
+      }
+    }, options);
 
 export default Observable_fromReadonlyArray;

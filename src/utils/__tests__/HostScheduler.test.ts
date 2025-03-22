@@ -3,9 +3,9 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
-import { pipe } from "../../functions.js";
-import { SchedulerLike_now } from "../../utils.js";
+import { ignore, pipe } from "../../functions.js";
+import { SchedulerLike_now, SchedulerLike_schedule } from "../../utils.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import * as HostScheduler from "../HostScheduler.js";
 
 testModule(
@@ -15,9 +15,10 @@ testModule(
     const start = scheduler[SchedulerLike_now];
 
     await pipe(
-      Observable.empty({ delay: 20 }),
-      Observable.firstAsync({ scheduler }),
+      scheduler[SchedulerLike_schedule](ignore, { delay: 20 }),
+      DisposableContainer.toPromise,
     );
+
     const end = scheduler[SchedulerLike_now];
     pipe(end - start >= 20, expectTrue("expected more than 20 ms to elapse"));
   }),
