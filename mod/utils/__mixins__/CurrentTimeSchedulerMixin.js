@@ -6,7 +6,6 @@ import SchedulerMixin from "../../utils/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_now, } from "../../utils.js";
 const CurrentTimeSchedulerMixin = /*@__PURE__*/ (() => mix(include(SchedulerMixin), function CurrentTimeSchedulerMixin() {
     init(SchedulerMixin, this);
-    this;
     return this;
 }, props(), proto({
     get [SchedulerLike_now]() {

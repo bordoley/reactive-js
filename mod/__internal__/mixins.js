@@ -42,17 +42,17 @@ export const include = (...mixins) => {
         };
     }
 };
-export const mix = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingOrPrototype) => {
+export const mix = ((initOrParent, propertiesOrInit, prototypeOrProperties, nothingOrPrototype) => {
     if (isFunction(initOrParent)) {
         return {
             [Mixin_init]: initOrParent,
             [Mixin_properties]: propertiesOrInit ?? {},
-            [Mixin_prototype]: prototypeOrParent ?? {},
+            [Mixin_prototype]: prototypeOrProperties ?? {},
         };
     }
     else {
         const base = include(initOrParent, {
-            [Mixin_properties]: prototypeOrParent ?? {},
+            [Mixin_properties]: prototypeOrProperties ?? {},
             [Mixin_prototype]: nothingOrPrototype ?? {},
         });
         return {

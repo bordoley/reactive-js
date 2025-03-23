@@ -31,7 +31,6 @@ const CurrentTimeSchedulerMixin: Mixin<
       typeof SchedulerLike_maxYieldInterval
     > {
       init(SchedulerMixin, this);
-      this;
       return this;
     },
     props(),
