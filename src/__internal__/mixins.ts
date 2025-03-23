@@ -1301,18 +1301,18 @@ export const include: Signature["include"] = (
 export const mix: Signature["mix"] = ((
   initOrParent: any,
   propertiesOrInit: any,
-  prototypeOrParent?: any,
+  prototypeOrProperties?: any,
   nothingOrPrototype?: any,
 ) => {
   if (isFunction(initOrParent)) {
     return {
       [Mixin_init]: initOrParent,
       [Mixin_properties]: propertiesOrInit ?? {},
-      [Mixin_prototype]: prototypeOrParent ?? {},
+      [Mixin_prototype]: prototypeOrProperties ?? {},
     };
   } else {
     const base = include(initOrParent, {
-      [Mixin_properties]: prototypeOrParent ?? {},
+      [Mixin_properties]: prototypeOrProperties ?? {},
       [Mixin_prototype]: nothingOrPrototype ?? {},
     });
     return {

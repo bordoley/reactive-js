@@ -1,4 +1,4 @@
-import { Mixin1, mix, props } from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, proto } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
@@ -34,7 +34,7 @@ const DelegatingEventSourceMixin: <T>() => Mixin1<
       props<TProperties>({
         [DelegatingEventSourceMixin_delegate]: none,
       }),
-      {
+      proto({
         [ComputationLike_isDeferred]: false as const,
         [ComputationLike_isSynchronous]: false as const,
 
@@ -46,7 +46,7 @@ const DelegatingEventSourceMixin: <T>() => Mixin1<
             EventSourceLike_addEventListener
           ](listener);
         },
-      },
+      }),
     ),
   );
 })();
