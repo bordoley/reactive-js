@@ -17,7 +17,8 @@ export const Mixin_private_initializedProperties = /*@__PURE__*/ Symbol(
   "Mixin_private_initializedProperties",
 );
 export const Mixin_properties = /*@__PURE__*/ Symbol("Mixin_properties");
-export const Mixin_prototype = /*@__PURE__*/ Symbol("Mixin_prototype");
+export const Mixin_proto = /*@__PURE__*/ Symbol("Mixin_proto");
+export const Mixin_protoDescription  = /*@__PURE__*/ Symbol("Mixin_protoDescription");
 
 type OptionalProperties<T> = T extends object
   ? {
@@ -31,7 +32,8 @@ export type Mutable<Type> = {
 
 export type PartialMixin<TPrototype extends object = object> = {
   [Mixin_properties]: object;
-  [Mixin_prototype]: TPrototype;
+  [Mixin_proto]?: TPrototype;
+  [Mixin_protoDescription]: { [x: string]: PropertyDescriptor; }
 };
 
 export interface MixinAny<out TReturn, TInstance = unknown>
@@ -498,7 +500,7 @@ interface Signature {
       [Mixin_private_initializedProperties]?: true;
     },
     prototype: TPrototype,
-  ): PartialMixin<TPrototype & TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<TPrototype & NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TPrototype & TInstance) => TReturn;
   };
 
@@ -519,7 +521,7 @@ interface Signature {
       [Mixin_private_initializedProperties]?: true;
     },
     prototype: TPrototype,
-  ): PartialMixin<TPrototype & TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<TPrototype & NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TPrototype & TInstance, a: TA) => TReturn;
   };
 
@@ -542,7 +544,7 @@ interface Signature {
       [Mixin_private_initializedProperties]?: true;
     },
     prototype: TPrototype,
-  ): PartialMixin<TPrototype & TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<TPrototype & NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TPrototype & TInstance, a: TA, b: TB) => TReturn;
   };
 
@@ -567,7 +569,7 @@ interface Signature {
       [Mixin_private_initializedProperties]?: true;
     },
     prototype: TPrototype,
-  ): PartialMixin<TPrototype & TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<TPrototype & NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (
       this: TPrototype & TInstance,
       a: TA,
@@ -599,7 +601,7 @@ interface Signature {
       [Mixin_private_initializedProperties]?: true;
     },
     prototype: TPrototype,
-  ): PartialMixin<TPrototype & TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<TPrototype & NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (
       this: TPrototype & TInstance,
       a: TA,
@@ -634,7 +636,7 @@ interface Signature {
       [Mixin_private_initializedProperties]?: true;
     },
     prototype: TPrototype,
-  ): PartialMixin<TPrototype & TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<TPrototype & NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (
       this: TPrototype & TInstance,
       a: TA,
@@ -651,7 +653,7 @@ interface Signature {
     properties: TProperties & {
       [Mixin_private_initializedProperties]?: true;
     },
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance) => TReturn;
   };
 
@@ -661,7 +663,7 @@ interface Signature {
     properties: TProperties & {
       [Mixin_private_initializedProperties]?: true;
     },
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA) => TReturn;
   };
 
@@ -671,7 +673,7 @@ interface Signature {
     properties: TProperties & {
       [Mixin_private_initializedProperties]?: true;
     },
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA, b: TB) => TReturn;
   };
 
@@ -694,7 +696,7 @@ interface Signature {
     properties: TProperties & {
       [Mixin_private_initializedProperties]?: true;
     },
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA, b: TB, c: TC) => TReturn;
   };
 
@@ -719,7 +721,7 @@ interface Signature {
     properties: TProperties & {
       [Mixin_private_initializedProperties]?: true;
     },
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA, b: TB, c: TC, d: TD) => TReturn;
   };
 
@@ -746,7 +748,7 @@ interface Signature {
     properties: TProperties & {
       [Mixin_private_initializedProperties]?: true;
     },
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (
       this: TInstance,
       a: TA,
@@ -760,42 +762,42 @@ interface Signature {
   mix<TReturn, TIncludes extends PartialMixin, TInstance>(
     includes: TIncludes,
     init: (this: TInstance) => TReturn,
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance) => TReturn;
   };
 
   mix<TReturn, TIncludes extends PartialMixin, TInstance, TA>(
     includes: TIncludes,
     init: (this: TInstance, a: TA) => TReturn,
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA) => TReturn;
   };
 
   mix<TReturn, TIncludes extends PartialMixin, TInstance, TA, TB>(
     includes: TIncludes,
     init: (this: TInstance, a: TA, b: TB) => TReturn,
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA, b: TB) => TReturn;
   };
 
   mix<TReturn, TIncludes extends PartialMixin, TInstance, TA, TB, TC>(
     includes: TIncludes,
     init: (this: TInstance, a: TA, b: TB, c: TC) => TReturn,
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA, b: TB, c: TC) => TReturn;
   };
 
   mix<TReturn, TIncludes extends PartialMixin, TInstance, TA, TB, TC, TD>(
     includes: TIncludes,
     init: (this: TInstance, a: TA, b: TB, c: TC, d: TD) => TReturn,
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (this: TInstance, a: TA, b: TB, c: TC, d: TD) => TReturn;
   };
 
   mix<TReturn, TIncludes extends PartialMixin, TInstance, TA, TB, TC, TD, TE>(
     includes: TIncludes,
     init: (this: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE) => TReturn,
-  ): PartialMixin<TIncludes[typeof Mixin_prototype]> & {
+  ): PartialMixin<NonNullable<TIncludes[typeof Mixin_proto]>> & {
     [Mixin_init]: (
       this: TInstance,
       a: TA,
@@ -1287,13 +1289,13 @@ export const include: Signature["include"] = (
       };
       prototypeDescriptions = {
         ...prototypeDescriptions,
-        ...Obj.getOwnPropertyDescriptors(mixin[Mixin_prototype]),
+        ...mixin[Mixin_protoDescription],
       };
     }
 
     return {
       [Mixin_properties]: Obj.create(Obj.prototype, propertyDescriptions),
-      [Mixin_prototype]: Obj.create(Obj.prototype, prototypeDescriptions),
+      [Mixin_protoDescription]: prototypeDescriptions,
     };
   }
 };
@@ -1308,12 +1310,12 @@ export const mix: Signature["mix"] = ((
     return {
       [Mixin_init]: initOrParent,
       [Mixin_properties]: propertiesOrInit ?? {},
-      [Mixin_prototype]: prototypeOrProperties ?? {},
+      [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(prototypeOrProperties ?? {}),
     };
   } else {
     const base = include(initOrParent, {
       [Mixin_properties]: prototypeOrProperties ?? {},
-      [Mixin_prototype]: nothingOrPrototype ?? {},
+      [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(nothingOrPrototype ?? {}),
     });
     return {
       ...base,
@@ -1333,7 +1335,7 @@ export const createInstanceFactory: Signature["createInstanceFactory"] = <
 
   const prototypeDescription = __DEV__
     ? {
-        ...Obj.getOwnPropertyDescriptors(mixin[Mixin_prototype]),
+        ...mixin[Mixin_protoDescription],
         constructor: {
           configurable: true,
           enumerable: false,
@@ -1341,7 +1343,7 @@ export const createInstanceFactory: Signature["createInstanceFactory"] = <
           writable: true,
         },
       }
-    : Obj.getOwnPropertyDescriptors(mixin[Mixin_prototype]);
+    : mixin[Mixin_protoDescription];
 
   const prototype = Obj.create(Obj.prototype, prototypeDescription);
 
@@ -1387,8 +1389,9 @@ export const super_: Signature["super_"] = (<TPrototype extends object>(
   thiz: unknown,
   method: keyof TPrototype,
   ...args: any[]
-): unknown =>
-  (mixin[Mixin_prototype][method] as Function).call(
-    thiz,
-    ...args,
-  )) as Signature["super_"];
+): unknown => {
+ const descriptor = mixin[Mixin_protoDescription][method as string];
+ const f = descriptor.value ?? descriptor.get;
+
+  return (f as Function).call(thiz, ...args)
+}) as Signature["super_"];
