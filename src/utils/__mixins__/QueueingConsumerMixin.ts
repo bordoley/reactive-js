@@ -95,6 +95,7 @@ const QueueingConsumerMixin: <T>() => Mixin1<
   return returns(
     mix<
       QueueLike<T> & ConsumerLike<T>,
+      ReturnType<typeof QueueMixin>,
       TProperties,
       Pick<
         QueueLike<T> & ConsumerLike<T>,

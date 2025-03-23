@@ -69,7 +69,14 @@ const isDisposableContainer = (
   );
 };
 
-const DisposableMixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
+const DisposableMixin: Mixin<
+  DisposableLike,
+  unknown,
+  Pick<
+    DisposableLike,
+    typeof DisposableLike_dispose | typeof DisposableContainerLike_add
+  >
+> = /*@__PURE__*/ mix(
   function DisposableMixin(
     this: Pick<
       DisposableLike,

@@ -1,5 +1,12 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
-import { Mixin, include, init, mix, props } from "../../__internal__/mixins.js";
+import {
+  Mixin,
+  include,
+  init,
+  mix,
+  props,
+  proto,
+} from "../../__internal__/mixins.js";
 import SchedulerMixin, {
   SchedulerMixinHostLike,
 } from "../../utils/__mixins__/SchedulerMixin.js";
@@ -15,6 +22,7 @@ const CurrentTimeSchedulerMixin: Mixin<
 > = /*@__PURE__*/ (() =>
   mix<
     SchedulerLike & DisposableLike,
+    typeof SchedulerMixin,
     object,
     Pick<SchedulerLike, typeof SchedulerLike_now>,
     SchedulerMixinHostLike & SchedulerLike & DisposableLike
@@ -27,11 +35,11 @@ const CurrentTimeSchedulerMixin: Mixin<
       return this;
     },
     props(),
-    {
+    proto({
       get [SchedulerLike_now]() {
         return CurrentTime.now();
       },
-    },
+    }),
   ))();
 
 export default CurrentTimeSchedulerMixin;

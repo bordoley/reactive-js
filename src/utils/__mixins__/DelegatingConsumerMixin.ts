@@ -42,6 +42,7 @@ const DelegatingConsumerMixin: <
   return returns(
     mix<
       DelegatingConsumerLike<T, TDelegateConsumer>,
+      ReturnType<typeof DelegatingSinkMixin>,
       unknown,
       Pick<
         DelegatingConsumerLike<T, TDelegateConsumer>,

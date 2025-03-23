@@ -398,6 +398,7 @@ const SchedulerMixin: Mixin<
 
   return mix<
     SchedulerLike & DisposableLike,
+    typeof DisposableMixin,
     TProperties,
     Omit<
       SchedulerMixinLike,
@@ -425,7 +426,7 @@ const SchedulerMixin: Mixin<
       [SchedulerMixinLike_startTime]: 0,
       [SchedulerMixinLike_taskIDCounter]: 0,
     }),
-    {
+    proto({
       get [SchedulerLike_inContinuation](): boolean {
         unsafeCast<SchedulerMixinHostLike & SchedulerMixinLike>(this);
         const currentContinuation =
@@ -521,7 +522,7 @@ const SchedulerMixin: Mixin<
         this[SchedulerMixinLike_schedule](continuation);
         return continuation;
       },
-    },
+    }),
   );
 })();
 

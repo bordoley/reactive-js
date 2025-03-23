@@ -36,6 +36,7 @@ const DelegatingSinkMixin: <
   returns(
     mix<
       DelegatingSinkLike<T, TDelegateSink>,
+      ReturnType<typeof DelegatingEventListenerMixin>,
       unknown,
       Pick<
         DelegatingSinkLike<T, TDelegateSink>,

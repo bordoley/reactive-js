@@ -199,7 +199,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
         [SchedulerMixinLike_yieldRequested]: false,
         [SchedulerMixinLike_startTime]: 0,
         [SchedulerMixinLike_taskIDCounter]: 0,
-    }), {
+    }), proto({
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
             const currentContinuation = this[SchedulerMixinLike_currentContinuation];
@@ -254,6 +254,6 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             this[SchedulerMixinLike_schedule](continuation);
             return continuation;
         },
-    });
+    }));
 })();
 export default SchedulerMixin;
