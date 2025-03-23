@@ -3,6 +3,7 @@ import {
   Mutable,
   mix,
   props,
+  proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import { none, pipe, returns } from "../../functions.js";
@@ -15,9 +16,10 @@ import {
 import * as Disposable from "../Disposable.js";
 
 const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
-  SerialDisposableLike<TDisposable>,
+  Pick<SerialDisposableLike<TDisposable>, typeof SerialDisposableLike_current>,
   TDisposable,
-  DisposableLike
+  DisposableLike,
+  Pick<SerialDisposableLike<TDisposable>, typeof SerialDisposableLike_current>
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
   const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
 
@@ -25,9 +27,12 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
     [SerialDisposableMixin_current]: TDisposable;
   };
 
-  return pipe(
+  return returns(
     mix<
-      SerialDisposableLike<TDisposable>,
+      Pick<
+        SerialDisposableLike<TDisposable>,
+        typeof SerialDisposableLike_current
+      >,
       TProperties,
       Pick<
         SerialDisposableLike<TDisposable>,
@@ -44,7 +49,10 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
           DisposableLike &
           Mutable<TProperties>,
         defaultValue: TDisposable,
-      ): SerialDisposableLike<TDisposable> {
+      ): Pick<
+        SerialDisposableLike<TDisposable>,
+        typeof SerialDisposableLike_current
+      > {
         this[SerialDisposableMixin_current] = defaultValue;
         pipe(this, Disposable.add(defaultValue));
 
@@ -53,7 +61,7 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
       props<TProperties>({
         [SerialDisposableMixin_current]: none,
       }),
-      {
+      proto({
         get [SerialDisposableLike_current](): TDisposable {
           unsafeCast<TProperties>(this);
           return this[SerialDisposableMixin_current];
@@ -66,9 +74,8 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
           this[SerialDisposableMixin_current] = v;
           pipe(this, Disposable.add(v));
         },
-      },
+      }),
     ),
-    returns,
   );
 })();
 

@@ -8,7 +8,7 @@ import type * as Disposable from "../../Disposable.js";
 import DisposableMixin from "../../__mixins__/DisposableMixin.js";
 
 const Disposable_create: Disposable.Signature["create"] = /*@__PURE__*/ (() =>
-  mixInstanceFactory<DisposableLike, DisposableLike>(
+  mixInstanceFactory(
     include(DisposableMixin),
     function CreateDisposable(this: DisposableLike) {
       init(DisposableMixin, this);

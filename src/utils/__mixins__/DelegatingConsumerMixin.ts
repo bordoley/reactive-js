@@ -32,28 +32,14 @@ const DelegatingConsumerMixin: <
   T,
   TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
 >() => Mixin1<
-  DelegatingConsumerLike<T, TDelegateConsumer>,
-  TDelegateConsumer,
-  DisposableLike
+  Omit<DelegatingConsumerLike<T, TDelegateConsumer>, keyof DisposableLike>,
+  TDelegateConsumer
 > = /*@__PURE__*/ (<
   T,
   TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
 >() => {
   return returns(
-    mix<
-      DelegatingConsumerLike<T, TDelegateConsumer>,
-      ReturnType<typeof DelegatingSinkMixin>,
-      unknown,
-      Pick<
-        DelegatingConsumerLike<T, TDelegateConsumer>,
-        | typeof ConsumerLike_backpressureStrategy
-        | typeof ConsumerLike_capacity
-        | typeof ConsumerLike_isReady
-        | typeof ConsumerLike_addOnReadyListener
-      >,
-      DisposableLike,
-      TDelegateConsumer
-    >(
+    mix(
       include(DelegatingSinkMixin()),
       function DelegatingConsumerMixin(
         this: Pick<
@@ -62,10 +48,12 @@ const DelegatingConsumerMixin: <
           | typeof ConsumerLike_capacity
           | typeof ConsumerLike_isReady
           | typeof ConsumerLike_addOnReadyListener
-        > &
-          DisposableLike,
+        >,
         delegate: TDelegateConsumer,
-      ): DelegatingConsumerLike<T, TDelegateConsumer> {
+      ): Omit<
+        DelegatingConsumerLike<T, TDelegateConsumer>,
+        keyof DisposableLike
+      > {
         init(DelegatingSinkMixin<T, TDelegateConsumer>(), this, delegate);
         return this;
       },

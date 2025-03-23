@@ -1,7 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   Mixin1,
-  Mutable,
   include,
   init,
   mix,
@@ -49,14 +48,14 @@ import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 
 const QueueingConsumerMixin: <T>() => Mixin1<
-  QueueLike<T> & ConsumerLike<T>,
+  Omit<QueueLike<T> & ConsumerLike<T>, keyof DisposableLike>,
   Optional<{
     autoDispose?: boolean;
     capacity?: number;
     comparator?: Comparator<T>;
     backpressureStrategy?: BackpressureStrategy;
   }>,
-  DisposableLike,
+  unknown,
   Pick<
     QueueLike<T> & ConsumerLike<T>,
     | typeof ConsumerLike_isReady
@@ -93,39 +92,17 @@ const QueueingConsumerMixin: <T>() => Mixin1<
   };
 
   return returns(
-    mix<
-      QueueLike<T> & ConsumerLike<T>,
-      ReturnType<typeof QueueMixin>,
-      TProperties,
-      Pick<
-        QueueLike<T> & ConsumerLike<T>,
-        | typeof SinkLike_isCompleted
-        | typeof ConsumerLike_isReady
-        | typeof EnumeratorLike_moveNext
-        | typeof EventListenerLike_notify
-        | typeof SinkLike_complete
-        | typeof ConsumerLike_addOnReadyListener
-        | typeof ConsumerLike_capacity
-        | typeof ConsumerLike_backpressureStrategy
-      >,
-      DisposableLike,
-      Optional<{
-        autoDispose?: boolean;
-        capacity?: number;
-        comparator?: Comparator<T>;
-        backpressureStrategy?: BackpressureStrategy;
-      }>
-    >(
+    mix(
       include(QueueMixin()),
       function QueueingConsumerMixin(
-        this: ConsumerLike<T> & Mutable<TProperties>,
+        this: Omit<ConsumerLike<T>, keyof DisposableLike> & TProperties,
         config: Optional<{
           autoDispose?: boolean;
           capacity?: number;
           comparator?: Comparator<T>;
           backpressureStrategy?: BackpressureStrategy;
         }>,
-      ): QueueLike<T> & ConsumerLike<T> {
+      ): Omit<QueueLike<T> & ConsumerLike<T>, keyof DisposableLike> {
         init(QueueMixin<T>(), this, config);
         this[QueueingConsumerMixin_backpressureStrategy] =
           config?.backpressureStrategy ?? OverflowBackpressureStrategy;

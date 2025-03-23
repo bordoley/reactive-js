@@ -13,25 +13,25 @@ import SchedulerMixin, {
 import {
   DisposableLike,
   SchedulerLike,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
 } from "../../utils.js";
 
 const CurrentTimeSchedulerMixin: Mixin<
-  SchedulerLike & DisposableLike,
-  Omit<SchedulerMixinHostLike, typeof SchedulerLike_now>
+  Omit<SchedulerLike & DisposableLike, typeof SchedulerLike_maxYieldInterval>,
+  Omit<SchedulerMixinHostLike, typeof SchedulerLike_now>,
+  Omit<SchedulerLike, typeof SchedulerLike_maxYieldInterval>
 > = /*@__PURE__*/ (() =>
-  mix<
-    SchedulerLike & DisposableLike,
-    typeof SchedulerMixin,
-    object,
-    Pick<SchedulerLike, typeof SchedulerLike_now>,
-    SchedulerMixinHostLike & SchedulerLike & DisposableLike
-  >(
+  mix(
     include(SchedulerMixin),
     function CurrentTimeSchedulerMixin(
-      this: SchedulerMixinHostLike,
-    ): SchedulerLike & DisposableLike {
+      this,
+    ): Omit<
+      SchedulerLike & DisposableLike,
+      typeof SchedulerLike_maxYieldInterval
+    > {
       init(SchedulerMixin, this);
+      this;
       return this;
     },
     props(),

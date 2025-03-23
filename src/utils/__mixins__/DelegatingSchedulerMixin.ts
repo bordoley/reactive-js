@@ -21,9 +21,8 @@ import {
 import * as Disposable from "../Disposable.js";
 
 const DelegatingSchedulerMixin: Mixin1<
-  SchedulerLike,
-  SchedulerLike,
-  DisposableContainerLike
+  Omit<SchedulerLike, keyof DisposableContainerLike>,
+  SchedulerLike
 > = /*@__PURE__*/ (() => {
   const DelegatingSchedulerMixin_delegate = Symbol(
     "DelegatingSchedulerMixin_delegate",
@@ -44,17 +43,11 @@ const DelegatingSchedulerMixin: Mixin1<
     [SchedulerLike_inContinuation]: boolean;
   };
 
-  return mix<
-    SchedulerLike,
-    TProperties,
-    Omit<SchedulerLike, keyof DisposableContainerLike | keyof TProperties>,
-    DisposableContainerLike,
-    SchedulerLike
-  >(
+  return mix(
     function DelegatingSchedulerMixin(
-      this: SchedulerLike & TProperties,
+      this: Omit<SchedulerLike, keyof DisposableContainerLike> & TProperties,
       delegate: SchedulerLike,
-    ): SchedulerLike {
+    ): Omit<SchedulerLike, keyof DisposableContainerLike> {
       this[DelegatingSchedulerMixin_delegate] = delegate;
 
       this[DelegatingSchedulerMixin_scheduler] =
@@ -82,7 +75,12 @@ const DelegatingSchedulerMixin: Mixin1<
       [DelegatingSchedulerMixin_scheduleCallback]: none,
       [SchedulerLike_inContinuation]: false,
     }),
-    proto({
+    proto<
+      Omit<
+        SchedulerLike,
+        keyof DisposableContainerLike | typeof SchedulerLike_inContinuation
+      >
+    >({
       get [SchedulerLike_maxYieldInterval]() {
         unsafeCast<TProperties>(this);
         return this[DelegatingSchedulerMixin_scheduler][

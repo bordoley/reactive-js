@@ -1,18 +1,18 @@
 /// <reference types="./SerialDisposableMixin.d.ts" />
 
-import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { none, pipe, returns } from "../../functions.js";
 import { DisposableLike_dispose, SerialDisposableLike_current, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const SerialDisposableMixin = /*@__PURE__*/ (() => {
     const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
-    return pipe(mix(function SerialDisposableMixin(defaultValue) {
+    return returns(mix(function SerialDisposableMixin(defaultValue) {
         this[SerialDisposableMixin_current] = defaultValue;
         pipe(this, Disposable.add(defaultValue));
         return this;
     }, props({
         [SerialDisposableMixin_current]: none,
-    }), {
+    }), proto({
         get [SerialDisposableLike_current]() {
             unsafeCast(this);
             return this[SerialDisposableMixin_current];
@@ -24,6 +24,6 @@ const SerialDisposableMixin = /*@__PURE__*/ (() => {
             this[SerialDisposableMixin_current] = v;
             pipe(this, Disposable.add(v));
         },
-    }), returns);
+    })));
 })();
 export default SerialDisposableMixin;

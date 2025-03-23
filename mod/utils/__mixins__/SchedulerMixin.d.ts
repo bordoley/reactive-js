@@ -1,5 +1,5 @@
 import { Mixin } from "../../__internal__/mixins.js";
-import { DisposableLike, SchedulerLike, SchedulerLike_maxYieldInterval, SchedulerLike_now } from "../../utils.js";
+import { DisposableLike, DisposableLike_error, DisposableLike_isDisposed, SchedulerLike, SchedulerLike_maxYieldInterval, SchedulerLike_now } from "../../utils.js";
 export declare const SchedulerContinuationLike_run: unique symbol;
 export declare const SchedulerContinuationLike_dueTime: unique symbol;
 export declare const SchedulerContinuationLike_id: unique symbol;
@@ -17,5 +17,5 @@ export interface SchedulerMixinHostLike extends Pick<SchedulerLike, typeof Sched
     readonly [SchedulerMixinHostLike_shouldYield]: boolean;
     [SchedulerMixinHostLike_schedule](continuation: SchedulerContinuationLike): void;
 }
-declare const SchedulerMixin: Mixin<SchedulerLike & DisposableLike, SchedulerMixinHostLike>;
+declare const SchedulerMixin: Mixin<Omit<SchedulerLike & DisposableLike, typeof SchedulerLike_maxYieldInterval | typeof SchedulerLike_now>, SchedulerMixinHostLike, Omit<SchedulerLike & DisposableLike, keyof SchedulerMixinHostLike | typeof DisposableLike_error | typeof DisposableLike_isDisposed>>;
 export default SchedulerMixin;

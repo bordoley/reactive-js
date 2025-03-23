@@ -28,6 +28,7 @@ import {
   ContinuationContextLike_yield,
   DisposableLike,
   DisposableLike_dispose,
+  DisposableLike_error,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
@@ -94,8 +95,17 @@ export interface SchedulerMixinHostLike
 }
 
 const SchedulerMixin: Mixin<
-  SchedulerLike & DisposableLike,
-  SchedulerMixinHostLike
+  Omit<
+    SchedulerLike & DisposableLike,
+    typeof SchedulerLike_maxYieldInterval | typeof SchedulerLike_now
+  >,
+  SchedulerMixinHostLike,
+  Omit<
+    SchedulerLike & DisposableLike,
+    | keyof SchedulerMixinHostLike
+    | typeof DisposableLike_error
+    | typeof DisposableLike_isDisposed
+  >
 > = /*@__PURE__*/ (() => {
   const ConsumerSchedulerContinuationLike_parent = Symbol(
     "ConsumerSchedulerContinuationLike_parent",
@@ -396,26 +406,20 @@ const SchedulerMixin: Mixin<
     [SchedulerMixinLike_taskIDCounter]: number;
   };
 
-  return mix<
-    SchedulerLike & DisposableLike,
-    typeof DisposableMixin,
-    TProperties,
-    Omit<
-      SchedulerMixinLike,
-      | keyof DisposableLike
-      | typeof SchedulerLike_now
-      | typeof SchedulerLike_maxYieldInterval
-      | typeof SchedulerMixinLike_currentContinuation
-      | typeof SchedulerMixinLike_yieldRequested
-      | typeof SchedulerMixinLike_startTime
-      | typeof SchedulerMixinLike_taskIDCounter
-    >,
-    SchedulerMixinHostLike & SchedulerLike & DisposableLike
-  >(
+  return mix(
     include(DisposableMixin),
     function SchedulerMixin(
-      this: SchedulerMixinLike,
-    ): SchedulerLike & DisposableLike {
+      this: Omit<
+        SchedulerLike,
+        | keyof DisposableLike
+        | typeof SchedulerLike_maxYieldInterval
+        | typeof SchedulerLike_now
+      > &
+        TProperties,
+    ): Omit<
+      SchedulerLike & DisposableLike,
+      typeof SchedulerLike_maxYieldInterval | typeof SchedulerLike_now
+    > {
       init(DisposableMixin, this);
 
       return this;
@@ -426,7 +430,9 @@ const SchedulerMixin: Mixin<
       [SchedulerMixinLike_startTime]: 0,
       [SchedulerMixinLike_taskIDCounter]: 0,
     }),
-    proto({
+    proto<
+      Omit<SchedulerLike, keyof SchedulerMixinHostLike | keyof DisposableLike>
+    >({
       get [SchedulerLike_inContinuation](): boolean {
         unsafeCast<SchedulerMixinHostLike & SchedulerMixinLike>(this);
         const currentContinuation =

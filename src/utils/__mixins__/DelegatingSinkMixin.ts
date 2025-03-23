@@ -29,31 +29,19 @@ const DelegatingSinkMixin: <
   T,
   TDelegateSink extends SinkLike<T> = SinkLike<T>,
 >() => Mixin1<
-  DelegatingSinkLike<T, TDelegateSink>,
-  TDelegateSink,
-  DisposableLike
+  Omit<DelegatingSinkLike<T, TDelegateSink>, keyof DisposableLike>,
+  TDelegateSink
 > = /*@__PURE__*/ (<T, TDelegateSink extends SinkLike<T> = SinkLike<T>>() =>
   returns(
-    mix<
-      DelegatingSinkLike<T, TDelegateSink>,
-      ReturnType<typeof DelegatingEventListenerMixin>,
-      unknown,
-      Pick<
-        DelegatingSinkLike<T, TDelegateSink>,
-        typeof SinkLike_complete | typeof SinkLike_isCompleted
-      >,
-      DisposableLike,
-      TDelegateSink
-    >(
+    mix(
       include(DelegatingEventListenerMixin()),
       function DelegatingSinkMixin(
         this: Pick<
           DelegatingSinkLike<T, TDelegateSink>,
           typeof SinkLike_isCompleted | typeof SinkLike_complete
-        > &
-          DisposableLike,
+        >,
         delegate: TDelegateSink,
-      ): DelegatingSinkLike<T, TDelegateSink> {
+      ): Omit<DelegatingSinkLike<T, TDelegateSink>, keyof DisposableLike> {
         init(DelegatingEventListenerMixin<T, TDelegateSink>(), this, delegate);
 
         return this;

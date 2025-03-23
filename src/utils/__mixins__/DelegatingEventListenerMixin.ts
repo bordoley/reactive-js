@@ -21,9 +21,11 @@ const DelegatingEventListenerMixin: <
   T,
   TDelegateEventListener extends EventListenerLike<T> = EventListenerLike<T>,
 >() => Mixin1<
-  DelegatingEventListenerLike<T, TDelegateEventListener>,
-  TDelegateEventListener,
-  DisposableLike
+  Omit<
+    DelegatingEventListenerLike<T, TDelegateEventListener>,
+    keyof DisposableLike
+  >,
+  TDelegateEventListener
 > = /*@__PURE__*/ (<
   T,
   TDelegateEventListener extends EventListenerLike<T> = EventListenerLike<T>,
@@ -33,21 +35,18 @@ const DelegatingEventListenerMixin: <
   };
 
   return returns(
-    mix<
-      DelegatingEventListenerLike<T, TDelegateEventListener>,
-      TProperties,
-      Pick<
-        DelegatingEventListenerLike<T, TDelegateEventListener>,
-        typeof EventListenerLike_notify
-      >,
-      DisposableLike,
-      TDelegateEventListener
-    >(
+    mix(
       function DelegatingEventListenerMixin(
         this: TProperties &
-          DelegatingEventListenerLike<T, TDelegateEventListener>,
+          Omit<
+            DelegatingEventListenerLike<T, TDelegateEventListener>,
+            keyof DisposableLike
+          >,
         delegate: TDelegateEventListener,
-      ): DelegatingEventListenerLike<T, TDelegateEventListener> {
+      ): Omit<
+        DelegatingEventListenerLike<T, TDelegateEventListener>,
+        keyof DisposableLike
+      > {
         this[DelegatingEventListenerLike_delegate] = delegate;
 
         return this;

@@ -9,9 +9,8 @@ import {
 } from "../../utils.js";
 
 const DelegatingPauseableMixin: Mixin1<
-  PauseableLike,
-  PauseableLike,
-  DisposableContainerLike
+  Omit<PauseableLike, keyof DisposableContainerLike>,
+  PauseableLike
 > = /*@__PURE__*/ (() => {
   const DelegatingPauseableMixin_delegate = Symbol(
     "DelegatingPauseableMixin_delegate",
@@ -20,29 +19,11 @@ const DelegatingPauseableMixin: Mixin1<
     [DelegatingPauseableMixin_delegate]: PauseableLike;
   };
 
-  return mix<
-    PauseableLike,
-    TProperties,
-    Pick<
-      PauseableLike,
-      | typeof PauseableLike_isPaused
-      | typeof PauseableLike_pause
-      | typeof PauseableLike_resume
-    >,
-    DisposableContainerLike &
-      TProperties &
-      Pick<
-        PauseableLike,
-        | typeof PauseableLike_isPaused
-        | typeof PauseableLike_pause
-        | typeof PauseableLike_resume
-      >,
-    PauseableLike
-  >(
+  return mix(
     function DelegatingPauseableMixin(
-      this: TProperties & PauseableLike,
+      this: TProperties & Omit<PauseableLike, keyof DisposableContainerLike>,
       delegate: PauseableLike,
-    ): PauseableLike {
+    ): Omit<PauseableLike, keyof DisposableContainerLike> {
       this[DelegatingPauseableMixin_delegate] = delegate;
 
       return this;
