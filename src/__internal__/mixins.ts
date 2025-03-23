@@ -18,7 +18,9 @@ export const Mixin_private_initializedProperties = /*@__PURE__*/ Symbol(
 );
 export const Mixin_properties = /*@__PURE__*/ Symbol("Mixin_properties");
 export const Mixin_proto = /*@__PURE__*/ Symbol("Mixin_proto");
-export const Mixin_protoDescription  = /*@__PURE__*/ Symbol("Mixin_protoDescription");
+export const Mixin_protoDescription = /*@__PURE__*/ Symbol(
+  "Mixin_protoDescription",
+);
 
 type OptionalProperties<T> = T extends object
   ? {
@@ -33,7 +35,7 @@ export type Mutable<Type> = {
 export type PartialMixin<TPrototype extends object = object> = {
   [Mixin_properties]: object;
   [Mixin_proto]?: TPrototype;
-  [Mixin_protoDescription]: { [x: string]: PropertyDescriptor; }
+  [Mixin_protoDescription]: { [x: string | symbol]: PropertyDescriptor };
 };
 
 export interface MixinAny<out TReturn, TInstance = unknown>
@@ -1236,6 +1238,15 @@ interface Signature {
 
   props(): object;
 
+  getProperty<
+    TPrototype extends Record<TKey, any>,
+    TKey extends keyof TPrototype,
+  >(
+    mixin: PartialMixin<TPrototype>,
+    thiz: unknown,
+    method: TKey,
+  ): TPrototype[TKey];
+
   proto<TPrototype extends object>(o: TPrototype): TPrototype;
 
   super_<
@@ -1310,12 +1321,16 @@ export const mix: Signature["mix"] = ((
     return {
       [Mixin_init]: initOrParent,
       [Mixin_properties]: propertiesOrInit ?? {},
-      [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(prototypeOrProperties ?? {}),
+      [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(
+        prototypeOrProperties ?? {},
+      ),
     };
   } else {
     const base = include(initOrParent, {
       [Mixin_properties]: prototypeOrProperties ?? {},
-      [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(nothingOrPrototype ?? {}),
+      [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(
+        nothingOrPrototype ?? {},
+      ),
     });
     return {
       ...base,
@@ -1380,7 +1395,7 @@ export function unsafeCast<T>(_v: unknown): asserts _v is T {}
 
 export const proto = <TPrototype extends object>(
   o: TPrototype & {
-    [key: string]: any; // Allow additional properties (this might be risky if not handled correctly)
+    [key: string | symbol]: any; // Allow additional properties (this might be risky if not handled correctly)
   },
 ): TPrototype => o;
 
@@ -1390,8 +1405,22 @@ export const super_: Signature["super_"] = (<TPrototype extends object>(
   method: keyof TPrototype,
   ...args: any[]
 ): unknown => {
- const descriptor = mixin[Mixin_protoDescription][method as string];
- const f = descriptor.value ?? descriptor.get;
+  const descriptor = mixin[Mixin_protoDescription][method as string];
+  const f = descriptor.value;
 
-  return (f as Function).call(thiz, ...args)
+  return (f as Function).call(thiz, ...args);
 }) as Signature["super_"];
+
+export const getProperty: Signature["getProperty"] = <
+  TPrototype extends Record<TKey, any>,
+  TKey extends keyof TPrototype,
+>(
+  mixin: PartialMixin<TPrototype>,
+  thiz: unknown,
+  method: TKey,
+): TPrototype[TKey] => {
+  const descriptor = mixin[Mixin_protoDescription][method as string];
+  const f = descriptor.get;
+
+  return (f as Function).call(thiz);
+};

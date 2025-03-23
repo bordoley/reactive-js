@@ -6,7 +6,8 @@ import { Array_length, __DEV__ } from "./constants.js";
 export const Mixin_init = /*@__PURE__*/ Symbol("Mixin_init");
 export const Mixin_private_initializedProperties = /*@__PURE__*/ Symbol("Mixin_private_initializedProperties");
 export const Mixin_properties = /*@__PURE__*/ Symbol("Mixin_properties");
-export const Mixin_prototype = /*@__PURE__*/ Symbol("Mixin_prototype");
+export const Mixin_proto = /*@__PURE__*/ Symbol("Mixin_proto");
+export const Mixin_protoDescription = /*@__PURE__*/ Symbol("Mixin_protoDescription");
 function initUnsafe(mixin, instance, ...args) {
     const f = mixin[Mixin_init];
     if (__DEV__) {
@@ -33,12 +34,12 @@ export const include = (...mixins) => {
             };
             prototypeDescriptions = {
                 ...prototypeDescriptions,
-                ...Obj.getOwnPropertyDescriptors(mixin[Mixin_prototype]),
+                ...mixin[Mixin_protoDescription],
             };
         }
         return {
             [Mixin_properties]: Obj.create(Obj.prototype, propertyDescriptions),
-            [Mixin_prototype]: Obj.create(Obj.prototype, prototypeDescriptions),
+            [Mixin_protoDescription]: prototypeDescriptions,
         };
     }
 };
@@ -47,13 +48,13 @@ export const mix = ((initOrParent, propertiesOrInit, prototypeOrProperties, noth
         return {
             [Mixin_init]: initOrParent,
             [Mixin_properties]: propertiesOrInit ?? {},
-            [Mixin_prototype]: prototypeOrProperties ?? {},
+            [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(prototypeOrProperties ?? {}),
         };
     }
     else {
         const base = include(initOrParent, {
             [Mixin_properties]: prototypeOrProperties ?? {},
-            [Mixin_prototype]: nothingOrPrototype ?? {},
+            [Mixin_protoDescription]: Obj.getOwnPropertyDescriptors(nothingOrPrototype ?? {}),
         });
         return {
             ...base,
@@ -65,7 +66,7 @@ export const createInstanceFactory = (mixin) => {
     const propertyDescription = Obj.getOwnPropertyDescriptors(mixin[Mixin_properties]);
     const prototypeDescription = __DEV__
         ? {
-            ...Obj.getOwnPropertyDescriptors(mixin[Mixin_prototype]),
+            ...mixin[Mixin_protoDescription],
             constructor: {
                 configurable: true,
                 enumerable: false,
@@ -73,7 +74,7 @@ export const createInstanceFactory = (mixin) => {
                 writable: true,
             },
         }
-        : Obj.getOwnPropertyDescriptors(mixin[Mixin_prototype]);
+        : mixin[Mixin_protoDescription];
     const prototype = Obj.create(Obj.prototype, prototypeDescription);
     return (...args) => {
         const instance = Obj.create(prototype, propertyDescription);
@@ -88,4 +89,13 @@ export const props = (o) => {
 };
 export function unsafeCast(_v) { }
 export const proto = (o) => o;
-export const super_ = ((mixin, thiz, method, ...args) => mixin[Mixin_prototype][method].call(thiz, ...args));
+export const super_ = ((mixin, thiz, method, ...args) => {
+    const descriptor = mixin[Mixin_protoDescription][method];
+    const f = descriptor.value;
+    return f.call(thiz, ...args);
+});
+export const getProperty = (mixin, thiz, method) => {
+    const descriptor = mixin[Mixin_protoDescription][method];
+    const f = descriptor.get;
+    return f.call(thiz);
+};
