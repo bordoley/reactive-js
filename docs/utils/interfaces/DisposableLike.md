@@ -14,6 +14,8 @@
 
 - [`SerialDisposableLike`](SerialDisposableLike.md)
 - [`QueueableLike`](QueueableLike.md)
+- [`EnumeratorLike`](EnumeratorLike.md)
+- [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`EventListenerLike`](EventListenerLike.md)
 - [`SinkLike`](SinkLike.md)

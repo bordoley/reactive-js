@@ -85,10 +85,18 @@ export declare class BackPressureError extends Error {
 export declare const EnumeratorLike_moveNext: unique symbol;
 export declare const EnumeratorLike_current: unique symbol;
 export declare const EnumeratorLike_hasCurrent: unique symbol;
-export interface EnumeratorLike<T = unknown> {
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
     [EnumeratorLike_moveNext](): boolean;
+}
+export declare const AsyncEnumeratorLike_moveNext: unique symbol;
+export declare const AsyncEnumeratorLike_current: unique symbol;
+export declare const AsyncEnumeratorLike_hasCurrent: unique symbol;
+export interface AsyncEnumeratorLike<T = unknown> extends DisposableLike {
+    readonly [AsyncEnumeratorLike_current]: T;
+    readonly [AsyncEnumeratorLike_hasCurrent]: boolean;
+    [AsyncEnumeratorLike_moveNext](): Promise<boolean>;
 }
 export declare const CollectionEnumeratorLike_count: unique symbol;
 export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {

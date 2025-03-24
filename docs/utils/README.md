@@ -12,6 +12,7 @@
 
 ## Interfaces
 
+- [AsyncEnumeratorLike](interfaces/AsyncEnumeratorLike.md)
 - [CollectionEnumeratorLike](interfaces/CollectionEnumeratorLike.md)
 - [ConsumerLike](interfaces/ConsumerLike.md)
 - [ContinuationContextLike](interfaces/ContinuationContextLike.md)
@@ -35,6 +36,9 @@
 
 ## Variables
 
+- [AsyncEnumeratorLike\_current](variables/AsyncEnumeratorLike_current.md)
+- [AsyncEnumeratorLike\_hasCurrent](variables/AsyncEnumeratorLike_hasCurrent.md)
+- [AsyncEnumeratorLike\_moveNext](variables/AsyncEnumeratorLike_moveNext.md)
 - [CollectionEnumeratorLike\_count](variables/CollectionEnumeratorLike_count.md)
 - [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
 - [DisposableContainerLike\_add](variables/DisposableContainerLike_add.md)

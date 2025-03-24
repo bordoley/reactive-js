@@ -39,6 +39,9 @@ export class BackPressureError extends Error {
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext");
+export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
+export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
 export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
