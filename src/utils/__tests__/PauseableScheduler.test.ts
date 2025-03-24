@@ -7,6 +7,7 @@ import {
 import { pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
+  PauseableLike_pause,
   PauseableLike_resume,
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -17,6 +18,31 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
   "PauseableScheduler",
+  test("pausing the scheduler from a continuation", () => {
+    using vts = VirtualTimeScheduler.create();
+    using pauseableScheduler = PauseableScheduler.create(vts);
+
+    let result: number[] = [];
+
+    pauseableScheduler[SchedulerLike_schedule](() => {
+      result[Array_push](0);
+    });
+
+    pauseableScheduler[SchedulerLike_schedule](() => {
+      result[Array_push](1);
+      pauseableScheduler[PauseableLike_pause]();
+    });
+
+    pauseableScheduler[SchedulerLike_schedule](() => {
+      result[Array_push](2);
+    });
+
+    pauseableScheduler[PauseableLike_resume]();
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    pipe(result, expectArrayEquals([0, 1]));
+  }),
   test("with disposed continuations", () => {
     using vts = VirtualTimeScheduler.create();
     using pauseableScheduler = PauseableScheduler.create(vts);

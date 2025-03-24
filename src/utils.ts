@@ -154,6 +154,7 @@ export interface CollectionEnumeratorLike<T = unknown>
   readonly [CollectionEnumeratorLike_count]: number;
 }
 
+export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 
 /**
@@ -162,6 +163,7 @@ export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 export interface QueueLike<T = unknown>
   extends CollectionEnumeratorLike<T>,
     QueueableLike {
+  [QueueLike_head]: Optional<T>;
   [QueueLike_enqueue](v: T): void;
 }
 

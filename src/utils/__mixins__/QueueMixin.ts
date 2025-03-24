@@ -40,6 +40,7 @@ import {
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_enqueue,
+  QueueLike_head,
   QueueableLike_addOnReadyEventListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -168,6 +169,18 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             const isDisposed = this[DisposableLike_isDisposed];
 
             return count < capacity && !isDisposed;
+          },
+
+          get [QueueLike_head](): Optional<T> {
+            unsafeCast<TProperties>(this);
+            const head = this[QueueMixin_head];
+            const values = this[QueueMixin_values];
+            const count = this[CollectionEnumeratorLike_count];
+            return count === 0
+              ? none
+              : count === 1
+                ? (values as T)
+                : (values as T[])[head];
           },
 
           /*get [QueueLike_tail]() {

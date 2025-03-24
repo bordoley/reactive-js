@@ -204,4 +204,29 @@ testModule(
 
     pipe(runCount, expectEquals(1));
   }),
+
+  test("with multiple delayed continuations with same delay", () => {
+    using vts = VirtualTimeScheduler.create({
+      maxMicroTaskTicks: 1,
+    });
+
+    let count = 0;
+    vts[SchedulerLike_schedule](
+      (ctx: ContinuationContextLike) => {
+        count++;
+      },
+      { delay: 1 },
+    );
+
+    vts[SchedulerLike_schedule](
+      (ctx: ContinuationContextLike) => {
+        count++;
+      },
+      { delay: 1 },
+    );
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    pipe(count, expectEquals(2));
+  }),
 );

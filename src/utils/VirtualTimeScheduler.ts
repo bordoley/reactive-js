@@ -10,7 +10,7 @@ import {
   unsafeCast,
 } from "../__internal__/mixins.js";
 import * as Iterable from "../computations/Iterable.js";
-import { Optional, none, pipe } from "../functions.js";
+import { Optional, isSome, none, pipe } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
 import {
   CollectionEnumeratorLike_count,
@@ -20,6 +20,7 @@ import {
   EnumeratorLike_moveNext,
   QueueLike,
   QueueLike_enqueue,
+  QueueLike_head,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -107,11 +108,20 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[CollectionEnumeratorLike_count] > 0)
         ) {
+          const currentTime = this[SchedulerLike_now];
+          const firstContinuation = queue[QueueLike_head];
+          const firstContinuationDueTime =
+            firstContinuation?.[SchedulerContinuationLike_dueTime] ??
+            MIN_SAFE_INTEGER;
+          if (firstContinuationDueTime > currentTime) {
+            // Fast forward time to avoid unnecessary loops
+            const dueTime = firstContinuationDueTime;
+            this[SchedulerLike_now] = max(dueTime, currentTime + 1);
+          }
+
           this[VirtualTimeScheduler_queue] = Queue.createSorted(
             SchedulerContinuation.compare,
           );
-
-          const currentTime = this[SchedulerLike_now];
 
           while (queue[EnumeratorLike_moveNext]()) {
             let continuation = queue[EnumeratorLike_current];
@@ -132,7 +142,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           }
 
           const queueHeadDueTime =
-            pipe(this[VirtualTimeScheduler_queue], Iterable.first())?.[
+            this[VirtualTimeScheduler_queue][QueueLike_head]?.[
               SchedulerContinuationLike_dueTime
             ] ?? MIN_SAFE_INTEGER;
 
