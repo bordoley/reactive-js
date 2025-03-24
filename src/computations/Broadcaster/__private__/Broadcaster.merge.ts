@@ -27,46 +27,46 @@ import Broadcaster_addEventHandler from "./Broadcaster.addEventHandler.js";
 const Broadcaster_merge: Broadcaster.Signature["merge"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const MergeBroadcaster_Broadcasters = Symbol("MergeBroadcaster_Broadcasters");
+  const MergeBroadcaster_broadcasters = Symbol("MergeBroadcaster_broadcasters");
 
   type TProperties = {
-    [MergeBroadcaster_Broadcasters]: readonly BroadcasterLike<T>[];
+    [MergeBroadcaster_broadcasters]: readonly BroadcasterLike<T>[];
   };
 
   const isMergeBroadcaster = <T>(
-    observable: BroadcasterLike<T>,
-  ): observable is BroadcasterLike<T> & TProperties =>
-    isSome((observable as any)[MergeBroadcaster_Broadcasters]);
+    broadcaster: BroadcasterLike<T>,
+  ): broadcaster is BroadcasterLike<T> & TProperties =>
+    isSome((broadcaster as any)[MergeBroadcaster_broadcasters]);
 
-  const flattenBroadcasters = (
-    observables: readonly BroadcasterLike<T>[],
+  const flattenbroadcasters = (
+    broadcasters: readonly BroadcasterLike<T>[],
   ): readonly BroadcasterLike<T>[] =>
-    observables.some(isMergeBroadcaster)
-      ? observables.flatMap(observable =>
-          isMergeBroadcaster(observable)
-            ? flattenBroadcasters(observable[MergeBroadcaster_Broadcasters])
-            : observable,
+    broadcasters.some(isMergeBroadcaster)
+      ? broadcasters.flatMap(broadcaster =>
+          isMergeBroadcaster(broadcaster)
+            ? flattenbroadcasters(broadcaster[MergeBroadcaster_broadcasters])
+            : broadcaster,
         )
-      : observables;
+      : broadcasters;
 
   return mixInstanceFactory(
     include(DelegatingDisposableContainerMixin()),
     function MergeBroadcaster(
       this: TProperties &
         Omit<BroadcasterLike<T>, keyof DisposableContainerLike>,
-      ...Broadcasters: readonly BroadcasterLike<T>[]
+      ...broadcasters: readonly BroadcasterLike<T>[]
     ): BroadcasterLike<T> {
-      Broadcasters = flattenBroadcasters(Broadcasters);
-      this[MergeBroadcaster_Broadcasters] = Broadcasters;
+      broadcasters = flattenbroadcasters(broadcasters);
+      this[MergeBroadcaster_broadcasters] = broadcasters;
 
       const disposable = Disposable.create();
       init(DelegatingDisposableContainerMixin(), this, disposable);
 
-      const count = Broadcasters[Array_length];
+      const count = broadcasters[Array_length];
       let completed = 0;
-      for (const Broadcaster of Broadcasters) {
+      for (const broadcaster of broadcasters) {
         pipe(
-          Broadcaster,
+          broadcaster,
           DisposableContainer.onDisposed(e => {
             completed++;
             if (completed >= count || isSome(e)) {
@@ -79,7 +79,7 @@ const Broadcaster_merge: Broadcaster.Signature["merge"] = /*@__PURE__*/ (<
       return this;
     },
     props<TProperties>({
-      [MergeBroadcaster_Broadcasters]: none,
+      [MergeBroadcaster_broadcasters]: none,
     }),
     {
       [ComputationLike_isDeferred]: false as const,
@@ -89,8 +89,8 @@ const Broadcaster_merge: Broadcaster.Signature["merge"] = /*@__PURE__*/ (<
         this: TProperties,
         listener: EventListenerLike<T>,
       ): void {
-        const Broadcasters = this[MergeBroadcaster_Broadcasters];
-        const count = Broadcasters[Array_length];
+        const broadcasters = this[MergeBroadcaster_broadcasters];
+        const count = broadcasters[Array_length];
         let completed = 0;
 
         const eventHandler = bindMethod(listener, EventListenerLike_notify);
@@ -102,9 +102,9 @@ const Broadcaster_merge: Broadcaster.Signature["merge"] = /*@__PURE__*/ (<
           }
         };
 
-        for (const Broadcaster of Broadcasters) {
+        for (const broadcaster of broadcasters) {
           pipe(
-            Broadcaster,
+            broadcaster,
             Broadcaster_addEventHandler(eventHandler),
             Disposable.addTo(listener),
             DisposableContainer.onComplete(onEventHandlerCompleted),

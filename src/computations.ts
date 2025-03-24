@@ -199,6 +199,7 @@ type FirstNotNeverComputation<
   (NonNullable<T[K3]> extends never ? 
     never : K3) : K2) : K1);
 
+// FIXME: Multicast types should be disposable
 export type NewInstanceWithSideEffectsOf<
   TComputationType extends ComputationType,
   T,
@@ -221,6 +222,7 @@ export type NewInstanceWithSideEffectsOf<
       readonly _T: () => T;
     };
 
+// FIXME: Multicast types should be disposable   
 export type NewPureInstanceOf<
   TComputationType extends ComputationType,
   T,
@@ -1293,7 +1295,7 @@ export interface ConcurrentReactiveComputationModule<
   ): DeferredComputationWithSideEffectsOf<TComputationType, T>;
   merge<T>(
     ...computations: readonly MulticastComputationOf<TComputationType, T>[]
-  ): MulticastComputationOf<TComputationType, T>;
+  ): MulticastComputationOf<TComputationType, T> & DisposableLike;
 
   never<T>(
     options?: TCreationOptions["never"],
