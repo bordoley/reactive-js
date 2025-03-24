@@ -22,7 +22,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  ListenerLike_notify,
+  EventListenerLike_notify,
 } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 
@@ -50,7 +50,7 @@ testModule(
       pipe(subscription[DisposableLike_isDisposed], expectTrue());
       pipe(publisher[DisposableLike_isDisposed], expectTrue());
     }),
-    test("when a listener throws an exception", () => {
+    test("when a EventListener throws an exception", () => {
       const e = newInstance(Error);
       const publisher = Publisher.create({ autoDispose: true });
       const subscription = pipe(
@@ -59,7 +59,7 @@ testModule(
           raiseError(e);
         }),
       );
-      publisher[ListenerLike_notify](none);
+      publisher[EventListenerLike_notify](none);
 
       pipe(
         subscription[DisposableLike_error],
@@ -76,22 +76,22 @@ testModule(
           result.push(v);
         }),
       );
-      publisher[ListenerLike_notify](1);
-      publisher[ListenerLike_notify](2);
+      publisher[EventListenerLike_notify](1);
+      publisher[EventListenerLike_notify](2);
       publisher[DisposableLike_dispose]();
-      publisher[ListenerLike_notify](3);
+      publisher[EventListenerLike_notify](3);
 
       pipe(result, expectArrayEquals([1, 2]));
     }),
   ),
-  test("add the same publisher as a listener multiple times", () => {
+  test("add the same publisher as a EventListener multiple times", () => {
     const publisher = Publisher.create<number>({ autoDispose: true });
-    const listener = Publisher.create<number>({ autoDispose: true });
+    const EventListener = Publisher.create<number>({ autoDispose: true });
 
-    publisher[SourceLike_subscribe](listener);
-    publisher[SourceLike_subscribe](listener);
+    publisher[SourceLike_subscribe](EventListener);
+    publisher[SourceLike_subscribe](EventListener);
 
-    listener[DisposableLike_dispose]();
+    EventListener[DisposableLike_dispose]();
 
     pipe(publisher[DisposableLike_isDisposed], expectTrue());
   }),

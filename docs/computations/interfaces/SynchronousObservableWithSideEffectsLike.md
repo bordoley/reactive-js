@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`SynchronousObservableLike`](SynchronousObservableLike.md)\<`T`\>.[`DeferredObservableWithSideEffectsLike`](DeferredObservableWithSideEffectsLike.md)\<`T`\>
+- [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\>.[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
 
 ## Type Parameters
 
@@ -22,7 +22,7 @@
 
 #### Overrides
 
-[`SynchronousObservableLike`](SynchronousObservableLike.md).[`[ComputationLike_isDeferred]`](SynchronousObservableLike.md#computationlike_isdeferred)
+[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md).[`[ComputationLike_isDeferred]`](SynchronousComputationWithSideEffectsLike.md#computationlike_isdeferred)
 
 ***
 
@@ -32,7 +32,7 @@
 
 #### Overrides
 
-[`DeferredObservableWithSideEffectsLike`](DeferredObservableWithSideEffectsLike.md).[`[ComputationLike_isPure]`](DeferredObservableWithSideEffectsLike.md#computationlike_ispure)
+[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md).[`[ComputationLike_isPure]`](SynchronousComputationWithSideEffectsLike.md#computationlike_ispure)
 
 ***
 
@@ -42,4 +42,4 @@
 
 #### Overrides
 
-[`SynchronousObservableLike`](SynchronousObservableLike.md).[`[ComputationLike_isSynchronous]`](SynchronousObservableLike.md#computationlike_issynchronous)
+[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationWithSideEffectsLike.md#computationlike_issynchronous)

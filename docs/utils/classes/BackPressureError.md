@@ -20,7 +20,7 @@
 
 ##### consumer
 
-[`ConsumerLike`](../interfaces/ConsumerLike.md)
+[`QueueableLike`](../interfaces/QueueableLike.md)
 
 #### Returns
 
@@ -32,18 +32,18 @@
 
 ## Properties
 
-### \[ConsumerLike\_backpressureStrategy\]
+### \[QueueableLike\_backpressureStrategy\]
 
-> `readonly` **\[ConsumerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
-
-***
-
-### \[ConsumerLike\_capacity\]
-
-> `readonly` **\[ConsumerLike\_capacity\]**: `number`
+> `readonly` **\[QueueableLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
 
 ***
 
-### \[ConsumerLike\_isReady\]
+### \[QueueableLike\_capacity\]
 
-> `readonly` **\[ConsumerLike\_isReady\]**: `boolean`
+> `readonly` **\[QueueableLike\_capacity\]**: `number`
+
+***
+
+### \[QueueableLike\_isReady\]
+
+> `readonly` **\[QueueableLike\_isReady\]**: `boolean`

@@ -1,5 +1,6 @@
 /// <reference types="./SchedulerMixin.d.ts" />
 
+import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
@@ -23,7 +24,8 @@ export const SchedulerContinuation = {
 };
 export const SchedulerMixinHostLike_shouldYield = Symbol("SchedulerMixinHostLike_shouldYield");
 export const SchedulerMixinHostLike_schedule = Symbol("SchedulerMixinHostLike_schedule");
-const SchedulerMixin = /*@__PURE__*/ (() => {
+const SchedulerMixin = 
+/*@__PURE__*/ (() => {
     const ConsumerSchedulerContinuationLike_parent = Symbol("ConsumerSchedulerContinuationLike_parent");
     const ConsumerSchedulerContinuationLike_isReschedulingChildren = Symbol("ConsumerSchedulerContinuationLike_isReschedulingChildren");
     const SchedulerMixinLike_schedule = Symbol("SchedulerMixinLike_schedule");
@@ -200,6 +202,10 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
         [SchedulerMixinLike_startTime]: 0,
         [SchedulerMixinLike_taskIDCounter]: 0,
     }), proto({
+        [SchedulerLike_maxYieldInterval]: 5,
+        get [SchedulerLike_now]() {
+            return CurrentTime.now();
+        },
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
             const currentContinuation = this[SchedulerMixinLike_currentContinuation];

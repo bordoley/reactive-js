@@ -3,13 +3,12 @@
 import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { alwaysTrue, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, tuple, } from "../functions.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, RunnableLike_eval, } from "../computations.js";
+import { alwaysTrue, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import Iterable_first from "./Iterable/__private__/Iterable.first.js";
-import Iterable_toObservable from "./Iterable/__private__/Iterable.toObservable.js";
-import Iterable_toRunnable from "./Iterable/__private__/Iterable.toRunnable.js";
 class CatchErrorIterable {
     s;
     onError;
@@ -52,6 +51,33 @@ class ConcatAllIterable {
 }
 export const concatAll = ((options) => (iterable) => newInstance(ConcatAllIterable, iterable, options?.innerType?.[ComputationLike_isPure] ?? true));
 export const concat = ((...iterables) => newInstance(ConcatAllIterable, iterables, ComputationM.areAllPure(iterables)));
+class DistinctUntilChangedIterable {
+    s;
+    eq;
+    [ComputationLike_isPure];
+    constructor(s, eq) {
+        this.s = s;
+        this.eq = eq;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    *[Symbol.iterator]() {
+        const equals = this.eq;
+        let hasPrev = false;
+        let prev = none;
+        for (const v of this.s) {
+            if (!hasPrev) {
+                hasPrev = true;
+                prev = v;
+                yield v;
+            }
+            else if (!equals(v, prev)) {
+                prev = v;
+                yield v;
+            }
+        }
+    }
+}
+export const distinctUntilChanged = ((options) => (iterable) => newInstance(DistinctUntilChangedIterable, iterable, options?.equality ?? strictEquality));
 export const empty = /*@__PURE__*/ returns([]);
 class EncodeUtf8Iterable {
     s;
@@ -90,7 +116,7 @@ class ForEachIterable {
         }
     }
 }
-export const forEach = (effect) => (iterable) => newInstance(ForEachIterable, iterable, effect);
+export const forEach = ((effect) => (iterable) => newInstance(ForEachIterable, iterable, effect));
 export const fromValue = /*@__PURE__*/ returns(tuple);
 class FromReadonlyArrayIterable {
     arr;
@@ -121,30 +147,28 @@ class GenIterable {
     f;
     [ComputationLike_isSynchronous] = true;
     [ComputationLike_isDeferred] = true;
-    [ComputationLike_isPure] = true;
-    constructor(f) {
-        this.f = f;
-    }
-    *[Symbol.iterator]() {
-        const iter = this.f();
-        yield* iter;
-    }
-}
-export const gen = ((factory) => newInstance((GenIterable), factory));
-class GenWithSideEffectsIterable {
-    f;
-    [ComputationLike_isSynchronous] = true;
-    [ComputationLike_isDeferred] = true;
     [ComputationLike_isPure] = false;
     constructor(f) {
         this.f = f;
     }
-    *[Symbol.iterator]() {
-        const iter = this.f();
-        yield* iter;
+    [Symbol.iterator]() {
+        return this.f();
     }
 }
-export const genWithSideEffects = ((factory) => newInstance((GenWithSideEffectsIterable), factory));
+export const gen = ((factory) => newInstance((GenIterable), factory));
+class GenPureIterable {
+    f;
+    [ComputationLike_isSynchronous] = true;
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isPure] = true;
+    constructor(f) {
+        this.f = f;
+    }
+    [Symbol.iterator]() {
+        return this.f();
+    }
+}
+export const genPure = ((factory) => newInstance((GenPureIterable), factory));
 class KeepIterable {
     d;
     p;
@@ -194,19 +218,30 @@ class MapIterable {
     }
 }
 export const map = ((mapper) => (iterable) => newInstance(MapIterable, iterable, mapper));
-class RaiseIterable {
-    r;
-    constructor(r) {
-        this.r = r;
+class PairwiseIterable {
+    s;
+    [ComputationLike_isPure];
+    constructor(s) {
+        this.s = s;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     *[Symbol.iterator]() {
-        raiseError(error(this.r()));
+        let hasPrev = false;
+        let prev = none;
+        for (const v of this.s) {
+            if (!hasPrev) {
+                hasPrev = true;
+                prev = v;
+            }
+            else {
+                const result = tuple(v, prev);
+                prev = v;
+                yield result;
+            }
+        }
     }
 }
-export const raise = (options) => {
-    const { raise: factory = raise } = options ?? {};
-    return newInstance((RaiseIterable), factory);
-};
+export const pairwise = (() => (iterable) => newInstance((PairwiseIterable), iterable));
 export const reduce = (reducer, initialValue) => (iterable) => {
     let acc = initialValue();
     for (let v of iterable) {
@@ -295,12 +330,28 @@ class ScanIterable {
         }
     }
 }
-export const run = () => (iter) => {
-    for (const _v of iter) {
-        // no op
-    }
-};
 export const scan = ((scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue));
+class SkipFirstIterable {
+    s;
+    c;
+    [ComputationLike_isPure];
+    constructor(s, c) {
+        this.s = s;
+        this.c = c;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    *[Symbol.iterator]() {
+        const skipCount = this.c;
+        let count = 0;
+        for (const v of this.s) {
+            if (count >= skipCount) {
+                yield v;
+            }
+            count++;
+        }
+    }
+}
+export const skipFirst = ((options) => (iterable) => newInstance(SkipFirstIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
 class TakeFirstIterable {
     s;
     c;
@@ -372,11 +423,29 @@ class ThrowIfEmptyIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
-export const toObservable = Iterable_toObservable;
+//export const toObservable: Signature["toObservable"] = Iterable_toObservable;
 export const toReadonlyArray = ReadonlyArray.fromIterable;
 export const toReadonlyArrayAsync = 
 /*@__PURE__*/ returns(async (iter) => pipe(iter, toReadonlyArray()));
-export const toRunnable = Iterable_toRunnable;
+class IterableToRunnable {
+    s;
+    [ComputationLike_isDeferred] = false;
+    [ComputationLike_isPure];
+    constructor(s) {
+        this.s = s;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    [RunnableLike_eval](sink) {
+        for (const v of this.s) {
+            if (sink[SinkLike_isCompleted]) {
+                break;
+            }
+            sink[EventListenerLike_notify](v);
+        }
+        sink[SinkLike_complete]();
+    }
+}
+export const toRunnable = /*@__PURE__*/ returns((iterable) => newInstance(IterableToRunnable, iterable));
 class ZipIterable {
     iters;
     [ComputationLike_isPure];

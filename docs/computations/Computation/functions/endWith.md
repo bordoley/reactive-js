@@ -6,7 +6,7 @@
 
 # Function: endWith()
 
-> **endWith**\<`TComputationType`\>(`m`): \<`T`\>(`value`, ...`values`) => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **endWith**\<`TComputationType`\>(`m`): \<`T`\>(`value`, ...`values`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -38,4 +38,4 @@
 
 ### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>

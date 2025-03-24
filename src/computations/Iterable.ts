@@ -53,7 +53,7 @@ import {
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import {
-  ListenerLike_notify,
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -721,7 +721,7 @@ class IterableToRunnable<T> implements RunnableLike<T> {
         break;
       }
 
-      sink[ListenerLike_notify](v);
+      sink[EventListenerLike_notify](v);
     }
     sink[SinkLike_complete]();
   }

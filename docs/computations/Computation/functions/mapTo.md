@@ -6,7 +6,7 @@
 
 # Function: mapTo()
 
-> **mapTo**\<`TComputationType`\>(`m`): \<`T`\>(`value`) => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
+> **mapTo**\<`TComputationType`\>(`m`): \<`T`\>(`value`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
 
 ## Type Parameters
 
@@ -34,4 +34,4 @@
 
 ### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>

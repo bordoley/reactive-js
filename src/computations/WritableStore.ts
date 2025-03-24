@@ -14,7 +14,7 @@ import {
   WritableStoreLike,
 } from "../computations.js";
 import { Equality, none, strictEquality } from "../functions.js";
-import { ListenerLike_notify } from "../utils.js";
+import { EventListenerLike_notify } from "../utils.js";
 import PublisherMixin from "./__mixins__/PublisherMixin.js";
 
 export const create: <T>(
@@ -63,13 +63,16 @@ export const create: <T>(
       },
       set [StoreLike_value](value: T) {
         unsafeCast<TProperties & WritableStoreLike<T>>(this);
-        this[ListenerLike_notify](value);
+        this[EventListenerLike_notify](value);
       },
-      [ListenerLike_notify](this: TProperties & WritableStoreLike<T>, v: T) {
+      [EventListenerLike_notify](
+        this: TProperties & WritableStoreLike<T>,
+        v: T,
+      ) {
         if (!this[WritableStore_equality](this[WritableStore_value], v)) {
           this[WritableStore_value] = v;
 
-          super_(PublisherMixin<T>(), this, ListenerLike_notify, v);
+          super_(PublisherMixin<T>(), this, EventListenerLike_notify, v);
         }
       },
     },

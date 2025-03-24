@@ -20,22 +20,22 @@ export type PartialMixin<TPrototype extends object = object> = {
 export interface MixinAny<out TReturn, TInstance = unknown> extends PartialMixin {
     [Mixin_init]: (this: TInstance, ...args: readonly any[]) => TReturn;
 }
-export interface Mixin<out TReturn, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin<out TReturn, TPrototype extends object = object, TInstance = unknown> extends PartialMixin<TPrototype> {
     [Mixin_init](this: TInstance & TPrototype): TReturn;
 }
-export interface Mixin1<out TReturn, TA, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin1<out TReturn, TA, TPrototype extends object = object, TInstance = unknown> extends PartialMixin<TPrototype> {
     [Mixin_init](this: TInstance & TPrototype, a: TA): TReturn;
 }
-export interface Mixin2<out TReturn, TA, TB, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin2<out TReturn, TA, TB, TPrototype extends object = object, TInstance = unknown> extends PartialMixin<TPrototype> {
     [Mixin_init](this: TInstance & TPrototype, a: TA, b: TB): TReturn;
 }
-export interface Mixin3<out TReturn, TA, TB, TC, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin3<out TReturn, TA, TB, TC, TPrototype extends object = object, TInstance = unknown> extends PartialMixin<TPrototype> {
     [Mixin_init](this: TInstance & TPrototype, a: TA, b: TB, c: TC): TReturn;
 }
-export interface Mixin4<out TReturn, TA, TB, TC, TD, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin4<out TReturn, TA, TB, TC, TD, TPrototype extends object = object, TInstance = unknown> extends PartialMixin<TPrototype> {
     [Mixin_init](this: TInstance & TPrototype, a: TA, b: TB, c: TC, d: TD): TReturn;
 }
-export interface Mixin5<out TReturn, TA, TB, TC, TD, TE, TInstance = unknown, TPrototype extends object = object> extends PartialMixin<TPrototype> {
+export interface Mixin5<out TReturn, TA, TB, TC, TD, TE, TPrototype extends object = object, TInstance = unknown> extends PartialMixin<TPrototype> {
     [Mixin_init](this: TInstance & TPrototype, a: TA, b: TB, c: TC, d: TD, e: TE): TReturn;
 }
 export interface MixinDecorator {
@@ -53,17 +53,18 @@ interface Signature {
     createInstanceFactory<TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Function3<TA, TB, TC, TReturn>;
     createInstanceFactory<TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<TA, TB, TC, TD, TReturn>;
     createInstanceFactory<TReturn, TA, TB, TC, TD, TE>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>): Function5<TA, TB, TC, TD, TE, TReturn>;
+    getProperty<TPrototype extends Record<TKey, any>, TKey extends keyof TPrototype>(mixin: PartialMixin<TPrototype>, thiz: unknown, method: TKey): TPrototype[TKey];
     include<TM0 extends PartialMixin>(m0: TM0): TM0;
     include<TM0 extends PartialMixin, TM1 extends PartialMixin>(m0: TM0, m1: TM1): TM0 & TM1;
     include<TM0 extends PartialMixin, TM1 extends PartialMixin, TM2 extends PartialMixin>(m0: TM0, m1: TM1, m2: TM2): TM0 & TM1 & TM2;
     include<TM0 extends PartialMixin, TM1 extends PartialMixin, TM2 extends PartialMixin, TM3 extends PartialMixin>(m0: TM0, m1: TM1, m2: TM2, m3: TM3): TM0 & TM1 & TM2 & TM3;
     include<TM0 extends PartialMixin, TM1 extends PartialMixin, TM2 extends PartialMixin, TM3 extends PartialMixin, TM4 extends PartialMixin>(m0: TM0, m1: TM1, m2: TM2, m3: TM3, m4: TM4): TM0 & TM1 & TM2 & TM3 & TM4;
-    init<TReturn, TInstance>(mixin: Mixin<TReturn, TInstance>, instance: TInstance): asserts instance is TInstance & TReturn;
-    init<TReturn, TA, TInstance>(mixin: Mixin1<TReturn, TA, TInstance>, instance: TInstance, a: TA): asserts instance is TInstance & TReturn;
-    init<TReturn, TA, TB, TInstance>(mixin: Mixin2<TReturn, TA, TB, TInstance>, instance: TInstance, a: TA, b: TB): asserts instance is TInstance & TReturn;
-    init<TReturn, TA, TB, TC, TInstance>(mixin: Mixin3<TReturn, TA, TB, TC, TInstance>, instance: TInstance, a: TA, b: TB, c: TC): asserts instance is TInstance & TReturn;
-    init<TReturn, TA, TB, TC, TD, TInstance>(mixin: Mixin4<TReturn, TA, TB, TC, TD, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD): asserts instance is TInstance & TReturn;
-    init<TReturn, TA, TB, TC, TD, TE, TInstance>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE): asserts instance is TInstance & TReturn;
+    init<TReturn, TInstance>(mixin: Mixin<TReturn, {}, TInstance>, instance: TInstance): asserts instance is TInstance & TReturn;
+    init<TReturn, TA, TInstance>(mixin: Mixin1<TReturn, TA, {}, TInstance>, instance: TInstance, a: TA): asserts instance is TInstance & TReturn;
+    init<TReturn, TA, TB, TInstance>(mixin: Mixin2<TReturn, TA, TB, {}, TInstance>, instance: TInstance, a: TA, b: TB): asserts instance is TInstance & TReturn;
+    init<TReturn, TA, TB, TC, TInstance>(mixin: Mixin3<TReturn, TA, TB, TC, {}, TInstance>, instance: TInstance, a: TA, b: TB, c: TC): asserts instance is TInstance & TReturn;
+    init<TReturn, TA, TB, TC, TD, TInstance>(mixin: Mixin4<TReturn, TA, TB, TC, TD, {}, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD): asserts instance is TInstance & TReturn;
+    init<TReturn, TA, TB, TC, TD, TE, TInstance>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE, {}, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE): asserts instance is TInstance & TReturn;
     mix<TReturn, TProperties, TPrototype extends object, TInstance>(init: (this: TPrototype & Mutable<TProperties> & TInstance) => TReturn, properties: TProperties & {
         [Mixin_private_initializedProperties]?: true;
     }, prototype: TPrototype): PartialMixin<TPrototype> & {
@@ -308,7 +309,6 @@ interface Signature {
         [Mixin_private_initializedProperties]?: true;
     };
     props(): object;
-    getProperty<TPrototype extends Record<TKey, any>, TKey extends keyof TPrototype>(mixin: PartialMixin<TPrototype>, thiz: unknown, method: TKey): TPrototype[TKey];
     proto<TPrototype extends object>(o: TPrototype): TPrototype;
     super_<TPrototype extends Record<TKey, TFunction>, TKey extends keyof TPrototype, TFunction extends (...args: any) => any>(mixin: PartialMixin<TPrototype>, thiz: unknown, method: TKey, ...args: Parameters<TPrototype[TKey]>): ReturnType<TPrototype[TKey]>;
 }

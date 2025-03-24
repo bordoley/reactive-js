@@ -36,11 +36,11 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_moveNext,
-  ListenerLike_notify,
+  EventListenerLike_notify,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_enqueue,
-  QueueableLike_addOnReadyListener,
+  QueueableLike_addOnReadyEventListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
@@ -193,7 +193,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
               this[EnumeratorLike_current] = none as T;
               this[EnumeratorLike_hasCurrent] = false;
 
-              shouldNotifyReady && onReadySignal?.[ListenerLike_notify]();
+              shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
               return this[EnumeratorLike_hasCurrent];
             }
@@ -206,7 +206,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
               this[EnumeratorLike_current] = item as T;
               this[EnumeratorLike_hasCurrent] = true;
 
-              shouldNotifyReady && onReadySignal?.[ListenerLike_notify]();
+              shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
               return this[EnumeratorLike_hasCurrent];
             }
@@ -228,7 +228,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
               this[EnumeratorLike_current] = item as T;
               this[EnumeratorLike_hasCurrent] = true;
 
-              shouldNotifyReady && onReadySignal?.[ListenerLike_notify]();
+              shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
               return this[EnumeratorLike_hasCurrent];
             }
@@ -325,7 +325,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             this[EnumeratorLike_current] = item as T;
             this[EnumeratorLike_hasCurrent] = true;
 
-            shouldNotifyReady && onReadySignal?.[ListenerLike_notify]();
+            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
             return this[EnumeratorLike_hasCurrent];
           },
@@ -472,7 +472,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             this[QueueMixin_capacityMask] = newCapacityMask;
           },
 
-          [QueueableLike_addOnReadyListener](
+          [QueueableLike_addOnReadyEventListener](
             this: TProperties & DisposableLike,
             callback: SideEffect1<void>,
           ) {

@@ -58,4 +58,5 @@
 - [mergeWith](functions/mergeWith.md)
 - [notify](functions/notify.md)
 - [pick](functions/pick.md)
+- [raise](functions/raise.md)
 - [startWith](functions/startWith.md)

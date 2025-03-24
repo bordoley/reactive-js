@@ -9,5 +9,3 @@
 ## Functions
 
 - [create](functions/create.md)
-- [get](functions/get.md)
-- [setMaxYieldInterval](functions/setMaxYieldInterval.md)

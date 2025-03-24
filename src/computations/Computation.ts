@@ -59,7 +59,11 @@ import {
   pipe,
   returns,
 } from "../functions.js";
-import { DisposableLike, ListenerLike_notify, SinkLike } from "../utils.js";
+import {
+  DisposableLike,
+  EventListenerLike_notify,
+  SinkLike,
+} from "../utils.js";
 
 export interface ConcatManyOperator<TComputationType extends ComputationType> {
   <T>(
@@ -921,7 +925,7 @@ export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoize(
 export const notify: Signature["notify"] = /*@__PURE__*/ memoize(
   m =>
     <T>(sink: SinkLike<T>) =>
-      m.forEach(bindMethod(sink, ListenerLike_notify)),
+      m.forEach(bindMethod(sink, EventListenerLike_notify)),
 );
 
 export const pick: Signature["pick"] = /*@__PURE__*/ memoize(

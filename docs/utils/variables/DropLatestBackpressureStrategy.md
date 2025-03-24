@@ -6,4 +6,4 @@
 
 # Variable: DropLatestBackpressureStrategy
 
-> `const` **DropLatestBackpressureStrategy**: `"drop-latest"` = `"drop-latest"`
+> `const` **DropLatestBackpressureStrategy**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)

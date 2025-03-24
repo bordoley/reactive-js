@@ -6,7 +6,7 @@
 
 # Function: fromValue()
 
-> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+> **fromValue**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-[`FromValueOperator`](../../type-aliases/FromValueOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>

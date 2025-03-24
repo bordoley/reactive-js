@@ -16,6 +16,7 @@
 - [`SequentialReactiveComputationModule`](SequentialReactiveComputationModule.md)
 - [`MulticastedComputationModule`](MulticastedComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
+- [`DeferredReactiveComputationModule`](DeferredReactiveComputationModule.md)
 
 ## Type Parameters
 

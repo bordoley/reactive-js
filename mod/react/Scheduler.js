@@ -4,9 +4,10 @@ import { unstable_NormalPriority, unstable_now, unstable_scheduleCallback, unsta
 import { Map, Map_delete, Map_get, Map_set, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { bindMethod, newInstance, none, pipe } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js";
+import { SchedulerLike_now } from "../utils.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     const ReactScheduler_priority = Symbol("ReactScheduler_priority");
     return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(priority) {
@@ -16,7 +17,6 @@ const createReactScheduler = /*@__PURE__*/ (() => {
     }, props({
         [ReactScheduler_priority]: 3,
     }), {
-        [SchedulerLike_maxYieldInterval]: 300,
         get [SchedulerLike_now]() {
             return unstable_now();
         },
@@ -31,7 +31,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         },
     });
 })();
-export const get = /*@__PURE__*/ (() => {
+export const getImpl = /*@__PURE__*/ (() => {
     const schedulerCache = newInstance(Map);
     return (priority = unstable_NormalPriority) => schedulerCache[Map_get](priority) ??
         (() => {
@@ -40,3 +40,5 @@ export const get = /*@__PURE__*/ (() => {
             return pipe(scheduler, DisposableContainer.onDisposed(_ => schedulerCache[Map_delete](priority)));
         })();
 })();
+export const get = (priority = unstable_NormalPriority) => getImpl(priority);
+DefaultScheduler.set(getImpl(unstable_NormalPriority));

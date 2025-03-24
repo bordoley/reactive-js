@@ -10,7 +10,7 @@
 
 • **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
 
-> **PickOperator**\<`T`, `TKeyOfT`\>(`key`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfT`\]\>
+> **PickOperator**\<`T`, `TKeyOfT`\>(`key`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfT`\]\>
 
 ## Type Parameters
 
@@ -26,9 +26,9 @@
 
 ## Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfT`\]\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfT`\]\>
 
-> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`\>(`keyA`, `keyB`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
+> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`\>(`keyA`, `keyB`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
 
 ## Type Parameters
 
@@ -50,9 +50,9 @@
 
 ## Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\>
 
-> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`keyA`, `keyB`, `keyC`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>
+> **PickOperator**\<`T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`keyA`, `keyB`, `keyC`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>
 
 ## Type Parameters
 
@@ -80,4 +80,4 @@
 
 ## Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\[`TKeyOfTA`\]\[`TKeyOfTB`\]\[`TKeyOfTC`\]\>

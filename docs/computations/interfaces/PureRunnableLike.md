@@ -6,8 +6,6 @@
 
 # Interface: PureRunnableLike\<T\>
 
-Represents a deferred computation that is synchronously evaluated.
-
 ## Extends
 
 - [`RunnableLike`](RunnableLike.md)\<`T`\>

@@ -10,12 +10,7 @@ Represents a duplex stream
 
 ## Extends
 
-- [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`TReq`\>.[`MulticastObservableLike`](MulticastObservableLike.md)\<`T`\>
-
-## Extended by
-
-- [`AnimationGroupStreamLike`](../Streamable/interfaces/AnimationGroupStreamLike.md)
-- [`AnimationStreamLike`](../Streamable/interfaces/AnimationStreamLike.md)
+- [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`TReq`\>.[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>
 
 ## Type Parameters
 

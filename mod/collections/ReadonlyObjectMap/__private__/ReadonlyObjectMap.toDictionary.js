@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyObjectMap.toDictionary.d.ts" />
 
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
-import { newInstance, pipe } from "../../../functions.js";
+import { newInstance, pipe, returns } from "../../../functions.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 class ReadonlyObjectMapDictionary {
     [DictionaryLike_keys];
@@ -14,5 +14,6 @@ class ReadonlyObjectMapDictionary {
         return this.d[index];
     }
 }
-const ReadonlyObjectMap_toDictionary = () => (map) => newInstance(ReadonlyObjectMapDictionary, map);
+const ReadonlyObjectMap_toDictionary = 
+/*@__PURE__*/ returns((map) => newInstance(ReadonlyObjectMapDictionary, map));
 export default ReadonlyObjectMap_toDictionary;

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`SynchronousObservableLike`](SynchronousObservableLike.md)\<`T`\>.[`PureDeferredObservableLike`](PureDeferredObservableLike.md)\<`T`\>
+- [`PureObservableLike`](PureObservableLike.md)\<`T`\>.[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
 
 ## Type Parameters
 
@@ -22,7 +22,7 @@
 
 #### Overrides
 
-[`PureDeferredObservableLike`](PureDeferredObservableLike.md).[`[ComputationLike_isDeferred]`](PureDeferredObservableLike.md#computationlike_isdeferred)
+[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md).[`[ComputationLike_isDeferred]`](PureSynchronousComputationLike.md#computationlike_isdeferred)
 
 ***
 
@@ -32,7 +32,7 @@
 
 #### Overrides
 
-[`PureDeferredObservableLike`](PureDeferredObservableLike.md).[`[ComputationLike_isPure]`](PureDeferredObservableLike.md#computationlike_ispure)
+[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md).[`[ComputationLike_isPure]`](PureSynchronousComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -42,4 +42,4 @@
 
 #### Overrides
 
-[`SynchronousObservableLike`](SynchronousObservableLike.md).[`[ComputationLike_isSynchronous]`](SynchronousObservableLike.md#computationlike_issynchronous)
+[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](PureSynchronousComputationLike.md#computationlike_issynchronous)

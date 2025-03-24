@@ -6,7 +6,7 @@
 
 # Function: map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`, `TB`\>

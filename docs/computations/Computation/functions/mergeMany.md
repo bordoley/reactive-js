@@ -16,7 +16,7 @@
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`\>, `"merge"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`, \{\}\>, `"merge"`\>
 
 ## Returns
 

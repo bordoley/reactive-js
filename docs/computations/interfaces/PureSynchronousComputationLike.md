@@ -10,6 +10,10 @@
 
 - [`SynchronousComputationLike`](SynchronousComputationLike.md)
 
+## Extended by
+
+- [`PureSynchronousObservableLike`](PureSynchronousObservableLike.md)
+
 ## Properties
 
 ### \[ComputationLike\_isDeferred\]?

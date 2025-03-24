@@ -33,3 +33,13 @@
 #### Overrides
 
 [`PureDeferredComputationLike`](PureDeferredComputationLike.md).[`[ComputationLike_isPure]`](PureDeferredComputationLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+
+#### Overrides
+
+[`PureDeferredComputationLike`](PureDeferredComputationLike.md).[`[ComputationLike_isSynchronous]`](PureDeferredComputationLike.md#computationlike_issynchronous)

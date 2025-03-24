@@ -17,7 +17,7 @@ import type {
   ConsumerLike,
   DisposableContainerLike,
   DisposableLike,
-  ListenerLike,
+  EventListenerLike,
   ObserverLike,
   PauseableLike,
   SchedulerLike,
@@ -1477,9 +1477,9 @@ export const SourceLike_subscribe = Symbol("SourceLike_subscribe");
 
 export interface SourceLike<
   T,
-  TListener extends ListenerLike<T> = ListenerLike<T>,
+  TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
 > extends ComputationLike {
-  [SourceLike_subscribe](listener: TListener): void;
+  [SourceLike_subscribe](EventListener: TEventListener): void;
 }
 /**
  * @noInheritDoc

@@ -12,14 +12,23 @@
 
 ## Extended by
 
-- [`PureDeferredObservableLike`](PureDeferredObservableLike.md)
-- [`MulticastObservableLike`](MulticastObservableLike.md)
+- [`PureSynchronousObservableLike`](PureSynchronousObservableLike.md)
 
 ## Type Parameters
 
 • **T** = `unknown`
 
 ## Properties
+
+### \[ComputationLike\_isDeferred\]?
+
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+
+#### Overrides
+
+[`PureComputationLike`](PureComputationLike.md).[`[ComputationLike_isDeferred]`](PureComputationLike.md#computationlike_isdeferred)
+
+***
 
 ### \[ComputationLike\_isPure\]?
 

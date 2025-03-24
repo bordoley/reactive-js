@@ -6,7 +6,7 @@
 
 # Function: fromReadonlyArray()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`FromReadonlyArrayOperator`](../../type-aliases/FromReadonlyArrayOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>\>

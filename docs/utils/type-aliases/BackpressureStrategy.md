@@ -6,4 +6,4 @@
 
 # Type Alias: BackpressureStrategy
 
-> **BackpressureStrategy**: *typeof* [`DropLatestBackpressureStrategy`](../variables/DropLatestBackpressureStrategy.md) \| *typeof* [`DropOldestBackpressureStrategy`](../variables/DropOldestBackpressureStrategy.md) \| *typeof* [`OverflowBackpressureStrategy`](../variables/OverflowBackpressureStrategy.md) \| *typeof* [`ThrowBackpressureStrategy`](../variables/ThrowBackpressureStrategy.md)
+> **BackpressureStrategy**: `"drop-latest"` \| `"drop-oldest"` \| `"overflow"` \| `"throw"`

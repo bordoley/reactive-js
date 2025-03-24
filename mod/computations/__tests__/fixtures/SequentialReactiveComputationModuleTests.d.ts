@@ -1,3 +1,0 @@
-import { ComputationModule, ComputationType, ComputationTypeOf, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule } from "../../../computations.js";
-declare const SequentialReactiveComputationModuleTests: <TComputationType extends ComputationType>(m: ComputationModule<TComputationType> & SequentialComputationModule<TComputationType> & SequentialReactiveComputationModule<TComputationType> & SynchronousComputationModule<TComputationType>, computations: ComputationTypeOf<TComputationType>) => import("../../../__internal__/testing.js").Describe;
-export default SequentialReactiveComputationModuleTests;

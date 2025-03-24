@@ -140,7 +140,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\> & [`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`\>, `"map"` \| `"gen"` \| `"genWithSideEffects"` \| `"concatAll"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\> & [`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`\>, `"map"` \| `"gen"` \| `"genPure"` \| `"concatAll"`\>
 
 #### Returns
 
@@ -198,7 +198,7 @@ readonly `TComputationType`[]
 
 ### endWith()
 
-> **endWith**\<`TComputationType`\>(`m`): \<`T`\>(`value`, ...`values`) => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **endWith**\<`TComputationType`\>(`m`): \<`T`\>(`value`, ...`values`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -230,7 +230,7 @@ readonly `TComputationType`[]
 
 ##### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
@@ -270,7 +270,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\> & [`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<`TComputationType`\>, `"map"` \| `"fromAsyncFactory"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputationType, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputationType, T\>, T\>; (options: \{ innerType: TInnerLike \}): HigherOrderComputationOperator\<TComputationType, TInnerLike, HigherOrderInnerComputationOf\<TComputationType, TInnerLike, T\>, T\> \} : unknown \}
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\> & [`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<`TComputationType`, \{\}\>, `"map"` \| `"fromAsyncFactory"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputationType, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputationType, T\>, T\>; (options: \{ innerType: TInnerLike \}): HigherOrderComputationOperator\<TComputationType, TInnerLike, HigherOrderInnerComputationOf\<TComputationType, TInnerLike, T\>, T\> \} : unknown \}
 
 #### Returns
 
@@ -312,7 +312,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"map"` \| `"gen"` \| `"genWithSideEffects"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputationType, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputationType, T\>, T\>; (options: \{ innerType: TInnerLike \}): HigherOrderComputationOperator\<TComputationType, TInnerLike, HigherOrderInnerComputationOf\<TComputationType, TInnerLike, T\>, T\> \} : unknown \}
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"map"` \| `"gen"` \| `"genPure"`\> & \{ readonly \[key in string \| number \| symbol\]: key extends TFlattenKey ? \{ (): HigherOrderComputationOperator\<TComputationType, PureSynchronousComputationLike, PureSynchronousComputationOf\<TComputationType, T\>, T\>; (options: \{ innerType: TInnerLike \}): HigherOrderComputationOperator\<TComputationType, TInnerLike, HigherOrderInnerComputationOf\<TComputationType, TInnerLike, T\>, T\> \} : unknown \}
 
 #### Returns
 
@@ -334,7 +334,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"gen"` \| `"genWithSideEffects"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"gen"` \| `"genPure"`\>
 
 ##### options?
 
@@ -410,7 +410,7 @@ readonly `TComputationType`[]
 
 ### ignoreElements()
 
-> **ignoreElements**\<`TComputationType`\>(`m`): \<`T`\>() => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `any`, `T`\>
+> **ignoreElements**\<`TComputationType`\>(`m`): \<`T`\>() => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `any`, `T`\>
 
 #### Type Parameters
 
@@ -432,7 +432,7 @@ readonly `TComputationType`[]
 
 ##### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `any`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `any`, `T`\>
 
 ***
 
@@ -598,7 +598,7 @@ readonly `TComputationType`[]
 
 ### keepType()
 
-> **keepType**\<`TComputationType`\>(`m`): \<`TA`, `TB`\>(`predicate`) => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
+> **keepType**\<`TComputationType`\>(`m`): \<`TA`, `TB`\>(`predicate`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -628,7 +628,7 @@ readonly `TComputationType`[]
 
 ##### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
 
 ***
 
@@ -662,7 +662,7 @@ readonly `TComputationType`[]
 
 ### mapTo()
 
-> **mapTo**\<`TComputationType`\>(`m`): \<`T`\>(`value`) => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
+> **mapTo**\<`TComputationType`\>(`m`): \<`T`\>(`value`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
 
 #### Type Parameters
 
@@ -690,7 +690,7 @@ readonly `TComputationType`[]
 
 ##### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `unknown`, `T`\>
 
 ***
 
@@ -706,7 +706,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`\>, `"merge"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`, \{\}\>, `"merge"`\>
 
 #### Returns
 
@@ -726,7 +726,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`\>, `"merge"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<`TComputationType`, \{\}\>, `"merge"`\>
 
 #### Returns
 
@@ -736,7 +736,7 @@ readonly `TComputationType`[]
 
 ### notify()
 
-> **notify**\<`TComputationType`\>(`m`): \<`T`\>(`eventListener`) => [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
+> **notify**\<`TComputationType`\>(`m`): \<`T`\>(`eventSink`) => [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -758,9 +758,9 @@ readonly `TComputationType`[]
 
 ##### Parameters
 
-###### eventListener
+###### eventSink
 
-[`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>
+[`SinkLike`](../../../utils/interfaces/SinkLike.md)\<`T`\>
 
 ##### Returns
 
@@ -788,9 +788,45 @@ readonly `TComputationType`[]
 
 ***
 
+### raise()
+
+> **raise**\<`TComputationType`\>(`m`): \<`T`\>(`options`?) => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+
+#### Parameters
+
+##### m
+
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"genPure"`\>
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+##### Returns
+
+[`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+
+***
+
 ### startWith()
 
-> **startWith**\<`TComputationType`\>(`m`): \<`T`\>(`value`, ...`values`) => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **startWith**\<`TComputationType`\>(`m`): \<`T`\>(`value`, ...`values`) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -822,4 +858,4 @@ readonly `TComputationType`[]
 
 ##### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>

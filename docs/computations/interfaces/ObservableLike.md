@@ -8,33 +8,23 @@
 
 ## Extends
 
-- [`ComputationLike`](ComputationLike.md)
+- [`SourceLike`](SourceLike.md)\<`T`, [`ObserverLike`](../../utils/interfaces/ObserverLike.md)\<`T`\>\>.[`DeferredComputationLike`](DeferredComputationLike.md)
 
 ## Extended by
 
-- [`DeferredObservableLike`](DeferredObservableLike.md)
 - [`PureObservableLike`](PureObservableLike.md)
+- [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)
 
 ## Type Parameters
 
 • **T** = `unknown`
 
-## Methods
+## Properties
 
-### \[ObservableLike\_observe\]()
+### \[ComputationLike\_isDeferred\]?
 
-> **\[ObservableLike\_observe\]**(`observer`): `void`
+> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
 
-Subscribes the given `ObserverLike` to the `ObservableLike` source.
+#### Overrides
 
-#### Parameters
-
-##### observer
-
-[`ObserverLike`](../../utils/interfaces/ObserverLike.md)\<`T`\>
-
-The observer.
-
-#### Returns
-
-`void`
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationLike.md#computationlike_isdeferred)

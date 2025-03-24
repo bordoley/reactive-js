@@ -6,7 +6,7 @@
 
 # Function: notify()
 
-> **notify**\<`TComputationType`\>(`m`): \<`T`\>(`eventListener`) => [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
+> **notify**\<`TComputationType`\>(`m`): \<`T`\>(`eventSink`) => [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
 
 ## Type Parameters
 
@@ -28,9 +28,9 @@
 
 ### Parameters
 
-#### eventListener
+#### eventSink
 
-[`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>
+[`SinkLike`](../../../utils/interfaces/SinkLike.md)\<`T`\>
 
 ### Returns
 

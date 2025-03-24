@@ -96,8 +96,8 @@ export const QueueableLike_backpressureStrategy = Symbol(
 );
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyListener = Symbol(
-  "QueueableLike_addOnReadyListener",
+export const QueueableLike_addOnReadyEventListener = Symbol(
+  "QueueableLike_addOnReadyEventListener",
 );
 
 export interface QueueableLike extends DisposableLike {
@@ -113,7 +113,7 @@ export interface QueueableLike extends DisposableLike {
    */
   readonly [QueueableLike_capacity]: number;
 
-  [QueueableLike_addOnReadyListener](
+  [QueueableLike_addOnReadyEventListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
 }
@@ -286,14 +286,14 @@ export interface PauseableLike extends DisposableContainerLike {
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
-export const ListenerLike_notify = Symbol("ListenerLike_notify");
-export interface ListenerLike<T = unknown> extends DisposableLike {
+export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
+export interface EventListenerLike<T = unknown> extends DisposableLike {
   /**
    * Notifies the EventSink of the next notification produced by the source.
    *
    * @param next - The next notification value.
    */
-  [ListenerLike_notify](event: T): void;
+  [EventListenerLike_notify](event: T): void;
 }
 
 export const SinkLike_complete = Symbol("SinkLike_complete");
@@ -309,7 +309,7 @@ export interface SinkLike<T = unknown> extends DisposableLike {
    *
    * @param next - The next notification value.
    */
-  [ListenerLike_notify](event: T): void;
+  [EventListenerLike_notify](event: T): void;
 
   [SinkLike_complete](): void;
 }

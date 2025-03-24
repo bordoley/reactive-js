@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`, [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>\>
+> **repeat**\<`T`\>(`predicate`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -22,11 +22,11 @@
 
 ### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`, [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ## Call Signature
 
-> **repeat**\<`T`\>(`count`): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`, [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>\>
+> **repeat**\<`T`\>(`count`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -40,11 +40,11 @@
 
 ### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`, [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ## Call Signature
 
-> **repeat**\<`T`\>(): [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`, [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>\>
+> **repeat**\<`T`\>(): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>
 
 ### Type Parameters
 
@@ -52,4 +52,4 @@
 
 ### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`, [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`, `T`\>

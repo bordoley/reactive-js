@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArray.toDictionary.d.ts" />
 
 import { DictionaryLike_get, DictionaryLike_keys, } from "../../../collections.js";
-import { newInstance, pipe } from "../../../functions.js";
+import { newInstance, pipe, returns } from "../../../functions.js";
 import ReadonlyArray_keys from "./ReadonlyArray.keys.js";
 class ReadonlyArrayDictionary {
     d;
@@ -15,5 +15,6 @@ class ReadonlyArrayDictionary {
         return pipe(this.d, ReadonlyArray_keys());
     }
 }
-const ReadonlyArray_toDictionary = () => (arr) => newInstance(ReadonlyArrayDictionary, arr);
+const ReadonlyArray_toDictionary = 
+/*@__PURE__*/ returns((arr) => newInstance(ReadonlyArrayDictionary, arr));
 export default ReadonlyArray_toDictionary;

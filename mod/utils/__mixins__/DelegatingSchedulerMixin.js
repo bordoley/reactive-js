@@ -4,7 +4,8 @@ import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, none, pipe } from "../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
-const DelegatingSchedulerMixin = /*@__PURE__*/ (() => {
+const DelegatingSchedulerMixin = 
+/*@__PURE__*/ (() => {
     const DelegatingSchedulerMixin_delegate = Symbol("DelegatingSchedulerMixin_delegate");
     const DelegatingSchedulerMixin_scheduler = Symbol("DelegatingSchedulerMixin_scheduler");
     const DelegatingSchedulerMixin_scheduleCallback = Symbol("DelegatingSchedulerMixin_scheduleCallback");

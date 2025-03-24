@@ -8,11 +8,13 @@
 
 ## Extends
 
-- [`ComputationLike`](ComputationLike.md).[`MulticastLike`](MulticastLike.md)
+- [`SourceLike`](SourceLike.md)\<`T`\>.[`DisposableContainerLike`](../../utils/interfaces/DisposableContainerLike.md).[`MulticastComputationLike`](MulticastComputationLike.md)
 
 ## Extended by
 
-- [`SubjectLike`](SubjectLike.md)
+- [`PublisherLike`](PublisherLike.md)
+- [`StoreLike`](StoreLike.md)
+- [`StreamLike`](StreamLike.md)
 
 ## Type Parameters
 
@@ -26,7 +28,7 @@
 
 #### Overrides
 
-[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isDeferred]`](MulticastLike.md#computationlike_isdeferred)
+[`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isDeferred]`](MulticastComputationLike.md#computationlike_isdeferred)
 
 ***
 
@@ -36,7 +38,7 @@
 
 #### Overrides
 
-[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isPure]`](MulticastLike.md#computationlike_ispure)
+[`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isPure]`](MulticastComputationLike.md#computationlike_ispure)
 
 ***
 
@@ -46,90 +48,4 @@
 
 #### Overrides
 
-[`MulticastLike`](MulticastLike.md).[`[ComputationLike_isSynchronous]`](MulticastLike.md#computationlike_issynchronous)
-
-## Methods
-
-### \[BroadcasterLike\_connect\]()
-
-> **\[BroadcasterLike\_connect\]**(`sink`): `void`
-
-#### Parameters
-
-##### sink
-
-[`SinkLike`](../../utils/interfaces/SinkLike.md)\<`T`\>
-
-#### Returns
-
-`void`
-
-***
-
-### \[DisposableContainerLike\_add\]()
-
-#### Call Signature
-
-> **\[DisposableContainerLike\_add\]**(`disposable`): `void`
-
-Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
-
-##### Parameters
-
-###### disposable
-
-`Disposable`
-
-The disposable to add.
-
-##### Returns
-
-`void`
-
-##### Inherited from
-
-[`MulticastLike`](MulticastLike.md).[`[DisposableContainerLike_add]`](MulticastLike.md#disposablecontainerlike_add)
-
-#### Call Signature
-
-> **\[DisposableContainerLike\_add\]**(`teardown`): `void`
-
-Adds the given teardown function to this container or disposes it if the container has been disposed.
-
-##### Parameters
-
-###### teardown
-
-[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
-
-The teardown function to add.
-
-##### Returns
-
-`void`
-
-##### Inherited from
-
-[`MulticastLike`](MulticastLike.md).[`[DisposableContainerLike_add]`](MulticastLike.md#disposablecontainerlike_add)
-
-#### Call Signature
-
-> **\[DisposableContainerLike\_add\]**(`teardown`): `void`
-
-Adds the given teardown function to this container or disposes it if the container has been disposed.
-
-##### Parameters
-
-###### teardown
-
-[`Method1`](../../functions/type-aliases/Method1.md)\<[`DisposableLike`](../../utils/interfaces/DisposableLike.md), [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
-
-The teardown function to add.
-
-##### Returns
-
-`void`
-
-##### Inherited from
-
-[`MulticastLike`](MulticastLike.md).[`[DisposableContainerLike_add]`](MulticastLike.md#disposablecontainerlike_add)
+[`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isSynchronous]`](MulticastComputationLike.md#computationlike_issynchronous)

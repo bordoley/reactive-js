@@ -13,9 +13,7 @@
 - [`DeferredComputationLike`](DeferredComputationLike.md)
 - [`SynchronousComputationLike`](SynchronousComputationLike.md)
 - [`MulticastComputationLike`](MulticastComputationLike.md)
-- [`ProducerLike`](ProducerLike.md)
-- [`ObservableLike`](ObservableLike.md)
-- [`BroadcasterLike`](BroadcasterLike.md)
+- [`SourceLike`](SourceLike.md)
 
 ## Properties
 

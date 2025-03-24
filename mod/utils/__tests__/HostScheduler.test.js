@@ -53,16 +53,16 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
 import { expectTrue, testAsync, testModule, } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
-import { pipe } from "../../functions.js";
-import { SchedulerLike_now } from "../../utils.js";
+import { ignore, pipe } from "../../functions.js";
+import { SchedulerLike_now, SchedulerLike_schedule } from "../../utils.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import * as HostScheduler from "../HostScheduler.js";
 testModule("HostScheduler", testAsync("delayed continuation", async () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const scheduler = __addDisposableResource(env_1, HostScheduler.create(), false);
         const start = scheduler[SchedulerLike_now];
-        await pipe(Observable.empty({ delay: 20 }), Observable.firstAsync({ scheduler }));
+        await pipe(scheduler[SchedulerLike_schedule](ignore, { delay: 20 }), DisposableContainer.toPromise);
         const end = scheduler[SchedulerLike_now];
         pipe(end - start >= 20, expectTrue("expected more than 20 ms to elapse"));
     }

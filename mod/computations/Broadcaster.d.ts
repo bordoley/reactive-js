@@ -1,17 +1,23 @@
-import { BroadcasterLike, DeferredObservableWithSideEffectsLike, EventSourceLike } from "../computations.js";
+import { BroadcasterLike, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike, PauseableLike, SinkLike } from "../utils.js";
+import { DisposableLike } from "../utils.js";
+/**
+ * @noInheritDoc
+ */
+export interface BroadcasterComputation extends ComputationType {
+    readonly [Computation_baseOfT]?: BroadcasterLike<this[typeof Computation_T]>;
+    readonly [Computation_pureSynchronousOfT]?: never;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: never;
+    readonly [Computation_pureDeferredOfT]?: never;
+    readonly [Computation_deferredWithSideEffectsOfT]?: never;
+    readonly [Computation_multicastOfT]?: BroadcasterLike<this[typeof Computation_T]>;
+}
+export type Computation = BroadcasterComputation;
+/**
+ * @noInheritDoc
+ */
 export interface BroadcasterModule {
-    create<T>(setup: SideEffect1<SinkLike<T>>, options?: {
-        readonly autoDispose?: boolean;
-        readonly replay?: number;
-    }): BroadcasterLike<T> & DisposableLike;
-    createPauseable<T>(op: Function1<EventSourceLike<boolean> & DisposableLike, BroadcasterLike<T>>): PauseableLike & BroadcasterLike<T> & DisposableLike;
-    toEventSource<T>(): <TBroadcaster extends BroadcasterLike<T>>(broadcaster: TBroadcaster) => TBroadcaster extends PauseableLike ? PauseableLike & EventSourceLike<T> : EventSourceLike<T>;
-    toObservable<T>(): Function1<BroadcasterLike<T>, DeferredObservableWithSideEffectsLike<T>>;
+    addEventHandler<T>(onNotify: SideEffect1<T>): Function1<BroadcasterLike<T>, DisposableLike>;
 }
 export type Signature = BroadcasterModule;
-export declare const create: Signature["create"];
-export declare const createPauseable: Signature["createPauseable"];
-export declare const toEventSource: Signature["toEventSource"];
-export declare const toObservable: Signature["toObservable"];
+export declare const addEventHandler: Signature["addEventHandler"];

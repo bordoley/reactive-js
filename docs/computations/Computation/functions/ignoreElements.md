@@ -6,7 +6,7 @@
 
 # Function: ignoreElements()
 
-> **ignoreElements**\<`TComputationType`\>(`m`): \<`T`\>() => [`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `any`, `T`\>
+> **ignoreElements**\<`TComputationType`\>(`m`): \<`T`\>() => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `any`, `T`\>
 
 ## Type Parameters
 
@@ -28,4 +28,4 @@
 
 ### Returns
 
-[`StatelessComputationOperator`](../../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `any`, `T`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<`TComputationType`, `any`, `T`\>

@@ -8,15 +8,14 @@
 
 ## Interfaces
 
+- [BroadcasterComputation](interfaces/BroadcasterComputation.md)
 - [BroadcasterModule](interfaces/BroadcasterModule.md)
 
 ## Type Aliases
 
+- [Computation](type-aliases/Computation.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions
 
-- [create](functions/create.md)
-- [createPauseable](functions/createPauseable.md)
-- [toEventSource](functions/toEventSource.md)
-- [toObservable](functions/toObservable.md)
+- [addEventHandler](functions/addEventHandler.md)

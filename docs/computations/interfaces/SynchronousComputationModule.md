@@ -13,8 +13,6 @@
 ## Extended by
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
-- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
-- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 
@@ -101,26 +99,6 @@
 #### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
-
-***
-
-### run()
-
-> **run**\<`T`\>(`options`?): [`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"run"`\]
-
-#### Returns
-
-[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 

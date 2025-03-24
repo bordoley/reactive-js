@@ -10,10 +10,6 @@
 
 - [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
-## Extended by
-
-- [`EventSourceModule`](../EventSource/interfaces/EventSourceModule.md)
-
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
@@ -41,17 +37,3 @@
 #### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>\>
-
-***
-
-### never()
-
-> **never**\<`T`\>(): [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>

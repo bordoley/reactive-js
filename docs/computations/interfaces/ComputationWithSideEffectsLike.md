@@ -13,6 +13,7 @@
 ## Extended by
 
 - [`AsyncIterableWithSideEffectsLike`](AsyncIterableWithSideEffectsLike.md)
+- [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)
 
 ## Properties
 

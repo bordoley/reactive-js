@@ -8,11 +8,11 @@
 
 ## Extends
 
-- [`EventListenerLike`](EventListenerLike.md)\<`T`\>
+- [`DisposableLike`](DisposableLike.md)
 
 ## Extended by
 
-- [`SubjectLike`](../../computations/interfaces/SubjectLike.md)
+- [`PublisherLike`](../../computations/interfaces/PublisherLike.md)
 - [`ConsumerLike`](ConsumerLike.md)
 
 ## Type Parameters
@@ -26,6 +26,24 @@
 > `readonly` **\[SinkLike\_isCompleted\]**: `boolean`
 
 ## Methods
+
+### \[EventListenerLike\_notify\]()
+
+> **\[EventListenerLike\_notify\]**(`event`): `void`
+
+Notifies the EventSink of the next notification produced by the source.
+
+#### Parameters
+
+##### event
+
+`T`
+
+#### Returns
+
+`void`
+
+***
 
 ### \[SinkLike\_complete\]()
 

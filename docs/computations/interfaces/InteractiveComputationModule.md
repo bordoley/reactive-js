@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 
 ## Type Parameters
@@ -34,3 +33,17 @@
 ### zip
 
 > **zip**: `ZipConstructor`\<`TComputationType`\>
+
+## Methods
+
+### toObservable()
+
+> **toObservable**\<`T`\>(): [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>

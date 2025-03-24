@@ -1,7 +1,7 @@
 /// <reference types="./Computation.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredComputationWithSideEffects, } from "../computations.js";
-import { alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, memoize, pickUnsafe, pipe, returns, } from "../functions.js";
+import { raise as Functions_raise, alwaysFalse, bindMethod, debug as breakPoint, compose, log as consoleLog, error, memoize, pickUnsafe, pipe, returns, } from "../functions.js";
 import { EventListenerLike_notify, } from "../utils.js";
 export const areAllDeferred = (computations) => computations.every(isDeferred);
 export const areAllMulticasted = (computations) => computations.every(isMulticasted);
@@ -14,7 +14,7 @@ export const concatMapIterable =
 export const concatMany = /*@__PURE__*/ memoize(m => (computations) => m.concat(...computations));
 export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.concat(fst, ...tail));
 export const debug = /*@__PURE__*/ memoize(m => returns(m.forEach(breakPoint)));
-export const endWith = /*@__PURE__*/ memoize(m => (...values) => concatWith(m)(m.fromReadonlyArray()(values)));
+export const endWith = /*@__PURE__*/ memoize(m => (...values) => pipe(values, m.fromReadonlyArray(), concatWith(m)));
 export const flatMap = /*@__PURE__*/ (() => memoize((m) => (flatten, selector, options) => compose((x) => x, m.map(selector), m[flatten](options))))();
 export const flatMapAsync = /*@__PURE__*/ (() => memoize((m) => (key, f) => {
     const mapper = (a) => pipe((options) => f(a, options), m.fromAsyncFactory());
@@ -29,7 +29,7 @@ export const flatMapIterable = /*@__PURE__*/ (() => memoize((m) => (key, selecto
 export const fromIterable = ((m, options) => 
 // FIXME: Memoize if no options
 (iterable) => {
-    const gen = isPure(iterable) ? m.gen : m.genWithSideEffects;
+    const gen = isPure(iterable) ? m.genPure : m.gen;
     return gen(function* FromIterable() {
         yield* iterable;
     }, options);
@@ -64,6 +64,10 @@ export const log = /*@__PURE__*/ memoize(m => returns(m.forEach(consoleLog)));
 export const mapTo = /*@__PURE__*/ memoize(m => (v) => m.map(returns(v)));
 export const mergeMany = /*@__PURE__*/ memoize(m => (computations) => m.merge(...computations));
 export const mergeWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.merge(fst, ...tail));
-export const notify = /*@__PURE__*/ memoize(m => (eventListener) => m.forEach(bindMethod(eventListener, EventListenerLike_notify)));
+export const notify = /*@__PURE__*/ memoize(m => (sink) => m.forEach(bindMethod(sink, EventListenerLike_notify)));
 export const pick = /*@__PURE__*/ memoize(m => (...keys) => m.map(pickUnsafe(...keys)));
+export const raise = /*@__PURE__*/ memoize(m => (options) => m.genPure(function* ComputationRaise() {
+    const { raise: factory = Functions_raise } = options ?? {};
+    pipe(factory, error, Functions_raise);
+}));
 export const startWith = /*@__PURE__*/ memoize(m => (...values) => (computation) => pipe(m.fromReadonlyArray()(values), concatWith(m)(computation)));

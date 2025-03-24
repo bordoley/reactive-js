@@ -12,10 +12,7 @@
 
 ## Extended by
 
-- [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
-- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
-- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 
@@ -37,7 +34,7 @@
 
 #### Call Signature
 
-> **catchError**\<`T`\>(`onError`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -51,7 +48,7 @@
 
 ##### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Call Signature
 
@@ -197,11 +194,11 @@
 
 ### encodeUtf8()
 
-> **encodeUtf8**(): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+> **encodeUtf8**(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ***
 
@@ -229,7 +226,7 @@
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+> **repeat**\<`T`\>(`predicate`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -243,11 +240,11 @@
 
 ##### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(`count`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+> **repeat**\<`T`\>(`count`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -261,11 +258,11 @@
 
 ##### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Call Signature
 
-> **repeat**\<`T`\>(): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+> **repeat**\<`T`\>(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -273,13 +270,13 @@
 
 ##### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
 ### retry()
 
-> **retry**\<`T`\>(`shouldRetry`?): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+> **retry**\<`T`\>(`shouldRetry`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -293,87 +290,13 @@
 
 #### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`, [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>\>
-
-***
-
-### scan()
-
-> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
-
-#### Type Parameters
-
-• **T**
-
-• **TAcc**
-
-#### Parameters
-
-##### scanner
-
-[`Reducer`](../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
-
-##### initialValue
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
-
-#### Returns
-
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
-
-***
-
-### takeFirst()
-
-> **takeFirst**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### count?
-
-`number`
-
-#### Returns
-
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-***
-
-### takeWhile()
-
-> **takeWhile**\<`T`\>(`predicate`, `options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### predicate
-
-[`Predicate`](../../functions/type-aliases/Predicate.md)\<`T`\>
-
-##### options?
-
-###### inclusive?
-
-`boolean`
-
-#### Returns
-
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
 ### throwIfEmpty()
 
-> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **throwIfEmpty**\<`T`\>(`factory`, `options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -391,4 +314,4 @@
 
 #### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
