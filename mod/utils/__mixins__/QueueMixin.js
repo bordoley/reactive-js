@@ -6,7 +6,7 @@ import Broadcaster_addEventHandler from "../../computations/Broadcaster/__privat
 import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_enqueue, QueueableLike_addOnReadyEventListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_enqueue, QueueLike_head, QueueableLike_addOnReadyEventListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
@@ -66,6 +66,17 @@ const QueueMixin =
             const capacity = this[QueueableLike_capacity];
             const isDisposed = this[DisposableLike_isDisposed];
             return count < capacity && !isDisposed;
+        },
+        get [QueueLike_head]() {
+            unsafeCast(this);
+            const head = this[QueueMixin_head];
+            const values = this[QueueMixin_values];
+            const count = this[CollectionEnumeratorLike_count];
+            return count === 0
+                ? none
+                : count === 1
+                    ? values
+                    : values[head];
         },
         /*get [QueueLike_tail]() {
           unsafeCast<TProperties>(this);

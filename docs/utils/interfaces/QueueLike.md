@@ -14,6 +14,12 @@
 
 • **T** = `unknown`
 
+## Properties
+
+### \[QueueLike\_head\]
+
+> **\[QueueLike\_head\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>
+
 ## Methods
 
 ### \[QueueLike\_enqueue\]()

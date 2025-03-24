@@ -263,4 +263,27 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     finally {
         __disposeResources(env_8);
     }
+}), test("with multiple delayed continuations with same delay", () => {
+    const env_9 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_9, VirtualTimeScheduler.create({
+            maxMicroTaskTicks: 1,
+        }), false);
+        let count = 0;
+        vts[SchedulerLike_schedule](() => {
+            count++;
+        }, { delay: 1 });
+        vts[SchedulerLike_schedule](() => {
+            count++;
+        }, { delay: 1 });
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(count, expectEquals(2));
+    }
+    catch (e_9) {
+        env_9.error = e_9;
+        env_9.hasError = true;
+    }
+    finally {
+        __disposeResources(env_9);
+    }
 }));

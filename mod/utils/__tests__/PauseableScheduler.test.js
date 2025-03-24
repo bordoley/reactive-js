@@ -55,14 +55,41 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { pipe } from "../../functions.js";
-import { DisposableLike_dispose, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as PauseableScheduler from "../PauseableScheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("PauseableScheduler", test("with disposed continuations", () => {
+testModule("PauseableScheduler", test("pausing the scheduler from a continuation", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
         const pauseableScheduler = __addDisposableResource(env_1, PauseableScheduler.create(vts), false);
+        let result = [];
+        pauseableScheduler[SchedulerLike_schedule](() => {
+            result[Array_push](0);
+        });
+        pauseableScheduler[SchedulerLike_schedule](() => {
+            result[Array_push](1);
+            pauseableScheduler[PauseableLike_pause]();
+        });
+        pauseableScheduler[SchedulerLike_schedule](() => {
+            result[Array_push](2);
+        });
+        pauseableScheduler[PauseableLike_resume]();
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([0, 1]));
+    }
+    catch (e_1) {
+        env_1.error = e_1;
+        env_1.hasError = true;
+    }
+    finally {
+        __disposeResources(env_1);
+    }
+}), test("with disposed continuations", () => {
+    const env_2 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
+        const pauseableScheduler = __addDisposableResource(env_2, PauseableScheduler.create(vts), false);
         let result = [];
         pauseableScheduler[SchedulerLike_schedule](() => {
             result[Array_push](0);
@@ -82,18 +109,18 @@ testModule("PauseableScheduler", test("with disposed continuations", () => {
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([0, 3]));
     }
-    catch (e_1) {
-        env_1.error = e_1;
-        env_1.hasError = true;
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
     }
     finally {
-        __disposeResources(env_1);
+        __disposeResources(env_2);
     }
 }), test("with delayed continuations", () => {
-    const env_2 = { stack: [], error: void 0, hasError: false };
+    const env_3 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
-        const pauseableScheduler = __addDisposableResource(env_2, PauseableScheduler.create(vts), false);
+        const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
+        const pauseableScheduler = __addDisposableResource(env_3, PauseableScheduler.create(vts), false);
         let result = [];
         pauseableScheduler[SchedulerLike_schedule](() => {
             result[Array_push](pauseableScheduler[SchedulerLike_now]);
@@ -105,11 +132,11 @@ testModule("PauseableScheduler", test("with disposed continuations", () => {
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([3, 5]));
     }
-    catch (e_2) {
-        env_2.error = e_2;
-        env_2.hasError = true;
+    catch (e_3) {
+        env_3.error = e_3;
+        env_3.hasError = true;
     }
     finally {
-        __disposeResources(env_2);
+        __disposeResources(env_3);
     }
 }));

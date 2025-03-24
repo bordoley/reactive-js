@@ -94,11 +94,13 @@ export declare const CollectionEnumeratorLike_count: unique symbol;
 export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
     readonly [CollectionEnumeratorLike_count]: number;
 }
+export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_enqueue: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T>, QueueableLike {
+    [QueueLike_head]: Optional<T>;
     [QueueLike_enqueue](v: T): void;
 }
 export declare const SchedulerLike_inContinuation: unique symbol;

@@ -9,8 +9,7 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as Iterable from "../computations/Iterable.js";
-import { Optional, isSome, none, pipe } from "../functions.js";
+import { Optional, none } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
 import {
   CollectionEnumeratorLike_count,

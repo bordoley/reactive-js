@@ -56,6 +56,7 @@
 - [QueueableLike\_capacity](variables/QueueableLike_capacity.md)
 - [QueueableLike\_isReady](variables/QueueableLike_isReady.md)
 - [QueueLike\_enqueue](variables/QueueLike_enqueue.md)
+- [QueueLike\_head](variables/QueueLike_head.md)
 - [SchedulerLike\_inContinuation](variables/SchedulerLike_inContinuation.md)
 - [SchedulerLike\_maxYieldInterval](variables/SchedulerLike_maxYieldInterval.md)
 - [SchedulerLike\_now](variables/SchedulerLike_now.md)

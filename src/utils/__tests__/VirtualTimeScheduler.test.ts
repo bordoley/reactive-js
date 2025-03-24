@@ -212,14 +212,14 @@ testModule(
 
     let count = 0;
     vts[SchedulerLike_schedule](
-      (ctx: ContinuationContextLike) => {
+      () => {
         count++;
       },
       { delay: 1 },
     );
 
     vts[SchedulerLike_schedule](
-      (ctx: ContinuationContextLike) => {
+      () => {
         count++;
       },
       { delay: 1 },
