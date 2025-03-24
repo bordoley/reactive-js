@@ -3,18 +3,12 @@ import {
   init,
   mixInstanceFactory,
   props,
-  proto,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { SideEffect1, none } from "../../functions.js";
 import {
   DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
-  SinkLike_complete,
-  SinkLike_isCompleted,
 } from "../../utils.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 
@@ -27,7 +21,7 @@ export const create: <T>(
 
   return mixInstanceFactory(
     include(DisposableMixin),
-    function Sink(
+    function EventListener(
       this: TProperties & Omit<EventListenerLike<T>, keyof DisposableLike>,
       notify: (this: EventListenerLike<T>, a: T) => void,
     ): EventListenerLike<T> {
@@ -39,15 +33,6 @@ export const create: <T>(
     },
     props<TProperties>({
       [EventListenerLike_notify]: none,
-    }),
-    proto({
-      get [SinkLike_isCompleted]() {
-        unsafeCast<DisposableLike>(this);
-        return this[DisposableLike_isDisposed];
-      },
-      [SinkLike_complete](this: DisposableLike) {
-        this[DisposableLike_dispose]();
-      },
     }),
   );
 })();

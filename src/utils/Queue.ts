@@ -12,8 +12,8 @@ const createInternal: <T>(options?: {
   capacity?: number;
   comparator?: Comparator<T>;
   backpressureStrategy?: BackpressureStrategy;
-}) => QueueLike<T> = /*@__PURE__*/ (<T>() => {
-  const createQueue = mixInstanceFactory(
+}) => QueueLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
     include(DisposableMixin, QueueMixin()),
     function Queue(
       this: unknown,
@@ -28,22 +28,7 @@ const createInternal: <T>(options?: {
 
       return this;
     },
-  );
-
-  return (options?: {
-    capacity?: number;
-    comparator?: Comparator<T>;
-    backpressureStrategy?: BackpressureStrategy;
-  }) => {
-    return createQueue(
-      options as Optional<{
-        capacity?: number;
-        comparator?: Comparator<unknown>;
-        backpressureStrategy?: BackpressureStrategy;
-      }>,
-    );
-  };
-})();
+  ))();
 
 export const create = <T>(): QueueLike<T> => createInternal();
 

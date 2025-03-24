@@ -10,9 +10,9 @@ import type * as Broadcaster from "../../Broadcaster.js";
 const Broadcaster_addEventHandler: Broadcaster.Signature["addEventHandler"] =
   <T>(handler: SideEffect1<T>) =>
   (source: BroadcasterLike<T>) => {
-    const eventEventListener = EventListener.create<T>(handler);
-    source[SourceLike_subscribe](eventEventListener);
-    return eventEventListener;
+    const eventListener = EventListener.create<T>(handler);
+    source[SourceLike_subscribe](eventListener);
+    return eventListener;
   };
 
 export default Broadcaster_addEventHandler;
