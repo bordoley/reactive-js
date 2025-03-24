@@ -3,7 +3,7 @@
 import { Set_add, Set_delete, Set_has, Set_size, } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
+import { call, error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
@@ -12,19 +12,20 @@ const PublisherMixin = /*@__PURE__*/ (() => {
     const Publisher_EventListeners = Symbol("Publisher_EventListeners");
     const Publisher_onSinkDisposed = Symbol("Publisher_onSinkDisposed");
     function onPublisherDisposed(e) {
+        const isCompleted = this[SinkLike_isCompleted];
+        this[SinkLike_isCompleted] = true;
+        if (isCompleted) {
+            return;
+        }
         const maybeEventListeners = this[Publisher_EventListeners];
         const EventListeners = maybeEventListeners instanceof Set
             ? maybeEventListeners
             : isSome(maybeEventListeners)
                 ? [maybeEventListeners]
                 : [];
-        if (isSome(e)) {
-            for (const EventListener of EventListeners) {
-                EventListener[DisposableLike_dispose](e);
-            }
+        for (const EventListener of EventListeners) {
+            EventListener[DisposableLike_dispose](e);
         }
-        this[Publisher_EventListeners] = none;
-        this[SinkLike_isCompleted] = true;
     }
     return returns(mix(include(DisposableMixin), function PublisherMixin(options) {
         init(DisposableMixin, this);
@@ -77,21 +78,7 @@ const PublisherMixin = /*@__PURE__*/ (() => {
             }
         },
         [SinkLike_complete]() {
-            const isCompleted = this[SinkLike_isCompleted];
-            this[SinkLike_isCompleted] = true;
-            if (isCompleted) {
-                return;
-            }
-            const maybeEventListeners = this[Publisher_EventListeners];
-            const EventListeners = maybeEventListeners instanceof Set
-                ? maybeEventListeners
-                : isSome(maybeEventListeners)
-                    ? [maybeEventListeners]
-                    : [];
-            for (const EventListener of EventListeners) {
-                EventListener[DisposableLike_dispose]();
-            }
-            this[DisposableLike_dispose]();
+            call(onPublisherDisposed, this, none);
         },
         [SourceLike_subscribe](EventListener) {
             const maybeEventListeners = this[Publisher_EventListeners];

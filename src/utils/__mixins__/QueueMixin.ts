@@ -190,12 +190,10 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             const onReadySignal = this[QueueMixin_onReadyPublisher];
 
             if (count < 1) {
+              // Queue was empty to start with;
               this[EnumeratorLike_current] = none as T;
               this[EnumeratorLike_hasCurrent] = false;
-
-              shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
-
-              return this[EnumeratorLike_hasCurrent];
+              return false;
             }
 
             if (count === 1) {
@@ -208,7 +206,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
               shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
-              return this[EnumeratorLike_hasCurrent];
+              return true;
             }
 
             unsafeCast<Optional<T>[]>(values);
@@ -230,7 +228,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
               shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
-              return this[EnumeratorLike_hasCurrent];
+              return true;
             }
 
             if (isSorted) {
@@ -327,7 +325,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
             shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
 
-            return this[EnumeratorLike_hasCurrent];
+            return true;
           },
 
           *[Symbol.iterator](this: QueueLike<T> & TProperties): Iterator<T> {

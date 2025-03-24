@@ -30,7 +30,14 @@ const createInternal: <T>(options?: {
     },
   ))();
 
-export const create = <T>(): QueueLike<T> => createInternal();
+export const create = <T>(options?: {
+  capacity?: number;
+  backpressureStrategy?: BackpressureStrategy;
+}): QueueLike<T> =>
+  createInternal({
+    capacity: options?.capacity,
+    backpressureStrategy: options?.backpressureStrategy,
+  });
 
 export const createSorted = <T>(comparator: Comparator<T>): QueueLike<T> =>
   createInternal({

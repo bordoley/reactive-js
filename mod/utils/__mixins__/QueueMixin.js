@@ -84,10 +84,10 @@ const QueueMixin =
             const shouldNotifyReady = count === capacity && capacity > 0 && !isDisposed;
             const onReadySignal = this[QueueMixin_onReadyPublisher];
             if (count < 1) {
+                // Queue was empty to start with;
                 this[EnumeratorLike_current] = none;
                 this[EnumeratorLike_hasCurrent] = false;
-                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
-                return this[EnumeratorLike_hasCurrent];
+                return false;
             }
             if (count === 1) {
                 const item = this[QueueMixin_values];
@@ -96,7 +96,7 @@ const QueueMixin =
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
                 shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
-                return this[EnumeratorLike_hasCurrent];
+                return true;
             }
             unsafeCast(values);
             const isSorted = isSome(this[QueueMixin_comparator]);
@@ -112,7 +112,7 @@ const QueueMixin =
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
                 shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
-                return this[EnumeratorLike_hasCurrent];
+                return true;
             }
             if (isSorted) {
                 const compare = this[QueueMixin_comparator];
@@ -180,7 +180,7 @@ const QueueMixin =
             this[EnumeratorLike_current] = item;
             this[EnumeratorLike_hasCurrent] = true;
             shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
-            return this[EnumeratorLike_hasCurrent];
+            return true;
         },
         *[Symbol.iterator]() {
             const values = this[QueueMixin_values];

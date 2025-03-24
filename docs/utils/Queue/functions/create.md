@@ -6,11 +6,23 @@
 
 # Function: create()
 
-> **create**\<`T`\>(): [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
+> **create**\<`T`\>(`options`?): [`QueueLike`](../../interfaces/QueueLike.md)\<`T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+#### backpressureStrategy?
+
+[`BackpressureStrategy`](../../type-aliases/BackpressureStrategy.md)
+
+#### capacity?
+
+`number`
 
 ## Returns
 
