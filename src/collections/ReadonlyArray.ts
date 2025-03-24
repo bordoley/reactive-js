@@ -1,5 +1,5 @@
 import {
-  Collection,
+  CollectionType,
   CollectionModule,
   CollectionOf,
   Collection_T,
@@ -22,7 +22,7 @@ import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__private__/ReadonlyArr
 /**
  * @noInheritDoc
  */
-export interface ReadonlyArrayCollection extends Collection<number> {
+export interface ReadonlyArrayCollection extends CollectionType<number> {
   readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
 }
 
@@ -64,6 +64,8 @@ export interface ReadonlyArrayModule
 }
 
 export type Signature = ReadonlyArrayModule;
+
+export type Collection = ReadonlyArrayCollection;
 
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;

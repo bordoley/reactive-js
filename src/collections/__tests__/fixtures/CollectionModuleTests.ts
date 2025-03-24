@@ -6,7 +6,7 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  Collection,
+  CollectionType,
   CollectionModule,
   CollectionOf,
   DictionaryLike_get,
@@ -27,7 +27,7 @@ import * as Dictionary from "../../Dictionary.js";
 import * as ReadonlyArray from "../../ReadonlyArray.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
 
-const CollectionModuleTests = <C extends Collection>(
+const CollectionModuleTests = <C extends CollectionType>(
   m: CollectionModule<C>,
   fromReadonlyArray: <T>() => Function1<
     ReadonlyArray<T>,

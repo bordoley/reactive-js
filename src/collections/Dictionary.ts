@@ -1,5 +1,5 @@
 import {
-  Collection,
+  CollectionType,
   Collection_T,
   Collection_TKey,
   Collection_type,
@@ -23,7 +23,7 @@ import Dictionary_values from "./Dictionary/__private__/Dictionary.values.js";
 /**
  * @noInheritDoc
  */
-export interface DictionaryCollection<TKey = unknown> extends Collection<TKey> {
+export interface DictionaryCollection<TKey = unknown> extends CollectionType<TKey> {
   readonly [Collection_type]?: DictionaryLike<
     NonNullable<this[typeof Collection_TKey]>,
     this[typeof Collection_T]
@@ -35,6 +35,8 @@ export interface DictionaryCollection<TKey = unknown> extends Collection<TKey> {
 export type TKeyBase = KeyOf<DictionaryCollection>;
 
 export type Signature = DictionaryCollectionModule<DictionaryCollection>;
+
+export type Collection<TKey = unknown> = DictionaryCollection<TKey>;
 
 export const empty: Signature["empty"] = Dictionary_empty;
 export const entries: Signature["entries"] = Dictionary_entries;

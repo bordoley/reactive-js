@@ -1,5 +1,5 @@
 import {
-  Collection,
+  CollectionType,
   Collection_T,
   Collection_TKey,
   Collection_type,
@@ -24,7 +24,7 @@ import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__private__/ReadonlyOb
  * @noInheritDoc
  */
 export interface ReadonlyObjectMapCollection<TKey extends string = string>
-  extends Collection<TKey> {
+  extends CollectionType<TKey> {
   readonly [Collection_type]?: ReadonlyObjectMapLike<
     NonNullable<this[typeof Collection_TKey]>,
     this[typeof Collection_T]
@@ -36,6 +36,8 @@ export interface ReadonlyObjectMapCollection<TKey extends string = string>
 export type TKeyBase = KeyOf<ReadonlyObjectMapCollection>;
 
 export type Signature = DictionaryCollectionModule<ReadonlyObjectMapCollection>;
+
+export type Collection<TKey extends string = string> = ReadonlyObjectMapCollection<TKey>;
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;
