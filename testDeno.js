@@ -13,9 +13,11 @@ import "./mod/collections/__tests__/ReadonlyObjectMap.test.js";
 import "./mod/computations/__tests__/Publisher.test.js";
 import "./mod/computations/__tests__/WritableStore.test.js";
 
+import "./mod/utils/__tests__/DefaultScheduler.test.js";
 import "./mod/utils/__tests__/Disposable.test.js";
 import "./mod/utils/__tests__/DisposableContainer.test.js";
 import "./mod/utils/__tests__/HostScheduler.test.js";
 import "./mod/utils/__tests__/PauseableScheduler.test.js";
 import "./mod/utils/__tests__/Queue.test.js";
+import "./mod/utils/__tests__/SerialDisposable.test.js";
 import "./mod/utils/__tests__/VirtualTimeScheduler.test.js";
