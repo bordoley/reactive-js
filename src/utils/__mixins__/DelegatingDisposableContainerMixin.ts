@@ -12,11 +12,11 @@ import {
   DisposableContainerLike_add,
 } from "../../utils.js";
 
-const DelegatingDisposableContainerLike_delegate = Symbol(
+export const DelegatingDisposableContainerLike_delegate = Symbol(
   "DelegatingDisposableContainerLike_delegate",
 );
 
-interface DelegatingDisposableContainerLike<
+export interface DelegatingDisposableContainerLike<
   TDisposableContainer extends DisposableContainerLike,
 > extends DisposableContainerLike {
   readonly [DelegatingDisposableContainerLike_delegate]: TDisposableContainer;

@@ -19,3 +19,5 @@
 ## Functions
 
 - [addEventHandler](functions/addEventHandler.md)
+- [create](functions/create.md)
+- [merge](functions/merge.md)

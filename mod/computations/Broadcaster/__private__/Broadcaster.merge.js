@@ -1,0 +1,58 @@
+/// <reference types="./Broadcaster.merge.d.ts" />
+
+import { Array_length } from "../../../__internal__/constants.js";
+import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../../computations.js";
+import { bindMethod, isSome, none, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
+import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
+import Broadcaster_addEventHandler from "./Broadcaster.addEventHandler.js";
+const Broadcaster_merge = /*@__PURE__*/ (() => {
+    const MergeBroadcaster_Broadcasters = Symbol("MergeBroadcaster_Broadcasters");
+    const isMergeBroadcaster = (observable) => isSome(observable[MergeBroadcaster_Broadcasters]);
+    const flattenBroadcasters = (observables) => observables.some(isMergeBroadcaster)
+        ? observables.flatMap(observable => isMergeBroadcaster(observable)
+            ? flattenBroadcasters(observable[MergeBroadcaster_Broadcasters])
+            : observable)
+        : observables;
+    return mixInstanceFactory(include(DelegatingDisposableContainerMixin()), function MergeBroadcaster(...Broadcasters) {
+        Broadcasters = flattenBroadcasters(Broadcasters);
+        this[MergeBroadcaster_Broadcasters] = Broadcasters;
+        const disposable = Disposable.create();
+        init(DelegatingDisposableContainerMixin(), this, disposable);
+        const count = Broadcasters[Array_length];
+        let completed = 0;
+        for (const Broadcaster of Broadcasters) {
+            pipe(Broadcaster, DisposableContainer.onDisposed(e => {
+                completed++;
+                if (completed >= count || isSome(e)) {
+                    disposable[DisposableLike_dispose](e);
+                }
+            }));
+        }
+        return this;
+    }, props({
+        [MergeBroadcaster_Broadcasters]: none,
+    }), {
+        [ComputationLike_isDeferred]: false,
+        [ComputationLike_isSynchronous]: false,
+        [SourceLike_subscribe](listener) {
+            const Broadcasters = this[MergeBroadcaster_Broadcasters];
+            const count = Broadcasters[Array_length];
+            let completed = 0;
+            const eventHandler = bindMethod(listener, EventListenerLike_notify);
+            const onEventHandlerCompleted = () => {
+                completed++;
+                if (completed >= count) {
+                    listener[DisposableLike_dispose]();
+                }
+            };
+            for (const Broadcaster of Broadcasters) {
+                pipe(Broadcaster, Broadcaster_addEventHandler(eventHandler), Disposable.addTo(listener), DisposableContainer.onComplete(onEventHandlerCompleted));
+            }
+        },
+    });
+})();
+export default Broadcaster_merge;

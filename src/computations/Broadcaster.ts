@@ -58,4 +58,3 @@ export const addEventHandler: Signature["addEventHandler"] =
   Broadcaster_addEventHandler;
 export const create: Signature["create"] = Broadcaster_create;
 export const merge: Signature["merge"] = Broadcaster_merge;
-

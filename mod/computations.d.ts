@@ -368,8 +368,6 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     merge<T>(...computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
     merge<T>(...computations: readonly MulticastComputationOf<TComputationType, T>[]): MulticastComputationOf<TComputationType, T>;
-    merge<T>(...computations: readonly PureComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
-    merge<T>(...computations: readonly ComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
     never<T>(options?: TCreationOptions["never"]): NewPureInstanceOf<TComputationType, T>;
     takeUntil<T>(notifier: PureSynchronousComputationOf<TComputationType, unknown>): PureComputationOperator<TComputationType, T, T>;
     takeUntil<T>(notifier: SynchronousComputationWithSideEffectsOf<TComputationType, unknown>): ComputationOperatorWithSideEffects<TComputationType, T, T>;

@@ -18,8 +18,7 @@ import {
 import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
-import SchedulerMixin from "../utils/__mixins__/SchedulerMixin.js";
-import {
+import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,

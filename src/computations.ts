@@ -1294,12 +1294,6 @@ export interface ConcurrentReactiveComputationModule<
   merge<T>(
     ...computations: readonly MulticastComputationOf<TComputationType, T>[]
   ): MulticastComputationOf<TComputationType, T>;
-  merge<T>(
-    ...computations: readonly PureComputationOf<TComputationType, T>[]
-  ): PureDeferredComputationOf<TComputationType, T>;
-  merge<T>(
-    ...computations: readonly ComputationOf<TComputationType, T>[]
-  ): DeferredComputationWithSideEffectsOf<TComputationType, T>;
 
   never<T>(
     options?: TCreationOptions["never"],

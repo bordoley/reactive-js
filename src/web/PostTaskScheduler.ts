@@ -12,8 +12,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { bindMethod, ignore, newInstance, pipe } from "../functions.js";
-import SchedulerMixin from "../utils/__mixins__/SchedulerMixin.js";
-import {
+import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
