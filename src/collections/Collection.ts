@@ -1,7 +1,7 @@
 import {
-  CollectionType,
   CollectionModule,
   CollectionOf,
+  CollectionType,
   KeyOf,
 } from "../collections.js";
 import { newInstance } from "../functions.js";

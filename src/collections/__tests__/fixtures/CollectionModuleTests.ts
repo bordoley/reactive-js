@@ -6,9 +6,9 @@ import {
   test,
 } from "../../../__internal__/testing.js";
 import {
-  CollectionType,
   CollectionModule,
   CollectionOf,
+  CollectionType,
   DictionaryLike_get,
   DictionaryLike_keys,
 } from "../../../collections.js";

@@ -13,6 +13,7 @@
 
 ## Type Aliases
 
+- [Collection](type-aliases/Collection.md)
 - [Signature](type-aliases/Signature.md)
 - [TKeyBase](type-aliases/TKeyBase.md)
 

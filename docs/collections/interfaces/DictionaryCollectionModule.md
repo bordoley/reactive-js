@@ -12,7 +12,7 @@
 
 ## Type Parameters
 
-• **C** *extends* [`Collection`](Collection.md)
+• **C** *extends* [`CollectionType`](CollectionType.md)
 
 ## Methods
 

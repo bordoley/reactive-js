@@ -12,7 +12,7 @@ Utility type for a generic operator function that transforms a Collection's inne
 
 ## Type Parameters
 
-• **C** *extends* [`Collection`](../interfaces/Collection.md)
+• **C** *extends* [`CollectionType`](../interfaces/CollectionType.md)
 
 • **TA**
 

@@ -1,6 +1,6 @@
 /// <reference types="./Disposable.test.d.ts" />
 
-import { describe, expectEquals, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectEquals, expectToThrowError, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, pipe } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
@@ -41,6 +41,11 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     const error = newInstance(Error);
     child[DisposableLike_dispose](error);
     pipe(parent[DisposableLike_error], expectEquals(error));
+})), describe("raiseIfDisposedWithError", test("throws an exception if if disposed with error", () => {
+    const disposable = Disposable.create();
+    const error = newInstance(Error);
+    disposable[DisposableLike_dispose](error);
+    pipe(() => Disposable.raiseIfDisposedWithError(disposable), expectToThrowError(error));
 })), describe("toErrorHandler", test("disposes the disposable with a wrapped error", () => {
     const disposable1 = Disposable.create();
     const errorHandler1 = pipe(disposable1, Disposable.toErrorHandler);

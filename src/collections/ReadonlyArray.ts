@@ -1,7 +1,7 @@
 import {
-  CollectionType,
   CollectionModule,
   CollectionOf,
+  CollectionType,
   Collection_T,
   Collection_type,
   KeyOf,

@@ -8,8 +8,8 @@
 
 ## Interfaces
 
-- [Collection](interfaces/Collection.md)
 - [CollectionModule](interfaces/CollectionModule.md)
+- [CollectionType](interfaces/CollectionType.md)
 - [DictionaryCollectionModule](interfaces/DictionaryCollectionModule.md)
 - [DictionaryLike](interfaces/DictionaryLike.md)
 

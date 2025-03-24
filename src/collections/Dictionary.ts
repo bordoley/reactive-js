@@ -23,7 +23,8 @@ import Dictionary_values from "./Dictionary/__private__/Dictionary.values.js";
 /**
  * @noInheritDoc
  */
-export interface DictionaryCollection<TKey = unknown> extends CollectionType<TKey> {
+export interface DictionaryCollection<TKey = unknown>
+  extends CollectionType<TKey> {
   readonly [Collection_type]?: DictionaryLike<
     NonNullable<this[typeof Collection_TKey]>,
     this[typeof Collection_T]

@@ -6,17 +6,17 @@
 
 # Function: keySet()
 
-> **keySet**\<`C`\>(`keys`): \<`TKey`\>(`collection`) => `ReadonlySet`\<`TKey`\>
+> **keySet**\<`C`\>(`m`): \<`TKey`\>(`collection`) => `ReadonlySet`\<`TKey`\>
 
 ## Type Parameters
 
-• **C** *extends* [`Collection`](../../interfaces/Collection.md)\<`unknown`\>
+• **C** *extends* [`CollectionType`](../../interfaces/CollectionType.md)\<`unknown`\>
 
 ## Parameters
 
-### keys
+### m
 
-\<`TKey`\>() => [`Function1`](../../../functions/type-aliases/Function1.md)\<[`CollectionOf`](../../type-aliases/CollectionOf.md)\<`C`, `unknown`, `TKey`\>, `Iterable`\<`TKey`, `any`, `any`\>\>
+`Pick`\<[`CollectionModule`](../../interfaces/CollectionModule.md)\<`C`\>, `"keys"`\>
 
 ## Returns
 

@@ -1,6 +1,7 @@
 import {
   describe,
   expectEquals,
+  expectToThrowError,
   expectTrue,
   test,
   testModule,
@@ -76,6 +77,19 @@ testModule(
       child[DisposableLike_dispose](error);
 
       pipe(parent[DisposableLike_error], expectEquals<Optional<Error>>(error));
+    }),
+  ),
+  describe(
+    "raiseIfDisposedWithError",
+    test("throws an exception if if disposed with error", () => {
+      const disposable = Disposable.create();
+      const error = newInstance(Error);
+      disposable[DisposableLike_dispose](error);
+
+      pipe(
+        () => Disposable.raiseIfDisposedWithError(disposable),
+        expectToThrowError(error),
+      );
     }),
   ),
   describe(

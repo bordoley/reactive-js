@@ -36,7 +36,8 @@ export type TKeyBase = KeyOf<ReadonlyMapCollection>;
 
 export type Signature = DictionaryCollectionModule<ReadonlyMapCollection>;
 
-export type Collection<TKey extends string = string> = ReadonlyMapCollection<TKey>;
+export type Collection<TKey extends string = string> =
+  ReadonlyMapCollection<TKey>;
 
 export const empty: Signature["empty"] = ReadonlyMap_empty;
 export const entries: Signature["entries"] = ReadonlyMap_entries;

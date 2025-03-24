@@ -10,4 +10,4 @@
 
 ## Type Parameters
 
-• **C** *extends* [`Collection`](../interfaces/Collection.md)
+• **C** *extends* [`CollectionType`](../interfaces/CollectionType.md)

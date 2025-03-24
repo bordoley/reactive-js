@@ -20,17 +20,17 @@ export declare const Collection_TKey: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface Collection<TKey = unknown> {
+export interface CollectionType<TKey = unknown> {
     readonly [Collection_T]?: unknown;
     readonly [Collection_type]?: unknown;
     readonly [Collection_TKey]?: TKey;
 }
 /**
  */
-export type KeyOf<C extends Collection> = NonNullable<C[typeof Collection_TKey]>;
+export type KeyOf<C extends CollectionType> = NonNullable<C[typeof Collection_TKey]>;
 /**
  */
-export type CollectionOf<C extends Collection, T, TKey extends KeyOf<C> = KeyOf<C>> = C extends {
+export type CollectionOf<C extends CollectionType, T, TKey extends KeyOf<C> = KeyOf<C>> = C extends {
     readonly [Collection_type]?: unknown;
 } ? NonNullable<(C & {
     readonly [Collection_T]: T;
@@ -43,11 +43,11 @@ export type CollectionOf<C extends Collection, T, TKey extends KeyOf<C> = KeyOf<
 /**
  * Utility type for a generic operator function that transforms a Collection's inner value type.
  */
-export type CollectionOperator<C extends Collection, TA, TB, TKey extends KeyOf<C> = KeyOf<C>> = Function1<CollectionOf<C, TA, TKey>, CollectionOf<C, TB, TKey>>;
+export type CollectionOperator<C extends CollectionType, TA, TB, TKey extends KeyOf<C> = KeyOf<C>> = Function1<CollectionOf<C, TA, TKey>, CollectionOf<C, TB, TKey>>;
 /**
  * @noInheritDoc
  */
-export interface CollectionModule<C extends Collection> {
+export interface CollectionModule<C extends CollectionType> {
     /**
      * Return an Collection that emits no items.
      *
@@ -91,7 +91,7 @@ export interface CollectionModule<C extends Collection> {
 /**
  * @noInheritDoc
  */
-export interface DictionaryCollectionModule<C extends Collection> extends CollectionModule<C> {
+export interface DictionaryCollectionModule<C extends CollectionType> extends CollectionModule<C> {
     fromEntries<T, TKey extends KeyOf<C>>(): Function1<Iterable<Tuple2<TKey, T>>, CollectionOf<C, T, TKey>>;
     union<TKey extends string | symbol, T>(m2: CollectionOf<C, T, TKey>): Function1<CollectionOf<C, T, TKey>, CollectionOf<C, T, TKey>>;
 }
