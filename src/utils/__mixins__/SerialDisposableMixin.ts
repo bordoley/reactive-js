@@ -1,6 +1,5 @@
 import {
   Mixin1,
-  Mutable,
   mix,
   props,
   proto,
@@ -15,11 +14,17 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 
+type TPrototype<TDisposable extends DisposableLike> = Pick<
+  SerialDisposableLike<TDisposable>,
+  typeof SerialDisposableLike_current
+>;
+type TReturn<TDisposable extends DisposableLike> = TPrototype<TDisposable>;
+
 const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
-  Pick<SerialDisposableLike<TDisposable>, typeof SerialDisposableLike_current>,
+  TReturn<TDisposable>,
   TDisposable,
-  DisposableLike,
-  Pick<SerialDisposableLike<TDisposable>, typeof SerialDisposableLike_current>
+  TPrototype<TDisposable>,
+  DisposableLike
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
   const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
 
@@ -29,30 +34,13 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
 
   return returns(
     mix<
-      Pick<
-        SerialDisposableLike<TDisposable>,
-        typeof SerialDisposableLike_current
-      >,
+      TReturn<TDisposable>,
       TProperties,
-      Pick<
-        SerialDisposableLike<TDisposable>,
-        typeof SerialDisposableLike_current
-      >,
+      TPrototype<TDisposable>,
       DisposableLike,
       TDisposable
     >(
-      function SerialDisposableMixin(
-        this: Pick<
-          SerialDisposableLike<TDisposable>,
-          typeof SerialDisposableLike_current
-        > &
-          DisposableLike &
-          Mutable<TProperties>,
-        defaultValue: TDisposable,
-      ): Pick<
-        SerialDisposableLike<TDisposable>,
-        typeof SerialDisposableLike_current
-      > {
+      function SerialDisposableMixin(this, defaultValue) {
         this[SerialDisposableMixin_current] = defaultValue;
         pipe(this, Disposable.add(defaultValue));
 
@@ -61,7 +49,7 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
       props<TProperties>({
         [SerialDisposableMixin_current]: none,
       }),
-      proto({
+      proto<TPrototype<TDisposable>>({
         get [SerialDisposableLike_current](): TDisposable {
           unsafeCast<TProperties>(this);
           return this[SerialDisposableMixin_current];

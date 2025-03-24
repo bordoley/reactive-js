@@ -3,7 +3,7 @@ import {
   DictionaryLike_get,
   DictionaryLike_keys,
 } from "../../../collections.js";
-import { Optional, newInstance, pipe } from "../../../functions.js";
+import { Optional, newInstance, pipe, returns } from "../../../functions.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 import ReadonlyArray_keys from "./ReadonlyArray.keys.js";
 
@@ -26,11 +26,11 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
 }
 
 const ReadonlyArray_toDictionary: ReadonlyArray.Signature["toDictionary"] =
-  <T, TKey extends ReadonlyArray.TKeyBase = ReadonlyArray.TKeyBase>() =>
-  (arr: ReadonlyArray<T>) =>
-    newInstance<ReadonlyArrayDictionary<T, TKey>, ReadonlyArray<T>>(
-      ReadonlyArrayDictionary,
-      arr,
-    );
+  /*@__PURE__*/ returns((arr: ReadonlyArray<unknown>) =>
+    newInstance<
+      ReadonlyArrayDictionary<unknown, number>,
+      ReadonlyArray<unknown>
+    >(ReadonlyArrayDictionary, arr),
+  ) as ReadonlyArray.Signature["toDictionary"];
 
 export default ReadonlyArray_toDictionary;

@@ -139,6 +139,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   function hostSchedulerContinuation(
     this: SchedulerMixinHostLike &
+      SchedulerLike &
       TProperties &
       QueueLike<SchedulerContinuationLike> &
       DisposableLike,

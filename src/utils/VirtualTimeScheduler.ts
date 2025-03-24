@@ -3,7 +3,6 @@ import {
   MIN_SAFE_INTEGER,
 } from "../__internal__/constants.js";
 import {
-  Mutable,
   include,
   init,
   mixInstanceFactory,
@@ -55,7 +54,7 @@ const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 
 type TProperties = {
   [SchedulerLike_now]: number;
-  readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
+  [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
   [VirtualTimeScheduler_queue]: QueueLike<SchedulerContinuationLike>;
 };
@@ -68,7 +67,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         VirtualTimeSchedulerLike,
         typeof VirtualTimeSchedulerLike_run
       > &
-        Mutable<TProperties> &
+        TProperties &
         SchedulerMixinHostLike,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {

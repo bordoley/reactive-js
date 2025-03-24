@@ -1,127 +1,47 @@
 import {
   BroadcasterLike,
-  BroadcasterLike_connect,
-  ComputationLike_isDeferred,
-  ComputationLike_isSynchronous,
-  DeferredObservableWithSideEffectsLike,
-  EventSourceLike,
-  EventSourceLike_addEventListener,
-  StoreLike,
+  ComputationType,
+  Computation_T,
+  Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
 } from "../computations.js";
-import {
-  Function1,
-  SideEffect1,
-  isSome,
-  newInstance,
-  pipe,
-  returns,
-} from "../functions.js";
-import AbstractDelegatingDisposableContainer, {
-  AbstractDelegatingDisposableContainer_delegate,
-} from "../utils/DisposableContainer/__internal__/AbstractDelegatingDisposableContainer.js";
-import * as EventListener from "../utils/EventListener.js";
-import {
-  DisposableLike,
-  EventListenerLike,
-  PauseableLike,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  SinkLike,
-} from "../utils.js";
-import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
-import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
-import Observable_create from "./Observable/__private__/Observable.create.js";
+import { Function1, SideEffect1 } from "../functions.js";
+import { DisposableLike } from "../utils.js";
+import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 
-export interface BroadcasterModule {
-  create<T>(
-    setup: SideEffect1<SinkLike<T>>,
-    options?: {
-      readonly autoDispose?: boolean;
-      readonly replay?: number;
-    },
-  ): BroadcasterLike<T> & DisposableLike;
+/**
+ * @noInheritDoc
+ */
+export interface BroadcasterComputation extends ComputationType {
+  readonly [Computation_baseOfT]?: BroadcasterLike<this[typeof Computation_T]>;
 
-  createPauseable<T>(
-    op: Function1<
-      EventSourceLike<boolean> & DisposableLike,
-      BroadcasterLike<T>
-    >,
-  ): PauseableLike & BroadcasterLike<T> & DisposableLike;
+  readonly [Computation_pureSynchronousOfT]?: never;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
 
-  toEventSource<T>(): <TBroadcaster extends BroadcasterLike<T>>(
-    broadcaster: TBroadcaster,
-  ) => TBroadcaster extends PauseableLike
-    ? PauseableLike & EventSourceLike<T>
-    : EventSourceLike<T>;
+  readonly [Computation_pureDeferredOfT]?: never;
+  readonly [Computation_deferredWithSideEffectsOfT]?: never;
 
-  toObservable<T>(): Function1<
-    BroadcasterLike<T>,
-    DeferredObservableWithSideEffectsLike<T>
+  readonly [Computation_multicastOfT]?: BroadcasterLike<
+    this[typeof Computation_T]
   >;
+}
+
+export type Computation = BroadcasterComputation;
+
+/**
+ * @noInheritDoc
+ */
+export interface BroadcasterModule {
+  addEventHandler<T>(
+    onNotify: SideEffect1<T>,
+  ): Function1<BroadcasterLike<T>, DisposableLike>;
 }
 
 export type Signature = BroadcasterModule;
 
-export const create: Signature["create"] = Broadcaster_create;
-export const createPauseable: Signature["createPauseable"] =
-  Broadcaster_createPauseable;
-
-class BroadcasterToEventSource<T, TBroadcaster extends BroadcasterLike<T>>
-  extends AbstractDelegatingDisposableContainer<TBroadcaster>
-  implements EventSourceLike<T>
-{
-  readonly [ComputationLike_isDeferred]: false = false as const;
-  readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  [EventSourceLike_addEventListener](
-    listener: EventListenerLike<unknown>,
-  ): void {
-    const sink = pipe(listener, EventListener.toSink());
-    this[AbstractDelegatingDisposableContainer_delegate][
-      BroadcasterLike_connect
-    ](sink);
-  }
-}
-
-class BroadcasterToPauseableEventSource<T>
-  extends BroadcasterToEventSource<T, PauseableLike & BroadcasterLike<T>>
-  implements PauseableLike
-{
-  readonly [ComputationLike_isDeferred]: false = false as const;
-  readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  get [PauseableLike_isPaused](): StoreLike<boolean> {
-    return this[AbstractDelegatingDisposableContainer_delegate][
-      PauseableLike_isPaused
-    ];
-  }
-
-  [PauseableLike_pause](): void {
-    return this[AbstractDelegatingDisposableContainer_delegate][
-      PauseableLike_pause
-    ]();
-  }
-  [PauseableLike_resume](): void {
-    return this[AbstractDelegatingDisposableContainer_delegate][
-      PauseableLike_resume
-    ]();
-  }
-}
-
-export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ returns(
-  broadcaster =>
-    isSome((broadcaster as any)[PauseableLike_isPaused])
-      ? newInstance(
-          BroadcasterToPauseableEventSource,
-          broadcaster as unknown as PauseableLike & BroadcasterLike,
-        )
-      : newInstance(BroadcasterToEventSource, broadcaster),
-) as Signature["toEventSource"];
-
-export const toObservable: Signature["toObservable"] = /*@__PURE__*/ (<T>() =>
-  returns((broadcaster: BroadcasterLike<T>) =>
-    Observable_create<T>(observer => {
-      broadcaster[BroadcasterLike_connect](observer);
-    }),
-  ))();
+export const addEventHandler: Signature["addEventHandler"] =
+  Broadcaster_addEventHandler;

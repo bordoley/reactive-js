@@ -78,74 +78,61 @@ export interface SerialDisposableLike<
   set [SerialDisposableLike_current](v: TDisposable);
 }
 
-export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
-
-/**
- * @noInheritDoc
- */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
-  /**
-   * Notifies the EventListener of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [EventListenerLike_notify](event: T): void;
-}
-
-export const SinkLike_complete = Symbol("SinkLike_complete");
-export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
-
-/**
- * @noInheritDoc
- */
-export interface SinkLike<T = unknown> extends EventListenerLike<T> {
-  readonly [SinkLike_isCompleted]: boolean;
-
-  [SinkLike_complete](): void;
-}
-
-export const DropLatestBackpressureStrategy = "drop-latest";
-export const DropOldestBackpressureStrategy = "drop-oldest";
-export const OverflowBackpressureStrategy = "overflow";
-export const ThrowBackpressureStrategy = "throw";
-
 export type BackpressureStrategy =
-  | typeof DropLatestBackpressureStrategy
-  | typeof DropOldestBackpressureStrategy
-  | typeof OverflowBackpressureStrategy
-  | typeof ThrowBackpressureStrategy;
+  | "drop-latest"
+  | "drop-oldest"
+  | "overflow"
+  | "throw";
 
-export const ConsumerLike_backpressureStrategy = Symbol(
-  "ConsumerLike_backpressureStrategy",
+export const DropLatestBackpressureStrategy: BackpressureStrategy =
+  "drop-latest";
+export const DropOldestBackpressureStrategy: BackpressureStrategy =
+  "drop-oldest";
+export const OverflowBackpressureStrategy: BackpressureStrategy = "overflow";
+export const ThrowBackpressureStrategy: BackpressureStrategy = "throw";
+
+export const QueueableLike_backpressureStrategy = Symbol(
+  "QueueableLike_backpressureStrategy",
 );
-export const ConsumerLike_capacity = Symbol("ConsumerLike_capacity");
-export const ConsumerLike_isReady = Symbol("ConsumerLike_isReady");
-export const ConsumerLike_addOnReadyListener = Symbol(
-  "ConsumerLike_addOnReadyListener",
+export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
+export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
+export const QueueableLike_addOnReadyListener = Symbol(
+  "QueueableLike_addOnReadyListener",
 );
 
-/**
- * A `ConsumerLike` type that consumes enqueued events to
- * be consumed.
- *
- * @noInheritDoc
- */
-export interface ConsumerLike<T = unknown> extends SinkLike<T> {
-  readonly [ConsumerLike_isReady]: boolean;
+export interface QueueableLike extends DisposableLike {
+  readonly [QueueableLike_isReady]: boolean;
 
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
-  readonly [ConsumerLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
 
   /**
    * The number of items the queue is capable of efficiently buffering.
    */
-  readonly [ConsumerLike_capacity]: number;
+  readonly [QueueableLike_capacity]: number;
 
-  [ConsumerLike_addOnReadyListener](
+  [QueueableLike_addOnReadyListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
+}
+
+/**
+ * @noInheritDoc
+ */
+export class BackPressureError extends Error {
+  readonly [QueueableLike_capacity]: number;
+  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [QueueableLike_isReady]: boolean;
+
+  constructor(consumer: QueueableLike) {
+    super();
+    this[QueueableLike_capacity] = consumer[QueueableLike_capacity];
+    this[QueueableLike_backpressureStrategy] =
+      consumer[QueueableLike_backpressureStrategy];
+    this[QueueableLike_isReady] = consumer[QueueableLike_isReady];
+  }
 }
 
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
@@ -161,7 +148,6 @@ export interface EnumeratorLike<T = unknown> {
 export const CollectionEnumeratorLike_count = Symbol(
   "CollectionEnumeratorLike_count",
 );
-
 export interface CollectionEnumeratorLike<T = unknown>
   extends EnumeratorLike<T>,
     Iterable<T> {
@@ -173,25 +159,10 @@ export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+export interface QueueLike<T = unknown>
+  extends CollectionEnumeratorLike<T>,
+    QueueableLike {
   [QueueLike_enqueue](v: T): void;
-}
-
-/**
- * @noInheritDoc
- */
-export class BackPressureError extends Error {
-  readonly [ConsumerLike_capacity]: number;
-  readonly [ConsumerLike_backpressureStrategy]: BackpressureStrategy;
-  readonly [ConsumerLike_isReady]: boolean;
-
-  constructor(consumer: ConsumerLike) {
-    super();
-    this[ConsumerLike_capacity] = consumer[ConsumerLike_capacity];
-    this[ConsumerLike_backpressureStrategy] =
-      consumer[ConsumerLike_backpressureStrategy];
-    this[ConsumerLike_isReady] = consumer[ConsumerLike_isReady];
-  }
 }
 
 export const SchedulerLike_inContinuation = Symbol(
@@ -314,6 +285,42 @@ export interface PauseableLike extends DisposableContainerLike {
  * @noInheritDoc
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
+
+export const ListenerLike_notify = Symbol("ListenerLike_notify");
+export interface ListenerLike<T = unknown> extends DisposableLike {
+  /**
+   * Notifies the EventSink of the next notification produced by the source.
+   *
+   * @param next - The next notification value.
+   */
+  [ListenerLike_notify](event: T): void;
+}
+
+export const SinkLike_complete = Symbol("SinkLike_complete");
+export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
+
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> extends DisposableLike {
+  readonly [SinkLike_isCompleted]: boolean;
+  /**
+   * Notifies the EventSink of the next notification produced by the source.
+   *
+   * @param next - The next notification value.
+   */
+  [ListenerLike_notify](event: T): void;
+
+  [SinkLike_complete](): void;
+}
+
+/**
+ * A `ConsumerLike` type that consumes enqueued events to
+ * be consumed.
+ *
+ * @noInheritDoc
+ */
+export interface ConsumerLike<T = unknown> extends SinkLike<T>, QueueableLike {}
 
 /**
  * A consumer of push-based notifications.

@@ -9,7 +9,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { EventSourceLike_addEventListener } from "../../computations.js";
+import { SourceLike_subscribe } from "../../computations.js";
 import {
   Optional,
   ignore,
@@ -22,9 +22,9 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  EventListenerLike_notify,
+  ListenerLike_notify,
 } from "../../utils.js";
-import * as EventSource from "../EventSource.js";
+import * as Broadcaster from "../Broadcaster.js";
 
 testModule(
   "Publisher",
@@ -40,7 +40,7 @@ testModule(
     }),
     test("auto disposing", () => {
       const publisher = Publisher.create({ autoDispose: true });
-      const subscription = pipe(publisher, EventSource.addEventHandler(ignore));
+      const subscription = pipe(publisher, Broadcaster.addEventHandler(ignore));
 
       pipe(subscription[DisposableLike_isDisposed], expectFalse());
       pipe(publisher[DisposableLike_isDisposed], expectFalse());
@@ -55,11 +55,11 @@ testModule(
       const publisher = Publisher.create({ autoDispose: true });
       const subscription = pipe(
         publisher,
-        EventSource.addEventHandler(_ => {
+        Broadcaster.addEventHandler(_ => {
           raiseError(e);
         }),
       );
-      publisher[EventListenerLike_notify](none);
+      publisher[ListenerLike_notify](none);
 
       pipe(
         subscription[DisposableLike_error],
@@ -72,14 +72,14 @@ testModule(
       const result: number[] = [];
       pipe(
         publisher,
-        EventSource.addEventHandler(v => {
+        Broadcaster.addEventHandler(v => {
           result.push(v);
         }),
       );
-      publisher[EventListenerLike_notify](1);
-      publisher[EventListenerLike_notify](2);
+      publisher[ListenerLike_notify](1);
+      publisher[ListenerLike_notify](2);
       publisher[DisposableLike_dispose]();
-      publisher[EventListenerLike_notify](3);
+      publisher[ListenerLike_notify](3);
 
       pipe(result, expectArrayEquals([1, 2]));
     }),
@@ -88,8 +88,8 @@ testModule(
     const publisher = Publisher.create<number>({ autoDispose: true });
     const listener = Publisher.create<number>({ autoDispose: true });
 
-    publisher[EventSourceLike_addEventListener](listener);
-    publisher[EventSourceLike_addEventListener](listener);
+    publisher[SourceLike_subscribe](listener);
+    publisher[SourceLike_subscribe](listener);
 
     listener[DisposableLike_dispose]();
 

@@ -1,18 +1,16 @@
 import * as Obj from "../../../__internal__/Object.js";
-import { Tuple2 } from "../../../functions.js";
+import { returns, Tuple2 } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 
 const ReadonlyObjectMap_fromEntries: ReadonlyObjectMap.Signature["fromEntries"] =
+  /*@__PURE__*/ returns((entries: Iterable<Tuple2<string, unknown>>) => {
+    const result = Obj.createObjectMap<string, unknown>();
 
-    <T, TKey extends ReadonlyObjectMap.TKeyBase>() =>
-    (entries: Iterable<Tuple2<TKey, T>>) => {
-      const result = Obj.createObjectMap<TKey, T>();
+    for (const [key, value] of entries) {
+      result[key] = value;
+    }
 
-      for (const [key, value] of entries) {
-        result[key] = value;
-      }
-
-      return result;
-    };
+    return result;
+  }) as ReadonlyObjectMap.Signature["fromEntries"];
 
 export default ReadonlyObjectMap_fromEntries;
