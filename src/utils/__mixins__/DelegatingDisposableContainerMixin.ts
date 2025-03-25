@@ -12,53 +12,45 @@ import {
   DisposableContainerLike_add,
 } from "../../utils.js";
 
-export const DelegatingDisposableContainerLike_delegate = Symbol(
-  "DelegatingDisposableContainerLike_delegate",
-);
-
-export interface DelegatingDisposableContainerLike<
-  TDisposableContainer extends DisposableContainerLike,
-> extends DisposableContainerLike {
-  readonly [DelegatingDisposableContainerLike_delegate]: TDisposableContainer;
-}
-
-const DelegatingDisposableContainerMixin: <
-  TDisposableContainer extends DisposableContainerLike,
->() => Mixin1<
-  DelegatingDisposableContainerLike<TDisposableContainer>,
-  TDisposableContainer,
+const DelegatingDisposableContainerMixin: () => Mixin1<
+  DisposableContainerLike,
+  DisposableContainerLike,
   DisposableContainerLike
-> = /*@__PURE__*/ (<TDisposableContainer extends DisposableContainerLike>() => {
+> = /*@__PURE__*/ (() => {
+  const DelegatingDisposableContainerMixin_delegate = Symbol(
+    "DelegatingDisposableContainerMixin_delegate",
+  );
+
   type TProperties = {
-    [DelegatingDisposableContainerLike_delegate]: TDisposableContainer;
+    [DelegatingDisposableContainerMixin_delegate]: DisposableContainerLike;
   };
 
   return returns(
     mix(
-      function DelegatingDisposableMixin(
+      function DelegatingDisposableContainerMixin(
         this: Pick<
           DisposableContainerLike,
           typeof DisposableContainerLike_add
         > &
           TProperties,
         delegate: DisposableContainerLike,
-      ): DelegatingDisposableContainerLike<TDisposableContainer> {
-        this[DelegatingDisposableContainerLike_delegate] =
+      ): DisposableContainerLike {
+        this[DelegatingDisposableContainerMixin_delegate] =
           (delegate as unknown as TProperties)[
-            DelegatingDisposableContainerLike_delegate
+            DelegatingDisposableContainerMixin_delegate
           ] ?? delegate;
 
         return this;
       },
       props<TProperties>({
-        [DelegatingDisposableContainerLike_delegate]: none,
+        [DelegatingDisposableContainerMixin_delegate]: none,
       }),
       proto<DisposableContainerLike>({
         [DisposableContainerLike_add](
           this: TProperties,
           disposable: Disposable | SideEffect1<Optional<Error>>,
         ) {
-          this[DelegatingDisposableContainerLike_delegate][
+          this[DelegatingDisposableContainerMixin_delegate][
             DisposableContainerLike_add
           ](
             // Cast to make the typechecker happy even though its a lie.

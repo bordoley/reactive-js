@@ -105,5 +105,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
 export type Signature = ObservableModule;
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
+export declare const map: Signature["map"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

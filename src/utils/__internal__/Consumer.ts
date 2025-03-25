@@ -6,7 +6,7 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Function1, Optional } from "../../functions.js";
+import { Function1, Optional, none } from "../../functions.js";
 import {
   BackpressureStrategy,
   CollectionEnumeratorLike,
@@ -23,10 +23,14 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
+import ObserverMixin, {
+  ObserverMixinLike,
+  ObserverMixinLike_complete,
+  ObserverMixinLike_consumer,
+  ObserverMixinLike_notify,
+} from "../__mixins__/ObserverMixin.js";
 import QueueMixin from "../__mixins__/QueueMixin.js";
 
 export const create: <T>(options?: {
@@ -82,22 +86,38 @@ export const toObserver: <T>(
   scheduler: SchedulerLike,
 ) => Function1<ConsumerLike<T>, ObserverLike<T>> = /*@__PURE__*/ (<T>() => {
   const createConsumerToObserver = mixInstanceFactory(
-    include(
-      DelegatingDisposableMixin(),
-      DelegatingSchedulerMixin,
-      DelegatingConsumerMixin(),
-    ),
+    include(DelegatingDisposableMixin, ObserverMixin()),
     function ConsumerToObserver(
       this: unknown,
       scheduler: SchedulerLike,
       consumer: ConsumerLike<T>,
     ): ObserverLike<T> {
-      init(DelegatingDisposableMixin(), this, consumer);
-      init(DelegatingSchedulerMixin, this, scheduler);
-      init(DelegatingConsumerMixin(), this, consumer);
+      init(DelegatingDisposableMixin, this, consumer);
+      init(
+        ObserverMixin<T, ConsumerLike<T>>(),
+        this,
+        consumer,
+        scheduler,
+        none,
+      );
 
       return this;
     },
+    props(),
+    proto({
+      [ObserverMixinLike_notify](
+        this: ObserverMixinLike<T, ConsumerLike<T>>,
+        next: T,
+      ) {
+        this[ObserverMixinLike_consumer][EventListenerLike_notify](next);
+      },
+
+      [ObserverMixinLike_complete](
+        this: ObserverMixinLike<T, ConsumerLike<T>>,
+      ) {
+        this[ObserverMixinLike_consumer][SinkLike_complete]();
+      },
+    }),
   );
 
   return (scheduler: SchedulerLike) => (consumer: ConsumerLike<T>) =>

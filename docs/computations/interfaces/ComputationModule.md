@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
 - [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)

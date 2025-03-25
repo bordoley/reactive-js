@@ -5,7 +5,7 @@ import { none, returns } from "../../functions.js";
 import { EventListenerLike_notify, } from "../../utils.js";
 export const DelegatingEventListenerLike_delegate = Symbol("DelegatingEventListenerLike_delegate");
 const DelegatingEventListenerMixin = /*@__PURE__*/ (() => {
-    return returns(mix(function DelegatingListenerMixin(delegate) {
+    return returns(mix(function DelegatingEventListenerMixin(delegate) {
         this[DelegatingEventListenerLike_delegate] = delegate;
         return this;
     }, props({

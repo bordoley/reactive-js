@@ -5,16 +5,17 @@ import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "..
 import { SourceLike_subscribe, } from "../../../computations.js";
 import { none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { DelegatingDisposableContainerLike_delegate } from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "../../Broadcaster/__private__/Broadcaster.createPauseable.js";
 const Producer_broadcast = /*@__PURE__*/ (() => {
     const EventListernToPauseableConsumer_mode = Symbol("EventListernToPauseableConsumer_mode");
-    const createPauseableConsumer = mixInstanceFactory(include(DelegatingDisposableMixin()), function EventListenerToPauseableConsumer(listener, mode) {
-        init(DelegatingDisposableMixin(), this, listener);
+    const createPauseableConsumer = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventListenerMixin()), function EventListenerToPauseableConsumer(listener, mode) {
+        init(DelegatingDisposableMixin, this, listener);
+        init(DelegatingEventListenerMixin(), this, listener);
         this[EventListernToPauseableConsumer_mode] = mode;
         pipe(mode, Disposable.bindTo(listener), Broadcaster_addEventHandler(isPaused => {
             this[QueueableLike_isReady] = !isPaused;
@@ -38,7 +39,7 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
             }), Disposable.addTo(this));
         },
         [EventListenerLike_notify](next) {
-            const delegate = this[DelegatingDisposableContainerLike_delegate];
+            const delegate = this[DelegatingEventListenerLike_delegate];
             if (this[SinkLike_isCompleted]) {
                 raise("Broadcaster is completed");
             }

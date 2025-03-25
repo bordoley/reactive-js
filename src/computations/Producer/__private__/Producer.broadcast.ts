@@ -14,10 +14,11 @@ import {
 } from "../../../computations.js";
 import { SideEffect1, none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { DelegatingDisposableContainerLike_delegate } from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingEventListenerMixin, {
+  DelegatingEventListenerLike,
+  DelegatingEventListenerLike_delegate,
+} from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
@@ -53,14 +54,15 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   };
 
   const createPauseableConsumer = mixInstanceFactory(
-    include(DelegatingDisposableMixin()),
+    include(DelegatingDisposableMixin, DelegatingEventListenerMixin()),
     function EventListenerToPauseableConsumer(
       this: TProperties &
         Omit<ConsumerLike<T>, keyof DisposableLike | keyof SchedulerLike>,
       listener: EventListenerLike<T>,
       mode: BroadcasterLike<boolean> & DisposableLike,
     ): ConsumerLike<T> {
-      init(DelegatingDisposableMixin(), this, listener);
+      init(DelegatingDisposableMixin, this, listener);
+      init(DelegatingEventListenerMixin(), this, listener);
 
       this[EventListernToPauseableConsumer_mode] = mode;
 
@@ -106,12 +108,10 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
       },
 
       [EventListenerLike_notify](
-        this: TProperties &
-          ConsumerLike<T> &
-          DelegatingDisposableLike<EventListenerLike<T>>,
+        this: TProperties & ConsumerLike<T> & DelegatingEventListenerLike<T>,
         next: T,
       ) {
-        const delegate = this[DelegatingDisposableContainerLike_delegate];
+        const delegate = this[DelegatingEventListenerLike_delegate];
 
         if (this[SinkLike_isCompleted]) {
           raise("Broadcaster is completed");
@@ -122,9 +122,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
         delegate[EventListenerLike_notify](next);
       },
       [SinkLike_complete](
-        this: TProperties &
-          ConsumerLike<T> &
-          DelegatingDisposableLike<EventListenerLike<T>>,
+        this: TProperties & ConsumerLike<T> & DelegatingEventListenerLike<T>,
       ) {
         this[DisposableLike_dispose]();
       },

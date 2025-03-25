@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 
 ## Type Parameters

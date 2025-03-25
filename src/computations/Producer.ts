@@ -24,6 +24,7 @@ import {
   Producer_gen,
   Producer_genPure,
 } from "./Producer/__private__/Producer.gen.js";
+import Producer_map from "./Producer/__private__/Producer.map.js";
 import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
 
 /**
@@ -71,5 +72,6 @@ export type Signature = ProducerModule;
 export const broadcast: Signature["broadcast"] = Producer_broadcast;
 export const gen: Signature["gen"] = Producer_gen;
 export const genPure: Signature["genPure"] = Producer_genPure;
+export const map: Signature["map"] = Producer_map;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Producer_toReadonlyArrayAsync;

@@ -3,18 +3,15 @@ import {
   init,
   mixInstanceFactory,
   props,
-  unsafeCast,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   BroadcasterLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../../../computations.js";
-import { Function1, pipe } from "../../../functions.js";
-import { DelegatingDisposableContainerLike_delegate } from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
-import DelegatingDisposableMixin, {
-  DelegatingDisposableLike,
-} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { Function1, none, pipe } from "../../../functions.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   DisposableContainerLike,
   DisposableLike,
@@ -28,11 +25,15 @@ import * as WritableStore from "../../WritableStore.js";
 import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
 
 export const Broadcaster_createPauseable: Broadcaster.Signature["createPauseable"] =
-  /*@__PURE__*/ (<T>() =>
-    mixInstanceFactory(
-      include(DelegatingDisposableMixin(), DelegatingBroadcasterMixin()),
+  /*@__PURE__*/ (<T>() => {
+    type TProperties = {
+      [PauseableLike_isPaused]: WritableStoreLike<boolean>;
+    };
+
+    return mixInstanceFactory(
+      include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()),
       function PauseableBroadcaster(
-        this: Omit<PauseableLike, keyof DisposableContainerLike>,
+        this: Omit<PauseableLike, keyof DisposableContainerLike> & TProperties,
         op: Function1<
           BroadcasterLike<boolean> & DisposableLike,
           BroadcasterLike<T>
@@ -42,38 +43,30 @@ export const Broadcaster_createPauseable: Broadcaster.Signature["createPauseable
         },
       ): PauseableLike & BroadcasterLike<T> & DisposableLike {
         const writableStore = WritableStore.create(true, options);
+        this[PauseableLike_isPaused] = writableStore;
+
         const delegate = pipe(writableStore, op);
 
-        init(DelegatingDisposableMixin(), this, writableStore);
+        init(DelegatingDisposableMixin, this, writableStore);
         init(DelegatingBroadcasterMixin<T>(), this, delegate);
 
         this[PauseableLike_resume]();
 
         return this;
       },
-      props(),
-      {
-        get [PauseableLike_isPaused]() {
-          unsafeCast<DelegatingDisposableLike<WritableStoreLike<boolean>>>(
-            this,
-          );
-          return this[DelegatingDisposableContainerLike_delegate];
+      props<TProperties>({
+        [PauseableLike_isPaused]: none,
+      }),
+      proto({
+        [PauseableLike_pause](this: TProperties) {
+          this[PauseableLike_isPaused][StoreLike_value] = true;
         },
 
-        [PauseableLike_pause](
-          this: DelegatingDisposableLike<WritableStoreLike<boolean>>,
-        ) {
-          this[DelegatingDisposableContainerLike_delegate][StoreLike_value] =
-            true;
+        [PauseableLike_resume](this: TProperties) {
+          this[PauseableLike_isPaused][StoreLike_value] = false;
         },
-
-        [PauseableLike_resume](
-          this: DelegatingDisposableLike<WritableStoreLike<boolean>>,
-        ) {
-          this[DelegatingDisposableContainerLike_delegate][StoreLike_value] =
-            false;
-        },
-      },
-    ))();
+      }),
+    );
+  })();
 
 export default Broadcaster_createPauseable;

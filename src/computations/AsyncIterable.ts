@@ -35,7 +35,6 @@ import {
   SideEffect1,
   Tuple2,
   alwaysTrue,
-  bindMethod,
   error,
   invoke,
   isFunction,
@@ -51,10 +50,15 @@ import {
   tuple,
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext, SchedulerLike } from "../utils.js";
+import * as Disposable from "../utils/Disposable.js";
+import * as Iterator from "../utils/__internal__/Iterator.js";
+import {
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
+  SchedulerLike,
+} from "../utils.js";
 import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
 import * as ComputationM from "./Computation.js";
-import * as Disposable from "../utils/Disposable.js";
 /*
 import {
   Observable_genAsync,
@@ -64,8 +68,6 @@ import {
   Producer_genAsync,
   Producer_genPureAsync,
 } from "./Producer/__private__/Producer.genAsync.js";*/
-import * as Iterator from "../utils/__internal__/Iterator.js";
-import { debug } from "console";
 
 /**
  * @noInheritDoc
@@ -207,7 +209,7 @@ export const concat: Signature["concat"] = (<T>(
   )) as unknown as Signature["concat"];
 
 class DistinctUntilChangedAsyncIterable<T> {
-  public readonly [ComputationLike_isSynchronous]: false = false;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
   public readonly [ComputationLike_isPure]?: boolean;
 
   constructor(
@@ -368,10 +370,9 @@ class GenAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
   constructor(readonly f: Factory<Iterator<T>>) {}
 
   async *[Symbol.asyncIterator](): AsyncIterator<T, any, any> {
-    debugger;
     const enumerator = pipe(this.f(), Iterator.toEnumerator<T>());
 
-    while(enumerator[EnumeratorLike_moveNext]()) {
+    while (enumerator[EnumeratorLike_moveNext]()) {
       yield Promise.resolve(enumerator[EnumeratorLike_current]);
     }
     Disposable.raiseIfDisposedWithError(enumerator);
@@ -407,7 +408,7 @@ class GenPureAsyncIterable<T> implements PureAsyncIterableLike<T> {
   async *[Symbol.asyncIterator]() {
     const enumerator = pipe(this.f(), Iterator.toEnumerator<T>());
 
-    while(enumerator[EnumeratorLike_moveNext]()) {
+    while (enumerator[EnumeratorLike_moveNext]()) {
       yield Promise.resolve(enumerator[EnumeratorLike_current]);
     }
     Disposable.raiseIfDisposedWithError(enumerator);
@@ -513,7 +514,7 @@ export const of: Signature["of"] = /*@__PURE__*/ returns(iter =>
 );
 
 class PairwiseAsyncIterable<T> implements AsyncIterableLike<Tuple2<T, T>> {
-  public readonly [ComputationLike_isSynchronous]: false = false;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
   public readonly [ComputationLike_isPure]?: boolean;
 
   constructor(private s: AsyncIterableLike<T>) {
@@ -670,7 +671,7 @@ export const scan: Signature["scan"] = (<T, TAcc>(
     )) as Signature["scan"];
 
 class SkipFirstAsyncIterable<T> {
-  public readonly [ComputationLike_isSynchronous]: false = false;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
   public readonly [ComputationLike_isPure]?: boolean;
 
   constructor(

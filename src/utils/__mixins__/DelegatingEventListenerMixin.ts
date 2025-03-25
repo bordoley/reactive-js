@@ -50,7 +50,7 @@ const DelegatingEventListenerMixin: <
 
   return returns(
     mix(
-      function DelegatingListenerMixin(
+      function DelegatingEventListenerMixin(
         this: TProperties & TPrototype<T, TDelegateEventListener>,
         delegate: TDelegateEventListener,
       ): TReturn<T, TDelegateEventListener> {

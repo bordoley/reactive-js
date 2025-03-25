@@ -21,4 +21,5 @@
 - [broadcast](functions/broadcast.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
+- [map](functions/map.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
