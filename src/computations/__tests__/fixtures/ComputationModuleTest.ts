@@ -8,9 +8,11 @@ import {
 import { ComputationModule, ComputationType } from "../../../computations.js";
 import {
   Tuple2,
+  alwaysTrue,
   arrayEquality,
   bindMethod,
   greaterThan,
+  lessThan,
   pipe,
   pipeAsync,
   pipeLazy,
@@ -32,6 +34,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
     | "scan"
     | "skipFirst"
     | "takeFirst"
+    | "takeWhile"
     | "toReadonlyArrayAsync"
   >,
   //  computations: ComputationTypeOf<TComputationType>,
@@ -360,6 +363,60 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           expectArrayEquals([] as number[]),
         ),
       ),
+    ),
+    describe(
+      "takeWhile",
+      testAsync("exclusive", async () => {
+        await pipeAsync(
+          bindMethod([1, 2, 3, 4, 5], Symbol.iterator),
+          m.gen,
+          m.takeWhile<number>(lessThan(4)),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        );
+
+        await pipeAsync(
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.gen,
+          m.takeWhile<number>(alwaysTrue),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        );
+
+        await pipeAsync(
+          bindMethod([], Symbol.iterator),
+          m.gen,
+          m.takeWhile<number>(alwaysTrue),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([] as number[]),
+        );
+      }),
+      testAsync(
+        "inclusive",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3, 4, 5, 6], Symbol.iterator),
+          m.gen,
+          m.takeWhile(lessThan(4), { inclusive: true }),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3, 4]),
+        ),
+      ),
+      testAsync("when predicate throws", async () => {
+        const err = new Error();
+        const predicate = (_: unknown): boolean => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            bindMethod([1, 1], Symbol.iterator),
+            m.gen,
+            m.takeWhile(predicate),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
     ),
   );
 

@@ -37,6 +37,8 @@ import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
 import Producer_scan from "./Producer/__private__/Producer.scan.js";
 import Producer_skipFirst from "./Producer/__private__/Producer.skipFirst.js";
 import Producer_takeFirst from "./Producer/__private__/Producer.takeFirst.js";
+import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
+import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
 import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
 
 /**
@@ -99,5 +101,7 @@ export const pairwise: Signature["pairwise"] = Producer_pairwise;
 export const scan: Signature["scan"] = Producer_scan;
 export const skipFirst: Signature["skipFirst"] = Producer_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Producer_takeFirst;
+export const takeWhile: Signature["takeWhile"] = Producer_takeWhile;
+export const throwIfEmpty: Signature["throwIfEmpty"] = Producer_throwIfEmpty;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Producer_toReadonlyArrayAsync;

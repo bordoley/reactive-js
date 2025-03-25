@@ -23,7 +23,7 @@ export const create = /*@__PURE__*/ (() => {
             const delegate = this[DelegatingLiftedOperatorLike_delegate];
             delegate[LiftedOperatorLike_notify](next);
             if (this[TakeFirstOperator_count] <= 0) {
-                delegate[LiftedOperatorLike_complete]();
+                this[LiftedOperatorLike_complete]();
             }
         },
     }));

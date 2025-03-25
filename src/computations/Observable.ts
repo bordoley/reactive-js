@@ -41,6 +41,8 @@ import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
 import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
+import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
+import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 
@@ -216,6 +218,8 @@ export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
+export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
+export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Observable_toReadonlyArrayAsync;

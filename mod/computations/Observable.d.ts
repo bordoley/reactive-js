@@ -117,5 +117,7 @@ export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
+export declare const takeWhile: Signature["takeWhile"];
+export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

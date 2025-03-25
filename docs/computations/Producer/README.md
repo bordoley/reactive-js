@@ -34,4 +34,6 @@
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
 - [takeFirst](functions/takeFirst.md)
+- [takeWhile](functions/takeWhile.md)
+- [throwIfEmpty](functions/throwIfEmpty.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

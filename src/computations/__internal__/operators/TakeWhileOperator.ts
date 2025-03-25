@@ -5,8 +5,7 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { Optional, none } from "../../../functions.js";
-import { clampPositiveInteger } from "../../../math.js";
+import { Optional, Predicate, none } from "../../../functions.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -19,50 +18,55 @@ import {
 
 export const create: <T>(
   delegate: LiftedOperatorLike<T>,
-  takeCount: Optional<number>,
+  predicate: Predicate<T>,
+  options: Optional<{ readonly inclusive?: boolean }>,
 ) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
-  const TakeFirstOperator_count = Symbol("TakeFirstOperator_count");
+  const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");
+  const TakeWhileMixin_predicate = Symbol("TakeWhileMixin_predicate");
 
   interface TProperties {
-    [TakeFirstOperator_count]: number;
+    [TakeWhileMixin_inclusive]: boolean;
+    [TakeWhileMixin_predicate]: Predicate<T>;
   }
 
   return mixInstanceFactory(
     include(DelegatingLiftedOperatorMixin<T>()),
-    function TakeFirstOperator(
+    function TakeWhileOperator(
       this: Pick<
         DelegatingLiftedOperatorLike<T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
       delegate: LiftedOperatorLike<T>,
-      takeCount: Optional<number>,
+      predicate: Predicate<T>,
+      options: Optional<{ readonly inclusive?: boolean }>,
     ): LiftedOperatorLike<T> {
       init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
 
-      this[TakeFirstOperator_count] = clampPositiveInteger(takeCount ?? 1);
-
-      if (takeCount === 0) {
-        this[LiftedOperatorLike_complete]();
-      }
+      this[TakeWhileMixin_predicate] = predicate;
+      this[TakeWhileMixin_inclusive] = options?.inclusive ?? false;
 
       return this;
     },
     props<TProperties>({
-      [TakeFirstOperator_count]: none,
+      [TakeWhileMixin_predicate]: none,
+      [TakeWhileMixin_inclusive]: none,
     }),
     proto({
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<T>,
         next: T,
       ) {
-        this[TakeFirstOperator_count];
-        this[TakeFirstOperator_count]--;
+        const satisfiesPredicate = this[TakeWhileMixin_predicate](next);
+        const isInclusive = this[TakeWhileMixin_inclusive];
 
-        const delegate = this[DelegatingLiftedOperatorLike_delegate];
-        delegate[LiftedOperatorLike_notify](next);
+        if (satisfiesPredicate || isInclusive) {
+          this[DelegatingLiftedOperatorLike_delegate][
+            LiftedOperatorLike_notify
+          ](next);
+        }
 
-        if (this[TakeFirstOperator_count] <= 0) {
+        if (!satisfiesPredicate) {
           this[LiftedOperatorLike_complete]();
         }
       },

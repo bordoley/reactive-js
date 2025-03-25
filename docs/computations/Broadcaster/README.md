@@ -33,5 +33,6 @@
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
 - [takeFirst](functions/takeFirst.md)
+- [takeWhile](functions/takeWhile.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

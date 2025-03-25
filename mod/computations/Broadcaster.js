@@ -15,6 +15,7 @@ import Broadcaster_pairwise from "./Broadcaster/__private__/Broadcaster.pairwise
 import Broadcaster_scan from "./Broadcaster/__private__/Broadcaster.scan.js";
 import Broadcaster_skipFirst from "./Broadcaster/__private__/Broadcaster.skipFirst.js";
 import Broadcaster_takeFirst from "./Broadcaster/__private__/Broadcaster.takeFirst.js";
+import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhile.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Broadcaster_toReadonlyArrayAsync from "./Broadcaster/__private__/Broadcaster.toReadonlyArrayAsync.js";
 export const addEventHandler = Broadcaster_addEventHandler;
@@ -32,5 +33,6 @@ export const pairwise = Broadcaster_pairwise;
 export const scan = Broadcaster_scan;
 export const skipFirst = Broadcaster_skipFirst;
 export const takeFirst = Broadcaster_takeFirst;
+export const takeWhile = Broadcaster_takeWhile;
 export const toProducer = Broadcaster_toProducer;
 export const toReadonlyArrayAsync = Broadcaster_toReadonlyArrayAsync;
