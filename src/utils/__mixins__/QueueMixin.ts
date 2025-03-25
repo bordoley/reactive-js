@@ -41,7 +41,7 @@ import {
   QueueLike,
   QueueLike_enqueue,
   QueueLike_head,
-  QueueableLike_addOnReadyEventListener,
+  QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_isReady,
@@ -483,7 +483,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             this[QueueMixin_capacityMask] = newCapacityMask;
           },
 
-          [QueueableLike_addOnReadyEventListener](
+          [QueueableLike_addOnReadyListener](
             this: TProperties & DisposableLike,
             callback: SideEffect1<void>,
           ) {

@@ -5,7 +5,7 @@ import { expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThr
 import * as Iterable from "../../computations/Iterable.js";
 import { ignore, newInstance, none, pipe } from "../../functions.js";
 import { floor, random } from "../../math.js";
-import { CollectionEnumeratorLike_count, DisposableLike_dispose, DisposableLike_isDisposed, DropLatestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, QueueableLike_addOnReadyEventListener, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, DisposableLike_dispose, DisposableLike_isDisposed, DropLatestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, QueueableLike_addOnReadyListener, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Queue from "../Queue.js";
 const createSorted = /*@__PURE__*/ (() => {
     const comparator = (a, b) => a - b;
@@ -123,7 +123,7 @@ testModule("Queue", test("enqueue", () => {
         backpressureStrategy: OverflowBackpressureStrategy,
     });
     let v = false;
-    queue[QueueableLike_addOnReadyEventListener](() => {
+    queue[QueueableLike_addOnReadyListener](() => {
         v = true;
     });
     queue[QueueLike_enqueue](0);
@@ -141,7 +141,7 @@ testModule("Queue", test("enqueue", () => {
         backpressureStrategy: ThrowBackpressureStrategy,
     });
     let v = false;
-    queue[QueueableLike_addOnReadyEventListener](() => {
+    queue[QueueableLike_addOnReadyListener](() => {
         v = true;
     });
     queue[QueueLike_enqueue](0);
@@ -156,7 +156,7 @@ testModule("Queue", test("enqueue", () => {
         backpressureStrategy: ThrowBackpressureStrategy,
     });
     let v = false;
-    queue[QueueableLike_addOnReadyEventListener](() => {
+    queue[QueueableLike_addOnReadyListener](() => {
         v = true;
     });
     queue[QueueLike_enqueue](0);
@@ -221,7 +221,7 @@ testModule("Queue", test("enqueue", () => {
         capacity: 2,
         backpressureStrategy: ThrowBackpressureStrategy,
     });
-    const subscription = queue[QueueableLike_addOnReadyEventListener](ignore);
+    const subscription = queue[QueueableLike_addOnReadyListener](ignore);
     queue[DisposableLike_dispose]();
     pipe(subscription[DisposableLike_isDisposed], expectTrue("expected subscription to be disposed"));
 }));

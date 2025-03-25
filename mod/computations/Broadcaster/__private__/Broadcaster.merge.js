@@ -10,22 +10,22 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster.addEventHandler.js";
 const Broadcaster_merge = /*@__PURE__*/ (() => {
-    const MergeBroadcaster_Broadcasters = Symbol("MergeBroadcaster_Broadcasters");
-    const isMergeBroadcaster = (observable) => isSome(observable[MergeBroadcaster_Broadcasters]);
-    const flattenBroadcasters = (observables) => observables.some(isMergeBroadcaster)
-        ? observables.flatMap(observable => isMergeBroadcaster(observable)
-            ? flattenBroadcasters(observable[MergeBroadcaster_Broadcasters])
-            : observable)
-        : observables;
-    return mixInstanceFactory(include(DelegatingDisposableContainerMixin()), function MergeBroadcaster(...Broadcasters) {
-        Broadcasters = flattenBroadcasters(Broadcasters);
-        this[MergeBroadcaster_Broadcasters] = Broadcasters;
+    const MergeBroadcaster_broadcasters = Symbol("MergeBroadcaster_broadcasters");
+    const isMergeBroadcaster = (broadcaster) => isSome(broadcaster[MergeBroadcaster_broadcasters]);
+    const flattenbroadcasters = (broadcasters) => broadcasters.some(isMergeBroadcaster)
+        ? broadcasters.flatMap(broadcaster => isMergeBroadcaster(broadcaster)
+            ? flattenbroadcasters(broadcaster[MergeBroadcaster_broadcasters])
+            : broadcaster)
+        : broadcasters;
+    return mixInstanceFactory(include(DelegatingDisposableContainerMixin()), function MergeBroadcaster(...broadcasters) {
+        broadcasters = flattenbroadcasters(broadcasters);
+        this[MergeBroadcaster_broadcasters] = broadcasters;
         const disposable = Disposable.create();
         init(DelegatingDisposableContainerMixin(), this, disposable);
-        const count = Broadcasters[Array_length];
+        const count = broadcasters[Array_length];
         let completed = 0;
-        for (const Broadcaster of Broadcasters) {
-            pipe(Broadcaster, DisposableContainer.onDisposed(e => {
+        for (const broadcaster of broadcasters) {
+            pipe(broadcaster, DisposableContainer.onDisposed(e => {
                 completed++;
                 if (completed >= count || isSome(e)) {
                     disposable[DisposableLike_dispose](e);
@@ -34,13 +34,13 @@ const Broadcaster_merge = /*@__PURE__*/ (() => {
         }
         return this;
     }, props({
-        [MergeBroadcaster_Broadcasters]: none,
+        [MergeBroadcaster_broadcasters]: none,
     }), {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [SourceLike_subscribe](listener) {
-            const Broadcasters = this[MergeBroadcaster_Broadcasters];
-            const count = Broadcasters[Array_length];
+            const broadcasters = this[MergeBroadcaster_broadcasters];
+            const count = broadcasters[Array_length];
             let completed = 0;
             const eventHandler = bindMethod(listener, EventListenerLike_notify);
             const onEventHandlerCompleted = () => {
@@ -49,8 +49,8 @@ const Broadcaster_merge = /*@__PURE__*/ (() => {
                     listener[DisposableLike_dispose]();
                 }
             };
-            for (const Broadcaster of Broadcasters) {
-                pipe(Broadcaster, Broadcaster_addEventHandler(eventHandler), Disposable.addTo(listener), DisposableContainer.onComplete(onEventHandlerCompleted));
+            for (const broadcaster of broadcasters) {
+                pipe(broadcaster, Broadcaster_addEventHandler(eventHandler), Disposable.addTo(listener), DisposableContainer.onComplete(onEventHandlerCompleted));
             }
         },
     });

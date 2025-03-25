@@ -96,8 +96,8 @@ export const QueueableLike_backpressureStrategy = Symbol(
 );
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyEventListener = Symbol(
-  "QueueableLike_addOnReadyEventListener",
+export const QueueableLike_addOnReadyListener = Symbol(
+  "QueueableLike_addOnReadyListener",
 );
 
 export interface QueueableLike extends DisposableLike {
@@ -113,7 +113,7 @@ export interface QueueableLike extends DisposableLike {
    */
   readonly [QueueableLike_capacity]: number;
 
-  [QueueableLike_addOnReadyEventListener](
+  [QueueableLike_addOnReadyListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
 }

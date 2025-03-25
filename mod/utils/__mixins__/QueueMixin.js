@@ -6,7 +6,7 @@ import Broadcaster_addEventHandler from "../../computations/Broadcaster/__privat
 import * as Publisher from "../../computations/Publisher.js";
 import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_enqueue, QueueLike_head, QueueableLike_addOnReadyEventListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_enqueue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
@@ -291,7 +291,7 @@ const QueueMixin =
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
         },
-        [QueueableLike_addOnReadyEventListener](callback) {
+        [QueueableLike_addOnReadyListener](callback) {
             const publisher = this[QueueMixin_onReadyPublisher] ??
                 (() => {
                     const publisher = pipe(Publisher.create(), Disposable.addTo(this));

@@ -16,6 +16,7 @@
 - [computations/Broadcaster](computations/Broadcaster/README.md)
 - [computations/Computation](computations/Computation/README.md)
 - [computations/Iterable](computations/Iterable/README.md)
+- [computations/Producer](computations/Producer/README.md)
 - [computations/Publisher](computations/Publisher/README.md)
 - [computations/WritableStore](computations/WritableStore/README.md)
 - [functions](functions/README.md)

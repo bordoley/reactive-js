@@ -10,6 +10,10 @@
 
 - [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
+## Extended by
+
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
+
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
@@ -113,23 +117,3 @@
 #### Returns
 
 [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
-
-***
-
-### toProducer()
-
-> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"toProducer"`\]
-
-#### Returns
-
-[`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>

@@ -55,7 +55,7 @@
 - [PauseableLike\_isPaused](variables/PauseableLike_isPaused.md)
 - [PauseableLike\_pause](variables/PauseableLike_pause.md)
 - [PauseableLike\_resume](variables/PauseableLike_resume.md)
-- [QueueableLike\_addOnReadyEventListener](variables/QueueableLike_addOnReadyEventListener.md)
+- [QueueableLike\_addOnReadyListener](variables/QueueableLike_addOnReadyListener.md)
 - [QueueableLike\_backpressureStrategy](variables/QueueableLike_backpressureStrategy.md)
 - [QueueableLike\_capacity](variables/QueueableLike_capacity.md)
 - [QueueableLike\_isReady](variables/QueueableLike_isReady.md)

@@ -12,7 +12,9 @@
 
 ## Extended by
 
+- [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters
 

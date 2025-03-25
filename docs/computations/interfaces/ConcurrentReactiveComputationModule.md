@@ -13,6 +13,7 @@
 ## Extended by
 
 - [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters
 
@@ -196,7 +197,7 @@
 
 #### Call Signature
 
-> **merge**\<`T`\>(...`computations`): [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>
+> **merge**\<`T`\>(...`computations`): [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
 
 ##### Type Parameters
 
@@ -210,7 +211,7 @@
 
 ##### Returns
 
-[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>
+[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
 
 ***
 

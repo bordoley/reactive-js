@@ -87,9 +87,9 @@ An optional error that signals the resource is being disposed due to an error.
 
 ***
 
-### \[QueueableLike\_addOnReadyEventListener\]()
+### \[QueueableLike\_addOnReadyListener\]()
 
-> **\[QueueableLike\_addOnReadyEventListener\]**(`callback`): [`DisposableLike`](DisposableLike.md)
+> **\[QueueableLike\_addOnReadyListener\]**(`callback`): [`DisposableLike`](DisposableLike.md)
 
 #### Parameters
 

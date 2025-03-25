@@ -20,4 +20,8 @@
 
 - [addEventHandler](functions/addEventHandler.md)
 - [create](functions/create.md)
+- [gen](functions/gen.md)
+- [genPure](functions/genPure.md)
 - [merge](functions/merge.md)
+- [toProducer](functions/toProducer.md)
+- [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

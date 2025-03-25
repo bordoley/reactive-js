@@ -311,15 +311,17 @@ export interface InteractiveComputationModule<TComputationType extends Computati
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
     zip: ZipConstructor<TComputationType>;
 }
-export interface ConcurrentComputationModule<TComputationType extends ComputationType> {
+export interface ConcurrentComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+    toProducer?: Record<string, any>;
+} = {}> {
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
+    toProducer<T>(options?: TCreationOptions["toProducer"]): ToProducer<TComputationType, T>;
 }
 export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
     broadcast?: Record<string, any>;
     fromAsyncFactory?: Record<string, any>;
     genAsync?: Record<string, any>;
     genPureAsync?: Record<string, any>;
-    toProducer?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     broadcast<T>(options?: {
         autoDispose?: boolean;
@@ -329,7 +331,6 @@ export interface ConcurrentDeferredComputationModule<TComputationType extends Co
     }) => Promise<T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
     genAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genAsync"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
     genPureAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genPureAsync"]): NewPureInstanceOf<TComputationType, T>;
-    toProducer<T>(options?: TCreationOptions["toProducer"]): ToProducer<TComputationType, T>;
 }
 export interface SequentialReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
@@ -367,7 +368,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     merge<T>(...computations: readonly SynchronousComputationOf<TComputationType, T>[]): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
     merge<T>(...computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
-    merge<T>(...computations: readonly MulticastComputationOf<TComputationType, T>[]): MulticastComputationOf<TComputationType, T>;
+    merge<T>(...computations: readonly MulticastComputationOf<TComputationType, T>[]): MulticastComputationOf<TComputationType, T> & DisposableLike;
     never<T>(options?: TCreationOptions["never"]): NewPureInstanceOf<TComputationType, T>;
     takeUntil<T>(notifier: PureSynchronousComputationOf<TComputationType, unknown>): PureComputationOperator<TComputationType, T, T>;
     takeUntil<T>(notifier: SynchronousComputationWithSideEffectsOf<TComputationType, unknown>): ComputationOperatorWithSideEffects<TComputationType, T, T>;

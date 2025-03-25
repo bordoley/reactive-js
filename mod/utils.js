@@ -20,7 +20,7 @@ export const ThrowBackpressureStrategy = "throw";
 export const QueueableLike_backpressureStrategy = Symbol("QueueableLike_backpressureStrategy");
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyEventListener = Symbol("QueueableLike_addOnReadyEventListener");
+export const QueueableLike_addOnReadyListener = Symbol("QueueableLike_addOnReadyListener");
 /**
  * @noInheritDoc
  */

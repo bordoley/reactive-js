@@ -21,7 +21,7 @@ import {
   EnumeratorLike_moveNext,
   OverflowBackpressureStrategy,
   QueueLike_enqueue,
-  QueueableLike_addOnReadyEventListener,
+  QueueableLike_addOnReadyListener,
   QueueableLike_isReady,
   ThrowBackpressureStrategy,
 } from "../../utils.js";
@@ -205,7 +205,7 @@ testModule(
     });
 
     let v = false;
-    queue[QueueableLike_addOnReadyEventListener](() => {
+    queue[QueueableLike_addOnReadyListener](() => {
       v = true;
     });
 
@@ -237,7 +237,7 @@ testModule(
     });
 
     let v = false;
-    queue[QueueableLike_addOnReadyEventListener](() => {
+    queue[QueueableLike_addOnReadyListener](() => {
       v = true;
     });
 
@@ -262,7 +262,7 @@ testModule(
     });
 
     let v = false;
-    queue[QueueableLike_addOnReadyEventListener](() => {
+    queue[QueueableLike_addOnReadyListener](() => {
       v = true;
     });
 
@@ -355,7 +355,7 @@ testModule(
       capacity: 2,
       backpressureStrategy: ThrowBackpressureStrategy,
     });
-    const subscription = queue[QueueableLike_addOnReadyEventListener](ignore);
+    const subscription = queue[QueueableLike_addOnReadyListener](ignore);
 
     queue[DisposableLike_dispose]();
     pipe(

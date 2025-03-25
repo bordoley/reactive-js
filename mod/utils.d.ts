@@ -60,7 +60,7 @@ export declare const ThrowBackpressureStrategy: BackpressureStrategy;
 export declare const QueueableLike_backpressureStrategy: unique symbol;
 export declare const QueueableLike_capacity: unique symbol;
 export declare const QueueableLike_isReady: unique symbol;
-export declare const QueueableLike_addOnReadyEventListener: unique symbol;
+export declare const QueueableLike_addOnReadyListener: unique symbol;
 export interface QueueableLike extends DisposableLike {
     readonly [QueueableLike_isReady]: boolean;
     /**
@@ -71,7 +71,7 @@ export interface QueueableLike extends DisposableLike {
      * The number of items the queue is capable of efficiently buffering.
      */
     readonly [QueueableLike_capacity]: number;
-    [QueueableLike_addOnReadyEventListener](callback: SideEffect1<void>): DisposableLike;
+    [QueueableLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
 }
 /**
  * @noInheritDoc

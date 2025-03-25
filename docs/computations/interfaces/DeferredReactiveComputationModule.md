@@ -10,6 +10,10 @@
 
 - [`ComputationModuleLike`](ComputationModuleLike.md)\<`TComputationType`\>
 
+## Extended by
+
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
+
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)

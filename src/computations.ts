@@ -222,7 +222,7 @@ export type NewInstanceWithSideEffectsOf<
       readonly _T: () => T;
     };
 
-// FIXME: Multicast types should be disposable   
+// FIXME: Multicast types should be disposable
 export type NewPureInstanceOf<
   TComputationType extends ComputationType,
   T,
@@ -1172,8 +1172,15 @@ export interface InteractiveComputationModule<
 
 export interface ConcurrentComputationModule<
   TComputationType extends ComputationType,
+  TCreationOptions extends {
+    toProducer?: Record<string, any>;
+  } = {},
 > {
   toObservable<T>(): ToObservableOperator<TComputationType, T>;
+
+  toProducer<T>(
+    options?: TCreationOptions["toProducer"],
+  ): ToProducer<TComputationType, T>;
 }
 
 export interface ConcurrentDeferredComputationModule<
@@ -1183,7 +1190,6 @@ export interface ConcurrentDeferredComputationModule<
     fromAsyncFactory?: Record<string, any>;
     genAsync?: Record<string, any>;
     genPureAsync?: Record<string, any>;
-    toProducer?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
   broadcast<T>(
@@ -1211,11 +1217,6 @@ export interface ConcurrentDeferredComputationModule<
     factory: Factory<AsyncIterator<T>>,
     options?: TCreationOptions["genPureAsync"],
   ): NewPureInstanceOf<TComputationType, T>;
-
-  // prettier-ignore
-  toProducer<T>(
-    options?: TCreationOptions["toProducer"],
-  ):ToProducer<TComputationType, T>;
 }
 
 export interface SequentialReactiveComputationModule<

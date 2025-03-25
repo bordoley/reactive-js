@@ -33,6 +33,7 @@ import {
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
+  DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -146,18 +147,18 @@ const PublisherMixin: <T>() => Mixin1<
           }
 
           const maybeEventListeners = this[Publisher_EventListeners];
-          const EventListeners =
+          const eventListeners =
             maybeEventListeners instanceof Set
               ? maybeEventListeners
               : isSome(maybeEventListeners)
                 ? [maybeEventListeners]
                 : [];
 
-          for (const EventListener of EventListeners) {
+          for (const eventListener of eventListeners) {
             try {
-              EventListener[EventListenerLike_notify](next);
+              eventListener[EventListenerLike_notify](next);
             } catch (e) {
-              EventListener[DisposableLike_dispose](error(e));
+              eventListener[DisposableLike_dispose](error(e));
             }
           }
         },
@@ -168,33 +169,34 @@ const PublisherMixin: <T>() => Mixin1<
 
         [SourceLike_subscribe](
           this: TProperties & PublisherLike<T>,
-          EventListener: EventListenerLike<T>,
+          eventListener: EventListenerLike<T>,
         ) {
           const maybeEventListeners = this[Publisher_EventListeners];
+          this[DisposableContainerLike_add](eventListener);
 
           if (
             this[DisposableLike_isDisposed] ||
-            EventListener === this ||
+            eventListener === this ||
             (maybeEventListeners instanceof Set &&
-              maybeEventListeners[Set_has](EventListener)) ||
-            maybeEventListeners === EventListener
+              maybeEventListeners[Set_has](eventListener)) ||
+            maybeEventListeners === eventListener
           ) {
             return;
           }
 
           if (maybeEventListeners instanceof Set) {
-            maybeEventListeners[Set_add](EventListener);
+            maybeEventListeners[Set_add](eventListener);
           } else if (isSome(maybeEventListeners)) {
             const EventListeners = (this[Publisher_EventListeners] =
               newInstance<Set<EventListenerLike<T>>>(Set));
             EventListeners[Set_add](maybeEventListeners);
-            EventListeners[Set_add](EventListener);
+            EventListeners[Set_add](eventListener);
           } else {
-            this[Publisher_EventListeners] = EventListener;
+            this[Publisher_EventListeners] = eventListener;
           }
 
           pipe(
-            EventListener,
+            eventListener,
             DisposableContainer.onDisposed(this[Publisher_onSinkDisposed]),
           );
         },
