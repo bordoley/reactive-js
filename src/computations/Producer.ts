@@ -33,6 +33,7 @@ import {
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
 import Producer_lastAsync from "./Producer/__private__/Producer.lastAsync.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
+import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
 import Producer_scan from "./Producer/__private__/Producer.scan.js";
 import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
 
@@ -92,6 +93,7 @@ export const genPure: Signature["genPure"] = Producer_genPure;
 export const keep: Signature["keep"] = Producer_keep;
 export const lastAsync: Signature["lastAsync"] = Producer_lastAsync;
 export const map: Signature["map"] = Producer_map;
+export const pairwise: Signature["pairwise"] = Producer_pairwise;
 export const scan: Signature["scan"] = Producer_scan;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Producer_toReadonlyArrayAsync;

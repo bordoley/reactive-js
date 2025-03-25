@@ -10,6 +10,7 @@ import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Ob
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
+import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
@@ -23,6 +24,7 @@ export const genPure = Observable_genPure;
 export const keep = Observable_keep;
 export const lastAsync = Observable_lastAsync;
 export const map = Observable_map;
+export const pairwise = Observable_pairwise;
 export const scan = Observable_scan;
 export const toProducer = Observable_toProducer;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;

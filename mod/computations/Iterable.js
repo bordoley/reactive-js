@@ -234,7 +234,7 @@ class PairwiseIterable {
                 prev = v;
             }
             else {
-                const result = tuple(v, prev);
+                const result = tuple(prev, v);
                 prev = v;
                 yield result;
             }

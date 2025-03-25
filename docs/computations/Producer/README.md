@@ -30,5 +30,6 @@
 - [keep](functions/keep.md)
 - [lastAsync](functions/lastAsync.md)
 - [map](functions/map.md)
+- [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

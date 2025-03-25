@@ -29,6 +29,7 @@
 - [lastAsync](functions/lastAsync.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)
+- [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

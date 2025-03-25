@@ -410,7 +410,7 @@ class PairwiseIterable<T> implements IterableLike<Tuple2<T, T>> {
         hasPrev = true;
         prev = v;
       } else {
-        const result = tuple(v, prev);
+        const result = tuple(prev, v);
         prev = v;
 
         yield result;

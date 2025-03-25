@@ -24,6 +24,7 @@ import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_lastAsync from "./Broadcaster/__private__/Broadcaster.lastAsync.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
 import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
+import Broadcaster_pairwise from "./Broadcaster/__private__/Broadcaster.pairwise.js";
 import Broadcaster_scan from "./Broadcaster/__private__/Broadcaster.scan.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Broadcaster_toReadonlyArrayAsync from "./Broadcaster/__private__/Broadcaster.toReadonlyArrayAsync.js";
@@ -92,6 +93,7 @@ export const keep: Signature["keep"] = Broadcaster_keep;
 export const lastAsync: Signature["lastAsync"] = Broadcaster_lastAsync;
 export const map: Signature["map"] = Broadcaster_map;
 export const merge: Signature["merge"] = Broadcaster_merge;
+export const pairwise: Signature["pairwise"] = Broadcaster_pairwise;
 export const scan: Signature["scan"] = Broadcaster_scan;
 export const toProducer: Signature["toProducer"] = Broadcaster_toProducer;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =

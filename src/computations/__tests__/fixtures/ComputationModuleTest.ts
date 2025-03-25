@@ -7,6 +7,8 @@ import {
 } from "../../../__internal__/testing.js";
 import { ComputationModule, ComputationType } from "../../../computations.js";
 import {
+  Tuple2,
+  arrayEquality,
   bindMethod,
   greaterThan,
   pipe,
@@ -14,6 +16,7 @@ import {
   pipeLazy,
   pipeLazyAsync,
   returns,
+  tuple,
 } from "../../../functions.js";
 import { increment } from "../../../math.js";
 
@@ -25,6 +28,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
     | "genPure"
     | "keep"
     | "map"
+    | "pairwise"
     | "scan"
     | "toReadonlyArrayAsync"
   >,
@@ -165,6 +169,44 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           expectToThrowErrorAsync(err),
         );
       }),
+    ),
+    describe(
+      "pairwise",
+      testAsync(
+        "when there are more than one input value",
+        pipeLazyAsync(
+          bindMethod([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], Symbol.iterator),
+          m.gen,
+          m.pairwise<number>(),
+          m.toReadonlyArrayAsync<Tuple2<number, number>>(),
+          expectArrayEquals(
+            [
+              tuple(0, 1),
+              tuple(1, 2),
+              tuple(2, 3),
+              tuple(3, 4),
+              tuple(4, 5),
+              tuple(5, 6),
+              tuple(6, 7),
+              tuple(7, 8),
+              tuple(8, 9),
+            ],
+            { valuesEquality: arrayEquality() },
+          ),
+        ),
+      ),
+      testAsync(
+        "when the input only provides 1 value",
+        pipeLazyAsync(
+          bindMethod([0], Symbol.iterator),
+          m.gen,
+          m.pairwise<number>(),
+          m.toReadonlyArrayAsync(),
+          expectArrayEquals<Tuple2<number, number>>([], {
+            valuesEquality: arrayEquality(),
+          }),
+        ),
+      ),
     ),
     describe(
       "scan",
