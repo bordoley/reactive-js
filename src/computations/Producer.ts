@@ -36,6 +36,7 @@ import Producer_map from "./Producer/__private__/Producer.map.js";
 import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
 import Producer_scan from "./Producer/__private__/Producer.scan.js";
 import Producer_skipFirst from "./Producer/__private__/Producer.skipFirst.js";
+import Producer_takeFirst from "./Producer/__private__/Producer.takeFirst.js";
 import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
 
 /**
@@ -97,5 +98,6 @@ export const map: Signature["map"] = Producer_map;
 export const pairwise: Signature["pairwise"] = Producer_pairwise;
 export const scan: Signature["scan"] = Producer_scan;
 export const skipFirst: Signature["skipFirst"] = Producer_skipFirst;
+export const takeFirst: Signature["takeFirst"] = Producer_takeFirst;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Producer_toReadonlyArrayAsync;

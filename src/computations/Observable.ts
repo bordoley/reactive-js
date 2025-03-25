@@ -40,6 +40,7 @@ import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
+import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 
@@ -214,6 +215,7 @@ export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
+export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Observable_toReadonlyArrayAsync;

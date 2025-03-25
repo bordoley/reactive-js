@@ -31,6 +31,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
     | "pairwise"
     | "scan"
     | "skipFirst"
+    | "takeFirst"
     | "toReadonlyArrayAsync"
   >,
   //  computations: ComputationTypeOf<TComputationType>,
@@ -283,6 +284,79 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           m.gen,
           m.skipFirst<number>({ count: 4 }),
           m.toReadonlyArrayAsync(),
+          expectArrayEquals([] as number[]),
+        ),
+      ),
+    ),
+    describe(
+      "takeFirst",
+      testAsync(
+        "with default count",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3, 4, 5], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>(),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+      testAsync(
+        "when taking fewer than the total number of elements in the source",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3, 4, 5], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>({ count: 3 }),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      testAsync(
+        "when taking more than all the items produced by the source",
+        pipeLazyAsync(
+          bindMethod([1, 2], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>({ count: 3 }),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2]),
+        ),
+      ),
+      testAsync(
+        "from iterable source",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3, 4], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>({ count: 2 }),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2]),
+        ),
+      ),
+      testAsync(
+        "when source is empty",
+        pipeLazyAsync(
+          bindMethod([], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>({ count: 3 }),
+          m.toReadonlyArrayAsync(),
+          expectArrayEquals<number>([]),
+        ),
+      ),
+      testAsync(
+        "with default count",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>(),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+      testAsync(
+        "when count is 0",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.gen,
+          m.takeFirst<number>({ count: 0 }),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([] as number[]),
         ),
       ),

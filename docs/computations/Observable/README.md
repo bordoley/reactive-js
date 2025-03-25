@@ -31,5 +31,6 @@
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
+- [takeFirst](functions/takeFirst.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

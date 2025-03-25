@@ -6,61 +6,64 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Optional, none } from "../../../functions.js";
-import { clampPositiveInteger, max } from "../../../math.js";
+import { clampPositiveInteger } from "../../../math.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
   LiftedOperatorLike,
+  LiftedOperatorLike_complete,
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
 export const create: <T>(
   delegate: LiftedOperatorLike<T>,
-  skipCount: Optional<number>,
+  takeCount: Optional<number>,
 ) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
-  const SkipFirstOperator_count = Symbol("SkipFirstOperator_count");
+  const TakeFirstOperator_count = Symbol("TakeFirstOperator_count");
 
   interface TProperties {
-    [SkipFirstOperator_count]: number;
+    [TakeFirstOperator_count]: number;
   }
 
   return mixInstanceFactory(
     include(DelegatingLiftedOperatorMixin<T>()),
-    function SkipFirstOperator(
+    function TakeFirstOperator(
       this: Pick<
         DelegatingLiftedOperatorLike<T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
       delegate: LiftedOperatorLike<T>,
-      skipCount: Optional<number>,
+      takeCount: Optional<number>,
     ): LiftedOperatorLike<T> {
       init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
-      this[SkipFirstOperator_count] = clampPositiveInteger(skipCount ?? 1);
+
+      this[TakeFirstOperator_count] = clampPositiveInteger(takeCount ?? 1);
+
+      if (takeCount === 0) {
+        this[LiftedOperatorLike_complete]();
+      }
 
       return this;
     },
     props<TProperties>({
-      [SkipFirstOperator_count]: none,
+      [TakeFirstOperator_count]: none,
     }),
     proto({
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<T>,
         next: T,
       ) {
-        this[SkipFirstOperator_count] = max(
-          this[SkipFirstOperator_count] - 1,
-          -1,
-        );
+        this[TakeFirstOperator_count];
+        this[TakeFirstOperator_count]--;
 
-        const shouldEmit = this[SkipFirstOperator_count] < 0;
+        const delegate = this[DelegatingLiftedOperatorLike_delegate];
+        delegate[LiftedOperatorLike_notify](next);
 
-        if (shouldEmit) {
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](next);
+        if (this[TakeFirstOperator_count] <= 0) {
+          delegate[LiftedOperatorLike_complete]();
         }
       },
     }),
