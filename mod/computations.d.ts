@@ -80,7 +80,7 @@ export type NewInstanceWithSideEffectsOf<TComputationType extends ComputationTyp
     readonly _C: TComputationType;
     readonly _T: () => T;
 };
-type NewPureInstanceFindType<TComputationType extends ComputationType, T> = TComputationType extends {
+export type NewPureInstanceType<TComputationType extends ComputationType, T> = TComputationType extends {
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
     readonly [Computation_T]: T;
@@ -88,7 +88,7 @@ type NewPureInstanceFindType<TComputationType extends ComputationType, T> = TCom
     readonly _C: TComputationType;
     readonly _T: () => T;
 };
-export type NewPureInstanceOf<TComputationType extends ComputationType, T> = NewPureInstanceFindType<TComputationType, T> extends MulticastComputationOf<TComputationType, T> ? NewPureInstanceFindType<TComputationType, T> & DisposableLike & PauseableLike : NewPureInstanceFindType<TComputationType, T>;
+export type NewPureInstanceOf<TComputationType extends ComputationType, T> = NewPureInstanceType<TComputationType, T> extends MulticastComputationOf<TComputationType, T> ? NewPureInstanceType<TComputationType, T> & DisposableLike & PauseableLike : NewPureInstanceType<TComputationType, T>;
 export type ComputationBaseOf<TComputationType extends ComputationType, T> = TComputationType extends {
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
@@ -238,7 +238,6 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
     firstAsync?: Record<string, any>;
     fromReadonlyArray?: Record<string, any>;
     fromValue?: Record<string, any>;
-    gen?: Record<string, any>;
     genPure?: Record<string, any>;
     lastAsync?: Record<string, any>;
     raise?: Record<string, any>;
@@ -256,7 +255,6 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
         readonly start?: number;
     } & TCreationOptions["fromReadonlyArray"]): Function1<ReadonlyArray<T>, NewPureInstanceOf<TComputationType, T>>;
     fromValue<T>(options?: TCreationOptions["fromValue"]): Function1<T, NewPureInstanceOf<TComputationType, T>>;
-    gen<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["gen"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
     genPure<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["genPure"]): NewPureInstanceOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<TComputationType, T, T>;
     lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
@@ -275,7 +273,9 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
     }): PureComputationOperator<TComputationType, T, T>;
     toReadonlyArrayAsync<T>(options?: TCreationOptions["toReadonlyArrayAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 }
-export interface SequentialComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+export interface SequentialComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+    gen?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
     catchError<T>(onError: SideEffect1<Error>): PureComputationOperator<TComputationType, T, T>;
     catchError<T, TInnerLike extends HigherOrderInnerComputationLike>(onError: Function1<Error, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>>, options: {
         readonly innerType: TInnerLike;
@@ -289,6 +289,7 @@ export interface SequentialComputationModule<TComputationType extends Computatio
         readonly innerType: TInnerLike;
     }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    gen<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["gen"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
     repeat<T>(predicate: Predicate<number>): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(count: number): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(): PureComputationOperator<TComputationType, T, T>;

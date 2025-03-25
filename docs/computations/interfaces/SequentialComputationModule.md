@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / SequentialComputationModule
 
-# Interface: SequentialComputationModule\<TComputationType\>
+# Interface: SequentialComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -20,6 +20,8 @@
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+
+• **TCreationOptions** *extends* `object` = \{\}
 
 ## Properties
 
@@ -212,6 +214,30 @@
 #### Returns
 
 [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
+
+***
+
+### gen()
+
+> **gen**\<`T`\>(`factory`, `options`?): [`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`TCreationOptions`\[`"gen"`\]
+
+#### Returns
+
+[`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ***
 

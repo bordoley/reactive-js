@@ -78,11 +78,11 @@ export interface Signature {
     }): <TA, TB>(key: TFlattenKey, selector: (a: TA, options?: {
         signal?: AbortSignal;
     }) => Promise<TB>) => HigherOrderComputationOperator<TComputationType, DeferredComputationWithSideEffectsLike, TA, TB>;
-    flatMapIterable<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "map" | "gen" | "genPure"> & {
+    flatMapIterable<TComputationType extends ComputationType, TFlattenKey extends string | number | symbol>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType> & SequentialComputationModule<TComputationType>, "map" | "gen" | "genPure"> & {
         readonly [key in TFlattenKey | string | symbol | number]: key extends TFlattenKey ? SequentialComputationModule<TComputationType>["concatAll"] : unknown;
     }): FlatMapIterableOperator<TComputationType, TFlattenKey>;
-    fromIterable<TComputationType extends ComputationType, T>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "gen" | "genPure">, options?: Parameters<(typeof m)["gen"]>[1]): FromIterableOperator<TComputationType, T>;
-    generate<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "gen">): <T>(generator: Updater<T>, initialValue: Factory<T>, options?: Parameters<(typeof m)["gen"]>[1]) => GeneratorOf<TComputationType, T>;
+    fromIterable<TComputationType extends ComputationType, T>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType> & SequentialComputationModule<TComputationType>, "gen" | "genPure">, options?: Parameters<(typeof m)["gen"]>[1]): FromIterableOperator<TComputationType, T>;
+    generate<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "genPure">): <T>(generator: Updater<T>, initialValue: Factory<T>, options?: Parameters<(typeof m)["genPure"]>[1]) => GeneratorOf<TComputationType, T>;
     hasSideEffects<TComputationType extends ComputationLike>(computation: TComputationType): computation is TComputationType & ComputationWithSideEffectsLike;
     ignoreElements<TComputationType extends ComputationType>(m: PickComputationModule<TComputationType, ComputationModule<TComputationType>, "keep">): <T>() => PureComputationOperator<TComputationType, any, T>;
     isDeferred<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & DeferredComputationLike;

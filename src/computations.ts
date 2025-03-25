@@ -221,8 +221,7 @@ export type NewInstanceWithSideEffectsOf<
       readonly _T: () => T;
     };
 
-// FIXME: Multicast types should be disposable
-type NewPureInstanceFindType<
+export type NewPureInstanceType<
   TComputationType extends ComputationType,
   T,
 > = TComputationType extends {
@@ -245,14 +244,12 @@ type NewPureInstanceFindType<
     };
 
 export type NewPureInstanceOf<TComputationType extends ComputationType, T> =
-  NewPureInstanceFindType<TComputationType, T> extends MulticastComputationOf<
+  NewPureInstanceType<TComputationType, T> extends MulticastComputationOf<
     TComputationType,
     T
   >
-    ? NewPureInstanceFindType<TComputationType, T> &
-        DisposableLike &
-        PauseableLike
-    : NewPureInstanceFindType<TComputationType, T>;
+    ? NewPureInstanceType<TComputationType, T> & DisposableLike & PauseableLike
+    : NewPureInstanceType<TComputationType, T>;
 
 export type ComputationBaseOf<
   TComputationType extends ComputationType,
@@ -981,7 +978,6 @@ export interface ComputationModule<
     firstAsync?: Record<string, any>;
     fromReadonlyArray?: Record<string, any>;
     fromValue?: Record<string, any>;
-    gen?: Record<string, any>;
     genPure?: Record<string, any>;
     lastAsync?: Record<string, any>;
     raise?: Record<string, any>;
@@ -1013,11 +1009,6 @@ export interface ComputationModule<
   fromValue<T>(
     options?: TCreationOptions["fromValue"],
   ): Function1<T, NewPureInstanceOf<TComputationType, T>>;
-
-  gen<T>(
-    factory: Factory<Iterator<T>>,
-    options?: TCreationOptions["gen"],
-  ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   genPure<T>(
     factory: Factory<Iterator<T>>,
@@ -1069,6 +1060,9 @@ export interface ComputationModule<
 
 export interface SequentialComputationModule<
   TComputationType extends ComputationType,
+  TCreationOptions extends {
+    gen?: Record<string, any>;
+  } = {},
 > extends ComputationModuleLike<TComputationType> {
   catchError<T>(
     onError: SideEffect1<Error>,
@@ -1121,6 +1115,11 @@ export interface SequentialComputationModule<
   forEach<T>(
     sideEffect: SideEffect1<T>,
   ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+
+  gen<T>(
+    factory: Factory<Iterator<T>>,
+    options?: TCreationOptions["gen"],
+  ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   repeat<T>(
     predicate: Predicate<number>,

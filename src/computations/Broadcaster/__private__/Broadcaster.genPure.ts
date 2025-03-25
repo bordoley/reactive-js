@@ -4,7 +4,7 @@ import type * as Broadcaster from "../../Broadcaster.js";
 import Producer_broadcast from "../../Producer/__private__/Producer.broadcast.js";
 import { Producer_genPure } from "../../Producer/__private__/Producer.gen.js";
 
-const Broadcaster_gen: Broadcaster.Signature["gen"] = (<T>(
+const Broadcaster_genPure: Broadcaster.Signature["genPure"] = (<T>(
   factory: Factory<Generator<T>>,
   options?: {
     readonly autoDispose?: boolean;
@@ -13,6 +13,6 @@ const Broadcaster_gen: Broadcaster.Signature["gen"] = (<T>(
   pipe(
     Producer_genPure(factory),
     Producer_broadcast(options),
-  )) as Broadcaster.Signature["gen"];
+  )) as Broadcaster.Signature["genPure"];
 
-export default Broadcaster_gen;
+export default Broadcaster_genPure;

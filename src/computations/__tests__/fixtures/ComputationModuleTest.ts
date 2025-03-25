@@ -26,7 +26,6 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
   m: Pick<
     ComputationModule<TComputationType>,
     | "distinctUntilChanged"
-    | "gen"
     | "genPure"
     | "keep"
     | "map"
@@ -47,7 +46,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when source has duplicates in order",
         pipeLazyAsync(
           bindMethod([1, 2, 2, 2, 2, 3, 3, 3, 4], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.distinctUntilChanged<number>(),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 4]),
@@ -57,7 +56,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when source is empty",
         pipeLazyAsync(
           bindMethod([], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.distinctUntilChanged<number>(),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals<number>([]),
@@ -72,7 +71,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipe(
           pipeLazy(
             bindMethod([1, 1], Symbol.iterator),
-            m.gen,
+            m.genPure,
             m.distinctUntilChanged({ equality }),
             m.toReadonlyArrayAsync(),
           ),
@@ -83,7 +82,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "with custom equality functions",
         pipeLazyAsync(
           bindMethod([1, 2, 2, 2, 2, 3, 3, 3, 4], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.distinctUntilChanged<number>({
             equality: () => true,
           }),
@@ -93,12 +92,12 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
       ),
     ),
     describe(
-      "gen",
+      "genPure",
       testAsync(
         "iterating an array iterator",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen<number>,
+          m.genPure<number>,
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
@@ -109,20 +108,20 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           function* () {
             throw new Error();
           },
-          m.gen<number>,
+          m.genPure<number>,
           m.toReadonlyArrayAsync<number>(),
           expectPromiseToThrow,
         ),
       ),
     ),
-    describe("genPure"),
+    describe("genPurePure"),
     describe(
       "keep",
       testAsync(
         "keeps only values greater than 5",
         pipeLazyAsync(
           bindMethod([4, 8, 10, 7], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.keep(greaterThan(5)),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([8, 10, 7]),
@@ -137,7 +136,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipeAsync(
           pipeLazy(
             bindMethod([1, 1], Symbol.iterator),
-            m.gen,
+            m.genPure,
             m.keep(predicate),
             m.toReadonlyArrayAsync(),
           ),
@@ -151,7 +150,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "maps every value",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen<number>,
+          m.genPure<number>,
           m.map<number, number>(increment),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3, 4]),
@@ -166,7 +165,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipeAsync(
           pipeLazy(
             bindMethod([1, 2, 3], Symbol.iterator),
-            m.gen,
+            m.genPure,
             m.map(selector),
             m.toReadonlyArrayAsync(),
           ),
@@ -181,7 +180,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when there are more than one input value",
         pipeLazyAsync(
           bindMethod([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.pairwise<number>(),
           m.toReadonlyArrayAsync<Tuple2<number, number>>(),
           expectArrayEquals(
@@ -204,7 +203,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when the input only provides 1 value",
         pipeLazyAsync(
           bindMethod([0], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.pairwise<number>(),
           m.toReadonlyArrayAsync(),
           expectArrayEquals<Tuple2<number, number>>([], {
@@ -219,7 +218,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "sums all the values in the array emitting intermediate values.",
         pipeLazyAsync(
           bindMethod([1, 1, 1], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.scan<number, number>((a, b) => a + b, returns(0)),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
@@ -234,7 +233,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipeAsync(
           pipeLazy(
             bindMethod([1, 1], Symbol.iterator),
-            m.gen,
+            m.genPure,
             m.scan(scanner, returns(0)),
             m.toReadonlyArrayAsync(),
           ),
@@ -250,7 +249,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipeAsync(
           pipeLazy(
             bindMethod([1, 1], Symbol.iterator),
-            m.gen,
+            m.genPure,
             m.scan<number, number>((a, b) => a + b, initialValue),
             m.toReadonlyArrayAsync<number>(),
           ),
@@ -264,7 +263,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "with default count",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.skipFirst<number>(),
           m.toReadonlyArrayAsync(),
           expectArrayEquals([2, 3]),
@@ -274,7 +273,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when skipped source has additional elements",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.skipFirst<number>({ count: 2 }),
           m.toReadonlyArrayAsync(),
           expectArrayEquals([3]),
@@ -284,7 +283,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when all elements are skipped",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.skipFirst<number>({ count: 4 }),
           m.toReadonlyArrayAsync(),
           expectArrayEquals([] as number[]),
@@ -297,7 +296,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "with default count",
         pipeLazyAsync(
           bindMethod([1, 2, 3, 4, 5], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>(),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1]),
@@ -307,7 +306,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when taking fewer than the total number of elements in the source",
         pipeLazyAsync(
           bindMethod([1, 2, 3, 4, 5], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>({ count: 3 }),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
@@ -317,7 +316,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when taking more than all the items produced by the source",
         pipeLazyAsync(
           bindMethod([1, 2], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>({ count: 3 }),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2]),
@@ -327,7 +326,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "from iterable source",
         pipeLazyAsync(
           bindMethod([1, 2, 3, 4], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>({ count: 2 }),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2]),
@@ -337,7 +336,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when source is empty",
         pipeLazyAsync(
           bindMethod([], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>({ count: 3 }),
           m.toReadonlyArrayAsync(),
           expectArrayEquals<number>([]),
@@ -347,7 +346,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "with default count",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>(),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1]),
@@ -357,7 +356,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "when count is 0",
         pipeLazyAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeFirst<number>({ count: 0 }),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([] as number[]),
@@ -369,7 +368,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
       testAsync("exclusive", async () => {
         await pipeAsync(
           bindMethod([1, 2, 3, 4, 5], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeWhile<number>(lessThan(4)),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
@@ -377,7 +376,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
 
         await pipeAsync(
           bindMethod([1, 2, 3], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeWhile<number>(alwaysTrue),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
@@ -385,7 +384,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
 
         await pipeAsync(
           bindMethod([], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeWhile<number>(alwaysTrue),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([] as number[]),
@@ -395,7 +394,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         "inclusive",
         pipeLazyAsync(
           bindMethod([1, 2, 3, 4, 5, 6], Symbol.iterator),
-          m.gen,
+          m.genPure,
           m.takeWhile(lessThan(4), { inclusive: true }),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 4]),
@@ -410,7 +409,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipeAsync(
           pipeLazy(
             bindMethod([1, 1], Symbol.iterator),
-            m.gen,
+            m.genPure,
             m.takeWhile(predicate),
             m.toReadonlyArrayAsync(),
           ),

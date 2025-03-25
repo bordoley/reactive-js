@@ -6,7 +6,7 @@ import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js"
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
-import Broadcaster_gen from "./Broadcaster/__private__/Broadcaster.gen.js";
+import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_lastAsync from "./Broadcaster/__private__/Broadcaster.lastAsync.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
@@ -23,8 +23,7 @@ export const create = Broadcaster_create;
 export const createPauseable = Broadcaster_createPauseable;
 export const distinctUntilChanged = Broadcaster_distinctUntilChanged;
 export const encodeUtf8 = Broadcaster_encodeUtf8;
-export const gen = Broadcaster_gen;
-export const genPure = Broadcaster_gen;
+export const genPure = Broadcaster_genPure;
 export const keep = Broadcaster_keep;
 export const lastAsync = Broadcaster_lastAsync;
 export const map = Broadcaster_map;

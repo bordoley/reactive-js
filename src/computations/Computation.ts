@@ -441,7 +441,8 @@ export interface Signature {
   >(
     m: PickComputationModule<
       TComputationType,
-      ComputationModule<TComputationType>,
+      ComputationModule<TComputationType> &
+        SequentialComputationModule<TComputationType>,
       "map" | "gen" | "genPure"
     > & {
       readonly [key in
@@ -457,7 +458,8 @@ export interface Signature {
   fromIterable<TComputationType extends ComputationType, T>(
     m: PickComputationModule<
       TComputationType,
-      ComputationModule<TComputationType>,
+      ComputationModule<TComputationType> &
+        SequentialComputationModule<TComputationType>,
       "gen" | "genPure"
     >,
     options?: Parameters<(typeof m)["gen"]>[1],
@@ -467,12 +469,12 @@ export interface Signature {
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType>,
-      "gen"
+      "genPure"
     >,
   ): <T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: Parameters<(typeof m)["gen"]>[1],
+    options?: Parameters<(typeof m)["genPure"]>[1],
   ) => GeneratorOf<TComputationType, T>;
 
   hasSideEffects<TComputationType extends ComputationLike>(
@@ -760,7 +762,8 @@ export const flatMapIterable: Signature["flatMapIterable"] = /*@__PURE__*/ (<
     (
       m: PickComputationModule<
         TComputationType,
-        ComputationModule<TComputationType>,
+        ComputationModule<TComputationType> &
+          SequentialComputationModule<TComputationType>,
         "map" | "gen" | "genPure"
       > & {
         readonly [key in
@@ -784,7 +787,8 @@ export const fromIterable: Signature["fromIterable"] = (<
   >(
     m: PickComputationModule<
       TComputationType,
-      ComputationModule<TComputationType>,
+      ComputationModule<TComputationType> &
+        SequentialComputationModule<TComputationType>,
       "gen" | "genPure"
     >,
     options?: any, //FIXME: for now
@@ -803,15 +807,15 @@ export const generate: Signature["generate"] =
     m: PickComputationModule<
       TComputationType,
       ComputationModule<TComputationType>,
-      "gen"
+      "genPure"
     >,
   ) =>
   <T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: Parameters<(typeof m)["gen"]>[1],
+    options?: Parameters<(typeof m)["genPure"]>[1],
   ) =>
-    m.gen(function* Generate() {
+    m.genPure(function* Generate() {
       let acc = initialValue();
       while (true) {
         const prevAcc = acc;

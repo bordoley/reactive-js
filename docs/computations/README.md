@@ -83,6 +83,7 @@
 - [MulticastComputationOfModule](type-aliases/MulticastComputationOfModule.md)
 - [NewInstanceWithSideEffectsOf](type-aliases/NewInstanceWithSideEffectsOf.md)
 - [NewPureInstanceOf](type-aliases/NewPureInstanceOf.md)
+- [NewPureInstanceType](type-aliases/NewPureInstanceType.md)
 - [PickComputationModule](type-aliases/PickComputationModule.md)
 - [PureAsynchronousComputationOperator](type-aliases/PureAsynchronousComputationOperator.md)
 - [PureComputationOf](type-aliases/PureComputationOf.md)

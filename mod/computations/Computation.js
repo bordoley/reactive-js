@@ -34,7 +34,7 @@ export const fromIterable = ((m, options) =>
         yield* iterable;
     }, options);
 });
-export const generate = (m) => (generator, initialValue, options) => m.gen(function* Generate() {
+export const generate = (m) => (generator, initialValue, options) => m.genPure(function* Generate() {
     let acc = initialValue();
     while (true) {
         const prevAcc = acc;
