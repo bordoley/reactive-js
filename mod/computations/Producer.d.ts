@@ -25,12 +25,14 @@ export interface ProducerModule extends ComputationModule<ProducerComputation>, 
 export type Signature = ProducerModule;
 export declare const buffer: Signature["buffer"];
 export declare const broadcast: Signature["broadcast"];
+export declare const create: Signature["create"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
+export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
 export declare const scan: Signature["scan"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

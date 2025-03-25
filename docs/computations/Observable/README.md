@@ -25,6 +25,7 @@
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
+- [lastAsync](functions/lastAsync.md)
 - [map](functions/map.md)
 - [scan](functions/scan.md)
 - [toProducer](functions/toProducer.md)

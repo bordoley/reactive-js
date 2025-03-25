@@ -26,6 +26,7 @@
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
+- [lastAsync](functions/lastAsync.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)
 - [scan](functions/scan.md)

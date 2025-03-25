@@ -21,6 +21,7 @@ import {
 import { ConsumerLike } from "../utils.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
+import Producer_create from "./Producer/__private__/Producer.create.js";
 import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
 import Producer_encodeUtf8 from "./Producer/__private__/Producer.encodeUtf8.js";
@@ -29,6 +30,7 @@ import {
   Producer_genPure,
 } from "./Producer/__private__/Producer.gen.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
+import Producer_lastAsync from "./Producer/__private__/Producer.lastAsync.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
 import Producer_scan from "./Producer/__private__/Producer.scan.js";
 import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
@@ -77,6 +79,7 @@ export type Signature = ProducerModule;
 
 export const buffer: Signature["buffer"] = Producer_buffer;
 export const broadcast: Signature["broadcast"] = Producer_broadcast;
+export const create: Signature["create"] = Producer_create;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Producer_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
@@ -85,6 +88,7 @@ export const encodeUtf8: Signature["encodeUtf8"] = Producer_encodeUtf8;
 export const gen: Signature["gen"] = Producer_gen;
 export const genPure: Signature["genPure"] = Producer_genPure;
 export const keep: Signature["keep"] = Producer_keep;
+export const lastAsync: Signature["lastAsync"] = Producer_lastAsync;
 export const map: Signature["map"] = Producer_map;
 export const scan: Signature["scan"] = Producer_scan;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =

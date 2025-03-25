@@ -1,14 +1,15 @@
 /// <reference types="./Consumer.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { none } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueLike_enqueue, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import ObserverMixin, { ObserverMixinLike_complete, ObserverMixinLike_consumer, ObserverMixinLike_notify, } from "../__mixins__/ObserverMixin.js";
 import QueueMixin from "../__mixins__/QueueMixin.js";
 export const create = /*@__PURE__*/ (() => {
-    const createQueue = mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueue(options) {
+    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueue(options) {
         init(DisposableMixin, this);
         init(QueueMixin(), this, options);
         return this;
@@ -26,7 +27,37 @@ export const create = /*@__PURE__*/ (() => {
             this[DisposableLike_dispose]();
         },
     }));
-    return (options) => createQueue(options);
+})();
+export const createDropOldestWithoutBackpressure = /*@__PURE__*/ (() => {
+    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueueDropOldestWithoutBackpressur(capacity) {
+        init(DisposableMixin, this);
+        init(QueueMixin(), this, {
+            backpressureStrategy: DropOldestBackpressureStrategy,
+            capacity,
+        });
+        return this;
+    }, props(), proto({
+        get [QueueableLike_isReady]() {
+            unsafeCast(this);
+            const isCompleted = this[SinkLike_isCompleted];
+            return !isCompleted;
+        },
+        get [QueueableLike_capacity]() {
+            return MAX_SAFE_INTEGER;
+        },
+        get [SinkLike_isCompleted]() {
+            unsafeCast(this);
+            return this[DisposableLike_isDisposed];
+        },
+        [EventListenerLike_notify](item) {
+            if (!this[DisposableLike_isDisposed]) {
+                this[QueueLike_enqueue](item);
+            }
+        },
+        [SinkLike_complete]() {
+            this[DisposableLike_dispose]();
+        },
+    }));
 })();
 export const toObserver = /*@__PURE__*/ (() => {
     const createConsumerToObserver = mixInstanceFactory(include(DelegatingDisposableMixin, ObserverMixin()), function ConsumerToObserver(scheduler, consumer) {

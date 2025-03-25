@@ -34,6 +34,7 @@ import {
   Observable_genPure,
 } from "./Observable/__private__/Observable.gen.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
+import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
@@ -204,6 +205,7 @@ export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const gen: Signature["gen"] = Observable_gen;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const keep: Signature["keep"] = Observable_keep;
+export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const scan: Signature["scan"] = Observable_scan;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;

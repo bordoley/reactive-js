@@ -110,6 +110,7 @@ export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
+export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
 export declare const scan: Signature["scan"];
 export declare const toProducer: Signature["toProducer"];

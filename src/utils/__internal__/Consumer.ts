@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -14,10 +15,13 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  DropOldestBackpressureStrategy,
   EventListenerLike_notify,
   ObserverLike,
   QueueLike,
   QueueLike_enqueue,
+  QueueableLike_capacity,
+  QueueableLike_isReady,
   SchedulerLike,
   SinkLike,
   SinkLike_complete,
@@ -43,7 +47,8 @@ export const create: <T>(options?: {
     | typeof SinkLike_complete
     | typeof SinkLike_isCompleted
   >;
-  const createQueue = mixInstanceFactory(
+
+  return mixInstanceFactory(
     include(DisposableMixin, QueueMixin()),
     function ConsumerQueue(
       this: TPrototype,
@@ -75,11 +80,62 @@ export const create: <T>(options?: {
       },
     }),
   );
+})();
 
-  return (options?: {
-    capacity?: number;
-    backpressureStrategy?: BackpressureStrategy;
-  }) => createQueue(options);
+export const createDropOldestWithoutBackpressure: <T>(
+  capacity: number,
+) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+  type TPrototype = Pick<
+    ConsumerLike<T>,
+    | typeof EventListenerLike_notify
+    | typeof SinkLike_complete
+    | typeof SinkLike_isCompleted
+    | typeof QueueableLike_isReady
+    | typeof QueueableLike_capacity
+  >;
+
+  return mixInstanceFactory(
+    include(DisposableMixin, QueueMixin()),
+    function ConsumerQueueDropOldestWithoutBackpressur(
+      this: TPrototype,
+      capacity: number,
+    ): ConsumerLike<T> & QueueLike<T> {
+      init(DisposableMixin, this);
+      init(QueueMixin<T>(), this, {
+        backpressureStrategy: DropOldestBackpressureStrategy,
+        capacity,
+      });
+      return this;
+    },
+    props(),
+    proto<TPrototype>({
+      get [QueueableLike_isReady](): boolean {
+        unsafeCast<ConsumerLike<T>>(this);
+        const isCompleted = this[SinkLike_isCompleted];
+
+        return !isCompleted;
+      },
+
+      get [QueueableLike_capacity](): number {
+        return MAX_SAFE_INTEGER;
+      },
+
+      get [SinkLike_isCompleted]() {
+        unsafeCast<DisposableLike>(this);
+        return this[DisposableLike_isDisposed];
+      },
+
+      [EventListenerLike_notify](this: QueueLike<T>, item: T) {
+        if (!this[DisposableLike_isDisposed]) {
+          this[QueueLike_enqueue](item);
+        }
+      },
+
+      [SinkLike_complete](this: DisposableLike) {
+        this[DisposableLike_dispose]();
+      },
+    }),
+  );
 })();
 
 export const toObserver: <T>(

@@ -8,6 +8,7 @@ import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcas
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
 import Broadcaster_gen from "./Broadcaster/__private__/Broadcaster.gen.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
+import Broadcaster_lastAsync from "./Broadcaster/__private__/Broadcaster.lastAsync.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
 import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
 import Broadcaster_scan from "./Broadcaster/__private__/Broadcaster.scan.js";
@@ -21,6 +22,7 @@ export const encodeUtf8 = Broadcaster_encodeUtf8;
 export const gen = Broadcaster_gen;
 export const genPure = Broadcaster_gen;
 export const keep = Broadcaster_keep;
+export const lastAsync = Broadcaster_lastAsync;
 export const map = Broadcaster_map;
 export const merge = Broadcaster_merge;
 export const scan = Broadcaster_scan;
