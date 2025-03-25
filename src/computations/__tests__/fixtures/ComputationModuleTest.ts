@@ -9,6 +9,7 @@ import { ComputationModule, ComputationType } from "../../../computations.js";
 import {
   bindMethod,
   greaterThan,
+  pipe,
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
@@ -18,12 +19,68 @@ import { increment } from "../../../math.js";
 const ComputationModuleTests = <TComputationType extends ComputationType>(
   m: Pick<
     ComputationModule<TComputationType>,
-    "gen" | "genPure" | "keep" | "map" | "toReadonlyArrayAsync"
+    | "distinctUntilChanged"
+    | "gen"
+    | "genPure"
+    | "keep"
+    | "map"
+    | "toReadonlyArrayAsync"
   >,
   //  computations: ComputationTypeOf<TComputationType>,
 ) =>
   describe(
     "ComputationModule",
+    describe(
+      "distinctUntilChanged",
+      testAsync(
+        "when source has duplicates in order",
+        pipeLazyAsync(
+          bindMethod([1, 2, 2, 2, 2, 3, 3, 3, 4], Symbol.iterator),
+          m.gen,
+          m.distinctUntilChanged<number>(),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3, 4]),
+        ),
+      ),
+      testAsync(
+        "when source is empty",
+        pipeLazyAsync(
+          bindMethod([], Symbol.iterator),
+          m.gen,
+          m.distinctUntilChanged<number>(),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals<number>([]),
+        ),
+      ),
+      testAsync("when equality operator throws", async () => {
+        const err = new Error();
+        const equality = <T>(_a: T, _b: T): boolean => {
+          throw err;
+        };
+
+        await pipe(
+          pipeLazy(
+            bindMethod([1, 1], Symbol.iterator),
+            m.gen,
+            m.distinctUntilChanged({ equality }),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+      testAsync(
+        "with custom equality functions",
+        pipeLazyAsync(
+          bindMethod([1, 2, 2, 2, 2, 3, 3, 3, 4], Symbol.iterator),
+          m.gen,
+          m.distinctUntilChanged<number>({
+            equality: () => true,
+          }),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+    ),
     describe(
       "gen",
       testAsync(

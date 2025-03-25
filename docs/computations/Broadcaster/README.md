@@ -20,6 +20,8 @@
 
 - [addEventHandler](functions/addEventHandler.md)
 - [create](functions/create.md)
+- [createPauseable](functions/createPauseable.md)
+- [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)

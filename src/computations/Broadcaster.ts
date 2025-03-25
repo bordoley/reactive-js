@@ -16,6 +16,8 @@ import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
+import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
+import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_gen from "./Broadcaster/__private__/Broadcaster.gen.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
@@ -76,6 +78,10 @@ export type Signature = BroadcasterModule;
 export const addEventHandler: Signature["addEventHandler"] =
   Broadcaster_addEventHandler;
 export const create: Signature["create"] = Broadcaster_create;
+export const createPauseable: Signature["createPauseable"] =
+  Broadcaster_createPauseable;
+export const distinctUntilChanged: Signature["distinctUntilChanged"] =
+  Broadcaster_distinctUntilChanged;
 export const gen: Signature["gen"] = Broadcaster_gen;
 export const genPure: Signature["genPure"] = Broadcaster_gen;
 export const keep: Signature["keep"] = Broadcaster_keep;

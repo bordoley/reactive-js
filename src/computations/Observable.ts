@@ -25,6 +25,7 @@ import {
 } from "../computations.js";
 import { Function1, Function2 } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
+import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import {
   Observable_gen,
   Observable_genPure,
@@ -190,6 +191,8 @@ export interface ObservableModule
 
 export type Signature = ObservableModule;
 
+export const distinctUntilChanged: Signature["distinctUntilChanged"] =
+  Observable_distinctUntilChanged;
 export const gen: Signature["gen"] = Observable_gen;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const keep: Signature["keep"] = Observable_keep;

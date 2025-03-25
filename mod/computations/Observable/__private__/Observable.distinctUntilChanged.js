@@ -1,0 +1,7 @@
+/// <reference types="./Observable.distinctUntilChanged.d.ts" />
+
+import { partial, pipe } from "../../../functions.js";
+import * as DistinctUntilChangedOperator from "../../__internal__/operators/DistinctUntilChangedOperator.js";
+import Observable_lift from "./Observable.lift.js";
+const Observable_distinctUntilChanged = ((options) => pipe(DistinctUntilChangedOperator.create, partial(options), Observable_lift()));
+export default Observable_distinctUntilChanged;

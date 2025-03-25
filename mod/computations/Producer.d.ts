@@ -24,6 +24,7 @@ export interface ProducerModule extends ComputationModule<ProducerComputation>, 
 }
 export type Signature = ProducerModule;
 export declare const broadcast: Signature["broadcast"];
+export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];

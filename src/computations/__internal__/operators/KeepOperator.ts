@@ -18,15 +18,15 @@ export const create: <T>(
   delegate: LiftedOperatorLike<T>,
   predicate: Predicate<T>,
 ) => DelegatingLiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
-  const KeepMixin_predicate = Symbol("KeepMixin_predicate");
+  const KeepOperator_predicate = Symbol("KeepOperator_predicate");
 
   interface TProperties {
-    [KeepMixin_predicate]: Predicate<T>;
+    [KeepOperator_predicate]: Predicate<T>;
   }
 
   return mixInstanceFactory(
     include(DelegatingLiftedOperatorMixin<T>()),
-    function KeepMixin(
+    function KeepOperator(
       this: Pick<
         DelegatingLiftedOperatorLike<T>,
         typeof LiftedOperatorLike_notify
@@ -36,19 +36,19 @@ export const create: <T>(
       predicate: Predicate<T>,
     ): DelegatingLiftedOperatorLike<T> {
       init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
-      this[KeepMixin_predicate] = predicate;
+      this[KeepOperator_predicate] = predicate;
 
       return this;
     },
     props<TProperties>({
-      [KeepMixin_predicate]: none,
+      [KeepOperator_predicate]: none,
     }),
     {
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<T>,
         next: T,
       ) {
-        const shouldNotify = this[KeepMixin_predicate](next);
+        const shouldNotify = this[KeepOperator_predicate](next);
 
         if (shouldNotify) {
           this[DelegatingLiftedOperatorLike_delegate][

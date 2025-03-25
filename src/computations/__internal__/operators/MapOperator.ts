@@ -18,15 +18,15 @@ export const create: <TA, TB>(
   delegate: LiftedOperatorLike<TB>,
   selector: Function1<TA, TB>,
 ) => DelegatingLiftedOperatorLike<TA, TB> = /*@__PURE__*/ (<TA, TB>() => {
-  const MapMixin_selector = Symbol("MapMixin_selector");
+  const MapOperator_selector = Symbol("MapOperator_selector");
 
   interface TProperties {
-    [MapMixin_selector]: Function1<TA, TB>;
+    [MapOperator_selector]: Function1<TA, TB>;
   }
 
   return mixInstanceFactory(
     include(DelegatingLiftedOperatorMixin<TA, TB>()),
-    function MapMixin(
+    function MapOperator(
       this: Pick<
         DelegatingLiftedOperatorLike<TA, TB>,
         typeof LiftedOperatorLike_notify
@@ -36,19 +36,19 @@ export const create: <TA, TB>(
       selector: Function1<TA, TB>,
     ): DelegatingLiftedOperatorLike<TA, TB> {
       init(DelegatingLiftedOperatorMixin<TA, TB>(), this, delegate);
-      this[MapMixin_selector] = selector;
+      this[MapOperator_selector] = selector;
 
       return this;
     },
     props<TProperties>({
-      [MapMixin_selector]: none,
+      [MapOperator_selector]: none,
     }),
     {
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<TA, TB>,
         next: TA,
       ) {
-        const mapped = this[MapMixin_selector](next);
+        const mapped = this[MapOperator_selector](next);
         this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](
           mapped,
         );

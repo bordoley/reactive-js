@@ -18,6 +18,7 @@
 
 ## Functions
 
+- [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)

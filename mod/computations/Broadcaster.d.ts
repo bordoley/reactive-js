@@ -28,6 +28,8 @@ export interface BroadcasterModule extends ComputationModule<BroadcasterComputat
 export type Signature = BroadcasterModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const create: Signature["create"];
+export declare const createPauseable: Signature["createPauseable"];
+export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
