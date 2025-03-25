@@ -10,6 +10,7 @@ import { Optional, newInstance, none } from "../../../functions.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedOperatorLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
   LiftedOperatorLike,
@@ -38,7 +39,8 @@ export const create: (
     function DecodeWithCharsetOperator(
       this: Pick<
         DelegatingLiftedOperatorLike<ArrayBuffer>,
-        typeof LiftedOperatorLike_notify | typeof LiftedOperatorLike_complete
+        | typeof LiftedOperatorLike_notify
+        | typeof DelegatingLiftedOperatorLike_onCompleted
       > &
         TProperties,
       delegate: LiftedOperatorLike<string>,
@@ -84,7 +86,7 @@ export const create: (
         }
       },
 
-      [LiftedOperatorLike_complete](
+      [DelegatingLiftedOperatorLike_onCompleted](
         this: TProperties & DelegatingLiftedOperatorLike<ArrayBuffer, string>,
       ) {
         const data = this[DecodeWithCharsetOperator_textDecoder].decode(

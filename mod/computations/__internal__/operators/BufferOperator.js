@@ -4,7 +4,7 @@ import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, DelegatingLiftedOperatorLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, } from "../LiftedSource.js";
 export const create = /*@__PURE__*/ (() => {
     const BufferOperator_buffer = Symbol("BufferOperator_buffer");
@@ -28,7 +28,7 @@ export const create = /*@__PURE__*/ (() => {
                 this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](buffer);
             }
         },
-        [LiftedOperatorLike_complete]() {
+        [DelegatingLiftedOperatorLike_onCompleted]() {
             const delegate = this[DelegatingLiftedOperatorLike_delegate];
             const buffer = this[BufferOperator_buffer];
             this[BufferOperator_buffer] = [];

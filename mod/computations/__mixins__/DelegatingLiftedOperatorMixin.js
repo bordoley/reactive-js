@@ -1,26 +1,28 @@
 /// <reference types="./DelegatingLiftedOperatorMixin.d.ts" />
 
-import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
+import { mix, props, proto } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import { LiftedOperatorLike_complete, LiftedOperatorLike_isCompleted, LiftedOperatorLike_notify, } from "../__internal__/LiftedSource.js";
 export const DelegatingLiftedOperatorLike_delegate = Symbol("DelegatingLiftedOperatorLike_delegate");
+export const DelegatingLiftedOperatorLike_onCompleted = Symbol("DelegatingLiftedOperatorLike_onCompleted");
 const DelegatingLiftedOperatorMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(function LiftedOperatorMixin(delegate) {
+    return returns(mix(function DelegatingLiftedOperatorMixin(delegate) {
         this[DelegatingLiftedOperatorLike_delegate] = delegate;
         return this;
     }, props({
         [DelegatingLiftedOperatorLike_delegate]: none,
+        [LiftedOperatorLike_isCompleted]: false,
     }), proto({
-        get [LiftedOperatorLike_isCompleted]() {
-            unsafeCast(this);
-            return this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_isCompleted];
+        [DelegatingLiftedOperatorLike_onCompleted]() {
+            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_complete]();
         },
         [LiftedOperatorLike_notify](next) {
             this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](next);
         },
         [LiftedOperatorLike_complete]() {
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_complete]();
+            this[LiftedOperatorLike_isCompleted] = true;
+            this[DelegatingLiftedOperatorLike_onCompleted]();
         },
     })));
 })();

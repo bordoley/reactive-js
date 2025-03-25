@@ -3,7 +3,7 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, DelegatingLiftedOperatorLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, } from "../LiftedSource.js";
 export const create = /*@__PURE__*/ (() => {
     const DecodeWithCharsetOperator_textDecoder = Symbol("DecodeWithCharsetOperator_textDecoder");
@@ -24,7 +24,7 @@ export const create = /*@__PURE__*/ (() => {
                 this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](data);
             }
         },
-        [LiftedOperatorLike_complete]() {
+        [DelegatingLiftedOperatorLike_onCompleted]() {
             const data = this[DecodeWithCharsetOperator_textDecoder].decode(newInstance(Uint8Array, []), {
                 stream: false,
             });

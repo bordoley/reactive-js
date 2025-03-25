@@ -1,10 +1,4 @@
-import {
-  Mixin1,
-  mix,
-  props,
-  proto,
-  unsafeCast,
-} from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, proto } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import {
   LiftedOperatorLike,
@@ -17,16 +11,22 @@ export const DelegatingLiftedOperatorLike_delegate = Symbol(
   "DelegatingLiftedOperatorLike_delegate",
 );
 
+export const DelegatingLiftedOperatorLike_onCompleted = Symbol(
+  "DelegatingLiftedOperatorLike_onCompleted",
+);
+
 export interface DelegatingLiftedOperatorLike<TA, TB = TA>
   extends LiftedOperatorLike<TA> {
   readonly [DelegatingLiftedOperatorLike_delegate]: LiftedOperatorLike<TB>;
+
+  [DelegatingLiftedOperatorLike_onCompleted](): void;
 }
 
-type TPrototype<TA> = Pick<
-  LiftedOperatorLike<TA>,
-  | typeof LiftedOperatorLike_isCompleted
+type TPrototype<TA, TB = TA> = Pick<
+  DelegatingLiftedOperatorLike<TA, TB>,
   | typeof LiftedOperatorLike_notify
   | typeof LiftedOperatorLike_complete
+  | typeof DelegatingLiftedOperatorLike_onCompleted
 >;
 
 interface DelegatingLiftedOperatorMixin {
@@ -47,12 +47,13 @@ const DelegatingLiftedOperatorMixin: DelegatingLiftedOperatorMixin =
   /*@__PURE__*/ (<TA, TB>() => {
     type TProperties = {
       [DelegatingLiftedOperatorLike_delegate]: LiftedOperatorLike<TB>;
+      [LiftedOperatorLike_isCompleted]: boolean;
     };
 
     return returns(
       mix(
-        function LiftedOperatorMixin(
-          this: TProperties & TPrototype<TA>,
+        function DelegatingLiftedOperatorMixin(
+          this: TProperties & TPrototype<TA, TB>,
           delegate: LiftedOperatorLike<TB>,
         ): DelegatingLiftedOperatorLike<TA, TB> {
           this[DelegatingLiftedOperatorLike_delegate] = delegate;
@@ -61,13 +62,13 @@ const DelegatingLiftedOperatorMixin: DelegatingLiftedOperatorMixin =
         },
         props<TProperties>({
           [DelegatingLiftedOperatorLike_delegate]: none,
+          [LiftedOperatorLike_isCompleted]: false,
         }),
         proto<TPrototype<TA>>({
-          get [LiftedOperatorLike_isCompleted]() {
-            unsafeCast<TProperties>(this);
-            return this[DelegatingLiftedOperatorLike_delegate][
-              LiftedOperatorLike_isCompleted
-            ];
+          [DelegatingLiftedOperatorLike_onCompleted](this: TProperties) {
+            this[DelegatingLiftedOperatorLike_delegate][
+              LiftedOperatorLike_complete
+            ]();
           },
 
           [LiftedOperatorLike_notify](this: TProperties, next: TA) {
@@ -76,10 +77,11 @@ const DelegatingLiftedOperatorMixin: DelegatingLiftedOperatorMixin =
             ](next as unknown as TB);
           },
 
-          [LiftedOperatorLike_complete](this: TProperties) {
-            this[DelegatingLiftedOperatorLike_delegate][
-              LiftedOperatorLike_complete
-            ]();
+          [LiftedOperatorLike_complete](
+            this: TProperties & TPrototype<TA, TB>,
+          ) {
+            this[LiftedOperatorLike_isCompleted] = true;
+            this[DelegatingLiftedOperatorLike_onCompleted]();
           },
         }),
       ),

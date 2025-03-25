@@ -15,6 +15,7 @@ import { clampPositiveNonZeroInteger } from "../../../math.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedOperatorLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
   LiftedOperatorLike,
@@ -77,7 +78,7 @@ export const create: <T>(
           ](buffer);
         }
       },
-      [LiftedOperatorLike_complete](
+      [DelegatingLiftedOperatorLike_onCompleted](
         this: TProperties & DelegatingLiftedOperatorLike<T, ReadonlyArray<T>>,
       ) {
         const delegate = this[DelegatingLiftedOperatorLike_delegate];
