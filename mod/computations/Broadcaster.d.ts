@@ -39,5 +39,6 @@ export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];
+export declare const skipFirst: Signature["skipFirst"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

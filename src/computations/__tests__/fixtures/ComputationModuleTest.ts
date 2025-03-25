@@ -30,6 +30,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
     | "map"
     | "pairwise"
     | "scan"
+    | "skipFirst"
     | "toReadonlyArrayAsync"
   >,
   //  computations: ComputationTypeOf<TComputationType>,
@@ -252,6 +253,39 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           expectToThrowErrorAsync(err),
         );
       }),
+    ),
+    describe(
+      "skipFirst",
+      testAsync(
+        "with default count",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.gen,
+          m.skipFirst<number>(),
+          m.toReadonlyArrayAsync(),
+          expectArrayEquals([2, 3]),
+        ),
+      ),
+      testAsync(
+        "when skipped source has additional elements",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.gen,
+          m.skipFirst<number>({ count: 2 }),
+          m.toReadonlyArrayAsync(),
+          expectArrayEquals([3]),
+        ),
+      ),
+      testAsync(
+        "when all elements are skipped",
+        pipeLazyAsync(
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.gen,
+          m.skipFirst<number>({ count: 4 }),
+          m.toReadonlyArrayAsync(),
+          expectArrayEquals([] as number[]),
+        ),
+      ),
     ),
   );
 

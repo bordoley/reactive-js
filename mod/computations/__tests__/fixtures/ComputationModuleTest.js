@@ -49,5 +49,5 @@ const ComputationModuleTests = (m) => describe("ComputationModule", describe("di
         throw err;
     };
     await pipeAsync(pipeLazy(bindMethod([1, 1], Symbol.iterator), m.gen, m.scan((a, b) => a + b, initialValue), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-})));
+})), describe("skipFirst", testAsync("with default count", pipeLazyAsync(bindMethod([1, 2, 3], Symbol.iterator), m.gen, m.skipFirst(), m.toReadonlyArrayAsync(), expectArrayEquals([2, 3]))), testAsync("when skipped source has additional elements", pipeLazyAsync(bindMethod([1, 2, 3], Symbol.iterator), m.gen, m.skipFirst({ count: 2 }), m.toReadonlyArrayAsync(), expectArrayEquals([3]))), testAsync("when all elements are skipped", pipeLazyAsync(bindMethod([1, 2, 3], Symbol.iterator), m.gen, m.skipFirst({ count: 4 }), m.toReadonlyArrayAsync(), expectArrayEquals([])))));
 export default ComputationModuleTests;

@@ -30,5 +30,6 @@
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)
+- [skipFirst](functions/skipFirst.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

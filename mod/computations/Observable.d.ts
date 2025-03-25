@@ -115,5 +115,6 @@ export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];
+export declare const skipFirst: Signature["skipFirst"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

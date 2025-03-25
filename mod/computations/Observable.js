@@ -12,6 +12,7 @@ import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
+import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 export const buffer = Observable_buffer;
@@ -26,5 +27,6 @@ export const lastAsync = Observable_lastAsync;
 export const map = Observable_map;
 export const pairwise = Observable_pairwise;
 export const scan = Observable_scan;
+export const skipFirst = Observable_skipFirst;
 export const toProducer = Observable_toProducer;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;
