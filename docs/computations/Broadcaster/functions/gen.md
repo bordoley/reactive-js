@@ -6,7 +6,7 @@
 
 # Function: gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
+> **gen**\<`T`\>(`factory`, `options`?): `never`
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
+`never`

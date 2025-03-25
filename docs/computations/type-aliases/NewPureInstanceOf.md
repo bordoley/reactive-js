@@ -6,7 +6,7 @@
 
 # Type Alias: NewPureInstanceOf\<TComputationType, T\>
 
-> **NewPureInstanceOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[`FirstNotNeverComputation`\<`TComputationType`, *typeof* [`Computation_pureSynchronousOfT`](../variables/Computation_pureSynchronousOfT.md), *typeof* [`Computation_pureDeferredOfT`](../variables/Computation_pureDeferredOfT.md), *typeof* [`Computation_multicastOfT`](../variables/Computation_multicastOfT.md)\>\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>\> : `object`
+> **NewPureInstanceOf**\<`TComputationType`, `T`\>: `NewPureInstanceFindType`\<`TComputationType`, `T`\> *extends* [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> ? `NewPureInstanceFindType`\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md) & [`PauseableLike`](../../utils/interfaces/PauseableLike.md) : `NewPureInstanceFindType`\<`TComputationType`, `T`\>
 
 ## Type Parameters
 

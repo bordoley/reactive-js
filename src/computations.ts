@@ -212,8 +212,7 @@ export type NewInstanceWithSideEffectsOf<
       })[FirstNotNeverComputation<
         TComputationType,
         typeof Computation_synchronousWithSideEffectsOfT,
-        typeof Computation_deferredWithSideEffectsOfT,
-        typeof Computation_multicastOfT
+        typeof Computation_deferredWithSideEffectsOfT
       >] &
         ComputationBaseOf<TComputationType, T>
     >
@@ -223,7 +222,7 @@ export type NewInstanceWithSideEffectsOf<
     };
 
 // FIXME: Multicast types should be disposable
-export type NewPureInstanceOf<
+type NewPureInstanceFindType<
   TComputationType extends ComputationType,
   T,
 > = TComputationType extends {
@@ -244,6 +243,16 @@ export type NewPureInstanceOf<
       readonly _C: TComputationType;
       readonly _T: () => T;
     };
+
+export type NewPureInstanceOf<TComputationType extends ComputationType, T> =
+  NewPureInstanceFindType<TComputationType, T> extends MulticastComputationOf<
+    TComputationType,
+    T
+  >
+    ? NewPureInstanceFindType<TComputationType, T> &
+        DisposableLike &
+        PauseableLike
+    : NewPureInstanceFindType<TComputationType, T>;
 
 export type ComputationBaseOf<
   TComputationType extends ComputationType,

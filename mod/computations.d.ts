@@ -76,11 +76,11 @@ export type NewInstanceWithSideEffectsOf<TComputationType extends ComputationTyp
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
     readonly [Computation_T]: T;
-})[FirstNotNeverComputation<TComputationType, typeof Computation_synchronousWithSideEffectsOfT, typeof Computation_deferredWithSideEffectsOfT, typeof Computation_multicastOfT>] & ComputationBaseOf<TComputationType, T>> : {
+})[FirstNotNeverComputation<TComputationType, typeof Computation_synchronousWithSideEffectsOfT, typeof Computation_deferredWithSideEffectsOfT>] & ComputationBaseOf<TComputationType, T>> : {
     readonly _C: TComputationType;
     readonly _T: () => T;
 };
-export type NewPureInstanceOf<TComputationType extends ComputationType, T> = TComputationType extends {
+type NewPureInstanceFindType<TComputationType extends ComputationType, T> = TComputationType extends {
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
     readonly [Computation_T]: T;
@@ -88,6 +88,7 @@ export type NewPureInstanceOf<TComputationType extends ComputationType, T> = TCo
     readonly _C: TComputationType;
     readonly _T: () => T;
 };
+export type NewPureInstanceOf<TComputationType extends ComputationType, T> = NewPureInstanceFindType<TComputationType, T> extends MulticastComputationOf<TComputationType, T> ? NewPureInstanceFindType<TComputationType, T> & DisposableLike & PauseableLike : NewPureInstanceFindType<TComputationType, T>;
 export type ComputationBaseOf<TComputationType extends ComputationType, T> = TComputationType extends {
     readonly [Computation_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
