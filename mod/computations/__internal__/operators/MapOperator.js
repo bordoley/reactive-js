@@ -1,6 +1,6 @@
 /// <reference types="./MapOperator.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import { LiftedOperatorLike_notify, } from "../LiftedSource.js";
@@ -12,10 +12,10 @@ export const create = /*@__PURE__*/ (() => {
         return this;
     }, props({
         [MapOperator_selector]: none,
-    }), {
+    }), proto({
         [LiftedOperatorLike_notify](next) {
             const mapped = this[MapOperator_selector](next);
             this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](mapped);
         },
-    });
+    }));
 })();

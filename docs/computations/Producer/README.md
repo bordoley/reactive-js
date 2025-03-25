@@ -19,6 +19,8 @@
 ## Functions
 
 - [broadcast](functions/broadcast.md)
+- [buffer](functions/buffer.md)
+- [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)

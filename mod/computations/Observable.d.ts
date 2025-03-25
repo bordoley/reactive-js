@@ -103,6 +103,8 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<ObservableComputation, TA, TB>;
 }
 export type Signature = ObservableModule;
+export declare const buffer: Signature["buffer"];
+export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];

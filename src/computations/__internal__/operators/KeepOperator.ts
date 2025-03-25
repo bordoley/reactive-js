@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none } from "../../../functions.js";
 import DelegatingLiftedOperatorMixin, {
@@ -17,7 +18,7 @@ import {
 export const create: <T>(
   delegate: LiftedOperatorLike<T>,
   predicate: Predicate<T>,
-) => DelegatingLiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
   const KeepOperator_predicate = Symbol("KeepOperator_predicate");
 
   interface TProperties {
@@ -34,7 +35,7 @@ export const create: <T>(
         TProperties,
       delegate: LiftedOperatorLike<T>,
       predicate: Predicate<T>,
-    ): DelegatingLiftedOperatorLike<T> {
+    ): LiftedOperatorLike<T> {
       init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
       this[KeepOperator_predicate] = predicate;
 
@@ -43,7 +44,7 @@ export const create: <T>(
     props<TProperties>({
       [KeepOperator_predicate]: none,
     }),
-    {
+    proto({
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<T>,
         next: T,
@@ -56,6 +57,6 @@ export const create: <T>(
           ](next);
         }
       },
-    },
+    }),
   );
 })();

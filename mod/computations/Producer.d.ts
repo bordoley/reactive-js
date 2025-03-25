@@ -23,7 +23,9 @@ export interface ProducerModule extends ComputationModule<ProducerComputation>, 
     create<T>(f: (consumer: ConsumerLike<T>) => void): ProducerWithSideEffectsLike<T>;
 }
 export type Signature = ProducerModule;
+export declare const buffer: Signature["buffer"];
 export declare const broadcast: Signature["broadcast"];
+export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];

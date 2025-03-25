@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import { Function1, none } from "../../../functions.js";
 import DelegatingLiftedOperatorMixin, {
@@ -17,7 +18,7 @@ import {
 export const create: <TA, TB>(
   delegate: LiftedOperatorLike<TB>,
   selector: Function1<TA, TB>,
-) => DelegatingLiftedOperatorLike<TA, TB> = /*@__PURE__*/ (<TA, TB>() => {
+) => LiftedOperatorLike<TA> = /*@__PURE__*/ (<TA, TB>() => {
   const MapOperator_selector = Symbol("MapOperator_selector");
 
   interface TProperties {
@@ -34,7 +35,7 @@ export const create: <TA, TB>(
         TProperties,
       delegate: LiftedOperatorLike<TB>,
       selector: Function1<TA, TB>,
-    ): DelegatingLiftedOperatorLike<TA, TB> {
+    ): LiftedOperatorLike<TA> {
       init(DelegatingLiftedOperatorMixin<TA, TB>(), this, delegate);
       this[MapOperator_selector] = selector;
 
@@ -43,7 +44,7 @@ export const create: <TA, TB>(
     props<TProperties>({
       [MapOperator_selector]: none,
     }),
-    {
+    proto({
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<TA, TB>,
         next: TA,
@@ -53,6 +54,6 @@ export const create: <TA, TB>(
           mapped,
         );
       },
-    },
+    }),
   );
 })();

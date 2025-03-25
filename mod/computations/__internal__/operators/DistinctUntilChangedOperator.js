@@ -1,6 +1,6 @@
 /// <reference types="./DistinctUntilChangedOperator.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, strictEquality, } from "../../../functions.js";
 import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import { LiftedOperatorLike_notify, } from "../LiftedSource.js";
@@ -17,7 +17,7 @@ export const create = /*@__PURE__*/ (() => {
         [DistinctUntilChangedMixin_equality]: none,
         [DistinctUntilChangedMixin_prev]: none,
         [DistinctUntilChangedMixin_hasValue]: false,
-    }), {
+    }), proto({
         [LiftedOperatorLike_notify](next) {
             const shouldEmit = !this[DistinctUntilChangedMixin_hasValue] ||
                 !this[DistinctUntilChangedMixin_equality](this[DistinctUntilChangedMixin_prev], next);
@@ -27,5 +27,5 @@ export const create = /*@__PURE__*/ (() => {
                 this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](next);
             }
         },
-    });
+    }));
 })();

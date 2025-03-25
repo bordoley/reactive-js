@@ -25,15 +25,17 @@ import {
 } from "../computations.js";
 import { Function1, Function2 } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
+import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
+import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import {
   Observable_gen,
   Observable_genPure,
 } from "./Observable/__private__/Observable.gen.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
+import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
-import Observable_map from "./Observable/__private__/Producer.map.js";
 
 /**
  * @noInheritDoc
@@ -191,6 +193,9 @@ export interface ObservableModule
 
 export type Signature = ObservableModule;
 
+export const buffer: Signature["buffer"] = Observable_buffer;
+export const decodeWithCharset: Signature["decodeWithCharset"] =
+  Observable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const gen: Signature["gen"] = Observable_gen;

@@ -20,6 +20,8 @@ import {
 } from "../computations.js";
 import { ConsumerLike } from "../utils.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
+import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
+import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
 import {
   Producer_gen,
@@ -71,7 +73,10 @@ export interface ProducerModule
 
 export type Signature = ProducerModule;
 
+export const buffer: Signature["buffer"] = Producer_buffer;
 export const broadcast: Signature["broadcast"] = Producer_broadcast;
+export const decodeWithCharset: Signature["decodeWithCharset"] =
+  Producer_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Producer_distinctUntilChanged;
 export const gen: Signature["gen"] = Producer_gen;

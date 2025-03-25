@@ -3,6 +3,7 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   Equality,
@@ -22,7 +23,7 @@ import {
 export const create: <T>(
   delegate: LiftedOperatorLike<T>,
   options?: { readonly equality?: Equality<T> },
-) => DelegatingLiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
   const DistinctUntilChangedMixin_equality = Symbol(
     "DistinctUntilChangedMixin_equality",
   );
@@ -49,7 +50,7 @@ export const create: <T>(
         TProperties,
       delegate: LiftedOperatorLike<T>,
       options: Optional<{ readonly equality?: Equality<T> }>,
-    ): DelegatingLiftedOperatorLike<T> {
+    ): LiftedOperatorLike<T> {
       init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
       this[DistinctUntilChangedMixin_equality] =
         options?.equality ?? strictEquality;
@@ -61,7 +62,7 @@ export const create: <T>(
       [DistinctUntilChangedMixin_prev]: none,
       [DistinctUntilChangedMixin_hasValue]: false,
     }),
-    {
+    proto({
       [LiftedOperatorLike_notify](
         this: TProperties & DelegatingLiftedOperatorLike<T>,
         next: T,
@@ -81,6 +82,6 @@ export const create: <T>(
           ](next);
         }
       },
-    },
+    }),
   );
 })();
