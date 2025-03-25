@@ -25,6 +25,7 @@ import Producer_create from "./Producer/__private__/Producer.create.js";
 import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
 import Producer_encodeUtf8 from "./Producer/__private__/Producer.encodeUtf8.js";
+import Producer_forEach from "./Producer/__private__/Producer.forEach.js";
 import {
   Producer_gen,
   Producer_genPure,
@@ -85,6 +86,7 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Producer_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Producer_encodeUtf8;
+export const forEach: Signature["forEach"] = Producer_forEach;
 export const gen: Signature["gen"] = Producer_gen;
 export const genPure: Signature["genPure"] = Producer_genPure;
 export const keep: Signature["keep"] = Producer_keep;

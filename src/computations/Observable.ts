@@ -29,6 +29,7 @@ import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
+import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import {
   Observable_gen,
   Observable_genPure,
@@ -202,6 +203,7 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
+export const forEach: Signature["forEach"] = Observable_forEach;
 export const gen: Signature["gen"] = Observable_gen;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const keep: Signature["keep"] = Observable_keep;
