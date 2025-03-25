@@ -18,6 +18,9 @@
 
 - [addEventHandler](functions/addEventHandler.md)
 - [addResizeHandler](functions/addResizeHandler.md)
+- [addScrollHandler](functions/addScrollHandler.md)
 - [eventSource](functions/eventSource.md)
 - [intersectionEventSource](functions/intersectionEventSource.md)
+- [measure](functions/measure.md)
 - [resizeEventSource](functions/resizeEventSource.md)
+- [scrollEventSource](functions/scrollEventSource.md)

@@ -10,12 +10,12 @@ import {
 } from "../web.js";
 import Element_addEventHandler from "./Element/__private__/Element.addEventHandler.js";
 import Element_addResizeHandler from "./Element/__private__/Element.addResizeHandler.js";
-//import Element_addScrollHandler from "./Element/__private__/Element.addScrollHandler.js";
+import Element_addScrollHandler from "./Element/__private__/Element.addScrollHandler.js";
 import Element_eventSource from "./Element/__private__/Element.eventSource.js";
 import Element_intersectionEventSource from "./Element/__private__/Element.intersectionEventSource.js";
-//import Element_measure from "./Element/__private__/Element.measure.js";
+import Element_measure from "./Element/__private__/Element.measure.js";
 import Element_resizeEventSource from "./Element/__private__/Element.resizeEventSource.js";
-//import Element_scrollEventSource from "./Element/__private__/Element.scrollEventSource.js";
+import Element_scrollEventSource from "./Element/__private__/Element.scrollEventSource.js";
 
 /**
  * @noInheritDoc
@@ -75,12 +75,14 @@ export const addEventHandler: Signature["addEventHandler"] =
   Element_addEventHandler;
 export const addResizeHandler: Signature["addResizeHandler"] =
   Element_addResizeHandler;
-//export const addScrollHandler: Signature["addScrollHandler"] = Element_addScrollHandler;
+export const addScrollHandler: Signature["addScrollHandler"] =
+  Element_addScrollHandler;
 export const eventSource: Signature["eventSource"] =
   Element_eventSource as Signature["eventSource"];
 export const intersectionEventSource: Signature["intersectionEventSource"] =
   Element_intersectionEventSource;
-//export const measure: Signature["measure"] = Element_measure;
+export const measure: Signature["measure"] = Element_measure;
 export const resizeEventSource: Signature["resizeEventSource"] =
   Element_resizeEventSource;
-//export const scrollEventSource: Signature["scrollEventSource"] = Element_scrollEventSource;
+export const scrollEventSource: Signature["scrollEventSource"] =
+  Element_scrollEventSource;

@@ -25,6 +25,9 @@ export interface WebElementModule {
 export type Signature = WebElementModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const addResizeHandler: Signature["addResizeHandler"];
+export declare const addScrollHandler: Signature["addScrollHandler"];
 export declare const eventSource: Signature["eventSource"];
 export declare const intersectionEventSource: Signature["intersectionEventSource"];
+export declare const measure: Signature["measure"];
 export declare const resizeEventSource: Signature["resizeEventSource"];
+export declare const scrollEventSource: Signature["scrollEventSource"];
