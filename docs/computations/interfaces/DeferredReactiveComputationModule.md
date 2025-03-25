@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters

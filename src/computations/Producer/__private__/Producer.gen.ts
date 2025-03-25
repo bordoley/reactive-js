@@ -22,9 +22,11 @@ import * as Source from "../../__internal__/DeferredSource.js";
 const genFactory =
   <T>(factory: Factory<Iterator<T>>) =>
   async (consumer: ConsumerLike<T>) => {
-    const enumerator = pipe(factory(), Iterator.toEnumerator());
-
-    pipe(enumerator, Disposable.addTo(consumer));
+    const enumerator = pipe(
+      factory(),
+      Iterator.toEnumerator(),
+      Disposable.addTo(consumer),
+    );
 
     let isActive = false;
     const continue_ = async () => {

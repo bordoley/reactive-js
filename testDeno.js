@@ -10,6 +10,10 @@ import "./mod/collections/__tests__/ReadonlyArray.test.js";
 import "./mod/collections/__tests__/ReadonlyMap.test.js";
 import "./mod/collections/__tests__/ReadonlyObjectMap.test.js";
 
+import "./mod/computations/__tests__/Broadcaster.test.js";
+import "./mod/computations/__tests__/Iterable.test.js";
+import "./mod/computations/__tests__/Observable.test.js";
+import "./mod/computations/__tests__/Producer.test.js";
 import "./mod/computations/__tests__/Publisher.test.js";
 import "./mod/computations/__tests__/WritableStore.test.js";
 

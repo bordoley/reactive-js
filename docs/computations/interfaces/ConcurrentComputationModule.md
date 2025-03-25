@@ -9,6 +9,7 @@
 ## Extended by
 
 - [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters

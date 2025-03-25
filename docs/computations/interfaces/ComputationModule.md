@@ -14,6 +14,7 @@
 
 - [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters

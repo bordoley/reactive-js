@@ -7,8 +7,7 @@ import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Source from "../../__internal__/DeferredSource.js";
 const genFactory = (factory) => async (consumer) => {
-    const enumerator = pipe(factory(), Iterator.toEnumerator());
-    pipe(enumerator, Disposable.addTo(consumer));
+    const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(consumer));
     let isActive = false;
     const continue_ = async () => {
         if (isActive) {

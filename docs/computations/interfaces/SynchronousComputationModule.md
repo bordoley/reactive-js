@@ -13,6 +13,7 @@
 ## Extended by
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
+- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 
 ## Type Parameters
 

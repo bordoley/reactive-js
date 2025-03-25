@@ -6,7 +6,7 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Optional } from "../../functions.js";
+import { Function1, Optional } from "../../functions.js";
 import {
   BackpressureStrategy,
   CollectionEnumeratorLike,
@@ -15,12 +15,17 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
+  ObserverLike,
   QueueLike,
   QueueLike_enqueue,
+  SchedulerLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
+import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
+import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
+import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import QueueMixin from "../__mixins__/QueueMixin.js";
 
@@ -71,4 +76,30 @@ export const create: <T>(options?: {
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
   }) => createQueue(options);
+})();
+
+export const toObserver: <T>(
+  scheduler: SchedulerLike,
+) => Function1<ConsumerLike<T>, ObserverLike<T>> = /*@__PURE__*/ (<T>() => {
+  const createConsumerToObserver = mixInstanceFactory(
+    include(
+      DelegatingDisposableMixin(),
+      DelegatingSchedulerMixin,
+      DelegatingConsumerMixin(),
+    ),
+    function ConsumerToObserver(
+      this: unknown,
+      scheduler: SchedulerLike,
+      consumer: ConsumerLike<T>,
+    ): ObserverLike<T> {
+      init(DelegatingDisposableMixin(), this, consumer);
+      init(DelegatingSchedulerMixin, this, scheduler);
+      init(DelegatingConsumerMixin(), this, consumer);
+
+      return this;
+    },
+  );
+
+  return (scheduler: SchedulerLike) => (consumer: ConsumerLike<T>) =>
+    createConsumerToObserver(scheduler, consumer);
 })();
