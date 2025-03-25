@@ -19,6 +19,7 @@ import {
   DisposableContainerLike,
   ObserverLike,
 } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 import {
   LiftedOperatorLike,
   LiftedSourceLike,
@@ -72,8 +73,14 @@ const operatorToObserver: <T>(
 const createLiftedObservable: <TIn, TOut>(
   src: ObservableLike<TIn>,
   op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+  config?: {
+    [ComputationLike_isPure]?: boolean;
+    [ComputationLike_isSynchronous]?: boolean;
+  },
 ) => ObservableLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
+    [ComputationLike_isPure]: boolean;
+    [ComputationLike_isSynchronous]: boolean;
     [LiftedSourceLike_source]: ObservableLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
       Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
@@ -85,6 +92,8 @@ const createLiftedObservable: <TIn, TOut>(
     | keyof DisposableContainerLike
     | typeof LiftedSourceLike_source
     | typeof LiftedSourceLike_operators
+    | typeof ComputationLike_isPure
+    | typeof ComputationLike_isSynchronous
   >;
 
   return mixInstanceFactory(
@@ -92,6 +101,10 @@ const createLiftedObservable: <TIn, TOut>(
       this: TProperties & TPrototype,
       source: ObservableLike<TIn>,
       op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+      config?: {
+        [ComputationLike_isPure]?: boolean;
+        [ComputationLike_isSynchronous]?: boolean;
+      },
     ): ObservableLike<TOut> {
       const liftedSource: ObservableLike<TIn> =
         (source as any)[LiftedSourceLike_source] ?? source;
@@ -99,17 +112,22 @@ const createLiftedObservable: <TIn, TOut>(
 
       this[LiftedSourceLike_source] = liftedSource;
       this[LiftedSourceLike_operators] = ops;
+      this[ComputationLike_isSynchronous] =
+        Computation.isSynchronous(source) &&
+        Computation.isSynchronous(config ?? {});
+      this[ComputationLike_isPure] =
+        Computation.isPure(source) && Computation.isPure(config ?? {});
 
       return this;
     },
     props<TProperties>({
       [LiftedSourceLike_source]: none,
       [LiftedSourceLike_operators]: none,
+      [ComputationLike_isPure]: false,
+      [ComputationLike_isSynchronous]: false,
     }),
     proto<TPrototype>({
-      [ComputationLike_isPure]: true as const,
       [ComputationLike_isDeferred]: true as const,
-      [ComputationLike_isSynchronous]: false as const,
 
       [SourceLike_subscribe](this: TProperties, observer: ObserverLike<TOut>) {
         const source = this[LiftedSourceLike_source];
@@ -126,11 +144,13 @@ const createLiftedObservable: <TIn, TOut>(
 })();
 
 const Observable_lift =
-  <TIn, TOut>(
-    operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
-  ) =>
+  <TIn, TOut>(config?: {
+    [ComputationLike_isPure]?: boolean;
+    [ComputationLike_isSynchronous]?: boolean;
+  }) =>
+  (operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>) =>
   (source: ObservableLike<TIn>): ObservableLike<TOut> => {
-    return createLiftedObservable(source, operator);
+    return createLiftedObservable(source, operator, config);
   };
 
 export default Observable_lift;

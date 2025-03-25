@@ -9,7 +9,7 @@ const Observable_map: Observable.Signature["map"] = (<TA, TB>(
   pipe(
     MapOperator.create<TA, TB>,
     partial(selector),
-    Observable_lift<TA, TB>,
+    Observable_lift<TA, TB>(),
   )) as Observable.Signature["map"];
 
 export default Observable_map;

@@ -5,11 +5,13 @@
 import "./mod/__tests__/math.test.js";
 import "./mod/__tests__/functions.test.js";
 
+import "./mod/collections/__tests__/Collection.test.js";
 import "./mod/collections/__tests__/Dictionary.test.js";
 import "./mod/collections/__tests__/ReadonlyArray.test.js";
 import "./mod/collections/__tests__/ReadonlyMap.test.js";
 import "./mod/collections/__tests__/ReadonlyObjectMap.test.js";
 
+import "./mod/computations/__tests__/AsyncIterable.test.js";
 import "./mod/computations/__tests__/Broadcaster.test.js";
 import "./mod/computations/__tests__/Iterable.test.js";
 import "./mod/computations/__tests__/Observable.test.js";

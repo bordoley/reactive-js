@@ -9,7 +9,7 @@ const Producer_map: Producer.Signature["map"] = (<TA, TB>(
   pipe(
     MapOperator.create<TA, TB>,
     partial(selector),
-    Producer_lift<TA, TB>,
+    Producer_lift<TA, TB>(),
   )) as Producer.Signature["map"];
 
 export default Producer_map;

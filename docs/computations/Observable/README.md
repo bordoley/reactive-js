@@ -20,6 +20,7 @@
 
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
+- [keep](functions/keep.md)
 - [map](functions/map.md)
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

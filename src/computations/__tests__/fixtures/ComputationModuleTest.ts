@@ -8,6 +8,7 @@ import {
 import { ComputationModule, ComputationType } from "../../../computations.js";
 import {
   bindMethod,
+  greaterThan,
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
@@ -17,7 +18,7 @@ import { increment } from "../../../math.js";
 const ComputationModuleTests = <TComputationType extends ComputationType>(
   m: Pick<
     ComputationModule<TComputationType>,
-    "gen" | "genPure" | "map" | "toReadonlyArrayAsync"
+    "gen" | "genPure" | "keep" | "map" | "toReadonlyArrayAsync"
   >,
   //  computations: ComputationTypeOf<TComputationType>,
 ) =>
@@ -47,6 +48,35 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
       ),
     ),
     describe("genPure"),
+    describe(
+      "keep",
+      testAsync(
+        "keeps only values greater than 5",
+        pipeLazyAsync(
+          bindMethod([4, 8, 10, 7], Symbol.iterator),
+          m.gen,
+          m.keep(greaterThan(5)),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([8, 10, 7]),
+        ),
+      ),
+      testAsync("when predicate throws", async () => {
+        const err = new Error();
+        const predicate = <T>(_a: T): boolean => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            bindMethod([1, 1], Symbol.iterator),
+            m.gen,
+            m.keep(predicate),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+    ),
     describe(
       "map",
       testAsync(

@@ -15,6 +15,7 @@ import {
 import { Function1, none, pipeUnsafe } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import { ConsumerLike, DisposableContainerLike } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 import {
   LiftedOperatorLike,
   LiftedSourceLike,
@@ -68,8 +69,12 @@ const operatorToConsumer: <T>(
 const createLiftedProducer: <TIn, TOut>(
   src: ProducerLike<TIn>,
   op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+  config?: {
+    [ComputationLike_isPure]?: boolean;
+  },
 ) => ProducerLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
+    [ComputationLike_isPure]: boolean;
     [LiftedSourceLike_source]: ProducerLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
       Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
@@ -88,6 +93,9 @@ const createLiftedProducer: <TIn, TOut>(
       this: TProperties & TPrototype,
       source: ProducerLike<TIn>,
       op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+      config?: {
+        [ComputationLike_isPure]?: boolean;
+      },
     ): ProducerLike<TOut> {
       const liftedSource: ProducerLike<TIn> =
         (source as any)[LiftedSourceLike_source] ?? source;
@@ -96,14 +104,17 @@ const createLiftedProducer: <TIn, TOut>(
       this[LiftedSourceLike_source] = liftedSource;
       this[LiftedSourceLike_operators] = ops;
 
+      this[ComputationLike_isPure] =
+        Computation.isPure(source) && Computation.isPure(config ?? {});
+
       return this;
     },
     props<TProperties>({
+      [ComputationLike_isPure]: true,
       [LiftedSourceLike_source]: none,
       [LiftedSourceLike_operators]: none,
     }),
     proto<TPrototype>({
-      [ComputationLike_isPure]: true as const,
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
@@ -122,11 +133,10 @@ const createLiftedProducer: <TIn, TOut>(
 })();
 
 const Producer_lift =
-  <TIn, TOut>(
-    operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
-  ) =>
+  <TIn, TOut>(config?: { [ComputationLike_isPure]?: boolean }) =>
+  (operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>) =>
   (source: ProducerLike<TIn>): ProducerLike<TOut> => {
-    return createLiftedProducer(source, operator);
+    return createLiftedProducer(source, operator, config);
   };
 
 export default Producer_lift;

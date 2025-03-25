@@ -26,5 +26,6 @@ export type Signature = ProducerModule;
 export declare const broadcast: Signature["broadcast"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
+export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

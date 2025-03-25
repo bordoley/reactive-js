@@ -30,6 +30,7 @@ export declare const addEventHandler: Signature["addEventHandler"];
 export declare const create: Signature["create"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
+export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const toProducer: Signature["toProducer"];

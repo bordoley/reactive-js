@@ -22,6 +22,7 @@
 - [create](functions/create.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
+- [keep](functions/keep.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)
 - [toProducer](functions/toProducer.md)

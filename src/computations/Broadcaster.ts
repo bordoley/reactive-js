@@ -17,6 +17,7 @@ import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_gen from "./Broadcaster/__private__/Broadcaster.gen.js";
+import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
 import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
@@ -77,6 +78,7 @@ export const addEventHandler: Signature["addEventHandler"] =
 export const create: Signature["create"] = Broadcaster_create;
 export const gen: Signature["gen"] = Broadcaster_gen;
 export const genPure: Signature["genPure"] = Broadcaster_gen;
+export const keep: Signature["keep"] = Broadcaster_keep;
 export const map: Signature["map"] = Broadcaster_map;
 export const merge: Signature["merge"] = Broadcaster_merge;
 export const toProducer: Signature["toProducer"] = Broadcaster_toProducer;
