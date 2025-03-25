@@ -1,7 +1,7 @@
 /// <reference types="./ComputationModuleTest.d.ts" />
 
 import { describe, expectArrayEquals, expectPromiseToThrow, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
-import { bindMethod, greaterThan, pipe, pipeAsync, pipeLazy, pipeLazyAsync, } from "../../../functions.js";
+import { bindMethod, greaterThan, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
 import { increment } from "../../../math.js";
 const ComputationModuleTests = (m) => describe("ComputationModule", describe("distinctUntilChanged", testAsync("when source has duplicates in order", pipeLazyAsync(bindMethod([1, 2, 2, 2, 2, 3, 3, 3, 4], Symbol.iterator), m.gen, m.distinctUntilChanged(), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4]))), testAsync("when source is empty", pipeLazyAsync(bindMethod([], Symbol.iterator), m.gen, m.distinctUntilChanged(), m.toReadonlyArrayAsync(), expectArrayEquals([]))), testAsync("when equality operator throws", async () => {
     const err = new Error();
@@ -25,5 +25,17 @@ const ComputationModuleTests = (m) => describe("ComputationModule", describe("di
         throw err;
     };
     await pipeAsync(pipeLazy(bindMethod([1, 2, 3], Symbol.iterator), m.gen, m.map(selector), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
+})), describe("scan", testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync(bindMethod([1, 1, 1], Symbol.iterator), m.gen, m.scan((a, b) => a + b, returns(0)), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("throws when the scan function throws", async () => {
+    const err = new Error();
+    const scanner = (_acc, _next) => {
+        throw err;
+    };
+    await pipeAsync(pipeLazy(bindMethod([1, 1], Symbol.iterator), m.gen, m.scan(scanner, returns(0)), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
+}), testAsync("throws when the initial value function throws", async () => {
+    const err = new Error();
+    const initialValue = () => {
+        throw err;
+    };
+    await pipeAsync(pipeLazy(bindMethod([1, 1], Symbol.iterator), m.gen, m.scan((a, b) => a + b, initialValue), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
 })));
 export default ComputationModuleTests;

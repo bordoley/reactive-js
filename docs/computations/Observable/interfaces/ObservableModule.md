@@ -476,7 +476,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`encodeUtf8`](../../interfaces/SequentialComputationModule.md#encodeutf8)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`encodeUtf8`](../../interfaces/ComputationModule.md#encodeutf8)
 
 ***
 

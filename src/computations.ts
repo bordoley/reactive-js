@@ -988,6 +988,8 @@ export interface ComputationModule<
     options?: TCreationOptions["empty"],
   ): NewPureInstanceOf<TComputationType, T>;
 
+  encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
+
   firstAsync<T>(
     options?: TCreationOptions["firstAsync"],
   ): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
@@ -1106,8 +1108,6 @@ export interface SequentialComputationModule<
     HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
     T
   >;
-
-  encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
 
   forEach<T>(
     sideEffect: SideEffect1<T>,

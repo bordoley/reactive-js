@@ -195,16 +195,6 @@
 
 ***
 
-### encodeUtf8()
-
-> **encodeUtf8**(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
-
-#### Returns
-
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
-
-***
-
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>

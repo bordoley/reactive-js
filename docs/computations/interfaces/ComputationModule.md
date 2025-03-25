@@ -78,6 +78,16 @@
 
 ***
 
+### encodeUtf8()
+
+> **encodeUtf8**(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+
+#### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+
+***
+
 ### firstAsync()
 
 > **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>

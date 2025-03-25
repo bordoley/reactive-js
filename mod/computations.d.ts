@@ -248,6 +248,7 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
         readonly equality?: Equality<T>;
     }): PureComputationOperator<TComputationType, T, T>;
     empty<T>(options?: TCreationOptions["empty"]): NewPureInstanceOf<TComputationType, T>;
+    encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
     firstAsync<T>(options?: TCreationOptions["firstAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
     fromReadonlyArray<T>(options?: {
         readonly count?: number;
@@ -286,7 +287,6 @@ export interface SequentialComputationModule<TComputationType extends Computatio
     concatAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerLike;
     }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
-    encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
     repeat<T>(predicate: Predicate<number>): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(count: number): PureComputationOperator<TComputationType, T, T>;

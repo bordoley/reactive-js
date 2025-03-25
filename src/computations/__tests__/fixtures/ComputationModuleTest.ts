@@ -13,6 +13,7 @@ import {
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
+  returns,
 } from "../../../functions.js";
 import { increment } from "../../../math.js";
 
@@ -24,6 +25,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
     | "genPure"
     | "keep"
     | "map"
+    | "scan"
     | "toReadonlyArrayAsync"
   >,
   //  computations: ComputationTypeOf<TComputationType>,
@@ -160,6 +162,51 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
             m.toReadonlyArrayAsync(),
           ),
 
+          expectToThrowErrorAsync(err),
+        );
+      }),
+    ),
+    describe(
+      "scan",
+      testAsync(
+        "sums all the values in the array emitting intermediate values.",
+        pipeLazyAsync(
+          bindMethod([1, 1, 1], Symbol.iterator),
+          m.gen,
+          m.scan<number, number>((a, b) => a + b, returns(0)),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      testAsync("throws when the scan function throws", async () => {
+        const err = new Error();
+        const scanner = <T>(_acc: T, _next: T): T => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            bindMethod([1, 1], Symbol.iterator),
+            m.gen,
+            m.scan(scanner, returns(0)),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+      testAsync("throws when the initial value function throws", async () => {
+        const err = new Error();
+        const initialValue = (): number => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            bindMethod([1, 1], Symbol.iterator),
+            m.gen,
+            m.scan<number, number>((a, b) => a + b, initialValue),
+            m.toReadonlyArrayAsync<number>(),
+          ),
           expectToThrowErrorAsync(err),
         );
       }),
