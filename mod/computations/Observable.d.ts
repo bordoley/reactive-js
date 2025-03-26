@@ -75,6 +75,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
 }
 export type Signature = ObservableModule;
 export declare const buffer: Signature["buffer"];
+export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
@@ -88,6 +89,7 @@ export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
+export declare const subscribe: Signature["subscribe"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];

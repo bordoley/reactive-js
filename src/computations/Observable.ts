@@ -26,6 +26,7 @@ import {
 import { Function1, Function2, identity } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
+import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
@@ -40,6 +41,7 @@ import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
+import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
 import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
@@ -176,6 +178,7 @@ export interface ObservableModule
 export type Signature = ObservableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
+export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
@@ -191,6 +194,7 @@ export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
+export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
