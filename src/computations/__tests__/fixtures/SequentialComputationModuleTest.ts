@@ -18,6 +18,7 @@ import {
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
+  returns,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 
@@ -25,7 +26,7 @@ const SequentialComputationModuleTests = <
   TComputationModule extends ComputationModule &
     Pick<
       SequentialComputationModule,
-      "catchError" | "concat" | "forEach" | "gen"
+      "catchError" | "concat" | "forEach" | "gen" | "throwIfEmpty"
     >,
 >(
   m: TComputationModule,
@@ -115,6 +116,43 @@ const SequentialComputationModuleTests = <
           expectToThrowErrorAsync(err),
         );
       }),
+    ),
+    describe(
+      "throwIfEmpty",
+      testAsync("when source is empty", async () => {
+        const error = new Error();
+        await pipe(
+          pipeLazy(
+            Computation.empty(m)(),
+            m.throwIfEmpty(() => error),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowErrorAsync(error),
+        );
+      }),
+      testAsync("when factory throw", async () => {
+        const error = new Error();
+        await pipe(
+          pipeLazy(
+            Computation.empty(m)(),
+            m.throwIfEmpty(() => {
+              throw error;
+            }),
+            m.toReadonlyArrayAsync(),
+          ),
+          expectToThrowErrorAsync(error),
+        );
+      }),
+      testAsync(
+        "when source is not empty",
+        pipeLazyAsync(
+          [1],
+          Computation.fromReadonlyArray(m)(),
+          m.throwIfEmpty<number>(returns(none)),
+          m.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
     ),
   );
 

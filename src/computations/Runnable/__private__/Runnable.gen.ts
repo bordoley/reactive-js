@@ -58,7 +58,7 @@ class GenRunnable<T> implements RunnableLike<T> {
       // Reassign because these values may change after
       // hopping the micro task queue
       isCompleted = sink[SinkLike_isCompleted];
-      if (isCompleted) {
+      if (!isCompleted) {
         sink[SinkLike_complete]();
         isCompleted = true;
       }

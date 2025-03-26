@@ -9,6 +9,7 @@ import { newInstance, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
+  DisposableLike_dispose,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -26,13 +27,13 @@ class ConcatRunnable<T> implements RunnableLike<T> {
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
-    const delegatingSink = pipe(
-      Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
-      Disposable.addTo(sink),
-    );
-
     for (const src of this.s) {
+      const delegatingSink = pipe(
+        Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
+        Disposable.addTo(sink),
+      );
       src[RunnableLike_eval](delegatingSink);
+      delegatingSink[DisposableLike_dispose]();
 
       if (sink[SinkLike_isCompleted]) {
         break;

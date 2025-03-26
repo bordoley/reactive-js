@@ -62,7 +62,7 @@ const genFactory =
         // hopping the micro task queue
         isReady = consumer[QueueableLike_isReady];
         isCompleted = consumer[SinkLike_isCompleted];
-        if (isReady || isCompleted) {
+        if (isReady || !isCompleted) {
           consumer[SinkLike_complete]();
           isReady = false;
           isCompleted = true;

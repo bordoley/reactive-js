@@ -25,12 +25,12 @@ export const create: <TSubscription extends DisposableLike, T>(
   TSubscription extends DisposableLike,
   T,
 >() => {
-  const ThrowIfEmptyMixin_isEmpty = Symbol("ThrowIfEmptyMixin_isEmpty");
-  const ThrowIfEmptyMixin_factory = Symbol("ThrowIfEmptyMixin_factory");
+  const ThrowIfEmptySink_isEmpty = Symbol("ThrowIfEmptySink_isEmpty");
+  const ThrowIfEmptySink_factory = Symbol("ThrowIfEmptySink_factory");
 
   type TProperties = {
-    [ThrowIfEmptyMixin_isEmpty]: boolean;
-    [ThrowIfEmptyMixin_factory]: Factory<unknown>;
+    [ThrowIfEmptySink_isEmpty]: boolean;
+    [ThrowIfEmptySink_factory]: Factory<unknown>;
   };
 
   return mixInstanceFactory(
@@ -45,20 +45,20 @@ export const create: <TSubscription extends DisposableLike, T>(
       factory: Factory<unknown>,
     ): LiftedSinkLike<TSubscription, T> {
       init(DelegatingLiftedSinkMixin<TSubscription, T>(), this, delegate);
-      this[ThrowIfEmptyMixin_factory] = factory;
+      this[ThrowIfEmptySink_factory] = factory;
 
       return this;
     },
     props<TProperties>({
-      [ThrowIfEmptyMixin_factory]: none,
-      [ThrowIfEmptyMixin_isEmpty]: true,
+      [ThrowIfEmptySink_factory]: none,
+      [ThrowIfEmptySink_isEmpty]: true,
     }),
     proto({
       [EventListenerLike_notify](
         this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
         next: T,
       ) {
-        this[ThrowIfEmptyMixin_isEmpty] = false;
+        this[ThrowIfEmptySink_isEmpty] = false;
 
         this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
       },
@@ -67,10 +67,10 @@ export const create: <TSubscription extends DisposableLike, T>(
         this: TProperties &
           DelegatingLiftedSinkLike<TSubscription, ArrayBuffer, string>,
       ) {
-        const factory = this[ThrowIfEmptyMixin_factory];
+        const factory = this[ThrowIfEmptySink_factory];
 
         let err: Optional<Error> = none;
-        if (this[ThrowIfEmptyMixin_isEmpty]) {
+        if (this[ThrowIfEmptySink_isEmpty]) {
           try {
             err = error(factory());
           } catch (e) {

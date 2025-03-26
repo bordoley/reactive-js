@@ -76,7 +76,7 @@ const genFactory =
           }
         }
 
-        if (!shouldYield && (isReady || isCompleted)) {
+        if (!shouldYield && (isReady || !isCompleted)) {
           observer[SinkLike_complete]();
           isReady = false;
           isCompleted = true;

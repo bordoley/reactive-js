@@ -31,7 +31,7 @@ const genFactory = (factory, options) => (observer) => {
                     break;
                 }
             }
-            if (!shouldYield && (isReady || isCompleted)) {
+            if (!shouldYield && (isReady || !isCompleted)) {
                 observer[SinkLike_complete]();
                 isReady = false;
                 isCompleted = true;

@@ -3,7 +3,7 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, } from "../../../functions.js";
+import { none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source throws", async () => {
     const e1 = "e1";
@@ -33,5 +33,13 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
     await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.forEach(_ => {
         throw err;
     }), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-})));
+})), describe("throwIfEmpty", testAsync("when source is empty", async () => {
+    const error = new Error();
+    await pipe(pipeLazy(Computation.empty(m)(), m.throwIfEmpty(() => error), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(error));
+}), testAsync("when factory throw", async () => {
+    const error = new Error();
+    await pipe(pipeLazy(Computation.empty(m)(), m.throwIfEmpty(() => {
+        throw error;
+    }), m.toReadonlyArrayAsync()), expectToThrowErrorAsync(error));
+}), testAsync("when source is not empty", pipeLazyAsync([1], Computation.fromReadonlyArray(m)(), m.throwIfEmpty(returns(none)), m.toReadonlyArrayAsync(), expectArrayEquals([1])))));
 export default SequentialComputationModuleTests;
