@@ -4,11 +4,11 @@ import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const DecodeWithCharsetOperator_textDecoder = Symbol("DecodeWithCharsetOperator_textDecoder");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function DecodeWithCharsetOperator(delegate, options) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function DecodeWithCharsetOperator(delegate, options) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         const textDecoder = newInstance(TextDecoder, options?.charset ?? "utf-8", options);
         this[DecodeWithCharsetOperator_textDecoder] = textDecoder;
         return this;

@@ -3,12 +3,12 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");
     const TakeWhileMixin_predicate = Symbol("TakeWhileMixin_predicate");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function TakeWhileOperator(delegate, predicate, options) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function TakeWhileOperator(delegate, predicate, options) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[TakeWhileMixin_predicate] = predicate;
         this[TakeWhileMixin_inclusive] = options?.inclusive ?? false;
         return this;

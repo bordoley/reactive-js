@@ -16,10 +16,10 @@ import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
 } from "../../__internal__/LiftedSource.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
 const createWithCurrentTimeOperator: <TA, TB>(
@@ -35,7 +35,7 @@ const createWithCurrentTimeOperator: <TA, TB>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<ObserverLike, TA, TB>()),
+    include(DelegatingLiftedSinkMixin<ObserverLike, TA, TB>()),
     function WithCurrentTimeOperator(
       this: Pick<
         DelegatingLiftedSinkLike<ObserverLike, TA, TB>,
@@ -45,11 +45,7 @@ const createWithCurrentTimeOperator: <TA, TB>(
       delegate: LiftedSinkLike<ObserverLike, TB>,
       selector: Function2<number, TA, TB>,
     ): LiftedSinkLike<ObserverLike, TA> {
-      init(
-        DelegatingLiftedOperatorMixin<ObserverLike, TA, TB>(),
-        this,
-        delegate,
-      );
+      init(DelegatingLiftedSinkMixin<ObserverLike, TA, TB>(), this, delegate);
       this[WithCurrentTimeOperator_selector] = selector;
 
       return this;

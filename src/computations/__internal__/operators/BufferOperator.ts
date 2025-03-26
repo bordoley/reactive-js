@@ -17,11 +17,11 @@ import {
   EventListenerLike_notify,
   SinkLike_complete,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
@@ -40,7 +40,7 @@ export const create: <TSubscription extends DisposableLike, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, T>()),
     function BufferOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, T>,
@@ -51,7 +51,7 @@ export const create: <TSubscription extends DisposableLike, T>(
       count?: number,
     ): LiftedSinkLike<TSubscription, T> {
       init(
-        DelegatingLiftedOperatorMixin<TSubscription, ReadonlyArray<T>>(),
+        DelegatingLiftedSinkMixin<TSubscription, ReadonlyArray<T>>(),
         this,
         delegate,
       );

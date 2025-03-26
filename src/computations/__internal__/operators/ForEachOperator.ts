@@ -7,10 +7,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { SideEffect1, none } from "../../../functions.js";
 import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
@@ -27,7 +27,7 @@ export const create: <TSubscription extends DisposableLike, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, T>()),
     function ForEachOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, T>,
@@ -37,7 +37,7 @@ export const create: <TSubscription extends DisposableLike, T>(
       delegate: LiftedSinkLike<TSubscription, T>,
       effect: SideEffect1<T>,
     ): LiftedSinkLike<TSubscription, T> {
-      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
+      init(DelegatingLiftedSinkMixin<TSubscription, T>(), this, delegate);
       this[ForEachOperator_effect] = effect;
 
       return this;

@@ -3,11 +3,11 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const EncodeUtf8Operator_textEncoder = Symbol("EncodeUtf8Operator_textEncoder");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function EncodeUtf8Operator(delegate) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function EncodeUtf8Operator(delegate) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[EncodeUtf8Operator_textEncoder] = newInstance(TextEncoder);
         return this;
     }, props({

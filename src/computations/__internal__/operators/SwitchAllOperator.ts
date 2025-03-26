@@ -17,11 +17,11 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -67,7 +67,7 @@ export const create: <
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, TInnerSource, T>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, TInnerSource, T>()),
     function SwitchAllOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
@@ -82,7 +82,7 @@ export const create: <
       >,
     ): LiftedSinkLike<TSubscription, TInnerSource> {
       init(
-        DelegatingLiftedOperatorMixin<TSubscription, TInnerSource, T>(),
+        DelegatingLiftedSinkMixin<TSubscription, TInnerSource, T>(),
         this,
         delegate,
       );

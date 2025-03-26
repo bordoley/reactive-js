@@ -5,7 +5,7 @@ import { bind, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike_subscription, } from "../LiftedSource.js";
 export const create = /*@__PURE__*/ (() => {
     const WithLatestFromOperator_selector = Symbol("WithLatestFromOperator_selector");
@@ -21,8 +21,8 @@ export const create = /*@__PURE__*/ (() => {
         this[WithLatestFromOperator_hasLatest] = true;
         this[WithLatestFromOperator_otherLatest] = next;
     }
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function WithLatestFromOperator(delegate, other, selector, addEventListener) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function WithLatestFromOperator(delegate, other, selector, addEventListener) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[WithLatestFromOperator_selector] = selector;
         const subscription = this[LiftedSinkLike_subscription];
         this[WithLatestFromOperator_otherSubscription] = pipe(other, addEventListener(subscription, bind(onOtherNotify, this)), Disposable.addTo(subscription), DisposableContainer.onComplete(bind(onWithLatestFromOperatorOtherSubscriptionComplete, this)));

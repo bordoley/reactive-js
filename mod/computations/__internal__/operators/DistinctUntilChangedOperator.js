@@ -3,13 +3,13 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, strictEquality, } from "../../../functions.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const DistinctUntilChangedMixin_equality = Symbol("DistinctUntilChangedMixin_equality");
     const DistinctUntilChangedMixin_prev = Symbol("DistinctUntilChangedMixin_prev");
     const DistinctUntilChangedMixin_hasValue = Symbol("DistinctUntilChangedMixin_hasValue");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function DistinctUntilChangedMixin(delegate, options) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function DistinctUntilChangedMixin(delegate, options) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[DistinctUntilChangedMixin_equality] =
             options?.equality ?? strictEquality;
         return this;

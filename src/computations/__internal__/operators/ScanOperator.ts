@@ -7,10 +7,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Factory, Reducer, none } from "../../../functions.js";
 import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T, TAcc>(
@@ -31,7 +31,7 @@ export const create: <TSubscription extends DisposableLike, T, TAcc>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, T, TAcc>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, T, TAcc>()),
     function ScanOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, T, TAcc>,
@@ -42,11 +42,7 @@ export const create: <TSubscription extends DisposableLike, T, TAcc>(
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): LiftedSinkLike<TSubscription, T> {
-      init(
-        DelegatingLiftedOperatorMixin<TSubscription, T, TAcc>(),
-        this,
-        delegate,
-      );
+      init(DelegatingLiftedSinkMixin<TSubscription, T, TAcc>(), this, delegate);
 
       this[ScanOperator_reducer] = reducer;
       this[ScanOperator_acc] = initialValue();

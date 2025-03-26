@@ -3,12 +3,12 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, tuple } from "../../../functions.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const PairwiseOperator_hasPrev = Symbol("PairwiseOperator_hasPrev");
     const PairwiseOperator_prev = Symbol("PairwiseOperator_prev");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function BufferOperator(delegate) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function BufferOperator(delegate) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         return this;
     }, props({
         [PairwiseOperator_prev]: none,

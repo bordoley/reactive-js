@@ -11,10 +11,10 @@ import {
   EventListenerLike_notify,
   SinkLike_complete,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
@@ -34,7 +34,7 @@ export const create: <TSubscription extends DisposableLike, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, T>()),
     function TakeWhileOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, T>,
@@ -45,7 +45,7 @@ export const create: <TSubscription extends DisposableLike, T>(
       predicate: Predicate<T>,
       options: Optional<{ readonly inclusive?: boolean }>,
     ): LiftedSinkLike<TSubscription, T> {
-      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
+      init(DelegatingLiftedSinkMixin<TSubscription, T>(), this, delegate);
 
       this[TakeWhileMixin_predicate] = predicate;
       this[TakeWhileMixin_inclusive] = options?.inclusive ?? false;

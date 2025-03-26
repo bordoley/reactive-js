@@ -7,10 +7,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
 import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike>(
@@ -27,7 +27,7 @@ export const create: <TSubscription extends DisposableLike>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin()),
+    include(DelegatingLiftedSinkMixin()),
     function EncodeUtf8Operator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, string, ArrayBuffer>,
@@ -37,7 +37,7 @@ export const create: <TSubscription extends DisposableLike>(
       delegate: LiftedSinkLike<TSubscription, ArrayBuffer>,
     ): LiftedSinkLike<TSubscription, string> {
       init(
-        DelegatingLiftedOperatorMixin<TSubscription, string, ArrayBuffer>(),
+        DelegatingLiftedSinkMixin<TSubscription, string, ArrayBuffer>(),
         this,
         delegate,
       );

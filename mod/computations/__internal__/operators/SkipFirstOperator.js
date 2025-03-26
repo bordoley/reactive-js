@@ -4,11 +4,11 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const SkipFirstOperator_count = Symbol("SkipFirstOperator_count");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function SkipFirstOperator(delegate, skipCount) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function SkipFirstOperator(delegate, skipCount) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[SkipFirstOperator_count] = clampPositiveInteger(skipCount ?? 1);
         return this;
     }, props({

@@ -3,12 +3,12 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ScanOperator_acc = Symbol("ScanOperator_acc");
     const ScanOperator_reducer = Symbol("ScanOperator_reducer");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function ScanOperator(delegate, reducer, initialValue) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ScanOperator(delegate, reducer, initialValue) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[ScanOperator_reducer] = reducer;
         this[ScanOperator_acc] = initialValue();
         return this;

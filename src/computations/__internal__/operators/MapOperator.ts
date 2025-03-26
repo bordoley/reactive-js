@@ -7,10 +7,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Function1, none } from "../../../functions.js";
 import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, TA, TB>(
@@ -28,7 +28,7 @@ export const create: <TSubscription extends DisposableLike, TA, TB>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, TA, TB>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, TA, TB>()),
     function MapOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, TA, TB>,
@@ -38,11 +38,7 @@ export const create: <TSubscription extends DisposableLike, TA, TB>(
       delegate: LiftedSinkLike<TSubscription, TB>,
       selector: Function1<TA, TB>,
     ): LiftedSinkLike<TSubscription, TA> {
-      init(
-        DelegatingLiftedOperatorMixin<TSubscription, TA, TB>(),
-        this,
-        delegate,
-      );
+      init(DelegatingLiftedSinkMixin<TSubscription, TA, TB>(), this, delegate);
       this[MapOperator_selector] = selector;
 
       return this;

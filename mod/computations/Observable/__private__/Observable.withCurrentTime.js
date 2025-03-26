@@ -4,12 +4,12 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe } from "../../../functions.js";
 import { EventListenerLike_notify, SchedulerLike_now, } from "../../../utils.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_lift from "./Observable.lift.js";
 const createWithCurrentTimeOperator = /*@__PURE__*/ (() => {
     const WithCurrentTimeOperator_selector = Symbol("WithCurrentTimeOperator_selector");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function WithCurrentTimeOperator(delegate, selector) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function WithCurrentTimeOperator(delegate, selector) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[WithCurrentTimeOperator_selector] = selector;
         return this;
     }, props({

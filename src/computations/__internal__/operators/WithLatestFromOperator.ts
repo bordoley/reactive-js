@@ -22,11 +22,11 @@ import {
   EventListenerLike_notify,
   SinkLike_complete,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -82,7 +82,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, TA, TB>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, TA, TB>()),
     function WithLatestFromOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, TA, T>,
@@ -98,11 +98,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
         Function1<TOther, DisposableLike>
       >,
     ): LiftedSinkLike<TSubscription, TA> {
-      init(
-        DelegatingLiftedOperatorMixin<TSubscription, TA, T>(),
-        this,
-        delegate,
-      );
+      init(DelegatingLiftedSinkMixin<TSubscription, TA, T>(), this, delegate);
       this[WithLatestFromOperator_selector] = selector;
 
       const subscription = this[LiftedSinkLike_subscription];

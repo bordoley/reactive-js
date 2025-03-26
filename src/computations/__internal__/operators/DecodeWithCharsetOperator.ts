@@ -12,11 +12,11 @@ import {
   EventListenerLike_notify,
   SinkLike_complete,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike>(
@@ -38,7 +38,7 @@ export const create: <TSubscription extends DisposableLike>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin()),
+    include(DelegatingLiftedSinkMixin()),
     function DecodeWithCharsetOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, ArrayBuffer>,
@@ -54,7 +54,7 @@ export const create: <TSubscription extends DisposableLike>(
       }>,
     ): LiftedSinkLike<TSubscription, ArrayBuffer> {
       init(
-        DelegatingLiftedOperatorMixin<TSubscription, ArrayBuffer, string>(),
+        DelegatingLiftedSinkMixin<TSubscription, ArrayBuffer, string>(),
         this,
         delegate,
       );

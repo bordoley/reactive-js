@@ -19,11 +19,11 @@ import {
   DisposableLike_dispose,
   SinkLike_complete,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -51,7 +51,7 @@ export const create: <TSubscription extends DisposableLike, T, TNotifier>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, T>()),
     function TakeUntilOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, T>,
@@ -66,7 +66,7 @@ export const create: <TSubscription extends DisposableLike, T, TNotifier>(
         Function1<TNotifier, DisposableLike>
       >,
     ): LiftedSinkLike<TSubscription, T> {
-      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
+      init(DelegatingLiftedSinkMixin<TSubscription, T>(), this, delegate);
 
       const subscription = this[LiftedSinkLike_subscription];
       this[TakeUntilOperator_notifierSubscription] = pipe(

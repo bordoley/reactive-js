@@ -3,11 +3,11 @@
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const KeepOperator_predicate = Symbol("KeepOperator_predicate");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function KeepOperator(delegate, predicate) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function KeepOperator(delegate, predicate) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[KeepOperator_predicate] = predicate;
         return this;
     }, props({

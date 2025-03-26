@@ -5,12 +5,12 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const BufferOperator_buffer = Symbol("BufferOperator_buffer");
     const BufferOperator_count = Symbol("BufferOperator_count");
-    return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function BufferOperator(delegate, count) {
-        init(DelegatingLiftedOperatorMixin(), this, delegate);
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function BufferOperator(delegate, count) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
         this[BufferOperator_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
         this[BufferOperator_buffer] = [];
         return this;

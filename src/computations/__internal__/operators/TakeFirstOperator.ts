@@ -12,10 +12,10 @@ import {
   EventListenerLike_notify,
   SinkLike_complete,
 } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
+import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+} from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
@@ -32,7 +32,7 @@ export const create: <TSubscription extends DisposableLike, T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
+    include(DelegatingLiftedSinkMixin<TSubscription, T>()),
     function TakeFirstOperator(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, T>,
@@ -42,7 +42,7 @@ export const create: <TSubscription extends DisposableLike, T>(
       delegate: LiftedSinkLike<TSubscription, T>,
       takeCount: Optional<number>,
     ): LiftedSinkLike<TSubscription, T> {
-      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
+      init(DelegatingLiftedSinkMixin<TSubscription, T>(), this, delegate);
 
       this[TakeFirstOperator_count] = clampPositiveInteger(takeCount ?? 1);
 
