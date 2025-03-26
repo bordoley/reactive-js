@@ -22,6 +22,8 @@ import { identity } from "../functions.js";
 import { ConsumerLike } from "../utils.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
+import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
+import Producer_concat from "./Producer/__private__/Producer.concat.js";
 import Producer_create from "./Producer/__private__/Producer.create.js";
 import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
@@ -89,6 +91,8 @@ export type Signature = ProducerModule;
 
 export const buffer: Signature["buffer"] = Producer_buffer;
 export const broadcast: Signature["broadcast"] = Producer_broadcast;
+export const catchError: Signature["catchError"] = Producer_catchError;
+export const concat: Signature["concat"] = Producer_concat;
 export const create: Signature["create"] = Producer_create;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Producer_decodeWithCharset;

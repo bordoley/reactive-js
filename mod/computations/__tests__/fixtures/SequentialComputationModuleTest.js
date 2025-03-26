@@ -1,10 +1,28 @@
 /// <reference types="./SequentialComputationModuleTest.d.ts" />
 
 import { Array_push } from "../../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
-import { pipe, pipeAsync, pipeLazy } from "../../../functions.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
+import { debug, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
-const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("forEach", testAsync("invokes the effect for each notified value", async () => {
+const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source throws", async () => {
+    const e1 = "e1";
+    let result = none;
+    await pipeAsync(Computation.raise(m)({ raise: () => e1 }), m.catchError((e) => {
+        result = e.message;
+    }), m.toReadonlyArrayAsync());
+    pipe(result, expectEquals(e1));
+}), testAsync("when the error handler throws an error", async () => {
+    const e1 = "e1";
+    const e2 = "e2";
+    let result = none;
+    await pipeAsync(Computation.raise(m)({ raise: () => e1 }), m.catchError(_ => {
+        throw e2;
+    }), m.catchError(e => {
+        result = e.cause;
+    }), m.toReadonlyArrayAsync());
+    pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
+}), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), Computation.concatWith(m)(Computation.raise(m)()), debug, m.catchError(pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)())), debug, m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("forEach", testAsync("invokes the effect for each notified value", async () => {
     const result = [];
     await pipeAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), m.forEach((x) => {
         result[Array_push](x + 10);

@@ -20,6 +20,8 @@
 
 - [broadcast](functions/broadcast.md)
 - [buffer](functions/buffer.md)
+- [catchError](functions/catchError.md)
+- [concat](functions/concat.md)
 - [create](functions/create.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)

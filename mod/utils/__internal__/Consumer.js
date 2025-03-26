@@ -4,6 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { none } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueLike_enqueue, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import ObserverMixin, { ObserverMixinLike_complete, ObserverMixinLike_consumer, ObserverMixinLike_notify, } from "../__mixins__/ObserverMixin.js";
@@ -28,6 +29,19 @@ export const create = /*@__PURE__*/ (() => {
         },
     }));
 })();
+export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, DelegatingConsumerMixin()), function NonDisposingDelegatingConsumer(delegate) {
+    init(DisposableMixin, this);
+    init(DelegatingConsumerMixin(), this, delegate);
+    return this;
+}, props(), proto({
+    get [SinkLike_isCompleted]() {
+        unsafeCast(this);
+        return this[DisposableLike_isDisposed];
+    },
+    [SinkLike_complete]() {
+        this[DisposableLike_dispose]();
+    },
+})))();
 export const createDropOldestWithoutBackpressure = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueueDropOldestWithoutBackpressur(capacity) {
         init(DisposableMixin, this);

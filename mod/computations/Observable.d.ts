@@ -75,6 +75,8 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
 }
 export type Signature = ObservableModule;
 export declare const buffer: Signature["buffer"];
+export declare const catchError: Signature["catchError"];
+export declare const concat: Signature["concat"];
 export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];

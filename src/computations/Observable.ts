@@ -26,6 +26,8 @@ import {
 import { Function1, Function2, identity } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
+import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
+import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
@@ -180,6 +182,8 @@ export interface ObservableModule
 export type Signature = ObservableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
+export const catchError: Signature["catchError"] = Observable_catchError;
+export const concat: Signature["concat"] = Observable_concat;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;

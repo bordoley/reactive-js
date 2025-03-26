@@ -27,6 +27,7 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
+import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import ObserverMixin, {
@@ -81,6 +82,33 @@ export const create: <T>(options?: {
     }),
   );
 })();
+
+export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
+  o: ConsumerLike<T>,
+) => ConsumerLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(DisposableMixin, DelegatingConsumerMixin()),
+    function NonDisposingDelegatingConsumer(
+      this: unknown,
+      delegate: ConsumerLike<T>,
+    ): ConsumerLike<T> {
+      init(DisposableMixin, this);
+      init(DelegatingConsumerMixin(), this, delegate);
+
+      return this;
+    },
+    props(),
+    proto({
+      get [SinkLike_isCompleted]() {
+        unsafeCast<ConsumerLike<T>>(this);
+        return this[DisposableLike_isDisposed];
+      },
+
+      [SinkLike_complete](this: ConsumerLike<T>) {
+        this[DisposableLike_dispose]();
+      },
+    }),
+  ))();
 
 export const createDropOldestWithoutBackpressure: <T>(
   capacity: number,

@@ -1,5 +1,11 @@
-import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, ComputationTypeOfModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationWithSideEffectsOf, MulticastComputationOf, NewPureInstanceOf, PureAsynchronousComputationOperator, PureComputationLike, PureComputationOperator, PureDeferredComputationOf, PureSynchronousComputationOf, SynchronousComputationLike, SynchronousComputationOf } from "../computations.js";
-import { Function1 } from "../functions.js";
+import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationType, ComputationTypeOfModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationWithSideEffectsOf, MulticastComputationOf, NewPureInstanceOf, PureAsynchronousComputationOperator, PureComputationLike, PureComputationOperator, PureDeferredComputationOf, PureSynchronousComputationOf, SequentialComputationModule, SynchronousComputationLike, SynchronousComputationOf } from "../computations.js";
+import { Factory, Function1 } from "../functions.js";
+export interface ConcatWithOperator<TComputationType extends ComputationType> {
+    <T>(snd: PureSynchronousComputationOf<TComputationType, T>, ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureComputationOperator<TComputationType, T, T>;
+    <T>(snd: SynchronousComputationOf<TComputationType, T>, ...tail: readonly SynchronousComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    <T>(snd: PureDeferredComputationOf<TComputationType, T>, ...tail: readonly PureDeferredComputationOf<TComputationType, T>[]): PureAsynchronousComputationOperator<TComputationType, T, T>;
+    <T>(snd: DeferredComputationOf<TComputationType, T>, ...tail: readonly DeferredComputationOf<TComputationType, T>[]): Function1<DeferredComputationOf<TComputationType, T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
+}
 export interface MergeWithOperator<TComputationType extends ComputationType> {
     <T>(snd: PureSynchronousComputationOf<TComputationType, T>, ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureComputationOperator<TComputationType, T, T>;
     <T>(snd: SynchronousComputationOf<TComputationType, T>, ...tail: readonly SynchronousComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
@@ -11,6 +17,7 @@ export interface MergeWithOperator<TComputationType extends ComputationType> {
 export interface Signature {
     areAllPure<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & PureComputationLike)[];
     areAllSynchronous<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & SynchronousComputationLike)[];
+    concatWith<TComputationModule extends Pick<SequentialComputationModule, "concat" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
     empty<TComputationModule extends Pick<ComputationModule, "genPure" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     fromReadonlyArray<TComputationModule extends Pick<ComputationModule, "genPure" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): <T>(options?: {
         readonly count?: number;
@@ -20,11 +27,16 @@ export interface Signature {
     isPure<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & PureComputationLike;
     isSynchronous<TComputationType extends ComputationLike = ComputationLike>(computation: TComputationType): computation is TComputationType & SynchronousComputationLike;
     mergeWith<TComputationModule extends Pick<ConcurrentReactiveComputationModule, "merge" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
+    raise<TComputationModule extends Pick<ComputationModule, "genPure" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): <T>(options?: {
+        readonly raise?: Factory<unknown>;
+    }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 }
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
+export declare const concatWith: Signature["concatWith"];
 export declare const empty: Signature["empty"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const isPure: Signature["isPure"];
 export declare const isSynchronous: Signature["isSynchronous"];
 export declare const mergeWith: Signature["mergeWith"];
+export declare const raise: Signature["raise"];

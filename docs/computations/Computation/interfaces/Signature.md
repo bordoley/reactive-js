@@ -48,6 +48,26 @@ readonly `TComputationType`[]
 
 ***
 
+### concatWith()
+
+> **concatWith**\<`TComputationModule`\>(`m`): [`ConcatWithOperator`](ConcatWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
+
+#### Type Parameters
+
+• **TComputationModule** *extends* `Pick`\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"concat"` \| *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md)\>
+
+#### Parameters
+
+##### m
+
+`TComputationModule`
+
+#### Returns
+
+[`ConcatWithOperator`](ConcatWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
+
+***
+
 ### empty()
 
 > **empty**\<`TComputationModule`\>(`m`): \<`T`\>() => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
@@ -187,3 +207,39 @@ readonly `TComputationType`[]
 #### Returns
 
 [`MergeWithOperator`](MergeWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
+
+***
+
+### raise()
+
+> **raise**\<`TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
+
+#### Type Parameters
+
+• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"genPure"`\>
+
+#### Parameters
+
+##### m
+
+`TComputationModule`
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options?
+
+###### raise?
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
+
+##### Returns
+
+[`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>

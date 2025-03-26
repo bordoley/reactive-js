@@ -4,6 +4,8 @@ import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computatio
 import { identity } from "../functions.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
+import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
+import Producer_concat from "./Producer/__private__/Producer.concat.js";
 import Producer_create from "./Producer/__private__/Producer.create.js";
 import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
@@ -25,6 +27,8 @@ import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toRea
 import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
 export const buffer = Producer_buffer;
 export const broadcast = Producer_broadcast;
+export const catchError = Producer_catchError;
+export const concat = Producer_concat;
 export const create = Producer_create;
 export const decodeWithCharset = Producer_decodeWithCharset;
 export const distinctUntilChanged = Producer_distinctUntilChanged;

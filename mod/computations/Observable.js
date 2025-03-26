@@ -3,6 +3,8 @@
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { identity } from "../functions.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
+import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
+import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
@@ -25,6 +27,8 @@ import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 export const buffer = Observable_buffer;
+export const catchError = Observable_catchError;
+export const concat = Observable_concat;
 export const currentTime = Observable_currentTime;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const distinctUntilChanged = Observable_distinctUntilChanged;

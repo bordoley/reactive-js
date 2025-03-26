@@ -8,6 +8,7 @@
 
 ## Interfaces
 
+- [ConcatWithOperator](interfaces/ConcatWithOperator.md)
 - [MergeWithOperator](interfaces/MergeWithOperator.md)
 - [Signature](interfaces/Signature.md)
 
@@ -15,8 +16,10 @@
 
 - [areAllPure](functions/areAllPure.md)
 - [areAllSynchronous](functions/areAllSynchronous.md)
+- [concatWith](functions/concatWith.md)
 - [empty](functions/empty.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [isPure](functions/isPure.md)
 - [isSynchronous](functions/isSynchronous.md)
 - [mergeWith](functions/mergeWith.md)
+- [raise](functions/raise.md)

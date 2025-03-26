@@ -25,6 +25,8 @@ export interface ProducerModule extends ComputationModule<ProducerComputation>, 
 export type Signature = ProducerModule;
 export declare const buffer: Signature["buffer"];
 export declare const broadcast: Signature["broadcast"];
+export declare const catchError: Signature["catchError"];
+export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
