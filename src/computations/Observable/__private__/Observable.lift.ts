@@ -52,25 +52,24 @@ interface LiftedObservableLike<TIn, TOut>
   [SourceLike_subscribe](listener: ConsumerLike<TOut>): void;
 }
 
-const operatorToObserver: <T>(
-  delegate: ConsumerLike,
-) => Function1<LiftedOperatorLike<ObserverLike, any>, ObserverLike<T>> =
-  /*@__PURE__*/ (<T>() => {
-    const createOperatorToObserver = mixInstanceFactory(
-      include(LiftedOperatorToObserverMixin()),
-      function OperatorToObserver(
-        this: unknown,
-        delegate: ConsumerLike,
-        operator: LiftedOperatorLike<any, ObserverLike>,
-      ): ObserverLike<T> {
-        init(LiftedOperatorToObserverMixin(), this, operator, delegate);
+export const operatorToObserver: <T>(
+  delegate: LiftedOperatorLike<ObserverLike, any>,
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(LiftedOperatorToObserverMixin()),
+    function OperatorToObserver(
+      this: unknown,
+      operator: LiftedOperatorLike<ObserverLike, any>,
+    ): ObserverLike<T> {
+      init(
+        LiftedOperatorToObserverMixin(),
+        this,
+        operator,
+      );
 
-        return this;
-      },
-    );
-
-    return delegate => operator => createOperatorToObserver(delegate, operator);
-  })();
+      return this;
+    },
+  ))();
 
 const createLiftedObservable: <TIn, TOut>(
   src: ObservableLike<TIn>,
@@ -146,7 +145,7 @@ const createLiftedObservable: <TIn, TOut>(
           observer,
           Sink.toOperator(),
           ...this[LiftedSourceLike_operators],
-          operatorToObserver(observer),
+          operatorToObserver,
         );
         source[SourceLike_subscribe](destinationOp);
       },
