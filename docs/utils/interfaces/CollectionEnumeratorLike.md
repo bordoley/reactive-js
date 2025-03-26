@@ -12,7 +12,8 @@
 
 ## Extended by
 
-- [`QueueEnumeratorLike`](QueueEnumeratorLike.md)
+- [`QueueLike`](QueueLike.md)
+- [`FlowControllerEnumeratorLike`](FlowControllerEnumeratorLike.md)
 
 ## Type Parameters
 
@@ -23,6 +24,12 @@
 ### \[CollectionEnumeratorLike\_count\]
 
 > `readonly` **\[CollectionEnumeratorLike\_count\]**: `number`
+
+***
+
+### \[CollectionEnumeratorLike\_peek\]
+
+> `readonly` **\[CollectionEnumeratorLike\_peek\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>
 
 ***
 

@@ -3,16 +3,16 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { none } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, QueueLike_enqueue, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, FlowControllerLike_capacity, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
+import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
 import ObserverMixin, { ObserverMixinLike_complete, ObserverMixinLike_consumer, ObserverMixinLike_notify, } from "../__mixins__/ObserverMixin.js";
-import QueueMixin from "../__mixins__/QueueMixin.js";
 export const create = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueue(options) {
+    return mixInstanceFactory(include(DisposableMixin, FlowControlledQueueMixin()), function ConsumerQueue(options) {
         init(DisposableMixin, this);
-        init(QueueMixin(), this, options);
+        init(FlowControlledQueueMixin(), this, options);
         return this;
     }, props(), proto({
         get [SinkLike_isCompleted]() {
@@ -21,7 +21,7 @@ export const create = /*@__PURE__*/ (() => {
         },
         [EventListenerLike_notify](item) {
             if (!this[DisposableLike_isDisposed]) {
-                this[QueueLike_enqueue](item);
+                this[FlowControllerQueueLike_enqueue](item);
             }
         },
         [SinkLike_complete]() {
@@ -43,20 +43,20 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/
     },
 })))();
 export const createDropOldestWithoutBackpressure = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueueDropOldestWithoutBackpressur(capacity) {
+    return mixInstanceFactory(include(DisposableMixin, FlowControlledQueueMixin()), function ConsumerQueueDropOldestWithoutBackpressur(capacity) {
         init(DisposableMixin, this);
-        init(QueueMixin(), this, {
+        init(FlowControlledQueueMixin(), this, {
             backpressureStrategy: DropOldestBackpressureStrategy,
             capacity,
         });
         return this;
     }, props(), proto({
-        get [QueueableLike_isReady]() {
+        get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             const isCompleted = this[SinkLike_isCompleted];
             return !isCompleted;
         },
-        get [QueueableLike_capacity]() {
+        get [FlowControllerLike_capacity]() {
             return MAX_SAFE_INTEGER;
         },
         get [SinkLike_isCompleted]() {
@@ -65,7 +65,7 @@ export const createDropOldestWithoutBackpressure = /*@__PURE__*/ (() => {
         },
         [EventListenerLike_notify](item) {
             if (!this[DisposableLike_isDisposed]) {
-                this[QueueLike_enqueue](item);
+                this[FlowControllerQueueLike_enqueue](item);
             }
         },
         [SinkLike_complete]() {

@@ -31,11 +31,11 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
-  QueueableLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
+  FlowControllerLike,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
@@ -99,11 +99,11 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       [WritableConsumer_onReadyPublisher]: none,
     }),
     proto({
-      [QueueableLike_backpressureStrategy]:
+      [FlowControllerLike_backpressureStrategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
-      [QueueableLike_capacity]: MAX_SAFE_INTEGER,
+      [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
 
-      get [QueueableLike_isReady]() {
+      get [FlowControllerLike_isReady]() {
         unsafeCast<TProperties>(this);
         const writable = this[WritableConsumer_writable];
         const needsDrain = writable.writableNeedDrain;
@@ -112,7 +112,7 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
         return result;
       },
 
-      [QueueableLike_addOnReadyListener](
+      [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike,
         callback: SideEffect1<void>,
       ) {
@@ -140,10 +140,10 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       },
 
       [EventListenerLike_notify](
-        this: TProperties & QueueableLike,
+        this: TProperties & FlowControllerLike,
         data: Uint8Array,
       ) {
-        if (this[QueueableLike_isReady]) {
+        if (this[FlowControllerLike_isReady]) {
           const writable = this[WritableConsumer_writable];
           writable.write(Buffer.from(data));
         } else {

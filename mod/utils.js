@@ -17,23 +17,23 @@ export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
-export const QueueableLike_backpressureStrategy = Symbol("QueueableLike_backpressureStrategy");
-export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
-export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyListener = Symbol("QueueableLike_addOnReadyListener");
+export const FlowControllerLike_backpressureStrategy = Symbol("FlowControllerLike_backpressureStrategy");
+export const FlowControllerLike_capacity = Symbol("FlowControllerLike_capacity");
+export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
+export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 /**
  * @noInheritDoc
  */
 export class BackPressureError extends Error {
-    [QueueableLike_capacity];
-    [QueueableLike_backpressureStrategy];
-    [QueueableLike_isReady];
+    [FlowControllerLike_capacity];
+    [FlowControllerLike_backpressureStrategy];
+    [FlowControllerLike_isReady];
     constructor(consumer) {
         super();
-        this[QueueableLike_capacity] = consumer[QueueableLike_capacity];
-        this[QueueableLike_backpressureStrategy] =
-            consumer[QueueableLike_backpressureStrategy];
-        this[QueueableLike_isReady] = consumer[QueueableLike_isReady];
+        this[FlowControllerLike_capacity] = consumer[FlowControllerLike_capacity];
+        this[FlowControllerLike_backpressureStrategy] =
+            consumer[FlowControllerLike_backpressureStrategy];
+        this[FlowControllerLike_isReady] = consumer[FlowControllerLike_isReady];
     }
 }
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
@@ -43,9 +43,11 @@ export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext
 export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
 export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
 export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
-export const QueueEnumeratorLike_addOnDataReadyListener = Symbol("QueueEnumeratorLike_addOnDataReadyListener");
-export const QueueLike_head = Symbol("QueueLike_head");
+export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_peek");
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
+export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol("FlowControllerEnumeratorLike_addOnDataAvailableListener");
+export const FlowControllerEnumeratorLike_isDataAvailable = Symbol("FlowControllerEnumeratorLike_isDataAvailable");
+export const FlowControllerQueueLike_enqueue = Symbol("FlowControllerQueueLike_enqueue");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");
 export const SchedulerLike_now = Symbol("SchedulerLike_now");

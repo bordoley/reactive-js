@@ -4,7 +4,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../..
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Source from "../../__internal__/DeferredSource.js";
 const genFactory = (factory) => async (consumer) => {
     const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(consumer));
@@ -14,7 +14,7 @@ const genFactory = (factory) => async (consumer) => {
             return;
         }
         isActive = true;
-        let isReady = consumer[QueueableLike_isReady];
+        let isReady = consumer[FlowControllerLike_isReady];
         let isCompleted = consumer[SinkLike_isCompleted];
         try {
             while (isReady &&
@@ -22,7 +22,7 @@ const genFactory = (factory) => async (consumer) => {
                 enumerator[EnumeratorLike_moveNext]()) {
                 const value = enumerator[EnumeratorLike_current];
                 consumer[EventListenerLike_notify](value);
-                isReady = consumer[QueueableLike_isReady];
+                isReady = consumer[FlowControllerLike_isReady];
                 isCompleted = consumer[SinkLike_isCompleted];
                 if (!isReady || isCompleted) {
                     break;
@@ -31,7 +31,7 @@ const genFactory = (factory) => async (consumer) => {
             }
             // Reassign because these values may change after
             // hopping the micro task queue
-            isReady = consumer[QueueableLike_isReady];
+            isReady = consumer[FlowControllerLike_isReady];
             isCompleted = consumer[SinkLike_isCompleted];
             if (isReady || !isCompleted) {
                 consumer[SinkLike_complete]();
@@ -47,7 +47,7 @@ const genFactory = (factory) => async (consumer) => {
         // Return and let the onReadySink reschedule
         // the continuation
     };
-    consumer[QueueableLike_addOnReadyListener](async () => {
+    consumer[FlowControllerLike_addOnReadyListener](async () => {
         await Promise.resolve();
         continue_;
     });

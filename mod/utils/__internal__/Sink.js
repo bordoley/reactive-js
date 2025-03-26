@@ -3,11 +3,11 @@
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { LiftedSinkLike_subscription, } from "../../computations/__internal__/LiftedSource.js";
 import { none, returns } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerQueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
-import QueueMixin from "../__mixins__/QueueMixin.js";
+import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, DelegatingSinkMixin()), function NonDisposingDelegatingSink(delegate) {
     init(DisposableMixin, this);
     init(DelegatingSinkMixin(), this, delegate);
@@ -21,9 +21,9 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/
         this[DisposableLike_dispose]();
     },
 })))();
-export const createQueueSink = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueue(options) {
+export const createQueueSink = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, FlowControlledQueueMixin()), function ConsumerQueue(options) {
     init(DisposableMixin, this);
-    init(QueueMixin(), this, options);
+    init(FlowControlledQueueMixin(), this, options);
     return this;
 }, props(), proto({
     get [SinkLike_isCompleted]() {
@@ -31,7 +31,7 @@ export const createQueueSink = /*@__PURE__*/ (() => mixInstanceFactory(include(D
         return this[DisposableLike_isDisposed];
     },
     [EventListenerLike_notify](next) {
-        this[QueueLike_enqueue](next);
+        this[FlowControllerQueueLike_enqueue](next);
     },
     [SinkLike_complete]() {
         this[DisposableLike_dispose]();

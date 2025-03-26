@@ -19,9 +19,9 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_isReady,
   ObserverLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_isReady,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   SinkLike_complete,
@@ -55,7 +55,7 @@ const genFactory =
       isActive = true;
 
       let shouldYield = false;
-      let isReady = observer[QueueableLike_isReady];
+      let isReady = observer[FlowControllerLike_isReady];
       let isCompleted = observer[SinkLike_isCompleted];
 
       try {
@@ -68,7 +68,7 @@ const genFactory =
           observer[EventListenerLike_notify](value);
 
           shouldYield = delay > 0 || observer[SchedulerLike_shouldYield];
-          isReady = observer[QueueableLike_isReady];
+          isReady = observer[FlowControllerLike_isReady];
           isCompleted = observer[SinkLike_isCompleted];
 
           if (shouldYield || !isReady || isCompleted) {
@@ -95,7 +95,7 @@ const genFactory =
       // the continuations
     };
 
-    observer[QueueableLike_addOnReadyListener](
+    observer[FlowControllerLike_addOnReadyListener](
       pipeLazy(
         continue_,
         bindMethod(observer, SchedulerLike_schedule),

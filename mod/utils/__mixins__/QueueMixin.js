@@ -1,15 +1,10 @@
 /// <reference types="./QueueMixin.d.ts" />
 
-import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
+import { Array, Array_length } from "../../__internal__/constants.js";
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import Broadcaster_addEventHandler from "../../computations/Broadcaster/__private__/Broadcaster.addEventHandler.js";
-import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadcaster.keep.js";
-import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
-import * as Publisher from "../../computations/Publisher.js";
-import { alwaysNone, isEqualTo, isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
-import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueEnumeratorLike_addOnDataReadyListener, QueueLike_enqueue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
-import * as Disposable from "../Disposable.js";
+import { isSome, newInstance, none, returns, } from "../../functions.js";
+import { floor } from "../../math.js";
+import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../../utils.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -17,7 +12,6 @@ const QueueMixin =
     const QueueMixin_tail = Symbol("QueueMixin_tail");
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
-    const QueueMixin_onReadyPublisher = Symbol("QueueMixin_onReadyPublisher");
     const computeIndex = (values, count, head, index) => {
         const valuesLength = values[Array_length];
         const headOffsetIndex = index + head;
@@ -45,13 +39,8 @@ const QueueMixin =
     return returns(mix(function QueueMixin(config) {
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueableLike_backpressureStrategy] =
-            config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        this[QueueableLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
         return this;
     }, props({
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
-        [QueueableLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
         [CollectionEnumeratorLike_count]: 0,
@@ -60,16 +49,17 @@ const QueueMixin =
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-        [QueueMixin_onReadyPublisher]: none,
     }), proto({
-        get [QueueableLike_isReady]() {
-            unsafeCast(this);
-            const count = this[CollectionEnumeratorLike_count];
-            const capacity = this[QueueableLike_capacity];
-            const isDisposed = this[DisposableLike_isDisposed];
-            return count < capacity && !isDisposed;
-        },
-        get [QueueLike_head]() {
+        /*get [FlowControllerQueueLike_tail]() {
+          unsafeCast<TProperties>(this);
+          const head = this[QueueMixin_head];
+          const tail = this[QueueMixin_tail];
+          const values = this[QueueMixin_values];
+          const index = tail > 0 ? tail - 1 : values[Array_length] - 1;
+
+          return head === tail ? none : values[index];
+        },*/
+        get [CollectionEnumeratorLike_peek]() {
             unsafeCast(this);
             const head = this[QueueMixin_head];
             const values = this[QueueMixin_values];
@@ -80,22 +70,9 @@ const QueueMixin =
                     ? values
                     : values[head];
         },
-        /*get [QueueLike_tail]() {
-          unsafeCast<TProperties>(this);
-          const head = this[QueueMixin_head];
-          const tail = this[QueueMixin_tail];
-          const values = this[QueueMixin_values];
-          const index = tail > 0 ? tail - 1 : values[Array_length] - 1;
-
-          return head === tail ? none : values[index];
-        },*/
         [EnumeratorLike_moveNext]() {
             const count = this[CollectionEnumeratorLike_count];
             const values = this[QueueMixin_values];
-            const capacity = this[QueueableLike_capacity];
-            const isDisposed = this[DisposableLike_isDisposed];
-            const shouldNotifyReady = count === capacity && capacity > 0 && !isDisposed;
-            const onReadySignal = this[QueueMixin_onReadyPublisher];
             if (count < 1) {
                 // Queue was empty to start with;
                 this[EnumeratorLike_current] = none;
@@ -108,8 +85,6 @@ const QueueMixin =
                 this[QueueMixin_values] = none;
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
-                shouldNotifyReady &&
-                    onReadySignal?.[EventListenerLike_notify]("ready");
                 return true;
             }
             unsafeCast(values);
@@ -125,8 +100,6 @@ const QueueMixin =
                 this[QueueMixin_values] = values[newHead];
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
-                shouldNotifyReady &&
-                    onReadySignal?.[EventListenerLike_notify]("ready");
                 return true;
             }
             if (isSorted) {
@@ -194,8 +167,6 @@ const QueueMixin =
             this[QueueMixin_capacityMask] = newCapacityMask;
             this[EnumeratorLike_current] = item;
             this[EnumeratorLike_hasCurrent] = true;
-            shouldNotifyReady &&
-                onReadySignal?.[EventListenerLike_notify]("ready");
             return true;
         },
         *[Symbol.iterator]() {
@@ -220,36 +191,12 @@ const QueueMixin =
             }
         },
         [QueueLike_enqueue](item) {
-            const isDisposed = this[DisposableLike_isDisposed];
-            const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-            const capacity = this[QueueableLike_capacity];
-            const applyBackpressure = this[CollectionEnumeratorLike_count] >= capacity;
-            if ((backpressureStrategy === DropLatestBackpressureStrategy &&
-                applyBackpressure) ||
-                // Special case the 0 capacity queue so that we don't fall through
-                // to pushing an item onto the queue
-                (backpressureStrategy === DropOldestBackpressureStrategy &&
-                    capacity === 0) ||
-                isDisposed) {
+            if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            else if (backpressureStrategy === DropOldestBackpressureStrategy &&
-                applyBackpressure) {
-                // We want to pop off the oldest value first, before enqueueing
-                // to avoid unintentionally growing the queue.
-                this[EnumeratorLike_moveNext]();
-            }
-            else if (backpressureStrategy === ThrowBackpressureStrategy &&
-                applyBackpressure) {
-                raiseError(newInstance(BackPressureError, this));
-            }
-            // Assign these after applying backpressure because backpressure
-            // can mutate the state of the queue.
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;
-                // We only notify when there use be 0 items and now there are more.
-                this[QueueMixin_onReadyPublisher]?.[EventListenerLike_notify]("data_ready");
                 return;
             }
             const compare = this[QueueMixin_comparator];
@@ -297,26 +244,6 @@ const QueueMixin =
                 this[QueueMixin_tail] = newCount;
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
-        },
-        [QueueEnumeratorLike_addOnDataReadyListener](callback) {
-            const publisher = this[QueueMixin_onReadyPublisher] ??
-                (() => {
-                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
-                    this[QueueMixin_onReadyPublisher] = publisher;
-                    return publisher;
-                })();
-            // FIXME: Could memoize
-            return pipe(publisher, Broadcaster_keep(isEqualTo("data_ready")), Broadcaster_map(alwaysNone), Broadcaster_addEventHandler(callback), Disposable.addTo(this));
-        },
-        [QueueableLike_addOnReadyListener](callback) {
-            const publisher = this[QueueMixin_onReadyPublisher] ??
-                (() => {
-                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
-                    this[QueueMixin_onReadyPublisher] = publisher;
-                    return publisher;
-                })();
-            // FIXME: Could memoize
-            return pipe(publisher, Broadcaster_keep(isEqualTo("ready")), Broadcaster_map(alwaysNone), Broadcaster_addEventHandler(callback), Disposable.addTo(this));
         },
     })));
 })();

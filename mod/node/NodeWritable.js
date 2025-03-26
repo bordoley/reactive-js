@@ -8,7 +8,7 @@ import { bindMethod, newInstance, none, pipe, raise, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import { BackPressureError, DisposableLike_dispose, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
+import { BackPressureError, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 export const toConsumer = /*@__PURE__*/ (() => {
     const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
@@ -32,16 +32,16 @@ export const toConsumer = /*@__PURE__*/ (() => {
         [SinkLike_isCompleted]: false,
         [WritableConsumer_onReadyPublisher]: none,
     }), proto({
-        [QueueableLike_backpressureStrategy]: ThrowBackpressureStrategy,
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
-        get [QueueableLike_isReady]() {
+        [FlowControllerLike_backpressureStrategy]: ThrowBackpressureStrategy,
+        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             const writable = this[WritableConsumer_writable];
             const needsDrain = writable.writableNeedDrain;
             const result = !this[SinkLike_isCompleted] && !needsDrain;
             return result;
         },
-        [QueueableLike_addOnReadyListener](callback) {
+        [FlowControllerLike_addOnReadyListener](callback) {
             const publisher = this[WritableConsumer_onReadyPublisher] ??
                 (() => {
                     const writable = this[WritableConsumer_writable];
@@ -54,7 +54,7 @@ export const toConsumer = /*@__PURE__*/ (() => {
             return pipe(publisher, Broadcaster.addEventHandler(callback), Disposable.addTo(this));
         },
         [EventListenerLike_notify](data) {
-            if (this[QueueableLike_isReady]) {
+            if (this[FlowControllerLike_isReady]) {
                 const writable = this[WritableConsumer_writable];
                 writable.write(Buffer.from(data));
             }

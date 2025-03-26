@@ -27,10 +27,10 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
   SchedulerLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -49,7 +49,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   );
 
   type TProperties = {
-    [QueueableLike_isReady]: boolean;
+    [FlowControllerLike_isReady]: boolean;
     [EventListernToPauseableConsumer_mode]: BroadcasterLike<boolean>;
   };
 
@@ -68,9 +68,9 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
 
       pipe(
         mode,
-        Disposable.bindTo(listener),
+        Disposable.addTo(this),
         Broadcaster_addEventHandler(isPaused => {
-          this[QueueableLike_isReady] = !isPaused;
+          this[FlowControllerLike_isReady] = !isPaused;
         }),
         Disposable.addTo(this),
       );
@@ -79,7 +79,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
     },
     props<TProperties>({
       [EventListernToPauseableConsumer_mode]: none,
-      [QueueableLike_isReady]: false,
+      [FlowControllerLike_isReady]: false,
     }),
     proto({
       get [SinkLike_isCompleted](): boolean {
@@ -87,12 +87,12 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
         return this[DisposableLike_isDisposed];
       },
 
-      [QueueableLike_backpressureStrategy]:
+      [FlowControllerLike_backpressureStrategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
 
-      [QueueableLike_capacity]: MAX_SAFE_INTEGER,
+      [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
 
-      [QueueableLike_addOnReadyListener](
+      [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike<T>,
         callback: SideEffect1<void>,
       ) {
@@ -115,7 +115,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
 
         if (this[SinkLike_isCompleted]) {
           raise("Broadcaster is completed");
-        } else if (!this[QueueableLike_isReady]) {
+        } else if (!this[FlowControllerLike_isReady]) {
           raise("Broadcaster is paused");
         }
 

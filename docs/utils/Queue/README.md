@@ -9,5 +9,4 @@
 ## Functions
 
 - [create](functions/create.md)
-- [createDropOldest](functions/createDropOldest.md)
 - [createSorted](functions/createSorted.md)

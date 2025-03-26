@@ -13,10 +13,10 @@ import {
   ConsumerLike,
   DisposableLike,
   EventListenerLike_notify,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -71,33 +71,33 @@ const DelegatingConsumerMixin: <
       },
       props(),
       proto({
-        get [QueueableLike_isReady](): boolean {
+        get [FlowControllerLike_isReady](): boolean {
           unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
-            QueueableLike_isReady
+            FlowControllerLike_isReady
           ];
         },
 
-        get [QueueableLike_backpressureStrategy](): BackpressureStrategy {
+        get [FlowControllerLike_backpressureStrategy](): BackpressureStrategy {
           unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
-            QueueableLike_backpressureStrategy
+            FlowControllerLike_backpressureStrategy
           ];
         },
 
-        get [QueueableLike_capacity](): number {
+        get [FlowControllerLike_capacity](): number {
           unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
-            QueueableLike_capacity
+            FlowControllerLike_capacity
           ];
         },
 
-        [QueueableLike_addOnReadyListener](
+        [FlowControllerLike_addOnReadyListener](
           this: DelegatingConsumerLike<T, TDelegateConsumer>,
           callback: SideEffect1<void>,
         ) {
           return this[DelegatingEventListenerLike_delegate][
-            QueueableLike_addOnReadyListener
+            FlowControllerLike_addOnReadyListener
           ](callback);
         },
       }),

@@ -12,10 +12,10 @@ import {
   BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
 } from "../../utils.js";
 import {
   LiftedSinkLike,
@@ -37,10 +37,10 @@ type TReturn<TSubscription extends ConsumerLike, T> = Omit<
 
 type TPrototype<TSubscription extends ConsumerLike, T> = Pick<
   LiftedSinkToConsumerLike<TSubscription, T>,
-  | typeof QueueableLike_isReady
-  | typeof QueueableLike_backpressureStrategy
-  | typeof QueueableLike_capacity
-  | typeof QueueableLike_addOnReadyListener
+  | typeof FlowControllerLike_isReady
+  | typeof FlowControllerLike_backpressureStrategy
+  | typeof FlowControllerLike_capacity
+  | typeof FlowControllerLike_addOnReadyListener
 >;
 
 const LiftedSinkToConsumerMixin: <
@@ -64,34 +64,34 @@ const LiftedSinkToConsumerMixin: <
       },
       props(),
       proto<TPrototype<TSubscription, T>>({
-        get [QueueableLike_isReady](): boolean {
+        get [FlowControllerLike_isReady](): boolean {
           unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
           return this[LiftedSinkToEventListenerLike_operator][
             LiftedSinkLike_subscription
-          ][QueueableLike_isReady];
+          ][FlowControllerLike_isReady];
         },
 
-        get [QueueableLike_backpressureStrategy](): BackpressureStrategy {
+        get [FlowControllerLike_backpressureStrategy](): BackpressureStrategy {
           unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
           return this[LiftedSinkToEventListenerLike_operator][
             LiftedSinkLike_subscription
-          ][QueueableLike_backpressureStrategy];
+          ][FlowControllerLike_backpressureStrategy];
         },
 
-        get [QueueableLike_capacity](): number {
+        get [FlowControllerLike_capacity](): number {
           unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
           return this[LiftedSinkToEventListenerLike_operator][
             LiftedSinkLike_subscription
-          ][QueueableLike_capacity];
+          ][FlowControllerLike_capacity];
         },
 
-        [QueueableLike_addOnReadyListener](
+        [FlowControllerLike_addOnReadyListener](
           this: LiftedSinkToConsumerLike<TSubscription, T>,
           callback: SideEffect1<void>,
         ) {
           return this[LiftedSinkToEventListenerLike_operator][
             LiftedSinkLike_subscription
-          ][QueueableLike_addOnReadyListener](callback);
+          ][FlowControllerLike_addOnReadyListener](callback);
         },
       }),
     ),

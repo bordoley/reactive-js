@@ -11,8 +11,8 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_isReady,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
@@ -36,7 +36,7 @@ const genFactory =
 
       isActive = true;
 
-      let isReady = consumer[QueueableLike_isReady];
+      let isReady = consumer[FlowControllerLike_isReady];
       let isCompleted = consumer[SinkLike_isCompleted];
 
       try {
@@ -48,7 +48,7 @@ const genFactory =
           const value = enumerator[EnumeratorLike_current];
           consumer[EventListenerLike_notify](value);
 
-          isReady = consumer[QueueableLike_isReady];
+          isReady = consumer[FlowControllerLike_isReady];
           isCompleted = consumer[SinkLike_isCompleted];
 
           if (!isReady || isCompleted) {
@@ -60,7 +60,7 @@ const genFactory =
 
         // Reassign because these values may change after
         // hopping the micro task queue
-        isReady = consumer[QueueableLike_isReady];
+        isReady = consumer[FlowControllerLike_isReady];
         isCompleted = consumer[SinkLike_isCompleted];
         if (isReady || !isCompleted) {
           consumer[SinkLike_complete]();
@@ -76,7 +76,7 @@ const genFactory =
       // the continuation
     };
 
-    consumer[QueueableLike_addOnReadyListener](async () => {
+    consumer[FlowControllerLike_addOnReadyListener](async () => {
       await Promise.resolve();
       continue_;
     });

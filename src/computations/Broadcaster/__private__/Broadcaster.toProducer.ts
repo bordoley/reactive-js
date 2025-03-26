@@ -8,10 +8,10 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   ConsumerLike,
   EventListenerLike_notify,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_isReady,
   PauseableLike_pause,
   PauseableLike_resume,
-  QueueableLike_addOnReadyListener,
-  QueueableLike_isReady,
   SinkLike_complete,
 } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
@@ -29,7 +29,7 @@ const Broadcaster_toProducer: Broadcaster.Signature["toProducer"] =
 
       src[PauseableLike_pause]();
 
-      consumer[QueueableLike_addOnReadyListener](
+      consumer[FlowControllerLike_addOnReadyListener](
         bindMethod(src, PauseableLike_resume),
       );
 
@@ -38,7 +38,7 @@ const Broadcaster_toProducer: Broadcaster.Signature["toProducer"] =
         Broadcaster_addEventHandler(v => {
           consumer[EventListenerLike_notify](v);
 
-          if (!consumer[QueueableLike_isReady]) {
+          if (!consumer[FlowControllerLike_isReady]) {
             src[PauseableLike_pause]();
           }
         }),
@@ -46,7 +46,7 @@ const Broadcaster_toProducer: Broadcaster.Signature["toProducer"] =
         Disposable.addTo(consumer),
       );
 
-      if (consumer[QueueableLike_isReady]) {
+      if (consumer[FlowControllerLike_isReady]) {
         src[PauseableLike_resume]();
       }
     }),

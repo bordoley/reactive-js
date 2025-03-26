@@ -11,7 +11,7 @@ be consumed.
 
 ## Extends
 
-- [`SinkLike`](SinkLike.md)\<`T`\>.[`QueueableLike`](QueueableLike.md)
+- [`SinkLike`](SinkLike.md)\<`T`\>.[`FlowControllerLike`](FlowControllerLike.md)
 
 ## Extended by
 

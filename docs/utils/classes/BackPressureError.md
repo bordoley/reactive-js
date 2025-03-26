@@ -20,7 +20,7 @@
 
 ##### consumer
 
-[`QueueableLike`](../interfaces/QueueableLike.md)
+[`FlowControllerLike`](../interfaces/FlowControllerLike.md)
 
 #### Returns
 
@@ -32,18 +32,18 @@
 
 ## Properties
 
-### \[QueueableLike\_backpressureStrategy\]
+### \[FlowControllerLike\_backpressureStrategy\]
 
-> `readonly` **\[QueueableLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
-
-***
-
-### \[QueueableLike\_capacity\]
-
-> `readonly` **\[QueueableLike\_capacity\]**: `number`
+> `readonly` **\[FlowControllerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
 
 ***
 
-### \[QueueableLike\_isReady\]
+### \[FlowControllerLike\_capacity\]
 
-> `readonly` **\[QueueableLike\_isReady\]**: `boolean`
+> `readonly` **\[FlowControllerLike\_capacity\]**: `number`
+
+***
+
+### \[FlowControllerLike\_isReady\]
+
+> `readonly` **\[FlowControllerLike\_isReady\]**: `boolean`

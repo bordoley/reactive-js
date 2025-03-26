@@ -5,11 +5,11 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerQueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
-import QueueMixin from "./QueueMixin.js";
+import FlowControlledQueueMixin from "./FlowControlledQueueMixin.js";
 export const SchedulerContinuationLike_run = Symbol("SchedulerContinuationLike_run");
 export const SchedulerContinuationLike_dueTime = Symbol("SchedulerContinuationLike_dueTime");
 export const SchedulerContinuationLike_id = Symbol("SchedulerContinuationLike_id");
@@ -53,7 +53,7 @@ const SchedulerMixin =
             const scheduler = continuation[QueueContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
-                parent[QueueLike_enqueue](continuation);
+                parent[FlowControllerQueueLike_enqueue](continuation);
             }
             else {
                 continuation[SchedulerContinuationLike_dueTime] =
@@ -72,7 +72,7 @@ const SchedulerMixin =
                     // continue
                 }
                 else if (isSome(parent)) {
-                    parent[QueueLike_enqueue](head);
+                    parent[FlowControllerQueueLike_enqueue](head);
                 }
                 else {
                     scheduler[SchedulerMixinLike_schedule](head);
@@ -92,9 +92,9 @@ const SchedulerMixin =
             this[QueueContinuation_effect] =
                 none;
         }
-        return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueContinuation(scheduler, effect, dueTime) {
+        return mixInstanceFactory(include(DisposableMixin, FlowControlledQueueMixin()), function QueueContinuation(scheduler, effect, dueTime) {
             init(DisposableMixin, this);
-            init(QueueMixin(), this, none);
+            init(FlowControlledQueueMixin(), this, none);
             this[SchedulerContinuationLike_dueTime] = dueTime;
             this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
             this[QueueContinuation_scheduler] = scheduler;
@@ -222,7 +222,7 @@ const SchedulerMixin =
             const exceededMaxYieldInterval = this[SchedulerLike_now] >
                 this[SchedulerMixinLike_startTime] +
                     this[SchedulerLike_maxYieldInterval];
-            const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][CollectionEnumeratorLike_count] > 0;
+            const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][FlowControllerEnumeratorLike_isDataAvailable];
             return (isDisposed ||
                 yieldRequested ||
                 exceededMaxYieldInterval ||
@@ -248,7 +248,7 @@ const SchedulerMixin =
                 this[SchedulerMixinHostLike_schedule](continuation);
             }
             else {
-                activeContinuation[QueueLike_enqueue](continuation);
+                activeContinuation[FlowControllerQueueLike_enqueue](continuation);
             }
         },
         [SchedulerLike_schedule](effect, options) {

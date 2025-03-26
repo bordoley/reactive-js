@@ -10,18 +10,18 @@ import {
 import { Function1, Optional, none } from "../../functions.js";
 import {
   BackpressureStrategy,
-  CollectionEnumeratorLike,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
+  FlowControllerEnumeratorLike,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
+  FlowControllerQueueLike,
+  FlowControllerQueueLike_enqueue,
   ObserverLike,
-  QueueLike,
-  QueueLike_enqueue,
-  QueueableLike_capacity,
-  QueueableLike_isReady,
   SchedulerLike,
   SinkLike,
   SinkLike_complete,
@@ -30,18 +30,20 @@ import {
 import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
+import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
 import ObserverMixin, {
   ObserverMixinLike,
   ObserverMixinLike_complete,
   ObserverMixinLike_consumer,
   ObserverMixinLike_notify,
 } from "../__mixins__/ObserverMixin.js";
-import QueueMixin from "../__mixins__/QueueMixin.js";
 
 export const create: <T>(options?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+}) => ConsumerLike<T> & FlowControllerEnumeratorLike<T> = /*@__PURE__*/ (<
+  T,
+>() => {
   type TPrototype = Pick<
     SinkLike<T>,
     | typeof EventListenerLike_notify
@@ -50,16 +52,16 @@ export const create: <T>(options?: {
   >;
 
   return mixInstanceFactory(
-    include(DisposableMixin, QueueMixin()),
+    include(DisposableMixin, FlowControlledQueueMixin()),
     function ConsumerQueue(
       this: TPrototype,
       options: Optional<{
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
-    ): ConsumerLike<T> & QueueLike<T> {
+    ): ConsumerLike<T> & FlowControllerQueueLike<T> {
       init(DisposableMixin, this);
-      init(QueueMixin<T>(), this, options);
+      init(FlowControlledQueueMixin<T>(), this, options);
 
       return this;
     },
@@ -70,9 +72,9 @@ export const create: <T>(options?: {
         return this[DisposableLike_isDisposed];
       },
 
-      [EventListenerLike_notify](this: QueueLike<T>, item: T) {
+      [EventListenerLike_notify](this: FlowControllerQueueLike<T>, item: T) {
         if (!this[DisposableLike_isDisposed]) {
-          this[QueueLike_enqueue](item);
+          this[FlowControllerQueueLike_enqueue](item);
         }
       },
 
@@ -112,24 +114,26 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
 
 export const createDropOldestWithoutBackpressure: <T>(
   capacity: number,
-) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+) => ConsumerLike<T> & FlowControllerEnumeratorLike<T> = /*@__PURE__*/ (<
+  T,
+>() => {
   type TPrototype = Pick<
     ConsumerLike<T>,
     | typeof EventListenerLike_notify
     | typeof SinkLike_complete
     | typeof SinkLike_isCompleted
-    | typeof QueueableLike_isReady
-    | typeof QueueableLike_capacity
+    | typeof FlowControllerLike_isReady
+    | typeof FlowControllerLike_capacity
   >;
 
   return mixInstanceFactory(
-    include(DisposableMixin, QueueMixin()),
+    include(DisposableMixin, FlowControlledQueueMixin()),
     function ConsumerQueueDropOldestWithoutBackpressur(
       this: TPrototype,
       capacity: number,
-    ): ConsumerLike<T> & QueueLike<T> {
+    ): ConsumerLike<T> & FlowControllerQueueLike<T> {
       init(DisposableMixin, this);
-      init(QueueMixin<T>(), this, {
+      init(FlowControlledQueueMixin<T>(), this, {
         backpressureStrategy: DropOldestBackpressureStrategy,
         capacity,
       });
@@ -137,14 +141,14 @@ export const createDropOldestWithoutBackpressure: <T>(
     },
     props(),
     proto<TPrototype>({
-      get [QueueableLike_isReady](): boolean {
+      get [FlowControllerLike_isReady](): boolean {
         unsafeCast<ConsumerLike<T>>(this);
         const isCompleted = this[SinkLike_isCompleted];
 
         return !isCompleted;
       },
 
-      get [QueueableLike_capacity](): number {
+      get [FlowControllerLike_capacity](): number {
         return MAX_SAFE_INTEGER;
       },
 
@@ -153,9 +157,9 @@ export const createDropOldestWithoutBackpressure: <T>(
         return this[DisposableLike_isDisposed];
       },
 
-      [EventListenerLike_notify](this: QueueLike<T>, item: T) {
+      [EventListenerLike_notify](this: FlowControllerQueueLike<T>, item: T) {
         if (!this[DisposableLike_isDisposed]) {
-          this[QueueLike_enqueue](item);
+          this[FlowControllerQueueLike_enqueue](item);
         }
       },
 

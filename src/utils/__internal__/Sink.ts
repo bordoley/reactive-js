@@ -13,13 +13,13 @@ import {
 import { Function1, Optional, none, returns } from "../../functions.js";
 import {
   BackpressureStrategy,
-  CollectionEnumeratorLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
-  QueueLike,
-  QueueLike_enqueue,
+  FlowControllerEnumeratorLike,
+  FlowControllerQueueLike,
+  FlowControllerQueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -29,7 +29,7 @@ import DelegatingSinkMixin, {
   DelegatingSinkLike,
 } from "../__mixins__/DelegatingSinkMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
-import QueueMixin from "../__mixins__/QueueMixin.js";
+import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: SinkLike<T>,
@@ -61,18 +61,18 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
 export const createQueueSink: <T>(options?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => SinkLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
+}) => SinkLike<T> & FlowControllerEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DisposableMixin, QueueMixin()),
+    include(DisposableMixin, FlowControlledQueueMixin()),
     function ConsumerQueue(
       this: Omit<SinkLike<T>, keyof DisposableLike>,
       options: Optional<{
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
-    ): SinkLike<T> & QueueLike<T> {
+    ): SinkLike<T> & FlowControllerQueueLike<T> {
       init(DisposableMixin, this);
-      init(QueueMixin<T>(), this, options);
+      init(FlowControlledQueueMixin<T>(), this, options);
 
       return this;
     },
@@ -83,8 +83,8 @@ export const createQueueSink: <T>(options?: {
         return this[DisposableLike_isDisposed];
       },
 
-      [EventListenerLike_notify](this: QueueLike<T>, next: T) {
-        this[QueueLike_enqueue](next);
+      [EventListenerLike_notify](this: FlowControllerQueueLike<T>, next: T) {
+        this[FlowControllerQueueLike_enqueue](next);
       },
 
       [SinkLike_complete](this: SinkLike<T>) {

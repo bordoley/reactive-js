@@ -91,29 +91,31 @@ export const DropOldestBackpressureStrategy: BackpressureStrategy =
 export const OverflowBackpressureStrategy: BackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy: BackpressureStrategy = "throw";
 
-export const QueueableLike_backpressureStrategy = Symbol(
-  "QueueableLike_backpressureStrategy",
+export const FlowControllerLike_backpressureStrategy = Symbol(
+  "FlowControllerLike_backpressureStrategy",
 );
-export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
-export const QueueableLike_isReady = Symbol("QueueableLike_isReady");
-export const QueueableLike_addOnReadyListener = Symbol(
-  "QueueableLike_addOnReadyListener",
+export const FlowControllerLike_capacity = Symbol(
+  "FlowControllerLike_capacity",
+);
+export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
+export const FlowControllerLike_addOnReadyListener = Symbol(
+  "FlowControllerLike_addOnReadyListener",
 );
 
-export interface QueueableLike extends DisposableLike {
-  readonly [QueueableLike_isReady]: boolean;
+export interface FlowControllerLike extends DisposableLike {
+  readonly [FlowControllerLike_isReady]: boolean;
 
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
-  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
 
   /**
    * The number of items the queue is capable of efficiently buffering.
    */
-  readonly [QueueableLike_capacity]: number;
+  readonly [FlowControllerLike_capacity]: number;
 
-  [QueueableLike_addOnReadyListener](
+  [FlowControllerLike_addOnReadyListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
 }
@@ -122,22 +124,23 @@ export interface QueueableLike extends DisposableLike {
  * @noInheritDoc
  */
 export class BackPressureError extends Error {
-  readonly [QueueableLike_capacity]: number;
-  readonly [QueueableLike_backpressureStrategy]: BackpressureStrategy;
-  readonly [QueueableLike_isReady]: boolean;
+  readonly [FlowControllerLike_capacity]: number;
+  readonly [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
+  readonly [FlowControllerLike_isReady]: boolean;
 
-  constructor(consumer: QueueableLike) {
+  constructor(consumer: FlowControllerLike) {
     super();
-    this[QueueableLike_capacity] = consumer[QueueableLike_capacity];
-    this[QueueableLike_backpressureStrategy] =
-      consumer[QueueableLike_backpressureStrategy];
-    this[QueueableLike_isReady] = consumer[QueueableLike_isReady];
+    this[FlowControllerLike_capacity] = consumer[FlowControllerLike_capacity];
+    this[FlowControllerLike_backpressureStrategy] =
+      consumer[FlowControllerLike_backpressureStrategy];
+    this[FlowControllerLike_isReady] = consumer[FlowControllerLike_isReady];
   }
 }
 
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+
 export interface EnumeratorLike<T = unknown> extends DisposableLike {
   readonly [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
@@ -164,34 +167,50 @@ export interface AsyncEnumeratorLike<T = unknown> extends DisposableLike {
 export const CollectionEnumeratorLike_count = Symbol(
   "CollectionEnumeratorLike_count",
 );
+export const CollectionEnumeratorLike_peek = Symbol(
+  "CollectionEnumeratorLike_peek",
+);
 export interface CollectionEnumeratorLike<T = unknown>
   extends EnumeratorLike<T>,
     Iterable<T> {
   readonly [CollectionEnumeratorLike_count]: number;
+  readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
 
-export const QueueEnumeratorLike_addOnDataReadyListener = Symbol(
-  "QueueEnumeratorLike_addOnDataReadyListener",
+export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
+/**
+ * @noInheritDoc
+ */
+export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+  [QueueLike_enqueue](v: T): void;
+}
+
+export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol(
+  "FlowControllerEnumeratorLike_addOnDataAvailableListener",
+);
+export const FlowControllerEnumeratorLike_isDataAvailable = Symbol(
+  "FlowControllerEnumeratorLike_isDataAvailable",
 );
 
-export interface QueueEnumeratorLike<T = unknown>
+export interface FlowControllerEnumeratorLike<T = unknown>
   extends CollectionEnumeratorLike<T> {
-  [QueueEnumeratorLike_addOnDataReadyListener](
+  readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
+
+  [FlowControllerEnumeratorLike_addOnDataAvailableListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
 }
 
-export const QueueLike_head = Symbol("QueueLike_head");
-export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
-
+export const FlowControllerQueueLike_enqueue = Symbol(
+  "FlowControllerQueueLike_enqueue",
+);
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown>
-  extends QueueEnumeratorLike<T>,
-    QueueableLike {
-  [QueueLike_head]: Optional<T>;
-  [QueueLike_enqueue](v: T): void;
+export interface FlowControllerQueueLike<T = unknown>
+  extends FlowControllerEnumeratorLike<T>,
+    FlowControllerLike {
+  [FlowControllerQueueLike_enqueue](v: T): void;
 }
 
 export const SchedulerLike_inContinuation = Symbol(
@@ -349,7 +368,9 @@ export interface SinkLike<T = unknown> extends DisposableLike {
  *
  * @noInheritDoc
  */
-export interface ConsumerLike<T = unknown> extends SinkLike<T>, QueueableLike {}
+export interface ConsumerLike<T = unknown>
+  extends SinkLike<T>,
+    FlowControllerLike {}
 
 /**
  * A consumer of push-based notifications.

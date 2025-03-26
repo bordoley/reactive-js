@@ -8,17 +8,11 @@
 
 ## Extends
 
-- [`QueueEnumeratorLike`](QueueEnumeratorLike.md)\<`T`\>.[`QueueableLike`](QueueableLike.md)
+- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>
 
 ## Type Parameters
 
 • **T** = `unknown`
-
-## Properties
-
-### \[QueueLike\_head\]
-
-> **\[QueueLike\_head\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>
 
 ## Methods
 

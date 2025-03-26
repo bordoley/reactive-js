@@ -7,7 +7,7 @@ import { none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "../../Broadcaster/__private__/Broadcaster.createPauseable.js";
@@ -17,21 +17,21 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
         init(DelegatingDisposableMixin, this, listener);
         init(DelegatingEventListenerMixin(), this, listener);
         this[EventListernToPauseableConsumer_mode] = mode;
-        pipe(mode, Disposable.bindTo(listener), Broadcaster_addEventHandler(isPaused => {
-            this[QueueableLike_isReady] = !isPaused;
+        pipe(mode, Disposable.addTo(this), Broadcaster_addEventHandler(isPaused => {
+            this[FlowControllerLike_isReady] = !isPaused;
         }), Disposable.addTo(this));
         return this;
     }, props({
         [EventListernToPauseableConsumer_mode]: none,
-        [QueueableLike_isReady]: false,
+        [FlowControllerLike_isReady]: false,
     }), proto({
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return this[DisposableLike_isDisposed];
         },
-        [QueueableLike_backpressureStrategy]: ThrowBackpressureStrategy,
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
-        [QueueableLike_addOnReadyListener](callback) {
+        [FlowControllerLike_backpressureStrategy]: ThrowBackpressureStrategy,
+        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        [FlowControllerLike_addOnReadyListener](callback) {
             return pipe(this[EventListernToPauseableConsumer_mode], Broadcaster_addEventHandler(isPaused => {
                 if (!isPaused) {
                     callback();
@@ -43,7 +43,7 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
             if (this[SinkLike_isCompleted]) {
                 raise("Broadcaster is completed");
             }
-            else if (!this[QueueableLike_isReady]) {
+            else if (!this[FlowControllerLike_isReady]) {
                 raise("Broadcaster is paused");
             }
             delegate[EventListenerLike_notify](next);
