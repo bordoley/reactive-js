@@ -10,7 +10,7 @@ import {
 import { ConsumerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Producer from "../../Producer.js";
-import * as WithLatestFrom from "../../__internal__/operators/WithLatestFromOperator.js";
+import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Producer_forEach from "./Producer.forEach.js";
 import Producer_lift from "./Producer.lift.js";
 import Producer_subscribe from "./Producer.subscribe.js";
@@ -27,7 +27,7 @@ const Producer_withLatestFrom: Producer.Signature["withLatestFrom"] = (<
   selector: Function2<TA, TB, T> = tuple as unknown as Function2<TA, TB, T>,
 ) =>
   pipe(
-    WithLatestFrom.create<ConsumerLike, ProducerLike<TB>, TA, TB, T>,
+    WithLatestFromSink.create<ConsumerLike, ProducerLike<TB>, TA, TB, T>,
     partial(other, selector, addEventListener),
     Producer_lift<TA, T>({
       [ComputationLike_isPure]: Computation.isPure(other),

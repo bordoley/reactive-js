@@ -23,10 +23,10 @@ import * as Computation from "../../Computation.js";
 import {
   LiftedSinkLike,
   LiftedSourceLike,
-  LiftedSourceLike_operators,
+  LiftedSourceLike_sink,
   LiftedSourceLike_source,
 } from "../../__internal__/LiftedSource.js";
-import LiftedOperatorToObserverMixin from "../../__mixins__/LiftedOperatorToObserverMixin.js";
+import LiftedSinkToObserverMixin from "../../__mixins__/LiftedSinkToObserverMixin.js";
 
 interface LiftedObservableLike<TIn, TOut>
   extends LiftedSourceLike<
@@ -42,7 +42,7 @@ interface LiftedObservableLike<TIn, TOut>
   readonly [ComputationLike_isSynchronous]: false;
 
   readonly [LiftedSourceLike_source]: ObservableLike<TIn>;
-  readonly [LiftedSourceLike_operators]: ReadonlyArray<
+  readonly [LiftedSourceLike_sink]: ReadonlyArray<
     Function1<
       LiftedSinkLike<ObserverLike, any>,
       LiftedSinkLike<ObserverLike, any>
@@ -56,12 +56,12 @@ export const operatorToObserver: <T>(
   delegate: LiftedSinkLike<ObserverLike, any>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(LiftedOperatorToObserverMixin()),
+    include(LiftedSinkToObserverMixin()),
     function OperatorToObserver(
       this: unknown,
       operator: LiftedSinkLike<ObserverLike, any>,
     ): ObserverLike<T> {
-      init(LiftedOperatorToObserverMixin(), this, operator);
+      init(LiftedSinkToObserverMixin(), this, operator);
 
       return this;
     },
@@ -82,7 +82,7 @@ const createLiftedObservable: <TIn, TOut>(
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
     [LiftedSourceLike_source]: ObservableLike<TIn>;
-    [LiftedSourceLike_operators]: ReadonlyArray<
+    [LiftedSourceLike_sink]: ReadonlyArray<
       Function1<
         LiftedSinkLike<any, ObserverLike>,
         LiftedSinkLike<any, ObserverLike>
@@ -94,7 +94,7 @@ const createLiftedObservable: <TIn, TOut>(
     LiftedObservableLike<TIn, TOut>,
     | keyof DisposableContainerLike
     | typeof LiftedSourceLike_source
-    | typeof LiftedSourceLike_operators
+    | typeof LiftedSourceLike_sink
     | typeof ComputationLike_isPure
     | typeof ComputationLike_isSynchronous
   >;
@@ -114,10 +114,10 @@ const createLiftedObservable: <TIn, TOut>(
     ): ObservableLike<TOut> {
       const liftedSource: ObservableLike<TIn> =
         (source as any)[LiftedSourceLike_source] ?? source;
-      const ops = [op, ...((source as any)[LiftedSourceLike_operators] ?? [])];
+      const ops = [op, ...((source as any)[LiftedSourceLike_sink] ?? [])];
 
       this[LiftedSourceLike_source] = liftedSource;
-      this[LiftedSourceLike_operators] = ops;
+      this[LiftedSourceLike_sink] = ops;
       this[ComputationLike_isSynchronous] =
         Computation.isSynchronous(source) &&
         Computation.isSynchronous(config ?? {});
@@ -128,7 +128,7 @@ const createLiftedObservable: <TIn, TOut>(
     },
     props<TProperties>({
       [LiftedSourceLike_source]: none,
-      [LiftedSourceLike_operators]: none,
+      [LiftedSourceLike_sink]: none,
       [ComputationLike_isPure]: false,
       [ComputationLike_isSynchronous]: false,
     }),
@@ -140,7 +140,7 @@ const createLiftedObservable: <TIn, TOut>(
         const destinationOp: ObserverLike<TIn> = pipeUnsafe(
           observer,
           Sink.toOperator(),
-          ...this[LiftedSourceLike_operators],
+          ...this[LiftedSourceLike_sink],
           operatorToObserver,
         );
         source[SourceLike_subscribe](destinationOp);

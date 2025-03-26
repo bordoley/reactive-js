@@ -1,7 +1,7 @@
 import { partial, pipe } from "../../../functions.js";
 import { EventListenerLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
-import * as TakeFirstOperator from "../../__internal__/operators/TakeFirstOperator.js";
+import * as TakeFirstSink from "../../__internal__/sinks/TakeFirstSink.js";
 import Broadcaster_lift from "./Broadcaster.lift.js";
 
 const Broadcaster_takeFirst: Broadcaster.Signature["takeFirst"] = (<
@@ -10,7 +10,7 @@ const Broadcaster_takeFirst: Broadcaster.Signature["takeFirst"] = (<
   count?: number;
 }) =>
   pipe(
-    TakeFirstOperator.create<EventListenerLike, T>,
+    TakeFirstSink.create<EventListenerLike, T>,
     partial(options?.count),
     Broadcaster_lift,
   )) as Broadcaster.Signature["takeFirst"];

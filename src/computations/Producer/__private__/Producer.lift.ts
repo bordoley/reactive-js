@@ -19,10 +19,10 @@ import * as Computation from "../../Computation.js";
 import {
   LiftedSinkLike,
   LiftedSourceLike,
-  LiftedSourceLike_operators,
+  LiftedSourceLike_sink,
   LiftedSourceLike_source,
 } from "../../__internal__/LiftedSource.js";
-import LiftedOperatorToConsumerMixin from "../../__mixins__/LiftedOperatorToConsumerMixin.js";
+import LiftedSinkToConsumerMixin from "../../__mixins__/LiftedSinkToConsumerMixin.js";
 
 interface LiftedProducerLike<TIn, TOut>
   extends LiftedSourceLike<
@@ -38,7 +38,7 @@ interface LiftedProducerLike<TIn, TOut>
   readonly [ComputationLike_isSynchronous]: false;
 
   readonly [LiftedSourceLike_source]: ProducerLike<TIn>;
-  readonly [LiftedSourceLike_operators]: ReadonlyArray<
+  readonly [LiftedSourceLike_sink]: ReadonlyArray<
     Function1<
       LiftedSinkLike<any, ConsumerLike>,
       LiftedSinkLike<any, ConsumerLike>
@@ -53,13 +53,13 @@ const operatorToConsumer: <T>(
 ) => Function1<LiftedSinkLike<any, ConsumerLike>, ConsumerLike<T>> =
   /*@__PURE__*/ (<T>() => {
     const createOperatorToConsumer = mixInstanceFactory(
-      include(LiftedOperatorToConsumerMixin()),
+      include(LiftedSinkToConsumerMixin()),
       function OperatorToConsumer(
         this: unknown,
         delegate: ConsumerLike,
         operator: LiftedSinkLike<ConsumerLike, any>,
       ): ConsumerLike<T> {
-        init(LiftedOperatorToConsumerMixin(), this, operator, delegate);
+        init(LiftedSinkToConsumerMixin(), this, operator, delegate);
 
         return this;
       },
@@ -81,7 +81,7 @@ const createLiftedProducer: <TIn, TOut>(
   type TProperties = {
     [ComputationLike_isPure]: boolean;
     [LiftedSourceLike_source]: ProducerLike<TIn>;
-    [LiftedSourceLike_operators]: ReadonlyArray<
+    [LiftedSourceLike_sink]: ReadonlyArray<
       Function1<
         LiftedSinkLike<any, ConsumerLike>,
         LiftedSinkLike<any, ConsumerLike>
@@ -93,7 +93,7 @@ const createLiftedProducer: <TIn, TOut>(
     LiftedProducerLike<TIn, TOut>,
     | keyof DisposableContainerLike
     | typeof LiftedSourceLike_source
-    | typeof LiftedSourceLike_operators
+    | typeof LiftedSourceLike_sink
   >;
 
   return mixInstanceFactory(
@@ -110,10 +110,10 @@ const createLiftedProducer: <TIn, TOut>(
     ): ProducerLike<TOut> {
       const liftedSource: ProducerLike<TIn> =
         (source as any)[LiftedSourceLike_source] ?? source;
-      const ops = [op, ...((source as any)[LiftedSourceLike_operators] ?? [])];
+      const ops = [op, ...((source as any)[LiftedSourceLike_sink] ?? [])];
 
       this[LiftedSourceLike_source] = liftedSource;
-      this[LiftedSourceLike_operators] = ops;
+      this[LiftedSourceLike_sink] = ops;
 
       this[ComputationLike_isPure] =
         Computation.isPure(source) && Computation.isPure(config ?? {});
@@ -123,7 +123,7 @@ const createLiftedProducer: <TIn, TOut>(
     props<TProperties>({
       [ComputationLike_isPure]: true,
       [LiftedSourceLike_source]: none,
-      [LiftedSourceLike_operators]: none,
+      [LiftedSourceLike_sink]: none,
     }),
     proto<TPrototype>({
       [ComputationLike_isDeferred]: true as const,
@@ -134,7 +134,7 @@ const createLiftedProducer: <TIn, TOut>(
         const destinationOp: ConsumerLike<TIn> = pipeUnsafe(
           consumer,
           Sink.toOperator(),
-          ...this[LiftedSourceLike_operators],
+          ...this[LiftedSourceLike_sink],
           operatorToConsumer(consumer),
         );
         source[SourceLike_subscribe](destinationOp);

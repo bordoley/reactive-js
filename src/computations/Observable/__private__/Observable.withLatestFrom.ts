@@ -14,7 +14,7 @@ import {
 import { ObserverLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
-import * as WithLatestFrom from "../../__internal__/operators/WithLatestFromOperator.js";
+import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -33,7 +33,7 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   selector: Function2<TA, TB, T> = tuple as unknown as Function2<TA, TB, T>,
 ) =>
   pipe(
-    WithLatestFrom.create<ObserverLike, ObservableLike<TB>, TA, TB, T>,
+    WithLatestFromSink.create<ObserverLike, ObservableLike<TB>, TA, TB, T>,
     partial(other, selector, addEventListener),
     Observable_lift<TA, T>({
       [ComputationLike_isPure]: Computation.isPure(other),

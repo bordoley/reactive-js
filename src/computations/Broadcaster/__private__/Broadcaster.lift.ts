@@ -19,10 +19,10 @@ import { DisposableContainerLike, EventListenerLike } from "../../../utils.js";
 import {
   LiftedSinkLike,
   LiftedSourceLike,
-  LiftedSourceLike_operators,
+  LiftedSourceLike_sink,
   LiftedSourceLike_source,
 } from "../../__internal__/LiftedSource.js";
-import LiftedOperatorToEventListenerMixin from "../../__mixins__/LiftedOperatorToEventListenerMixin.js";
+import LiftedSinkToEventListenerMixin from "../../__mixins__/LiftedSinkToEventListenerMixin.js";
 
 interface LiftedBroadcasterLike<TIn, TOut>
   extends LiftedSourceLike<
@@ -38,7 +38,7 @@ interface LiftedBroadcasterLike<TIn, TOut>
   readonly [ComputationLike_isSynchronous]: false;
 
   readonly [LiftedSourceLike_source]: BroadcasterLike<TIn>;
-  readonly [LiftedSourceLike_operators]: ReadonlyArray<
+  readonly [LiftedSourceLike_sink]: ReadonlyArray<
     Function1<
       LiftedSinkLike<EventListenerLike, any>,
       LiftedSinkLike<EventListenerLike, any>
@@ -53,13 +53,13 @@ const operatorToEventListener: <T>(
 ) => Function1<LiftedSinkLike<any, EventListenerLike>, EventListenerLike<T>> =
   /*@__PURE__*/ (<T>() => {
     const createOperatorToEventListener = mixInstanceFactory(
-      include(LiftedOperatorToEventListenerMixin()),
+      include(LiftedSinkToEventListenerMixin()),
       function OperatorToEventListener(
         this: unknown,
         delegate: EventListenerLike,
         operator: LiftedSinkLike<any, EventListenerLike>,
       ): EventListenerLike<T> {
-        init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
+        init(LiftedSinkToEventListenerMixin(), this, operator, delegate);
 
         return this;
       },
@@ -78,7 +78,7 @@ const createLiftedBroadcaster: <TIn, TOut>(
 ) => BroadcasterLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
     [LiftedSourceLike_source]: BroadcasterLike<TIn>;
-    [LiftedSourceLike_operators]: ReadonlyArray<
+    [LiftedSourceLike_sink]: ReadonlyArray<
       Function1<
         LiftedSinkLike<EventListenerLike, any>,
         LiftedSinkLike<EventListenerLike, any>
@@ -90,7 +90,7 @@ const createLiftedBroadcaster: <TIn, TOut>(
     LiftedBroadcasterLike<TIn, TOut>,
     | keyof DisposableContainerLike
     | typeof LiftedSourceLike_source
-    | typeof LiftedSourceLike_operators
+    | typeof LiftedSourceLike_sink
   >;
 
   return mixInstanceFactory(
@@ -106,16 +106,16 @@ const createLiftedBroadcaster: <TIn, TOut>(
       init(DelegatingDisposableContainerMixin(), this, source);
       const liftedSource: BroadcasterLike<TIn> =
         (source as any)[LiftedSourceLike_source] ?? source;
-      const ops = [op, ...((source as any)[LiftedSourceLike_operators] ?? [])];
+      const ops = [op, ...((source as any)[LiftedSourceLike_sink] ?? [])];
 
       this[LiftedSourceLike_source] = liftedSource;
-      this[LiftedSourceLike_operators] = ops;
+      this[LiftedSourceLike_sink] = ops;
 
       return this;
     },
     props<TProperties>({
       [LiftedSourceLike_source]: none,
-      [LiftedSourceLike_operators]: none,
+      [LiftedSourceLike_sink]: none,
     }),
     proto<TPrototype>({
       [ComputationLike_isPure]: true as const,
@@ -130,7 +130,7 @@ const createLiftedBroadcaster: <TIn, TOut>(
         const destinationOp: EventListenerLike<TIn> = pipeUnsafe(
           listener,
           EventListener.toOperator(),
-          ...this[LiftedSourceLike_operators],
+          ...this[LiftedSourceLike_sink],
           operatorToEventListener(listener),
         );
         source[SourceLike_subscribe](destinationOp);

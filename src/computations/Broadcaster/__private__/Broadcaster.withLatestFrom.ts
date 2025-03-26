@@ -8,7 +8,7 @@ import {
 } from "../../../functions.js";
 import { EventListenerLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
-import * as WithLatestFrom from "../../__internal__/operators/WithLatestFromOperator.js";
+import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Broadcaster_addEventHandler from "./Broadcaster.addEventHandler.js";
 import Broadcaster_lift from "./Broadcaster.lift.js";
 
@@ -24,7 +24,13 @@ const Broadcaster_withLatestFrom: Broadcaster.Signature["withLatestFrom"] = (<
   selector: Function2<TA, TB, T> = tuple as unknown as Function2<TA, TB, T>,
 ) =>
   pipe(
-    WithLatestFrom.create<EventListenerLike, BroadcasterLike<TB>, TA, TB, T>,
+    WithLatestFromSink.create<
+      EventListenerLike,
+      BroadcasterLike<TB>,
+      TA,
+      TB,
+      T
+    >,
     partial(other, selector, addEventListener),
     Broadcaster_lift<TA, T>,
   )) as Broadcaster.Signature["withLatestFrom"];

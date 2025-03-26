@@ -20,7 +20,7 @@ export type LiftOperator<
   LiftedSinkLike<TSubscription, TA>
 >;
 
-export const LiftedSourceLike_operators = Symbol("LiftedSourceLike_operators");
+export const LiftedSourceLike_sink = Symbol("LiftedSourceLike_sink");
 export const LiftedSourceLike_source = Symbol("LiftedSourceLike_source");
 
 export interface LiftedSourceLike<
@@ -31,7 +31,7 @@ export interface LiftedSourceLike<
   TSource extends SourceLike<TIn, TEventListenerIn>,
 > extends SourceLike<TOut, TEventListenerOut> {
   readonly [LiftedSourceLike_source]: TSource;
-  readonly [LiftedSourceLike_operators]: ReadonlyArray<
+  readonly [LiftedSourceLike_sink]: ReadonlyArray<
     LiftOperator<any, any, TEventListenerOut>
   >;
 
