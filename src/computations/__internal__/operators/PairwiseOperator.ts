@@ -6,19 +6,16 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Tuple2, none, tuple } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
-  delegate: LiftedOperatorLike<TSubscription, Tuple2<T, T>>,
-) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  delegate: LiftedSinkLike<TSubscription, Tuple2<T, T>>,
+) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
 >() => {
@@ -34,12 +31,12 @@ export const create: <TSubscription extends DisposableLike, T>(
     include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function BufferOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, T>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, T>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, Tuple2<T, T>>,
-    ): LiftedOperatorLike<TSubscription, T> {
+      delegate: LiftedSinkLike<TSubscription, Tuple2<T, T>>,
+    ): LiftedSinkLike<TSubscription, T> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, Tuple2<T, T>>(),
         this,
@@ -53,9 +50,9 @@ export const create: <TSubscription extends DisposableLike, T>(
       [PairwiseOperator_hasPrev]: false,
     }),
     proto({
-      [LiftedOperatorLike_notify](
+      [EventListenerLike_notify](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, T, Tuple2<T, T>>,
+          DelegatingLiftedSinkLike<TSubscription, T, Tuple2<T, T>>,
         next: T,
       ) {
         const prev = this[PairwiseOperator_prev];
@@ -66,9 +63,9 @@ export const create: <TSubscription extends DisposableLike, T>(
 
         if (hasPrev) {
           const pair = tuple(prev, next);
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](pair);
+          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+            pair,
+          );
         }
       },
     }),

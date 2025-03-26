@@ -7,11 +7,8 @@ import {
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_isCompleted,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../../computations/__internal__/LiftedSource.js";
 import { Function1, SideEffect1, none, returns } from "../../functions.js";
 import {
@@ -20,7 +17,10 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
+  SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../utils.js";
+import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 
 export const create: <T>(
@@ -50,37 +50,43 @@ export const create: <T>(
 
 export const toOperator: <T>() => Function1<
   EventListenerLike<T>,
-  LiftedOperatorLike<EventListenerLike<T>, T>
+  LiftedSinkLike<EventListenerLike<T>, T>
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [LiftedOperatorLike_subscription]: EventListenerLike<T>;
+    [LiftedSinkLike_subscription]: EventListenerLike<T>;
   };
   return returns(
     mixInstanceFactory(
+      include(DelegatingDisposableMixin),
       function EventListenerToOperator(
-        this: LiftedOperatorLike<EventListenerLike<T>, T> & TProperties,
+        this: Pick<
+          LiftedSinkLike<EventListenerLike<T>, T>,
+          | typeof SinkLike_isCompleted
+          | typeof EventListenerLike_notify
+          | typeof SinkLike_complete
+        > &
+          TProperties,
         listener: EventListenerLike<T>,
-      ): LiftedOperatorLike<EventListenerLike<T>, T> {
-        this[LiftedOperatorLike_subscription] = listener;
+      ): LiftedSinkLike<EventListenerLike<T>, T> {
+        init(DelegatingDisposableMixin, this, listener);
+        this[LiftedSinkLike_subscription] = listener;
         return this;
       },
       props<TProperties>({
-        [LiftedOperatorLike_subscription]: none,
+        [LiftedSinkLike_subscription]: none,
       }),
       proto({
-        get [LiftedOperatorLike_isCompleted](): boolean {
+        get [SinkLike_isCompleted](): boolean {
           unsafeCast<TProperties>(this);
-          return this[LiftedOperatorLike_subscription][
-            DisposableLike_isDisposed
-          ];
+          return this[LiftedSinkLike_subscription][DisposableLike_isDisposed];
         },
 
-        [LiftedOperatorLike_notify](this: TProperties, next: T) {
-          this[LiftedOperatorLike_subscription][EventListenerLike_notify](next);
+        [EventListenerLike_notify](this: TProperties, next: T) {
+          this[LiftedSinkLike_subscription][EventListenerLike_notify](next);
         },
 
-        [LiftedOperatorLike_complete](this: TProperties) {
-          this[LiftedOperatorLike_subscription][DisposableLike_dispose]();
+        [SinkLike_complete](this: TProperties) {
+          this[LiftedSinkLike_subscription][DisposableLike_dispose]();
         },
       }),
     ),

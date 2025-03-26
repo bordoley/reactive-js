@@ -7,7 +7,8 @@ import * as EventListener from "../../../utils/__internal__/EventListener.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { LiftedSourceLike_operators, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedOperatorToEventListenerMixin from "../../__mixins__/LiftedOperatorToEventListenerMixin.js";
-const operatorToEventListener = /*@__PURE__*/ (() => {
+const operatorToEventListener = 
+/*@__PURE__*/ (() => {
     const createOperatorToEventListener = mixInstanceFactory(include(LiftedOperatorToEventListenerMixin()), function OperatorToEventListener(delegate, operator) {
         init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
         return this;

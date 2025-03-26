@@ -6,19 +6,16 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike>(
-  delegate: LiftedOperatorLike<TSubscription, ArrayBuffer>,
-) => LiftedOperatorLike<TSubscription, string> = /*@__PURE__*/ (<
+  delegate: LiftedSinkLike<TSubscription, ArrayBuffer>,
+) => LiftedSinkLike<TSubscription, string> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
 >() => {
   const EncodeUtf8Operator_textEncoder = Symbol(
@@ -33,12 +30,12 @@ export const create: <TSubscription extends DisposableLike>(
     include(DelegatingLiftedOperatorMixin()),
     function EncodeUtf8Operator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, string, ArrayBuffer>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, string, ArrayBuffer>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, ArrayBuffer>,
-    ): LiftedOperatorLike<TSubscription, string> {
+      delegate: LiftedSinkLike<TSubscription, ArrayBuffer>,
+    ): LiftedSinkLike<TSubscription, string> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, string, ArrayBuffer>(),
         this,
@@ -53,13 +50,13 @@ export const create: <TSubscription extends DisposableLike>(
       [EncodeUtf8Operator_textEncoder]: none,
     }),
     proto({
-      [LiftedOperatorLike_notify](
+      [EventListenerLike_notify](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, string, ArrayBuffer>,
+          DelegatingLiftedSinkLike<TSubscription, string, ArrayBuffer>,
         next: string,
       ) {
         const mapped = this[EncodeUtf8Operator_textEncoder].encode(next);
-        this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](
+        this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
           mapped,
         );
       },

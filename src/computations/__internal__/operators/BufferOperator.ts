@@ -12,22 +12,22 @@ import {
 } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import { DisposableLike } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
-  DelegatingLiftedOperatorLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+  DisposableLike,
+  EventListenerLike_notify,
+  SinkLike_complete,
+} from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, {
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
+  DelegatingLiftedSinkLike_onCompleted,
+} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
-  delegate: LiftedOperatorLike<TSubscription, ReadonlyArray<T>>,
+  delegate: LiftedSinkLike<TSubscription, ReadonlyArray<T>>,
   count?: number,
-) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
 >() => {
@@ -43,13 +43,13 @@ export const create: <TSubscription extends DisposableLike, T>(
     include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function BufferOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, T>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, T>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, ReadonlyArray<T>>,
+      delegate: LiftedSinkLike<TSubscription, ReadonlyArray<T>>,
       count?: number,
-    ): LiftedOperatorLike<TSubscription, T> {
+    ): LiftedSinkLike<TSubscription, T> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, ReadonlyArray<T>>(),
         this,
@@ -68,9 +68,9 @@ export const create: <TSubscription extends DisposableLike, T>(
       [BufferOperator_count]: MAX_SAFE_INTEGER,
     }),
     proto({
-      [LiftedOperatorLike_notify](
+      [EventListenerLike_notify](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, T, ReadonlyArray<T>>,
+          DelegatingLiftedSinkLike<TSubscription, T, ReadonlyArray<T>>,
         next: T,
       ) {
         const buffer = this[BufferOperator_buffer];
@@ -82,23 +82,23 @@ export const create: <TSubscription extends DisposableLike, T>(
 
         if (shouldEmit) {
           this[BufferOperator_buffer] = [];
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](buffer);
+          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+            buffer,
+          );
         }
       },
-      [DelegatingLiftedOperatorLike_onCompleted](
+      [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, T, ReadonlyArray<T>>,
+          DelegatingLiftedSinkLike<TSubscription, T, ReadonlyArray<T>>,
       ) {
-        const delegate = this[DelegatingLiftedOperatorLike_delegate];
+        const delegate = this[DelegatingLiftedSinkLike_delegate];
         const buffer = this[BufferOperator_buffer];
         this[BufferOperator_buffer] = [];
 
         if (buffer[Array_length] > 0) {
-          delegate[LiftedOperatorLike_notify](buffer);
+          delegate[EventListenerLike_notify](buffer);
         }
-        delegate[LiftedOperatorLike_complete]();
+        delegate[SinkLike_complete]();
       },
     }),
   );

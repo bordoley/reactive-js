@@ -16,21 +16,24 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  EventListenerLike_notify,
+  SinkLike_complete,
+} from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
-  DelegatingLiftedOperatorLike_onCompleted,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
+  DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
-  delegate: LiftedOperatorLike<TSubscription, T>,
+  delegate: LiftedSinkLike<TSubscription, T>,
   other: TOther,
   selector: Function2<TA, TB, T>,
   addEventListener: Function2<
@@ -38,7 +41,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
     SideEffect1<TB>,
     Function1<TOther, DisposableLike>
   >,
-) => LiftedOperatorLike<TSubscription, TA> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, TA> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   TOther,
   TA,
@@ -66,10 +69,10 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
   }
 
   function onWithLatestFromOperatorOtherSubscriptionComplete(
-    this: TProperties & LiftedOperatorLike<TSubscription, TA>,
+    this: TProperties & LiftedSinkLike<TSubscription, TA>,
   ) {
     if (!this[WithLatestFromOperator_hasLatest]) {
-      this[LiftedOperatorLike_complete]();
+      this[SinkLike_complete]();
     }
   }
 
@@ -82,11 +85,11 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
     include(DelegatingLiftedOperatorMixin<TSubscription, TA, TB>()),
     function WithLatestFromOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, TA, T>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, TA, T>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, T>,
+      delegate: LiftedSinkLike<TSubscription, T>,
       other: TOther,
       selector: Function2<TA, TB, T>,
       addEventListener: Function2<
@@ -94,7 +97,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
         SideEffect1<TB>,
         Function1<TOther, DisposableLike>
       >,
-    ): LiftedOperatorLike<TSubscription, TA> {
+    ): LiftedSinkLike<TSubscription, TA> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, TA, T>(),
         this,
@@ -102,7 +105,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
       );
       this[WithLatestFromOperator_selector] = selector;
 
-      const subscription = this[LiftedOperatorLike_subscription];
+      const subscription = this[LiftedSinkLike_subscription];
       this[WithLatestFromOperator_otherSubscription] = pipe(
         other,
         addEventListener(subscription, bind(onOtherNotify, this)),
@@ -121,19 +124,17 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
       [WithLatestFromOperator_otherSubscription]: none,
     }),
     proto({
-      [DelegatingLiftedOperatorLike_onCompleted](
-        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
+      [DelegatingLiftedSinkLike_onCompleted](
+        this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
       ) {
         this[WithLatestFromOperator_otherSubscription][
           DisposableLike_dispose
         ]();
-        this[DelegatingLiftedOperatorLike_delegate][
-          LiftedOperatorLike_complete
-        ]();
+        this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
       },
 
-      [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, TA, T>,
+      [EventListenerLike_notify](
+        this: TProperties & DelegatingLiftedSinkLike<TSubscription, TA, T>,
         next: TA,
       ) {
         const shouldEmit = this[WithLatestFromOperator_hasLatest];
@@ -143,9 +144,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
             next,
             this[WithLatestFromOperator_otherLatest] as TB,
           );
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](v);
+          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](v);
         }
       },
     }),

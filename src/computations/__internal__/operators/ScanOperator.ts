@@ -6,21 +6,18 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Factory, Reducer, none } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T, TAcc>(
-  delegate: LiftedOperatorLike<TSubscription, TAcc>,
+  delegate: LiftedSinkLike<TSubscription, TAcc>,
   selector: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
   TAcc,
@@ -37,14 +34,14 @@ export const create: <TSubscription extends DisposableLike, T, TAcc>(
     include(DelegatingLiftedOperatorMixin<TSubscription, T, TAcc>()),
     function ScanOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, T, TAcc>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, T, TAcc>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, TAcc>,
+      delegate: LiftedSinkLike<TSubscription, TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
-    ): LiftedOperatorLike<TSubscription, T> {
+    ): LiftedSinkLike<TSubscription, T> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, T, TAcc>(),
         this,
@@ -61,16 +58,15 @@ export const create: <TSubscription extends DisposableLike, T, TAcc>(
       [ScanOperator_reducer]: none,
     }),
     proto({
-      [LiftedOperatorLike_notify](
-        this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, T, TAcc>,
+      [EventListenerLike_notify](
+        this: TProperties & DelegatingLiftedSinkLike<TSubscription, T, TAcc>,
         next: T,
       ) {
         const oldAcc = this[ScanOperator_acc];
         const nextAcc = this[ScanOperator_reducer](oldAcc, next);
         this[ScanOperator_acc] = nextAcc;
 
-        this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](
+        this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
           nextAcc,
         );
       },

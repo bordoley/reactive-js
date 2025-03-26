@@ -7,20 +7,17 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
-  delegate: LiftedOperatorLike<TSubscription, T>,
+  delegate: LiftedSinkLike<TSubscription, T>,
   skipCount: Optional<number>,
-) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
 >() => {
@@ -34,13 +31,13 @@ export const create: <TSubscription extends DisposableLike, T>(
     include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function SkipFirstOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, T>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, T>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, T>,
+      delegate: LiftedSinkLike<TSubscription, T>,
       skipCount: Optional<number>,
-    ): LiftedOperatorLike<TSubscription, T> {
+    ): LiftedSinkLike<TSubscription, T> {
       init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
       this[SkipFirstOperator_count] = clampPositiveInteger(skipCount ?? 1);
 
@@ -50,8 +47,8 @@ export const create: <TSubscription extends DisposableLike, T>(
       [SkipFirstOperator_count]: none,
     }),
     proto({
-      [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
+      [EventListenerLike_notify](
+        this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
         next: T,
       ) {
         this[SkipFirstOperator_count] = max(
@@ -62,9 +59,9 @@ export const create: <TSubscription extends DisposableLike, T>(
         const shouldEmit = this[SkipFirstOperator_count] < 0;
 
         if (shouldEmit) {
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](next);
+          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+            next,
+          );
         }
       },
     }),

@@ -11,20 +11,17 @@ import {
   none,
   strictEquality,
 } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
-  delegate: LiftedOperatorLike<TSubscription, T>,
+  delegate: LiftedSinkLike<TSubscription, T>,
   options?: { readonly equality?: Equality<T> },
-) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
 >() => {
@@ -48,13 +45,13 @@ export const create: <TSubscription extends DisposableLike, T>(
     include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function DistinctUntilChangedMixin(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, T>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, T>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, T>,
+      delegate: LiftedSinkLike<TSubscription, T>,
       options: Optional<{ readonly equality?: Equality<T> }>,
-    ): LiftedOperatorLike<TSubscription, T> {
+    ): LiftedSinkLike<TSubscription, T> {
       init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
       this[DistinctUntilChangedMixin_equality] =
         options?.equality ?? strictEquality;
@@ -67,8 +64,8 @@ export const create: <TSubscription extends DisposableLike, T>(
       [DistinctUntilChangedMixin_hasValue]: false,
     }),
     proto({
-      [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
+      [EventListenerLike_notify](
+        this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
         next: T,
       ) {
         const shouldEmit =
@@ -81,9 +78,9 @@ export const create: <TSubscription extends DisposableLike, T>(
         if (shouldEmit) {
           this[DistinctUntilChangedMixin_prev] = next;
           this[DistinctUntilChangedMixin_hasValue] = true;
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](next);
+          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+            next,
+          );
         }
       },
     }),

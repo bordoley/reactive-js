@@ -1,31 +1,34 @@
 /// <reference types="./DelegatingLiftedOperatorMixin.d.ts" />
 
-import { mix, props, proto } from "../../__internal__/mixins.js";
+import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
-import { LiftedOperatorLike_complete, LiftedOperatorLike_isCompleted, LiftedOperatorLike_notify, LiftedOperatorLike_subscription, } from "../__internal__/LiftedSource.js";
-export const DelegatingLiftedOperatorLike_delegate = Symbol("DelegatingLiftedOperatorLike_delegate");
-export const DelegatingLiftedOperatorLike_onCompleted = Symbol("DelegatingLiftedOperatorLike_onCompleted");
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
+export const DelegatingLiftedSinkLike_delegate = Symbol("DelegatingLiftedSinkLike_delegate");
+export const DelegatingLiftedSinkLike_onCompleted = Symbol("DelegatingLiftedSinkLike_onCompleted");
 const DelegatingLiftedOperatorMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(function DelegatingLiftedOperatorMixin(delegate) {
-        this[DelegatingLiftedOperatorLike_delegate] = delegate;
-        this[LiftedOperatorLike_subscription] =
-            delegate[LiftedOperatorLike_subscription];
+    return returns(mix(include(DelegatingDisposableMixin), function DelegatingLiftedOperatorMixin(delegate) {
+        this[DelegatingLiftedSinkLike_delegate] = delegate;
+        this[LiftedSinkLike_subscription] =
+            delegate[LiftedSinkLike_subscription];
+        init(DelegatingDisposableMixin, this, delegate[LiftedSinkLike_subscription]);
         return this;
     }, props({
-        [DelegatingLiftedOperatorLike_delegate]: none,
-        [LiftedOperatorLike_isCompleted]: false,
-        [LiftedOperatorLike_subscription]: none,
+        [DelegatingLiftedSinkLike_delegate]: none,
+        [SinkLike_isCompleted]: false,
+        [LiftedSinkLike_subscription]: none,
     }), proto({
-        [DelegatingLiftedOperatorLike_onCompleted]() {
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_complete]();
+        [DelegatingLiftedSinkLike_onCompleted]() {
+            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         },
-        [LiftedOperatorLike_notify](next) {
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](next);
+        [EventListenerLike_notify](next) {
+            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
         },
-        [LiftedOperatorLike_complete]() {
-            this[LiftedOperatorLike_isCompleted] = true;
-            this[DelegatingLiftedOperatorLike_onCompleted]();
+        [SinkLike_complete]() {
+            this[SinkLike_isCompleted] = true;
+            this[DelegatingLiftedSinkLike_onCompleted]();
         },
     })));
 })();

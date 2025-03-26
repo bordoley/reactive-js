@@ -17,7 +17,7 @@ import * as Sink from "../../../utils/__internal__/Sink.js";
 import { ConsumerLike, DisposableContainerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import {
-  LiftedOperatorLike,
+  LiftedSinkLike,
   LiftedSourceLike,
   LiftedSourceLike_operators,
   LiftedSourceLike_source,
@@ -40,8 +40,8 @@ interface LiftedProducerLike<TIn, TOut>
   readonly [LiftedSourceLike_source]: ProducerLike<TIn>;
   readonly [LiftedSourceLike_operators]: ReadonlyArray<
     Function1<
-      LiftedOperatorLike<any, ConsumerLike>,
-      LiftedOperatorLike<any, ConsumerLike>
+      LiftedSinkLike<any, ConsumerLike>,
+      LiftedSinkLike<any, ConsumerLike>
     >
   >;
 
@@ -50,14 +50,14 @@ interface LiftedProducerLike<TIn, TOut>
 
 const operatorToConsumer: <T>(
   delegate: ConsumerLike,
-) => Function1<LiftedOperatorLike<any, ConsumerLike>, ConsumerLike<T>> =
+) => Function1<LiftedSinkLike<any, ConsumerLike>, ConsumerLike<T>> =
   /*@__PURE__*/ (<T>() => {
     const createOperatorToConsumer = mixInstanceFactory(
       include(LiftedOperatorToConsumerMixin()),
       function OperatorToConsumer(
         this: unknown,
         delegate: ConsumerLike,
-        operator: LiftedOperatorLike<ConsumerLike, any>,
+        operator: LiftedSinkLike<ConsumerLike, any>,
       ): ConsumerLike<T> {
         init(LiftedOperatorToConsumerMixin(), this, operator, delegate);
 
@@ -71,8 +71,8 @@ const operatorToConsumer: <T>(
 const createLiftedProducer: <TIn, TOut>(
   src: ProducerLike<TIn>,
   op: Function1<
-    LiftedOperatorLike<ConsumerLike, TOut>,
-    LiftedOperatorLike<ConsumerLike, TIn>
+    LiftedSinkLike<ConsumerLike, TOut>,
+    LiftedSinkLike<ConsumerLike, TIn>
   >,
   config?: {
     [ComputationLike_isPure]?: boolean;
@@ -83,8 +83,8 @@ const createLiftedProducer: <TIn, TOut>(
     [LiftedSourceLike_source]: ProducerLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
       Function1<
-        LiftedOperatorLike<any, ConsumerLike>,
-        LiftedOperatorLike<any, ConsumerLike>
+        LiftedSinkLike<any, ConsumerLike>,
+        LiftedSinkLike<any, ConsumerLike>
       >
     >;
   };
@@ -101,8 +101,8 @@ const createLiftedProducer: <TIn, TOut>(
       this: TProperties & TPrototype,
       source: ProducerLike<TIn>,
       op: Function1<
-        LiftedOperatorLike<ConsumerLike, TOut>,
-        LiftedOperatorLike<ConsumerLike, TIn>
+        LiftedSinkLike<ConsumerLike, TOut>,
+        LiftedSinkLike<ConsumerLike, TIn>
       >,
       config?: {
         [ComputationLike_isPure]?: boolean;
@@ -147,8 +147,8 @@ const Producer_lift =
   <TIn, TOut>(config?: { [ComputationLike_isPure]?: boolean }) =>
   (
     operator: Function1<
-      LiftedOperatorLike<ConsumerLike, TOut>,
-      LiftedOperatorLike<ConsumerLike, TIn>
+      LiftedSinkLike<ConsumerLike, TOut>,
+      LiftedSinkLike<ConsumerLike, TIn>
     >,
   ) =>
   (source: ProducerLike<TIn>): ProducerLike<TOut> => {

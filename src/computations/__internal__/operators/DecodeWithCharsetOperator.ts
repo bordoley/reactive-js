@@ -7,26 +7,26 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Optional, newInstance, none } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
-  DelegatingLiftedOperatorLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+  DisposableLike,
+  EventListenerLike_notify,
+  SinkLike_complete,
+} from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, {
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
+  DelegatingLiftedSinkLike_onCompleted,
+} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike>(
-  delegate: LiftedOperatorLike<TSubscription, string>,
+  delegate: LiftedSinkLike<TSubscription, string>,
   options: Optional<{
     charset?: string;
     fatal?: boolean;
     ignoreBOM?: boolean;
   }>,
-) => LiftedOperatorLike<TSubscription, ArrayBuffer> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, ArrayBuffer> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
 >() => {
   const DecodeWithCharsetOperator_textDecoder = Symbol(
@@ -41,18 +41,18 @@ export const create: <TSubscription extends DisposableLike>(
     include(DelegatingLiftedOperatorMixin()),
     function DecodeWithCharsetOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer>,
-        | typeof LiftedOperatorLike_notify
-        | typeof DelegatingLiftedOperatorLike_onCompleted
+        DelegatingLiftedSinkLike<TSubscription, ArrayBuffer>,
+        | typeof EventListenerLike_notify
+        | typeof DelegatingLiftedSinkLike_onCompleted
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, string>,
+      delegate: LiftedSinkLike<TSubscription, string>,
       options: Optional<{
         charset?: string;
         fatal?: boolean;
         ignoreBOM?: boolean;
       }>,
-    ): LiftedOperatorLike<TSubscription, ArrayBuffer> {
+    ): LiftedSinkLike<TSubscription, ArrayBuffer> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, ArrayBuffer, string>(),
         this,
@@ -72,9 +72,9 @@ export const create: <TSubscription extends DisposableLike>(
       [DecodeWithCharsetOperator_textDecoder]: none,
     }),
     proto({
-      [LiftedOperatorLike_notify](
+      [EventListenerLike_notify](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer, string>,
+          DelegatingLiftedSinkLike<TSubscription, ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
         const data = this[DecodeWithCharsetOperator_textDecoder].decode(next, {
@@ -84,15 +84,15 @@ export const create: <TSubscription extends DisposableLike>(
         const shouldEmit = data[Array_length] > 0;
 
         if (shouldEmit) {
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_notify
-          ](data);
+          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+            data,
+          );
         }
       },
 
-      [DelegatingLiftedOperatorLike_onCompleted](
+      [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer, string>,
+          DelegatingLiftedSinkLike<TSubscription, ArrayBuffer, string>,
       ) {
         const data = this[DecodeWithCharsetOperator_textDecoder].decode(
           newInstance(Uint8Array, []),
@@ -101,13 +101,13 @@ export const create: <TSubscription extends DisposableLike>(
           },
         );
 
-        const delegate = this[DelegatingLiftedOperatorLike_delegate];
+        const delegate = this[DelegatingLiftedSinkLike_delegate];
 
         if (data[Array_length] > 0) {
-          delegate[LiftedOperatorLike_notify](data);
+          delegate[EventListenerLike_notify](data);
         }
 
-        delegate[LiftedOperatorLike_complete]();
+        delegate[SinkLike_complete]();
       },
     }),
   );

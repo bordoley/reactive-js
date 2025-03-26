@@ -2,9 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { SchedulerLike_now } from "../../../utils.js";
-import { LiftedOperatorLike_notify, LiftedOperatorLike_subscription, } from "../../__internal__/LiftedSource.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import { EventListenerLike_notify, SchedulerLike_now, } from "../../../utils.js";
+import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import Observable_lift from "./Observable.lift.js";
 const createWithCurrentTimeOperator = /*@__PURE__*/ (() => {
     const WithCurrentTimeOperator_selector = Symbol("WithCurrentTimeOperator_selector");
@@ -15,10 +15,10 @@ const createWithCurrentTimeOperator = /*@__PURE__*/ (() => {
     }, props({
         [WithCurrentTimeOperator_selector]: none,
     }), proto({
-        [LiftedOperatorLike_notify](next) {
-            const currentTime = this[LiftedOperatorLike_subscription][SchedulerLike_now];
+        [EventListenerLike_notify](next) {
+            const currentTime = this[LiftedSinkLike_subscription][SchedulerLike_now];
             const mapped = this[WithCurrentTimeOperator_selector](currentTime, next);
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](mapped);
+            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](mapped);
         },
     }));
 })();

@@ -17,8 +17,8 @@ import {
   QueueableLike_isReady,
 } from "../../utils.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_subscription,
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../__internal__/LiftedSource.js";
 import { LiftedOperatorToEventListenerLike_operator } from "./LiftedOperatorToEventListenerMixin.js";
 import LiftedOperatorToSinkMixin, {
@@ -49,7 +49,7 @@ const LiftedOperatorToConsumerMixin: <
   T,
 >() => Mixin1<
   TReturn<TSubscription, T>,
-  LiftedOperatorLike<TSubscription, T>,
+  LiftedSinkLike<TSubscription, T>,
   TPrototype<TSubscription, T>
 > = /*@__PURE__*/ (<TSubscription extends ConsumerLike, T>() => {
   return returns(
@@ -57,7 +57,7 @@ const LiftedOperatorToConsumerMixin: <
       include(LiftedOperatorToSinkMixin()),
       function LiftedOperatorToConsumerMixin(
         this: TPrototype<TSubscription, T>,
-        operator: LiftedOperatorLike<TSubscription, T>,
+        operator: LiftedSinkLike<TSubscription, T>,
       ): TReturn<TSubscription, T> {
         init(LiftedOperatorToSinkMixin<TSubscription, T>(), this, operator);
 
@@ -68,21 +68,21 @@ const LiftedOperatorToConsumerMixin: <
         get [QueueableLike_isReady](): boolean {
           unsafeCast<LiftedOperatorToConsumerLike<TSubscription, T>>(this);
           return this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_subscription
+            LiftedSinkLike_subscription
           ][QueueableLike_isReady];
         },
 
         get [QueueableLike_backpressureStrategy](): BackpressureStrategy {
           unsafeCast<LiftedOperatorToConsumerLike<TSubscription, T>>(this);
           return this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_subscription
+            LiftedSinkLike_subscription
           ][QueueableLike_backpressureStrategy];
         },
 
         get [QueueableLike_capacity](): number {
           unsafeCast<LiftedOperatorToConsumerLike<TSubscription, T>>(this);
           return this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_subscription
+            LiftedSinkLike_subscription
           ][QueueableLike_capacity];
         },
 
@@ -91,7 +91,7 @@ const LiftedOperatorToConsumerMixin: <
           callback: SideEffect1<void>,
         ) {
           return this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_subscription
+            LiftedSinkLike_subscription
           ][QueueableLike_addOnReadyListener](callback);
         },
       }),

@@ -6,23 +6,26 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
-import { ObserverLike, SchedulerLike_now } from "../../../utils.js";
+import {
+  EventListenerLike_notify,
+  ObserverLike,
+  SchedulerLike_now,
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../../__internal__/LiftedSource.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
 const createWithCurrentTimeOperator: <TA, TB>(
-  delegate: LiftedOperatorLike<ObserverLike, TB>,
+  delegate: LiftedSinkLike<ObserverLike, TB>,
   selector: Function2<number, TA, TB>,
-) => LiftedOperatorLike<ObserverLike, TA> = /*@__PURE__*/ (<TA, TB>() => {
+) => LiftedSinkLike<ObserverLike, TA> = /*@__PURE__*/ (<TA, TB>() => {
   const WithCurrentTimeOperator_selector = Symbol(
     "WithCurrentTimeOperator_selector",
   );
@@ -35,13 +38,13 @@ const createWithCurrentTimeOperator: <TA, TB>(
     include(DelegatingLiftedOperatorMixin<ObserverLike, TA, TB>()),
     function WithCurrentTimeOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<ObserverLike, TA, TB>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<ObserverLike, TA, TB>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<ObserverLike, TB>,
+      delegate: LiftedSinkLike<ObserverLike, TB>,
       selector: Function2<number, TA, TB>,
-    ): LiftedOperatorLike<ObserverLike, TA> {
+    ): LiftedSinkLike<ObserverLike, TA> {
       init(
         DelegatingLiftedOperatorMixin<ObserverLike, TA, TB>(),
         this,
@@ -55,17 +58,17 @@ const createWithCurrentTimeOperator: <TA, TB>(
       [WithCurrentTimeOperator_selector]: none,
     }),
     proto({
-      [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<ObserverLike, TA, TB>,
+      [EventListenerLike_notify](
+        this: TProperties & DelegatingLiftedSinkLike<ObserverLike, TA, TB>,
         next: TA,
       ) {
         const currentTime =
-          this[LiftedOperatorLike_subscription][SchedulerLike_now];
+          this[LiftedSinkLike_subscription][SchedulerLike_now];
         const mapped = this[WithCurrentTimeOperator_selector](
           currentTime,
           next,
         );
-        this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](
+        this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
           mapped,
         );
       },

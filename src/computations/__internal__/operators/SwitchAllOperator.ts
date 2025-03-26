@@ -6,38 +6,38 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { SourceLike } from "../../../computations.js";
-import { bind, Function1, none, pipe } from "../../../functions.js";
+import { Function1, bind, none, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
+  SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
-  DelegatingLiftedOperatorLike_onCompleted,
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
+  DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_isCompleted,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../LiftedSource.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 
 export const create: <
   TSubscription extends DisposableLike,
   TInnerSource extends SourceLike<T>,
   T,
 >(
-  delegate: LiftedOperatorLike<TSubscription, T>,
+  delegate: LiftedSinkLike<TSubscription, T>,
   subscribeToInner: Function1<
-    LiftedOperatorLike<TSubscription, T>,
+    LiftedSinkLike<TSubscription, T>,
     Function1<TInnerSource, DisposableLike>
   >,
-) => LiftedOperatorLike<TSubscription, TInnerSource> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, TInnerSource> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   TInnerSource extends SourceLike<T>,
   T,
@@ -51,7 +51,7 @@ export const create: <
 
   interface TProperties {
     [SwitchAllOperator_subscribeToInner]: Function1<
-      LiftedOperatorLike<TSubscription, T>,
+      LiftedSinkLike<TSubscription, T>,
       Function1<TInnerSource, DisposableLike>
     >;
     [SwitchAllOperator_innerSubscription]: DisposableLike;
@@ -59,12 +59,10 @@ export const create: <
 
   function onSwitchAllObserverInnerObservableComplete(
     this: TProperties &
-      DelegatingLiftedOperatorLike<TSubscription, TInnerSource, T>,
+      DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
   ) {
-    if (this[LiftedOperatorLike_isCompleted]) {
-      this[DelegatingLiftedOperatorLike_delegate][
-        LiftedOperatorLike_complete
-      ]();
+    if (this[SinkLike_isCompleted]) {
+      this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
     }
   }
 
@@ -72,17 +70,17 @@ export const create: <
     include(DelegatingLiftedOperatorMixin<TSubscription, TInnerSource, T>()),
     function SwitchAllOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, TInnerSource, T>,
-        | typeof LiftedOperatorLike_notify
-        | typeof DelegatingLiftedOperatorLike_onCompleted
+        DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
+        | typeof EventListenerLike_notify
+        | typeof DelegatingLiftedSinkLike_onCompleted
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, T>,
+      delegate: LiftedSinkLike<TSubscription, T>,
       subscribeToInner: Function1<
-        LiftedOperatorLike<TSubscription, T>,
+        LiftedSinkLike<TSubscription, T>,
         Function1<TInnerSource, DisposableLike>
       >,
-    ): LiftedOperatorLike<TSubscription, TInnerSource> {
+    ): LiftedSinkLike<TSubscription, TInnerSource> {
       init(
         DelegatingLiftedOperatorMixin<TSubscription, TInnerSource, T>(),
         this,
@@ -97,15 +95,15 @@ export const create: <
       [SwitchAllOperator_innerSubscription]: Disposable.disposed,
     }),
     proto({
-      [LiftedOperatorLike_notify](
+      [EventListenerLike_notify](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, TInnerSource, T>,
+          DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
         next: TInnerSource,
       ) {
         this[SwitchAllOperator_innerSubscription][DisposableLike_dispose]();
 
-        const subscription = this[LiftedOperatorLike_subscription];
-        const delegate = this[DelegatingLiftedOperatorLike_delegate];
+        const subscription = this[LiftedSinkLike_subscription];
+        const delegate = this[DelegatingLiftedSinkLike_delegate];
         this[SwitchAllOperator_innerSubscription] = pipe(
           next,
           this[SwitchAllOperator_subscribeToInner](delegate),
@@ -115,16 +113,14 @@ export const create: <
           Disposable.addTo(subscription),
         );
       },
-      [DelegatingLiftedOperatorLike_onCompleted](
+      [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, TInnerSource, T>,
+          DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
       ) {
         if (
           this[SwitchAllOperator_innerSubscription][DisposableLike_isDisposed]
         ) {
-          this[DelegatingLiftedOperatorLike_delegate][
-            LiftedOperatorLike_complete
-          ]();
+          this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         }
       },
     }),

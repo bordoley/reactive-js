@@ -3,8 +3,8 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, DelegatingLiftedOperatorLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, } from "../LiftedSource.js";
+import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const DecodeWithCharsetOperator_textDecoder = Symbol("DecodeWithCharsetOperator_textDecoder");
     return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function DecodeWithCharsetOperator(delegate, options) {
@@ -15,24 +15,24 @@ export const create = /*@__PURE__*/ (() => {
     }, props({
         [DecodeWithCharsetOperator_textDecoder]: none,
     }), proto({
-        [LiftedOperatorLike_notify](next) {
+        [EventListenerLike_notify](next) {
             const data = this[DecodeWithCharsetOperator_textDecoder].decode(next, {
                 stream: true,
             });
             const shouldEmit = data[Array_length] > 0;
             if (shouldEmit) {
-                this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](data);
+                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](data);
             }
         },
-        [DelegatingLiftedOperatorLike_onCompleted]() {
+        [DelegatingLiftedSinkLike_onCompleted]() {
             const data = this[DecodeWithCharsetOperator_textDecoder].decode(newInstance(Uint8Array, []), {
                 stream: false,
             });
-            const delegate = this[DelegatingLiftedOperatorLike_delegate];
+            const delegate = this[DelegatingLiftedSinkLike_delegate];
             if (data[Array_length] > 0) {
-                delegate[LiftedOperatorLike_notify](data);
+                delegate[EventListenerLike_notify](data);
             }
-            delegate[LiftedOperatorLike_complete]();
+            delegate[SinkLike_complete]();
         },
     }));
 })();

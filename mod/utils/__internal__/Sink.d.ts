@@ -1,4 +1,4 @@
-import { LiftedOperatorLike } from "../../computations/__internal__/LiftedSource.js";
+import { LiftedSinkLike } from "../../computations/__internal__/LiftedSource.js";
 import { Function1 } from "../../functions.js";
 import { SinkLike } from "../../utils.js";
-export declare const toOperator: <T>() => Function1<SinkLike<T>, LiftedOperatorLike<SinkLike<T>, T>>;
+export declare const toOperator: <T>() => Function1<SinkLike<T>, LiftedSinkLike<SinkLike<T>, T>>;

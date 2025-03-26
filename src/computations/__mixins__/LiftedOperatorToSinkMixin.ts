@@ -13,11 +13,7 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_isCompleted,
-} from "../__internal__/LiftedSource.js";
+import { LiftedSinkLike } from "../__internal__/LiftedSource.js";
 import LiftedOperatorToEventListenerMixin, {
   LiftedOperatorToEventListenerLike,
   LiftedOperatorToEventListenerLike_operator,
@@ -42,7 +38,7 @@ const LiftedOperatorToSinkMixin: <
   T,
 >() => Mixin1<
   TReturn<TSubscription, T>,
-  LiftedOperatorLike<TSubscription, T>,
+  LiftedSinkLike<TSubscription, T>,
   TPrototype<TSubscription, T>
 > = /*@__PURE__*/ (<TSubscription extends SinkLike, T>() => {
   return returns(
@@ -50,7 +46,7 @@ const LiftedOperatorToSinkMixin: <
       include(LiftedOperatorToEventListenerMixin()),
       function LiftedOperatorToSinkMixin(
         this: TPrototype<TSubscription, T>,
-        operator: LiftedOperatorLike<TSubscription, T>,
+        operator: LiftedSinkLike<TSubscription, T>,
       ): TReturn<TSubscription, T> {
         init(
           LiftedOperatorToEventListenerMixin<TSubscription, T>(),
@@ -65,13 +61,11 @@ const LiftedOperatorToSinkMixin: <
         get [SinkLike_isCompleted]() {
           unsafeCast<LiftedOperatorToSinkLike<TSubscription, T>>(this);
           return this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_isCompleted
+            SinkLike_isCompleted
           ];
         },
         [SinkLike_complete](this: LiftedOperatorToSinkLike<TSubscription, T>) {
-          this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_complete
-          ]();
+          this[LiftedOperatorToEventListenerLike_operator][SinkLike_complete]();
         },
       }),
     ),

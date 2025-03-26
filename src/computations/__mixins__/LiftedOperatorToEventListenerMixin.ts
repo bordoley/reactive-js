@@ -10,9 +10,8 @@ import { none, returns } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { EventListenerLike, EventListenerLike_notify } from "../../utils.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../__internal__/LiftedSource.js";
 
 export const LiftedOperatorToEventListenerLike_operator = Symbol(
@@ -23,7 +22,7 @@ export interface LiftedOperatorToEventListenerLike<
   TSubscription extends EventListenerLike,
   T,
 > extends EventListenerLike<T> {
-  readonly [LiftedOperatorToEventListenerLike_operator]: LiftedOperatorLike<
+  readonly [LiftedOperatorToEventListenerLike_operator]: LiftedSinkLike<
     TSubscription,
     T
   >;
@@ -44,11 +43,11 @@ const LiftedOperatorToEventListenerMixin: <
   T,
 >() => Mixin1<
   TReturn<TSubscription, T>,
-  LiftedOperatorLike<TSubscription, T>,
+  LiftedSinkLike<TSubscription, T>,
   TPrototype<TSubscription, T>
 > = /*@__PURE__*/ (<TSubscription extends EventListenerLike, T>() => {
   type TProperties = {
-    [LiftedOperatorToEventListenerLike_operator]: LiftedOperatorLike<
+    [LiftedOperatorToEventListenerLike_operator]: LiftedSinkLike<
       TSubscription,
       T
     >;
@@ -59,9 +58,9 @@ const LiftedOperatorToEventListenerMixin: <
       include(DelegatingDisposableMixin),
       function LiftedOperatorToEventListenerMixin(
         this: TProperties & TPrototype<TSubscription, T>,
-        operator: LiftedOperatorLike<TSubscription, T>,
+        operator: LiftedSinkLike<TSubscription, T>,
       ): TReturn<TSubscription, T> {
-        const delegate = operator[LiftedOperatorLike_subscription];
+        const delegate = operator[LiftedSinkLike_subscription];
 
         init(DelegatingDisposableMixin, this, delegate);
         this[LiftedOperatorToEventListenerLike_operator] = operator;
@@ -74,7 +73,7 @@ const LiftedOperatorToEventListenerMixin: <
       proto<TPrototype<TSubscription, T>>({
         [EventListenerLike_notify](this: TProperties, next: T) {
           this[LiftedOperatorToEventListenerLike_operator][
-            LiftedOperatorLike_notify
+            EventListenerLike_notify
           ](next);
         },
       }),

@@ -12,12 +12,14 @@ import ObserverMixin, {
   ObserverMixinLike_complete,
   ObserverMixinLike_notify,
 } from "../../utils/__mixins__/ObserverMixin.js";
-import { ObserverLike } from "../../utils.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  EventListenerLike_notify,
+  ObserverLike,
+  SinkLike_complete,
+} from "../../utils.js";
+import {
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../__internal__/LiftedSource.js";
 import { LiftedOperatorToConsumerLike } from "./LiftedOperatorToConsumerMixin.js";
 import LiftedOperatorToEventListenerMixin, {
@@ -39,7 +41,7 @@ type TReturn<
 const LiftedOperatorToObserverMixin: <
   TSubscription extends ObserverLike,
   T,
->() => Mixin1<TReturn<TSubscription, T>, LiftedOperatorLike<TSubscription, T>> =
+>() => Mixin1<TReturn<TSubscription, T>, LiftedSinkLike<TSubscription, T>> =
   /*@__PURE__*/ (<TSubscription extends ObserverLike, T>() => {
     return returns(
       mix(
@@ -50,9 +52,9 @@ const LiftedOperatorToObserverMixin: <
         ),
         function LiftedOperatorToObserverMixin(
           this: unknown,
-          operator: LiftedOperatorLike<TSubscription, T>,
+          operator: LiftedSinkLike<TSubscription, T>,
         ): TReturn<TSubscription, T> {
-          const delegate = operator[LiftedOperatorLike_subscription];
+          const delegate = operator[LiftedSinkLike_subscription];
           init(DelegatingSchedulerMixin, this, delegate);
           init(
             LiftedOperatorToEventListenerMixin<TSubscription, T>(),
@@ -76,7 +78,7 @@ const LiftedOperatorToObserverMixin: <
             next: T,
           ) {
             this[LiftedOperatorToEventListenerLike_operator][
-              LiftedOperatorLike_notify
+              EventListenerLike_notify
             ](next);
           },
 
@@ -84,7 +86,7 @@ const LiftedOperatorToObserverMixin: <
             this: LiftedOperatorToEventListenerLike<TSubscription, T>,
           ) {
             this[LiftedOperatorToEventListenerLike_operator][
-              LiftedOperatorLike_complete
+              SinkLike_complete
             ]();
           },
         }),

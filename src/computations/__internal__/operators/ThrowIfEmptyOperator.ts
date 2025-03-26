@@ -6,22 +6,22 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Factory, Optional, error, none, raise } from "../../../functions.js";
-import { DisposableLike } from "../../../utils.js";
-import DelegatingLiftedOperatorMixin, {
-  DelegatingLiftedOperatorLike,
-  DelegatingLiftedOperatorLike_delegate,
-  DelegatingLiftedOperatorLike_onCompleted,
-} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_notify,
-} from "../LiftedSource.js";
+  DisposableLike,
+  EventListenerLike_notify,
+  SinkLike_complete,
+} from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, {
+  DelegatingLiftedSinkLike,
+  DelegatingLiftedSinkLike_delegate,
+  DelegatingLiftedSinkLike_onCompleted,
+} from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
-  delegate: LiftedOperatorLike<TSubscription, T>,
+  delegate: LiftedSinkLike<TSubscription, T>,
   factory: Factory<unknown>,
-) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
 >() => {
@@ -37,13 +37,13 @@ export const create: <TSubscription extends DisposableLike, T>(
     include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function ThrowIfEmptyOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TSubscription, T>,
-        typeof LiftedOperatorLike_notify
+        DelegatingLiftedSinkLike<TSubscription, T>,
+        typeof EventListenerLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TSubscription, T>,
+      delegate: LiftedSinkLike<TSubscription, T>,
       factory: Factory<unknown>,
-    ): LiftedOperatorLike<TSubscription, T> {
+    ): LiftedSinkLike<TSubscription, T> {
       init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
       this[ThrowIfEmptyMixin_factory] = factory;
 
@@ -54,20 +54,18 @@ export const create: <TSubscription extends DisposableLike, T>(
       [ThrowIfEmptyMixin_isEmpty]: true,
     }),
     proto({
-      [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
+      [EventListenerLike_notify](
+        this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
         next: T,
       ) {
         this[ThrowIfEmptyMixin_isEmpty] = false;
 
-        this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](
-          next,
-        );
+        this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
       },
 
-      [DelegatingLiftedOperatorLike_onCompleted](
+      [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties &
-          DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer, string>,
+          DelegatingLiftedSinkLike<TSubscription, ArrayBuffer, string>,
       ) {
         const factory = this[ThrowIfEmptyMixin_factory];
 
@@ -81,9 +79,7 @@ export const create: <TSubscription extends DisposableLike, T>(
 
           raise(err);
         }
-        this[DelegatingLiftedOperatorLike_delegate][
-          LiftedOperatorLike_complete
-        ]();
+        this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
       },
     }),
   );

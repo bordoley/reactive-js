@@ -2,8 +2,8 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, raise } from "../../../functions.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, DelegatingLiftedOperatorLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, } from "../LiftedSource.js";
+import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ThrowIfEmptyMixin_isEmpty = Symbol("ThrowIfEmptyMixin_isEmpty");
     const ThrowIfEmptyMixin_factory = Symbol("ThrowIfEmptyMixin_factory");
@@ -15,11 +15,11 @@ export const create = /*@__PURE__*/ (() => {
         [ThrowIfEmptyMixin_factory]: none,
         [ThrowIfEmptyMixin_isEmpty]: true,
     }), proto({
-        [LiftedOperatorLike_notify](next) {
+        [EventListenerLike_notify](next) {
             this[ThrowIfEmptyMixin_isEmpty] = false;
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](next);
+            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
         },
-        [DelegatingLiftedOperatorLike_onCompleted]() {
+        [DelegatingLiftedSinkLike_onCompleted]() {
             const factory = this[ThrowIfEmptyMixin_factory];
             let err = none;
             if (this[ThrowIfEmptyMixin_isEmpty]) {
@@ -31,7 +31,7 @@ export const create = /*@__PURE__*/ (() => {
                 }
                 raise(err);
             }
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_complete]();
+            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         },
     }));
 })();

@@ -17,7 +17,7 @@ import * as EventListener from "../../../utils/__internal__/EventListener.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { DisposableContainerLike, EventListenerLike } from "../../../utils.js";
 import {
-  LiftedOperatorLike,
+  LiftedSinkLike,
   LiftedSourceLike,
   LiftedSourceLike_operators,
   LiftedSourceLike_source,
@@ -40,8 +40,8 @@ interface LiftedBroadcasterLike<TIn, TOut>
   readonly [LiftedSourceLike_source]: BroadcasterLike<TIn>;
   readonly [LiftedSourceLike_operators]: ReadonlyArray<
     Function1<
-      LiftedOperatorLike<EventListenerLike, any>,
-      LiftedOperatorLike<EventListenerLike, any>
+      LiftedSinkLike<EventListenerLike, any>,
+      LiftedSinkLike<EventListenerLike, any>
     >
   >;
 
@@ -50,40 +50,38 @@ interface LiftedBroadcasterLike<TIn, TOut>
 
 const operatorToEventListener: <T>(
   delegate: EventListenerLike,
-) => Function1<
-  LiftedOperatorLike<any, EventListenerLike>,
-  EventListenerLike<T>
-> = /*@__PURE__*/ (<T>() => {
-  const createOperatorToEventListener = mixInstanceFactory(
-    include(LiftedOperatorToEventListenerMixin()),
-    function OperatorToEventListener(
-      this: unknown,
-      delegate: EventListenerLike,
-      operator: LiftedOperatorLike<any, EventListenerLike>,
-    ): EventListenerLike<T> {
-      init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
+) => Function1<LiftedSinkLike<any, EventListenerLike>, EventListenerLike<T>> =
+  /*@__PURE__*/ (<T>() => {
+    const createOperatorToEventListener = mixInstanceFactory(
+      include(LiftedOperatorToEventListenerMixin()),
+      function OperatorToEventListener(
+        this: unknown,
+        delegate: EventListenerLike,
+        operator: LiftedSinkLike<any, EventListenerLike>,
+      ): EventListenerLike<T> {
+        init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
 
-      return this;
-    },
-  );
+        return this;
+      },
+    );
 
-  return delegate => operator =>
-    createOperatorToEventListener(delegate, operator);
-})();
+    return delegate => operator =>
+      createOperatorToEventListener(delegate, operator);
+  })();
 
 const createLiftedBroadcaster: <TIn, TOut>(
   src: BroadcasterLike<TIn>,
   op: Function1<
-    LiftedOperatorLike<EventListenerLike, TOut>,
-    LiftedOperatorLike<EventListenerLike, TIn>
+    LiftedSinkLike<EventListenerLike, TOut>,
+    LiftedSinkLike<EventListenerLike, TIn>
   >,
 ) => BroadcasterLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
     [LiftedSourceLike_source]: BroadcasterLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
       Function1<
-        LiftedOperatorLike<EventListenerLike, any>,
-        LiftedOperatorLike<EventListenerLike, any>
+        LiftedSinkLike<EventListenerLike, any>,
+        LiftedSinkLike<EventListenerLike, any>
       >
     >;
   };
@@ -101,8 +99,8 @@ const createLiftedBroadcaster: <TIn, TOut>(
       this: TProperties & TPrototype,
       source: BroadcasterLike<TIn>,
       op: Function1<
-        LiftedOperatorLike<EventListenerLike, TOut>,
-        LiftedOperatorLike<EventListenerLike, TIn>
+        LiftedSinkLike<EventListenerLike, TOut>,
+        LiftedSinkLike<EventListenerLike, TIn>
       >,
     ): BroadcasterLike<TOut> {
       init(DelegatingDisposableContainerMixin(), this, source);
@@ -144,8 +142,8 @@ const createLiftedBroadcaster: <TIn, TOut>(
 const Broadcaster_lift =
   <TIn, TOut>(
     operator: Function1<
-      LiftedOperatorLike<EventListenerLike, TOut>,
-      LiftedOperatorLike<EventListenerLike, TIn>
+      LiftedSinkLike<EventListenerLike, TOut>,
+      LiftedSinkLike<EventListenerLike, TIn>
     >,
   ) =>
   (source: BroadcasterLike<TIn>): BroadcasterLike<TOut> => {

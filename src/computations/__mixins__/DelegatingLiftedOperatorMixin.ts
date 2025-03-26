@@ -1,52 +1,62 @@
-import { Mixin1, mix, props, proto } from "../../__internal__/mixins.js";
-import { none, returns } from "../../functions.js";
-import { DisposableLike } from "../../utils.js";
 import {
-  LiftedOperatorLike,
-  LiftedOperatorLike_complete,
-  LiftedOperatorLike_isCompleted,
-  LiftedOperatorLike_notify,
-  LiftedOperatorLike_subscription,
+  Mixin1,
+  include,
+  init,
+  mix,
+  props,
+  proto,
+} from "../../__internal__/mixins.js";
+import { none, returns } from "../../functions.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  DisposableLike,
+  EventListenerLike_notify,
+  SinkLike_complete,
+  SinkLike_isCompleted,
+} from "../../utils.js";
+import {
+  LiftedSinkLike,
+  LiftedSinkLike_subscription,
 } from "../__internal__/LiftedSource.js";
 
-export const DelegatingLiftedOperatorLike_delegate = Symbol(
-  "DelegatingLiftedOperatorLike_delegate",
+export const DelegatingLiftedSinkLike_delegate = Symbol(
+  "DelegatingLiftedSinkLike_delegate",
 );
 
-export const DelegatingLiftedOperatorLike_onCompleted = Symbol(
-  "DelegatingLiftedOperatorLike_onCompleted",
+export const DelegatingLiftedSinkLike_onCompleted = Symbol(
+  "DelegatingLiftedSinkLike_onCompleted",
 );
 
-export interface DelegatingLiftedOperatorLike<
+export interface DelegatingLiftedSinkLike<
   TSubscription extends DisposableLike,
   TA,
   TB = TA,
-> extends LiftedOperatorLike<TSubscription, TA> {
-  readonly [DelegatingLiftedOperatorLike_delegate]: LiftedOperatorLike<
+> extends LiftedSinkLike<TSubscription, TA> {
+  readonly [DelegatingLiftedSinkLike_delegate]: LiftedSinkLike<
     TSubscription,
     TB
   >;
 
-  [DelegatingLiftedOperatorLike_onCompleted](): void;
+  [DelegatingLiftedSinkLike_onCompleted](): void;
 }
 
 type TPrototype<TSubscription extends DisposableLike, TA, TB = TA> = Pick<
-  DelegatingLiftedOperatorLike<TSubscription, TA, TB>,
-  | typeof LiftedOperatorLike_notify
-  | typeof LiftedOperatorLike_complete
-  | typeof DelegatingLiftedOperatorLike_onCompleted
+  DelegatingLiftedSinkLike<TSubscription, TA, TB>,
+  | typeof EventListenerLike_notify
+  | typeof SinkLike_complete
+  | typeof DelegatingLiftedSinkLike_onCompleted
 >;
 
 interface DelegatingLiftedOperatorMixin {
   <TSubscription extends DisposableLike, TA, TB>(): Mixin1<
-    DelegatingLiftedOperatorLike<TSubscription, TA, TB>,
-    LiftedOperatorLike<TSubscription, TB>,
+    DelegatingLiftedSinkLike<TSubscription, TA, TB>,
+    LiftedSinkLike<TSubscription, TB>,
     TPrototype<TSubscription, TA>
   >;
 
   <TSubscription extends DisposableLike, T>(): Mixin1<
-    DelegatingLiftedOperatorLike<TSubscription, T>,
-    LiftedOperatorLike<TSubscription, T>,
+    DelegatingLiftedSinkLike<TSubscription, T>,
+    LiftedSinkLike<TSubscription, T>,
     TPrototype<TSubscription, T>
   >;
 }
@@ -54,49 +64,51 @@ interface DelegatingLiftedOperatorMixin {
 const DelegatingLiftedOperatorMixin: DelegatingLiftedOperatorMixin =
   /*@__PURE__*/ (<TSubscription extends DisposableLike, TA, TB>() => {
     type TProperties = {
-      [DelegatingLiftedOperatorLike_delegate]: LiftedOperatorLike<
-        TSubscription,
-        TB
-      >;
-      [LiftedOperatorLike_isCompleted]: boolean;
-      [LiftedOperatorLike_subscription]: TSubscription;
+      [DelegatingLiftedSinkLike_delegate]: LiftedSinkLike<TSubscription, TB>;
+      [SinkLike_isCompleted]: boolean;
+      [LiftedSinkLike_subscription]: TSubscription;
     };
 
     return returns(
       mix(
+        include(DelegatingDisposableMixin),
         function DelegatingLiftedOperatorMixin(
           this: TProperties & TPrototype<TSubscription, TA, TB>,
-          delegate: LiftedOperatorLike<TSubscription, TB>,
-        ): DelegatingLiftedOperatorLike<TSubscription, TA, TB> {
-          this[DelegatingLiftedOperatorLike_delegate] = delegate;
-          this[LiftedOperatorLike_subscription] =
-            delegate[LiftedOperatorLike_subscription];
+          delegate: LiftedSinkLike<TSubscription, TB>,
+        ): DelegatingLiftedSinkLike<TSubscription, TA, TB> {
+          this[DelegatingLiftedSinkLike_delegate] = delegate;
+          this[LiftedSinkLike_subscription] =
+            delegate[LiftedSinkLike_subscription];
+
+          init(
+            DelegatingDisposableMixin,
+            this,
+            delegate[LiftedSinkLike_subscription],
+          );
 
           return this;
         },
         props<TProperties>({
-          [DelegatingLiftedOperatorLike_delegate]: none,
-          [LiftedOperatorLike_isCompleted]: false,
-          [LiftedOperatorLike_subscription]: none,
+          [DelegatingLiftedSinkLike_delegate]: none,
+          [SinkLike_isCompleted]: false,
+          [LiftedSinkLike_subscription]: none,
         }),
         proto<TPrototype<TSubscription, TA>>({
-          [DelegatingLiftedOperatorLike_onCompleted](this: TProperties) {
-            this[DelegatingLiftedOperatorLike_delegate][
-              LiftedOperatorLike_complete
-            ]();
+          [DelegatingLiftedSinkLike_onCompleted](this: TProperties) {
+            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
           },
 
-          [LiftedOperatorLike_notify](this: TProperties, next: TA) {
-            this[DelegatingLiftedOperatorLike_delegate][
-              LiftedOperatorLike_notify
-            ](next as unknown as TB);
+          [EventListenerLike_notify](this: TProperties, next: TA) {
+            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+              next as unknown as TB,
+            );
           },
 
-          [LiftedOperatorLike_complete](
+          [SinkLike_complete](
             this: TProperties & TPrototype<TSubscription, TA, TB>,
           ) {
-            this[LiftedOperatorLike_isCompleted] = true;
-            this[DelegatingLiftedOperatorLike_onCompleted]();
+            this[SinkLike_isCompleted] = true;
+            this[DelegatingLiftedSinkLike_onCompleted]();
           },
         }),
       ),

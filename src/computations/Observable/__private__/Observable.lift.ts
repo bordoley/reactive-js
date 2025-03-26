@@ -21,7 +21,7 @@ import {
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import {
-  LiftedOperatorLike,
+  LiftedSinkLike,
   LiftedSourceLike,
   LiftedSourceLike_operators,
   LiftedSourceLike_source,
@@ -44,8 +44,8 @@ interface LiftedObservableLike<TIn, TOut>
   readonly [LiftedSourceLike_source]: ObservableLike<TIn>;
   readonly [LiftedSourceLike_operators]: ReadonlyArray<
     Function1<
-      LiftedOperatorLike<ObserverLike, any>,
-      LiftedOperatorLike<ObserverLike, any>
+      LiftedSinkLike<ObserverLike, any>,
+      LiftedSinkLike<ObserverLike, any>
     >
   >;
 
@@ -53,19 +53,15 @@ interface LiftedObservableLike<TIn, TOut>
 }
 
 export const operatorToObserver: <T>(
-  delegate: LiftedOperatorLike<ObserverLike, any>,
+  delegate: LiftedSinkLike<ObserverLike, any>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(LiftedOperatorToObserverMixin()),
     function OperatorToObserver(
       this: unknown,
-      operator: LiftedOperatorLike<ObserverLike, any>,
+      operator: LiftedSinkLike<ObserverLike, any>,
     ): ObserverLike<T> {
-      init(
-        LiftedOperatorToObserverMixin(),
-        this,
-        operator,
-      );
+      init(LiftedOperatorToObserverMixin(), this, operator);
 
       return this;
     },
@@ -74,8 +70,8 @@ export const operatorToObserver: <T>(
 const createLiftedObservable: <TIn, TOut>(
   src: ObservableLike<TIn>,
   op: Function1<
-    LiftedOperatorLike<ObserverLike, TOut>,
-    LiftedOperatorLike<ObserverLike, TIn>
+    LiftedSinkLike<ObserverLike, TOut>,
+    LiftedSinkLike<ObserverLike, TIn>
   >,
   config?: {
     [ComputationLike_isPure]?: boolean;
@@ -88,8 +84,8 @@ const createLiftedObservable: <TIn, TOut>(
     [LiftedSourceLike_source]: ObservableLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
       Function1<
-        LiftedOperatorLike<any, ObserverLike>,
-        LiftedOperatorLike<any, ObserverLike>
+        LiftedSinkLike<any, ObserverLike>,
+        LiftedSinkLike<any, ObserverLike>
       >
     >;
   };
@@ -108,8 +104,8 @@ const createLiftedObservable: <TIn, TOut>(
       this: TProperties & TPrototype,
       source: ObservableLike<TIn>,
       op: Function1<
-        LiftedOperatorLike<ObserverLike, TOut>,
-        LiftedOperatorLike<ObserverLike, TIn>
+        LiftedSinkLike<ObserverLike, TOut>,
+        LiftedSinkLike<ObserverLike, TIn>
       >,
       config?: {
         [ComputationLike_isPure]?: boolean;
@@ -160,8 +156,8 @@ const Observable_lift =
   }) =>
   (
     operator: Function1<
-      LiftedOperatorLike<ObserverLike, TOut>,
-      LiftedOperatorLike<ObserverLike, TIn>
+      LiftedSinkLike<ObserverLike, TOut>,
+      LiftedSinkLike<ObserverLike, TIn>
     >,
   ) =>
   (source: ObservableLike<TIn>): ObservableLike<TOut> => {

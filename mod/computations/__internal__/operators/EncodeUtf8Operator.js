@@ -2,8 +2,8 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import { LiftedOperatorLike_notify, } from "../LiftedSource.js";
+import { EventListenerLike_notify } from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const EncodeUtf8Operator_textEncoder = Symbol("EncodeUtf8Operator_textEncoder");
     return mixInstanceFactory(include(DelegatingLiftedOperatorMixin()), function EncodeUtf8Operator(delegate) {
@@ -13,9 +13,9 @@ export const create = /*@__PURE__*/ (() => {
     }, props({
         [EncodeUtf8Operator_textEncoder]: none,
     }), proto({
-        [LiftedOperatorLike_notify](next) {
+        [EventListenerLike_notify](next) {
             const mapped = this[EncodeUtf8Operator_textEncoder].encode(next);
-            this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](mapped);
+            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](mapped);
         },
     }));
 })();

@@ -2,8 +2,8 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
-import DelegatingLiftedOperatorMixin, { DelegatingLiftedOperatorLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
-import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, } from "../LiftedSource.js";
+import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
+import DelegatingLiftedOperatorMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedOperatorMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");
     const TakeWhileMixin_predicate = Symbol("TakeWhileMixin_predicate");
@@ -16,14 +16,14 @@ export const create = /*@__PURE__*/ (() => {
         [TakeWhileMixin_predicate]: none,
         [TakeWhileMixin_inclusive]: none,
     }), proto({
-        [LiftedOperatorLike_notify](next) {
+        [EventListenerLike_notify](next) {
             const satisfiesPredicate = this[TakeWhileMixin_predicate](next);
             const isInclusive = this[TakeWhileMixin_inclusive];
             if (satisfiesPredicate || isInclusive) {
-                this[DelegatingLiftedOperatorLike_delegate][LiftedOperatorLike_notify](next);
+                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
             }
             if (!satisfiesPredicate) {
-                this[LiftedOperatorLike_complete]();
+                this[SinkLike_complete]();
             }
         },
     }));
