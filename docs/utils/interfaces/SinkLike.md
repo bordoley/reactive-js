@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DisposableLike`](DisposableLike.md)
+- [`EventListenerLike`](EventListenerLike.md)\<`T`\>
 
 ## Extended by
 
@@ -26,24 +26,6 @@
 > `readonly` **\[SinkLike\_isCompleted\]**: `boolean`
 
 ## Methods
-
-### \[EventListenerLike\_notify\]()
-
-> **\[EventListenerLike\_notify\]**(`event`): `void`
-
-Notifies the EventSink of the next notification produced by the source.
-
-#### Parameters
-
-##### event
-
-`T`
-
-#### Returns
-
-`void`
-
-***
 
 ### \[SinkLike\_complete\]()
 

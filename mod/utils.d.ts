@@ -231,14 +231,8 @@ export declare const SinkLike_isCompleted: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface SinkLike<T = unknown> extends DisposableLike {
+export interface SinkLike<T = unknown> extends EventListenerLike<T> {
     readonly [SinkLike_isCompleted]: boolean;
-    /**
-     * Notifies the EventSink of the next notification produced by the source.
-     *
-     * @param next - The next notification value.
-     */
-    [EventListenerLike_notify](event: T): void;
     [SinkLike_complete](): void;
 }
 /**

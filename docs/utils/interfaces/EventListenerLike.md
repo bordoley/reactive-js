@@ -10,6 +10,10 @@
 
 - [`DisposableLike`](DisposableLike.md)
 
+## Extended by
+
+- [`SinkLike`](SinkLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`

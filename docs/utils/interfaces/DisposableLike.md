@@ -18,7 +18,6 @@
 - [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`EventListenerLike`](EventListenerLike.md)
-- [`SinkLike`](SinkLike.md)
 
 ## Properties
 
