@@ -18,7 +18,7 @@
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md) = [`ComputationType`](../type-aliases/ComputationType.md)
 
 • **TCreationOptions** *extends* `object` = \{\}
 
@@ -213,6 +213,24 @@
 ##### Returns
 
 [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>[]
+
+##### Returns
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
 
 ***
 

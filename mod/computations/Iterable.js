@@ -1,10 +1,9 @@
 /// <reference types="./Iterable.d.ts" />
 
-import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import parseArrayBounds from "../__internal__/parseArrayBounds.js";
+import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, RunnableLike_eval, } from "../computations.js";
-import { alwaysTrue, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
@@ -95,10 +94,6 @@ class EncodeUtf8Iterable {
 }
 export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8Iterable, iterable));
 export const first = Iterable_first;
-export const firstAsync = /*@__PURE__*/ returns(async (iter) => {
-    await Promise.resolve();
-    return first()(iter);
-});
 class ForEachIterable {
     d;
     ef;
@@ -118,31 +113,6 @@ class ForEachIterable {
 }
 export const forEach = ((effect) => (iterable) => newInstance(ForEachIterable, iterable, effect));
 export const fromValue = /*@__PURE__*/ returns(tuple);
-class FromReadonlyArrayIterable {
-    arr;
-    count;
-    start;
-    [ComputationLike_isPure];
-    constructor(arr, count, start) {
-        this.arr = arr;
-        this.count = count;
-        this.start = start;
-    }
-    *[Symbol.iterator]() {
-        let { arr, start, count } = this;
-        while (count !== 0) {
-            const next = arr[start];
-            yield next;
-            count > 0 ? (start++, count--) : (start--, count++);
-        }
-    }
-}
-export const fromReadonlyArray = (options) => (arr) => {
-    let [start, count] = parseArrayBounds(arr, options);
-    return start === 0 && count >= arr[Array_length]
-        ? arr
-        : newInstance(FromReadonlyArrayIterable, arr, count, start);
-};
 class GenIterable {
     f;
     [ComputationLike_isSynchronous] = true;
@@ -217,6 +187,7 @@ class MapIterable {
         }
     }
 }
+export const makeModule = identity;
 export const map = ((mapper) => (iterable) => newInstance(MapIterable, iterable, mapper));
 class PairwiseIterable {
     s;
@@ -248,10 +219,6 @@ export const reduce = (reducer, initialValue) => (iterable) => {
         acc = reducer(acc, v);
     }
     return acc;
-};
-export const reduceAsync = (reducer, initialValue) => async (iterable) => {
-    await Promise.resolve();
-    return reduce(reducer, initialValue)(iterable);
 };
 class RepeatIterable {
     i;

@@ -1,11 +1,13 @@
 /// <reference types="./Broadcaster.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { identity } from "../functions.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
+import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_lastAsync from "./Broadcaster/__private__/Broadcaster.lastAsync.js";
@@ -23,9 +25,11 @@ export const create = Broadcaster_create;
 export const createPauseable = Broadcaster_createPauseable;
 export const distinctUntilChanged = Broadcaster_distinctUntilChanged;
 export const encodeUtf8 = Broadcaster_encodeUtf8;
+export const fromPromise = Broadcaster_fromPromise;
 export const genPure = Broadcaster_genPure;
 export const keep = Broadcaster_keep;
 export const lastAsync = Broadcaster_lastAsync;
+export const makeModule = identity;
 export const map = Broadcaster_map;
 export const merge = Broadcaster_merge;
 export const pairwise = Broadcaster_pairwise;

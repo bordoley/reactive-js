@@ -24,6 +24,7 @@ export interface BroadcasterModule extends ComputationModule<BroadcasterComputat
     createPauseable<T>(op: Function1<BroadcasterLike<boolean> & DisposableLike, BroadcasterLike<T>>, options?: {
         readonly autoDispose?: boolean;
     }): PauseableLike & BroadcasterLike<T> & DisposableLike;
+    fromPromise<T>(): Function1<Promise<T>, BroadcasterLike<T>>;
 }
 export type Signature = BroadcasterModule;
 export declare const addEventHandler: Signature["addEventHandler"];
@@ -31,9 +32,11 @@ export declare const create: Signature["create"];
 export declare const createPauseable: Signature["createPauseable"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
+export declare const fromPromise: Signature["fromPromise"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];
+export declare const makeModule: Signature["makeModule"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const pairwise: Signature["pairwise"];

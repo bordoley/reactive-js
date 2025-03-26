@@ -8,13 +8,16 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Computation from "../../computations/Computation.js";
 import * as Producer from "../../computations/Producer.js";
 import { SourceLike_subscribe } from "../../computations.js";
-import { bindMethod, invoke, newInstance, pipe } from "../../functions.js";
+import { invoke, newInstance, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as NodeWritable from "../NodeWritable.js";
+
+const ProducerModule = Producer.makeModule(Producer);
 
 testModule(
   "NodeWritable",
@@ -39,8 +42,8 @@ testModule(
       );
 
       pipe(
-        bindMethod(["abc", "defg"], Symbol.iterator),
-        Producer.gen,
+        ["abc", "defg"],
+        Computation.fromReadonlyArray(ProducerModule)<string>(),
         Producer.encodeUtf8(),
         invoke(SourceLike_subscribe, consumer),
       );
@@ -71,8 +74,8 @@ testModule(
       );
 
       pipe(
-        bindMethod(["abc", "defg"], Symbol.iterator),
-        Producer.gen,
+        ["abc", "defg"],
+        Computation.fromReadonlyArray(ProducerModule)(),
         Producer.encodeUtf8(),
         invoke(SourceLike_subscribe, consumer),
       );
@@ -107,8 +110,8 @@ testModule(
       );
 
       pipe(
-        bindMethod(["abc", "defg"], Symbol.iterator),
-        Producer.gen,
+        ["abc", "defg"],
+        Computation.fromReadonlyArray(ProducerModule)(),
         Producer.encodeUtf8(),
         invoke(SourceLike_subscribe, consumer),
       );

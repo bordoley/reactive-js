@@ -39,9 +39,9 @@ const createInitialScrollValue = (): ScrollValue => ({
 
 const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
   /*@__PURE__*/ (() => {
-    const BroadcasterModule = {
+    const BroadcasterModule = Broadcaster.makeModule({
       merge: Broadcaster.merge,
-    };
+    });
 
     const eventSourceCache =
       newInstance<WeakMap<HTMLElement, BroadcasterLike<ScrollValue>>>(WeakMap);
@@ -69,7 +69,7 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
             Element_eventSource<HTMLElement, "scroll">("scroll", {
               autoDispose: true,
             }),
-            Computation.mergeWith<Broadcaster.Computation>(BroadcasterModule)(
+            Computation.mergeWith(BroadcasterModule)(
               Element_windowResizeEventSource(),
               pipe(
                 element,

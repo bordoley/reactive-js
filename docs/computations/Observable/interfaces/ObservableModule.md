@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `empty`: \{ `delay`: `number`; \}; `firstAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `fromIterable`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `fromReadonlyArray`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `fromValue`: \{ `delay`: `number`; \}; `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `lastAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `raise`: \{ `delay`: `number`; \}; `reduceAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `runAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toReadonlyArrayAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `broadcast`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `first`: \{ `maxMicroTaskTicks`: `number`; \}; `last`: \{ `maxMicroTaskTicks`: `number`; \}; `reduce`: \{ `maxMicroTaskTicks`: `number`; \}; `run`: \{ `maxMicroTaskTicks`: `number`; \}; `toReadonlyArray`: \{ `maxMicroTaskTicks`: `number`; \}; `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `subscribe`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `empty`: \{ `delay`: `number`; \}; `fromValue`: \{ `delay`: `number`; \}; `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `lastAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `raise`: \{ `delay`: `number`; \}; `toReadonlyArrayAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `broadcast`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `first`: \{ `maxMicroTaskTicks`: `number`; \}; `last`: \{ `maxMicroTaskTicks`: `number`; \}; `reduce`: \{ `maxMicroTaskTicks`: `number`; \}; `run`: \{ `maxMicroTaskTicks`: `number`; \}; `toReadonlyArray`: \{ `maxMicroTaskTicks`: `number`; \}; `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `subscribe`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>
 
 ## Properties
 
@@ -506,32 +506,6 @@
 
 ***
 
-### firstAsync()
-
-> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### scheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-#### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`firstAsync`](../../interfaces/ComputationModule.md#firstasync)
-
-***
-
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
@@ -663,30 +637,6 @@
 #### Inherited from
 
 [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromProducer`](../../interfaces/ConcurrentReactiveComputationModule.md#fromproducer)
-
-***
-
-### fromReadonlyArray()
-
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`object` & `object`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromReadonlyArray`](../../interfaces/ComputationModule.md#fromreadonlyarray)
 
 ***
 
@@ -932,6 +882,30 @@
 
 ***
 
+### makeModule()
+
+> **makeModule**\<`TModule`\>(`o`): `TModule` & `object`
+
+#### Type Parameters
+
+• **TModule** *extends* `object`
+
+#### Parameters
+
+##### o
+
+`TModule`
+
+#### Returns
+
+`TModule` & `object`
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`makeModule`](../../interfaces/ComputationModule.md#makemodule)
+
+***
+
 ### map()
 
 > **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `TB`\>
@@ -1070,6 +1044,28 @@
 
 [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
 
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>[]
+
+##### Returns
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
+
 ***
 
 ### mergeAll()
@@ -1187,42 +1183,6 @@
 #### Inherited from
 
 [`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`reduce`](../../interfaces/SynchronousComputationModule.md#reduce)
-
-***
-
-### reduceAsync()
-
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, `TAcc`\>
-
-#### Type Parameters
-
-• **T**
-
-• **TAcc**
-
-#### Parameters
-
-##### reducer
-
-[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
-
-##### initialValue
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
-
-##### options?
-
-###### scheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-#### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, `TAcc`\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`reduceAsync`](../../interfaces/ComputationModule.md#reduceasync)
 
 ***
 

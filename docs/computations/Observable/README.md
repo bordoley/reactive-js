@@ -27,6 +27,7 @@
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
 - [lastAsync](functions/lastAsync.md)
+- [makeModule](functions/makeModule.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)

@@ -448,30 +448,6 @@
 
 ***
 
-### firstAsync()
-
-> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`firstAsync`](../../interfaces/ComputationModule.md#firstasync)
-
-***
-
 ### forEach()
 
 > **forEach**\<`T`\>(`sideEffect`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
@@ -603,36 +579,6 @@
 #### Inherited from
 
 [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromProducer`](../../interfaces/ConcurrentReactiveComputationModule.md#fromproducer)
-
-***
-
-### fromReadonlyArray()
-
-> **fromReadonlyArray**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### count?
-
-`number`
-
-###### start?
-
-`number`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`fromReadonlyArray`](../../interfaces/ComputationModule.md#fromreadonlyarray)
 
 ***
 
@@ -824,6 +770,30 @@
 
 ***
 
+### makeModule()
+
+> **makeModule**\<`TModule`\>(`o`): `TModule` & `object`
+
+#### Type Parameters
+
+• **TModule** *extends* `object`
+
+#### Parameters
+
+##### o
+
+`TModule`
+
+#### Returns
+
+`TModule` & `object`
+
+#### Inherited from
+
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`makeModule`](../../interfaces/ComputationModule.md#makemodule)
+
+***
+
 ### map()
 
 > **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, `TB`\>
@@ -962,6 +932,28 @@
 
 [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
 
+#### Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### computations
+
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>[]
+
+##### Returns
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
+
 ***
 
 ### mergeAll()
@@ -1043,40 +1035,6 @@
 #### Inherited from
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`pairwise`](../../interfaces/ComputationModule.md#pairwise)
-
-***
-
-### reduceAsync()
-
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, `TAcc`\>
-
-#### Type Parameters
-
-• **T**
-
-• **TAcc**
-
-#### Parameters
-
-##### reducer
-
-[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
-
-##### initialValue
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, `TAcc`\>
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`reduceAsync`](../../interfaces/ComputationModule.md#reduceasync)
 
 ***
 

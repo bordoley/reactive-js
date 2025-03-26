@@ -6,7 +6,7 @@
 
 # Type Alias: PickComputationModule\<TComputationType, TComputationModule, K\>
 
-> **PickComputationModule**\<`TComputationType`, `TComputationModule`, `K`\>: `Pick`\<`TComputationModule`, `K` \| *typeof* `ComputationModuleLike_computationType`\>
+> **PickComputationModule**\<`TComputationType`, `TComputationModule`, `K`\>: `Pick`\<`TComputationModule`, `K` \| *typeof* [`ComputationModuleLike_computationType`](../variables/ComputationModuleLike_computationType.md)\>
 
 ## Type Parameters
 

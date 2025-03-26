@@ -23,7 +23,7 @@ import {
   SynchronousComputationModule,
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
-import { Function1, Function2 } from "../functions.js";
+import { Function1, Function2, identity } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
@@ -77,23 +77,8 @@ export interface ObservableModule
         empty: {
           readonly delay: number;
         };
-        firstAsync: {
-          readonly scheduler?: SchedulerLike;
-        };
-        fromIterable: {
-          readonly delay?: number;
-          readonly delayStart?: boolean;
-        };
-        fromReadonlyArray: {
-          readonly delay?: number;
-          readonly delayStart?: boolean;
-        };
         fromValue: {
           readonly delay: number;
-        };
-        gen: {
-          readonly delay?: number;
-          readonly delayStart?: boolean;
         };
         genPure: {
           readonly delay?: number;
@@ -104,12 +89,6 @@ export interface ObservableModule
         };
         raise: {
           readonly delay?: number;
-        };
-        reduceAsync: {
-          readonly scheduler?: SchedulerLike;
-        };
-        runAsync: {
-          readonly scheduler?: SchedulerLike;
         };
         toReadonlyArrayAsync: {
           readonly scheduler?: SchedulerLike;
@@ -213,6 +192,7 @@ export const gen: Signature["gen"] = Observable_gen;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const keep: Signature["keep"] = Observable_keep;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
+export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;

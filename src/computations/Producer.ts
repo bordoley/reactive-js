@@ -18,6 +18,7 @@ import {
   SequentialComputationModule,
   SequentialReactiveComputationModule,
 } from "../computations.js";
+import { identity } from "../functions.js";
 import { ConsumerLike } from "../utils.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
@@ -96,6 +97,7 @@ export const gen: Signature["gen"] = Producer_gen;
 export const genPure: Signature["genPure"] = Producer_genPure;
 export const keep: Signature["keep"] = Producer_keep;
 export const lastAsync: Signature["lastAsync"] = Producer_lastAsync;
+export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Producer_map;
 export const pairwise: Signature["pairwise"] = Producer_pairwise;
 export const scan: Signature["scan"] = Producer_scan;

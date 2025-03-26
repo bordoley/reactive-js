@@ -17,23 +17,8 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     empty: {
         readonly delay: number;
     };
-    firstAsync: {
-        readonly scheduler?: SchedulerLike;
-    };
-    fromIterable: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    };
-    fromReadonlyArray: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    };
     fromValue: {
         readonly delay: number;
-    };
-    gen: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
     };
     genPure: {
         readonly delay?: number;
@@ -44,12 +29,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     };
     raise: {
         readonly delay?: number;
-    };
-    reduceAsync: {
-        readonly scheduler?: SchedulerLike;
-    };
-    runAsync: {
-        readonly scheduler?: SchedulerLike;
     };
     toReadonlyArrayAsync: {
         readonly scheduler?: SchedulerLike;
@@ -112,6 +91,7 @@ export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];
+export declare const makeModule: Signature["makeModule"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];

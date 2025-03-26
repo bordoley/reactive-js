@@ -12,13 +12,14 @@ import {
   ConcurrentComputationModule,
   ConcurrentReactiveComputationModule,
 } from "../computations.js";
-import { Function1, SideEffect1 } from "../functions.js";
+import { Function1, SideEffect1, identity } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
+import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_lastAsync from "./Broadcaster/__private__/Broadcaster.lastAsync.js";
@@ -78,6 +79,8 @@ export interface BroadcasterModule
       readonly autoDispose?: boolean;
     },
   ): PauseableLike & BroadcasterLike<T> & DisposableLike;
+
+  fromPromise<T>(): Function1<Promise<T>, BroadcasterLike<T>>;
 }
 
 export type Signature = BroadcasterModule;
@@ -90,9 +93,11 @@ export const createPauseable: Signature["createPauseable"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Broadcaster_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;
+export const fromPromise: Signature["fromPromise"] = Broadcaster_fromPromise;
 export const genPure: Signature["genPure"] = Broadcaster_genPure;
 export const keep: Signature["keep"] = Broadcaster_keep;
 export const lastAsync: Signature["lastAsync"] = Broadcaster_lastAsync;
+export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Broadcaster_map;
 export const merge: Signature["merge"] = Broadcaster_merge;
 export const pairwise: Signature["pairwise"] = Broadcaster_pairwise;

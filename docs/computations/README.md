@@ -28,7 +28,6 @@
 - [IterableLike](interfaces/IterableLike.md)
 - [IterableWithSideEffectsLike](interfaces/IterableWithSideEffectsLike.md)
 - [MulticastComputationLike](interfaces/MulticastComputationLike.md)
-- [MulticastedComputationModule](interfaces/MulticastedComputationModule.md)
 - [ObservableLike](interfaces/ObservableLike.md)
 - [ObservableWithSideEffectsLike](interfaces/ObservableWithSideEffectsLike.md)
 - [ProducerLike](interfaces/ProducerLike.md)
@@ -59,6 +58,7 @@
 
 ## Type Aliases
 
+- [AnyComputationType](type-aliases/AnyComputationType.md)
 - [BroadcastOperator](type-aliases/BroadcastOperator.md)
 - [ComputationBaseOf](type-aliases/ComputationBaseOf.md)
 - [ComputationOf](type-aliases/ComputationOf.md)
@@ -109,6 +109,7 @@
 - [ComputationLike\_isDeferred](variables/ComputationLike_isDeferred.md)
 - [ComputationLike\_isPure](variables/ComputationLike_isPure.md)
 - [ComputationLike\_isSynchronous](variables/ComputationLike_isSynchronous.md)
+- [ComputationModuleLike\_computationType](variables/ComputationModuleLike_computationType.md)
 - [DeferredComputationWithSideEffects](variables/DeferredComputationWithSideEffects.md)
 - [MulticastComputation](variables/MulticastComputation.md)
 - [PureDeferredComputation](variables/PureDeferredComputation.md)

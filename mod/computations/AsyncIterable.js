@@ -1,9 +1,8 @@
 /// <reference types="./AsyncIterable.d.ts" />
 
 import { Array_map, Array_push, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
-import { alwaysTrue, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
@@ -110,30 +109,6 @@ class FromAsyncFactoryIterable {
     }
 }
 export const fromAsyncFactory = returns(factory => newInstance(FromAsyncFactoryIterable, factory));
-class FromReadonlyArrayAsyncIterable {
-    arr;
-    count;
-    start;
-    [ComputationLike_isSynchronous] = false;
-    constructor(arr, count, start) {
-        this.arr = arr;
-        this.count = count;
-        this.start = start;
-    }
-    async *[Symbol.asyncIterator]() {
-        let { arr, start, count } = this;
-        while (count !== 0) {
-            const next = arr[start];
-            yield next;
-            count > 0 ? (start++, count--) : (start--, count++);
-        }
-    }
-}
-export const fromReadonlyArray = ((options) => (arr) => {
-    let [start, count] = parseArrayBounds(arr, options);
-    return newInstance(FromReadonlyArrayAsyncIterable, arr, count, start);
-});
-export const empty = (() => pipe([], fromReadonlyArray(), returns))();
 class EncodeUtf8AsyncIterable {
     s;
     [ComputationLike_isPure];
@@ -150,12 +125,6 @@ class EncodeUtf8AsyncIterable {
     }
 }
 export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8AsyncIterable, iterable));
-export const firstAsync = /*@__PURE__*/ returns(async (iter) => {
-    for await (const v of iter) {
-        return v;
-    }
-    return none;
-});
 class ForEachAsyncIterable {
     d;
     ef;
@@ -175,9 +144,6 @@ class ForEachAsyncIterable {
     }
 }
 export const forEach = ((effect) => (iter) => newInstance(ForEachAsyncIterable, iter, effect));
-export const fromValue = 
-/*@__PURE__*/
-returns(v => fromReadonlyArray()([v]));
 class GenAsyncIterable {
     f;
     [ComputationLike_isSynchronous] = false;
@@ -258,6 +224,10 @@ class KeepAsyncIterable {
         }
     }
 }
+export const empty = (() => pipe(genPure(bindMethod([], Symbol.iterator)), returns))();
+export const fromValue = 
+/*@__PURE__*/
+returns(v => genPure(bindMethod([v], Symbol.iterator)));
 export const keep = ((predicate) => (iterable) => newInstance(KeepAsyncIterable, iterable, predicate));
 export const lastAsync = /*@__PURE__*/ returns(async (iter) => {
     let result = none;
@@ -266,6 +236,7 @@ export const lastAsync = /*@__PURE__*/ returns(async (iter) => {
     }
     return result;
 });
+export const makeModule = identity;
 class MapAsyncIterable {
     d;
     m;
@@ -343,13 +314,6 @@ class ScanAsyncIterable {
         }
     }
 }
-export const reduceAsync = (reducer, initialValue) => async (iterable) => {
-    let acc = initialValue();
-    for await (let v of iterable) {
-        acc = reducer(acc, v);
-    }
-    return acc;
-};
 class RepeatAsyncIterable {
     i;
     p;

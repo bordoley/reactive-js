@@ -1,6 +1,7 @@
 /// <reference types="./Producer.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { identity } from "../functions.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
 import Producer_create from "./Producer/__private__/Producer.create.js";
@@ -30,6 +31,7 @@ export const gen = Producer_gen;
 export const genPure = Producer_genPure;
 export const keep = Producer_keep;
 export const lastAsync = Producer_lastAsync;
+export const makeModule = identity;
 export const map = Producer_map;
 export const pairwise = Producer_pairwise;
 export const scan = Producer_scan;

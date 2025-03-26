@@ -32,9 +32,9 @@ const createInitialScrollValue = () => ({
 });
 const Element_scrollEventSource = 
 /*@__PURE__*/ (() => {
-    const BroadcasterModule = {
+    const BroadcasterModule = Broadcaster.makeModule({
         merge: Broadcaster.merge,
-    };
+    });
     const eventSourceCache = newInstance(WeakMap);
     return returns(element => eventSourceCache.get(element) ??
         (() => {

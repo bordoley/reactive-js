@@ -95,3 +95,21 @@
 ### Returns
 
 [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+## Call Signature
+
+> **merge**\<`T`\>(...`computations`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+### Type Parameters
+
+• **T**
+
+### Parameters
+
+#### computations
+
+...readonly [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>[]
+
+### Returns
+
+[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)

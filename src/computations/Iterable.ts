@@ -1,11 +1,9 @@
 import {
-  Array_length,
   Array_map,
   Iterator_done,
   Iterator_next,
   Iterator_value,
 } from "../__internal__/constants.js";
-import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import {
   ComputationLike_isDeferred,
@@ -38,6 +36,7 @@ import {
   Tuple2,
   alwaysTrue,
   error,
+  identity,
   invoke,
   isFunction,
   isNone,
@@ -236,13 +235,6 @@ export const encodeUtf8: Signature["encodeUtf8"] = (() =>
 
 export const first: Signature["first"] = Iterable_first;
 
-export const firstAsync: Signature["firstAsync"] = /*@__PURE__*/ returns(
-  async (iter: IterableLike) => {
-    await Promise.resolve();
-    return first()(iter);
-  },
-) as Signature["firstAsync"];
-
 class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
 
@@ -267,35 +259,6 @@ export const forEach: Signature["forEach"] = (<T>(effect: SideEffect1<T>) =>
     newInstance(ForEachIterable, iterable, effect)) as Signature["forEach"];
 
 export const fromValue: Signature["fromValue"] = /*@__PURE__*/ returns(tuple);
-
-class FromReadonlyArrayIterable<T> {
-  public readonly [ComputationLike_isPure]?: true;
-
-  constructor(
-    private readonly arr: readonly T[],
-    private readonly count: number,
-    private readonly start: number,
-  ) {}
-
-  *[Symbol.iterator]() {
-    let { arr, start, count } = this;
-    while (count !== 0) {
-      const next = arr[start];
-      yield next;
-
-      count > 0 ? (start++, count--) : (start--, count++);
-    }
-  }
-}
-export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  <T>(options?: { readonly count?: number; readonly start?: number }) =>
-  (arr: readonly T[]) => {
-    let [start, count] = parseArrayBounds(arr, options);
-
-    return start === 0 && count >= arr[Array_length]
-      ? arr
-      : newInstance(FromReadonlyArrayIterable, arr, count, start);
-  };
 
 class GenIterable<T> implements IterableWithSideEffectsLike<T> {
   public readonly [ComputationLike_isSynchronous]: true = true as const;
@@ -390,6 +353,8 @@ class MapIterable<TA, TB> implements IterableLike<TB> {
   }
 }
 
+export const makeModule: Signature["makeModule"] = identity;
+
 export const map: Signature["map"] = (<TA, TB>(mapper: Function1<TA, TB>) =>
   (iterable: IterableLike<TA>) =>
     newInstance(MapIterable, iterable, mapper)) as Signature["map"];
@@ -432,13 +397,6 @@ export const reduce: Signature["reduce"] =
     }
 
     return acc;
-  };
-
-export const reduceAsync: Signature["reduceAsync"] =
-  <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-  async (iterable: IterableLike<T>) => {
-    await Promise.resolve();
-    return reduce(reducer, initialValue)(iterable);
   };
 
 class RepeatIterable<T> {

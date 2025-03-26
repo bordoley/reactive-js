@@ -81,3 +81,17 @@
 #### Returns
 
 [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+
+***
+
+### fromPromise()
+
+> **fromPromise**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>

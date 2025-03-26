@@ -63,6 +63,7 @@ export interface GenericComputationType<TComputationBaseOfT extends ComputationL
     readonly [Computation_synchronousWithSideEffectsOfT]?: TSynchronousWithSideEffectsOfT;
     readonly [Computation_multicastOfT]?: TMulticastComputationOfT;
 }
+export type AnyComputationType = GenericComputationType<any, any, any, any, any, any>;
 export type ComputationType = GenericComputationType<ComputationLike, PureDeferredComputationLike, DeferredComputationWithSideEffectsLike, PureSynchronousComputationLike, SynchronousComputationWithSideEffectsLike, MulticastComputationLike>;
 export interface ComputationTypeOf<TComputationType extends ComputationType, T = unknown> {
     readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<TComputationType, T>;
@@ -224,7 +225,7 @@ interface ZipConstructor<TComputationType extends ComputationType> {
     <TA, TB, TC>(a: DeferredComputationOf<TComputationType, TA>, b: DeferredComputationOf<TComputationType, TB>, c: DeferredComputationOf<TComputationType, TC>): DeferredComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
     <TA, TB, TC, TD>(a: DeferredComputationOf<TComputationType, TA>, b: DeferredComputationOf<TComputationType, TB>, c: DeferredComputationOf<TComputationType, TC>, d: DeferredComputationOf<TComputationType, TD>): DeferredComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
 }
-declare const ComputationModuleLike_computationType: unique symbol;
+export declare const ComputationModuleLike_computationType: unique symbol;
 export interface ComputationModuleLike<TComputationType extends ComputationType = ComputationType> {
     [ComputationModuleLike_computationType]?: TComputationType;
 }
@@ -233,15 +234,12 @@ export type PickComputationModule<TComputationType extends ComputationType, TCom
 export type ComputationOfModule<TModule extends ComputationModuleLike, T> = ComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type DeferredComputationOfModule<TModule extends ComputationModuleLike, T> = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type MulticastComputationOfModule<TModule extends ComputationModuleLike, T> = MulticastComputationOf<ComputationTypeOfModule<TModule>, T>;
-export interface ComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+export interface ComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
     empty?: Record<string, any>;
-    firstAsync?: Record<string, any>;
-    fromReadonlyArray?: Record<string, any>;
     fromValue?: Record<string, any>;
     genPure?: Record<string, any>;
     lastAsync?: Record<string, any>;
     raise?: Record<string, any>;
-    reduceAsync?: Record<string, any>;
     toReadonlyArrayAsync?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     distinctUntilChanged<T>(options?: {
@@ -249,17 +247,16 @@ export interface ComputationModule<TComputationType extends ComputationType, TCr
     }): PureComputationOperator<TComputationType, T, T>;
     empty<T>(options?: TCreationOptions["empty"]): NewPureInstanceOf<TComputationType, T>;
     encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
-    firstAsync<T>(options?: TCreationOptions["firstAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
-    fromReadonlyArray<T>(options?: {
-        readonly count?: number;
-        readonly start?: number;
-    } & TCreationOptions["fromReadonlyArray"]): Function1<ReadonlyArray<T>, NewPureInstanceOf<TComputationType, T>>;
     fromValue<T>(options?: TCreationOptions["fromValue"]): Function1<T, NewPureInstanceOf<TComputationType, T>>;
     genPure<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["genPure"]): NewPureInstanceOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<TComputationType, T, T>;
     lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
+    makeModule<TModule extends {
+        [key: string]: any;
+    }>(o: TModule): TModule & {
+        [ComputationModuleLike_computationType]?: TComputationType;
+    };
     map<TA, TB>(selector: Function1<TA, TB>): PureComputationOperator<TComputationType, TA, TB>;
-    reduceAsync<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: TCreationOptions["reduceAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, TAcc>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureComputationOperator<TComputationType, T, TAcc>;
     pairwise<T>(): PureComputationOperator<TComputationType, T, Tuple2<T, T>>;
     skipFirst<T>(options?: {
@@ -350,10 +347,7 @@ export interface SequentialReactiveComputationModule<TComputationType extends Co
         readonly count?: number;
     }): PureComputationOperator<TComputationType, T, T>;
 }
-export interface MulticastedComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
-    fromPromise<T>(): Function1<Promise<T>, MulticastComputationOf<TComputationType, T>>;
-}
-export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationType = ComputationType, TCreationOptions extends {
     fromAsyncIterable?: Record<string, any>;
     fromBroadcaster?: Record<string, any>;
     never?: Record<string, any>;
@@ -371,6 +365,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     merge<T>(...computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
     merge<T>(...computations: readonly MulticastComputationOf<TComputationType, T>[]): MulticastComputationOf<TComputationType, T> & DisposableLike;
+    merge<T>(...computations: readonly ComputationOf<TComputationType, T>[]): ComputationOf<TComputationType, T> & DisposableLike;
     never<T>(options?: TCreationOptions["never"]): NewPureInstanceOf<TComputationType, T>;
     takeUntil<T>(notifier: PureSynchronousComputationOf<TComputationType, unknown>): PureComputationOperator<TComputationType, T, T>;
     takeUntil<T>(notifier: SynchronousComputationWithSideEffectsOf<TComputationType, unknown>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
