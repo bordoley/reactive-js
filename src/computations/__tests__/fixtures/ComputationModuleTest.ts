@@ -5,7 +5,7 @@ import {
   expectToThrowErrorAsync,
   testAsync,
 } from "../../../__internal__/testing.js";
-import { ComputationModule, ComputationType } from "../../../computations.js";
+import { ComputationModule } from "../../../computations.js";
 import {
   Tuple2,
   alwaysTrue,
@@ -23,8 +23,8 @@ import {
 import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
 
-const ComputationModuleTests = <TComputationType extends ComputationType>(
-  m: ComputationModule<TComputationType>,
+const ComputationModuleTests = <TComputationModule extends ComputationModule>(
+  m: TComputationModule,
 ) =>
   describe(
     "ComputationModule",
@@ -251,7 +251,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           [1, 2, 3],
           Computation.fromReadonlyArray(m)(),
           m.skipFirst<number>(),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3]),
         ),
       ),
@@ -261,7 +261,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           [1, 2, 3],
           Computation.fromReadonlyArray(m)(),
           m.skipFirst<number>({ count: 2 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([3]),
         ),
       ),
@@ -271,7 +271,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
           [1, 2, 3],
           Computation.fromReadonlyArray(m)(),
           m.skipFirst<number>({ count: 4 }),
-          m.toReadonlyArrayAsync(),
+          m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([] as number[]),
         ),
       ),

@@ -1045,7 +1045,7 @@ export interface ComputationModule<
 }
 
 export interface SequentialComputationModule<
-  TComputationType extends ComputationType,
+  TComputationType extends AnyComputationType = AnyComputationType,
   TCreationOptions extends {
     gen?: Record<string, any>;
   } = {},

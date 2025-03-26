@@ -267,7 +267,7 @@ export interface ComputationModule<TComputationType extends AnyComputationType =
     }): PureComputationOperator<TComputationType, T, T>;
     toReadonlyArrayAsync<T>(options?: TCreationOptions["toReadonlyArrayAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 }
-export interface SequentialComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+export interface SequentialComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
     gen?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     catchError<T>(onError: SideEffect1<Error>): PureComputationOperator<TComputationType, T, T>;
