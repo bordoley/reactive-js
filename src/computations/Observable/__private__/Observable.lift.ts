@@ -32,8 +32,8 @@ interface LiftedObservableLike<TIn, TOut>
   extends LiftedSourceLike<
       TIn,
       TOut,
-      ConsumerLike<TIn>,
-      ConsumerLike<TOut>,
+      ObserverLike<TIn>,
+      ObserverLike<TOut>,
       ObservableLike<TIn>
     >,
     ObservableLike<TOut> {
@@ -43,7 +43,10 @@ interface LiftedObservableLike<TIn, TOut>
 
   readonly [LiftedSourceLike_source]: ObservableLike<TIn>;
   readonly [LiftedSourceLike_operators]: ReadonlyArray<
-    Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
+    Function1<
+      LiftedOperatorLike<ObserverLike, any>,
+      LiftedOperatorLike<ObserverLike, any>
+    >
   >;
 
   [SourceLike_subscribe](listener: ConsumerLike<TOut>): void;
@@ -51,28 +54,30 @@ interface LiftedObservableLike<TIn, TOut>
 
 const operatorToObserver: <T>(
   delegate: ConsumerLike,
-) => Function1<LiftedOperatorLike<any>, ConsumerLike<T>> = /*@__PURE__*/ (<
-  T,
->() => {
-  const createOperatorToObserver = mixInstanceFactory(
-    include(LiftedOperatorToObserverMixin()),
-    function OperatorToObserver(
-      this: unknown,
-      delegate: ConsumerLike,
-      operator: LiftedOperatorLike<any>,
-    ): ObserverLike<T> {
-      init(LiftedOperatorToObserverMixin(), this, operator, delegate);
+) => Function1<LiftedOperatorLike<ObserverLike, any>, ObserverLike<T>> =
+  /*@__PURE__*/ (<T>() => {
+    const createOperatorToObserver = mixInstanceFactory(
+      include(LiftedOperatorToObserverMixin()),
+      function OperatorToObserver(
+        this: unknown,
+        delegate: ConsumerLike,
+        operator: LiftedOperatorLike<any, ObserverLike>,
+      ): ObserverLike<T> {
+        init(LiftedOperatorToObserverMixin(), this, operator, delegate);
 
-      return this;
-    },
-  );
+        return this;
+      },
+    );
 
-  return delegate => operator => createOperatorToObserver(delegate, operator);
-})();
+    return delegate => operator => createOperatorToObserver(delegate, operator);
+  })();
 
 const createLiftedObservable: <TIn, TOut>(
   src: ObservableLike<TIn>,
-  op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+  op: Function1<
+    LiftedOperatorLike<ObserverLike, TOut>,
+    LiftedOperatorLike<ObserverLike, TIn>
+  >,
   config?: {
     [ComputationLike_isPure]?: boolean;
     [ComputationLike_isSynchronous]?: boolean;
@@ -83,7 +88,10 @@ const createLiftedObservable: <TIn, TOut>(
     [ComputationLike_isSynchronous]: boolean;
     [LiftedSourceLike_source]: ObservableLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
-      Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
+      Function1<
+        LiftedOperatorLike<any, ObserverLike>,
+        LiftedOperatorLike<any, ObserverLike>
+      >
     >;
   };
 
@@ -100,7 +108,10 @@ const createLiftedObservable: <TIn, TOut>(
     function LiftedObservable(
       this: TProperties & TPrototype,
       source: ObservableLike<TIn>,
-      op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+      op: Function1<
+        LiftedOperatorLike<ObserverLike, TOut>,
+        LiftedOperatorLike<ObserverLike, TIn>
+      >,
       config?: {
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
@@ -148,7 +159,12 @@ const Observable_lift =
     [ComputationLike_isPure]?: boolean;
     [ComputationLike_isSynchronous]?: boolean;
   }) =>
-  (operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>) =>
+  (
+    operator: Function1<
+      LiftedOperatorLike<ObserverLike, TOut>,
+      LiftedOperatorLike<ObserverLike, TIn>
+    >,
+  ) =>
   (source: ObservableLike<TIn>): ObservableLike<TOut> => {
     return createLiftedObservable(source, operator, config);
   };

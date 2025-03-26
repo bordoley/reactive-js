@@ -7,7 +7,8 @@ import * as Sink from "../../../utils/__internal__/Sink.js";
 import * as Computation from "../../Computation.js";
 import { LiftedSourceLike_operators, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedOperatorToConsumerMixin from "../../__mixins__/LiftedOperatorToConsumerMixin.js";
-const operatorToConsumer = /*@__PURE__*/ (() => {
+const operatorToConsumer = 
+/*@__PURE__*/ (() => {
     const createOperatorToConsumer = mixInstanceFactory(include(LiftedOperatorToConsumerMixin()), function OperatorToConsumer(delegate, operator) {
         init(LiftedOperatorToConsumerMixin(), this, operator, delegate);
         return this;

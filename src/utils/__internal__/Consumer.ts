@@ -150,7 +150,7 @@ export const toObserver: <T>(
     ): ObserverLike<T> {
       init(DelegatingDisposableMixin, this, consumer);
       init(
-        ObserverMixin<T, ConsumerLike<T>>(),
+        ObserverMixin<ConsumerLike<T>, T>(),
         this,
         consumer,
         scheduler,
@@ -162,14 +162,14 @@ export const toObserver: <T>(
     props(),
     proto({
       [ObserverMixinLike_notify](
-        this: ObserverMixinLike<T, ConsumerLike<T>>,
+        this: ObserverMixinLike<ConsumerLike<T>, T>,
         next: T,
       ) {
         this[ObserverMixinLike_consumer][EventListenerLike_notify](next);
       },
 
       [ObserverMixinLike_complete](
-        this: ObserverMixinLike<T, ConsumerLike<T>>,
+        this: ObserverMixinLike<ConsumerLike<T>, T>,
       ) {
         this[ObserverMixinLike_consumer][SinkLike_complete]();
       },

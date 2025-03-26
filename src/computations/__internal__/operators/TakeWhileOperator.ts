@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Optional, Predicate, none } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -16,11 +17,14 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<T>,
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, T>,
   predicate: Predicate<T>,
   options: Optional<{ readonly inclusive?: boolean }>,
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");
   const TakeWhileMixin_predicate = Symbol("TakeWhileMixin_predicate");
 
@@ -30,18 +34,18 @@ export const create: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function TakeWhileOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<T>,
+      delegate: LiftedOperatorLike<TSubscription, T>,
       predicate: Predicate<T>,
       options: Optional<{ readonly inclusive?: boolean }>,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
 
       this[TakeWhileMixin_predicate] = predicate;
       this[TakeWhileMixin_inclusive] = options?.inclusive ?? false;
@@ -54,7 +58,7 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T>,
+        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
         next: T,
       ) {
         const satisfiesPredicate = this[TakeWhileMixin_predicate](next);

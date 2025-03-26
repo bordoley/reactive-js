@@ -12,6 +12,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -23,10 +24,13 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<ReadonlyArray<T>>,
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, ReadonlyArray<T>>,
   count?: number,
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const BufferOperator_buffer = Symbol("BufferOperator_buffer");
   const BufferOperator_count = Symbol("BufferOperator_count");
 
@@ -36,17 +40,21 @@ export const create: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function BufferOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<ReadonlyArray<T>>,
+      delegate: LiftedOperatorLike<TSubscription, ReadonlyArray<T>>,
       count?: number,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<ReadonlyArray<T>>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(
+        DelegatingLiftedOperatorMixin<TSubscription, ReadonlyArray<T>>(),
+        this,
+        delegate,
+      );
 
       this[BufferOperator_count] = clampPositiveNonZeroInteger(
         count ?? MAX_SAFE_INTEGER,
@@ -61,7 +69,8 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T, ReadonlyArray<T>>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, T, ReadonlyArray<T>>,
         next: T,
       ) {
         const buffer = this[BufferOperator_buffer];
@@ -79,7 +88,8 @@ export const create: <T>(
         }
       },
       [DelegatingLiftedOperatorLike_onCompleted](
-        this: TProperties & DelegatingLiftedOperatorLike<T, ReadonlyArray<T>>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, T, ReadonlyArray<T>>,
       ) {
         const delegate = this[DelegatingLiftedOperatorLike_delegate];
         const buffer = this[BufferOperator_buffer];

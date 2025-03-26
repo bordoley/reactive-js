@@ -6,8 +6,8 @@ import { SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import { LiftedOperatorLike_complete, LiftedOperatorLike_isCompleted, } from "../__internal__/LiftedSource.js";
 import LiftedOperatorToEventListenerMixin, { LiftedOperatorToEventListenerLike_operator, } from "./LiftedOperatorToEventListenerMixin.js";
 const LiftedOperatorToSinkMixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(LiftedOperatorToEventListenerMixin()), function LiftedOperatorToSinkMixin(operator, delegate) {
-        init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
+    return returns(mix(include(LiftedOperatorToEventListenerMixin()), function LiftedOperatorToSinkMixin(operator) {
+        init(LiftedOperatorToEventListenerMixin(), this, operator);
         return this;
     }, props(), proto({
         get [SinkLike_isCompleted]() {

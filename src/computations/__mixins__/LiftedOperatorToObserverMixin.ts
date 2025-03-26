@@ -1,5 +1,5 @@
 import {
-  Mixin2,
+  Mixin1,
   include,
   init,
   mix,
@@ -17,6 +17,7 @@ import {
   LiftedOperatorLike,
   LiftedOperatorLike_complete,
   LiftedOperatorLike_notify,
+  LiftedOperatorLike_subscription,
 } from "../__internal__/LiftedSource.js";
 import { LiftedOperatorToConsumerLike } from "./LiftedOperatorToConsumerMixin.js";
 import LiftedOperatorToEventListenerMixin, {
@@ -24,20 +25,22 @@ import LiftedOperatorToEventListenerMixin, {
   LiftedOperatorToEventListenerLike_operator,
 } from "./LiftedOperatorToEventListenerMixin.js";
 
-export interface LiftedOperatorToObserverLike<T, TDelegate extends ObserverLike>
-  extends LiftedOperatorToConsumerLike<T, TDelegate>,
+export interface LiftedOperatorToObserverLike<
+  TSubscription extends ObserverLike,
+  T,
+> extends LiftedOperatorToConsumerLike<TSubscription, T>,
     ObserverLike<T> {}
 
-type TReturn<T, TDelegate extends ObserverLike> = LiftedOperatorToObserverLike<
+type TReturn<
+  TSubscription extends ObserverLike,
   T,
-  TDelegate
->;
+> = LiftedOperatorToObserverLike<TSubscription, T>;
 
 const LiftedOperatorToObserverMixin: <
+  TSubscription extends ObserverLike,
   T,
-  TDelegate extends ObserverLike,
->() => Mixin2<TReturn<T, TDelegate>, LiftedOperatorLike<T>, TDelegate> =
-  /*@__PURE__*/ (<T, TDelegate extends ObserverLike>() => {
+>() => Mixin1<TReturn<TSubscription, T>, LiftedOperatorLike<TSubscription, T>> =
+  /*@__PURE__*/ (<TSubscription extends ObserverLike, T>() => {
     return returns(
       mix(
         include(
@@ -47,24 +50,29 @@ const LiftedOperatorToObserverMixin: <
         ),
         function LiftedOperatorToObserverMixin(
           this: unknown,
-          operator: LiftedOperatorLike<T>,
-          delegate: TDelegate,
-        ): TReturn<T, TDelegate> {
+          operator: LiftedOperatorLike<TSubscription, T>,
+        ): TReturn<TSubscription, T> {
+          const delegate = operator[LiftedOperatorLike_subscription];
           init(DelegatingSchedulerMixin, this, delegate);
           init(
-            LiftedOperatorToEventListenerMixin<T, TDelegate>(),
+            LiftedOperatorToEventListenerMixin<TSubscription, T>(),
             this,
             operator,
-            delegate,
           );
-          init(ObserverMixin<T, TDelegate>(), this, delegate, delegate, none);
+          init(
+            ObserverMixin<TSubscription, T>(),
+            this,
+            delegate,
+            delegate,
+            none,
+          );
 
           return this;
         },
         props(),
         proto({
           [ObserverMixinLike_notify](
-            this: LiftedOperatorToEventListenerLike<T, TDelegate>,
+            this: LiftedOperatorToEventListenerLike<TSubscription, T>,
             next: T,
           ) {
             this[LiftedOperatorToEventListenerLike_operator][
@@ -73,7 +81,7 @@ const LiftedOperatorToObserverMixin: <
           },
 
           [ObserverMixinLike_complete](
-            this: LiftedOperatorToEventListenerLike<T, TDelegate>,
+            this: LiftedOperatorToEventListenerLike<TSubscription, T>,
           ) {
             this[LiftedOperatorToEventListenerLike_operator][
               LiftedOperatorLike_complete

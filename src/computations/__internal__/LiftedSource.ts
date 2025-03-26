@@ -1,6 +1,6 @@
 import { SourceLike, SourceLike_subscribe } from "../../computations.js";
 import { Function1 } from "../../functions.js";
-import { EventListenerLike } from "../../utils.js";
+import { DisposableLike, EventListenerLike } from "../../utils.js";
 
 export const LiftedOperatorLike_notify = Symbol("LiftedOperatorLike_notify");
 export const LiftedOperatorLike_complete = Symbol(
@@ -10,17 +10,26 @@ export const LiftedOperatorLike_isCompleted = Symbol(
   "LiftedOperatorLike_isCompleted",
 );
 
-export interface LiftedOperatorLike<T> {
+export const LiftedOperatorLike_subscription = Symbol(
+  "LiftedOperatorLike_subscription",
+);
+
+export interface LiftedOperatorLike<TSubscription extends DisposableLike, T> {
   readonly [LiftedOperatorLike_isCompleted]: boolean;
+  readonly [LiftedOperatorLike_subscription]: TSubscription;
 
   [LiftedOperatorLike_notify](next: T): void;
 
   [LiftedOperatorLike_complete](): void;
 }
 
-export type LiftOperator<TA, TB> = Function1<
-  LiftedOperatorLike<TB>,
-  LiftedOperatorLike<TA>
+export type LiftOperator<
+  TSubscription extends DisposableLike,
+  TA,
+  TB,
+> = Function1<
+  LiftedOperatorLike<TSubscription, TB>,
+  LiftedOperatorLike<TSubscription, TA>
 >;
 
 export const LiftedSourceLike_operators = Symbol("LiftedSourceLike_operators");
@@ -34,7 +43,9 @@ export interface LiftedSourceLike<
   TSource extends SourceLike<TIn, TEventListenerIn>,
 > extends SourceLike<TOut, TEventListenerOut> {
   readonly [LiftedSourceLike_source]: TSource;
-  readonly [LiftedSourceLike_operators]: ReadonlyArray<LiftOperator<any, any>>;
+  readonly [LiftedSourceLike_operators]: ReadonlyArray<
+    LiftOperator<any, any, TEventListenerOut>
+  >;
 
   [SourceLike_subscribe](listener: TEventListenerOut): void;
 }

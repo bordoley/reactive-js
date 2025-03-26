@@ -4,13 +4,14 @@ import { include, init, mix, props, proto, } from "../../__internal__/mixins.js"
 import { none, returns } from "../../functions.js";
 import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import ObserverMixin, { ObserverMixinLike_complete, ObserverMixinLike_notify, } from "../../utils/__mixins__/ObserverMixin.js";
-import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, } from "../__internal__/LiftedSource.js";
+import { LiftedOperatorLike_complete, LiftedOperatorLike_notify, LiftedOperatorLike_subscription, } from "../__internal__/LiftedSource.js";
 import LiftedOperatorToEventListenerMixin, { LiftedOperatorToEventListenerLike_operator, } from "./LiftedOperatorToEventListenerMixin.js";
 const LiftedOperatorToObserverMixin = 
 /*@__PURE__*/ (() => {
-    return returns(mix(include(DelegatingSchedulerMixin, LiftedOperatorToEventListenerMixin(), ObserverMixin()), function LiftedOperatorToObserverMixin(operator, delegate) {
+    return returns(mix(include(DelegatingSchedulerMixin, LiftedOperatorToEventListenerMixin(), ObserverMixin()), function LiftedOperatorToObserverMixin(operator) {
+        const delegate = operator[LiftedOperatorLike_subscription];
         init(DelegatingSchedulerMixin, this, delegate);
-        init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
+        init(LiftedOperatorToEventListenerMixin(), this, operator);
         init(ObserverMixin(), this, delegate, delegate, none);
         return this;
     }, props(), proto({

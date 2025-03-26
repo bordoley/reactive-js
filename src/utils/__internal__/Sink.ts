@@ -9,6 +9,7 @@ import {
   LiftedOperatorLike_complete,
   LiftedOperatorLike_isCompleted,
   LiftedOperatorLike_notify,
+  LiftedOperatorLike_subscription,
 } from "../../computations/__internal__/LiftedSource.js";
 import { Function1, none, returns } from "../../functions.js";
 import {
@@ -20,16 +21,14 @@ import {
 
 export const toOperator: <T>() => Function1<
   SinkLike<T>,
-  LiftedOperatorLike<T>
+  LiftedOperatorLike<SinkLike<T>, T>
 > = /*@__PURE__*/ (<T>() => {
-  const SinkToOperator_sink = Symbol("SinkToOperator_sink");
-
   type TProperties = {
-    [SinkToOperator_sink]: SinkLike<T>;
+    [LiftedOperatorLike_subscription]: SinkLike<T>;
   };
 
   type TPrototype = Pick<
-    LiftedOperatorLike<T>,
+    LiftedOperatorLike<SinkLike<T>, T>,
     | typeof LiftedOperatorLike_isCompleted
     | typeof LiftedOperatorLike_notify
     | typeof LiftedOperatorLike_complete
@@ -40,25 +39,25 @@ export const toOperator: <T>() => Function1<
       function SinkToOperator(
         this: TPrototype & TProperties,
         listener: SinkLike<T>,
-      ): LiftedOperatorLike<T> {
-        this[SinkToOperator_sink] = listener;
+      ): LiftedOperatorLike<SinkLike<T>, T> {
+        this[LiftedOperatorLike_subscription] = listener;
         return this;
       },
       props<TProperties>({
-        [SinkToOperator_sink]: none,
+        [LiftedOperatorLike_subscription]: none,
       }),
       proto<TPrototype>({
         get [LiftedOperatorLike_isCompleted](): boolean {
           unsafeCast<TProperties>(this);
-          return this[SinkToOperator_sink][SinkLike_isCompleted];
+          return this[LiftedOperatorLike_subscription][SinkLike_isCompleted];
         },
 
         [LiftedOperatorLike_notify](this: TProperties, next: T) {
-          this[SinkToOperator_sink][EventListenerLike_notify](next);
+          this[LiftedOperatorLike_subscription][EventListenerLike_notify](next);
         },
 
         [LiftedOperatorLike_complete](this: TProperties) {
-          this[SinkToOperator_sink][SinkLike_complete]();
+          this[LiftedOperatorLike_subscription][SinkLike_complete]();
         },
       }),
     ),

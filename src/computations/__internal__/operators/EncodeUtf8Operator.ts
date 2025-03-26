@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -15,9 +16,11 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: (
-  delegate: LiftedOperatorLike<ArrayBuffer>,
-) => LiftedOperatorLike<string> = /*@__PURE__*/ (() => {
+export const create: <TSubscription extends DisposableLike>(
+  delegate: LiftedOperatorLike<TSubscription, ArrayBuffer>,
+) => LiftedOperatorLike<TSubscription, string> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+>() => {
   const EncodeUtf8Operator_textEncoder = Symbol(
     "EncodeUtf8Operator_textEncoder",
   );
@@ -30,14 +33,14 @@ export const create: (
     include(DelegatingLiftedOperatorMixin()),
     function EncodeUtf8Operator(
       this: Pick<
-        DelegatingLiftedOperatorLike<string, ArrayBuffer>,
+        DelegatingLiftedOperatorLike<TSubscription, string, ArrayBuffer>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<ArrayBuffer>,
-    ): LiftedOperatorLike<string> {
+      delegate: LiftedOperatorLike<TSubscription, ArrayBuffer>,
+    ): LiftedOperatorLike<TSubscription, string> {
       init(
-        DelegatingLiftedOperatorMixin<string, ArrayBuffer>(),
+        DelegatingLiftedOperatorMixin<TSubscription, string, ArrayBuffer>(),
         this,
         delegate,
       );
@@ -51,7 +54,8 @@ export const create: (
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<string, ArrayBuffer>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, string, ArrayBuffer>,
         next: string,
       ) {
         const mapped = this[EncodeUtf8Operator_textEncoder].encode(next);

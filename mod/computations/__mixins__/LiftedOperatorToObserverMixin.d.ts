@@ -1,9 +1,9 @@
-import { Mixin2 } from "../../__internal__/mixins.js";
+import { Mixin1 } from "../../__internal__/mixins.js";
 import { ObserverLike } from "../../utils.js";
 import { LiftedOperatorLike } from "../__internal__/LiftedSource.js";
 import { LiftedOperatorToConsumerLike } from "./LiftedOperatorToConsumerMixin.js";
-export interface LiftedOperatorToObserverLike<T, TDelegate extends ObserverLike> extends LiftedOperatorToConsumerLike<T, TDelegate>, ObserverLike<T> {
+export interface LiftedOperatorToObserverLike<TSubscription extends ObserverLike, T> extends LiftedOperatorToConsumerLike<TSubscription, T>, ObserverLike<T> {
 }
-type TReturn<T, TDelegate extends ObserverLike> = LiftedOperatorToObserverLike<T, TDelegate>;
-declare const LiftedOperatorToObserverMixin: <T, TDelegate extends ObserverLike>() => Mixin2<TReturn<T, TDelegate>, LiftedOperatorLike<T>, TDelegate>;
+type TReturn<TSubscription extends ObserverLike, T> = LiftedOperatorToObserverLike<TSubscription, T>;
+declare const LiftedOperatorToObserverMixin: <TSubscription extends ObserverLike, T>() => Mixin1<TReturn<TSubscription, T>, LiftedOperatorLike<TSubscription, T>>;
 export default LiftedOperatorToObserverMixin;

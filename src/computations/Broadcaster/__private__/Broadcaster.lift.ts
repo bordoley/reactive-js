@@ -39,7 +39,10 @@ interface LiftedBroadcasterLike<TIn, TOut>
 
   readonly [LiftedSourceLike_source]: BroadcasterLike<TIn>;
   readonly [LiftedSourceLike_operators]: ReadonlyArray<
-    Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
+    Function1<
+      LiftedOperatorLike<EventListenerLike, any>,
+      LiftedOperatorLike<EventListenerLike, any>
+    >
   >;
 
   [SourceLike_subscribe](listener: EventListenerLike<TOut>): void;
@@ -47,15 +50,16 @@ interface LiftedBroadcasterLike<TIn, TOut>
 
 const operatorToEventListener: <T>(
   delegate: EventListenerLike,
-) => Function1<LiftedOperatorLike<any>, EventListenerLike<T>> = /*@__PURE__*/ (<
-  T,
->() => {
+) => Function1<
+  LiftedOperatorLike<any, EventListenerLike>,
+  EventListenerLike<T>
+> = /*@__PURE__*/ (<T>() => {
   const createOperatorToEventListener = mixInstanceFactory(
     include(LiftedOperatorToEventListenerMixin()),
     function OperatorToEventListener(
       this: unknown,
       delegate: EventListenerLike,
-      operator: LiftedOperatorLike<any>,
+      operator: LiftedOperatorLike<any, EventListenerLike>,
     ): EventListenerLike<T> {
       init(LiftedOperatorToEventListenerMixin(), this, operator, delegate);
 
@@ -69,12 +73,18 @@ const operatorToEventListener: <T>(
 
 const createLiftedBroadcaster: <TIn, TOut>(
   src: BroadcasterLike<TIn>,
-  op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+  op: Function1<
+    LiftedOperatorLike<EventListenerLike, TOut>,
+    LiftedOperatorLike<EventListenerLike, TIn>
+  >,
 ) => BroadcasterLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
     [LiftedSourceLike_source]: BroadcasterLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
-      Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
+      Function1<
+        LiftedOperatorLike<EventListenerLike, any>,
+        LiftedOperatorLike<EventListenerLike, any>
+      >
     >;
   };
 
@@ -90,7 +100,10 @@ const createLiftedBroadcaster: <TIn, TOut>(
     function LiftedBroadcaster(
       this: TProperties & TPrototype,
       source: BroadcasterLike<TIn>,
-      op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+      op: Function1<
+        LiftedOperatorLike<EventListenerLike, TOut>,
+        LiftedOperatorLike<EventListenerLike, TIn>
+      >,
     ): BroadcasterLike<TOut> {
       init(DelegatingDisposableContainerMixin(), this, source);
       const liftedSource: BroadcasterLike<TIn> =
@@ -130,7 +143,10 @@ const createLiftedBroadcaster: <TIn, TOut>(
 
 const Broadcaster_lift =
   <TIn, TOut>(
-    operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+    operator: Function1<
+      LiftedOperatorLike<EventListenerLike, TOut>,
+      LiftedOperatorLike<EventListenerLike, TIn>
+    >,
   ) =>
   (source: BroadcasterLike<TIn>): BroadcasterLike<TOut> => {
     return createLiftedBroadcaster(source, operator);

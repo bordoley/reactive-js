@@ -1,5 +1,5 @@
 import {
-  Mixin2,
+  Mixin1,
   include,
   init,
   mix,
@@ -23,52 +23,52 @@ import LiftedOperatorToEventListenerMixin, {
   LiftedOperatorToEventListenerLike_operator,
 } from "./LiftedOperatorToEventListenerMixin.js";
 
-export interface LiftedOperatorToSinkLike<T, TDelegate extends SinkLike>
-  extends LiftedOperatorToEventListenerLike<T, TDelegate>,
+export interface LiftedOperatorToSinkLike<TSubscription extends SinkLike, T>
+  extends LiftedOperatorToEventListenerLike<TSubscription, T>,
     SinkLike<T> {}
 
-type TReturn<T, TDelegate extends SinkLike> = LiftedOperatorToSinkLike<
-  T,
-  TDelegate
+type TReturn<TSubscription extends SinkLike, T> = LiftedOperatorToSinkLike<
+  TSubscription,
+  T
 >;
 
-type TPrototype<T, TDelegate extends SinkLike> = Pick<
-  LiftedOperatorToSinkLike<T, TDelegate>,
+type TPrototype<TSubscription extends SinkLike, T> = Pick<
+  LiftedOperatorToSinkLike<TSubscription, T>,
   typeof SinkLike_complete | typeof SinkLike_isCompleted
 >;
 
-const LiftedOperatorToSinkMixin: <T, TDelegate extends SinkLike>() => Mixin2<
-  TReturn<T, TDelegate>,
-  LiftedOperatorLike<T>,
-  TDelegate,
-  TPrototype<T, TDelegate>
-> = /*@__PURE__*/ (<T, TDelegate extends SinkLike>() => {
+const LiftedOperatorToSinkMixin: <
+  TSubscription extends SinkLike,
+  T,
+>() => Mixin1<
+  TReturn<TSubscription, T>,
+  LiftedOperatorLike<TSubscription, T>,
+  TPrototype<TSubscription, T>
+> = /*@__PURE__*/ (<TSubscription extends SinkLike, T>() => {
   return returns(
     mix(
       include(LiftedOperatorToEventListenerMixin()),
       function LiftedOperatorToSinkMixin(
-        this: TPrototype<T, TDelegate>,
-        operator: LiftedOperatorLike<T>,
-        delegate: TDelegate,
-      ): TReturn<T, TDelegate> {
+        this: TPrototype<TSubscription, T>,
+        operator: LiftedOperatorLike<TSubscription, T>,
+      ): TReturn<TSubscription, T> {
         init(
-          LiftedOperatorToEventListenerMixin<T, TDelegate>(),
+          LiftedOperatorToEventListenerMixin<TSubscription, T>(),
           this,
           operator,
-          delegate,
         );
 
         return this;
       },
       props(),
-      proto<TPrototype<T, TDelegate>>({
+      proto<TPrototype<TSubscription, T>>({
         get [SinkLike_isCompleted]() {
-          unsafeCast<LiftedOperatorToSinkLike<T, TDelegate>>(this);
+          unsafeCast<LiftedOperatorToSinkLike<TSubscription, T>>(this);
           return this[LiftedOperatorToEventListenerLike_operator][
             LiftedOperatorLike_isCompleted
           ];
         },
-        [SinkLike_complete](this: LiftedOperatorToSinkLike<T, TDelegate>) {
+        [SinkLike_complete](this: LiftedOperatorToSinkLike<TSubscription, T>) {
           this[LiftedOperatorToEventListenerLike_operator][
             LiftedOperatorLike_complete
           ]();

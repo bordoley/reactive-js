@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Factory, Optional, error, none, raise } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -17,10 +18,13 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<T>,
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, T>,
   factory: Factory<unknown>,
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const ThrowIfEmptyMixin_isEmpty = Symbol("ThrowIfEmptyMixin_isEmpty");
   const ThrowIfEmptyMixin_factory = Symbol("ThrowIfEmptyMixin_factory");
 
@@ -30,17 +34,17 @@ export const create: <T>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function ThrowIfEmptyOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<T>,
+      delegate: LiftedOperatorLike<TSubscription, T>,
       factory: Factory<unknown>,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
       this[ThrowIfEmptyMixin_factory] = factory;
 
       return this;
@@ -51,7 +55,7 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T>,
+        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
         next: T,
       ) {
         this[ThrowIfEmptyMixin_isEmpty] = false;
@@ -62,7 +66,8 @@ export const create: <T>(
       },
 
       [DelegatingLiftedOperatorLike_onCompleted](
-        this: TProperties & DelegatingLiftedOperatorLike<ArrayBuffer, string>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer, string>,
       ) {
         const factory = this[ThrowIfEmptyMixin_factory];
 

@@ -1,5 +1,5 @@
 import {
-  Mixin2,
+  Mixin1,
   include,
   init,
   mix,
@@ -16,23 +16,28 @@ import {
   QueueableLike_capacity,
   QueueableLike_isReady,
 } from "../../utils.js";
-import { LiftedOperatorLike } from "../__internal__/LiftedSource.js";
-import { LiftedOperatorToEventListenerLike_delegate } from "./LiftedOperatorToEventListenerMixin.js";
+import {
+  LiftedOperatorLike,
+  LiftedOperatorLike_subscription,
+} from "../__internal__/LiftedSource.js";
+import { LiftedOperatorToEventListenerLike_operator } from "./LiftedOperatorToEventListenerMixin.js";
 import LiftedOperatorToSinkMixin, {
   LiftedOperatorToSinkLike,
 } from "./LiftedOperatorToSinkMixin.js";
 
-export interface LiftedOperatorToConsumerLike<T, TDelegate extends ConsumerLike>
-  extends LiftedOperatorToSinkLike<T, TDelegate>,
+export interface LiftedOperatorToConsumerLike<
+  TSubscription extends ConsumerLike,
+  T,
+> extends LiftedOperatorToSinkLike<TSubscription, T>,
     ConsumerLike<T> {}
 
-type TReturn<T, TDelegate extends ConsumerLike> = LiftedOperatorToConsumerLike<
+type TReturn<
+  TSubscription extends ConsumerLike,
   T,
-  TDelegate
->;
+> = LiftedOperatorToConsumerLike<TSubscription, T>;
 
-type TPrototype<T, TDelegate extends ConsumerLike> = Pick<
-  LiftedOperatorToConsumerLike<T, TDelegate>,
+type TPrototype<TSubscription extends ConsumerLike, T> = Pick<
+  LiftedOperatorToConsumerLike<TSubscription, T>,
   | typeof QueueableLike_isReady
   | typeof QueueableLike_backpressureStrategy
   | typeof QueueableLike_capacity
@@ -40,61 +45,54 @@ type TPrototype<T, TDelegate extends ConsumerLike> = Pick<
 >;
 
 const LiftedOperatorToConsumerMixin: <
+  TSubscription extends ConsumerLike,
   T,
-  TDelegate extends ConsumerLike,
->() => Mixin2<
-  TReturn<T, TDelegate>,
-  LiftedOperatorLike<T>,
-  TDelegate,
-  TPrototype<T, TDelegate>
-> = /*@__PURE__*/ (<T, TDelegate extends ConsumerLike>() => {
+>() => Mixin1<
+  TReturn<TSubscription, T>,
+  LiftedOperatorLike<TSubscription, T>,
+  TPrototype<TSubscription, T>
+> = /*@__PURE__*/ (<TSubscription extends ConsumerLike, T>() => {
   return returns(
     mix(
       include(LiftedOperatorToSinkMixin()),
       function LiftedOperatorToConsumerMixin(
-        this: TPrototype<T, TDelegate>,
-        operator: LiftedOperatorLike<T>,
-        delegate: TDelegate,
-      ): TReturn<T, TDelegate> {
-        init(
-          LiftedOperatorToSinkMixin<T, TDelegate>(),
-          this,
-          operator,
-          delegate,
-        );
+        this: TPrototype<TSubscription, T>,
+        operator: LiftedOperatorLike<TSubscription, T>,
+      ): TReturn<TSubscription, T> {
+        init(LiftedOperatorToSinkMixin<TSubscription, T>(), this, operator);
 
         return this;
       },
       props(),
-      proto<TPrototype<T, TDelegate>>({
+      proto<TPrototype<TSubscription, T>>({
         get [QueueableLike_isReady](): boolean {
-          unsafeCast<LiftedOperatorToConsumerLike<T, TDelegate>>(this);
-          return this[LiftedOperatorToEventListenerLike_delegate][
-            QueueableLike_isReady
-          ];
+          unsafeCast<LiftedOperatorToConsumerLike<TSubscription, T>>(this);
+          return this[LiftedOperatorToEventListenerLike_operator][
+            LiftedOperatorLike_subscription
+          ][QueueableLike_isReady];
         },
 
         get [QueueableLike_backpressureStrategy](): BackpressureStrategy {
-          unsafeCast<LiftedOperatorToConsumerLike<T, TDelegate>>(this);
-          return this[LiftedOperatorToEventListenerLike_delegate][
-            QueueableLike_backpressureStrategy
-          ];
+          unsafeCast<LiftedOperatorToConsumerLike<TSubscription, T>>(this);
+          return this[LiftedOperatorToEventListenerLike_operator][
+            LiftedOperatorLike_subscription
+          ][QueueableLike_backpressureStrategy];
         },
 
         get [QueueableLike_capacity](): number {
-          unsafeCast<LiftedOperatorToConsumerLike<T, TDelegate>>(this);
-          return this[LiftedOperatorToEventListenerLike_delegate][
-            QueueableLike_capacity
-          ];
+          unsafeCast<LiftedOperatorToConsumerLike<TSubscription, T>>(this);
+          return this[LiftedOperatorToEventListenerLike_operator][
+            LiftedOperatorLike_subscription
+          ][QueueableLike_capacity];
         },
 
         [QueueableLike_addOnReadyListener](
-          this: LiftedOperatorToConsumerLike<T, TDelegate>,
+          this: LiftedOperatorToConsumerLike<TSubscription, T>,
           callback: SideEffect1<void>,
         ) {
-          return this[LiftedOperatorToEventListenerLike_delegate][
-            QueueableLike_addOnReadyListener
-          ](callback);
+          return this[LiftedOperatorToEventListenerLike_operator][
+            LiftedOperatorLike_subscription
+          ][QueueableLike_addOnReadyListener](callback);
         },
       }),
     ),

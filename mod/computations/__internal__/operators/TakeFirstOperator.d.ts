@@ -1,3 +1,4 @@
 import { Optional } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import { LiftedOperatorLike } from "../LiftedSource.js";
-export declare const create: <T>(delegate: LiftedOperatorLike<T>, takeCount: Optional<number>) => LiftedOperatorLike<T>;
+export declare const create: <TSubscription extends DisposableLike, T>(delegate: LiftedOperatorLike<TSubscription, T>, takeCount: Optional<number>) => LiftedOperatorLike<TSubscription, T>;

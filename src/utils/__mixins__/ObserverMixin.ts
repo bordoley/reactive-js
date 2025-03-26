@@ -46,27 +46,27 @@ export const ObserverMixinLike_notify = Symbol("ObserverMixinLike_notify");
 export const ObserverMixinLike_complete = Symbol("ObserverMixinLike_complete");
 export const ObserverMixinLike_consumer = Symbol("ObserverMixinLike_consumer");
 
-export interface ObserverMixinLike<T, TConsumer extends ConsumerLike> {
+export interface ObserverMixinLike<TConsumer extends ConsumerLike, T> {
   readonly [ObserverMixinLike_consumer]: TConsumer;
   [ObserverMixinLike_notify](next: T): void;
   [ObserverMixinLike_complete](): void;
 }
 
-type TReturn<T, TConsumer extends ConsumerLike> = ObserverMixinLike<
-  T,
-  TConsumer
+type TReturn<TConsumer extends ConsumerLike, T> = ObserverMixinLike<
+  TConsumer,
+  T
 > &
   Omit<ObserverLike<T>, keyof DisposableLike>;
 
-const ObserverMixin: <T, TConsumer extends ConsumerLike>() => Mixin3<
-  TReturn<T, TConsumer>,
+const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
+  TReturn<TConsumer, T>,
   TConsumer,
   SchedulerLike,
   Optional<{
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
   }>
-> = /*@__PURE__*/ (<T, TConsumer extends ConsumerLike>() => {
+> = /*@__PURE__*/ (<TConsumer extends ConsumerLike, T>() => {
   function observerSchedulerContinuation(
     this: TThis,
     ctx: ContinuationContextLike,
@@ -139,7 +139,7 @@ const ObserverMixin: <T, TConsumer extends ConsumerLike>() => Mixin3<
   };
 
   type TPrototype = Omit<
-    ObserverLike<T> & ObserverMixinLike<T, TConsumer>,
+    ObserverLike<T> & ObserverMixinLike<TConsumer, T>,
     | keyof DisposableLike
     | keyof SchedulerLike
     | keyof QueueableLike
@@ -150,7 +150,7 @@ const ObserverMixin: <T, TConsumer extends ConsumerLike>() => Mixin3<
   type TThis = TProperties &
     ObserverLike<T> &
     QueueLike<T> &
-    ObserverMixinLike<T, TConsumer>;
+    ObserverMixinLike<TConsumer, T>;
 
   return returns(
     mix(
@@ -163,7 +163,7 @@ const ObserverMixin: <T, TConsumer extends ConsumerLike>() => Mixin3<
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         }>,
-      ): TReturn<T, TConsumer> {
+      ): TReturn<TConsumer, T> {
         init(QueueMixin<T>(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
 

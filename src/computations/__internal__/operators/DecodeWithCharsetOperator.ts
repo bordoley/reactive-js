@@ -7,6 +7,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Optional, newInstance, none } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -18,14 +19,16 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: (
-  delegate: LiftedOperatorLike<string>,
+export const create: <TSubscription extends DisposableLike>(
+  delegate: LiftedOperatorLike<TSubscription, string>,
   options: Optional<{
     charset?: string;
     fatal?: boolean;
     ignoreBOM?: boolean;
   }>,
-) => LiftedOperatorLike<ArrayBuffer> = /*@__PURE__*/ (() => {
+) => LiftedOperatorLike<TSubscription, ArrayBuffer> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+>() => {
   const DecodeWithCharsetOperator_textDecoder = Symbol(
     "DecodeWithCharsetOperator_textDecoder",
   );
@@ -38,20 +41,20 @@ export const create: (
     include(DelegatingLiftedOperatorMixin()),
     function DecodeWithCharsetOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<ArrayBuffer>,
+        DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer>,
         | typeof LiftedOperatorLike_notify
         | typeof DelegatingLiftedOperatorLike_onCompleted
       > &
         TProperties,
-      delegate: LiftedOperatorLike<string>,
+      delegate: LiftedOperatorLike<TSubscription, string>,
       options: Optional<{
         charset?: string;
         fatal?: boolean;
         ignoreBOM?: boolean;
       }>,
-    ): LiftedOperatorLike<ArrayBuffer> {
+    ): LiftedOperatorLike<TSubscription, ArrayBuffer> {
       init(
-        DelegatingLiftedOperatorMixin<ArrayBuffer, string>(),
+        DelegatingLiftedOperatorMixin<TSubscription, ArrayBuffer, string>(),
         this,
         delegate,
       );
@@ -70,7 +73,8 @@ export const create: (
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<ArrayBuffer, string>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer, string>,
         next: ArrayBuffer,
       ) {
         const data = this[DecodeWithCharsetOperator_textDecoder].decode(next, {
@@ -87,7 +91,8 @@ export const create: (
       },
 
       [DelegatingLiftedOperatorLike_onCompleted](
-        this: TProperties & DelegatingLiftedOperatorLike<ArrayBuffer, string>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, ArrayBuffer, string>,
       ) {
         const data = this[DecodeWithCharsetOperator_textDecoder].decode(
           newInstance(Uint8Array, []),

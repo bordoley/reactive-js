@@ -7,6 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -17,10 +18,13 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<T>,
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, T>,
   takeCount: Optional<number>,
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const TakeFirstOperator_count = Symbol("TakeFirstOperator_count");
 
   interface TProperties {
@@ -28,17 +32,17 @@ export const create: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function TakeFirstOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<T>,
+      delegate: LiftedOperatorLike<TSubscription, T>,
       takeCount: Optional<number>,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
 
       this[TakeFirstOperator_count] = clampPositiveInteger(takeCount ?? 1);
 
@@ -53,7 +57,7 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T>,
+        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
         next: T,
       ) {
         this[TakeFirstOperator_count];

@@ -1,13 +1,11 @@
-import { Mixin2 } from "../../__internal__/mixins.js";
+import { Mixin1 } from "../../__internal__/mixins.js";
 import { EventListenerLike, EventListenerLike_notify } from "../../utils.js";
 import { LiftedOperatorLike } from "../__internal__/LiftedSource.js";
 export declare const LiftedOperatorToEventListenerLike_operator: unique symbol;
-export declare const LiftedOperatorToEventListenerLike_delegate: unique symbol;
-export interface LiftedOperatorToEventListenerLike<T, TDelegate extends EventListenerLike> extends EventListenerLike<T> {
-    readonly [LiftedOperatorToEventListenerLike_delegate]: TDelegate;
-    readonly [LiftedOperatorToEventListenerLike_operator]: LiftedOperatorLike<T>;
+export interface LiftedOperatorToEventListenerLike<TSubscription extends EventListenerLike, T> extends EventListenerLike<T> {
+    readonly [LiftedOperatorToEventListenerLike_operator]: LiftedOperatorLike<TSubscription, T>;
 }
-type TReturn<T, TDelegate extends EventListenerLike> = LiftedOperatorToEventListenerLike<T, TDelegate>;
-type TPrototype<T, TDelegate extends EventListenerLike> = Pick<LiftedOperatorToEventListenerLike<T, TDelegate>, typeof EventListenerLike_notify>;
-declare const LiftedOperatorToEventListenerMixin: <T, TDelegate extends EventListenerLike>() => Mixin2<TReturn<T, TDelegate>, LiftedOperatorLike<T>, TDelegate, TPrototype<T, TDelegate>>;
+type TReturn<TSubscription extends EventListenerLike, T> = LiftedOperatorToEventListenerLike<TSubscription, T>;
+type TPrototype<TSubscription extends EventListenerLike, T> = Pick<LiftedOperatorToEventListenerLike<TSubscription, T>, typeof EventListenerLike_notify>;
+declare const LiftedOperatorToEventListenerMixin: <TSubscription extends EventListenerLike, T>() => Mixin1<TReturn<TSubscription, T>, LiftedOperatorLike<TSubscription, T>, TPrototype<TSubscription, T>>;
 export default LiftedOperatorToEventListenerMixin;

@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { SideEffect1, none } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -15,10 +16,13 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<T>,
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, T>,
   sideEffect: SideEffect1<T>,
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const ForEachOperator_effect = Symbol("ForEachOperator_effect");
 
   interface TProperties {
@@ -26,17 +30,17 @@ export const create: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function ForEachOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<T>,
+      delegate: LiftedOperatorLike<TSubscription, T>,
       effect: SideEffect1<T>,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
       this[ForEachOperator_effect] = effect;
 
       return this;
@@ -46,7 +50,7 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T>,
+        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
         next: T,
       ) {
         this[ForEachOperator_effect](next);

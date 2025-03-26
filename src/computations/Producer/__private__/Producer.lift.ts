@@ -39,7 +39,10 @@ interface LiftedProducerLike<TIn, TOut>
 
   readonly [LiftedSourceLike_source]: ProducerLike<TIn>;
   readonly [LiftedSourceLike_operators]: ReadonlyArray<
-    Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
+    Function1<
+      LiftedOperatorLike<any, ConsumerLike>,
+      LiftedOperatorLike<any, ConsumerLike>
+    >
   >;
 
   [SourceLike_subscribe](listener: ConsumerLike<TOut>): void;
@@ -47,28 +50,30 @@ interface LiftedProducerLike<TIn, TOut>
 
 const operatorToConsumer: <T>(
   delegate: ConsumerLike,
-) => Function1<LiftedOperatorLike<any>, ConsumerLike<T>> = /*@__PURE__*/ (<
-  T,
->() => {
-  const createOperatorToConsumer = mixInstanceFactory(
-    include(LiftedOperatorToConsumerMixin()),
-    function OperatorToConsumer(
-      this: unknown,
-      delegate: ConsumerLike,
-      operator: LiftedOperatorLike<any>,
-    ): ConsumerLike<T> {
-      init(LiftedOperatorToConsumerMixin(), this, operator, delegate);
+) => Function1<LiftedOperatorLike<any, ConsumerLike>, ConsumerLike<T>> =
+  /*@__PURE__*/ (<T>() => {
+    const createOperatorToConsumer = mixInstanceFactory(
+      include(LiftedOperatorToConsumerMixin()),
+      function OperatorToConsumer(
+        this: unknown,
+        delegate: ConsumerLike,
+        operator: LiftedOperatorLike<ConsumerLike, any>,
+      ): ConsumerLike<T> {
+        init(LiftedOperatorToConsumerMixin(), this, operator, delegate);
 
-      return this;
-    },
-  );
+        return this;
+      },
+    );
 
-  return delegate => operator => createOperatorToConsumer(delegate, operator);
-})();
+    return delegate => operator => createOperatorToConsumer(delegate, operator);
+  })();
 
 const createLiftedProducer: <TIn, TOut>(
   src: ProducerLike<TIn>,
-  op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+  op: Function1<
+    LiftedOperatorLike<ConsumerLike, TOut>,
+    LiftedOperatorLike<ConsumerLike, TIn>
+  >,
   config?: {
     [ComputationLike_isPure]?: boolean;
   },
@@ -77,7 +82,10 @@ const createLiftedProducer: <TIn, TOut>(
     [ComputationLike_isPure]: boolean;
     [LiftedSourceLike_source]: ProducerLike<TIn>;
     [LiftedSourceLike_operators]: ReadonlyArray<
-      Function1<LiftedOperatorLike<any>, LiftedOperatorLike<any>>
+      Function1<
+        LiftedOperatorLike<any, ConsumerLike>,
+        LiftedOperatorLike<any, ConsumerLike>
+      >
     >;
   };
 
@@ -92,7 +100,10 @@ const createLiftedProducer: <TIn, TOut>(
     function LiftedProducer(
       this: TProperties & TPrototype,
       source: ProducerLike<TIn>,
-      op: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>,
+      op: Function1<
+        LiftedOperatorLike<ConsumerLike, TOut>,
+        LiftedOperatorLike<ConsumerLike, TIn>
+      >,
       config?: {
         [ComputationLike_isPure]?: boolean;
       },
@@ -134,7 +145,12 @@ const createLiftedProducer: <TIn, TOut>(
 
 const Producer_lift =
   <TIn, TOut>(config?: { [ComputationLike_isPure]?: boolean }) =>
-  (operator: Function1<LiftedOperatorLike<TOut>, LiftedOperatorLike<TIn>>) =>
+  (
+    operator: Function1<
+      LiftedOperatorLike<ConsumerLike, TOut>,
+      LiftedOperatorLike<ConsumerLike, TIn>
+    >,
+  ) =>
   (source: ProducerLike<TIn>): ProducerLike<TOut> => {
     return createLiftedProducer(source, operator, config);
   };

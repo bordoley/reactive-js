@@ -11,6 +11,7 @@ import {
   none,
   strictEquality,
 } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -20,10 +21,13 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<T>,
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, T>,
   options?: { readonly equality?: Equality<T> },
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const DistinctUntilChangedMixin_equality = Symbol(
     "DistinctUntilChangedMixin_equality",
   );
@@ -41,17 +45,17 @@ export const create: <T>(
   };
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function DistinctUntilChangedMixin(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<T>,
+      delegate: LiftedOperatorLike<TSubscription, T>,
       options: Optional<{ readonly equality?: Equality<T> }>,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<T>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(DelegatingLiftedOperatorMixin<TSubscription, T>(), this, delegate);
       this[DistinctUntilChangedMixin_equality] =
         options?.equality ?? strictEquality;
 
@@ -64,7 +68,7 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T>,
+        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, T>,
         next: T,
       ) {
         const shouldEmit =

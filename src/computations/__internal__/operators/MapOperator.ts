@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function1, none } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -15,10 +16,14 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <TA, TB>(
-  delegate: LiftedOperatorLike<TB>,
+export const create: <TSubscription extends DisposableLike, TA, TB>(
+  delegate: LiftedOperatorLike<TSubscription, TB>,
   selector: Function1<TA, TB>,
-) => LiftedOperatorLike<TA> = /*@__PURE__*/ (<TA, TB>() => {
+) => LiftedOperatorLike<TSubscription, TA> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  TA,
+  TB,
+>() => {
   const MapOperator_selector = Symbol("MapOperator_selector");
 
   interface TProperties {
@@ -26,17 +31,21 @@ export const create: <TA, TB>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<TA, TB>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, TA, TB>()),
     function MapOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<TA, TB>,
+        DelegatingLiftedOperatorLike<TSubscription, TA, TB>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<TB>,
+      delegate: LiftedOperatorLike<TSubscription, TB>,
       selector: Function1<TA, TB>,
-    ): LiftedOperatorLike<TA> {
-      init(DelegatingLiftedOperatorMixin<TA, TB>(), this, delegate);
+    ): LiftedOperatorLike<TSubscription, TA> {
+      init(
+        DelegatingLiftedOperatorMixin<TSubscription, TA, TB>(),
+        this,
+        delegate,
+      );
       this[MapOperator_selector] = selector;
 
       return this;
@@ -46,7 +55,7 @@ export const create: <TA, TB>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<TA, TB>,
+        this: TProperties & DelegatingLiftedOperatorLike<TSubscription, TA, TB>,
         next: TA,
       ) {
         const mapped = this[MapOperator_selector](next);

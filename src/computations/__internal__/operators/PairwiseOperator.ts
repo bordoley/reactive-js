@@ -6,6 +6,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Tuple2, none, tuple } from "../../../functions.js";
+import { DisposableLike } from "../../../utils.js";
 import DelegatingLiftedOperatorMixin, {
   DelegatingLiftedOperatorLike,
   DelegatingLiftedOperatorLike_delegate,
@@ -15,9 +16,12 @@ import {
   LiftedOperatorLike_notify,
 } from "../LiftedSource.js";
 
-export const create: <T>(
-  delegate: LiftedOperatorLike<Tuple2<T, T>>,
-) => LiftedOperatorLike<T> = /*@__PURE__*/ (<T>() => {
+export const create: <TSubscription extends DisposableLike, T>(
+  delegate: LiftedOperatorLike<TSubscription, Tuple2<T, T>>,
+) => LiftedOperatorLike<TSubscription, T> = /*@__PURE__*/ (<
+  TSubscription extends DisposableLike,
+  T,
+>() => {
   const PairwiseOperator_hasPrev = Symbol("PairwiseOperator_hasPrev");
   const PairwiseOperator_prev = Symbol("PairwiseOperator_prev");
 
@@ -27,16 +31,20 @@ export const create: <T>(
   }
 
   return mixInstanceFactory(
-    include(DelegatingLiftedOperatorMixin<T>()),
+    include(DelegatingLiftedOperatorMixin<TSubscription, T>()),
     function BufferOperator(
       this: Pick<
-        DelegatingLiftedOperatorLike<T>,
+        DelegatingLiftedOperatorLike<TSubscription, T>,
         typeof LiftedOperatorLike_notify
       > &
         TProperties,
-      delegate: LiftedOperatorLike<Tuple2<T, T>>,
-    ): LiftedOperatorLike<T> {
-      init(DelegatingLiftedOperatorMixin<Tuple2<T, T>>(), this, delegate);
+      delegate: LiftedOperatorLike<TSubscription, Tuple2<T, T>>,
+    ): LiftedOperatorLike<TSubscription, T> {
+      init(
+        DelegatingLiftedOperatorMixin<TSubscription, Tuple2<T, T>>(),
+        this,
+        delegate,
+      );
 
       return this;
     },
@@ -46,7 +54,8 @@ export const create: <T>(
     }),
     proto({
       [LiftedOperatorLike_notify](
-        this: TProperties & DelegatingLiftedOperatorLike<T, Tuple2<T, T>>,
+        this: TProperties &
+          DelegatingLiftedOperatorLike<TSubscription, T, Tuple2<T, T>>,
         next: T,
       ) {
         const prev = this[PairwiseOperator_prev];
