@@ -1281,7 +1281,7 @@ export interface ConcurrentReactiveComputationModule<
   ): DeferredComputationWithSideEffectsOf<TComputationType, T>;
   merge<T>(
     ...computations: readonly MulticastComputationOf<TComputationType, T>[]
-  ): MulticastComputationOf<TComputationType, T> & DisposableLike;
+  ): MulticastComputationOf<TComputationType, T>;
   merge<T>(
     ...computations: readonly ComputationOf<TComputationType, T>[]
   ): ComputationOf<TComputationType, T> & DisposableLike;
