@@ -127,7 +127,7 @@ const createLiftedBroadcaster: <TIn, TOut>(
         const source = this[LiftedSourceLike_source];
         const destinationOp: EventListenerLike<TIn> = pipeUnsafe(
           listener,
-          EventListener.toOperator(),
+          EventListener.toLiftedSink(),
           ...this[LiftedSourceLike_sink],
           sinkToEventListener,
         );

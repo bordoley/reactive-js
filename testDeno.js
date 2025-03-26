@@ -17,6 +17,7 @@ import "./mod/computations/__tests__/Iterable.test.js";
 import "./mod/computations/__tests__/Observable.test.js";
 import "./mod/computations/__tests__/Producer.test.js";
 import "./mod/computations/__tests__/Publisher.test.js";
+import "./mod/computations/__tests__/Runnable.test.js";
 import "./mod/computations/__tests__/WritableStore.test.js";
 
 import "./mod/utils/__tests__/DefaultScheduler.test.js";

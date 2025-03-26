@@ -48,7 +48,7 @@ export const create: <T>(
   );
 })();
 
-export const toOperator: <T>() => Function1<
+export const toLiftedSink: <T>() => Function1<
   EventListenerLike<T>,
   LiftedSinkLike<EventListenerLike<T>, T>
 > = /*@__PURE__*/ (<T>() => {
@@ -58,7 +58,7 @@ export const toOperator: <T>() => Function1<
   return returns(
     mixInstanceFactory(
       include(DelegatingDisposableMixin),
-      function EventListenerToOperator(
+      function EventListenertoLiftedSink(
         this: Pick<
           LiftedSinkLike<EventListenerLike<T>, T>,
           | typeof SinkLike_isCompleted

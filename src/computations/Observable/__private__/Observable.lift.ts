@@ -139,7 +139,7 @@ const createLiftedObservable: <TIn, TOut>(
         const source = this[LiftedSourceLike_source];
         const destinationOp: ObserverLike<TIn> = pipeUnsafe(
           observer,
-          Sink.toOperator(),
+          Sink.toLiftedSink(),
           ...this[LiftedSourceLike_sink],
           sinkToObserver,
         );

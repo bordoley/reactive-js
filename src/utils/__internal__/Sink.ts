@@ -10,16 +10,90 @@ import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
 } from "../../computations/__internal__/LiftedSource.js";
-import { Function1, none, returns } from "../../functions.js";
+import { Function1, Optional, none, returns } from "../../functions.js";
 import {
+  BackpressureStrategy,
+  CollectionEnumeratorLike,
+  DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EventListenerLike_notify,
+  QueueLike,
+  QueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
+import DelegatingSinkMixin, {
+  DelegatingSinkLike,
+} from "../__mixins__/DelegatingSinkMixin.js";
+import DisposableMixin from "../__mixins__/DisposableMixin.js";
+import QueueMixin from "../__mixins__/QueueMixin.js";
 
-export const toOperator: <T>() => Function1<
+export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
+  o: SinkLike<T>,
+) => DelegatingSinkLike<T, SinkLike<T>> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(DisposableMixin, DelegatingSinkMixin()),
+    function NonDisposingDelegatingSink(
+      this: unknown,
+      delegate: SinkLike<T>,
+    ): DelegatingSinkLike<T, SinkLike<T>> {
+      init(DisposableMixin, this);
+      init(DelegatingSinkMixin(), this, delegate);
+
+      return this;
+    },
+    props(),
+    proto({
+      get [SinkLike_isCompleted]() {
+        unsafeCast<SinkLike<T>>(this);
+        return this[DisposableLike_isDisposed];
+      },
+
+      [SinkLike_complete](this: SinkLike<T>) {
+        this[DisposableLike_dispose]();
+      },
+    }),
+  ))();
+
+export const createQueueSink: <T>(options?: {
+  capacity?: number;
+  backpressureStrategy?: BackpressureStrategy;
+}) => SinkLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(DisposableMixin, QueueMixin()),
+    function ConsumerQueue(
+      this: Omit<SinkLike<T>, keyof DisposableLike>,
+      options: Optional<{
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+      }>,
+    ): SinkLike<T> & QueueLike<T> {
+      init(DisposableMixin, this);
+      init(QueueMixin<T>(), this, options);
+
+      return this;
+    },
+    props(),
+    proto({
+      get [SinkLike_isCompleted](): boolean {
+        unsafeCast<SinkLike>(this);
+        return this[DisposableLike_isDisposed];
+      },
+
+      [EventListenerLike_notify](this: QueueLike<T>, next: T) {
+        this[QueueLike_enqueue](next);
+      },
+
+      [SinkLike_complete](this: SinkLike<T>) {
+        this[DisposableLike_dispose]();
+      },
+    }),
+  ))();
+
+export const toLiftedSink: <T>() => Function1<
   SinkLike<T>,
   LiftedSinkLike<SinkLike<T>, T>
 > = /*@__PURE__*/ (<T>() => {
@@ -37,7 +111,7 @@ export const toOperator: <T>() => Function1<
   return returns(
     mixInstanceFactory(
       include(DelegatingDisposableMixin),
-      function SinkToOperator(
+      function SinktoLiftedSink(
         this: TPrototype & TProperties,
         listener: SinkLike<T>,
       ): LiftedSinkLike<SinkLike<T>, T> {

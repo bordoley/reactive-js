@@ -128,7 +128,7 @@ const createLiftedProducer: <TIn, TOut>(
         const source = this[LiftedSourceLike_source];
         const destinationOp: ConsumerLike<TIn> = pipeUnsafe(
           consumer,
-          Sink.toOperator(),
+          Sink.toLiftedSink(),
           ...this[LiftedSourceLike_sink],
           sinkToConsumer,
         );

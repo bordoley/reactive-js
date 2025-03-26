@@ -13,7 +13,6 @@ import {
 } from "../../../computations.js";
 import {
   Optional,
-  debug,
   none,
   pipe,
   pipeAsync,
@@ -78,11 +77,9 @@ const SequentialComputationModuleTests = <
           [1, 2, 3],
           Computation.fromReadonlyArray(m)(),
           Computation.concatWith(m)<number>(Computation.raise(m)()),
-          debug,
           m.catchError<number>(
             pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)()),
           ),
-          debug,
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
         ),
