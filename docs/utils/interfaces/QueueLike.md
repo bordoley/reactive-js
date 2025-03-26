@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>.[`QueueableLike`](QueueableLike.md)
+- [`QueueEnumeratorLike`](QueueEnumeratorLike.md)\<`T`\>.[`QueueableLike`](QueueableLike.md)
 
 ## Type Parameters
 

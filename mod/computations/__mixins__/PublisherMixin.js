@@ -62,6 +62,8 @@ const PublisherMixin = /*@__PURE__*/ (() => {
             if (this[SinkLike_isCompleted]) {
                 return;
             }
+            // FIXME: Maybe we should invoke listeners asynchronously
+            // by awaiting a promise
             const maybeEventListeners = this[Publisher_EventListeners];
             const eventListeners = maybeEventListeners instanceof Set
                 ? maybeEventListeners

@@ -15,6 +15,7 @@ import {
 import { Function1, none, pipeUnsafe } from "../../../functions.js";
 import * as EventListener from "../../../utils/__internal__/EventListener.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableContainerLike, EventListenerLike } from "../../../utils.js";
 import {
   LiftedSinkLike,
@@ -52,7 +53,7 @@ const sinkToEventListener: <T>(
   delegate: LiftedSinkLike<EventListenerLike, any>,
 ) => EventListenerLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(LiftedSinkToEventListenerMixin()),
+    include(LiftedSinkToEventListenerMixin(), DelegatingDisposableMixin),
     function OperatorToEventListener(
       this: unknown,
       operator: LiftedSinkLike<EventListenerLike, any>,
@@ -62,6 +63,7 @@ const sinkToEventListener: <T>(
         this,
         operator,
       );
+      init(DelegatingDisposableMixin, this, operator);
 
       return this;
     },

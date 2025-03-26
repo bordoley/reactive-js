@@ -5,10 +5,12 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { none, pipeUnsafe } from "../../../functions.js";
 import * as EventListener from "../../../utils/__internal__/EventListener.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToEventListenerMixin from "../../__mixins__/LiftedSinkToEventListenerMixin.js";
-const sinkToEventListener = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToEventListenerMixin()), function OperatorToEventListener(operator) {
+const sinkToEventListener = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToEventListenerMixin(), DelegatingDisposableMixin), function OperatorToEventListener(operator) {
     init(LiftedSinkToEventListenerMixin(), this, operator);
+    init(DelegatingDisposableMixin, this, operator);
     return this;
 }))();
 const createLiftedBroadcaster = /*@__PURE__*/ (() => {

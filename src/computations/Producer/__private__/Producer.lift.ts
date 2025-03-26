@@ -14,6 +14,7 @@ import {
 } from "../../../computations.js";
 import { Function1, none, pipeUnsafe } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { ConsumerLike, DisposableContainerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import {
@@ -52,12 +53,13 @@ const sinkToConsumer: <T>(
   delegate: LiftedSinkLike<ConsumerLike, any>,
 ) => ConsumerLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(LiftedSinkToConsumerMixin()),
+    include(LiftedSinkToConsumerMixin(), DelegatingDisposableMixin),
     function OperatorToConsumer(
       this: unknown,
       delegate: LiftedSinkLike<ConsumerLike, any>,
     ): ConsumerLike<T> {
       init(LiftedSinkToConsumerMixin(), this, delegate);
+      init(DelegatingDisposableMixin, this, delegate);
 
       return this;
     },

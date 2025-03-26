@@ -9,6 +9,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
 import {
+  DisposableLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -23,9 +24,9 @@ export interface LiftedSinkToSinkLike<TSubscription extends SinkLike, T>
   extends LiftedSinkToEventListenerLike<TSubscription, T>,
     SinkLike<T> {}
 
-type TReturn<TSubscription extends SinkLike, T> = LiftedSinkToSinkLike<
-  TSubscription,
-  T
+type TReturn<TSubscription extends SinkLike, T> = Omit<
+  LiftedSinkToSinkLike<TSubscription, T>,
+  keyof DisposableLike
 >;
 
 type TPrototype<TSubscription extends SinkLike, T> = Pick<

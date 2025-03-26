@@ -102,12 +102,16 @@ export declare const CollectionEnumeratorLike_count: unique symbol;
 export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
     readonly [CollectionEnumeratorLike_count]: number;
 }
+export declare const QueueEnumeratorLike_addOnDataReadyListener: unique symbol;
+export interface QueueEnumeratorLike<T = unknown> extends CollectionEnumeratorLike<T> {
+    [QueueEnumeratorLike_addOnDataReadyListener](callback: SideEffect1<void>): DisposableLike;
+}
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_enqueue: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T>, QueueableLike {
+export interface QueueLike<T = unknown> extends QueueEnumeratorLike<T>, QueueableLike {
     [QueueLike_head]: Optional<T>;
     [QueueLike_enqueue](v: T): void;
 }

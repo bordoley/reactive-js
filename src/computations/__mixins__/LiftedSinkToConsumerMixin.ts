@@ -11,6 +11,7 @@ import { SideEffect1, returns } from "../../functions.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
+  DisposableLike,
   QueueableLike_addOnReadyListener,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -29,9 +30,9 @@ export interface LiftedSinkToConsumerLike<TSubscription extends ConsumerLike, T>
   extends LiftedSinkToSinkLike<TSubscription, T>,
     ConsumerLike<T> {}
 
-type TReturn<TSubscription extends ConsumerLike, T> = LiftedSinkToConsumerLike<
-  TSubscription,
-  T
+type TReturn<TSubscription extends ConsumerLike, T> = Omit<
+  LiftedSinkToConsumerLike<TSubscription, T>,
+  keyof DisposableLike
 >;
 
 type TPrototype<TSubscription extends ConsumerLike, T> = Pick<

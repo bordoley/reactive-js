@@ -9,6 +9,7 @@ import {
 import {
   Optional,
   bind,
+  call,
   memoize,
   none,
   pipe,
@@ -27,6 +28,7 @@ import {
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
   ObserverLike,
+  QueueEnumeratorLike_addOnDataReadyListener,
   QueueLike,
   QueueLike_enqueue,
   QueueableLike,
@@ -58,6 +60,15 @@ type TReturn<TConsumer extends ConsumerLike, T> = ObserverMixinLike<
 > &
   Omit<ObserverLike<T>, keyof DisposableLike>;
 
+type TPrototype<TConsumer extends ConsumerLike, T> = Omit<
+  ObserverLike<T> & ObserverMixinLike<TConsumer, T>,
+  | keyof DisposableLike
+  | keyof SchedulerLike
+  | keyof QueueableLike
+  | typeof SinkLike_isCompleted
+  | typeof ObserverMixinLike_consumer
+>;
+
 const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
   TReturn<TConsumer, T>,
   TConsumer,
@@ -65,7 +76,9 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
   Optional<{
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
-  }>
+  }>,
+  TPrototype<TConsumer, T>,
+  DisposableLike
 > = /*@__PURE__*/ (<TConsumer extends ConsumerLike, T>() => {
   function observerSchedulerContinuation(
     this: TThis,
@@ -82,7 +95,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
       // is applying backpressure.
       if (!consumer[QueueableLike_isReady]) {
         // Set up the onReady sink
-        scheduleDrainQueue(this);
+        call(scheduleDrainQueue, this);
         break;
       }
 
@@ -112,21 +125,21 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
     );
   });
 
-  const scheduleDrainQueue = (observer: TThis) => {
-    const consumer = observer[ObserverMixinLike_consumer];
+  function scheduleDrainQueue(this: TThis) {
+    const consumer = this[ObserverMixinLike_consumer];
     const isConsumerReady = consumer[QueueableLike_isReady];
     const isConsumerDisposed = consumer[DisposableLike_isDisposed];
     const isDrainScheduled =
-      !observer[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
+      !this[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
 
     if (!isDrainScheduled && isConsumerReady) {
-      observer[ObserverMixin_schedulerSubscription] = observer[
-        SchedulerLike_schedule
-      ](bind(observerSchedulerContinuation, observer));
+      this[ObserverMixin_schedulerSubscription] = this[SchedulerLike_schedule](
+        bind(observerSchedulerContinuation, this),
+      );
     } else if (!isConsumerReady && !isConsumerDisposed) {
-      setUpOnConsumerReadySinkMemoized(observer);
+      setUpOnConsumerReadySinkMemoized(this);
     }
-  };
+  }
 
   const ObserverMixin_schedulerSubscription = Symbol(
     "ObserverMixin_schedulerSubscription",
@@ -138,25 +151,28 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
     [ObserverMixin_schedulerSubscription]: DisposableLike;
   };
 
-  type TPrototype = Omit<
-    ObserverLike<T> & ObserverMixinLike<TConsumer, T>,
-    | keyof DisposableLike
-    | keyof SchedulerLike
-    | keyof QueueableLike
-    | typeof SinkLike_isCompleted
-    | typeof ObserverMixinLike_consumer
-  >;
-
   type TThis = TProperties &
     ObserverLike<T> &
     QueueLike<T> &
     ObserverMixinLike<TConsumer, T>;
 
   return returns(
-    mix(
+    mix<
+      TReturn<TConsumer, T>,
+      ReturnType<typeof QueueMixin> & typeof DelegatingSchedulerMixin,
+      TProperties,
+      TPrototype<TConsumer, T>,
+      DisposableLike,
+      TConsumer,
+      SchedulerLike,
+      Optional<{
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+      }>
+    >(
       include(QueueMixin(), DelegatingSchedulerMixin),
       function ObserverMixin(
-        this: TProperties & TPrototype,
+        this: TProperties & TPrototype<TConsumer, T> & DisposableLike,
         consumer: TConsumer,
         scheduler: SchedulerLike,
         options: Optional<{
@@ -166,8 +182,11 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
       ): TReturn<TConsumer, T> {
         init(QueueMixin<T>(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
-
         this[ObserverMixinLike_consumer] = consumer;
+
+        this[QueueEnumeratorLike_addOnDataReadyListener](
+          bind(scheduleDrainQueue, this),
+        );
 
         return this;
       },
@@ -176,7 +195,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
         [SinkLike_isCompleted]: false,
         [ObserverMixin_schedulerSubscription]: Disposable.disposed,
       }),
-      proto<TPrototype>({
+      proto<TPrototype<TConsumer, T>>({
         [EventListenerLike_notify](this: TThis, next: T) {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[SinkLike_isCompleted];
@@ -198,7 +217,6 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
             this[ObserverMixinLike_notify](next);
           } else if (!isCompleted) {
             this[QueueLike_enqueue](next);
-            scheduleDrainQueue(this);
           }
         },
 
@@ -216,7 +234,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
           if (inSchedulerContinuation && count == 0) {
             this[ObserverMixinLike_complete]();
           } else {
-            scheduleDrainQueue(this);
+            call(scheduleDrainQueue, this);
           }
         },
 

@@ -146,6 +146,9 @@ const PublisherMixin: <T>() => Mixin1<
             return;
           }
 
+          // FIXME: Maybe we should invoke listeners asynchronously
+          // by awaiting a promise
+
           const maybeEventListeners = this[Publisher_EventListeners];
           const eventListeners =
             maybeEventListeners instanceof Set

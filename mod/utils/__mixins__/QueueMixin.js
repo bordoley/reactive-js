@@ -3,10 +3,12 @@
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import Broadcaster_addEventHandler from "../../computations/Broadcaster/__private__/Broadcaster.addEventHandler.js";
+import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadcaster.keep.js";
+import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
+import { alwaysNone, isEqualTo, isSome, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueLike_enqueue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, OverflowBackpressureStrategy, QueueEnumeratorLike_addOnDataReadyListener, QueueLike_enqueue, QueueLike_head, QueueableLike_addOnReadyListener, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_isReady, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
@@ -106,7 +108,8 @@ const QueueMixin =
                 this[QueueMixin_values] = none;
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
-                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
+                shouldNotifyReady &&
+                    onReadySignal?.[EventListenerLike_notify]("ready");
                 return true;
             }
             unsafeCast(values);
@@ -122,7 +125,8 @@ const QueueMixin =
                 this[QueueMixin_values] = values[newHead];
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
-                shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
+                shouldNotifyReady &&
+                    onReadySignal?.[EventListenerLike_notify]("ready");
                 return true;
             }
             if (isSorted) {
@@ -190,7 +194,8 @@ const QueueMixin =
             this[QueueMixin_capacityMask] = newCapacityMask;
             this[EnumeratorLike_current] = item;
             this[EnumeratorLike_hasCurrent] = true;
-            shouldNotifyReady && onReadySignal?.[EventListenerLike_notify]();
+            shouldNotifyReady &&
+                onReadySignal?.[EventListenerLike_notify]("ready");
             return true;
         },
         *[Symbol.iterator]() {
@@ -243,6 +248,8 @@ const QueueMixin =
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;
+                // We only notify when there use be 0 items and now there are more.
+                this[QueueMixin_onReadyPublisher]?.[EventListenerLike_notify]("data_ready");
                 return;
             }
             const compare = this[QueueMixin_comparator];
@@ -291,6 +298,16 @@ const QueueMixin =
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
         },
+        [QueueEnumeratorLike_addOnDataReadyListener](callback) {
+            const publisher = this[QueueMixin_onReadyPublisher] ??
+                (() => {
+                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
+                    this[QueueMixin_onReadyPublisher] = publisher;
+                    return publisher;
+                })();
+            // FIXME: Could memoize
+            return pipe(publisher, Broadcaster_keep(isEqualTo("data_ready")), Broadcaster_map(alwaysNone), Broadcaster_addEventHandler(callback), Disposable.addTo(this));
+        },
         [QueueableLike_addOnReadyListener](callback) {
             const publisher = this[QueueMixin_onReadyPublisher] ??
                 (() => {
@@ -298,7 +315,8 @@ const QueueMixin =
                     this[QueueMixin_onReadyPublisher] = publisher;
                     return publisher;
                 })();
-            return pipe(publisher, Broadcaster_addEventHandler(callback), Disposable.addTo(this));
+            // FIXME: Could memoize
+            return pipe(publisher, Broadcaster_keep(isEqualTo("ready")), Broadcaster_map(alwaysNone), Broadcaster_addEventHandler(callback), Disposable.addTo(this));
         },
     })));
 })();

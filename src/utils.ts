@@ -170,6 +170,17 @@ export interface CollectionEnumeratorLike<T = unknown>
   readonly [CollectionEnumeratorLike_count]: number;
 }
 
+export const QueueEnumeratorLike_addOnDataReadyListener = Symbol(
+  "QueueEnumeratorLike_addOnDataReadyListener",
+);
+
+export interface QueueEnumeratorLike<T = unknown>
+  extends CollectionEnumeratorLike<T> {
+  [QueueEnumeratorLike_addOnDataReadyListener](
+    callback: SideEffect1<void>,
+  ): DisposableLike;
+}
+
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 
@@ -177,7 +188,7 @@ export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
  * @noInheritDoc
  */
 export interface QueueLike<T = unknown>
-  extends CollectionEnumeratorLike<T>,
+  extends QueueEnumeratorLike<T>,
     QueueableLike {
   [QueueLike_head]: Optional<T>;
   [QueueLike_enqueue](v: T): void;

@@ -1,8 +1,8 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
-import { bind, memoize, none, pipe, pipeLazy, returns, } from "../../functions.js";
-import { CollectionEnumeratorLike_count, ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, QueueableLike_addOnReadyListener, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { bind, call, memoize, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { CollectionEnumeratorLike_count, ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueEnumeratorLike_addOnDataReadyListener, QueueLike_enqueue, QueueableLike_addOnReadyListener, QueueableLike_isReady, SchedulerLike_inContinuation, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import QueueMixin from "./QueueMixin.js";
@@ -19,7 +19,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             // is applying backpressure.
             if (!consumer[QueueableLike_isReady]) {
                 // Set up the onReady sink
-                scheduleDrainQueue(this);
+                call(scheduleDrainQueue, this);
                 break;
             }
             this[EnumeratorLike_moveNext]();
@@ -39,23 +39,24 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         const consumer = observer[ObserverMixinLike_consumer];
         return pipe(consumer[QueueableLike_addOnReadyListener](pipeLazy(observer, scheduleDrainQueue)), Disposable.addTo(observer));
     });
-    const scheduleDrainQueue = (observer) => {
-        const consumer = observer[ObserverMixinLike_consumer];
+    function scheduleDrainQueue() {
+        const consumer = this[ObserverMixinLike_consumer];
         const isConsumerReady = consumer[QueueableLike_isReady];
         const isConsumerDisposed = consumer[DisposableLike_isDisposed];
-        const isDrainScheduled = !observer[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
+        const isDrainScheduled = !this[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
         if (!isDrainScheduled && isConsumerReady) {
-            observer[ObserverMixin_schedulerSubscription] = observer[SchedulerLike_schedule](bind(observerSchedulerContinuation, observer));
+            this[ObserverMixin_schedulerSubscription] = this[SchedulerLike_schedule](bind(observerSchedulerContinuation, this));
         }
         else if (!isConsumerReady && !isConsumerDisposed) {
-            setUpOnConsumerReadySinkMemoized(observer);
+            setUpOnConsumerReadySinkMemoized(this);
         }
-    };
+    }
     const ObserverMixin_schedulerSubscription = Symbol("ObserverMixin_schedulerSubscription");
     return returns(mix(include(QueueMixin(), DelegatingSchedulerMixin), function ObserverMixin(consumer, scheduler, options) {
         init(QueueMixin(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
         this[ObserverMixinLike_consumer] = consumer;
+        this[QueueEnumeratorLike_addOnDataReadyListener](bind(scheduleDrainQueue, this));
         return this;
     }, props({
         [ObserverMixinLike_consumer]: none,
@@ -80,7 +81,6 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             }
             else if (!isCompleted) {
                 this[QueueLike_enqueue](next);
-                scheduleDrainQueue(this);
             }
         },
         [SinkLike_complete]() {
@@ -95,7 +95,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 this[ObserverMixinLike_complete]();
             }
             else {
-                scheduleDrainQueue(this);
+                call(scheduleDrainQueue, this);
             }
         },
         [ObserverMixinLike_notify](_next) { },

@@ -4,11 +4,13 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../../computations.js";
 import { none, pipeUnsafe } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import * as Computation from "../../Computation.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToConsumerMixin from "../../__mixins__/LiftedSinkToConsumerMixin.js";
-const sinkToConsumer = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToConsumerMixin()), function OperatorToConsumer(delegate) {
+const sinkToConsumer = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToConsumerMixin(), DelegatingDisposableMixin), function OperatorToConsumer(delegate) {
     init(LiftedSinkToConsumerMixin(), this, delegate);
+    init(DelegatingDisposableMixin, this, delegate);
     return this;
 }))();
 const createLiftedProducer = /*@__PURE__*/ (() => {

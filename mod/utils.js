@@ -43,6 +43,7 @@ export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext
 export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
 export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
 export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
+export const QueueEnumeratorLike_addOnDataReadyListener = Symbol("QueueEnumeratorLike_addOnDataReadyListener");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");

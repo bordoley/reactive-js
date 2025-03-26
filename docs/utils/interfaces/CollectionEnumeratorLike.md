@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`QueueLike`](QueueLike.md)
+- [`QueueEnumeratorLike`](QueueEnumeratorLike.md)
 
 ## Type Parameters
 

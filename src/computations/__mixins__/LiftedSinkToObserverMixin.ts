@@ -7,6 +7,7 @@ import {
   proto,
 } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import ObserverMixin, {
   ObserverMixinLike_complete,
@@ -44,6 +45,7 @@ const LiftedSinkToObserverMixin: <
     return returns(
       mix(
         include(
+          DelegatingDisposableMixin,
           DelegatingSchedulerMixin,
           LiftedSinkToEventListenerMixin(),
           ObserverMixin(),
@@ -53,6 +55,7 @@ const LiftedSinkToObserverMixin: <
           operator: LiftedSinkLike<TSubscription, T>,
         ): TReturn<TSubscription, T> {
           const delegate = operator[LiftedSinkLike_subscription];
+          init(DelegatingDisposableMixin, this, delegate);
           init(DelegatingSchedulerMixin, this, delegate);
           init(
             LiftedSinkToEventListenerMixin<TSubscription, T>(),
