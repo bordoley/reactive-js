@@ -72,7 +72,7 @@ export const create: <TSubscription extends DisposableLike, T, TNotifier>(
       this[TakeUntilSink_notifierSubscription] = pipe(
         notifier,
         addEventListener(subscription, bindMethod(this, SinkLike_complete)),
-        Disposable.addTo(subscription),
+        Disposable.addTo(this),
       );
 
       return this;

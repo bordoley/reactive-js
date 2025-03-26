@@ -110,8 +110,12 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
         [SinkLike_complete](
           this: TProperties & TPrototype<TSubscription, TA, TB>,
         ) {
+          const isCompleted = this[SinkLike_isCompleted];
           this[SinkLike_isCompleted] = true;
-          this[DelegatingLiftedSinkLike_onCompleted]();
+
+          if (!isCompleted) {
+            this[DelegatingLiftedSinkLike_onCompleted]();
+          }
         },
       }),
     ),

@@ -101,7 +101,7 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
       this[WithLatestFromSink_otherSubscription] = pipe(
         other,
         addEventListener(subscription, bind(onOtherNotify, this)),
-        Disposable.addTo(subscription),
+        Disposable.addTo(this),
         DisposableContainer.onComplete(
           bind(onWithLatestFromSinkOtherSubscriptionComplete, this),
         ),

@@ -22,10 +22,7 @@ import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
-import {
-  LiftedSinkLike,
-  LiftedSinkLike_subscription,
-} from "../LiftedSource.js";
+import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <
   TSubscription extends DisposableLike,
@@ -42,19 +39,19 @@ export const create: <
   TInnerSource extends SourceLike<T>,
   T,
 >() => {
-  const SkipFirstSink_subscribeToInner = Symbol(
-    "SkipFirstSink_subscribeToInner",
+  const SwitchAllSink_subscribeToInner = Symbol(
+    "SwitchAllSink_subscribeToInner",
   );
-  const SkipFirstSink_innerSubscription = Symbol(
-    "SkipFirstSink_innerSubscription",
+  const SwitchAllSink_innerSubscription = Symbol(
+    "SwitchAllSink_innerSubscription",
   );
 
   interface TProperties {
-    [SkipFirstSink_subscribeToInner]: Function1<
+    [SwitchAllSink_subscribeToInner]: Function1<
       LiftedSinkLike<TSubscription, T>,
       Function1<TInnerSource, DisposableLike>
     >;
-    [SkipFirstSink_innerSubscription]: DisposableLike;
+    [SwitchAllSink_innerSubscription]: DisposableLike;
   }
 
   function onSwitchAllObserverInnerObservableComplete(
@@ -68,7 +65,7 @@ export const create: <
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, TInnerSource, T>()),
-    function SkipFirstSink(
+    function SwitchAllSink(
       this: Pick<
         DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
         | typeof EventListenerLike_notify
@@ -86,13 +83,13 @@ export const create: <
         this,
         delegate,
       );
-      this[SkipFirstSink_subscribeToInner] = subscribeToInner;
+      this[SwitchAllSink_subscribeToInner] = subscribeToInner;
 
       return this;
     },
     props<TProperties>({
-      [SkipFirstSink_subscribeToInner]: none,
-      [SkipFirstSink_innerSubscription]: Disposable.disposed,
+      [SwitchAllSink_subscribeToInner]: none,
+      [SwitchAllSink_innerSubscription]: Disposable.disposed,
     }),
     proto({
       [EventListenerLike_notify](
@@ -100,24 +97,23 @@ export const create: <
           DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
         next: TInnerSource,
       ) {
-        this[SkipFirstSink_innerSubscription][DisposableLike_dispose]();
+        this[SwitchAllSink_innerSubscription][DisposableLike_dispose]();
 
-        const subscription = this[LiftedSinkLike_subscription];
         const delegate = this[DelegatingLiftedSinkLike_delegate];
-        this[SkipFirstSink_innerSubscription] = pipe(
+        this[SwitchAllSink_innerSubscription] = pipe(
           next,
-          this[SkipFirstSink_subscribeToInner](delegate),
+          this[SwitchAllSink_subscribeToInner](delegate),
           DisposableContainer.onComplete(
             bind(onSwitchAllObserverInnerObservableComplete, this),
           ),
-          Disposable.addTo(subscription),
+          Disposable.addTo(this),
         );
       },
       [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties &
           DelegatingLiftedSinkLike<TSubscription, TInnerSource, T>,
       ) {
-        if (this[SkipFirstSink_innerSubscription][DisposableLike_isDisposed]) {
+        if (this[SwitchAllSink_innerSubscription][DisposableLike_isDisposed]) {
           this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         }
       },

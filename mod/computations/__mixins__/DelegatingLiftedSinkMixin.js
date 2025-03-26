@@ -26,8 +26,11 @@ const DelegatingLiftedSinkMixin = /*@__PURE__*/ (() => {
             this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
         },
         [SinkLike_complete]() {
+            const isCompleted = this[SinkLike_isCompleted];
             this[SinkLike_isCompleted] = true;
-            this[DelegatingLiftedSinkLike_onCompleted]();
+            if (!isCompleted) {
+                this[DelegatingLiftedSinkLike_onCompleted]();
+            }
         },
     })));
 })();

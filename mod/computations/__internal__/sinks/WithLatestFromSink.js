@@ -25,7 +25,7 @@ export const create = /*@__PURE__*/ (() => {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[WithLatestFromSink_selector] = selector;
         const subscription = this[LiftedSinkLike_subscription];
-        this[WithLatestFromSink_otherSubscription] = pipe(other, addEventListener(subscription, bind(onOtherNotify, this)), Disposable.addTo(subscription), DisposableContainer.onComplete(bind(onWithLatestFromSinkOtherSubscriptionComplete, this)));
+        this[WithLatestFromSink_otherSubscription] = pipe(other, addEventListener(subscription, bind(onOtherNotify, this)), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromSinkOtherSubscriptionComplete, this)));
         return this;
     }, props({
         [WithLatestFromSink_hasLatest]: false,
