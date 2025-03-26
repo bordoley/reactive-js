@@ -2,9 +2,10 @@
 
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../computations.js";
-import { memoize } from "../functions.js";
+import { bindMethod, memoize, returns } from "../functions.js";
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
+export const empty = /*@__PURE__*/ memoize(m => returns(m.genPure(bindMethod([], Symbol.iterator))));
 export const fromReadonlyArray = 
 /*@__PURE__*/ memoize(m => (options) => (array) => m.genPure(function* ComputationFromReadonlyArray() {
     let [start, count] = parseArrayBounds(array, options);

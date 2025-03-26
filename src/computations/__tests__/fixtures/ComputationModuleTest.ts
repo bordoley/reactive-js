@@ -43,8 +43,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
       testAsync(
         "when source is empty",
         pipeLazyAsync(
-          [],
-          Computation.fromReadonlyArray(m)(),
+          Computation.empty(m)<number>(),
           m.distinctUntilChanged<number>(),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals<number>([]),
@@ -322,8 +321,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
       testAsync(
         "when source is empty",
         pipeLazyAsync(
-          [],
-          Computation.fromReadonlyArray(m)(),
+          Computation.empty(m)<number>(),
           m.takeFirst<number>({ count: 3 }),
           m.toReadonlyArrayAsync(),
           expectArrayEquals<number>([]),
@@ -370,8 +368,7 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         );
 
         await pipeAsync(
-          [],
-          Computation.fromReadonlyArray(m)(),
+          Computation.empty(m)<number>(),
           m.takeWhile<number>(alwaysTrue),
           m.toReadonlyArrayAsync<number>(),
           expectArrayEquals([] as number[]),

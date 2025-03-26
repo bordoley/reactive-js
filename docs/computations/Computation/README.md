@@ -15,6 +15,7 @@
 
 - [areAllPure](functions/areAllPure.md)
 - [areAllSynchronous](functions/areAllSynchronous.md)
+- [empty](functions/empty.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [isPure](functions/isPure.md)
 - [isSynchronous](functions/isSynchronous.md)

@@ -11,6 +11,7 @@ export interface MergeWithOperator<TComputationType extends ComputationType> {
 export interface Signature {
     areAllPure<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & PureComputationLike)[];
     areAllSynchronous<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & SynchronousComputationLike)[];
+    empty<TComputationModule extends Pick<ComputationModule, "genPure" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     fromReadonlyArray<TComputationModule extends Pick<ComputationModule, "genPure" | typeof ComputationModuleLike_computationType>>(m: TComputationModule): <T>(options?: {
         readonly count?: number;
         readonly start?: number;
@@ -22,6 +23,7 @@ export interface Signature {
 }
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
+export declare const empty: Signature["empty"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const isPure: Signature["isPure"];
 export declare const isSynchronous: Signature["isSynchronous"];

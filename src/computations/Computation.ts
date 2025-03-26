@@ -25,7 +25,7 @@ import {
   SynchronousComputationLike,
   SynchronousComputationOf,
 } from "../computations.js";
-import { Function1, memoize } from "../functions.js";
+import { Function1, bindMethod, memoize, returns } from "../functions.js";
 
 export interface MergeWithOperator<TComputationType extends ComputationType> {
   <T>(
@@ -71,6 +71,15 @@ export interface Signature {
   areAllSynchronous<TComputationType extends ComputationLike>(
     computations: readonly TComputationType[],
   ): computations is readonly (TComputationType & SynchronousComputationLike)[];
+
+  empty<
+    TComputationModule extends Pick<
+      ComputationModule,
+      "genPure" | typeof ComputationModuleLike_computationType
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   fromReadonlyArray<
     TComputationModule extends Pick<
@@ -124,6 +133,10 @@ export const areAllSynchronous: Signature["areAllSynchronous"] = <
   computations: readonly TComputationType[],
 ): computations is readonly (TComputationType & SynchronousComputationLike)[] =>
   computations.every(isSynchronous);
+
+export const empty: Signature["empty"] = /*@__PURE__*/ memoize(m =>
+  returns(m.genPure(bindMethod([], Symbol.iterator))),
+);
 
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   /*@__PURE__*/ memoize(
