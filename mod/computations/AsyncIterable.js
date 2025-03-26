@@ -2,7 +2,7 @@
 
 import { Array_map, Array_push, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
-import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
@@ -224,10 +224,6 @@ class KeepAsyncIterable {
         }
     }
 }
-export const empty = (() => pipe(genPure(bindMethod([], Symbol.iterator)), returns))();
-export const fromValue = 
-/*@__PURE__*/
-returns(v => genPure(bindMethod([v], Symbol.iterator)));
 export const keep = ((predicate) => (iterable) => newInstance(KeepAsyncIterable, iterable, predicate));
 export const lastAsync = /*@__PURE__*/ returns(async (iter) => {
     let result = none;

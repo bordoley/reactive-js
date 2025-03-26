@@ -995,15 +995,7 @@ export interface ComputationModule<
     readonly equality?: Equality<T>;
   }): PureComputationOperator<TComputationType, T, T>;
 
-  empty<T>(
-    options?: TCreationOptions["empty"],
-  ): NewPureInstanceOf<TComputationType, T>;
-
   encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
-
-  fromValue<T>(
-    options?: TCreationOptions["fromValue"],
-  ): Function1<T, NewPureInstanceOf<TComputationType, T>>;
 
   genPure<T>(
     factory: Factory<Iterator<T>>,

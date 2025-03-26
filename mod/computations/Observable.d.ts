@@ -70,6 +70,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     }): PureComputationOperator<ObservableComputation, T, T>;
     create<T>(f: (observer: ObserverLike<T>) => void): ObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
+    delay(duration: number): PureSynchronousObservableLike<number>;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureSynchronousObservableLike<number>;

@@ -30,8 +30,6 @@ export declare const gen: Signature["gen"];
 export declare const genAsync: Signature["genAsync"];
 export declare const genPure: Signature["genPure"];
 export declare const genPureAsync: Signature["genPureAsync"];
-export declare const empty: Signature["empty"];
-export declare const fromValue: Signature["fromValue"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const makeModule: Signature["makeModule"];

@@ -152,6 +152,8 @@ export interface ObservableModule
 
   currentTime: PureSynchronousObservableLike<number>;
 
+  delay(duration: number): PureSynchronousObservableLike<number>;
+
   keyFrame(
     duration: number,
     options?: {

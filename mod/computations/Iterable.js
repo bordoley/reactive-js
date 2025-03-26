@@ -77,7 +77,6 @@ class DistinctUntilChangedIterable {
     }
 }
 export const distinctUntilChanged = ((options) => (iterable) => newInstance(DistinctUntilChangedIterable, iterable, options?.equality ?? strictEquality));
-export const empty = /*@__PURE__*/ returns([]);
 class EncodeUtf8Iterable {
     s;
     [ComputationLike_isPure];
@@ -112,7 +111,6 @@ class ForEachIterable {
     }
 }
 export const forEach = ((effect) => (iterable) => newInstance(ForEachIterable, iterable, effect));
-export const fromValue = /*@__PURE__*/ returns(tuple);
 class GenIterable {
     f;
     [ComputationLike_isSynchronous] = true;

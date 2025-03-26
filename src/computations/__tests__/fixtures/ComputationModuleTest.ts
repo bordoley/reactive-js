@@ -5,11 +5,7 @@ import {
   expectToThrowErrorAsync,
   testAsync,
 } from "../../../__internal__/testing.js";
-import {
-  ComputationModule,
-  ComputationModuleLike_computationType,
-  ComputationType,
-} from "../../../computations.js";
+import { ComputationModule, ComputationType } from "../../../computations.js";
 import {
   Tuple2,
   alwaysTrue,
@@ -28,20 +24,7 @@ import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
 
 const ComputationModuleTests = <TComputationType extends ComputationType>(
-  m: Pick<
-    ComputationModule<TComputationType>,
-    | "distinctUntilChanged"
-    | "genPure"
-    | "keep"
-    | "map"
-    | "pairwise"
-    | "scan"
-    | "skipFirst"
-    | "takeFirst"
-    | "takeWhile"
-    | "toReadonlyArrayAsync"
-    | typeof ComputationModuleLike_computationType
-  >,
+  m: ComputationModule<TComputationType>,
 ) =>
   describe(
     "ComputationModule",

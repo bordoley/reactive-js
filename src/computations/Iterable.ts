@@ -211,8 +211,6 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] = (<
       options?.equality ?? strictEquality,
     )) as Signature["distinctUntilChanged"];
 
-export const empty: Signature["empty"] = /*@__PURE__*/ returns([]);
-
 class EncodeUtf8Iterable implements IterableLike<Uint8Array<ArrayBufferLike>> {
   public [ComputationLike_isPure]?: boolean;
 
@@ -257,8 +255,6 @@ class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
 export const forEach: Signature["forEach"] = (<T>(effect: SideEffect1<T>) =>
   (iterable: IterableLike<T>) =>
     newInstance(ForEachIterable, iterable, effect)) as Signature["forEach"];
-
-export const fromValue: Signature["fromValue"] = /*@__PURE__*/ returns(tuple);
 
 class GenIterable<T> implements IterableWithSideEffectsLike<T> {
   public readonly [ComputationLike_isSynchronous]: true = true as const;

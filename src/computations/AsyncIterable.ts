@@ -34,7 +34,6 @@ import {
   SideEffect1,
   Tuple2,
   alwaysTrue,
-  bindMethod,
   error,
   identity,
   invoke,
@@ -412,18 +411,6 @@ class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
     }
   }
 }
-
-export const empty: Signature["empty"] = (() =>
-  pipe(
-    genPure(bindMethod([], Symbol.iterator)),
-    returns,
-  ))() as Signature["empty"];
-
-export const fromValue: Signature["fromValue"] =
-  /*@__PURE__*/
-  returns(v =>
-    genPure(bindMethod([v], Symbol.iterator)),
-  ) as Signature["fromValue"];
 
 export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
   (iterable: AsyncIterableLike<T>) =>

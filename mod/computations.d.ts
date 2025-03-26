@@ -245,9 +245,7 @@ export interface ComputationModule<TComputationType extends AnyComputationType =
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): PureComputationOperator<TComputationType, T, T>;
-    empty<T>(options?: TCreationOptions["empty"]): NewPureInstanceOf<TComputationType, T>;
     encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
-    fromValue<T>(options?: TCreationOptions["fromValue"]): Function1<T, NewPureInstanceOf<TComputationType, T>>;
     genPure<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["genPure"]): NewPureInstanceOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<TComputationType, T, T>;
     lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;

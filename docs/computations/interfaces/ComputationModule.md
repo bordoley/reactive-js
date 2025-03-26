@@ -58,26 +58,6 @@
 
 ***
 
-### empty()
-
-> **empty**\<`T`\>(`options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"empty"`\]
-
-#### Returns
-
-[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
-
-***
-
 ### encodeUtf8()
 
 > **encodeUtf8**(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
@@ -85,26 +65,6 @@
 #### Returns
 
 [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
-
-***
-
-### fromValue()
-
-> **fromValue**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"fromValue"`\]
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<`T`, [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
