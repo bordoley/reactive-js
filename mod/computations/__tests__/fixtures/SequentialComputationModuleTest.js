@@ -3,7 +3,7 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { debug, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, } from "../../../functions.js";
+import { none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source throws", async () => {
     const e1 = "e1";
@@ -22,7 +22,7 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
         result = e.cause;
     }), m.toReadonlyArrayAsync());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-}), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), Computation.concatWith(m)(Computation.raise(m)()), debug, m.catchError(pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)())), debug, m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("forEach", testAsync("invokes the effect for each notified value", async () => {
+}), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), Computation.concatWith(m)(Computation.raise(m)()), m.catchError(pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)())), m.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("forEach", testAsync("invokes the effect for each notified value", async () => {
     const result = [];
     await pipeAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), m.forEach((x) => {
         result[Array_push](x + 10);

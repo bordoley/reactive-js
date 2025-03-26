@@ -20,6 +20,7 @@
 - [computations/Observable](computations/Observable/README.md)
 - [computations/Producer](computations/Producer/README.md)
 - [computations/Publisher](computations/Publisher/README.md)
+- [computations/Runnable](computations/Runnable/README.md)
 - [computations/WritableStore](computations/WritableStore/README.md)
 - [functions](functions/README.md)
 - [math](math/README.md)

@@ -32,7 +32,7 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: true,
         [SourceLike_subscribe](observer) {
             const source = this[LiftedSourceLike_source];
-            const destinationOp = pipeUnsafe(observer, Sink.toOperator(), ...this[LiftedSourceLike_sink], sinkToObserver);
+            const destinationOp = pipeUnsafe(observer, Sink.toLiftedSink(), ...this[LiftedSourceLike_sink], sinkToObserver);
             source[SourceLike_subscribe](destinationOp);
         },
     }));

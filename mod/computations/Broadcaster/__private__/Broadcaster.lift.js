@@ -28,7 +28,7 @@ const createLiftedBroadcaster = /*@__PURE__*/ (() => {
         [ComputationLike_isSynchronous]: false,
         [SourceLike_subscribe](listener) {
             const source = this[LiftedSourceLike_source];
-            const destinationOp = pipeUnsafe(listener, EventListener.toOperator(), ...this[LiftedSourceLike_sink], sinkToEventListener);
+            const destinationOp = pipeUnsafe(listener, EventListener.toLiftedSink(), ...this[LiftedSourceLike_sink], sinkToEventListener);
             source[SourceLike_subscribe](destinationOp);
         },
     }));

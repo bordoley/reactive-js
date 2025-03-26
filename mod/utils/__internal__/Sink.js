@@ -3,10 +3,42 @@
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { LiftedSinkLike_subscription, } from "../../computations/__internal__/LiftedSource.js";
 import { none, returns } from "../../functions.js";
-import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-export const toOperator = /*@__PURE__*/ (() => {
-    return returns(mixInstanceFactory(include(DelegatingDisposableMixin), function SinkToOperator(listener) {
+import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
+import DisposableMixin from "../__mixins__/DisposableMixin.js";
+import QueueMixin from "../__mixins__/QueueMixin.js";
+export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, DelegatingSinkMixin()), function NonDisposingDelegatingSink(delegate) {
+    init(DisposableMixin, this);
+    init(DelegatingSinkMixin(), this, delegate);
+    return this;
+}, props(), proto({
+    get [SinkLike_isCompleted]() {
+        unsafeCast(this);
+        return this[DisposableLike_isDisposed];
+    },
+    [SinkLike_complete]() {
+        this[DisposableLike_dispose]();
+    },
+})))();
+export const createQueueSink = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerQueue(options) {
+    init(DisposableMixin, this);
+    init(QueueMixin(), this, options);
+    return this;
+}, props(), proto({
+    get [SinkLike_isCompleted]() {
+        unsafeCast(this);
+        return this[DisposableLike_isDisposed];
+    },
+    [EventListenerLike_notify](next) {
+        this[QueueLike_enqueue](next);
+    },
+    [SinkLike_complete]() {
+        this[DisposableLike_dispose]();
+    },
+})))();
+export const toLiftedSink = /*@__PURE__*/ (() => {
+    return returns(mixInstanceFactory(include(DelegatingDisposableMixin), function SinktoLiftedSink(listener) {
         init(DelegatingDisposableMixin, this, listener);
         this[LiftedSinkLike_subscription] = listener;
         return this;

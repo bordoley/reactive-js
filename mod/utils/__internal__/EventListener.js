@@ -15,8 +15,8 @@ export const create = /*@__PURE__*/ (() => {
         [EventListenerLike_notify]: none,
     }));
 })();
-export const toOperator = /*@__PURE__*/ (() => {
-    return returns(mixInstanceFactory(include(DelegatingDisposableMixin), function EventListenerToOperator(listener) {
+export const toLiftedSink = /*@__PURE__*/ (() => {
+    return returns(mixInstanceFactory(include(DelegatingDisposableMixin), function EventListenertoLiftedSink(listener) {
         init(DelegatingDisposableMixin, this, listener);
         this[LiftedSinkLike_subscription] = listener;
         return this;

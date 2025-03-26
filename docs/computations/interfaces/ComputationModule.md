@@ -17,6 +17,7 @@
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
+- [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 

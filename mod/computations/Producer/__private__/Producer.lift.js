@@ -29,7 +29,7 @@ const createLiftedProducer = /*@__PURE__*/ (() => {
         [ComputationLike_isSynchronous]: false,
         [SourceLike_subscribe](consumer) {
             const source = this[LiftedSourceLike_source];
-            const destinationOp = pipeUnsafe(consumer, Sink.toOperator(), ...this[LiftedSourceLike_sink], sinkToConsumer);
+            const destinationOp = pipeUnsafe(consumer, Sink.toLiftedSink(), ...this[LiftedSourceLike_sink], sinkToConsumer);
             source[SourceLike_subscribe](destinationOp);
         },
     }));

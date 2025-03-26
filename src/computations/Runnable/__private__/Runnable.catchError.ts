@@ -9,19 +9,22 @@ import {
   Function1,
   Optional,
   SideEffect1,
+  error,
   isNone,
   isSome,
   newInstance,
   none,
 } from "../../../functions.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
+  DisposableLike_dispose,
   DisposableLike_error,
   SinkLike,
   SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
-import * as Sink from "../../../utils/__internal__/Sink.js";
 
 class CatchErrorRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
@@ -52,11 +55,17 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
 
     let action: Optional<RunnableLike<T>> = none;
 
-    action = this.onError(err) as Optional<RunnableLike<T>>;
-    if (isSome(action)) {
-      action[RunnableLike_eval](sink);
+    try {
+      action = this.onError(err) as Optional<RunnableLike>;
+    } catch (e) {
+      sink[DisposableLike_dispose](error([error(e), err]));
     }
-    sink[SinkLike_complete]();
+    if (isSome(action) && !sink[SinkLike_isCompleted]) {
+      action[RunnableLike_eval](sink);
+      sink[SinkLike_complete]();
+    } else {
+      sink[SinkLike_complete]();
+    }
   }
 }
 
