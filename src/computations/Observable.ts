@@ -49,6 +49,7 @@ import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIf
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
+import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 
 /**
  * @noInheritDoc
@@ -205,3 +206,5 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Observable_toReadonlyArrayAsync;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
+export const withLatestFrom: Signature["withLatestFrom"] =
+  Observable_withLatestFrom;

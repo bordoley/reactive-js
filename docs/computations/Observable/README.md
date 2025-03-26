@@ -44,3 +44,4 @@
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [withCurrentTime](functions/withCurrentTime.md)
+- [withLatestFrom](functions/withLatestFrom.md)

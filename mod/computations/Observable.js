@@ -23,6 +23,7 @@ import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIf
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
+import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 export const buffer = Observable_buffer;
 export const currentTime = Observable_currentTime;
 export const decodeWithCharset = Observable_decodeWithCharset;
@@ -46,3 +47,4 @@ export const throwIfEmpty = Observable_throwIfEmpty;
 export const toProducer = Observable_toProducer;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;
 export const withCurrentTime = Observable_withCurrentTime;
+export const withLatestFrom = Observable_withLatestFrom;

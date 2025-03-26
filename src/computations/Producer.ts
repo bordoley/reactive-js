@@ -43,6 +43,7 @@ import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
 import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
 import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
 import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
+import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
 
 /**
  * @noInheritDoc
@@ -111,3 +112,5 @@ export const takeWhile: Signature["takeWhile"] = Producer_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Producer_throwIfEmpty;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Producer_toReadonlyArrayAsync;
+export const withLatestFrom: Signature["withLatestFrom"] =
+  Producer_withLatestFrom;

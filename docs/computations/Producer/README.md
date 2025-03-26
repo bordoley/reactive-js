@@ -40,3 +40,4 @@
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
+- [withLatestFrom](functions/withLatestFrom.md)
