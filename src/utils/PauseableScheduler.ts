@@ -20,12 +20,12 @@ import {
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
-  FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableSchedulerLike,
+  QueueLike,
+  QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -36,7 +36,7 @@ import {
   SerialDisposableLike_current,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
-import FlowControlledQueueMixin from "./__mixins__/FlowControlledQueueMixin.js";
+import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, {
   SchedulerContinuation,
   SchedulerContinuationLike,
@@ -79,7 +79,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const peek = (
     instance: TProperties &
       SchedulerMixinHostLike &
-      FlowControllerQueueLike<SchedulerContinuationLike>,
+      QueueLike<SchedulerContinuationLike>,
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
     while (true) {
@@ -100,7 +100,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       SerialDisposableLike &
       SchedulerMixinHostLike &
       SchedulerLike &
-      FlowControllerQueueLike<SchedulerContinuationLike>,
+      QueueLike<SchedulerContinuationLike>,
   ) => {
     const hostScheduler = instance[PauseableScheduler_hostScheduler];
 
@@ -141,7 +141,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     this: SchedulerMixinHostLike &
       SchedulerLike &
       TProperties &
-      FlowControllerQueueLike<SchedulerContinuationLike> &
+      QueueLike<SchedulerContinuationLike> &
       DisposableLike,
     ctx: ContinuationContextLike,
   ) {
@@ -172,11 +172,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   }
 
   return mixInstanceFactory(
-    include(
-      SchedulerMixin,
-      SerialDisposableMixin(),
-      FlowControlledQueueMixin(),
-    ),
+    include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function PauseableScheduler(
       this: Pick<
         PauseableSchedulerLike,
@@ -188,7 +184,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     ): PauseableSchedulerLike & DisposableLike {
       init(SchedulerMixin, this);
       init(SerialDisposableMixin(), this, Disposable.disposed);
-      init(FlowControlledQueueMixin<SchedulerContinuationLike>(), this, {
+      init(QueueMixin<SchedulerContinuationLike>(), this, {
         comparator: SchedulerContinuation.compare,
       });
 
@@ -236,7 +232,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           TProperties &
             DisposableLike &
             SchedulerLike &
-            FlowControllerQueueLike<SchedulerContinuationLike>
+            QueueLike<SchedulerContinuationLike>
         >(this);
 
         const now = this[SchedulerLike_now];
@@ -267,7 +263,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           SerialDisposableLike &
           SchedulerMixinHostLike &
           SchedulerLike &
-          FlowControllerQueueLike<SchedulerContinuationLike>,
+          QueueLike<SchedulerContinuationLike>,
       ) {
         const hostNow =
           this[PauseableScheduler_hostScheduler][SchedulerLike_now];
@@ -281,10 +277,10 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           SerialDisposableLike &
           SchedulerMixinHostLike &
           SchedulerLike &
-          FlowControllerQueueLike<SchedulerContinuationLike>,
+          QueueLike<SchedulerContinuationLike>,
         continuation: SchedulerContinuationLike,
       ) {
-        this[FlowControllerQueueLike_enqueue](continuation);
+        this[QueueLike_enqueue](continuation);
 
         scheduleOnHost(this);
       },

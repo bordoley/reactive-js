@@ -6,10 +6,10 @@ import * as Iterable from "../computations/Iterable.js";
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, FlowControllerQueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
-import FlowControlledQueueMixin from "./__mixins__/FlowControlledQueueMixin.js";
+import QueueMixin from "./__mixins__/QueueMixin.js";
 import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
@@ -91,11 +91,11 @@ export const create = /*@PURE__*/ (() => {
             channel.port2.close();
         }
     }
-    const createHostSchedulerInstance = mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), FlowControlledQueueMixin()), function HostScheduler(maxYieldInterval) {
+    const createHostSchedulerInstance = mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function HostScheduler(maxYieldInterval) {
         this[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(SchedulerMixin, this);
         init(SerialDisposableMixin(), this, Disposable.disposed);
-        init(FlowControlledQueueMixin(), this, {
+        init(QueueMixin(), this, {
             comparator: SchedulerContinuation.compare,
         });
         const MessageChannel = globalObject.MessageChannel;
@@ -123,7 +123,7 @@ export const create = /*@PURE__*/ (() => {
             return yieldToNextContinuation;
         },
         [SchedulerMixinHostLike_schedule](continuation) {
-            this[FlowControllerQueueLike_enqueue](continuation);
+            this[QueueLike_enqueue](continuation);
             scheduleOnHost(this);
         },
     });

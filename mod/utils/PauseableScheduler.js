@@ -7,9 +7,9 @@ import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none, pipe } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { ContinuationContextLike_yield, DisposableContainerLike_add, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, FlowControllerQueueLike_enqueue, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
+import { ContinuationContextLike_yield, DisposableContainerLike_add, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
-import FlowControlledQueueMixin from "./__mixins__/FlowControlledQueueMixin.js";
+import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 export const create = /*@PURE__*/ (() => {
@@ -73,10 +73,10 @@ export const create = /*@PURE__*/ (() => {
             ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
         }
     }
-    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), FlowControlledQueueMixin()), function PauseableScheduler(host) {
+    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(host) {
         init(SchedulerMixin, this);
         init(SerialDisposableMixin(), this, Disposable.disposed);
-        init(FlowControlledQueueMixin(), this, {
+        init(QueueMixin(), this, {
             comparator: SchedulerContinuation.compare,
         });
         this[PauseableScheduler_hostScheduler] = host;
@@ -131,7 +131,7 @@ export const create = /*@PURE__*/ (() => {
             scheduleOnHost(this);
         },
         [SchedulerMixinHostLike_schedule](continuation) {
-            this[FlowControllerQueueLike_enqueue](continuation);
+            this[QueueLike_enqueue](continuation);
             scheduleOnHost(this);
         },
     });

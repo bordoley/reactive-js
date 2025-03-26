@@ -113,7 +113,7 @@ export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
 }
 export declare const FlowControllerEnumeratorLike_addOnDataAvailableListener: unique symbol;
 export declare const FlowControllerEnumeratorLike_isDataAvailable: unique symbol;
-export interface FlowControllerEnumeratorLike<T = unknown> extends CollectionEnumeratorLike<T> {
+export interface FlowControllerEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
     readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
     [FlowControllerEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
 }
