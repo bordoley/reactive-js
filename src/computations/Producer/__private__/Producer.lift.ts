@@ -48,25 +48,20 @@ interface LiftedProducerLike<TIn, TOut>
   [SourceLike_subscribe](listener: ConsumerLike<TOut>): void;
 }
 
-const operatorToConsumer: <T>(
-  delegate: ConsumerLike,
-) => Function1<LiftedSinkLike<any, ConsumerLike>, ConsumerLike<T>> =
-  /*@__PURE__*/ (<T>() => {
-    const createOperatorToConsumer = mixInstanceFactory(
-      include(LiftedSinkToConsumerMixin()),
-      function OperatorToConsumer(
-        this: unknown,
-        delegate: ConsumerLike,
-        operator: LiftedSinkLike<ConsumerLike, any>,
-      ): ConsumerLike<T> {
-        init(LiftedSinkToConsumerMixin(), this, operator, delegate);
+const sinkToConsumer: <T>(
+  delegate: LiftedSinkLike<ConsumerLike, any>,
+) => ConsumerLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(LiftedSinkToConsumerMixin()),
+    function OperatorToConsumer(
+      this: unknown,
+      delegate: LiftedSinkLike<ConsumerLike, any>,
+    ): ConsumerLike<T> {
+      init(LiftedSinkToConsumerMixin(), this, delegate);
 
-        return this;
-      },
-    );
-
-    return delegate => operator => createOperatorToConsumer(delegate, operator);
-  })();
+      return this;
+    },
+  ))();
 
 const createLiftedProducer: <TIn, TOut>(
   src: ProducerLike<TIn>,
@@ -135,7 +130,7 @@ const createLiftedProducer: <TIn, TOut>(
           consumer,
           Sink.toOperator(),
           ...this[LiftedSourceLike_sink],
-          operatorToConsumer(consumer),
+          sinkToConsumer,
         );
         source[SourceLike_subscribe](destinationOp);
       },

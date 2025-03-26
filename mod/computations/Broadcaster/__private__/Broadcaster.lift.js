@@ -7,14 +7,10 @@ import * as EventListener from "../../../utils/__internal__/EventListener.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToEventListenerMixin from "../../__mixins__/LiftedSinkToEventListenerMixin.js";
-const operatorToEventListener = 
-/*@__PURE__*/ (() => {
-    const createOperatorToEventListener = mixInstanceFactory(include(LiftedSinkToEventListenerMixin()), function OperatorToEventListener(delegate, operator) {
-        init(LiftedSinkToEventListenerMixin(), this, operator, delegate);
-        return this;
-    });
-    return delegate => operator => createOperatorToEventListener(delegate, operator);
-})();
+const sinkToEventListener = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToEventListenerMixin()), function OperatorToEventListener(operator) {
+    init(LiftedSinkToEventListenerMixin(), this, operator);
+    return this;
+}))();
 const createLiftedBroadcaster = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableContainerMixin()), function LiftedBroadcaster(source, op) {
         init(DelegatingDisposableContainerMixin(), this, source);
@@ -32,7 +28,7 @@ const createLiftedBroadcaster = /*@__PURE__*/ (() => {
         [ComputationLike_isSynchronous]: false,
         [SourceLike_subscribe](listener) {
             const source = this[LiftedSourceLike_source];
-            const destinationOp = pipeUnsafe(listener, EventListener.toOperator(), ...this[LiftedSourceLike_sink], operatorToEventListener(listener));
+            const destinationOp = pipeUnsafe(listener, EventListener.toOperator(), ...this[LiftedSourceLike_sink], sinkToEventListener);
             source[SourceLike_subscribe](destinationOp);
         },
     }));

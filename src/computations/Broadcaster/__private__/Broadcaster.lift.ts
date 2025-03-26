@@ -48,26 +48,24 @@ interface LiftedBroadcasterLike<TIn, TOut>
   [SourceLike_subscribe](listener: EventListenerLike<TOut>): void;
 }
 
-const operatorToEventListener: <T>(
-  delegate: EventListenerLike,
-) => Function1<LiftedSinkLike<any, EventListenerLike>, EventListenerLike<T>> =
-  /*@__PURE__*/ (<T>() => {
-    const createOperatorToEventListener = mixInstanceFactory(
-      include(LiftedSinkToEventListenerMixin()),
-      function OperatorToEventListener(
-        this: unknown,
-        delegate: EventListenerLike,
-        operator: LiftedSinkLike<any, EventListenerLike>,
-      ): EventListenerLike<T> {
-        init(LiftedSinkToEventListenerMixin(), this, operator, delegate);
+const sinkToEventListener: <T>(
+  delegate: LiftedSinkLike<EventListenerLike, any>,
+) => EventListenerLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(LiftedSinkToEventListenerMixin()),
+    function OperatorToEventListener(
+      this: unknown,
+      operator: LiftedSinkLike<EventListenerLike, any>,
+    ): EventListenerLike<T> {
+      init(
+        LiftedSinkToEventListenerMixin<EventListenerLike, T>(),
+        this,
+        operator,
+      );
 
-        return this;
-      },
-    );
-
-    return delegate => operator =>
-      createOperatorToEventListener(delegate, operator);
-  })();
+      return this;
+    },
+  ))();
 
 const createLiftedBroadcaster: <TIn, TOut>(
   src: BroadcasterLike<TIn>,
@@ -131,7 +129,7 @@ const createLiftedBroadcaster: <TIn, TOut>(
           listener,
           EventListener.toOperator(),
           ...this[LiftedSourceLike_sink],
-          operatorToEventListener(listener),
+          sinkToEventListener,
         );
         source[SourceLike_subscribe](destinationOp);
       },

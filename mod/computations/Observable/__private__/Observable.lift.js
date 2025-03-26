@@ -7,7 +7,7 @@ import * as Sink from "../../../utils/__internal__/Sink.js";
 import * as Computation from "../../Computation.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToObserverMixin from "../../__mixins__/LiftedSinkToObserverMixin.js";
-export const operatorToObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToObserverMixin()), function OperatorToObserver(operator) {
+export const sinkToObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToObserverMixin()), function OperatorToObserver(operator) {
     init(LiftedSinkToObserverMixin(), this, operator);
     return this;
 }))();
@@ -32,7 +32,7 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: true,
         [SourceLike_subscribe](observer) {
             const source = this[LiftedSourceLike_source];
-            const destinationOp = pipeUnsafe(observer, Sink.toOperator(), ...this[LiftedSourceLike_sink], operatorToObserver);
+            const destinationOp = pipeUnsafe(observer, Sink.toOperator(), ...this[LiftedSourceLike_sink], sinkToObserver);
             source[SourceLike_subscribe](destinationOp);
         },
     }));

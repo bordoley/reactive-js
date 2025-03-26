@@ -7,14 +7,10 @@ import * as Sink from "../../../utils/__internal__/Sink.js";
 import * as Computation from "../../Computation.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToConsumerMixin from "../../__mixins__/LiftedSinkToConsumerMixin.js";
-const operatorToConsumer = 
-/*@__PURE__*/ (() => {
-    const createOperatorToConsumer = mixInstanceFactory(include(LiftedSinkToConsumerMixin()), function OperatorToConsumer(delegate, operator) {
-        init(LiftedSinkToConsumerMixin(), this, operator, delegate);
-        return this;
-    });
-    return delegate => operator => createOperatorToConsumer(delegate, operator);
-})();
+const sinkToConsumer = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToConsumerMixin()), function OperatorToConsumer(delegate) {
+    init(LiftedSinkToConsumerMixin(), this, delegate);
+    return this;
+}))();
 const createLiftedProducer = /*@__PURE__*/ (() => {
     return mixInstanceFactory(function LiftedProducer(source, op, config) {
         const liftedSource = source[LiftedSourceLike_source] ?? source;
@@ -33,7 +29,7 @@ const createLiftedProducer = /*@__PURE__*/ (() => {
         [ComputationLike_isSynchronous]: false,
         [SourceLike_subscribe](consumer) {
             const source = this[LiftedSourceLike_source];
-            const destinationOp = pipeUnsafe(consumer, Sink.toOperator(), ...this[LiftedSourceLike_sink], operatorToConsumer(consumer));
+            const destinationOp = pipeUnsafe(consumer, Sink.toOperator(), ...this[LiftedSourceLike_sink], sinkToConsumer);
             source[SourceLike_subscribe](destinationOp);
         },
     }));
