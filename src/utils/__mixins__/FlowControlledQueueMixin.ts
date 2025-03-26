@@ -19,6 +19,7 @@ import {
   Optional,
   SideEffect1,
   alwaysNone,
+  call,
   isEqualTo,
   newInstance,
   none,
@@ -95,6 +96,17 @@ const FlowControlledQueueMixin: <T>() => Mixin1<
       PublisherLike<"ready" | "data_ready">
     >;
   };
+
+  function createPublisher(
+    this: TProperties & DisposableLike,
+  ): PublisherLike<"ready" | "data_ready"> {
+    const publisher = pipe(
+      Publisher.createAsync<"ready" | "data_ready">(),
+      Disposable.addTo(this),
+    );
+    this[FlowControlledQueueMixin_onReadyPublisher] = publisher;
+    return publisher;
+  }
 
   return returns(
     mix(
@@ -209,14 +221,7 @@ const FlowControlledQueueMixin: <T>() => Mixin1<
         ) {
           const publisher =
             this[FlowControlledQueueMixin_onReadyPublisher] ??
-            (() => {
-              const publisher = pipe(
-                Publisher.create<"ready" | "data_ready">(),
-                Disposable.addTo(this),
-              );
-              this[FlowControlledQueueMixin_onReadyPublisher] = publisher;
-              return publisher;
-            })();
+            call(createPublisher, this);
 
           // FIXME: Could memoize
           return pipe(
@@ -234,14 +239,7 @@ const FlowControlledQueueMixin: <T>() => Mixin1<
         ) {
           const publisher =
             this[FlowControlledQueueMixin_onReadyPublisher] ??
-            (() => {
-              const publisher = pipe(
-                Publisher.create<"ready" | "data_ready">(),
-                Disposable.addTo(this),
-              );
-              this[FlowControlledQueueMixin_onReadyPublisher] = publisher;
-              return publisher;
-            })();
+            call(createPublisher, this);
 
           // FIXME: Could memoize
           return pipe(

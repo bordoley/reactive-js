@@ -6,13 +6,18 @@ import Broadcaster_addEventHandler from "../../computations/Broadcaster/__privat
 import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadcaster.keep.js";
 import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { alwaysNone, isEqualTo, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
+import { alwaysNone, call, isEqualTo, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { clampPositiveInteger } from "../../math.js";
 import { BackPressureError, CollectionEnumeratorLike_count, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, OverflowBackpressureStrategy, QueueLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 const FlowControlledQueueMixin = /*@__PURE__*/ (() => {
     const FlowControlledQueueMixin_onReadyPublisher = Symbol("FlowControlledQueueMixin_onReadyPublisher");
+    function createPublisher() {
+        const publisher = pipe(Publisher.createAsync(), Disposable.addTo(this));
+        this[FlowControlledQueueMixin_onReadyPublisher] = publisher;
+        return publisher;
+    }
     return returns(mix(include(QueueMixin()), function FlowControlledQueueMixin(config) {
         init(QueueMixin(), this, config);
         this[FlowControllerLike_backpressureStrategy] =
@@ -83,21 +88,13 @@ const FlowControlledQueueMixin = /*@__PURE__*/ (() => {
         },
         [FlowControllerEnumeratorLike_addOnDataAvailableListener](callback) {
             const publisher = this[FlowControlledQueueMixin_onReadyPublisher] ??
-                (() => {
-                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
-                    this[FlowControlledQueueMixin_onReadyPublisher] = publisher;
-                    return publisher;
-                })();
+                call(createPublisher, this);
             // FIXME: Could memoize
             return pipe(publisher, Broadcaster_keep(isEqualTo("data_ready")), Broadcaster_map(alwaysNone), Broadcaster_addEventHandler(callback), Disposable.addTo(this));
         },
         [FlowControllerLike_addOnReadyListener](callback) {
             const publisher = this[FlowControlledQueueMixin_onReadyPublisher] ??
-                (() => {
-                    const publisher = pipe(Publisher.create(), Disposable.addTo(this));
-                    this[FlowControlledQueueMixin_onReadyPublisher] = publisher;
-                    return publisher;
-                })();
+                call(createPublisher, this);
             // FIXME: Could memoize
             return pipe(publisher, Broadcaster_keep(isEqualTo("ready")), Broadcaster_map(alwaysNone), Broadcaster_addEventHandler(callback), Disposable.addTo(this));
         },
