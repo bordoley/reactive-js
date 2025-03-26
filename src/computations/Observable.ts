@@ -45,6 +45,7 @@ import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
+import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 
 /**
  * @noInheritDoc
@@ -196,3 +197,5 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Observable_toReadonlyArrayAsync;
+export const withCurrentTime: Signature["withCurrentTime"] =
+  Observable_withCurrentTime;

@@ -19,6 +19,7 @@ import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable.toReadonlyArrayAsync.js";
+import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 export const buffer = Observable_buffer;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
@@ -38,3 +39,4 @@ export const takeWhile = Observable_takeWhile;
 export const throwIfEmpty = Observable_throwIfEmpty;
 export const toProducer = Observable_toProducer;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;
+export const withCurrentTime = Observable_withCurrentTime;
