@@ -1461,7 +1461,7 @@ export interface RunnableWithSideEffectsLike<T = unknown>
 export const SourceLike_subscribe = Symbol("SourceLike_subscribe");
 
 export interface SourceLike<
-  T,
+  T = unknown,
   TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
 > extends ComputationLike {
   [SourceLike_subscribe](EventListener: TEventListener): void;

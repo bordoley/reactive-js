@@ -434,7 +434,7 @@ export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T
     readonly [ComputationLike_isPure]: false;
 }
 export declare const SourceLike_subscribe: unique symbol;
-export interface SourceLike<T, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends ComputationLike {
+export interface SourceLike<T = unknown, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends ComputationLike {
     [SourceLike_subscribe](EventListener: TEventListener): void;
 }
 /**

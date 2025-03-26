@@ -15,7 +15,6 @@ import {
   Optional,
   SideEffect1,
   bind,
-  bindMethod,
   error,
   isSome,
   newInstance,
@@ -152,22 +151,22 @@ export const catchError =
   ) =>
   (source: TContinueSource) =>
     create<T, TSink>(
-      observer => {
+      sink => {
         const onErrorSink = pipe(
-          createDelegatingNotifyOnlyNonCompletingNonDisposing(observer),
-          Disposable.addToContainer(observer),
+          createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
+          Disposable.addToContainer(sink),
           DisposableContainer.onError(err => {
             let action: Optional<TContinueSource> = none;
             try {
               action = errorHandler(err) as Optional<TContinueSource>;
             } catch (e) {
-              observer[DisposableLike_dispose](error([error(e), err]));
+              sink[DisposableLike_dispose](error([error(e), err]));
             }
 
             if (isSome(action)) {
-              action[SourceLike_subscribe](observer);
+              action[SourceLike_subscribe](sink);
             } else {
-              observer[SinkLike_complete]();
+              sink[SinkLike_complete]();
             }
           }),
         );
@@ -269,17 +268,16 @@ export const creatConcat = <
     {
       [ComputationLike_isDeferred]: true as const,
 
-      [SourceLike_subscribe](this: TProperties, observer: TSink): void {
+      [SourceLike_subscribe](this: TProperties, sink: TSink): void {
         const { [ConcatSource_sources]: sources } = this;
 
-        pipe(
-          createConcatSink({
-            [ConcatSinkCtx_delegate]: observer,
-            [ConcatSinkCtx_sources]: sources,
-            [ConcatSinkCtx_nextIndex]: 1,
-          }),
-          bindMethod(sources[0], SourceLike_subscribe),
-        );
+        const concatSink = createConcatSink({
+          [ConcatSinkCtx_delegate]: sink,
+          [ConcatSinkCtx_sources]: sources,
+          [ConcatSinkCtx_nextIndex]: 1,
+        });
+
+        sources[0][SourceLike_subscribe](concatSink);
       },
     },
   );

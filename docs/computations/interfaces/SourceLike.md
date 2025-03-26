@@ -18,7 +18,7 @@
 
 ## Type Parameters
 
-• **T**
+• **T** = `unknown`
 
 • **TEventListener** *extends* [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\> = [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
 

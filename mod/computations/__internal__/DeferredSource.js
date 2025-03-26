@@ -3,7 +3,7 @@
 import { Array_length } from "../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { bind, bindMethod, error, isSome, newInstance, none, pipe, } from "../../functions.js";
+import { bind, error, isSome, newInstance, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../utils.js";
@@ -30,20 +30,20 @@ class CreateSource {
     }
 }
 export const create = ((effect, options) => newInstance((CreateSource), effect, options));
-export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(observer => {
-    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(observer), Disposable.addToContainer(observer), DisposableContainer.onError(err => {
+export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(sink => {
+    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addToContainer(sink), DisposableContainer.onError(err => {
         let action = none;
         try {
             action = errorHandler(err);
         }
         catch (e) {
-            observer[DisposableLike_dispose](error([error(e), err]));
+            sink[DisposableLike_dispose](error([error(e), err]));
         }
         if (isSome(action)) {
-            action[SourceLike_subscribe](observer);
+            action[SourceLike_subscribe](sink);
         }
         else {
-            observer[SinkLike_complete]();
+            sink[SinkLike_complete]();
         }
     }));
     source[SourceLike_subscribe](onErrorSink);
@@ -91,13 +91,14 @@ export const creatConcat = (m) => {
         [ConcatSource_sources]: none,
     }), {
         [ComputationLike_isDeferred]: true,
-        [SourceLike_subscribe](observer) {
+        [SourceLike_subscribe](sink) {
             const { [ConcatSource_sources]: sources } = this;
-            pipe(createConcatSink({
-                [ConcatSinkCtx_delegate]: observer,
+            const concatSink = createConcatSink({
+                [ConcatSinkCtx_delegate]: sink,
                 [ConcatSinkCtx_sources]: sources,
                 [ConcatSinkCtx_nextIndex]: 1,
-            }), bindMethod(sources[0], SourceLike_subscribe));
+            });
+            sources[0][SourceLike_subscribe](concatSink);
         },
     });
     return (...sources) => {
