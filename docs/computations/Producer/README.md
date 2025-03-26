@@ -36,6 +36,7 @@
 - [skipFirst](functions/skipFirst.md)
 - [subscribe](functions/subscribe.md)
 - [takeFirst](functions/takeFirst.md)
+- [takeUntil](functions/takeUntil.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
