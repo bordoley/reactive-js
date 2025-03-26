@@ -239,7 +239,6 @@ export interface ComputationModule<TComputationType extends AnyComputationType =
     fromValue?: Record<string, any>;
     genPure?: Record<string, any>;
     lastAsync?: Record<string, any>;
-    raise?: Record<string, any>;
     toReadonlyArrayAsync?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     distinctUntilChanged<T>(options?: {

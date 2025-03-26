@@ -14,21 +14,12 @@ export interface ObservableComputation extends ComputationType {
 }
 export type Computation = ObservableComputation;
 export interface ObservableModule extends ComputationModule<ObservableComputation, {
-    empty: {
-        readonly delay: number;
-    };
-    fromValue: {
-        readonly delay: number;
-    };
     genPure: {
         readonly delay?: number;
         readonly delayStart?: boolean;
     };
     lastAsync: {
         readonly scheduler?: SchedulerLike;
-    };
-    raise: {
-        readonly delay?: number;
     };
     toReadonlyArrayAsync: {
         readonly scheduler?: SchedulerLike;

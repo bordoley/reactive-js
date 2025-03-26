@@ -987,7 +987,6 @@ export interface ComputationModule<
     fromValue?: Record<string, any>;
     genPure?: Record<string, any>;
     lastAsync?: Record<string, any>;
-    raise?: Record<string, any>;
     toReadonlyArrayAsync?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
