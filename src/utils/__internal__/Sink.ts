@@ -1,4 +1,5 @@
 import {
+  createInstanceFactory,
   include,
   init,
   mixInstanceFactory,
@@ -25,37 +26,16 @@ import {
   SinkLike_isCompleted,
 } from "../../utils.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-import DelegatingSinkMixin, {
-  DelegatingSinkLike,
-} from "../__mixins__/DelegatingSinkMixin.js";
+import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
+
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: SinkLike<T>,
-) => DelegatingSinkLike<T, SinkLike<T>> = /*@__PURE__*/ (<T>() =>
-  mixInstanceFactory(
-    include(DisposableMixin, DelegatingSinkMixin()),
-    function NonDisposingDelegatingSink(
-      this: unknown,
-      delegate: SinkLike<T>,
-    ): DelegatingSinkLike<T, SinkLike<T>> {
-      init(DisposableMixin, this);
-      init(DelegatingSinkMixin(), this, delegate);
-
-      return this;
-    },
-    props(),
-    proto({
-      get [SinkLike_isCompleted]() {
-        unsafeCast<SinkLike<T>>(this);
-        return this[DisposableLike_isDisposed];
-      },
-
-      [SinkLike_complete](this: SinkLike<T>) {
-        this[DisposableLike_dispose]();
-      },
-    }),
+) => SinkLike<T> = /*@__PURE__*/ (() =>
+  createInstanceFactory(
+    DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin(),
   ))();
 
 export const createQueueSink: <T>(options?: {
