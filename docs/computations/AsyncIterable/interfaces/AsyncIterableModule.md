@@ -822,4 +822,4 @@
 
 #### Inherited from
 
-[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md).[`toProducer`](../../interfaces/ConcurrentComputationModule.md#toproducer)
+[`ComputationModule`](../../interfaces/ComputationModule.md).[`toProducer`](../../interfaces/ComputationModule.md#toproducer)

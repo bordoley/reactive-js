@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentComputationModule
 
-# Interface: ConcurrentComputationModule\<TComputationType, TCreationOptions\>
+# Interface: ConcurrentComputationModule\<TComputationType\>
 
 ## Extended by
 
@@ -16,8 +16,6 @@
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
-
-• **TCreationOptions** *extends* `object` = \{\}
 
 ## Methods
 
@@ -32,23 +30,3 @@
 #### Returns
 
 [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
-
-***
-
-### toProducer()
-
-> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"toProducer"`\]
-
-#### Returns
-
-[`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>

@@ -1120,7 +1120,7 @@ export interface SequentialComputationModule<
 }
 
 export interface SynchronousComputationModule<
-  TComputationType extends ComputationType,
+  TComputationType extends AnyComputationType = AnyComputationType,
   TCreationOptions extends {
     first?: Record<string, any>;
     last?: Record<string, any>;
@@ -1132,20 +1132,6 @@ export interface SynchronousComputationModule<
   first<T>(
     options?: TCreationOptions["first"],
   ): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
-
-  last<T>(
-    options?: TCreationOptions["last"],
-  ): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
-
-  reduce<T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-    options?: TCreationOptions["reduce"],
-  ): Function1<SynchronousComputationOf<TComputationType, T>, TAcc>;
-
-  toReadonlyArray<T>(
-    options?: TCreationOptions["toReadonlyArray"],
-  ): Function1<SynchronousComputationOf<TComputationType, T>, ReadonlyArray<T>>;
 
   toRunnable<T>(
     options?: TCreationOptions["toRunnable"],
@@ -1162,15 +1148,8 @@ export interface InteractiveComputationModule<
 
 export interface ConcurrentComputationModule<
   TComputationType extends ComputationType,
-  TCreationOptions extends {
-    toProducer?: Record<string, any>;
-  } = {},
 > {
   toObservable<T>(): ToObservableOperator<TComputationType, T>;
-
-  toProducer<T>(
-    options?: TCreationOptions["toProducer"],
-  ): ToProducer<TComputationType, T>;
 }
 
 export interface ConcurrentDeferredComputationModule<

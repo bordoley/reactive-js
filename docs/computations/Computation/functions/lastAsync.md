@@ -30,7 +30,7 @@
 
 #### options?
 
-`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`1`\]
+`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`0`\]
 
 ### Returns
 

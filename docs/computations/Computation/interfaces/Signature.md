@@ -190,6 +190,40 @@ readonly `TComputationType`[]
 
 ***
 
+### last()
+
+> **last**\<`TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+#### Type Parameters
+
+• **TComputationModule** *extends* `Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toRunnable"`\>
+
+#### Parameters
+
+##### m
+
+`TComputationModule`
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options?
+
+`Parameters`\<`TComputationModule`\[`"toRunnable"`\]\>\[`0`\]
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+***
+
 ### lastAsync()
 
 > **lastAsync**\<`TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
@@ -216,7 +250,7 @@ readonly `TComputationType`[]
 
 ###### options?
 
-`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`1`\]
+`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`0`\]
 
 ##### Returns
 
@@ -280,6 +314,40 @@ readonly `TComputationType`[]
 
 ***
 
+### toReadonlyArray()
+
+> **toReadonlyArray**\<`TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, readonly `T`[]\>
+
+#### Type Parameters
+
+• **TComputationModule** *extends* `Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toRunnable"`\>
+
+#### Parameters
+
+##### m
+
+`TComputationModule`
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options?
+
+`Parameters`\<`TComputationModule`\[`"toRunnable"`\]\>\[`0`\]
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, readonly `T`[]\>
+
+***
+
 ### toReadonlyArrayAsync()
 
 > **toReadonlyArrayAsync**\<`TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, `Promise`\<readonly `T`[]\>\>
@@ -306,7 +374,7 @@ readonly `TComputationType`[]
 
 ###### options?
 
-`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`1`\]
+`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`0`\]
 
 ##### Returns
 

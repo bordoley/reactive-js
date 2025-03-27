@@ -290,7 +290,7 @@ export interface SequentialComputationModule<TComputationType extends AnyComputa
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureComputationOperator<TComputationType, T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
 }
-export interface SynchronousComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
+export interface SynchronousComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
     first?: Record<string, any>;
     last?: Record<string, any>;
     reduce?: Record<string, any>;
@@ -298,20 +298,14 @@ export interface SynchronousComputationModule<TComputationType extends Computati
     toRunnable?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     first<T>(options?: TCreationOptions["first"]): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
-    last<T>(options?: TCreationOptions["last"]): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: TCreationOptions["reduce"]): Function1<SynchronousComputationOf<TComputationType, T>, TAcc>;
-    toReadonlyArray<T>(options?: TCreationOptions["toReadonlyArray"]): Function1<SynchronousComputationOf<TComputationType, T>, ReadonlyArray<T>>;
     toRunnable<T>(options?: TCreationOptions["toRunnable"]): ToRunnableOperator<TComputationType, T>;
 }
 export interface InteractiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
     zip: ZipConstructor<TComputationType>;
 }
-export interface ConcurrentComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
-    toProducer?: Record<string, any>;
-} = {}> {
+export interface ConcurrentComputationModule<TComputationType extends ComputationType> {
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
-    toProducer<T>(options?: TCreationOptions["toProducer"]): ToProducer<TComputationType, T>;
 }
 export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
     broadcast?: Record<string, any>;

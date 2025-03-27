@@ -27,7 +27,6 @@ import {
   Runnable_genPure,
 } from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
-import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
 //import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
@@ -39,7 +38,6 @@ import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
 import Runnable_toProducer from "./Runnable/__private__/Runnable.toProducer.js";
-import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonlyArray.js";
 
 /**
  * @noInheritDoc
@@ -78,7 +76,6 @@ export const forEach: Signature["forEach"] = Runnable_forEach;
 export const gen: Signature["gen"] = Runnable_gen;
 export const genPure: Signature["genPure"] = Runnable_genPure;
 export const keep: Signature["keep"] = Runnable_keep;
-export const last: Signature["last"] = Runnable_last;
 export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Runnable_map;
 export const pairwise: Signature["pairwise"] = Runnable_pairwise;
@@ -91,8 +88,6 @@ export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Runnable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Runnable_toProducer;
-export const toReadonlyArray: Signature["toReadonlyArray"] =
-  Runnable_toReadonlyArray;
 export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toRunnable"];

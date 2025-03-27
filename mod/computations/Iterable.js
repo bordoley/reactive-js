@@ -1,7 +1,6 @@
 /// <reference types="./Iterable.d.ts" />
 
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, RunnableLike_eval, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
@@ -158,13 +157,6 @@ class KeepIterable {
     }
 }
 export const keep = ((predicate) => (iterable) => newInstance(KeepIterable, iterable, predicate));
-export const last = () => (iter) => {
-    let result = none;
-    for (const v of iter) {
-        result = v;
-    }
-    return result;
-};
 class MapIterable {
     d;
     m;
@@ -208,13 +200,6 @@ class PairwiseIterable {
     }
 }
 export const pairwise = (() => (iterable) => newInstance((PairwiseIterable), iterable));
-export const reduce = (reducer, initialValue) => (iterable) => {
-    let acc = initialValue();
-    for (let v of iterable) {
-        acc = reducer(acc, v);
-    }
-    return acc;
-};
 class RepeatIterable {
     i;
     p;
@@ -386,7 +371,6 @@ class ThrowIfEmptyIterable {
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
 //export const toObservable: Signature["toObservable"] = Iterable_toObservable;
-export const toReadonlyArray = ReadonlyArray.fromIterable;
 export const toProducer = /*@__PURE__*/ returns((iterable) => ComputationM.isPure(iterable)
     ? Producer_genPure(bindMethod(iterable, Symbol.iterator))
     : Producer_gen(bindMethod(iterable, Symbol.iterator)));

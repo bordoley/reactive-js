@@ -4,7 +4,6 @@ import {
   Iterator_next,
   Iterator_value,
 } from "../__internal__/constants.js";
-import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -316,16 +315,6 @@ export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
   (iterable: IterableLike<T>) =>
     newInstance(KeepIterable, iterable, predicate)) as Signature["keep"];
 
-export const last: Signature["last"] =
-  <T>() =>
-  (iter: IterableLike<T>) => {
-    let result: Optional<T> = none;
-    for (const v of iter) {
-      result = v;
-    }
-    return result;
-  };
-
 class MapIterable<TA, TB> implements IterableLike<TB> {
   public readonly [ComputationLike_isPure]?: boolean;
 
@@ -380,17 +369,6 @@ class PairwiseIterable<T> implements IterableLike<Tuple2<T, T>> {
 export const pairwise: Signature["pairwise"] = (<T>() =>
   (iterable: IterableLike<T>) =>
     newInstance(PairwiseIterable<T>, iterable)) as Signature["pairwise"];
-
-export const reduce: Signature["reduce"] =
-  <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-  (iterable: IterableLike<T>) => {
-    let acc = initialValue();
-    for (let v of iterable) {
-      acc = reducer(acc, v);
-    }
-
-    return acc;
-  };
 
 class RepeatIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -650,9 +628,6 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
     )) as Signature["throwIfEmpty"];
 
 //export const toObservable: Signature["toObservable"] = Iterable_toObservable;
-
-export const toReadonlyArray: Signature["toReadonlyArray"] =
-  ReadonlyArray.fromIterable;
 
 export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
   (iterable: IterableLike) =>

@@ -23,9 +23,11 @@ import {
   PureComputationOperator,
   PureDeferredComputationOf,
   PureSynchronousComputationOf,
+  RunnableLike_eval,
   SequentialComputationModule,
   SourceLike_subscribe,
   SynchronousComputationLike,
+  SynchronousComputationModule,
   SynchronousComputationOf,
 } from "../computations.js";
 import {
@@ -39,6 +41,7 @@ import {
   pipe,
   returns,
 } from "../functions.js";
+import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
 import Iterable_first from "./Iterable/__private__/Iterable.first.js";
@@ -157,6 +160,17 @@ export interface Signature {
     computation: TComputationType,
   ): computation is TComputationType & SynchronousComputationLike;
 
+  last<
+    TComputationModule extends Pick<
+      SynchronousComputationModule,
+      "toRunnable" | typeof ComputationModuleLike_computationType
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: Parameters<TComputationModule["toRunnable"]>[0],
+  ) => Function1<ComputationOfModule<TComputationModule, T>, Optional<T>>;
+
   lastAsync<
     TComputationModule extends Pick<
       ComputationModule,
@@ -165,7 +179,7 @@ export interface Signature {
   >(
     m: TComputationModule,
   ): <T>(
-    options?: Parameters<TComputationModule["toProducer"]>[1],
+    options?: Parameters<TComputationModule["toProducer"]>[0],
   ) => Function1<
     ComputationOfModule<TComputationModule, T>,
     Promise<Optional<T>>
@@ -191,6 +205,17 @@ export interface Signature {
     readonly raise?: Factory<unknown>;
   }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
+  toReadonlyArray<
+    TComputationModule extends Pick<
+      SynchronousComputationModule,
+      "toRunnable" | typeof ComputationModuleLike_computationType
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: Parameters<TComputationModule["toRunnable"]>[0],
+  ) => Function1<ComputationOfModule<TComputationModule, T>, ReadonlyArray<T>>;
+
   toReadonlyArrayAsync<
     TComputationModule extends Pick<
       ComputationModule,
@@ -199,7 +224,7 @@ export interface Signature {
   >(
     m: TComputationModule,
   ): <T>(
-    options?: Parameters<TComputationModule["toProducer"]>[1],
+    options?: Parameters<TComputationModule["toProducer"]>[0],
   ) => Function1<
     ComputationOfModule<TComputationModule, T>,
     Promise<ReadonlyArray<T>>
@@ -260,6 +285,20 @@ export const isSynchronous: Signature["isSynchronous"] = <
 ): computation is TComputationType & SynchronousComputationLike =>
   computation[ComputationLike_isSynchronous] ?? true;
 
+export const last: Signature["last"] = /*@__PURE__*/ memoize(
+  m =>
+    <T>(options?: Parameters<typeof m.toRunnable>[0]) =>
+    (src: ComputationOfModule<typeof m, T>) => {
+      const producer = pipe(src, m.toRunnable(options));
+
+      const consumer = Consumer.takeLast<T>(1);
+      producer[RunnableLike_eval](consumer);
+      Disposable.raiseIfDisposedWithError(consumer);
+
+      return pipe(consumer, Iterable_first<T>());
+    },
+);
+
 export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ memoize(
   m =>
     <T>(options?: Parameters<typeof m.toProducer>[0]) =>
@@ -293,6 +332,21 @@ export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
         pipe(factory(), error, Functions_raise);
       }),
 );
+
+export const toReadonlyArray: Signature["toReadonlyArray"] =
+  /*@__PURE__*/ memoize(
+    m =>
+      <T>(options?: Parameters<typeof m.toRunnable>[0]) =>
+      (src: ComputationOfModule<typeof m, T>) => {
+        const producer = pipe(src, m.toRunnable(options));
+
+        const consumer = Consumer.create<T>();
+        producer[RunnableLike_eval](consumer);
+        Disposable.raiseIfDisposedWithError(consumer);
+
+        return Array.from(consumer);
+      },
+  );
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/ memoize(
