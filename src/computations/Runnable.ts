@@ -36,7 +36,7 @@ import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
 import Runnable_skipFirst from "./Runnable/__private__/Runnable.skipFirst.js";
 import Runnable_takeFirst from "./Runnable/__private__/Runnable.takeFirst.js";
-//import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
+import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
 import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonlyArray.js";
@@ -89,7 +89,7 @@ export const pairwise: Signature["pairwise"] = Runnable_pairwise;
 export const scan: Signature["scan"] = Runnable_scan;
 export const skipFirst: Signature["skipFirst"] = Runnable_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Runnable_takeFirst;
-//export const takeLast: Signature["takeLast"] = Runnable_takeLast;
+export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Runnable_throwIfEmpty;
 export const toReadonlyArray: Signature["toReadonlyArray"] =

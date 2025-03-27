@@ -6,7 +6,9 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
+  ComputationModuleLike_computationType,
   HigherOrderInnerComputationLike,
+  IterableLike,
   SourceLike,
   SourceLike_subscribe,
 } from "../../computations.js";
@@ -15,7 +17,9 @@ import {
   Optional,
   SideEffect1,
   bind,
+  bindMethod,
   error,
+  invoke,
   isSome,
   newInstance,
   none,
@@ -291,3 +295,34 @@ export const creatConcat = <
         : createConcatSource(sources);
   };
 };
+
+export const createTakeLast =
+  <
+    TComputationModule extends Pick<
+      ComputationModule,
+      "genPure" | typeof ComputationModuleLike_computationType
+    >,
+  >(
+    m: TComputationModule,
+  ) =>
+  <TSink extends SinkLike<T>, T>(
+    takeLast: (sink: TSink, count: number) => TSink & IterableLike<T>,
+    options?: { readonly count?: number },
+  ) =>
+  (obs: SourceLike<T, TSink>): SourceLike<T, TSink> =>
+    create<T, TSink>(sink => {
+      const count = options?.count ?? 1;
+
+      const takeLastSink = pipe(
+        takeLast(sink, count),
+        Disposable.addTo(sink),
+        DisposableContainer.onComplete(() =>
+          pipe(
+            m.genPure(bindMethod(takeLastSink, Symbol.iterator)),
+            invoke(SourceLike_subscribe, sink),
+          ),
+        ),
+      );
+
+      pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
+    }, obs);

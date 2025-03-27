@@ -1,4 +1,4 @@
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, HigherOrderInnerComputationLike, SourceLike } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike_computationType, HigherOrderInnerComputationLike, IterableLike, SourceLike } from "../../computations.js";
 import { Function1, SideEffect1 } from "../../functions.js";
 import { EventListenerLike, SinkLike } from "../../utils.js";
 interface Signature {
@@ -55,4 +55,7 @@ export declare const catchError: <T, TContinueSource extends SourceLike<T, TSink
 export declare const creatConcat: <TSink extends SinkLike, TComputationModule extends Pick<ComputationModule, "genPure"> & {
     createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<TSink, TSink>;
 }>(m: TComputationModule) => <T>(...sources: readonly SourceLike<T, TSink>[]) => SourceLike<T, TSink> | import("../../computations.js").NewPureInstanceOf<import("../../computations.js").ComputationTypeOfModule<TComputationModule>, unknown>;
+export declare const createTakeLast: <TComputationModule extends Pick<ComputationModule, "genPure" | typeof ComputationModuleLike_computationType>>(m: TComputationModule) => <TSink extends SinkLike<T>, T>(takeLast: (sink: TSink, count: number) => TSink & IterableLike<T>, options?: {
+    readonly count?: number;
+}) => (obs: SourceLike<T, TSink>) => SourceLike<T, TSink>;
 export {};

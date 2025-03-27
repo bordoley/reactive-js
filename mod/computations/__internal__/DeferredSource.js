@@ -3,7 +3,7 @@
 import { Array_length } from "../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { bind, error, isSome, newInstance, none, pipe, } from "../../functions.js";
+import { bind, bindMethod, error, invoke, isSome, newInstance, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../utils.js";
@@ -110,3 +110,8 @@ export const creatConcat = (m) => {
                 : createConcatSource(sources);
     };
 };
+export const createTakeLast = (m) => (takeLast, options) => (obs) => create(sink => {
+    const count = options?.count ?? 1;
+    const takeLastSink = pipe(takeLast(sink, count), Disposable.addTo(sink), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, sink))));
+    pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
+}, obs);

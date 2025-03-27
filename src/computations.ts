@@ -1214,7 +1214,7 @@ export interface ConcurrentDeferredComputationModule<
 }
 
 export interface SequentialReactiveComputationModule<
-  TComputationType extends ComputationType,
+  TComputationType extends AnyComputationType = AnyComputationType,
 > extends ComputationModuleLike<TComputationType> {
   actionReducer<TAction, T>(
     reducer: Reducer<TAction, T>,

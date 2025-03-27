@@ -328,7 +328,7 @@ export interface ConcurrentDeferredComputationModule<TComputationType extends Co
     genAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genAsync"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
     genPureAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genPureAsync"]): NewPureInstanceOf<TComputationType, T>;
 }
-export interface SequentialReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+export interface SequentialReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): PureComputationOperator<TComputationType, TAction, T>;
