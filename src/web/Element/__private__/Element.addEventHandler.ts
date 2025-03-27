@@ -1,7 +1,7 @@
-import { Function1, SideEffect1, pipe } from "../../../functions.js";
+import { Function1, SideEffect1, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike } from "../../../utils.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import { DOMEventTarget, EventKeysOf, EventMapOf } from "../../../web.js";
 import type * as Element from "../../Element.js";
 
@@ -22,7 +22,18 @@ const Element_addEventHandler: Element.Signature["addEventHandler"] =
       passive: options?.passive ?? true,
     };
 
-    target.addEventListener(eventName, eventHandler, addEventListenerOptions);
+    const safeEventHandler = (ev: EventMapOf<TEventTarget>[TEventName]) => {
+      try {
+        eventHandler(ev);
+      } catch (e) {
+        disposable[DisposableLike_dispose](error(e));
+      }
+    };
+    target.addEventListener(
+      eventName,
+      safeEventHandler,
+      addEventListenerOptions,
+    );
 
     pipe(
       disposable,
