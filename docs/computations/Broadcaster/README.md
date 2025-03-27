@@ -26,7 +26,6 @@
 - [fromPromise](functions/fromPromise.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
-- [lastAsync](functions/lastAsync.md)
 - [makeModule](functions/makeModule.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)

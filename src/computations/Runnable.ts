@@ -28,7 +28,6 @@ import {
 } from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
-import Runnable_lastAsync from "./Runnable/__private__/Runnable.lastAsync.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
 //import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
@@ -80,7 +79,6 @@ export const gen: Signature["gen"] = Runnable_gen;
 export const genPure: Signature["genPure"] = Runnable_genPure;
 export const keep: Signature["keep"] = Runnable_keep;
 export const last: Signature["last"] = Runnable_last;
-export const lastAsync: Signature["lastAsync"] = Runnable_lastAsync;
 export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Runnable_map;
 export const pairwise: Signature["pairwise"] = Runnable_pairwise;

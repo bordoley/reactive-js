@@ -5,6 +5,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subsc
 import { raise as Functions_raise, bindMethod, error, memoize, pipe, returns, } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
+import Iterable_first from "./Iterable/__private__/Iterable.first.js";
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
 export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.concat(fst, ...tail));
@@ -19,6 +20,13 @@ export const fromReadonlyArray =
 }, options));
 export const isPure = (computation) => computation[ComputationLike_isPure] ?? true;
 export const isSynchronous = (computation) => computation[ComputationLike_isSynchronous] ?? true;
+export const lastAsync = /*@__PURE__*/ memoize(m => (options) => async (src) => {
+    const producer = pipe(src, m.toProducer(options));
+    const consumer = Consumer.takeLast(1);
+    producer[SourceLike_subscribe](consumer);
+    await DisposableContainer.toPromise(consumer);
+    return pipe(consumer, Iterable_first());
+});
 export const mergeWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.merge(fst, ...tail));
 export const raise = /*@__PURE__*/ memoize(m => (options) => m.genPure(function* RaiseComputation() {
     const { raise: factory = Functions_raise } = options ?? {};

@@ -1,4 +1,4 @@
-import type { AsyncFunction1, Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
+import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
 import type { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
@@ -248,7 +248,6 @@ export interface ComputationModule<TComputationType extends AnyComputationType =
     encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
     genPure<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["genPure"]): NewPureInstanceOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<TComputationType, T, T>;
-    lastAsync<T>(options?: TCreationOptions["lastAsync"]): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
     makeModule<TModule extends {
         [key: string]: any;
     }>(o: TModule): TModule & {

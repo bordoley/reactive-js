@@ -38,7 +38,6 @@ import {
   Observable_genPure,
 } from "./Observable/__private__/Observable.gen.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
-import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
@@ -194,7 +193,6 @@ export const forEach: Signature["forEach"] = Observable_forEach;
 export const gen: Signature["gen"] = Observable_gen;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const keep: Signature["keep"] = Observable_keep;
-export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;

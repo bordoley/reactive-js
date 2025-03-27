@@ -12,7 +12,6 @@ import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Observable.gen.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
-import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
@@ -37,7 +36,6 @@ export const forEach = Observable_forEach;
 export const gen = Observable_gen;
 export const genPure = Observable_genPure;
 export const keep = Observable_keep;
-export const lastAsync = Observable_lastAsync;
 export const makeModule = identity;
 export const map = Observable_map;
 export const pairwise = Observable_pairwise;

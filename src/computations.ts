@@ -1,5 +1,4 @@
 import type {
-  AsyncFunction1,
   Equality,
   Factory,
   Function1,
@@ -1005,10 +1004,6 @@ export interface ComputationModule<
   keep<T>(
     predicate: Predicate<T>,
   ): PureComputationOperator<TComputationType, T, T>;
-
-  lastAsync<T>(
-    options?: TCreationOptions["lastAsync"],
-  ): AsyncFunction1<ComputationOf<TComputationType, T>, Optional<T>>;
 
   makeModule<TModule extends { [key: string]: any }>(
     o: TModule,

@@ -190,6 +190,40 @@ readonly `TComputationType`[]
 
 ***
 
+### lastAsync()
+
+> **lastAsync**\<`TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+
+#### Type Parameters
+
+• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toProducer"`\>
+
+#### Parameters
+
+##### m
+
+`TComputationModule`
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options?
+
+`Parameters`\<`TComputationModule`\[`"toProducer"`\]\>\[`1`\]
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOfModule`](../../type-aliases/ComputationOfModule.md)\<`TComputationModule`, `T`\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+
+***
+
 ### mergeWith()
 
 > **mergeWith**\<`TComputationModule`\>(`m`): [`MergeWithOperator`](MergeWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>

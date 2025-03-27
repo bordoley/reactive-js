@@ -22,7 +22,6 @@ export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
 export declare const last: Signature["last"];
-export declare const lastAsync: Signature["lastAsync"];
 export declare const makeModule: Signature["makeModule"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];

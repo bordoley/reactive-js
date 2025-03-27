@@ -165,10 +165,6 @@ export const last = () => (iter) => {
     }
     return result;
 };
-export const lastAsync = (() => async (iter) => {
-    await Promise.resolve();
-    return last()(iter);
-});
 class MapIterable {
     d;
     m;

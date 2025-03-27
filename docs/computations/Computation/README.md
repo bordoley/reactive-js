@@ -21,6 +21,7 @@
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [isPure](functions/isPure.md)
 - [isSynchronous](functions/isSynchronous.md)
+- [lastAsync](functions/lastAsync.md)
 - [mergeWith](functions/mergeWith.md)
 - [raise](functions/raise.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

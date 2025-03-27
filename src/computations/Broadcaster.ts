@@ -22,7 +22,6 @@ import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encode
 import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
-import Broadcaster_lastAsync from "./Broadcaster/__private__/Broadcaster.lastAsync.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
 import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
 import Broadcaster_pairwise from "./Broadcaster/__private__/Broadcaster.pairwise.js";
@@ -97,7 +96,6 @@ export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;
 export const fromPromise: Signature["fromPromise"] = Broadcaster_fromPromise;
 export const genPure: Signature["genPure"] = Broadcaster_genPure;
 export const keep: Signature["keep"] = Broadcaster_keep;
-export const lastAsync: Signature["lastAsync"] = Broadcaster_lastAsync;
 export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Broadcaster_map;
 export const merge: Signature["merge"] = Broadcaster_merge;

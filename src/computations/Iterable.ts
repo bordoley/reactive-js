@@ -326,12 +326,6 @@ export const last: Signature["last"] =
     return result;
   };
 
-export const lastAsync: Signature["lastAsync"] = (<T>() =>
-  async (iter: IterableLike<T>) => {
-    await Promise.resolve();
-    return last<T>()(iter);
-  }) as Signature["lastAsync"];
-
 class MapIterable<TA, TB> implements IterableLike<TB> {
   public readonly [ComputationLike_isPure]?: boolean;
 

@@ -35,7 +35,6 @@ export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
-export declare const lastAsync: Signature["lastAsync"];
 export declare const makeModule: Signature["makeModule"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];

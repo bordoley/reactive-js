@@ -38,7 +38,6 @@ import {
   Producer_genPureAsync,
 } from "./Producer/__private__/Producer.genAsync.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
-import Producer_lastAsync from "./Producer/__private__/Producer.lastAsync.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
 import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
 import Producer_scan from "./Producer/__private__/Producer.scan.js";
@@ -109,7 +108,6 @@ export const genAsync: Signature["genAsync"] = Producer_genAsync;
 export const genPure: Signature["genPure"] = Producer_genPure;
 export const genPureAsync: Signature["genPureAsync"] = Producer_genPureAsync;
 export const keep: Signature["keep"] = Producer_keep;
-export const lastAsync: Signature["lastAsync"] = Producer_lastAsync;
 export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Producer_map;
 export const pairwise: Signature["pairwise"] = Producer_pairwise;

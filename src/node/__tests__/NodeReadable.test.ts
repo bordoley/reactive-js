@@ -7,6 +7,7 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as Computation from "../../computations/Computation.js";
 import * as Iterable from "../../computations/Iterable.js";
 import * as Producer from "../../computations/Producer.js";
 import { SourceLike_subscribe } from "../../computations.js";
@@ -20,8 +21,9 @@ import {
 } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
-
 import * as NodeReadable from "../NodeReadable.js";
+
+const m = Producer.makeModule(Producer);
 
 testModule(
   "NodeReadable",
@@ -43,7 +45,7 @@ testModule(
         NodeReadable.create,
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        Producer.lastAsync<string>(),
+        Computation.lastAsync(m)<string>(),
         expectEquals<Optional<string>>("abcdefg"),
       );
 
@@ -77,7 +79,7 @@ testModule(
 
       await pipe(
         NodeReadable.create(() => Readable.from(generate())),
-        Producer.lastAsync(),
+        Computation.lastAsync(m)<Uint8Array>(),
         expectPromiseToThrow,
       );
     }),

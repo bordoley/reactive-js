@@ -226,13 +226,6 @@ class KeepAsyncIterable {
     }
 }
 export const keep = ((predicate) => (iterable) => newInstance(KeepAsyncIterable, iterable, predicate));
-export const lastAsync = /*@__PURE__*/ returns(async (iter) => {
-    let result = none;
-    for await (const v of iter) {
-        result = v;
-    }
-    return result;
-});
 export const makeModule = identity;
 class MapAsyncIterable {
     d;

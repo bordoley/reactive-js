@@ -32,6 +32,7 @@ import {
   Factory,
   Function1,
   raise as Functions_raise,
+  Optional,
   bindMethod,
   error,
   memoize,
@@ -40,6 +41,7 @@ import {
 } from "../functions.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
+import Iterable_first from "./Iterable/__private__/Iterable.first.js";
 
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
@@ -155,6 +157,20 @@ export interface Signature {
     computation: TComputationType,
   ): computation is TComputationType & SynchronousComputationLike;
 
+  lastAsync<
+    TComputationModule extends Pick<
+      ComputationModule,
+      "toProducer" | typeof ComputationModuleLike_computationType
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: Parameters<TComputationModule["toProducer"]>[1],
+  ) => Function1<
+    ComputationOfModule<TComputationModule, T>,
+    Promise<Optional<T>>
+  >;
+
   mergeWith<
     TComputationModule extends Pick<
       ConcurrentReactiveComputationModule,
@@ -244,6 +260,20 @@ export const isSynchronous: Signature["isSynchronous"] = <
 ): computation is TComputationType & SynchronousComputationLike =>
   computation[ComputationLike_isSynchronous] ?? true;
 
+export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ memoize(
+  m =>
+    <T>(options?: Parameters<typeof m.toProducer>[0]) =>
+    async (src: ComputationOfModule<typeof m, T>) => {
+      const producer = pipe(src, m.toProducer(options));
+
+      const consumer = Consumer.takeLast<T>(1);
+      producer[SourceLike_subscribe](consumer);
+      await DisposableContainer.toPromise(consumer);
+
+      return pipe(consumer, Iterable_first<T>());
+    },
+);
+
 export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoize(
   m =>
     <T>(...tail: ComputationOfModule<typeof m, T>[]) =>
@@ -267,11 +297,7 @@ export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   /*@__PURE__*/ memoize(
     m =>
-      <T>(
-        options?: {
-          readonly raise?: Factory<unknown>;
-        } & Parameters<typeof m.toProducer>[0],
-      ) =>
+      <T>(options?: Parameters<typeof m.toProducer>[0]) =>
       async (src: ComputationOfModule<typeof m, T>) => {
         const producer = pipe(src, m.toProducer(options));
 

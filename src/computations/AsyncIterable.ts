@@ -420,16 +420,6 @@ export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
   (iterable: AsyncIterableLike<T>) =>
     newInstance(KeepAsyncIterable, iterable, predicate)) as Signature["keep"];
 
-export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ returns(
-  async (iter: AsyncIterableLike) => {
-    let result: Optional<unknown> = none;
-    for await (const v of iter) {
-      result = v;
-    }
-    return result;
-  },
-) as Signature["lastAsync"];
-
 export const makeModule: Signature["makeModule"] = identity;
 
 class MapAsyncIterable<TA, TB> implements AsyncIterableLike<TB> {
