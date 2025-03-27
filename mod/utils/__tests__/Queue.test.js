@@ -135,4 +135,4 @@ testModule("Queue", test("enqueue", () => {
         pipe(queue[EnumeratorLike_current], expectEquals(i));
     }
     pipe(queue[EnumeratorLike_moveNext](), expectFalse("expected enumerator to been consumed"));
-}));
+}))();

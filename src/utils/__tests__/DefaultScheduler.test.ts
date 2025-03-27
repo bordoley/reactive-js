@@ -22,4 +22,4 @@ testModule(
       expectToThrow(DefaultScheduler.get);
     }),
   ),
-);
+)();

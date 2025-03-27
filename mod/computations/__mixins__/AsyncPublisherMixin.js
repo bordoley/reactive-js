@@ -8,7 +8,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
-import * as Iterable from "../Iterable.js";
+import Iterable_first from "../Iterable/__private__/Iterable.first.js";
 const AsyncPublisherMixin = /*@__PURE__*/ (() => {
     const AsyncPublisher_EventListeners = Symbol("AsyncPublisher_EventListeners");
     const AsyncPublisher_onSinkDisposed = Symbol("AsyncPublisher_onSinkDisposed");
@@ -83,7 +83,7 @@ const AsyncPublisherMixin = /*@__PURE__*/ (() => {
             if (maybeEventListeners instanceof Set &&
                 maybeEventListeners[Set_size] == 1) {
                 instance[AsyncPublisher_EventListeners] =
-                    Iterable.first()(maybeEventListeners);
+                    Iterable_first()(maybeEventListeners);
             }
             if (autoDispose && isNone(instance[AsyncPublisher_EventListeners])) {
                 instance[DisposableLike_dispose]();

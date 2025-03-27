@@ -23,3 +23,4 @@
 - [isSynchronous](functions/isSynchronous.md)
 - [mergeWith](functions/mergeWith.md)
 - [raise](functions/raise.md)
+- [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

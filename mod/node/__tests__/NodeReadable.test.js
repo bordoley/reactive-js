@@ -35,4 +35,4 @@ testModule("NodeReadable", describe("create", testAsync("reading from readable",
         throw err;
     }
     await pipe(NodeReadable.create(() => Readable.from(generate())), Producer.lastAsync(), expectPromiseToThrow);
-})));
+})))();

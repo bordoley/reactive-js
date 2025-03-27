@@ -39,4 +39,4 @@ testModule(
       expectTrue("expected store to be disposed"),
     );
   }),
-);
+)();

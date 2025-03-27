@@ -35,6 +35,7 @@ import {
   SideEffect1,
   Tuple2,
   alwaysTrue,
+  bindMethod,
   error,
   identity,
   invoke,
@@ -44,7 +45,6 @@ import {
   newInstance,
   none,
   pick,
-  pipe,
   raise as raiseError,
   returns,
   strictEquality,
@@ -59,7 +59,10 @@ import {
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import Iterable_first from "./Iterable/__private__/Iterable.first.js";
-//import Iterable_toObservable from "./Iterable/__private__/Iterable.toObservable.js";
+import {
+  Producer_gen,
+  Producer_genPure,
+} from "./Producer/__private__/Producer.gen.js";
 
 /**
  * @noInheritDoc
@@ -657,10 +660,12 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray.fromIterable;
 
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  /*@__PURE__*/ returns(async (iter: IterableLike) =>
-    pipe(iter, toReadonlyArray<unknown>()),
-  ) as Signature["toReadonlyArrayAsync"];
+export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
+  (iterable: IterableLike) =>
+    ComputationM.isPure(iterable)
+      ? Producer_genPure(bindMethod(iterable, Symbol.iterator))
+      : Producer_gen(bindMethod(iterable, Symbol.iterator)),
+) as Signature["toProducer"];
 
 class IterableToRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isDeferred]: false = false as const;

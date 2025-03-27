@@ -18,5 +18,5 @@ testModule("SerialDisposable", test("setting a new a disposable, disposes the ol
     s[SerialDisposableLike_current] = d;
     s[DisposableLike_dispose]();
     expectTrue("d should be disposed")(d[DisposableLike_isDisposed]);
-}));
+}))();
 ((_) => { })(Disposable);

@@ -33,6 +33,6 @@ testModule(
     s[DisposableLike_dispose]();
     expectTrue("d should be disposed")(d[DisposableLike_isDisposed]);
   }),
-);
+)();
 
 ((_: Disposable.Signature) => {})(Disposable);

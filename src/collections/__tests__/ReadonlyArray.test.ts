@@ -168,6 +168,6 @@ testModule(
       ),
     ),
   ),
-);
+)();
 
 ((_: ReadonlyArray.Signature) => {})(ReadonlyArray);

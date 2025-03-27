@@ -1,14 +1,15 @@
 /// <reference types="./AsyncIterable.d.ts" />
 
-import { Array_map, Array_push, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
+import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
 import { EnumeratorLike_current, EnumeratorLike_moveNext, } from "../utils.js";
 import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
 import * as ComputationM from "./Computation.js";
+import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
 export const broadcast = AsyncIterable_broadcast;
 class CatchErrorAsyncIterable {
     s;
@@ -474,24 +475,12 @@ export const toObservable: Signature["toObservable"] =
       ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
       : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)),
   ) as Signature["toObservable"];
-
-export const toProducer: Signature["toProducer"] =
-  //   @__PURE__
-  returns((iter: AsyncIterableLike) =>
-    ComputationM.isPure(iter)
-      ? Producer_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
-      : Producer_genAsync(bindMethod(iter, Symbol.asyncIterator)),
-  ) as Signature["toProducer"];
 */
-export const toReadonlyArrayAsync = 
-/*@__PURE__*/
-returns(async (iter) => {
-    const result = [];
-    for await (const v of iter) {
-        result[Array_push](v);
-    }
-    return result;
-});
+export const toProducer = 
+//   @__PURE__
+returns((iter) => ComputationM.isPure(iter)
+    ? Producer_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
+    : Producer_genAsync(bindMethod(iter, Symbol.asyncIterator)));
 class ZipAsyncIterable {
     iters;
     [ComputationLike_isPure];

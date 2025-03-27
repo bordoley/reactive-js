@@ -39,8 +39,8 @@ import Runnable_takeFirst from "./Runnable/__private__/Runnable.takeFirst.js";
 import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
+import Runnable_toProducer from "./Runnable/__private__/Runnable.toProducer.js";
 import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonlyArray.js";
-import Runnable_toReadonlyArrayAsync from "./Runnable/__private__/Runnable.toReadonlyArrayAsync.js";
 
 /**
  * @noInheritDoc
@@ -92,10 +92,9 @@ export const takeFirst: Signature["takeFirst"] = Runnable_takeFirst;
 export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Runnable_throwIfEmpty;
+export const toProducer: Signature["toProducer"] = Runnable_toProducer;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Runnable_toReadonlyArray;
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  Runnable_toReadonlyArrayAsync;
 export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toRunnable"];

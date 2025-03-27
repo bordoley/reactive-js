@@ -170,6 +170,6 @@ testModule(
       );
     }),
   ),
-);
+)();
 
 ((_: ReadonlyObjectMap.Signature) => {})(ReadonlyObjectMap);

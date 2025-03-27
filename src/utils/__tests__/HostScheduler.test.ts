@@ -22,4 +22,4 @@ testModule(
     const end = scheduler[SchedulerLike_now];
     pipe(end - start >= 20, expectTrue("expected more than 20 ms to elapse"));
   }),
-);
+)();

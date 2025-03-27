@@ -308,6 +308,10 @@ export const expectPromiseToThrow = async (promise: PromiseLike<unknown>) => {
 const createTests = (
   testGroup: TestGroup,
   parents: readonly string[],
+  setup: {
+    beforeEach: () => void;
+    afterEach: () => void;
+  },
   debug = false,
 ) => {
   const path = [...parents, testGroup.name];
@@ -317,7 +321,7 @@ const createTests = (
       const { tests } = testGroup;
 
       for (const test of tests) {
-        createTests(test, path, debug);
+        createTests(test, path, setup, debug);
       }
     };
 
@@ -331,21 +335,56 @@ const createTests = (
   } else if (!debug || testGroup.type === TestDebugType) {
     const name = path.join(":");
 
-    if (__DENO__) {
-      globalObject.Deno?.test(name, testGroup.f(name));
-    } else {
-      globalObject.test?.(testGroup.name, testGroup.f(name));
+    if (
+      __DENO__ &&
+      (testGroup.type === TestType || testGroup.type === TestDebugType)
+    ) {
+      globalObject.Deno?.test(name, () => {
+        setup.beforeEach();
+        testGroup.f(name)();
+        setup.afterEach();
+      });
+    } else if (__DENO__ && testGroup.type === TestAsyncType) {
+      globalObject.Deno?.test(name, async () => {
+        setup.beforeEach();
+        await testGroup.f(name)();
+        setup.afterEach();
+      });
+    } else if (testGroup.type === TestType) {
+      globalObject.test?.(testGroup.name, () => {
+        setup.beforeEach();
+        testGroup.f(name)();
+        setup.afterEach();
+      });
+    } else if (testGroup.type === TestAsyncType) {
+      globalObject.test?.(testGroup.name, async () => {
+        setup.beforeEach();
+        await testGroup.f(name)();
+        setup.afterEach();
+      });
     }
   }
 };
 
-export const testModule = (name: string, ...testGroups: TestGroup[]): void => {
-  createTests(describe(name, ...testGroups), []);
-};
+export const testModule =
+  (name: string, ...testGroups: TestGroup[]) =>
+  (options?: { beforeEach?: () => void; afterEach?: () => void }) => {
+    createTests(describe(name, ...testGroups), [], {
+      beforeEach: options?.beforeEach ?? (() => {}),
+      afterEach: options?.afterEach ?? (() => {}),
+    });
+  };
 
-export const testDebugModule = (
-  name: string,
-  ...testGroups: TestGroup[]
-): void => {
-  createTests(describe(name, ...testGroups), [], true);
-};
+export const testDebugModule =
+  (name: string, ...testGroups: TestGroup[]) =>
+  (options?: { beforeEach?: () => void; afterEach?: () => void }) => {
+    createTests(
+      describe(name, ...testGroups),
+      [],
+      {
+        beforeEach: options?.beforeEach ?? (() => {}),
+        afterEach: options?.afterEach ?? (() => {}),
+      },
+      true,
+    );
+  };

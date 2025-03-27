@@ -32,7 +32,6 @@ import Broadcaster_takeFirst from "./Broadcaster/__private__/Broadcaster.takeFir
 import Broadcaster_takeUntil from "./Broadcaster/__private__/Broadcaster.takeUntil.js";
 import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhile.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
-import Broadcaster_toReadonlyArrayAsync from "./Broadcaster/__private__/Broadcaster.toReadonlyArrayAsync.js";
 import Broadcaster_withLatestFrom from "./Broadcaster/__private__/Broadcaster.withLatestFrom.js";
 
 /**
@@ -109,7 +108,5 @@ export const takeFirst: Signature["takeFirst"] = Broadcaster_takeFirst;
 export const takeUntil: Signature["takeUntil"] = Broadcaster_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Broadcaster_takeWhile;
 export const toProducer: Signature["toProducer"] = Broadcaster_toProducer;
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  Broadcaster_toReadonlyArrayAsync;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Broadcaster_withLatestFrom;

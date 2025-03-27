@@ -1,6 +1,5 @@
 import {
   Array_map,
-  Array_push,
   Iterator_done,
   Iterator_next,
   Iterator_value,
@@ -34,6 +33,7 @@ import {
   SideEffect1,
   Tuple2,
   alwaysTrue,
+  bindMethod,
   error,
   identity,
   invoke,
@@ -59,6 +59,10 @@ import {
 } from "../utils.js";
 import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
 import * as ComputationM from "./Computation.js";
+import {
+  Producer_genAsync,
+  Producer_genPureAsync,
+} from "./Producer/__private__/Producer.genAsync.js";
 /*
 import {
   Observable_genAsync,
@@ -769,6 +773,7 @@ export const toObservable: Signature["toObservable"] =
       ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
       : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)),
   ) as Signature["toObservable"];
+*/
 
 export const toProducer: Signature["toProducer"] =
   //   @__PURE__
@@ -777,16 +782,6 @@ export const toProducer: Signature["toProducer"] =
       ? Producer_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
       : Producer_genAsync(bindMethod(iter, Symbol.asyncIterator)),
   ) as Signature["toProducer"];
-*/
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  /*@__PURE__*/
-  returns(async (iter: AsyncIterableLike) => {
-    const result: any[] = [];
-    for await (const v of iter) {
-      result[Array_push](v);
-    }
-    return result;
-  });
 
 class ZipAsyncIterable implements AsyncIterableLike {
   public readonly [ComputationLike_isPure]?: boolean;

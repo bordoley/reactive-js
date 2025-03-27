@@ -229,4 +229,4 @@ testModule(
 
     pipe(count, expectEquals(2));
   }),
-);
+)();

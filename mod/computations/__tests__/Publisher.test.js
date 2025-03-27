@@ -75,4 +75,4 @@ testModule("Publisher", test("when disposed with an error", () => {
     publisher[DisposableLike_dispose](error);
     pipe(subscription1[DisposableLike_isDisposed], expectTrue());
     pipe(subscription1[DisposableLike_error], expectIsNone);
-}));
+}))();

@@ -122,4 +122,4 @@ testModule(
       pipe(data, expectEquals("abcdefg"));
     }),
   ),
-);
+)();

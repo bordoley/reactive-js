@@ -220,4 +220,4 @@ testModule(
       expectFalse("expected enumerator to been consumed"),
     );
   }),
-);
+)();

@@ -8,6 +8,7 @@
 
 ## Functions
 
+- [dispose](functions/dispose.md)
 - [get](functions/get.md)
 - [getOrNone](functions/getOrNone.md)
 - [set](functions/set.md)

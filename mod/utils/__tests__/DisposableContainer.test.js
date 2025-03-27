@@ -61,5 +61,5 @@ testModule("DisposableContainer", describe("onComplete", test("disposing the par
     disposable[DisposableLike_dispose](error);
     pipe(callback, expectToHaveBeenCalledTimes(1));
     pipe(signal.reason, expectEquals(error));
-})));
+})))();
 ((_) => { })(Disposable);

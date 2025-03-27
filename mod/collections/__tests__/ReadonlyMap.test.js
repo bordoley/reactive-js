@@ -6,5 +6,5 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as ReadonlyMap from "../ReadonlyMap.js";
 import CollectionModuleTests from "./fixtures/CollectionModuleTests.js";
 import DictionaryCollectionModuleTests from "./fixtures/DictionaryCollectionModuleTests.js";
-testModule("ReadonlyMap", CollectionModuleTests(ReadonlyMap, () => compose(ReadonlyArray.entries(), ReadonlyMap.fromEntries())), DictionaryCollectionModuleTests(ReadonlyMap));
+testModule("ReadonlyMap", CollectionModuleTests(ReadonlyMap, () => compose(ReadonlyArray.entries(), ReadonlyMap.fromEntries())), DictionaryCollectionModuleTests(ReadonlyMap))();
 ((_) => { })(ReadonlyMap);

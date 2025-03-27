@@ -16,3 +16,8 @@ export const get = () => {
     return globalDefaultScheduler;
 };
 export const getOrNone = () => globalDefaultScheduler;
+export const dispose = () => {
+    raiseIfNone(globalDefaultScheduler, "The DefaultScheduler has not been set.");
+    globalDefaultScheduler[DisposableLike_dispose]();
+    globalDefaultScheduler = none;
+};

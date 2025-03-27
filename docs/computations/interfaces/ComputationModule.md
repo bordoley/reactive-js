@@ -285,9 +285,9 @@
 
 ***
 
-### toReadonlyArrayAsync()
+### toProducer()
 
-> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
+> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -297,8 +297,8 @@
 
 ##### options?
 
-`TCreationOptions`\[`"toReadonlyArrayAsync"`\]
+`TCreationOptions`\[`"toProducer"`\]
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
+[`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>

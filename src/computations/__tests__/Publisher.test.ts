@@ -128,4 +128,4 @@ testModule(
     pipe(subscription1[DisposableLike_isDisposed], expectTrue());
     pipe(subscription1[DisposableLike_error], expectIsNone);
   }),
-);
+)();

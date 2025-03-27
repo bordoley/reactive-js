@@ -47,7 +47,7 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import * as Iterable from "../Iterable.js";
+import Iterable_first from "../Iterable/__private__/Iterable.first.js";
 
 type TPrototype<T> = Omit<
   PublisherLike<T>,
@@ -177,7 +177,7 @@ const AsyncPublisherMixin: <T>() => Mixin1<
             maybeEventListeners[Set_size] == 1
           ) {
             instance[AsyncPublisher_EventListeners] =
-              Iterable.first<EventListenerLike<T>>()(maybeEventListeners);
+              Iterable_first<EventListenerLike<T>>()(maybeEventListeners);
           }
 
           if (autoDispose && isNone(instance[AsyncPublisher_EventListeners])) {

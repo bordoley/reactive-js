@@ -4,4 +4,4 @@ import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 
 const m = Broadcaster.makeModule(Broadcaster);
 
-testModule("Broadcaster", ComputationModuleTests(m));
+testModule("Broadcaster", ComputationModuleTests(m))();

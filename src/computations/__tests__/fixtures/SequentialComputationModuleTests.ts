@@ -44,7 +44,7 @@ const SequentialComputationModuleTests = <
           m.catchError<number>((e: Error) => {
             result = e.message;
           }),
-          m.toReadonlyArrayAsync(),
+          Computation.toReadonlyArrayAsync(m)<number>(),
         );
 
         pipe(result, expectEquals<Optional<string>>(e1));
@@ -63,7 +63,7 @@ const SequentialComputationModuleTests = <
           m.catchError<number>(e => {
             result = e.cause;
           }),
-          m.toReadonlyArrayAsync(),
+          Computation.toReadonlyArrayAsync(m)<number>(),
         );
 
         pipe(
@@ -81,7 +81,7 @@ const SequentialComputationModuleTests = <
           m.catchError<number>(
             pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)()),
           ),
-          m.toReadonlyArrayAsync<number>(),
+          Computation.toReadonlyArrayAsync(m)<number>(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
         ),
       ),
@@ -98,7 +98,7 @@ const SequentialComputationModuleTests = <
           m.forEach((x: number) => {
             result[Array_push](x + 10);
           }),
-          m.toReadonlyArrayAsync(),
+          Computation.toReadonlyArrayAsync(m)<number>(),
         ),
           pipe(result, expectArrayEquals([11, 12, 13]));
       }),
@@ -111,7 +111,7 @@ const SequentialComputationModuleTests = <
             m.forEach(_ => {
               throw err;
             }),
-            m.toReadonlyArrayAsync(),
+            Computation.toReadonlyArrayAsync(m)<number>(),
           ),
           expectToThrowErrorAsync(err),
         );
@@ -125,7 +125,7 @@ const SequentialComputationModuleTests = <
           pipeLazy(
             Computation.empty(m)(),
             m.throwIfEmpty(() => error),
-            m.toReadonlyArrayAsync(),
+            Computation.toReadonlyArrayAsync(m)<number>(),
           ),
           expectToThrowErrorAsync(error),
         );
@@ -138,7 +138,7 @@ const SequentialComputationModuleTests = <
             m.throwIfEmpty(() => {
               throw error;
             }),
-            m.toReadonlyArrayAsync(),
+            Computation.toReadonlyArrayAsync(m)<number>(),
           ),
           expectToThrowErrorAsync(error),
         );
@@ -149,7 +149,7 @@ const SequentialComputationModuleTests = <
           [1],
           Computation.fromReadonlyArray(m)(),
           m.throwIfEmpty<number>(returns(none)),
-          m.toReadonlyArrayAsync<number>(),
+          Computation.toReadonlyArrayAsync(m)<number>(),
           expectArrayEquals([1]),
         ),
       ),

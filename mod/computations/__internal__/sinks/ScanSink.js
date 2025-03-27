@@ -1,8 +1,8 @@
 /// <reference types="./ScanSink.d.ts" />
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
-import { none } from "../../../functions.js";
-import { EventListenerLike_notify } from "../../../utils.js";
+import { error, none } from "../../../functions.js";
+import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ScanSink_acc = Symbol("ScanSink_acc");
@@ -10,7 +10,12 @@ export const create = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ScanSink(delegate, reducer, initialValue) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[ScanSink_reducer] = reducer;
-        this[ScanSink_acc] = initialValue();
+        try {
+            this[ScanSink_acc] = initialValue();
+        }
+        catch (e) {
+            this[DisposableLike_dispose](error(e));
+        }
         return this;
     }, props({
         [ScanSink_acc]: none,

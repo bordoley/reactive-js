@@ -139,4 +139,4 @@ testModule("PauseableScheduler", test("pausing the scheduler from a continuation
     finally {
         __disposeResources(env_3);
     }
-}));
+}))();

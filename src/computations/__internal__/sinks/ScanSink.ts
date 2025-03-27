@@ -5,8 +5,12 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { Factory, Reducer, none } from "../../../functions.js";
-import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
+import { Factory, Reducer, error, none } from "../../../functions.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  EventListenerLike_notify,
+} from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
@@ -45,7 +49,12 @@ export const create: <TSubscription extends DisposableLike, T, TAcc>(
       init(DelegatingLiftedSinkMixin<TSubscription, T, TAcc>(), this, delegate);
 
       this[ScanSink_reducer] = reducer;
-      this[ScanSink_acc] = initialValue();
+
+      try {
+        this[ScanSink_acc] = initialValue();
+      } catch (e) {
+        this[DisposableLike_dispose](error(e));
+      }
 
       return this;
     },

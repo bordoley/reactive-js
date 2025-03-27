@@ -103,4 +103,4 @@ testModule("Iterator", describe("toAsyncEnumerator", testAsync("enumerating an a
     enumerator[DisposableLike_dispose]();
     expectTrue("The enumerator is disposed")(enumerator[DisposableLike_isDisposed]);
     expectIsNone(enumerator[DisposableLike_error]);
-})));
+})))();

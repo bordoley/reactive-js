@@ -6,4 +6,4 @@ testModule("DefaultScheduler", describe("getOrNone", test("getOrNone returns non
     expectIsNone(DefaultScheduler.getOrNone());
 })), describe("get", test("throws if no scheduler is set", () => {
     expectToThrow(DefaultScheduler.get);
-})));
+})))();

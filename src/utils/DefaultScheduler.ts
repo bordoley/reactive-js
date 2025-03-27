@@ -11,6 +11,7 @@ interface Signature {
   get(): SchedulerLike;
   getOrNone(): Optional<SchedulerLike>;
   set(scheduler: SchedulerLike & DisposableLike): void;
+  dispose(): void;
 }
 
 export const set: Signature["set"] = (
@@ -35,3 +36,14 @@ export const get: Signature["get"] = () => {
 };
 
 export const getOrNone: Signature["getOrNone"] = () => globalDefaultScheduler;
+
+export const dispose: Signature["dispose"] = () => {
+  raiseIfNone<SchedulerLike>(
+    globalDefaultScheduler,
+    "The DefaultScheduler has not been set.",
+  );
+
+  globalDefaultScheduler[DisposableLike_dispose]();
+
+  globalDefaultScheduler = none;
+};

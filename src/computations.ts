@@ -987,6 +987,7 @@ export interface ComputationModule<
     fromValue?: Record<string, any>;
     genPure?: Record<string, any>;
     lastAsync?: Record<string, any>;
+    toProducer?: Record<string, any>;
     toReadonlyArrayAsync?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
@@ -1039,9 +1040,9 @@ export interface ComputationModule<
     options?: { readonly inclusive?: boolean },
   ): PureComputationOperator<TComputationType, T, T>;
 
-  toReadonlyArrayAsync<T>(
-    options?: TCreationOptions["toReadonlyArrayAsync"],
-  ): AsyncFunction1<ComputationOf<TComputationType, T>, ReadonlyArray<T>>;
+  toProducer<T>(
+    options?: TCreationOptions["toProducer"],
+  ): ToProducer<TComputationType, T>;
 }
 
 export interface SequentialComputationModule<

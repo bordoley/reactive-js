@@ -5,4 +5,4 @@ import * as AsyncIterable from "../AsyncIterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 const m = AsyncIterable.makeModule(AsyncIterable);
-testModule("AsyncIterable", ComputationModuleTests(m), SequentialComputationModuleTests(m));
+testModule("AsyncIterable", ComputationModuleTests(m), SequentialComputationModuleTests(m))();

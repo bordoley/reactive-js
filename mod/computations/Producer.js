@@ -1,7 +1,7 @@
 /// <reference types="./Producer.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { identity } from "../functions.js";
+import { identity, returns } from "../functions.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
 import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
@@ -12,6 +12,7 @@ import Producer_distinctUntilChanged from "./Producer/__private__/Producer.disti
 import Producer_encodeUtf8 from "./Producer/__private__/Producer.encodeUtf8.js";
 import Producer_forEach from "./Producer/__private__/Producer.forEach.js";
 import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
+import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
 import Producer_lastAsync from "./Producer/__private__/Producer.lastAsync.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
@@ -24,7 +25,6 @@ import Producer_takeLast from "./Producer/__private__/Producer.takeLast.js";
 import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
 import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
 import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
-import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
 import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
 export const buffer = Producer_buffer;
 export const broadcast = Producer_broadcast;
@@ -36,7 +36,9 @@ export const distinctUntilChanged = Producer_distinctUntilChanged;
 export const encodeUtf8 = Producer_encodeUtf8;
 export const forEach = Producer_forEach;
 export const gen = Producer_gen;
+export const genAsync = Producer_genAsync;
 export const genPure = Producer_genPure;
+export const genPureAsync = Producer_genPureAsync;
 export const keep = Producer_keep;
 export const lastAsync = Producer_lastAsync;
 export const makeModule = identity;
@@ -50,5 +52,5 @@ export const takeLast = Producer_takeLast;
 export const takeUntil = Producer_takeUntil;
 export const takeWhile = Producer_takeWhile;
 export const throwIfEmpty = Producer_throwIfEmpty;
-export const toReadonlyArrayAsync = Producer_toReadonlyArrayAsync;
+export const toProducer = /*@__PURE__*/ returns(identity);
 export const withLatestFrom = Producer_withLatestFrom;

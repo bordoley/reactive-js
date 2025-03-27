@@ -43,5 +43,5 @@
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
-- [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
+- [toProducer](functions/toProducer.md)
 - [zip](functions/zip.md)

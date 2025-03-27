@@ -286,4 +286,4 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     finally {
         __disposeResources(env_9);
     }
-}));
+}))();

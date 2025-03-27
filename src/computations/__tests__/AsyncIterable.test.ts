@@ -9,4 +9,4 @@ testModule(
   "AsyncIterable",
   ComputationModuleTests(m),
   SequentialComputationModuleTests(m),
-);
+)();

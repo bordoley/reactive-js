@@ -58,4 +58,4 @@ testModule(
       pipeLazy(1.1, scale(0, 10), expectEquals(11)),
     ),
   ),
-);
+)();

@@ -18,7 +18,7 @@ import {
   SequentialComputationModule,
   SequentialReactiveComputationModule,
 } from "../computations.js";
-import { identity } from "../functions.js";
+import { identity, returns } from "../functions.js";
 import { ConsumerLike } from "../utils.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
@@ -33,6 +33,10 @@ import {
   Producer_gen,
   Producer_genPure,
 } from "./Producer/__private__/Producer.gen.js";
+import {
+  Producer_genAsync,
+  Producer_genPureAsync,
+} from "./Producer/__private__/Producer.genAsync.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
 import Producer_lastAsync from "./Producer/__private__/Producer.lastAsync.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
@@ -45,7 +49,6 @@ import Producer_takeLast from "./Producer/__private__/Producer.takeLast.js";
 import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
 import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
 import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
-import Producer_toReadonlyArrayAsync from "./Producer/__private__/Producer.toReadonlyArrayAsync.js";
 import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
 
 /**
@@ -102,7 +105,9 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
 export const encodeUtf8: Signature["encodeUtf8"] = Producer_encodeUtf8;
 export const forEach: Signature["forEach"] = Producer_forEach;
 export const gen: Signature["gen"] = Producer_gen;
+export const genAsync: Signature["genAsync"] = Producer_genAsync;
 export const genPure: Signature["genPure"] = Producer_genPure;
+export const genPureAsync: Signature["genPureAsync"] = Producer_genPureAsync;
 export const keep: Signature["keep"] = Producer_keep;
 export const lastAsync: Signature["lastAsync"] = Producer_lastAsync;
 export const makeModule: Signature["makeModule"] = identity;
@@ -116,7 +121,8 @@ export const takeLast: Signature["takeLast"] = Producer_takeLast;
 export const takeUntil: Signature["takeUntil"] = Producer_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Producer_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Producer_throwIfEmpty;
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  Producer_toReadonlyArrayAsync;
+export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
+  identity,
+) as Signature["toProducer"];
 export const withLatestFrom: Signature["withLatestFrom"] =
   Producer_withLatestFrom;

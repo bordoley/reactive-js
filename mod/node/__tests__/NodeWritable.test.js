@@ -120,4 +120,4 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
     finally {
         __disposeResources(env_1);
     }
-})));
+})))();

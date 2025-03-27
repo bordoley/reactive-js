@@ -11,4 +11,4 @@ testModule(
   ComputationModuleTests(m),
   SequentialComputationModuleTests(m),
   SequentialReactiveComputationModuleTests(m),
-);
+)();

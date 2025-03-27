@@ -234,4 +234,4 @@ testModule(
       expectIsNone(enumerator[DisposableLike_error]);
     }),
   ),
-);
+)();

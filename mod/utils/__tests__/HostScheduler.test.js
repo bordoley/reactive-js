@@ -73,4 +73,4 @@ testModule("HostScheduler", testAsync("delayed continuation", async () => {
     finally {
         __disposeResources(env_1);
     }
-}));
+}))();

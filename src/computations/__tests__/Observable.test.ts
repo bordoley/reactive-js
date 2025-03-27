@@ -1,4 +1,6 @@
 import { testModule } from "../../__internal__/testing.js";
+import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Observable from "../Observable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
@@ -11,4 +13,12 @@ testModule(
   ComputationModuleTests(m),
   SequentialComputationModuleTests(m),
   SequentialReactiveComputationModuleTests(m),
-);
+)({
+  beforeEach() {
+    const scheduler = HostScheduler.create();
+    DefaultScheduler.set(scheduler);
+  },
+  afterEach() {
+    DefaultScheduler.dispose();
+  },
+});

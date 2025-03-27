@@ -48,6 +48,6 @@ testModule(
       );
     }),
   ),
-);
+)();
 
 ((_: Dictionary.Signature) => {})(Dictionary);

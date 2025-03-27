@@ -115,6 +115,6 @@ testModule(
       );
     }),
   ),
-);
+)();
 
 ((_: Disposable.Signature) => {})(Disposable);

@@ -3,11 +3,12 @@
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, RunnableLike_eval, } from "../computations.js";
-import { alwaysTrue, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import Iterable_first from "./Iterable/__private__/Iterable.first.js";
+import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
 class CatchErrorIterable {
     s;
     onError;
@@ -390,8 +391,9 @@ class ThrowIfEmptyIterable {
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
 //export const toObservable: Signature["toObservable"] = Iterable_toObservable;
 export const toReadonlyArray = ReadonlyArray.fromIterable;
-export const toReadonlyArrayAsync = 
-/*@__PURE__*/ returns(async (iter) => pipe(iter, toReadonlyArray()));
+export const toProducer = /*@__PURE__*/ returns((iterable) => ComputationM.isPure(iterable)
+    ? Producer_genPure(bindMethod(iterable, Symbol.iterator))
+    : Producer_gen(bindMethod(iterable, Symbol.iterator)));
 class IterableToRunnable {
     s;
     [ComputationLike_isDeferred] = false;

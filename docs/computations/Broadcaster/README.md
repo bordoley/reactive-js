@@ -37,5 +37,4 @@
 - [takeUntil](functions/takeUntil.md)
 - [takeWhile](functions/takeWhile.md)
 - [toProducer](functions/toProducer.md)
-- [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)
 - [withLatestFrom](functions/withLatestFrom.md)

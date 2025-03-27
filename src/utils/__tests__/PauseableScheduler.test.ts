@@ -98,4 +98,4 @@ testModule(
 
     pipe(result, expectArrayEquals([3, 5]));
   }),
-);
+)();

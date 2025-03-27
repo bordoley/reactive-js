@@ -24,6 +24,7 @@ import {
   PureDeferredComputationOf,
   PureSynchronousComputationOf,
   SequentialComputationModule,
+  SourceLike_subscribe,
   SynchronousComputationLike,
   SynchronousComputationOf,
 } from "../computations.js";
@@ -37,6 +38,8 @@ import {
   pipe,
   returns,
 } from "../functions.js";
+import * as DisposableContainer from "../utils/DisposableContainer.js";
+import * as Consumer from "../utils/__internal__/Consumer.js";
 
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
@@ -171,6 +174,20 @@ export interface Signature {
   ): <T>(options?: {
     readonly raise?: Factory<unknown>;
   }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+
+  toReadonlyArrayAsync<
+    TComputationModule extends Pick<
+      ComputationModule,
+      "toProducer" | typeof ComputationModuleLike_computationType
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: Parameters<TComputationModule["toProducer"]>[1],
+  ) => Function1<
+    ComputationOfModule<TComputationModule, T>,
+    Promise<ReadonlyArray<T>>
+  >;
 }
 
 export const areAllPure: Signature["areAllPure"] = <
@@ -246,3 +263,22 @@ export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
         pipe(factory(), error, Functions_raise);
       }),
 );
+
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  /*@__PURE__*/ memoize(
+    m =>
+      <T>(
+        options?: {
+          readonly raise?: Factory<unknown>;
+        } & Parameters<typeof m.toProducer>[0],
+      ) =>
+      async (src: ComputationOfModule<typeof m, T>) => {
+        const producer = pipe(src, m.toProducer(options));
+
+        const consumer = Consumer.create<T>();
+        producer[SourceLike_subscribe](consumer);
+        await DisposableContainer.toPromise(consumer);
+
+        return Array.from(consumer);
+      },
+  );
