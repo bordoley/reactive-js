@@ -42,7 +42,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
-import FlowControlledQueueMixin from "./FlowControlledQueueMixin.js";
+import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 
 export const ObserverMixinLike_notify = Symbol("ObserverMixinLike_notify");
 export const ObserverMixinLike_complete = Symbol("ObserverMixinLike_complete");
@@ -159,7 +159,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
   return returns(
     mix<
       TReturn<TConsumer, T>,
-      ReturnType<typeof FlowControlledQueueMixin> &
+      ReturnType<typeof FlowControllerQueueMixin> &
         typeof DelegatingSchedulerMixin,
       TProperties,
       TPrototype<TConsumer, T>,
@@ -171,7 +171,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
         backpressureStrategy?: BackpressureStrategy;
       }>
     >(
-      include(FlowControlledQueueMixin(), DelegatingSchedulerMixin),
+      include(FlowControllerQueueMixin(), DelegatingSchedulerMixin),
       function ObserverMixin(
         this: TProperties & TPrototype<TConsumer, T> & DisposableLike,
         consumer: TConsumer,
@@ -181,7 +181,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
           backpressureStrategy?: BackpressureStrategy;
         }>,
       ): TReturn<TConsumer, T> {
-        init(FlowControlledQueueMixin<T>(), this, options);
+        init(FlowControllerQueueMixin<T>(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
         this[ObserverMixinLike_consumer] = consumer;
 

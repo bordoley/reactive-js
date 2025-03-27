@@ -24,7 +24,7 @@ testModule("NodeReadable", describe("create", testAsync("reading from readable",
         yield Buffer.from("abc", "utf8");
         yield Buffer.from("defg", "utf8");
     }
-    const queue = Consumer.createDropOldestWithoutBackpressure(1);
+    const queue = Consumer.takeLast(1);
     pipe(NodeReadable.create(() => Readable.from(generate())), Producer.decodeWithCharset(), Producer.scan((acc, next) => acc + next, returns("")), invoke(SourceLike_subscribe, queue));
     await DisposableContainer.toPromise(queue);
     pipe(queue, Iterable.first(), expectEquals("abcdefg"));

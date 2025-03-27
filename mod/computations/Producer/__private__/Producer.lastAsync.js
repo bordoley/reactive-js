@@ -6,7 +6,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import Iterable_first from "../../Iterable/__private__/Iterable.first.js";
 const Producer_lastAsync = () => async (producer) => {
-    const consumer = Consumer.createDropOldestWithoutBackpressure(1);
+    const consumer = Consumer.takeLast(1);
     producer[SourceLike_subscribe](consumer);
     await DisposableContainer.toPromise(consumer);
     return pipe(consumer, Iterable_first());

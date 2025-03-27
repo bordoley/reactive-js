@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -6,85 +5,33 @@ import {
   mixInstanceFactory,
   props,
   proto,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Function1, Optional, none } from "../../functions.js";
+import { IterableLike } from "../../computations.js";
+import { Function1, none } from "../../functions.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
-  DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-  DropOldestBackpressureStrategy,
   EventListenerLike_notify,
-  FlowControllerEnumeratorLike,
-  FlowControllerLike_capacity,
-  FlowControllerLike_isReady,
-  FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
   ObserverLike,
   SchedulerLike,
-  SinkLike,
   SinkLike_complete,
-  SinkLike_isCompleted,
 } from "../../utils.js";
+import { ConsumerQueueMixin } from "../__mixins__/ConsumerQueueMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
-import DisposableMixin from "../__mixins__/DisposableMixin.js";
-import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
 import ObserverMixin, {
   ObserverMixinLike,
   ObserverMixinLike_complete,
   ObserverMixinLike_consumer,
   ObserverMixinLike_notify,
 } from "../__mixins__/ObserverMixin.js";
+import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
 
 export const create: <T>(options?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => ConsumerLike<T> & FlowControllerEnumeratorLike<T> = /*@__PURE__*/ (<
-  T,
->() => {
-  type TPrototype = Pick<
-    SinkLike<T>,
-    | typeof EventListenerLike_notify
-    | typeof SinkLike_complete
-    | typeof SinkLike_isCompleted
-  >;
-
-  return mixInstanceFactory(
-    include(DisposableMixin, FlowControlledQueueMixin()),
-    function ConsumerQueue(
-      this: TPrototype,
-      options: Optional<{
-        capacity?: number;
-        backpressureStrategy?: BackpressureStrategy;
-      }>,
-    ): ConsumerLike<T> & FlowControllerQueueLike<T> {
-      init(DisposableMixin, this);
-      init(FlowControlledQueueMixin<T>(), this, options);
-
-      return this;
-    },
-    props(),
-    proto<TPrototype>({
-      get [SinkLike_isCompleted]() {
-        unsafeCast<DisposableLike>(this);
-        return this[DisposableLike_isDisposed];
-      },
-
-      [EventListenerLike_notify](this: FlowControllerQueueLike<T>, item: T) {
-        if (!this[DisposableLike_isDisposed]) {
-          this[FlowControllerQueueLike_enqueue](item);
-        }
-      },
-
-      [SinkLike_complete](this: DisposableLike) {
-        this[DisposableLike_dispose]();
-      },
-    }),
-  );
-})();
+}) => ConsumerLike<T> & IterableLike<T> = /*@__PURE__*/ (() =>
+  createInstanceFactory(ConsumerQueueMixin()))();
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: ConsumerLike<T>,
@@ -93,63 +40,10 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
     DelegatingNotifyOnlyNonCompletingNonDisposingConsumer(),
   ))();
 
-export const createDropOldestWithoutBackpressure: <T>(
+export const takeLast: <T>(
   capacity: number,
-) => ConsumerLike<T> & FlowControllerEnumeratorLike<T> = /*@__PURE__*/ (<
-  T,
->() => {
-  type TPrototype = Pick<
-    ConsumerLike<T>,
-    | typeof EventListenerLike_notify
-    | typeof SinkLike_complete
-    | typeof SinkLike_isCompleted
-    | typeof FlowControllerLike_isReady
-    | typeof FlowControllerLike_capacity
-  >;
-
-  return mixInstanceFactory(
-    include(DisposableMixin, FlowControlledQueueMixin()),
-    function ConsumerQueueDropOldestWithoutBackpressur(
-      this: TPrototype,
-      capacity: number,
-    ): ConsumerLike<T> & FlowControllerQueueLike<T> {
-      init(DisposableMixin, this);
-      init(FlowControlledQueueMixin<T>(), this, {
-        backpressureStrategy: DropOldestBackpressureStrategy,
-        capacity,
-      });
-      return this;
-    },
-    props(),
-    proto<TPrototype>({
-      get [FlowControllerLike_isReady](): boolean {
-        unsafeCast<ConsumerLike<T>>(this);
-        const isCompleted = this[SinkLike_isCompleted];
-
-        return !isCompleted;
-      },
-
-      get [FlowControllerLike_capacity](): number {
-        return MAX_SAFE_INTEGER;
-      },
-
-      get [SinkLike_isCompleted]() {
-        unsafeCast<DisposableLike>(this);
-        return this[DisposableLike_isDisposed];
-      },
-
-      [EventListenerLike_notify](this: FlowControllerQueueLike<T>, item: T) {
-        if (!this[DisposableLike_isDisposed]) {
-          this[FlowControllerQueueLike_enqueue](item);
-        }
-      },
-
-      [SinkLike_complete](this: DisposableLike) {
-        this[DisposableLike_dispose]();
-      },
-    }),
-  );
-})();
+) => ConsumerLike<T> & IterableLike<T> = /*@__PURE__*/ (() =>
+  createInstanceFactory(TakeLastConsumerMixin()))();
 
 export const toObserver: <T>(
   scheduler: SchedulerLike,

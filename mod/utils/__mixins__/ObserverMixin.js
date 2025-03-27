@@ -5,7 +5,7 @@ import { bind, call, memoize, none, pipe, pipeLazy, returns, } from "../../funct
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
-import FlowControlledQueueMixin from "./FlowControlledQueueMixin.js";
+import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 export const ObserverMixinLike_notify = Symbol("ObserverMixinLike_notify");
 export const ObserverMixinLike_complete = Symbol("ObserverMixinLike_complete");
 export const ObserverMixinLike_consumer = Symbol("ObserverMixinLike_consumer");
@@ -52,8 +52,8 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         }
     }
     const ObserverMixin_schedulerSubscription = Symbol("ObserverMixin_schedulerSubscription");
-    return returns(mix(include(FlowControlledQueueMixin(), DelegatingSchedulerMixin), function ObserverMixin(consumer, scheduler, options) {
-        init(FlowControlledQueueMixin(), this, options);
+    return returns(mix(include(FlowControllerQueueMixin(), DelegatingSchedulerMixin), function ObserverMixin(consumer, scheduler, options) {
+        init(FlowControllerQueueMixin(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
         this[ObserverMixinLike_consumer] = consumer;
         this[FlowControllerEnumeratorLike_addOnDataAvailableListener](bind(scheduleDrainQueue, this));

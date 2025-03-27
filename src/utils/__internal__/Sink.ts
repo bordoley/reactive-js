@@ -11,16 +11,9 @@ import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
 } from "../../computations/__internal__/LiftedSource.js";
-import { Function1, Optional, none, returns } from "../../functions.js";
+import { Function1, none, returns } from "../../functions.js";
 import {
-  BackpressureStrategy,
-  DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
   EventListenerLike_notify,
-  FlowControllerEnumeratorLike,
-  FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -28,49 +21,11 @@ import {
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
 
-import DisposableMixin from "../__mixins__/DisposableMixin.js";
-import FlowControlledQueueMixin from "../__mixins__/FlowControlledQueueMixin.js";
-
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: SinkLike<T>,
 ) => SinkLike<T> = /*@__PURE__*/ (() =>
   createInstanceFactory(
     DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin(),
-  ))();
-
-export const createQueueSink: <T>(options?: {
-  capacity?: number;
-  backpressureStrategy?: BackpressureStrategy;
-}) => SinkLike<T> & FlowControllerEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
-  mixInstanceFactory(
-    include(DisposableMixin, FlowControlledQueueMixin()),
-    function ConsumerQueue(
-      this: Omit<SinkLike<T>, keyof DisposableLike>,
-      options: Optional<{
-        capacity?: number;
-        backpressureStrategy?: BackpressureStrategy;
-      }>,
-    ): SinkLike<T> & FlowControllerQueueLike<T> {
-      init(DisposableMixin, this);
-      init(FlowControlledQueueMixin<T>(), this, options);
-
-      return this;
-    },
-    props(),
-    proto({
-      get [SinkLike_isCompleted](): boolean {
-        unsafeCast<SinkLike>(this);
-        return this[DisposableLike_isDisposed];
-      },
-
-      [EventListenerLike_notify](this: FlowControllerQueueLike<T>, next: T) {
-        this[FlowControllerQueueLike_enqueue](next);
-      },
-
-      [SinkLike_complete](this: SinkLike<T>) {
-        this[DisposableLike_dispose]();
-      },
-    }),
   ))();
 
 export const toLiftedSink: <T>() => Function1<

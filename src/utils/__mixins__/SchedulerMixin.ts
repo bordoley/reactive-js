@@ -47,7 +47,7 @@ import {
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
-import FlowControlledQueueMixin from "./FlowControlledQueueMixin.js";
+import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 
 export const SchedulerContinuationLike_run = Symbol(
   "SchedulerContinuationLike_run",
@@ -235,7 +235,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
       return mixInstanceFactory(
         include(
           DisposableMixin,
-          FlowControlledQueueMixin<QueueSchedulerContinuationLike>(),
+          FlowControllerQueueMixin<QueueSchedulerContinuationLike>(),
         ),
         function QueueContinuation(
           this: Pick<
@@ -251,7 +251,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           init(DisposableMixin, this);
 
           init(
-            FlowControlledQueueMixin<QueueSchedulerContinuationLike>(),
+            FlowControllerQueueMixin<QueueSchedulerContinuationLike>(),
             this,
             none,
           );

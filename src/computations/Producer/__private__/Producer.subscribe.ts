@@ -6,7 +6,7 @@ import type * as Producer from "../../Producer.js";
 const Producer_subscribe: Producer.Signature["subscribe"] =
   /*@__PURE__*/ returns(
     (producer: ComputationOf<Producer.Computation, any>) => {
-      const consumer = Consumer.createDropOldestWithoutBackpressure(0);
+      const consumer = Consumer.takeLast(0);
       pipe(producer, invoke(SourceLike_subscribe, consumer));
       return consumer;
     },

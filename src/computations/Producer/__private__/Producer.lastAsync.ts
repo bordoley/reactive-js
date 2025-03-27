@@ -8,7 +8,7 @@ import type * as Producer from "../../Producer.js";
 const Producer_lastAsync: Producer.Signature["lastAsync"] =
   <T>() =>
   async (producer: ProducerLike<T>) => {
-    const consumer = Consumer.createDropOldestWithoutBackpressure<T>(1);
+    const consumer = Consumer.takeLast<T>(1);
 
     producer[SourceLike_subscribe](consumer);
 

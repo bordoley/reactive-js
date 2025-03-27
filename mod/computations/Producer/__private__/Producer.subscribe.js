@@ -5,7 +5,7 @@ import { invoke, pipe, returns } from "../../../functions.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 const Producer_subscribe = 
 /*@__PURE__*/ returns((producer) => {
-    const consumer = Consumer.createDropOldestWithoutBackpressure(0);
+    const consumer = Consumer.takeLast(0);
     pipe(producer, invoke(SourceLike_subscribe, consumer));
     return consumer;
 });

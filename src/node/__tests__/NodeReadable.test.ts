@@ -55,7 +55,7 @@ testModule(
         yield Buffer.from("defg", "utf8");
       }
 
-      const queue = Consumer.createDropOldestWithoutBackpressure<string>(1);
+      const queue = Consumer.takeLast<string>(1);
       pipe(
         NodeReadable.create(() => Readable.from(generate())),
         Producer.decodeWithCharset(),

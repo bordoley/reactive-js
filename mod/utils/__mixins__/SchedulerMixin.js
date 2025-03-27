@@ -9,7 +9,7 @@ import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_i
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
-import FlowControlledQueueMixin from "./FlowControlledQueueMixin.js";
+import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 export const SchedulerContinuationLike_run = Symbol("SchedulerContinuationLike_run");
 export const SchedulerContinuationLike_dueTime = Symbol("SchedulerContinuationLike_dueTime");
 export const SchedulerContinuationLike_id = Symbol("SchedulerContinuationLike_id");
@@ -92,9 +92,9 @@ const SchedulerMixin =
             this[QueueContinuation_effect] =
                 none;
         }
-        return mixInstanceFactory(include(DisposableMixin, FlowControlledQueueMixin()), function QueueContinuation(scheduler, effect, dueTime) {
+        return mixInstanceFactory(include(DisposableMixin, FlowControllerQueueMixin()), function QueueContinuation(scheduler, effect, dueTime) {
             init(DisposableMixin, this);
-            init(FlowControlledQueueMixin(), this, none);
+            init(FlowControllerQueueMixin(), this, none);
             this[SchedulerContinuationLike_dueTime] = dueTime;
             this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
             this[QueueContinuation_scheduler] = scheduler;
