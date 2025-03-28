@@ -330,7 +330,7 @@
 
 ### delay()
 
-> **delay**(`duration`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+> **delay**(`duration`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
 
 #### Parameters
 
@@ -340,7 +340,7 @@
 
 #### Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
 
 ***
 
@@ -1409,6 +1409,32 @@
 #### Inherited from
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`takeWhile`](../../interfaces/ComputationModule.md#takewhile)
+
+***
+
+### throttle()
+
+> **throttle**\<`T`\>(`duration`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### duration
+
+`number`
+
+##### options?
+
+###### mode?
+
+[`ThrottleMode`](../type-aliases/ThrottleMode.md)
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
 
 ***
 

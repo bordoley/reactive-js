@@ -120,20 +120,17 @@ testModule(
             Observable.concat(
               Observable.delay(3),
               Computation.empty(m)(),
-
               pipe([4, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1 })),
             ),
             m.merge<number>(
               Observable.concat(
                 Observable.delay(6),
                 Computation.empty(m)(),
-
                 pipe([7, 8, 9], Computation.fromReadonlyArray(m)({ delay: 1 })),
               ),
               Observable.concat(
                 Observable.delay(9),
                 Computation.empty(m)(),
-
                 pipe(
                   [10, 11, 12],
                   Computation.fromReadonlyArray(m)({ delay: 1 }),
@@ -142,7 +139,7 @@ testModule(
             ),
           ),
         ),
-        Computation.toReadonlyArray(m)(),
+        Computation.toReadonlyArray(m)<number>(),
         expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
       );
     }),
@@ -173,6 +170,78 @@ testModule(
         ),
         Computation.toReadonlyArray(m)(),
         expectArrayEquals([10, 20]),
+      ),
+    ),
+  ),
+  describe(
+    "throttle",
+    test(
+      "first",
+      pipeLazy(
+        Observable.genPure(
+          function* counter() {
+            let x = 0;
+
+            while (true) {
+              yield x;
+              x++;
+            }
+          },
+          {
+            delay: 1,
+            delayStart: true,
+          },
+        ),
+        Observable.takeFirst({ count: 101 }),
+        Observable.throttle<number>(50, { mode: "first" }),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([0, 49, 99]),
+      ),
+    ),
+    test(
+      "last",
+      pipeLazy(
+        Observable.genPure(
+          function* counter() {
+            let x = 0;
+
+            while (true) {
+              yield x;
+              x++;
+            }
+          },
+          {
+            delay: 1,
+            delayStart: true,
+          },
+        ),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(50, { mode: "last" }),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([49, 99, 149, 199]),
+      ),
+    ),
+    test(
+      "interval",
+      pipeLazy(
+        Observable.genPure(
+          function* counter() {
+            let x = 0;
+
+            while (true) {
+              yield x;
+              x++;
+            }
+          },
+          {
+            delay: 1,
+            delayStart: true,
+          },
+        ),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(75, { mode: "interval" }),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
   ),

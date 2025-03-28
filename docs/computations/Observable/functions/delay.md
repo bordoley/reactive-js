@@ -6,7 +6,7 @@
 
 # Function: delay()
 
-> **delay**(`duration`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+> **delay**(`duration`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)

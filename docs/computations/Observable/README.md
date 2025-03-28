@@ -15,10 +15,14 @@
 
 - [Computation](type-aliases/Computation.md)
 - [Signature](type-aliases/Signature.md)
+- [ThrottleMode](type-aliases/ThrottleMode.md)
 
 ## Variables
 
 - [currentTime](variables/currentTime.md)
+- [ThrottleFirstMode](variables/ThrottleFirstMode.md)
+- [ThrottleIntervalMode](variables/ThrottleIntervalMode.md)
+- [ThrottleLastMode](variables/ThrottleLastMode.md)
 
 ## Functions
 
@@ -51,6 +55,7 @@
 - [takeLast](functions/takeLast.md)
 - [takeUntil](functions/takeUntil.md)
 - [takeWhile](functions/takeWhile.md)
+- [throttle](functions/throttle.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
 - [toRunnable](functions/toRunnable.md)

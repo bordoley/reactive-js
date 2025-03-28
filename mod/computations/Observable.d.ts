@@ -13,6 +13,10 @@ export interface ObservableComputation extends ComputationType {
     readonly [Computation_multicastOfT]?: never;
 }
 export type Computation = ObservableComputation;
+export type ThrottleMode = "first" | "last" | "interval";
+export declare const ThrottleFirstMode: ThrottleMode;
+export declare const ThrottleLastMode: ThrottleMode;
+export declare const ThrottleIntervalMode: ThrottleMode;
 export interface ObservableModule extends ComputationModule<ObservableComputation, {
     genPure: {
         readonly delay?: number;
@@ -33,7 +37,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
 }>, DeferredReactiveComputationModule<ObservableComputation> {
     create<T>(f: (observer: ObserverLike<T>) => void): ObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
-    delay(duration: number): PureSynchronousObservableLike<number>;
+    delay(duration: number): PureSynchronousObservableLike;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureSynchronousObservableLike<number>;
@@ -43,6 +47,9 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly precision?: number;
     }): PureSynchronousObservableLike<number>;
     subscribeOn<T>(scheduler: SchedulerLike): PureAsynchronousComputationOperator<ObservableComputation, T, T>;
+    throttle<T>(duration: number, options?: {
+        readonly mode?: ThrottleMode;
+    }): PureComputationOperator<ObservableComputation, T, T>;
     withBackpressure<T>(config: {
         capacity: number;
         backpressureStrategy: BackpressureStrategy;
@@ -80,6 +87,7 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toRunnable: Signature["toRunnable"];

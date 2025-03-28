@@ -57,6 +57,7 @@ import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.
 import Observable_takeLast from "./Observable/__private__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.js";
 import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
+import Observable_throttle from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
@@ -87,6 +88,11 @@ export interface ObservableComputation extends ComputationType {
 }
 
 export type Computation = ObservableComputation;
+
+export type ThrottleMode = "first" | "last" | "interval";
+export const ThrottleFirstMode: ThrottleMode = "first";
+export const ThrottleLastMode: ThrottleMode = "last";
+export const ThrottleIntervalMode: ThrottleMode = "interval";
 
 export interface ObservableModule
   extends ComputationModule<
@@ -128,7 +134,7 @@ export interface ObservableModule
 
   currentTime: PureSynchronousObservableLike<number>;
 
-  delay(duration: number): PureSynchronousObservableLike<number>;
+  delay(duration: number): PureSynchronousObservableLike;
 
   keyFrame(
     duration: number,
@@ -146,12 +152,11 @@ export interface ObservableModule
   subscribeOn<T>(
     scheduler: SchedulerLike,
   ): PureAsynchronousComputationOperator<ObservableComputation, T, T>;
-  /*
+
   throttle<T>(
     duration: number,
     options?: { readonly mode?: ThrottleMode },
   ): PureComputationOperator<ObservableComputation, T, T>;
-*/
 
   // FIXME: Implement this on producer as well and move into
   // a computation module
@@ -200,6 +205,7 @@ export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
+export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toRunnable: Signature["toRunnable"] = Observable_toRunnable;
