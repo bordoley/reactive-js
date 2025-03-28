@@ -36,7 +36,6 @@
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
-- [subscribe](functions/subscribe.md)
 - [takeFirst](functions/takeFirst.md)
 - [takeLast](functions/takeLast.md)
 - [takeUntil](functions/takeUntil.md)

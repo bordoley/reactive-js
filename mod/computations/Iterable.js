@@ -6,7 +6,6 @@ import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newI
 import { clampPositiveInteger } from "../math.js";
 import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
-import Iterable_first from "./Iterable/__private__/Iterable.first.js";
 import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
 class CatchErrorIterable {
     s;
@@ -92,7 +91,6 @@ class EncodeUtf8Iterable {
     }
 }
 export const encodeUtf8 = (() => (iterable) => newInstance(EncodeUtf8Iterable, iterable));
-export const first = Iterable_first;
 class ForEachIterable {
     d;
     ef;

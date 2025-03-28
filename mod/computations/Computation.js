@@ -2,11 +2,11 @@
 
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModuleLike_computationType, RunnableLike_eval, SourceLike_subscribe, } from "../computations.js";
-import { raise as Functions_raise, bindMethod, error, identity, memoize, pipe, returns, } from "../functions.js";
+import { raise as Functions_raise, bindMethod, error, identity, invoke, memoize, pipe, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
-import Iterable_first from "./Iterable/__private__/Iterable.first.js";
+import { CollectionEnumeratorLike_peek } from "../utils.js";
 export const areAllPure = (computations) => computations.every(isPure);
 export const areAllSynchronous = (computations) => computations.every(isSynchronous);
 export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.concat(fst, ...tail));
@@ -26,14 +26,14 @@ export const last = /*@__PURE__*/ memoize(m => (options) => (src) => {
     const consumer = Consumer.takeLast(1);
     producer[RunnableLike_eval](consumer);
     Disposable.raiseIfDisposedWithError(consumer);
-    return pipe(consumer, Iterable_first());
+    return consumer[CollectionEnumeratorLike_peek];
 });
 export const lastAsync = /*@__PURE__*/ memoize(m => (options) => async (src) => {
     const producer = pipe(src, m.toProducer(options));
     const consumer = Consumer.takeLast(1);
     producer[SourceLike_subscribe](consumer);
     await DisposableContainer.toPromise(consumer);
-    return pipe(consumer, Iterable_first());
+    return consumer[CollectionEnumeratorLike_peek];
 });
 export const makeModule = returns(identity);
 export const mergeWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.merge(fst, ...tail));
@@ -41,6 +41,11 @@ export const raise = /*@__PURE__*/ memoize(m => (options) => m.genPure(function*
     const { raise: factory = Functions_raise } = options ?? {};
     pipe(factory(), error, Functions_raise);
 }));
+export const subscribe = /*@__PURE__*/ memoize(m => (options) => (src) => {
+    const consumer = Consumer.takeLast(0);
+    pipe(src, m.toProducer(options), invoke(SourceLike_subscribe, consumer));
+    return consumer;
+});
 export const toReadonlyArray = 
 /*@__PURE__*/ memoize(m => (options) => (src) => {
     const producer = pipe(src, m.toRunnable(options));

@@ -7,7 +7,6 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as Iterable from "../computations/Iterable.js";
 import {
   Optional,
   isNone,
@@ -28,6 +27,7 @@ import SchedulerMixin, {
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
+  CollectionEnumeratorLike_peek,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -78,7 +78,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
     while (true) {
-      continuation = pipe(instance, Iterable.first());
+      continuation = instance[CollectionEnumeratorLike_peek];
 
       if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
         break;

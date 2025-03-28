@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EnumeratorLike`](EnumeratorLike.md)\<`T`\>.`Iterable`\<`T`\>
+- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>.`Iterable`\<`T`\>
 
 ## Extended by
 
@@ -20,6 +20,26 @@
 
 ## Properties
 
+### \[CollectionEnumeratorLike\_count\]
+
+> `readonly` **\[CollectionEnumeratorLike\_count\]**: `number`
+
+#### Inherited from
+
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[CollectionEnumeratorLike_count]`](CollectionEnumeratorLike.md#collectionenumeratorlike_count)
+
+***
+
+### \[CollectionEnumeratorLike\_peek\]
+
+> `readonly` **\[CollectionEnumeratorLike\_peek\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>
+
+#### Inherited from
+
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[CollectionEnumeratorLike_peek]`](CollectionEnumeratorLike.md#collectionenumeratorlike_peek)
+
+***
+
 ### \[DisposableLike\_error\]
 
 > `readonly` **\[DisposableLike\_error\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>
@@ -28,7 +48,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[DisposableLike_error]`](EnumeratorLike.md#disposablelike_error)
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[DisposableLike_error]`](CollectionEnumeratorLike.md#disposablelike_error)
 
 ***
 
@@ -40,7 +60,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[DisposableLike_isDisposed]`](EnumeratorLike.md#disposablelike_isdisposed)
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[DisposableLike_isDisposed]`](CollectionEnumeratorLike.md#disposablelike_isdisposed)
 
 ***
 
@@ -50,7 +70,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_current]`](EnumeratorLike.md#enumeratorlike_current)
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[EnumeratorLike_current]`](CollectionEnumeratorLike.md#enumeratorlike_current)
 
 ***
 
@@ -60,7 +80,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_hasCurrent]`](EnumeratorLike.md#enumeratorlike_hascurrent)
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[EnumeratorLike_hasCurrent]`](CollectionEnumeratorLike.md#enumeratorlike_hascurrent)
 
 ***
 
@@ -90,7 +110,7 @@ An optional error that signals the resource is being disposed due to an error.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[dispose]`](EnumeratorLike.md#dispose)
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[dispose]`](CollectionEnumeratorLike.md#dispose)
 
 ***
 
@@ -104,7 +124,7 @@ An optional error that signals the resource is being disposed due to an error.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_moveNext]`](EnumeratorLike.md#enumeratorlike_movenext)
+[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md).[`[EnumeratorLike_moveNext]`](CollectionEnumeratorLike.md#enumeratorlike_movenext)
 
 ***
 

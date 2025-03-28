@@ -193,7 +193,7 @@ export const FlowControllerEnumeratorLike_isDataAvailable = Symbol(
 );
 
 export interface FlowControllerEnumeratorLike<T = unknown>
-  extends EnumeratorLike<T>,
+  extends CollectionEnumeratorLike<T>,
     Iterable<T> {
   readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
 

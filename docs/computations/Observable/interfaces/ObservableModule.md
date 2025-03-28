@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `lastAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toReadonlyArrayAsync`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `broadcast`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `first`: \{ `maxMicroTaskTicks`: `number`; \}; `last`: \{ `maxMicroTaskTicks`: `number`; \}; `reduce`: \{ `maxMicroTaskTicks`: `number`; \}; `run`: \{ `maxMicroTaskTicks`: `number`; \}; `toReadonlyArray`: \{ `maxMicroTaskTicks`: `number`; \}; `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `subscribe`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `broadcast`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
 
 ## Properties
 
@@ -467,32 +467,6 @@
 #### Inherited from
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`encodeUtf8`](../../interfaces/ComputationModule.md#encodeutf8)
-
-***
-
-### first()
-
-> **first**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### maxMicroTaskTicks?
-
-`number`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Inherited from
-
-[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md).[`first`](../../interfaces/SynchronousComputationModule.md#first)
 
 ***
 
@@ -1246,32 +1220,6 @@
 
 ***
 
-### subscribe()
-
-> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-###### scheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-#### Inherited from
-
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`subscribe`](../../interfaces/DeferredReactiveComputationModule.md#subscribe)
-
-***
-
 ### subscribeOn()
 
 > **subscribeOn**\<`T`\>(`scheduler`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
@@ -1574,7 +1522,9 @@
 
 ##### options?
 
-`unknown`
+###### scheduler?
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
 #### Returns
 

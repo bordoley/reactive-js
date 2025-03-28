@@ -16,7 +16,9 @@
 
 ### options?
 
-`unknown`
+#### scheduler?
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
 ## Returns
 

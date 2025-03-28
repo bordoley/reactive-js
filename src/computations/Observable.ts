@@ -42,7 +42,6 @@ import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
-import Observable_subscribe from "./Observable/__private__/Observable.subscribe.js";
 import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__private__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.js";
@@ -84,10 +83,7 @@ export interface ObservableModule
           readonly delay?: number;
           readonly delayStart?: boolean;
         };
-        lastAsync: {
-          readonly scheduler?: SchedulerLike;
-        };
-        toReadonlyArrayAsync: {
+        toProducer: {
           readonly scheduler?: SchedulerLike;
         };
       }
@@ -98,9 +94,6 @@ export interface ObservableModule
         broadcast: {
           scheduler?: SchedulerLike;
         };
-        toProducer: {
-          scheduler?: SchedulerLike;
-        };
       }
     >,
     ConcurrentReactiveComputationModule<ObservableComputation>,
@@ -109,35 +102,13 @@ export interface ObservableModule
     SynchronousComputationModule<
       ObservableComputation,
       {
-        first: {
-          readonly maxMicroTaskTicks?: number;
-        };
-        last: {
-          readonly maxMicroTaskTicks?: number;
-        };
-        reduce: {
-          readonly maxMicroTaskTicks?: number;
-        };
-        run: {
-          readonly maxMicroTaskTicks?: number;
-        };
-        toReadonlyArray: {
-          readonly maxMicroTaskTicks?: number;
-        };
         toRunnable: {
           readonly maxMicroTaskTicks?: number;
         };
       }
     >,
     ConcurrentComputationModule<ObservableComputation>,
-    DeferredReactiveComputationModule<
-      ObservableComputation,
-      {
-        subscribe: {
-          scheduler?: SchedulerLike;
-        };
-      }
-    > {
+    DeferredReactiveComputationModule<ObservableComputation> {
   backpressureStrategy<T>(options: {
     capacity: number;
     backpressureStrategy: BackpressureStrategy;
@@ -197,7 +168,6 @@ export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
-export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;

@@ -41,7 +41,6 @@ export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
-export declare const subscribe: Signature["subscribe"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];

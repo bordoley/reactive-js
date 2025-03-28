@@ -1124,30 +1124,6 @@
 
 ***
 
-### subscribe()
-
-> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
-
-#### Inherited from
-
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`subscribe`](../../interfaces/DeferredReactiveComputationModule.md#subscribe)
-
-***
-
 ### switchAll()
 
 > **switchAll**\<`T`, `TInnerLike`\>(`options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>

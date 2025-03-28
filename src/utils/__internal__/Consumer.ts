@@ -6,10 +6,10 @@ import {
   props,
   proto,
 } from "../../__internal__/mixins.js";
-import { IterableLike } from "../../computations.js";
 import { Function1, none } from "../../functions.js";
 import {
   BackpressureStrategy,
+  CollectionEnumeratorLike,
   ConsumerLike,
   EventListenerLike_notify,
   ObserverLike,
@@ -30,7 +30,7 @@ import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
 export const create: <T>(options?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
-}) => ConsumerLike<T> & IterableLike<T> = /*@__PURE__*/ (() =>
+}) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (() =>
   createInstanceFactory(ConsumerQueueMixin()))();
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
@@ -42,7 +42,7 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
 
 export const takeLast: <T>(
   capacity: number,
-) => ConsumerLike<T> & IterableLike<T> = /*@__PURE__*/ (() =>
+) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (() =>
   createInstanceFactory(TakeLastConsumerMixin()))();
 
 export const toObserver: <T>(

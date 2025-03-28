@@ -7,10 +7,10 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { IterableLike } from "../../computations.js";
 import { Optional, returns } from "../../functions.js";
 import {
   BackpressureStrategy,
+  CollectionEnumeratorLike,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
@@ -26,7 +26,7 @@ import DisposableMixin from "./DisposableMixin.js";
 import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 
 export const ConsumerQueueMixin: <T>() => Mixin1<
-  ConsumerLike<T> & IterableLike<T>,
+  ConsumerLike<T> & CollectionEnumeratorLike<T>,
   Optional<{
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
@@ -48,7 +48,7 @@ export const ConsumerQueueMixin: <T>() => Mixin1<
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         }>,
-      ): ConsumerLike<T> & IterableLike<T> {
+      ): ConsumerLike<T> & CollectionEnumeratorLike<T> {
         init(DisposableMixin, this);
         init(FlowControllerQueueMixin<T>(), this, options);
 

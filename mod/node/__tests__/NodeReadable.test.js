@@ -3,12 +3,12 @@
 import { Readable } from "node:stream";
 import { describe, expectEquals, expectPromiseToThrow, expectTrue, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Computation from "../../computations/Computation.js";
-import * as Iterable from "../../computations/Iterable.js";
 import * as Producer from "../../computations/Producer.js";
 import { SourceLike_subscribe } from "../../computations.js";
 import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
+import { CollectionEnumeratorLike_peek } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
 const m = Computation.makeModule()(Producer);
 testModule("NodeReadable", describe("create", testAsync("reading from readable", async () => {
@@ -29,7 +29,7 @@ testModule("NodeReadable", describe("create", testAsync("reading from readable",
     const queue = Consumer.takeLast(1);
     pipe(NodeReadable.create(() => Readable.from(generate())), Producer.decodeWithCharset(), Producer.scan((acc, next) => acc + next, returns("")), invoke(SourceLike_subscribe, queue));
     await DisposableContainer.toPromise(queue);
-    pipe(queue, Iterable.first(), expectEquals("abcdefg"));
+    pipe(queue[CollectionEnumeratorLike_peek], expectEquals("abcdefg"));
 }), testAsync("reading from readable that throws", async () => {
     const err = newInstance(Error);
     function* generate() {

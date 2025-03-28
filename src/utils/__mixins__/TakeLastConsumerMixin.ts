@@ -8,9 +8,9 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { IterableLike } from "../../computations.js";
 import { returns } from "../../functions.js";
 import {
+  CollectionEnumeratorLike,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
@@ -28,7 +28,7 @@ import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import FlowControllerQueueMixin from "../__mixins__/FlowControllerQueueMixin.js";
 
 const TakeLastConsumerMixin: <T>() => Mixin1<
-  ConsumerLike<T> & IterableLike<T>,
+  ConsumerLike<T> & CollectionEnumeratorLike<T>,
   number
 > = /*@__PURE__*/ (<T>() => {
   type TPrototype = Pick<
@@ -46,7 +46,7 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
       function TakeLastConsumerMixin(
         this: TPrototype,
         capacity: number,
-      ): ConsumerLike<T> & IterableLike<T> {
+      ): ConsumerLike<T> & CollectionEnumeratorLike<T> {
         init(DisposableMixin, this);
         init(FlowControllerQueueMixin<T>(), this, {
           backpressureStrategy: DropOldestBackpressureStrategy,

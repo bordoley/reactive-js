@@ -56,7 +56,6 @@ import {
   SinkLike_isCompleted,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
-import Iterable_first from "./Iterable/__private__/Iterable.first.js";
 import {
   Producer_gen,
   Producer_genPure,
@@ -231,8 +230,6 @@ class EncodeUtf8Iterable implements IterableLike<Uint8Array<ArrayBufferLike>> {
 export const encodeUtf8: Signature["encodeUtf8"] = (() =>
   (iterable: IterableLike<string>) =>
     newInstance(EncodeUtf8Iterable, iterable)) as Signature["encodeUtf8"];
-
-export const first: Signature["first"] = Iterable_first;
 
 class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;

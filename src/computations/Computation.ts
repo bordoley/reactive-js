@@ -19,6 +19,7 @@ import {
   MulticastComputationOf,
   NewPureInstanceOf,
   PickComputationModule,
+  ProducerLike,
   PureAsynchronousComputationOperator,
   PureComputationLike,
   PureComputationOperator,
@@ -39,6 +40,7 @@ import {
   bindMethod,
   error,
   identity,
+  invoke,
   memoize,
   pipe,
   returns,
@@ -46,7 +48,7 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
-import Iterable_first from "./Iterable/__private__/Iterable.first.js";
+import { CollectionEnumeratorLike_peek, DisposableLike } from "../utils.js";
 
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
@@ -215,6 +217,17 @@ export interface Signature {
     readonly raise?: Factory<unknown>;
   }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
+  subscribe<
+    TComputationModule extends PickComputationModule<
+      ComputationModule,
+      "toProducer"
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: Parameters<TComputationModule["toProducer"]>[0],
+  ) => Function1<ComputationOfModule<TComputationModule, T>, DisposableLike>;
+
   toReadonlyArray<
     TComputationModule extends PickComputationModule<
       SynchronousComputationModule,
@@ -305,7 +318,7 @@ export const last: Signature["last"] = /*@__PURE__*/ memoize(
       producer[RunnableLike_eval](consumer);
       Disposable.raiseIfDisposedWithError(consumer);
 
-      return pipe(consumer, Iterable_first<T>());
+      return consumer[CollectionEnumeratorLike_peek];
     },
 );
 
@@ -319,7 +332,7 @@ export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ memoize(
       producer[SourceLike_subscribe](consumer);
       await DisposableContainer.toPromise(consumer);
 
-      return pipe(consumer, Iterable_first<T>());
+      return consumer[CollectionEnumeratorLike_peek];
     },
 );
 
@@ -343,6 +356,23 @@ export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
         const { raise: factory = Functions_raise } = options ?? {};
         pipe(factory(), error, Functions_raise);
       }),
+);
+
+export const subscribe: Signature["subscribe"] = /*@__PURE__*/ memoize(
+  m =>
+    <T>(options?: Parameters<typeof m.toProducer>[0]) =>
+    (src: ComputationOfModule<typeof m, T>) => {
+      const consumer = Consumer.takeLast<T>(0);
+      pipe(
+        src,
+        m.toProducer<T>(options),
+        invoke<ProducerLike, typeof SourceLike_subscribe>(
+          SourceLike_subscribe,
+          consumer,
+        ),
+      );
+      return consumer;
+    },
 );
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =

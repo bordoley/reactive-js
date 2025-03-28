@@ -26,5 +26,6 @@
 - [makeModule](functions/makeModule.md)
 - [mergeWith](functions/mergeWith.md)
 - [raise](functions/raise.md)
+- [subscribe](functions/subscribe.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

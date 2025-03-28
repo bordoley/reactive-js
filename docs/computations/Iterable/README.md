@@ -23,7 +23,6 @@
 - [concatAll](functions/concatAll.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
-- [first](functions/first.md)
 - [forEach](functions/forEach.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)

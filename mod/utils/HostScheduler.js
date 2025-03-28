@@ -2,11 +2,10 @@
 
 import { MAX_VALUE, globalObject } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
-import * as Iterable from "../computations/Iterable.js";
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
+import { CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -18,7 +17,7 @@ export const create = /*@PURE__*/ (() => {
     const peek = (instance) => {
         let continuation = none;
         while (true) {
-            continuation = pipe(instance, Iterable.first());
+            continuation = instance[CollectionEnumeratorLike_peek];
             if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
                 break;
             }

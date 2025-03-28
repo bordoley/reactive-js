@@ -17,12 +17,14 @@ import type * as Observable from "../../Observable.js";
 import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_toProducer from "./Observable.toProducer.js";
 
-const addEventListener = <TB>(
-  scheduler: ObserverLike,
-  effect: SideEffect1<TB>,
-) => compose(Observable_forEach(effect), Observable_subscribe({ scheduler }));
+const m = {
+  toProducer: Observable_toProducer,
+};
+
+const addEventListener = <T>(scheduler: ObserverLike, effect: SideEffect1<T>) =>
+  compose(Observable_forEach(effect), Computation.subscribe(m)({ scheduler }));
 
 const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   TA,

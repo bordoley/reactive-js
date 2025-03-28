@@ -18,43 +18,18 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delay?: number;
         readonly delayStart?: boolean;
     };
-    lastAsync: {
-        readonly scheduler?: SchedulerLike;
-    };
-    toReadonlyArrayAsync: {
+    toProducer: {
         readonly scheduler?: SchedulerLike;
     };
 }>, ConcurrentDeferredComputationModule<ObservableComputation, {
     broadcast: {
         scheduler?: SchedulerLike;
     };
-    toProducer: {
-        scheduler?: SchedulerLike;
-    };
 }>, ConcurrentReactiveComputationModule<ObservableComputation>, SequentialComputationModule<ObservableComputation>, SequentialReactiveComputationModule<ObservableComputation>, SynchronousComputationModule<ObservableComputation, {
-    first: {
-        readonly maxMicroTaskTicks?: number;
-    };
-    last: {
-        readonly maxMicroTaskTicks?: number;
-    };
-    reduce: {
-        readonly maxMicroTaskTicks?: number;
-    };
-    run: {
-        readonly maxMicroTaskTicks?: number;
-    };
-    toReadonlyArray: {
-        readonly maxMicroTaskTicks?: number;
-    };
     toRunnable: {
         readonly maxMicroTaskTicks?: number;
     };
-}>, ConcurrentComputationModule<ObservableComputation>, DeferredReactiveComputationModule<ObservableComputation, {
-    subscribe: {
-        scheduler?: SchedulerLike;
-    };
-}> {
+}>, ConcurrentComputationModule<ObservableComputation>, DeferredReactiveComputationModule<ObservableComputation> {
     backpressureStrategy<T>(options: {
         capacity: number;
         backpressureStrategy: BackpressureStrategy;
@@ -89,7 +64,6 @@ export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
-export declare const subscribe: Signature["subscribe"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];

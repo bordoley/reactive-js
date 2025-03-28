@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredReactiveComputationModule
 
-# Interface: DeferredReactiveComputationModule\<TComputationType, TCreationOptions\>
+# Interface: DeferredReactiveComputationModule\<TComputationType\>
 
 ## Extends
 
@@ -18,8 +18,6 @@
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
-
-• **TCreationOptions** *extends* `object` = \{\}
 
 ## Properties
 
@@ -100,26 +98,6 @@
 #### Returns
 
 [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, `T`, `TAcc`\>
-
-***
-
-### subscribe()
-
-> **subscribe**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"subscribe"`\]
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
 
 ***
 

@@ -3,8 +3,11 @@ import {
   init,
   mixInstanceFactory,
 } from "../../__internal__/mixins.js";
-import { IterableLike } from "../../computations.js";
-import { ObserverLike, SchedulerLike } from "../../utils.js";
+import {
+  CollectionEnumeratorLike,
+  ObserverLike,
+  SchedulerLike,
+} from "../../utils.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
@@ -35,14 +38,14 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
 export const takeLast: <T>(
   scheduler: SchedulerLike,
   capacity: number,
-) => ObserverLike<T> & IterableLike<T> = /*@__PURE__*/ (<T>() =>
+) => ObserverLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(TakeLastConsumerMixin(), DelegatingSchedulerMixin),
     function NonDisposingDelegatingObserver(
       this: unknown,
       scheduler: SchedulerLike,
       capacity: number,
-    ): ObserverLike<T> & IterableLike<T> {
+    ): ObserverLike<T> & CollectionEnumeratorLike<T> {
       init(TakeLastConsumerMixin<T>(), this, capacity);
       init(DelegatingSchedulerMixin, this, scheduler);
 

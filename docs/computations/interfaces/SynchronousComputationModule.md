@@ -34,26 +34,6 @@
 
 ## Methods
 
-### first()
-
-> **first**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"first"`\]
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-***
-
 ### toRunnable()
 
 > **toRunnable**\<`T`\>(`options`?): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>

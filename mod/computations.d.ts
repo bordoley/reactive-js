@@ -1,4 +1,4 @@
-import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
+import type { Equality, Factory, Function1, Function2, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
 import type { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
@@ -235,12 +235,8 @@ export type ComputationOfModule<TModule extends ComputationModuleLike, T> = Comp
 export type DeferredComputationOfModule<TModule extends ComputationModuleLike, T> = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type MulticastComputationOfModule<TModule extends ComputationModuleLike, T> = MulticastComputationOf<ComputationTypeOfModule<TModule>, T>;
 export interface ComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
-    empty?: Record<string, any>;
-    fromValue?: Record<string, any>;
     genPure?: Record<string, any>;
-    lastAsync?: Record<string, any>;
     toProducer?: Record<string, any>;
-    toReadonlyArrayAsync?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
@@ -286,13 +282,8 @@ export interface SequentialComputationModule<TComputationType extends AnyComputa
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
 }
 export interface SynchronousComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
-    first?: Record<string, any>;
-    last?: Record<string, any>;
-    reduce?: Record<string, any>;
-    toReadonlyArray?: Record<string, any>;
     toRunnable?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
-    first<T>(options?: TCreationOptions["first"]): Function1<SynchronousComputationOf<TComputationType, T>, Optional<T>>;
     toRunnable<T>(options?: TCreationOptions["toRunnable"]): ToRunnableOperator<TComputationType, T>;
 }
 export interface InteractiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
@@ -370,9 +361,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     withLatestFrom<TA, TB, T>(other: MulticastComputationOf<TComputationType, TB>, selector: Function2<TA, TB, T>): PureAsynchronousComputationOperator<TComputationType, TA, T>;
     zipLatest: CombineConstructor<TComputationType>;
 }
-export interface DeferredReactiveComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
-    subscribe?: Record<string, any>;
-} = {}> extends ComputationModuleLike<TComputationType> {
+export interface DeferredReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -385,7 +374,6 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
     switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerLike;
     }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
-    subscribe<T>(options?: TCreationOptions["subscribe"]): Function1<ComputationOf<TComputationType, T>, DisposableLike>;
 }
 export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike, DeferredComputationLike {
     [ComputationLike_isDeferred]?: true;

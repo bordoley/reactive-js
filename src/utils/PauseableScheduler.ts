@@ -7,12 +7,12 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as Iterable from "../computations/Iterable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value, WritableStoreLike } from "../computations.js";
-import { Optional, bind, isNone, isSome, none, pipe } from "../functions.js";
+import { Optional, bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import {
+  CollectionEnumeratorLike_peek,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableContainerLike_add,
@@ -83,7 +83,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
     while (true) {
-      continuation = pipe(instance, Iterable.first());
+      continuation = instance[CollectionEnumeratorLike_peek];
 
       if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
         break;

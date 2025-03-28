@@ -16,7 +16,6 @@ export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
-export declare const first: Signature["first"];
 export declare const forEach: Signature["forEach"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
