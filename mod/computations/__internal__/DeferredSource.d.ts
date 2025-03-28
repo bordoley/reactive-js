@@ -74,7 +74,8 @@ interface Signature {
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
     }): DeferredSourceLike<TOut, TConsumerOut>;
-    takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (sink: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
+    merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
+    takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (consumer: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
         readonly count?: number;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
 }
@@ -82,5 +83,6 @@ export declare const catchError: Signature["catchError"];
 export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];
 export declare const createLifted: Signature["createLifted"];
+export declare const merge: Signature["merge"];
 export declare const takeLast: Signature["takeLast"];
 export {};

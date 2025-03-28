@@ -1,10 +1,12 @@
 import {
   describe,
   expectArrayEquals,
+  expectToThrow,
   expectToThrowError,
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import {
   arrayEquality,
   newInstance,
@@ -35,11 +37,99 @@ testModule(
   SequentialReactiveComputationModuleTests(m),
   SynchronousComputationModuleTests(m),
   ConcurrentReactiveComputationModuleTests(m),
+  // Ideally these tests would be part of SequentialReactiveComputationModuleTests
+  // but writing dependable tests that use real time is slow at best and ripe for
+  // flakiness. The implementation is shared so only test using Observable.
+  describe(
+    "merge",
+    test("with sources that have the same delays", () => {
+      const [ev1, ev2, ev3] = pipe(
+        [
+          [1, 4, 7],
+          [2, 5, 8],
+          [3, 6, 9],
+        ],
+        ReadonlyArray.map(Computation.fromReadonlyArray(m)({ delay: 3 })),
+      );
+
+      pipe(
+        Observable.merge(ev1, ev2, ev3),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+      );
+    }),
+    test(
+      "with sources that have the different delays",
+      pipeLazy(
+        Observable.merge<number>(
+          pipe(
+            [0, 2, 3, 5, 6],
+            Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }),
+          ),
+          pipe(
+            [1, 4, 7],
+            Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }),
+          ),
+        ),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
+      ),
+    ),
+    test("when one source throws", () => {
+      using vts = VirtualTimeScheduler.create();
+
+      const subscription = pipe(
+        Observable.merge(
+          pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2 })),
+          Observable.concat(Observable.delay(5), Computation.raise(m)()),
+        ),
+        Computation.subscribe(m)({ scheduler: vts }),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(
+        pipeLazy(subscription, Disposable.raiseIfDisposedWithError),
+        expectToThrow,
+      );
+    }),
+    test("merging merged sources", () => {
+      pipe(
+        Observable.merge(
+          Observable.merge(
+            pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })),
+            Observable.concat(
+              Observable.delay(3),
+              Computation.empty(m)(),
+
+              pipe([4, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1 })),
+            ),
+            m.merge<number>(
+              Observable.concat(
+                Observable.delay(6),
+                Computation.empty(m)(),
+
+                pipe([7, 8, 9], Computation.fromReadonlyArray(m)({ delay: 1 })),
+              ),
+              Observable.concat(
+                Observable.delay(9),
+                Computation.empty(m)(),
+
+                pipe(
+                  [10, 11, 12],
+                  Computation.fromReadonlyArray(m)({ delay: 1 }),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+      );
+    }),
+  ),
   describe(
     "takeUntil",
-    // Ideally these tests would be part of SequentialReactiveComputationModuleTests
-    // but writing dependable tests that use real time is slow at best and ripe for
-    // flakiness. The implementation is shared so only test using Observable.
     test(
       "takes until the notifier notifies its first notification",
       pipeLazy(
@@ -59,9 +149,6 @@ testModule(
 
   describe(
     "withLatestFrom",
-    // Ideally these tests would be part of SequentialReactiveComputationModuleTests
-    // but writing dependable tests that use real time is slow at best and ripe for
-    // flakiness. The implementation is shared so only test using Observable.
     test(
       "when source and latest are interlaced",
       pipeLazy(

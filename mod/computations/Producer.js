@@ -16,6 +16,7 @@ import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
+import Producer_merge from "./Producer/__private__/Producer.merge.js";
 import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
 import Producer_scan from "./Producer/__private__/Producer.scan.js";
 import Producer_skipFirst from "./Producer/__private__/Producer.skipFirst.js";
@@ -41,6 +42,7 @@ export const genPure = Producer_genPure;
 export const genPureAsync = Producer_genPureAsync;
 export const keep = Producer_keep;
 export const map = Producer_map;
+export const merge = Producer_merge;
 export const pairwise = Producer_pairwise;
 export const scan = Producer_scan;
 export const skipFirst = Producer_skipFirst;

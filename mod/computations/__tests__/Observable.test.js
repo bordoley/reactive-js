@@ -52,7 +52,8 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
-import { describe, expectArrayEquals, expectToThrowError, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectToThrow, expectToThrowError, test, testModule, } from "../../__internal__/testing.js";
+import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { arrayEquality, newInstance, pipe, pipeLazy, returns, tuple, } from "../../functions.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -67,26 +68,24 @@ import SequentialComputationModuleTests from "./fixtures/SequentialComputationMo
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 const m = Computation.makeModule()(Observable);
-testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), ConcurrentReactiveComputationModuleTests(m), describe("takeUntil", 
+testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), ConcurrentReactiveComputationModuleTests(m), 
 // Ideally these tests would be part of SequentialReactiveComputationModuleTests
 // but writing dependable tests that use real time is slow at best and ripe for
 // flakiness. The implementation is shared so only test using Observable.
-test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m)({ delay: 2 }), Observable.takeUntil(pipe([1], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }))), Computation.toReadonlyArray(m)(), expectArrayEquals([10, 20])))), describe("withLatestFrom", 
-// Ideally these tests would be part of SequentialReactiveComputationModuleTests
-// but writing dependable tests that use real time is slow at best and ripe for
-// flakiness. The implementation is shared so only test using Observable.
-test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 }))), Computation.toReadonlyArray(m)(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
-    valuesEquality: arrayEquality(),
-}))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(Computation.empty(m)(), returns(1)), Computation.toReadonlyArray(m)(), expectArrayEquals([]))), test("when latest throws", () => {
+describe("merge", test("with sources that have the same delays", () => {
+    const [ev1, ev2, ev3] = pipe([
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9],
+    ], ReadonlyArray.map(Computation.fromReadonlyArray(m)({ delay: 3 })));
+    pipe(Observable.merge(ev1, ev2, ev3), Computation.toReadonlyArray(m)(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+}), test("with sources that have the different delays", pipeLazy(Observable.merge(pipe([0, 2, 3, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true })), pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }))), Computation.toReadonlyArray(m)(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
-        const error = newInstance(Error);
-        const result = pipe([0], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(Computation.raise(m)({
-            raise: returns(error),
-        }), returns(1)), Computation.subscribe(m)({ scheduler: vts }));
+        const subscription = pipe(Observable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2 })), Observable.concat(Observable.delay(5), Computation.raise(m)())), Computation.subscribe(m)({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(pipeLazy(result, Disposable.raiseIfDisposedWithError), expectToThrowError(error));
+        pipe(pipeLazy(subscription, Disposable.raiseIfDisposedWithError), expectToThrow);
     }
     catch (e_1) {
         env_1.error = e_1;
@@ -94,6 +93,28 @@ test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation
     }
     finally {
         __disposeResources(env_1);
+    }
+}), test("merging merged sources", () => {
+    pipe(Observable.merge(Observable.merge(pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })), Observable.concat(Observable.delay(3), Computation.empty(m)(), pipe([4, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1 }))), m.merge(Observable.concat(Observable.delay(6), Computation.empty(m)(), pipe([7, 8, 9], Computation.fromReadonlyArray(m)({ delay: 1 }))), Observable.concat(Observable.delay(9), Computation.empty(m)(), pipe([10, 11, 12], Computation.fromReadonlyArray(m)({ delay: 1 })))))), Computation.toReadonlyArray(m)(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
+})), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m)({ delay: 2 }), Observable.takeUntil(pipe([1], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }))), Computation.toReadonlyArray(m)(), expectArrayEquals([10, 20])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 }))), Computation.toReadonlyArray(m)(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
+    valuesEquality: arrayEquality(),
+}))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(Computation.empty(m)(), returns(1)), Computation.toReadonlyArray(m)(), expectArrayEquals([]))), test("when latest throws", () => {
+    const env_2 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
+        const error = newInstance(Error);
+        const result = pipe([0], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(Computation.raise(m)({
+            raise: returns(error),
+        }), returns(1)), Computation.subscribe(m)({ scheduler: vts }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(pipeLazy(result, Disposable.raiseIfDisposedWithError), expectToThrowError(error));
+    }
+    catch (e_2) {
+        env_2.error = e_2;
+        env_2.hasError = true;
+    }
+    finally {
+        __disposeResources(env_2);
     }
 }), test("with selector", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })), (x, y) => x + y), Computation.toReadonlyArray(m)(), expectArrayEquals([0, 1, 3, 4])))))({
     beforeEach() {

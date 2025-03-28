@@ -217,7 +217,6 @@ interface Signature {
   ): DeferredSourceLike<TOut, TConsumerOut> & {
     [ComputationLike_isSynchronous]: false;
   };
-
   createLifted<
     TIn,
     TOut,
@@ -239,6 +238,15 @@ interface Signature {
     },
   ): DeferredSourceLike<TOut, TConsumerOut>;
 
+  merge<TConsumer extends ConsumerLike>(
+    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
+      TConsumer,
+      TConsumer
+    >,
+  ): <T>(
+    ...sources: readonly DeferredSourceLike<T, TConsumer>[]
+  ) => DeferredSourceLike<T, TConsumer>;
+
   takeLast<
     TComputationModule extends PickComputationModule<
       ComputationModule,
@@ -247,7 +255,10 @@ interface Signature {
   >(
     m: TComputationModule,
   ): <TConsumer extends ConsumerLike<T>, T>(
-    takeLast: (sink: TConsumer, count: number) => TConsumer & IterableLike<T>,
+    takeLast: (
+      consumer: TConsumer,
+      count: number,
+    ) => TConsumer & IterableLike<T>,
     options?: { readonly count?: number },
   ) => Function1<
     DeferredSourceLike<T, TConsumer>,
@@ -272,22 +283,22 @@ export const catchError: Signature["catchError"] =
   ) =>
   (source: TSource): DeferredSourceLike<T, TConsumer> =>
     create<T, TConsumer>(
-      sink => {
+      consumer => {
         const onErrorSink = pipe(
-          createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
-          Disposable.addToContainer(sink),
+          createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer),
+          Disposable.addToContainer(consumer),
           DisposableContainer.onError(err => {
             let action: Optional<TSource> = none;
             try {
               action = errorHandler(err) as Optional<TSource>;
             } catch (e) {
-              sink[DisposableLike_dispose](error([error(e), err]));
+              consumer[DisposableLike_dispose](error([error(e), err]));
             }
 
             if (isSome(action)) {
-              action[SourceLike_subscribe](sink);
+              action[SourceLike_subscribe](consumer);
             } else {
-              sink[SinkLike_complete]();
+              consumer[SinkLike_complete]();
             }
           }),
         );
@@ -386,11 +397,11 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
     {
       [ComputationLike_isDeferred]: true as const,
 
-      [SourceLike_subscribe](this: TProperties, sink: TConsumer): void {
+      [SourceLike_subscribe](this: TProperties, consumer: TConsumer): void {
         const { [ConcatSource_sources]: sources } = this;
 
         const concatSink = createConcatSink({
-          [ConcatSinkCtx_delegate]: sink,
+          [ConcatSinkCtx_delegate]: consumer,
           [ConcatSinkCtx_sources]: sources,
           [ConcatSinkCtx_nextIndex]: 1,
         });
@@ -538,23 +549,106 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
   );
 })() as Signature["createLifted"];
 
+export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
+  createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
+    TConsumer,
+    TConsumer
+  >,
+) => {
+  const MergeSource_sources = Symbol("MergeSource_sources");
+
+  type TProperties = {
+    [ComputationLike_isPure]: boolean;
+    [ComputationLike_isSynchronous]: boolean;
+    [MergeSource_sources]: readonly DeferredSourceLike<unknown, TConsumer>[];
+  };
+
+  const isMergeSource = (
+    observable: DeferredSourceLike<unknown, TConsumer>,
+  ): observable is DeferredSourceLike<unknown, TConsumer> & TProperties =>
+    isSome((observable as any)[MergeSource_sources]);
+
+  const flattenSources = (
+    sources: readonly DeferredSourceLike<unknown, TConsumer>[],
+  ): readonly DeferredSourceLike<unknown, TConsumer>[] =>
+    sources.some(isMergeSource)
+      ? sources.flatMap(observable =>
+          isMergeSource(observable)
+            ? flattenSources(observable[MergeSource_sources])
+            : observable,
+        )
+      : sources;
+
+  const createMergeSource = mixInstanceFactory(
+    function ConcatSource(
+      this: TProperties & DeferredSourceLike<unknown, TConsumer>,
+      sources: readonly DeferredSourceLike<unknown, TConsumer>[],
+    ): DeferredSourceLike<unknown, TConsumer> {
+      this[ComputationLike_isPure] = Computation_areAllPure(sources);
+      this[ComputationLike_isSynchronous] =
+        Computation_areAllSynchronous(sources);
+      this[MergeSource_sources] = flattenSources(sources);
+
+      return this;
+    },
+    props<TProperties>({
+      [ComputationLike_isPure]: false,
+      [ComputationLike_isSynchronous]: false,
+      [MergeSource_sources]: none,
+    }),
+    {
+      [ComputationLike_isDeferred]: true as const,
+
+      [SourceLike_subscribe](this: TProperties, consumer: TConsumer): void {
+        const { [MergeSource_sources]: sources } = this;
+        const count = sources[Array_length];
+        let completed = 0;
+
+        for (const source of sources) {
+          pipe(
+            createDelegatingNotifyOnlyNonCompletingNonDisposingSink(consumer),
+            Disposable.addTo(consumer),
+            DisposableContainer.onComplete(() => {
+              completed++;
+              if (completed >= count) {
+                consumer[SinkLike_complete]();
+              }
+            }),
+            bindMethod(source, SourceLike_subscribe),
+          );
+        }
+      },
+    },
+  );
+
+  return <T>(
+    ...sources: readonly DeferredSourceLike<T, TConsumer>[]
+  ): DeferredSourceLike<T, TConsumer> => {
+    const length = sources[Array_length];
+    return length === 1 ? sources[0] : createMergeSource(sources);
+  };
+};
+
 export const takeLast: Signature["takeLast"] = memoize(
   m =>
     <TConsumer extends ConsumerLike<T>, T>(
-      takeLast: (sink: TConsumer, count: number) => TConsumer & IterableLike<T>,
+      takeLast: (
+        consumer: TConsumer,
+        count: number,
+      ) => TConsumer & IterableLike<T>,
       options?: { readonly count?: number },
     ) =>
     (obs: DeferredSourceLike<T, TConsumer>) =>
-      create<T, TConsumer>(sink => {
+      create<T, TConsumer>(consumer => {
         const count = options?.count ?? 1;
 
         const takeLastSink = pipe(
-          takeLast(sink, count),
-          Disposable.addTo(sink),
+          takeLast(consumer, count),
+          Disposable.addTo(consumer),
           DisposableContainer.onComplete(() =>
             pipe(
               m.genPure(bindMethod(takeLastSink, Symbol.iterator)),
-              invoke(SourceLike_subscribe, sink),
+              invoke(SourceLike_subscribe, consumer),
             ),
           ),
         );

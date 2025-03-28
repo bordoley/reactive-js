@@ -34,6 +34,7 @@
 - [genPureAsync](functions/genPureAsync.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
+- [merge](functions/merge.md)
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)

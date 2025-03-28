@@ -29,6 +29,7 @@ import Observable_catchError from "./Observable/__private__/Observable.catchErro
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
+import Observable_delay from "./Observable/__private__/Observable.delay.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -42,6 +43,7 @@ import {
 } from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
+import Observable_merge from "./Observable/__private__/Observable.merge.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
@@ -170,6 +172,7 @@ export const concat: Signature["concat"] = Observable_concat;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
+export const delay: Signature["delay"] = Observable_delay;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
@@ -182,6 +185,7 @@ export const genPure: Signature["genPure"] = Observable_genPure;
 export const genPureAsync: Signature["genPureAsync"] = Observable_genPureAsync;
 export const keep: Signature["keep"] = Observable_keep;
 export const map: Signature["map"] = Observable_map;
+export const merge: Signature["merge"] = Observable_merge;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;

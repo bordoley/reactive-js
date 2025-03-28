@@ -14,20 +14,20 @@ import Computation_isPure from "../Computation/__private__/Computation.isPure.js
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
-export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(sink => {
-    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addToContainer(sink), DisposableContainer.onError(err => {
+export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(consumer => {
+    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer), Disposable.addToContainer(consumer), DisposableContainer.onError(err => {
         let action = none;
         try {
             action = errorHandler(err);
         }
         catch (e) {
-            sink[DisposableLike_dispose](error([error(e), err]));
+            consumer[DisposableLike_dispose](error([error(e), err]));
         }
         if (isSome(action)) {
-            action[SourceLike_subscribe](sink);
+            action[SourceLike_subscribe](consumer);
         }
         else {
-            sink[SinkLike_complete]();
+            consumer[SinkLike_complete]();
         }
     }));
     source[SourceLike_subscribe](onErrorSink);
@@ -75,10 +75,10 @@ export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) 
         [ConcatSource_sources]: none,
     }), {
         [ComputationLike_isDeferred]: true,
-        [SourceLike_subscribe](sink) {
+        [SourceLike_subscribe](consumer) {
             const { [ConcatSource_sources]: sources } = this;
             const concatSink = createConcatSink({
-                [ConcatSinkCtx_delegate]: sink,
+                [ConcatSinkCtx_delegate]: consumer,
                 [ConcatSinkCtx_sources]: sources,
                 [ConcatSinkCtx_nextIndex]: 1,
             });
@@ -140,8 +140,47 @@ export const createLifted = /*@__PURE__*/ (() => {
         },
     }));
 })();
-export const takeLast = memoize(m => (takeLast, options) => (obs) => create(sink => {
+export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {
+    const MergeSource_sources = Symbol("MergeSource_sources");
+    const isMergeSource = (observable) => isSome(observable[MergeSource_sources]);
+    const flattenSources = (sources) => sources.some(isMergeSource)
+        ? sources.flatMap(observable => isMergeSource(observable)
+            ? flattenSources(observable[MergeSource_sources])
+            : observable)
+        : sources;
+    const createMergeSource = mixInstanceFactory(function ConcatSource(sources) {
+        this[ComputationLike_isPure] = Computation_areAllPure(sources);
+        this[ComputationLike_isSynchronous] =
+            Computation_areAllSynchronous(sources);
+        this[MergeSource_sources] = flattenSources(sources);
+        return this;
+    }, props({
+        [ComputationLike_isPure]: false,
+        [ComputationLike_isSynchronous]: false,
+        [MergeSource_sources]: none,
+    }), {
+        [ComputationLike_isDeferred]: true,
+        [SourceLike_subscribe](consumer) {
+            const { [MergeSource_sources]: sources } = this;
+            const count = sources[Array_length];
+            let completed = 0;
+            for (const source of sources) {
+                pipe(createDelegatingNotifyOnlyNonCompletingNonDisposingSink(consumer), Disposable.addTo(consumer), DisposableContainer.onComplete(() => {
+                    completed++;
+                    if (completed >= count) {
+                        consumer[SinkLike_complete]();
+                    }
+                }), bindMethod(source, SourceLike_subscribe));
+            }
+        },
+    });
+    return (...sources) => {
+        const length = sources[Array_length];
+        return length === 1 ? sources[0] : createMergeSource(sources);
+    };
+};
+export const takeLast = memoize(m => (takeLast, options) => (obs) => create(consumer => {
     const count = options?.count ?? 1;
-    const takeLastSink = pipe(takeLast(sink, count), Disposable.addTo(sink), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, sink))));
+    const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, consumer))));
     pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
 }, obs));
