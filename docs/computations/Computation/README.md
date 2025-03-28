@@ -16,6 +16,7 @@
 
 - [areAllPure](functions/areAllPure.md)
 - [areAllSynchronous](functions/areAllSynchronous.md)
+- [broadcast](functions/broadcast.md)
 - [concatWith](functions/concatWith.md)
 - [empty](functions/empty.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)

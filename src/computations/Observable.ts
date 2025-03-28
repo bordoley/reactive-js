@@ -93,14 +93,7 @@ export interface ObservableModule
         };
       }
     >,
-    ConcurrentDeferredComputationModule<
-      ObservableComputation,
-      {
-        broadcast: {
-          scheduler?: SchedulerLike;
-        };
-      }
-    >,
+    ConcurrentDeferredComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation>,
     SequentialComputationModule<
       ObservableComputation,

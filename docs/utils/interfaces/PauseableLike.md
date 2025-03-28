@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`AnimationLike`](../../computations/Streamable/interfaces/AnimationLike.md)
 - [`PauseableSchedulerLike`](PauseableSchedulerLike.md)
 
 ## Properties

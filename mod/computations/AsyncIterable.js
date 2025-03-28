@@ -6,12 +6,10 @@ import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newI
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext, } from "../utils.js";
-import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
+import { EnumeratorLike_current, EnumeratorLike_moveNext } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
-export const broadcast = AsyncIterable_broadcast;
 class CatchErrorAsyncIterable {
     s;
     onError;

@@ -1,6 +1,6 @@
-import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOfModule, ComputationOperatorWithSideEffects, ComputationType, ComputationTypeOfModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationWithSideEffectsOf, MulticastComputationOf, NewPureInstanceOf, ObservableWithSideEffectsLike, PickComputationModule, PureAsynchronousComputationOperator, PureComputationLike, PureComputationOperator, PureDeferredComputationOf, PureObservableLike, PureSynchronousComputationOf, SequentialComputationModule, SynchronousComputationLike, SynchronousComputationModule, SynchronousComputationOf } from "../computations.js";
+import { BroadcasterLike, ComputationBaseOf, ComputationLike, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOfModule, ComputationOperatorWithSideEffects, ComputationType, ComputationTypeOfModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationWithSideEffectsOf, MulticastComputationOf, NewPureInstanceOf, ObservableWithSideEffectsLike, PickComputationModule, PureAsynchronousComputationOperator, PureComputationLike, PureComputationOperator, PureDeferredComputationOf, PureObservableLike, PureSynchronousComputationOf, SequentialComputationModule, SynchronousComputationLike, SynchronousComputationModule, SynchronousComputationOf } from "../computations.js";
 import { Factory, Function1, Optional } from "../functions.js";
-import { DisposableLike } from "../utils.js";
+import { DisposableLike, PauseableLike } from "../utils.js";
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
     <T>(snd: PureSynchronousComputationOf<TComputationType, T>, ...tail: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureComputationOperator<TComputationType, T, T>;
     <T>(snd: SynchronousComputationOf<TComputationType, T>, ...tail: readonly SynchronousComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
@@ -18,6 +18,9 @@ export interface MergeWithOperator<TComputationType extends ComputationType> {
 export interface Signature {
     areAllPure<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & PureComputationLike)[];
     areAllSynchronous<TComputationType extends ComputationLike>(computations: readonly TComputationType[]): computations is readonly (TComputationType & SynchronousComputationLike)[];
+    broadcast<TComputationModule extends PickComputationModule<ComputationModule, "toProducer">>(m: TComputationModule): <T>(options?: {
+        autoDispose?: boolean;
+    } & Parameters<TComputationModule["toProducer"]>[0]) => Function1<ComputationOfModule<TComputationModule, T>, BroadcasterLike<T> & PauseableLike & DisposableLike>;
     concatWith<TComputationModule extends PickComputationModule<SequentialComputationModule, "concat">>(m: TComputationModule): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
     empty<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     fromReadonlyArray<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <T>(options?: {
@@ -47,6 +50,7 @@ export interface Signature {
 }
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
+export declare const broadcast: Signature["broadcast"];
 export declare const concatWith: Signature["concatWith"];
 export declare const empty: Signature["empty"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];

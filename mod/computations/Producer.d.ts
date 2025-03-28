@@ -1,5 +1,6 @@
-import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, PureProducerLike, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
-import { ConsumerLike } from "../utils.js";
+import { BroadcasterLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, PureProducerLike, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
+import { Function1 } from "../functions.js";
+import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -13,6 +14,9 @@ export interface ProducerComputation extends ComputationType {
 }
 export type Computation = ProducerComputation;
 export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation> {
+    broadcast<T>(options?: {
+        autoDispose?: boolean;
+    }): Function1<ProducerLike<T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;
     create<T>(f: (consumer: ConsumerLike<T>) => void): ProducerWithSideEffectsLike<T>;
 }
 export type Signature = ProducerModule;

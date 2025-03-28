@@ -18,7 +18,6 @@
 
 ## Functions
 
-- [broadcast](functions/broadcast.md)
 - [catchError](functions/catchError.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)

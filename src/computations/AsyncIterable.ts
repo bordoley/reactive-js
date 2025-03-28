@@ -52,12 +52,7 @@ import {
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import {
-  EnumeratorLike_current,
-  EnumeratorLike_moveNext,
-  SchedulerLike,
-} from "../utils.js";
-import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
+import { EnumeratorLike_current, EnumeratorLike_moveNext } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
   Observable_genAsync,
@@ -93,20 +88,11 @@ export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
     SequentialComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
-    ConcurrentDeferredComputationModule<
-      AsyncIterableComputation,
-      {
-        broadcast: {
-          readonly scheduler?: SchedulerLike;
-        };
-      }
-    > {
+    ConcurrentDeferredComputationModule<AsyncIterableComputation> {
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 }
 
 export type Signature = AsyncIterableModule;
-
-export const broadcast: Signature["broadcast"] = AsyncIterable_broadcast;
 
 class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;

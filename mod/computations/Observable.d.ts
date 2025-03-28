@@ -21,11 +21,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     toProducer: {
         readonly scheduler?: SchedulerLike;
     };
-}>, ConcurrentDeferredComputationModule<ObservableComputation, {
-    broadcast: {
-        scheduler?: SchedulerLike;
-    };
-}>, ConcurrentReactiveComputationModule<ObservableComputation>, SequentialComputationModule<ObservableComputation, {
+}>, ConcurrentDeferredComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation>, SequentialComputationModule<ObservableComputation, {
     gen: {
         readonly delay?: number;
         readonly delayStart?: boolean;

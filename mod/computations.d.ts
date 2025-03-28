@@ -291,12 +291,8 @@ export interface InteractiveComputationModule<TComputationType extends AnyComput
     zip: ZipConstructor<TComputationType>;
 }
 export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
-    broadcast?: Record<string, any>;
     fromAsyncFactory?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
-    broadcast<T>(options?: {
-        autoDispose?: boolean;
-    } & TCreationOptions["broadcast"]): Function1<ComputationBaseOf<TComputationType, T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;
     fromAsyncFactory<T>(options?: TCreationOptions["fromAsyncFactory"]): Function1<(options?: {
         signal?: AbortSignal;
     }) => Promise<T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;

@@ -34,26 +34,6 @@
 
 ## Methods
 
-### broadcast()
-
-> **broadcast**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationBaseOf`](../type-aliases/ComputationBaseOf.md)\<`TComputationType`, `T`\>, [`PauseableLike`](../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`object` & `TCreationOptions`\[`"broadcast"`\]
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationBaseOf`](../type-aliases/ComputationBaseOf.md)\<`TComputationType`, `T`\>, [`PauseableLike`](../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
-
-***
-
 ### fromAsyncFactory()
 
 > **fromAsyncFactory**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<(`options`?) => `Promise`\<`T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>

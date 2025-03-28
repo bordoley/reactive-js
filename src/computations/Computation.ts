@@ -1,5 +1,6 @@
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
+  BroadcasterLike,
   ComputationBaseOf,
   ComputationLike,
   ComputationLike_isPure,
@@ -40,6 +41,7 @@ import {
   raise as Functions_raise,
   Optional,
   bindMethod,
+  compose,
   error,
   identity,
   invoke,
@@ -54,12 +56,14 @@ import {
   CollectionEnumeratorLike_peek,
   DisposableLike,
   ObserverLike,
+  PauseableLike,
 } from "../utils.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_empty from "./Computation/__private__/Computation.empty.js";
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
+import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import * as DeferredSource from "./__internal__/DeferredSource.js";
 
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
@@ -128,6 +132,22 @@ export interface Signature {
   areAllSynchronous<TComputationType extends ComputationLike>(
     computations: readonly TComputationType[],
   ): computations is readonly (TComputationType & SynchronousComputationLike)[];
+
+  broadcast<
+    TComputationModule extends PickComputationModule<
+      ComputationModule,
+      "toProducer"
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: {
+      autoDispose?: boolean;
+    } & Parameters<TComputationModule["toProducer"]>[0],
+  ) => Function1<
+    ComputationOfModule<TComputationModule, T>,
+    BroadcasterLike<T> & PauseableLike & DisposableLike
+  >;
 
   concatWith<
     TComputationModule extends PickComputationModule<
@@ -289,6 +309,14 @@ export interface Signature {
 export const areAllPure: Signature["areAllPure"] = Computation_areAllPure;
 export const areAllSynchronous: Signature["areAllSynchronous"] =
   Computation_areAllSynchronous;
+
+export const broadcast: Signature["broadcast"] = /*@__PURE__*/ memoize(
+  m =>
+    (
+      options?: { autoDispose?: boolean } & Parameters<typeof m.toProducer>[0],
+    ) =>
+      compose(m.toProducer(options), Producer_broadcast()),
+);
 
 export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoize(
   m =>

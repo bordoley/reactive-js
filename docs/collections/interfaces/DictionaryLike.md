@@ -6,6 +6,10 @@
 
 # Interface: DictionaryLike\<TKey, T\>
 
+## Extended by
+
+- [`AnimationGroupLike`](../../computations/Streamable/interfaces/AnimationGroupLike.md)
+
 ## Type Parameters
 
 • **TKey** = `unknown`

@@ -1,6 +1,5 @@
 import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
-import { SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -12,15 +11,10 @@ export interface AsyncIterableComputation extends ComputationType {
     readonly [Computation_pureDeferredOfT]?: PureAsyncIterableLike<this[typeof Computation_T]>;
 }
 export type Computation = AsyncIterableComputation;
-export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation, {
-    broadcast: {
-        readonly scheduler?: SchedulerLike;
-    };
-}> {
+export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 }
 export type Signature = AsyncIterableModule;
-export declare const broadcast: Signature["broadcast"];
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];

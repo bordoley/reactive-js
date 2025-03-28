@@ -12,6 +12,10 @@ Represents a duplex stream
 
 - [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`TReq`\>.[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>
 
+## Extended by
+
+- [`AnimationLike`](../Streamable/interfaces/AnimationLike.md)
+
 ## Type Parameters
 
 • **TReq**

@@ -2,7 +2,7 @@
 
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModuleLike_computationType, RunnableLike_eval, SourceLike_subscribe, } from "../computations.js";
-import { raise as Functions_raise, bindMethod, error, identity, invoke, memoize, pipe, returns, } from "../functions.js";
+import { raise as Functions_raise, bindMethod, compose, error, identity, invoke, memoize, pipe, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
@@ -12,9 +12,11 @@ import Computation_areAllSynchronous from "./Computation/__private__/Computation
 import Computation_empty from "./Computation/__private__/Computation.empty.js";
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
+import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import * as DeferredSource from "./__internal__/DeferredSource.js";
 export const areAllPure = Computation_areAllPure;
 export const areAllSynchronous = Computation_areAllSynchronous;
+export const broadcast = /*@__PURE__*/ memoize(m => (options) => compose(m.toProducer(options), Producer_broadcast()));
 export const concatWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.concat(fst, ...tail));
 export const empty = Computation_empty;
 export const fromReadonlyArray = 
