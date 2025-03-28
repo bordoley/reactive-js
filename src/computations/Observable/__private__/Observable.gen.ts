@@ -62,32 +62,34 @@ const genFactory =
         while (
           isReady &&
           !isCompleted &&
+          !shouldYield &&
           enumerator[EnumeratorLike_moveNext]()
         ) {
           const value = enumerator[EnumeratorLike_current];
           observer[EventListenerLike_notify](value);
 
-          shouldYield = delay > 0 || observer[SchedulerLike_shouldYield];
           isReady = observer[FlowControllerLike_isReady];
           isCompleted = observer[SinkLike_isCompleted];
 
-          if (shouldYield || !isReady || isCompleted) {
-            break;
-          }
+          // Only request a yield if the observer is ready
+          // to accept more notifications, but the scheduler
+          // has requested a yield or we want to intentionally delay
+          shouldYield =
+            (delay > 0 || observer[SchedulerLike_shouldYield]) &&
+            isReady &&
+            !isCompleted;
         }
 
-        if (!shouldYield && (isReady || !isCompleted)) {
+        if (!shouldYield && isReady && !isCompleted) {
           observer[SinkLike_complete]();
-          isReady = false;
-          isCompleted = true;
         }
-        isActive = false;
       } catch (e) {
         observer[DisposableLike_dispose](error(e));
         isReady = false;
       }
 
-      if (shouldYield && isReady) {
+      isActive = false;
+      if (shouldYield) {
         ctx[ContinuationContextLike_yield](delay);
         // Will throw a yield exception and we'll exit the continuation
       }

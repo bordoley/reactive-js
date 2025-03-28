@@ -18,7 +18,7 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import * as Source from "../../__internal__/DeferredSource.js";
+import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
 const genOnSubscribe =
   <T>(factory: Factory<AsyncEnumeratorLike<T>>) =>
@@ -30,15 +30,15 @@ const genOnSubscribe =
     let valueToNotify: Optional<T> = none;
 
     const continue_ = async () => {
-      if (isActive || consumer[SinkLike_isCompleted]) {
+      let isReady = consumer[FlowControllerLike_isReady];
+      let isCompleted = consumer[SinkLike_isCompleted];
+
+      if (isActive || isCompleted) {
         return;
       }
       isActive = true;
 
       try {
-        let isReady = consumer[FlowControllerLike_isReady];
-        let isCompleted = consumer[SinkLike_isCompleted];
-
         if (hasValueToNotify && isReady && !isCompleted) {
           consumer[EventListenerLike_notify](valueToNotify as T);
           isReady = consumer[FlowControllerLike_isReady];
@@ -63,22 +63,14 @@ const genOnSubscribe =
           if (!isReady && !isCompleted) {
             hasValueToNotify = true;
             valueToNotify = value;
-          } else {
+          } else if (!isCompleted) {
             consumer[EventListenerLike_notify](value);
             isReady = consumer[FlowControllerLike_isReady];
             isCompleted = consumer[SinkLike_isCompleted];
           }
-
-          if (!isReady || isCompleted) {
-            break;
-          }
         }
 
-        // Reassign because these values may change after
-        // hopping the micro task queue
-        isReady = consumer[FlowControllerLike_isReady];
-        isCompleted = consumer[SinkLike_isCompleted];
-        if (!hasValueToNotify || !isCompleted) {
+        if (!hasValueToNotify && !isCompleted) {
           consumer[SinkLike_complete]();
         }
       } catch (e) {
@@ -102,7 +94,7 @@ const genOnSubscribe =
 export const Producer_genAsyncEnumerator = <T>(
   factory: Factory<AsyncEnumeratorLike<T>>,
 ): ProducerWithSideEffectsLike<T> =>
-  Source.create(genOnSubscribe(factory), {
+  DeferredSource.create(genOnSubscribe(factory), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
   });
@@ -110,7 +102,7 @@ export const Producer_genAsyncEnumerator = <T>(
 export const Producer_genPureAsyncEnumerator = <T>(
   factory: Factory<AsyncEnumeratorLike<T>>,
 ): PureProducerLike<T> =>
-  Source.create(genOnSubscribe(factory), {
+  DeferredSource.create(genOnSubscribe(factory), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: false,
   });
