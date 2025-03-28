@@ -15,7 +15,7 @@ import Computation_isSynchronous from "../Computation/__private__/Computation.is
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
 export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(consumer => {
-    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer), Disposable.addToContainer(consumer), DisposableContainer.onError(err => {
+    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer), Disposable.addToContainer(consumer), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)), DisposableContainer.onError(err => {
         let action = none;
         try {
             action = errorHandler(err);

@@ -3,9 +3,9 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { ignore, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
-const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source throws", async () => {
+const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source does not throw", pipeLazyAsync([1, 2, 3, 4], Computation.fromReadonlyArray(m)(), m.catchError(ignore), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3, 4]))), testAsync("when the source throws", async () => {
     const e1 = "e1";
     let result = none;
     await pipeAsync(Computation.raise(m)({ raise: () => e1 }), m.catchError((e) => {

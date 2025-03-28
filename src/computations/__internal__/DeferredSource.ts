@@ -287,6 +287,9 @@ export const catchError: Signature["catchError"] =
         const onErrorSink = pipe(
           createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer),
           Disposable.addToContainer(consumer),
+          DisposableContainer.onComplete(
+            bindMethod(consumer, SinkLike_complete),
+          ),
           DisposableContainer.onError(err => {
             let action: Optional<TSource> = none;
             try {

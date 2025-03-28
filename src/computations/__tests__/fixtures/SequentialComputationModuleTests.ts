@@ -13,6 +13,7 @@ import {
 } from "../../../computations.js";
 import {
   Optional,
+  ignore,
   none,
   pipe,
   pipeAsync,
@@ -35,7 +36,16 @@ const SequentialComputationModuleTests = <
     "SequentialComputationModule",
     describe(
       "catchError",
-
+      testAsync(
+        "when the source does not throw",
+        pipeLazyAsync(
+          [1, 2, 3, 4],
+          Computation.fromReadonlyArray(m)<number>(),
+          m.catchError<number>(ignore),
+          Computation.toReadonlyArrayAsync(m)<number>(),
+          expectArrayEquals([1, 2, 3, 4]),
+        ),
+      ),
       testAsync("when the source throws", async () => {
         const e1 = "e1";
         let result: Optional<string> = none;
