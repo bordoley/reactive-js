@@ -49,6 +49,7 @@ import Observable_repeat from "./Observable/__private__/Observable.repeat.js";
 import Observable_retry from "./Observable/__private__/Observable.retry.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
+import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__private__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.js";
@@ -118,11 +119,6 @@ export interface ObservableModule
       }
     >,
     DeferredReactiveComputationModule<ObservableComputation> {
-  backpressureStrategy<T>(options: {
-    capacity: number;
-    backpressureStrategy: BackpressureStrategy;
-  }): PureComputationOperator<ObservableComputation, T, T>;
-
   create<T>(
     f: (observer: ObserverLike<T>) => void,
   ): ObservableWithSideEffectsLike<T>;
@@ -193,6 +189,7 @@ export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
+export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;

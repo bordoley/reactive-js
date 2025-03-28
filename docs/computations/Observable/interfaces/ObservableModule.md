@@ -94,32 +94,6 @@
 
 ***
 
-### backpressureStrategy()
-
-> **backpressureStrategy**\<`T`\>(`options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options
-
-###### backpressureStrategy
-
-[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity
-
-`number`
-
-#### Returns
-
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
-
-***
-
 ### buffer()
 
 > **buffer**\<`T`\>(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, readonly `T`[]\>

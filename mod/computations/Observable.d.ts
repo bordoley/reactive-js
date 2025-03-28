@@ -31,10 +31,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly maxMicroTaskTicks?: number;
     };
 }>, DeferredReactiveComputationModule<ObservableComputation> {
-    backpressureStrategy<T>(options: {
-        capacity: number;
-        backpressureStrategy: BackpressureStrategy;
-    }): PureComputationOperator<ObservableComputation, T, T>;
     create<T>(f: (observer: ObserverLike<T>) => void): ObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     delay(duration: number): PureSynchronousObservableLike<number>;
@@ -76,6 +72,7 @@ export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
+export declare const subscribeOn: Signature["subscribeOn"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];

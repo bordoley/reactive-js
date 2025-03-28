@@ -43,6 +43,7 @@
 - [retry](functions/retry.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
+- [subscribeOn](functions/subscribeOn.md)
 - [takeFirst](functions/takeFirst.md)
 - [takeLast](functions/takeLast.md)
 - [takeUntil](functions/takeUntil.md)
