@@ -1,23 +1,144 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   testAsync,
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
   SequentialReactiveComputationModule,
 } from "../../../computations.js";
-import { pipeLazyAsync } from "../../../functions.js";
+import {
+  arrayEquality,
+  invoke,
+  pipeAsync,
+  pipeLazyAsync,
+} from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 
 const SequentialReactiveComputationModuleTests = <
   TComputationModule extends ComputationModule &
-    Pick<SequentialReactiveComputationModule, "takeLast">,
+    Pick<
+      SequentialReactiveComputationModule,
+      "buffer" | "decodeWithCharset" | "takeLast"
+    >,
 >(
   m: TComputationModule,
 ) =>
   describe(
     "SequentialReactiveComputationModule",
+    describe(
+      "buffer",
+      testAsync(
+        "with multiple sub buffers",
+        pipeLazyAsync(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          Computation.fromReadonlyArray(m)(),
+          m.buffer<number>({ count: 3 }),
+          Computation.toReadonlyArrayAsync(m)<readonly number[]>(),
+          expectArrayEquals<readonly number[]>(
+            [
+              [1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9],
+            ],
+            { valuesEquality: arrayEquality() },
+          ),
+        ),
+      ),
+      testAsync(
+        "last buffer is short",
+        pipeLazyAsync(
+          [1, 2, 3, 4, 5, 6, 7, 8],
+          Computation.fromReadonlyArray(m)(),
+          m.buffer<number>({ count: 3 }),
+          Computation.toReadonlyArrayAsync(m)<readonly number[]>(),
+          expectArrayEquals<readonly number[]>(
+            [
+              [1, 2, 3],
+              [4, 5, 6],
+              [7, 8],
+            ],
+            { valuesEquality: arrayEquality() },
+          ),
+        ),
+      ),
+      testAsync(
+        "buffers all values when no count is provided",
+        pipeLazyAsync(
+          [1, 2, 3, 4, 5, 6, 7, 8],
+          Computation.fromReadonlyArray(m)(),
+          m.buffer<number>(),
+          Computation.toReadonlyArrayAsync(m)<readonly number[]>(),
+          expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
+            valuesEquality: arrayEquality(),
+          }),
+        ),
+      ),
+    ),
+    describe(
+      "decodeWithCharset",
+      testAsync("decoding ascii", async () => {
+        const str = "abcdefghijklmnsopqrstuvwxyz";
+
+        await pipeAsync(
+          [str],
+          Computation.fromReadonlyArray(m)(),
+          m.encodeUtf8(),
+          m.decodeWithCharset(),
+          Computation.toReadonlyArrayAsync(m)<string>(),
+          invoke("join"),
+          expectEquals(str),
+        );
+      }),
+      testAsync("decoding ascii", async () => {
+        const str = "abcdefghijklmnsopqrstuvwxyz";
+
+        await pipeAsync(
+          [str],
+          Computation.fromReadonlyArray(m)(),
+          m.encodeUtf8(),
+          m.decodeWithCharset(),
+          Computation.toReadonlyArrayAsync(m)<string>(),
+          invoke("join"),
+          expectEquals(str),
+        );
+      }),
+      testAsync("decoding multi-byte code points", async () => {
+        const str = String.fromCodePoint(8364);
+        await pipeAsync(
+          [str],
+          Computation.fromReadonlyArray(m)(),
+          m.encodeUtf8(),
+          m.decodeWithCharset(),
+          Computation.toReadonlyArrayAsync(m)<string>(),
+          invoke("join"),
+          expectEquals(str),
+        );
+      }),
+      testAsync(
+        "multi-byte decoding divided between multiple buffers",
+        pipeLazyAsync(
+          [new Uint8Array([226, 153]), new Uint8Array([165])],
+          Computation.fromReadonlyArray(m)(),
+          m.decodeWithCharset(),
+          Computation.toReadonlyArrayAsync(m)<string>(),
+          invoke("join"),
+          expectEquals("♥"),
+        ),
+      ),
+      testAsync(
+        "multi-byte decoding with missing tail",
+        pipeLazyAsync(
+          [new Uint8Array([226])],
+          Computation.fromReadonlyArray(m)(),
+          m.decodeWithCharset(),
+          Computation.toReadonlyArrayAsync(m)<string>(),
+          invoke("join"),
+          expectEquals("�"),
+        ),
+      ),
+    ),
     describe(
       "takeLast",
       testAsync(

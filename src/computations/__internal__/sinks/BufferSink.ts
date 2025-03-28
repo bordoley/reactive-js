@@ -10,7 +10,7 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { none } from "../../../functions.js";
+import { Optional, none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import {
   DisposableLike,
@@ -26,7 +26,9 @@ import { LiftedSinkLike } from "../LiftedSource.js";
 
 export const create: <TSubscription extends DisposableLike, T>(
   delegate: LiftedSinkLike<TSubscription, ReadonlyArray<T>>,
-  count?: number,
+  options: Optional<{
+    count?: number;
+  }>,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
   TSubscription extends DisposableLike,
   T,
@@ -48,7 +50,9 @@ export const create: <TSubscription extends DisposableLike, T>(
       > &
         TProperties,
       delegate: LiftedSinkLike<TSubscription, ReadonlyArray<T>>,
-      count?: number,
+      options: Optional<{
+        count?: number;
+      }>,
     ): LiftedSinkLike<TSubscription, T> {
       init(
         DelegatingLiftedSinkMixin<TSubscription, ReadonlyArray<T>>(),
@@ -57,7 +61,7 @@ export const create: <TSubscription extends DisposableLike, T>(
       );
 
       this[BufferSink_count] = clampPositiveNonZeroInteger(
-        count ?? MAX_SAFE_INTEGER,
+        options?.count ?? MAX_SAFE_INTEGER,
       );
       this[BufferSink_buffer] = [];
 

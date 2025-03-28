@@ -9,9 +9,9 @@ import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, Delegatin
 export const create = /*@__PURE__*/ (() => {
     const BufferSink_buffer = Symbol("BufferSink_buffer");
     const BufferSink_count = Symbol("BufferSink_count");
-    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function BufferSink(delegate, count) {
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function BufferSink(delegate, options) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
-        this[BufferSink_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
+        this[BufferSink_count] = clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER);
         this[BufferSink_buffer] = [];
         return this;
     }, props({
