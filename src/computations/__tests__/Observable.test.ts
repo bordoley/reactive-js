@@ -1,20 +1,25 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectToThrow,
   expectToThrowError,
   test,
+  testAsync,
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import {
+  Optional,
   arrayEquality,
   newInstance,
   pipe,
   pipeLazy,
+  pipeLazyAsync,
   returns,
   tuple,
 } from "../../functions.js";
+import { scale } from "../../math.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
@@ -37,6 +42,20 @@ testModule(
   SequentialReactiveComputationModuleTests(m),
   SynchronousComputationModuleTests(m),
   ConcurrentReactiveComputationModuleTests(m),
+  describe(
+    "keyFrame",
+    test(
+      "keyframing from 0 to 10 over a duration of 10 clock clicks",
+      pipeLazy(
+        Observable.keyFrame(10),
+        Observable.map(scale(0, 10)),
+        Computation.toReadonlyArray(m)({
+          maxMicroTaskTicks: 1,
+        }),
+        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+      ),
+    ),
+  ),
   // Ideally these tests would be part of SequentialReactiveComputationModuleTests
   // but writing dependable tests that use real time is slow at best and ripe for
   // flakiness. The implementation is shared so only test using Observable.
@@ -129,6 +148,17 @@ testModule(
     }),
   ),
   describe(
+    "spring",
+    testAsync(
+      "test with spring",
+      pipeLazyAsync(
+        Observable.spring(),
+        Computation.lastAsync(m)(),
+        expectEquals<Optional<number>>(1),
+      ),
+    ),
+  ),
+  describe(
     "takeUntil",
     test(
       "takes until the notifier notifies its first notification",
@@ -146,7 +176,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "withLatestFrom",
     test(
