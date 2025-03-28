@@ -3,6 +3,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectToThrowAsync,
   expectToThrowErrorAsync,
   testAsync,
 } from "../../../__internal__/testing.js";
@@ -28,7 +29,13 @@ const SequentialComputationModuleTests = <
   TComputationModule extends ComputationModule &
     Pick<
       SequentialComputationModule,
-      "catchError" | "concat" | "forEach" | "gen" | "repeat" | "throwIfEmpty"
+      | "catchError"
+      | "concat"
+      | "forEach"
+      | "gen"
+      | "repeat"
+      | "retry"
+      | "throwIfEmpty"
     >,
 >(
   m: TComputationModule,
@@ -174,6 +181,49 @@ const SequentialComputationModuleTests = <
           expectToThrowErrorAsync(err),
         );
       }),
+    ),
+    describe(
+      "retry",
+      testAsync(
+        "retrys with the default predicate",
+        pipeLazyAsync(
+          m.concat<number>(
+            Computation.fromReadonlyArray(m)()([1, 2, 3]),
+            Computation.raise(m)<number>(),
+          ),
+          m.retry<number>(),
+          m.takeFirst<number>({ count: 6 }),
+          Computation.toReadonlyArrayAsync(m)<number>(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      testAsync(
+        "when source and the retry predicate throw",
+        pipeLazyAsync(
+          pipeLazyAsync(
+            Computation.raise(m)(),
+            m.retry(Computation.raise(m)()),
+            Computation.toReadonlyArrayAsync(m)(),
+          ),
+          expectToThrowAsync,
+        ),
+      ),
+      testAsync(
+        "retrys only twice",
+        pipeLazyAsync(
+          pipeLazyAsync(
+            m.concat<number>(
+              Computation.fromReadonlyArray(m)()([1, 2, 3]),
+              Computation.raise(m)(),
+            ),
+            m.retry<number>((count, _) => count < 2),
+            m.takeFirst<number>({ count: 10 }),
+            Computation.toReadonlyArrayAsync(m)<number>(),
+            expectArrayEquals([1, 2, 3, 1, 2, 3]),
+          ),
+          expectToThrowAsync,
+        ),
+      ),
     ),
     describe(
       "throwIfEmpty",

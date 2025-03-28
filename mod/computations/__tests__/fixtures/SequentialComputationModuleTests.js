@@ -1,7 +1,7 @@
 /// <reference types="./SequentialComputationModuleTests.d.ts" />
 
 import { Array_push } from "../../../__internal__/constants.js";
-import { describe, expectArrayEquals, expectEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrowAsync, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { ignore, lessThan, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
@@ -38,7 +38,7 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
     await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.repeat(_ => {
         throw err;
     }), Computation.toReadonlyArrayAsync(m)()), expectToThrowErrorAsync(err));
-})), describe("throwIfEmpty", testAsync("when source is empty", async () => {
+})), describe("retry", testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(Computation.fromReadonlyArray(m)()([1, 2, 3]), Computation.raise(m)()), m.retry(), m.takeFirst({ count: 6 }), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(Computation.raise(m)(), m.retry(Computation.raise(m)()), Computation.toReadonlyArrayAsync(m)()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(pipeLazyAsync(m.concat(Computation.fromReadonlyArray(m)()([1, 2, 3]), Computation.raise(m)()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3, 1, 2, 3])), expectToThrowAsync))), describe("throwIfEmpty", testAsync("when source is empty", async () => {
     const error = new Error();
     await pipe(pipeLazy(Computation.empty(m)(), m.throwIfEmpty(() => error), Computation.toReadonlyArrayAsync(m)()), expectToThrowErrorAsync(error));
 }), testAsync("when factory throw", async () => {

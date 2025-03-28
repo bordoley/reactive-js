@@ -187,14 +187,17 @@ export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsu
             : (count) => count < shouldRepeat;
     let count = 0;
     const onDelegateConsumerCompleted = () => {
-        count++;
         const consumerIsCompleted = consumer[SinkLike_isCompleted];
+        if (consumerIsCompleted) {
+            return;
+        }
+        count++;
         try {
             const shouldRepeat = repeatPredicate(count);
-            if (shouldRepeat && !consumerIsCompleted) {
+            if (shouldRepeat) {
                 src[SourceLike_subscribe](createDelegateConsumer());
             }
-            else if (!consumerIsCompleted) {
+            else {
                 consumer[SinkLike_complete]();
             }
         }
@@ -202,7 +205,32 @@ export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsu
             consumer[DisposableLike_dispose](error(e));
         }
     };
-    const createDelegateConsumer = () => pipe(createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer(consumer), DisposableContainer.onComplete(onDelegateConsumerCompleted), Disposable.addTo(consumer));
+    const createDelegateConsumer = () => pipe(consumer, createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, DisposableContainer.onComplete(onDelegateConsumerCompleted), Disposable.addTo(consumer));
+    src[SourceLike_subscribe](createDelegateConsumer());
+}, src));
+export const retry = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, shouldRetry) => (src) => create((consumer) => {
+    const retryFunction = shouldRetry ?? alwaysTrue;
+    let count = 0;
+    const onDelegateConsumerError = (e) => {
+        const consumerIsCompleted = consumer[SinkLike_isCompleted];
+        if (consumerIsCompleted) {
+            return;
+        }
+        count++;
+        try {
+            const shouldRetry = retryFunction(count, e);
+            if (shouldRetry) {
+                src[SourceLike_subscribe](createDelegateConsumer());
+            }
+            else {
+                consumer[DisposableLike_dispose](e);
+            }
+        }
+        catch (eRetry) {
+            consumer[DisposableLike_dispose](error([e, eRetry]));
+        }
+    };
+    const createDelegateConsumer = () => pipe(consumer, createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, DisposableContainer.onError(onDelegateConsumerError), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)));
     src[SourceLike_subscribe](createDelegateConsumer());
 }, src));
 export const takeLast = memoize(m => (takeLast, options) => (obs) => create(consumer => {

@@ -263,6 +263,17 @@ interface Signature {
     DeferredSourceLike<T, TConsumer>
   >;
 
+  retry<TConsumer extends ConsumerLike<T>, T>(
+    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
+      TConsumer,
+      TConsumer
+    >,
+    shouldRetry?: (count: number, error: Error) => boolean,
+  ): Function1<
+    DeferredSourceLike<T, TConsumer>,
+    DeferredSourceLike<T, TConsumer>
+  >;
+
   takeLast<
     TComputationModule extends PickComputationModule<
       ComputationModule,
@@ -669,14 +680,19 @@ export const repeat: Signature["repeat"] = (<
       let count = 0;
 
       const onDelegateConsumerCompleted = () => {
-        count++;
         const consumerIsCompleted = consumer[SinkLike_isCompleted];
+        if (consumerIsCompleted) {
+          return;
+        }
+
+        count++;
+
         try {
           const shouldRepeat = repeatPredicate(count);
 
-          if (shouldRepeat && !consumerIsCompleted) {
+          if (shouldRepeat) {
             src[SourceLike_subscribe](createDelegateConsumer());
-          } else if (!consumerIsCompleted) {
+          } else {
             consumer[SinkLike_complete]();
           }
         } catch (e) {
@@ -686,12 +702,62 @@ export const repeat: Signature["repeat"] = (<
 
       const createDelegateConsumer = () =>
         pipe(
-          createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer(consumer),
+          consumer,
+          createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer,
           DisposableContainer.onComplete(onDelegateConsumerCompleted),
           Disposable.addTo(consumer),
         );
       src[SourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["repeat"];
+
+export const retry: Signature["retry"] = (<
+    TConsumer extends ConsumerLike<T>,
+    T,
+  >(
+    createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer: Function1<
+      TConsumer,
+      TConsumer
+    >,
+    shouldRetry?: (count: number, error: Error) => boolean,
+  ) =>
+  (src: DeferredSourceLike<T, TConsumer>) =>
+    create<T, TConsumer>((consumer: TConsumer) => {
+      const retryFunction = shouldRetry ?? alwaysTrue;
+
+      let count = 0;
+
+      const onDelegateConsumerError = (e: Error) => {
+        const consumerIsCompleted = consumer[SinkLike_isCompleted];
+        if (consumerIsCompleted) {
+          return;
+        }
+
+        count++;
+
+        try {
+          const shouldRetry = retryFunction(count, e);
+
+          if (shouldRetry) {
+            src[SourceLike_subscribe](createDelegateConsumer());
+          } else {
+            consumer[DisposableLike_dispose](e);
+          }
+        } catch (eRetry) {
+          consumer[DisposableLike_dispose](error([e, eRetry]));
+        }
+      };
+
+      const createDelegateConsumer = () =>
+        pipe(
+          consumer,
+          createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer,
+          DisposableContainer.onError(onDelegateConsumerError),
+          DisposableContainer.onComplete(
+            bindMethod(consumer, SinkLike_complete),
+          ),
+        );
+      src[SourceLike_subscribe](createDelegateConsumer());
+    }, src)) as Signature["retry"];
 
 export const takeLast: Signature["takeLast"] = memoize(
   m =>

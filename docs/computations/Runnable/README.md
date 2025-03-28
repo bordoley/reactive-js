@@ -31,6 +31,7 @@
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [repeat](functions/repeat.md)
+- [retry](functions/retry.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
 - [takeFirst](functions/takeFirst.md)

@@ -244,11 +244,12 @@ class RetryIterable {
         while (true) {
             try {
                 yield* iterable;
+                return;
             }
             catch (e) {
                 cnt++;
                 if (!predicate(cnt, error(e))) {
-                    break;
+                    throw e;
                 }
             }
         }

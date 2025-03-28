@@ -76,6 +76,7 @@ interface Signature {
     }): DeferredSourceLike<TOut, TConsumerOut>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
+    retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (consumer: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
         readonly count?: number;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
@@ -86,5 +87,6 @@ export declare const create: Signature["create"];
 export declare const createLifted: Signature["createLifted"];
 export declare const merge: Signature["merge"];
 export declare const repeat: Signature["repeat"];
+export declare const retry: Signature["retry"];
 export declare const takeLast: Signature["takeLast"];
 export {};
