@@ -15,11 +15,15 @@ import {
 import {
   Function1,
   Optional,
+  Predicate,
   SideEffect1,
+  alwaysTrue,
   bind,
   bindMethod,
   error,
   invoke,
+  isFunction,
+  isNone,
   isSome,
   memoize,
   newInstance,
@@ -34,6 +38,7 @@ import {
   ConsumerLike,
   DisposableLike_dispose,
   SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
@@ -246,6 +251,17 @@ interface Signature {
   ): <T>(
     ...sources: readonly DeferredSourceLike<T, TConsumer>[]
   ) => DeferredSourceLike<T, TConsumer>;
+
+  repeat<TConsumer extends ConsumerLike<T>, T>(
+    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
+      TConsumer,
+      TConsumer
+    >,
+    predicate: Optional<Predicate<number> | number>,
+  ): Function1<
+    DeferredSourceLike<T, TConsumer>,
+    DeferredSourceLike<T, TConsumer>
+  >;
 
   takeLast<
     TComputationModule extends PickComputationModule<
@@ -631,6 +647,51 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
     return length === 1 ? sources[0] : createMergeSource(sources);
   };
 };
+
+export const repeat: Signature["repeat"] = (<
+    TConsumer extends ConsumerLike<T>,
+    T,
+  >(
+    createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer: Function1<
+      TConsumer,
+      TConsumer
+    >,
+    shouldRepeat: Optional<Predicate<number> | number>,
+  ) =>
+  (src: DeferredSourceLike<T, TConsumer>) =>
+    create<T, TConsumer>((consumer: TConsumer) => {
+      const repeatPredicate = isFunction(shouldRepeat)
+        ? shouldRepeat
+        : isNone(shouldRepeat)
+          ? alwaysTrue
+          : (count: number) => count < shouldRepeat;
+
+      let count = 0;
+
+      const onDelegateConsumerCompleted = () => {
+        count++;
+        const consumerIsCompleted = consumer[SinkLike_isCompleted];
+        try {
+          const shouldRepeat = repeatPredicate(count);
+
+          if (shouldRepeat && !consumerIsCompleted) {
+            src[SourceLike_subscribe](createDelegateConsumer());
+          } else if (!consumerIsCompleted) {
+            consumer[SinkLike_complete]();
+          }
+        } catch (e) {
+          consumer[DisposableLike_dispose](error(e));
+        }
+      };
+
+      const createDelegateConsumer = () =>
+        pipe(
+          createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer(consumer),
+          DisposableContainer.onComplete(onDelegateConsumerCompleted),
+          Disposable.addTo(consumer),
+        );
+      src[SourceLike_subscribe](createDelegateConsumer());
+    }, src)) as Signature["repeat"];
 
 export const takeLast: Signature["takeLast"] = memoize(
   m =>

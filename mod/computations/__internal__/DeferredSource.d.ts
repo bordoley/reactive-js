@@ -1,5 +1,5 @@
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule } from "../../computations.js";
-import { Function1, SideEffect1 } from "../../functions.js";
+import { Function1, Optional, Predicate, SideEffect1 } from "../../functions.js";
 import { ConsumerLike } from "../../utils.js";
 import { LiftedSinkLike } from "./LiftedSource.js";
 interface Signature {
@@ -75,6 +75,7 @@ interface Signature {
         [ComputationLike_isSynchronous]?: boolean;
     }): DeferredSourceLike<TOut, TConsumerOut>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
+    repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (consumer: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
         readonly count?: number;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
@@ -84,5 +85,6 @@ export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];
 export declare const createLifted: Signature["createLifted"];
 export declare const merge: Signature["merge"];
+export declare const repeat: Signature["repeat"];
 export declare const takeLast: Signature["takeLast"];
 export {};

@@ -14,6 +14,7 @@ import {
 import {
   Optional,
   ignore,
+  lessThan,
   none,
   pipe,
   pipeAsync,
@@ -27,7 +28,7 @@ const SequentialComputationModuleTests = <
   TComputationModule extends ComputationModule &
     Pick<
       SequentialComputationModule,
-      "catchError" | "concat" | "forEach" | "gen" | "throwIfEmpty"
+      "catchError" | "concat" | "forEach" | "gen" | "repeat" | "throwIfEmpty"
     >,
 >(
   m: TComputationModule,
@@ -96,7 +97,6 @@ const SequentialComputationModuleTests = <
         ),
       ),
     ),
-
     describe(
       "forEach",
       testAsync("invokes the effect for each notified value", async () => {
@@ -119,6 +119,54 @@ const SequentialComputationModuleTests = <
             [1, 1],
             Computation.fromReadonlyArray(m)(),
             m.forEach(_ => {
+              throw err;
+            }),
+            Computation.toReadonlyArrayAsync(m)<number>(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+    ),
+    describe(
+      "repeat",
+      testAsync(
+        "when repeating forever.",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.repeat<number>(),
+          m.takeFirst<number>({ count: 8 }),
+          Computation.toReadonlyArrayAsync(m)<number>(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]),
+        ),
+      ),
+      testAsync(
+        "when repeating a finite amount of times.",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.repeat<number>(3),
+          Computation.toReadonlyArrayAsync(m)<number>(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      testAsync(
+        "when repeating with a predicate",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.repeat<number>(lessThan(1)),
+          Computation.toReadonlyArrayAsync(m)<number>(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      testAsync("when the repeat function throws", async () => {
+        const err = new Error();
+        await pipeAsync(
+          pipeLazy(
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.repeat(_ => {
               throw err;
             }),
             Computation.toReadonlyArrayAsync(m)<number>(),

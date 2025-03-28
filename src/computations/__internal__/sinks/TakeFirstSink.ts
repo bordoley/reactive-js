@@ -5,7 +5,7 @@ import {
   props,
   proto,
 } from "../../../__internal__/mixins.js";
-import { Optional, none } from "../../../functions.js";
+import { Optional } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
 import {
   DisposableLike,
@@ -53,14 +53,13 @@ export const create: <TSubscription extends DisposableLike, T>(
       return this;
     },
     props<TProperties>({
-      [TakeFirstSink_count]: none,
+      [TakeFirstSink_count]: 0,
     }),
     proto({
       [EventListenerLike_notify](
         this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
         next: T,
       ) {
-        this[TakeFirstSink_count];
         this[TakeFirstSink_count]--;
 
         const delegate = this[DelegatingLiftedSinkLike_delegate];

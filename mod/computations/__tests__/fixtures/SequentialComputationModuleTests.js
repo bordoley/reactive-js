@@ -3,7 +3,7 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { ignore, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { ignore, lessThan, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source does not throw", pipeLazyAsync([1, 2, 3, 4], Computation.fromReadonlyArray(m)(), m.catchError(ignore), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3, 4]))), testAsync("when the source throws", async () => {
     const e1 = "e1";
@@ -31,6 +31,11 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
 }), testAsync("when the effect function throws", async () => {
     const err = new Error();
     await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.forEach(_ => {
+        throw err;
+    }), Computation.toReadonlyArrayAsync(m)()), expectToThrowErrorAsync(err));
+})), describe("repeat", testAsync("when repeating forever.", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), m.repeat(), m.takeFirst({ count: 8 }), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]))), testAsync("when repeating a finite amount of times.", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), m.repeat(3), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), testAsync("when repeating with a predicate", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m)(), m.repeat(lessThan(1)), Computation.toReadonlyArrayAsync(m)(), expectArrayEquals([1, 2, 3]))), testAsync("when the repeat function throws", async () => {
+    const err = new Error();
+    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.repeat(_ => {
         throw err;
     }), Computation.toReadonlyArrayAsync(m)()), expectToThrowErrorAsync(err));
 })), describe("throwIfEmpty", testAsync("when source is empty", async () => {

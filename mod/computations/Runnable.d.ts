@@ -23,6 +23,7 @@ export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
+export declare const repeat: Signature["repeat"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];

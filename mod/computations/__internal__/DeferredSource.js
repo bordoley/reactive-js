@@ -3,11 +3,11 @@
 import { Array_length } from "../../__internal__/constants.js";
 import { mixInstanceFactory, props, proto } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { bind, bindMethod, error, invoke, isSome, memoize, newInstance, none, pipe, pipeUnsafe, } from "../../functions.js";
+import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, memoize, newInstance, none, pipe, pipeUnsafe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
-import { DisposableLike_dispose, SinkLike_complete, } from "../../utils.js";
+import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
@@ -179,6 +179,32 @@ export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) =
         return length === 1 ? sources[0] : createMergeSource(sources);
     };
 };
+export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, shouldRepeat) => (src) => create((consumer) => {
+    const repeatPredicate = isFunction(shouldRepeat)
+        ? shouldRepeat
+        : isNone(shouldRepeat)
+            ? alwaysTrue
+            : (count) => count < shouldRepeat;
+    let count = 0;
+    const onDelegateConsumerCompleted = () => {
+        count++;
+        const consumerIsCompleted = consumer[SinkLike_isCompleted];
+        try {
+            const shouldRepeat = repeatPredicate(count);
+            if (shouldRepeat && !consumerIsCompleted) {
+                src[SourceLike_subscribe](createDelegateConsumer());
+            }
+            else if (!consumerIsCompleted) {
+                consumer[SinkLike_complete]();
+            }
+        }
+        catch (e) {
+            consumer[DisposableLike_dispose](error(e));
+        }
+    };
+    const createDelegateConsumer = () => pipe(createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer(consumer), DisposableContainer.onComplete(onDelegateConsumerCompleted), Disposable.addTo(consumer));
+    src[SourceLike_subscribe](createDelegateConsumer());
+}, src));
 export const takeLast = memoize(m => (takeLast, options) => (obs) => create(consumer => {
     const count = options?.count ?? 1;
     const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, consumer))));

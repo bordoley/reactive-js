@@ -30,6 +30,7 @@
 - [keep](functions/keep.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
+- [repeat](functions/repeat.md)
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
 - [takeFirst](functions/takeFirst.md)

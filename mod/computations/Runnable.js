@@ -15,7 +15,7 @@ import { Runnable_gen, Runnable_genPure, } from "./Runnable/__private__/Runnable
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
-//import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
+import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 //import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
 import Runnable_skipFirst from "./Runnable/__private__/Runnable.skipFirst.js";
@@ -38,7 +38,7 @@ export const genPure = Runnable_genPure;
 export const keep = Runnable_keep;
 export const map = Runnable_map;
 export const pairwise = Runnable_pairwise;
-//export const repeat: Signature["repeat"] = Runnable_repeat;
+export const repeat = Runnable_repeat;
 //export const retry: Signature["retry"] = Runnable_retry;
 export const scan = Runnable_scan;
 export const skipFirst = Runnable_skipFirst;
