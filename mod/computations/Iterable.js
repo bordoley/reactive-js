@@ -277,6 +277,34 @@ class ScanIterable {
     }
 }
 export const scan = ((scanner, initialValue) => (iter) => newInstance(ScanIterable, iter, scanner, initialValue));
+class ScanDistinctIterable {
+    s;
+    r;
+    iv;
+    o;
+    [ComputationLike_isPure];
+    constructor(s, r, iv, o) {
+        this.s = s;
+        this.r = r;
+        this.iv = iv;
+        this.o = o;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    *[Symbol.iterator]() {
+        const { r: reducer, iv: initialValue, s: src, o: options } = this;
+        const equals = options?.equality ?? strictEquality;
+        let acc = initialValue();
+        yield acc;
+        for (const v of src) {
+            const prevAcc = acc;
+            acc = reducer(acc, v);
+            if (!equals(prevAcc, acc)) {
+                yield acc;
+            }
+        }
+    }
+}
+export const scanDistinct = ((scanner, initialValue, options) => (iter) => newInstance(ScanDistinctIterable, iter, scanner, initialValue, options));
 class SkipFirstIterable {
     s;
     c;

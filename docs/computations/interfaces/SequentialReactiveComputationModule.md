@@ -32,38 +32,6 @@
 
 ## Methods
 
-### actionReducer()
-
-> **actionReducer**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TAction`, `T`\>
-
-#### Type Parameters
-
-• **TAction**
-
-• **T**
-
-#### Parameters
-
-##### reducer
-
-[`Reducer`](../../functions/type-aliases/Reducer.md)\<`TAction`, `T`\>
-
-##### initialState
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### equality?
-
-[`Equality`](../../functions/type-aliases/Equality.md)\<`T`\>
-
-#### Returns
-
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TAction`, `T`\>
-
-***
-
 ### buffer()
 
 > **buffer**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, readonly `T`[]\>

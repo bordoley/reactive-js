@@ -3,6 +3,9 @@ import {
   ComputationType,
   Computation_T,
   Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
   PureRunnableLike,
@@ -13,7 +16,6 @@ import {
   SynchronousComputationModule,
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
-//import Runnable_actionReducer from "./Runnable/__private__/Runnable.actionReducer.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -32,6 +34,7 @@ import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
 import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
+import Runnable_scanDistinct from "./Runnable/__private__/Runnable.scanDistinct.js";
 import Runnable_skipFirst from "./Runnable/__private__/Runnable.skipFirst.js";
 import Runnable_takeFirst from "./Runnable/__private__/Runnable.takeFirst.js";
 import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
@@ -50,6 +53,10 @@ export interface RunnableComputation extends ComputationType {
   readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
+
+  readonly [Computation_pureDeferredOfT]?: never;
+  readonly [Computation_deferredWithSideEffectsOfT]?: never;
+  readonly [Computation_multicastOfT]?: never;
 }
 
 export type Computation = RunnableComputation;
@@ -62,7 +69,6 @@ export interface RunnableModule
 
 export type Signature = RunnableModule;
 
-//export const actionReducer: Signature["actionReducer"] = Runnable_actionReducer;
 export const buffer: Signature["buffer"] = Runnable_buffer;
 export const catchError: Signature["catchError"] = Runnable_catchError;
 //export const concatAll: Signature["concatAll"] = Runnable_concatAll;
@@ -81,6 +87,7 @@ export const pairwise: Signature["pairwise"] = Runnable_pairwise;
 export const repeat: Signature["repeat"] = Runnable_repeat;
 export const retry: Signature["retry"] = Runnable_retry;
 export const scan: Signature["scan"] = Runnable_scan;
+export const scanDistinct: Signature["scanDistinct"] = Runnable_scanDistinct;
 export const skipFirst: Signature["skipFirst"] = Runnable_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Runnable_takeFirst;
 export const takeLast: Signature["takeLast"] = Runnable_takeLast;

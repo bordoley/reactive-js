@@ -1104,6 +1104,12 @@ export interface SequentialComputationModule<
     shouldRetry?: (count: number, error: Error) => boolean,
   ): PureComputationOperator<TComputationType, T, T>;
 
+  scanDistinct<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialState: Factory<TAcc>,
+    options?: { readonly equality?: Equality<TAcc> },
+  ): PureComputationOperator<TComputationType, T, TAcc>;
+
   throwIfEmpty<T>(
     factory: Factory<unknown>,
     options?: undefined,
@@ -1159,12 +1165,6 @@ export interface ConcurrentDeferredComputationModule<
 export interface SequentialReactiveComputationModule<
   TComputationType extends AnyComputationType = AnyComputationType,
 > extends ComputationModuleLike<TComputationType> {
-  actionReducer<TAction, T>(
-    reducer: Reducer<TAction, T>,
-    initialState: Factory<T>,
-    options?: { readonly equality?: Equality<T> },
-  ): PureComputationOperator<TComputationType, TAction, T>;
-
   buffer<T>(options?: {
     count?: number;
   }): PureComputationOperator<TComputationType, T, readonly T[]>;

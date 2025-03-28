@@ -43,6 +43,7 @@ export interface Signature {
     raise<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <T>(options?: {
         readonly raise?: Factory<unknown>;
     }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    startWith<TComputationModule extends PickComputationModule<SequentialComputationModule & ComputationModule, "concat" | "genPure">>(m: TComputationModule): <T>(value: T, ...values: readonly T[]) => PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
     subscribe<TComputationModule extends PickComputationModule<ComputationModule, "toProducer">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toProducer"]>[0]) => Function1<ComputationOfModule<TComputationModule, T>, DisposableLike>;
     toObservable<TComputationModule extends PickComputationModule<ComputationModule, "toProducer">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toProducer"]>[0]) => <TComputationBaseOf extends ComputationOfModule<TComputationModule, T>>(computation: TComputationBaseOf) => TComputationBaseOf extends PureDeferredComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? PureObservableLike<T> : TComputationBaseOf extends DeferredComputationWithSideEffectsOf<ComputationTypeOfModule<TComputationModule>, T> ? ObservableWithSideEffectsLike<T> : TComputationBaseOf extends MulticastComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? PureObservableLike<T> : never;
     toReadonlyArray<TComputationModule extends PickComputationModule<SynchronousComputationModule, "toRunnable">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toRunnable"]>[0]) => Function1<ComputationOfModule<TComputationModule, T>, ReadonlyArray<T>>;
@@ -61,6 +62,7 @@ export declare const lastAsync: Signature["lastAsync"];
 export declare const makeModule: Signature["makeModule"];
 export declare const mergeWith: Signature["mergeWith"];
 export declare const raise: Signature["raise"];
+export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

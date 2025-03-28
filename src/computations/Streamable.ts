@@ -17,7 +17,7 @@ import {
   Updater,
 } from "../functions.js";
 import { PauseableLike, SchedulerLike } from "../utils.js";
-//import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
+//import Streamable_scanDistinct from "./Streamable/__private__/Streamable.scanDistinct.js";
 //import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 //import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
@@ -62,7 +62,7 @@ export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {}
  * @noInheritDoc
  */
 export interface StreamableModule {
-  actionReducer<TAction, T>(
+  scanDistinct<TAction, T>(
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
@@ -135,8 +135,8 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 
 export const create: Signature["create"] = Streamable_create;
-//export const actionReducer: Signature["actionReducer"] =
-//  Streamable_actionReducer;
+//export const scanDistinct: Signature["scanDistinct"] =
+//  Streamable_scanDistinct;
 //export const animation: Signature["animation"] = Streamable_animation;
 //export const animationGroup: Signature["animationGroup"] = Streamable_animationGroup;
 export const identity: Signature["identity"] = Streamable_identity;

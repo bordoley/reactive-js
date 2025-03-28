@@ -499,6 +499,51 @@ export const scan: Signature["scan"] = (<T, TAcc>(
       initialValue,
     )) as Signature["scan"];
 
+class ScanDistinctIterable<T, TAcc> {
+  public readonly [ComputationLike_isPure]?: boolean;
+
+  constructor(
+    private readonly s: IterableLike<T>,
+    private readonly r: Reducer<T, TAcc>,
+    private readonly iv: Factory<TAcc>,
+    private readonly o?: { readonly equality?: Equality<TAcc> },
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  *[Symbol.iterator]() {
+    const { r: reducer, iv: initialValue, s: src, o: options } = this;
+    const equals = options?.equality ?? strictEquality;
+
+    let acc = initialValue();
+
+    yield acc;
+
+    for (const v of src) {
+      const prevAcc = acc;
+      acc = reducer(acc, v);
+
+      if (!equals(prevAcc, acc)) {
+        yield acc;
+      }
+    }
+  }
+}
+
+export const scanDistinct: Signature["scanDistinct"] = (<T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+    options?: { readonly equality?: Equality<TAcc> },
+  ) =>
+  (iter: IterableLike<T>) =>
+    newInstance(
+      ScanDistinctIterable,
+      iter,
+      scanner,
+      initialValue,
+      options,
+    )) as Signature["scanDistinct"];
+
 class SkipFirstIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
 

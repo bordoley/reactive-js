@@ -3,7 +3,7 @@
 import { Array_length } from "../../__internal__/constants.js";
 import { mixInstanceFactory, props, proto } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, memoize, newInstance, none, pipe, pipeUnsafe, } from "../../functions.js";
+import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, memoize, newInstance, none, pipe, pipeUnsafe, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
@@ -12,8 +12,14 @@ import Computation_areAllPure from "../Computation/__private__/Computation.areAl
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
+import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
+export const scanDistinct = memoize(m => (reducer, initialState, options) => (source) => create(consumer => {
+    const acc = initialState();
+    const lifted = pipe(source, m.scan(reducer, returns(acc)), Computation_startWith(m)(acc), m.distinctUntilChanged(options));
+    lifted[SourceLike_subscribe](consumer);
+}, source));
 export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(consumer => {
     const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer), Disposable.addToContainer(consumer), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)), DisposableContainer.onError(err => {
         let action = none;

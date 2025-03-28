@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.d.ts" />
 
-//import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
+//import Streamable_scanDistinct from "./Streamable/__private__/Streamable.scanDistinct.js";
 //import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 //import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
@@ -10,8 +10,8 @@ import Streamable_identity from "./Streamable/__private__/Streamable.identity.js
 //import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 export const AnimationLike_isRunning = Symbol("AnimationLike_isRunning");
 export const create = Streamable_create;
-//export const actionReducer: Signature["actionReducer"] =
-//  Streamable_actionReducer;
+//export const scanDistinct: Signature["scanDistinct"] =
+//  Streamable_scanDistinct;
 //export const animation: Signature["animation"] = Streamable_animation;
 //export const animationGroup: Signature["animationGroup"] = Streamable_animationGroup;
 export const identity = Streamable_identity;

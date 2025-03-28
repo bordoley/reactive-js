@@ -1,8 +1,7 @@
 /// <reference types="./Runnable.d.ts" />
 
-import { Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { identity, returns } from "../functions.js";
-//import Runnable_actionReducer from "./Runnable/__private__/Runnable.actionReducer.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -18,13 +17,13 @@ import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
 import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
+import Runnable_scanDistinct from "./Runnable/__private__/Runnable.scanDistinct.js";
 import Runnable_skipFirst from "./Runnable/__private__/Runnable.skipFirst.js";
 import Runnable_takeFirst from "./Runnable/__private__/Runnable.takeFirst.js";
 import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
 import Runnable_toProducer from "./Runnable/__private__/Runnable.toProducer.js";
-//export const actionReducer: Signature["actionReducer"] = Runnable_actionReducer;
 export const buffer = Runnable_buffer;
 export const catchError = Runnable_catchError;
 //export const concatAll: Signature["concatAll"] = Runnable_concatAll;
@@ -41,6 +40,7 @@ export const pairwise = Runnable_pairwise;
 export const repeat = Runnable_repeat;
 export const retry = Runnable_retry;
 export const scan = Runnable_scan;
+export const scanDistinct = Runnable_scanDistinct;
 export const skipFirst = Runnable_skipFirst;
 export const takeFirst = Runnable_takeFirst;
 export const takeLast = Runnable_takeLast;

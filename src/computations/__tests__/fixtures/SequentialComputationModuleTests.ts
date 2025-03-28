@@ -29,6 +29,7 @@ const SequentialComputationModuleTests = <
   TComputationModule extends ComputationModule &
     Pick<
       SequentialComputationModule,
+      | "scanDistinct"
       | "catchError"
       | "concat"
       | "forEach"
@@ -224,6 +225,51 @@ const SequentialComputationModuleTests = <
           expectToThrowAsync,
         ),
       ),
+    ),
+    describe(
+      "scanDistinct",
+      testAsync(
+        "sums all the values in the array emitting intermediate values.",
+        pipeLazyAsync(
+          [1, 1, 1],
+          Computation.fromReadonlyArray(m)(),
+          m.scanDistinct<number, number>((a, b) => a + b, returns(0)),
+          Computation.toReadonlyArrayAsync(m)<number>(),
+          expectArrayEquals([0, 1, 2, 3]),
+        ),
+      ),
+      testAsync("throws when the reduce function throws", async () => {
+        const err = new Error();
+        const scanner = <T>(_acc: T, _next: T): T => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.scanDistinct(scanner, returns(0)),
+            Computation.toReadonlyArrayAsync(m)<number>(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+      testAsync("throws when the initial value function throws", async () => {
+        const err = new Error();
+        const initialValue = (): number => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.scanDistinct<number, number>((a, b) => a + b, initialValue),
+            Computation.toReadonlyArrayAsync(m)<number>(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
     ),
     describe(
       "throwIfEmpty",

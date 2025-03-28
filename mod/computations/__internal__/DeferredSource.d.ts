@@ -1,5 +1,5 @@
-import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule } from "../../computations.js";
-import { Function1, Optional, Predicate, SideEffect1 } from "../../functions.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule, SequentialComputationModule } from "../../computations.js";
+import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1 } from "../../functions.js";
 import { ConsumerLike } from "../../utils.js";
 import { LiftedSinkLike } from "./LiftedSource.js";
 interface Signature {
@@ -77,10 +77,14 @@ interface Signature {
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
+    scanDistinct<TModule extends PickComputationModule<ComputationModule & SequentialComputationModule, "genPure" | "concat" | "distinctUntilChanged" | "scan">>(m: TModule): <T, TAcc, TConsumer extends ConsumerLike<T>, TAccConsumer extends ConsumerLike<TAcc>>(reducer: Reducer<T, TAcc>, initialState: Factory<TAcc>, options?: {
+        readonly equality?: Equality<TAcc>;
+    }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<TAcc, TAccConsumer>>;
     takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (consumer: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
         readonly count?: number;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
 }
+export declare const scanDistinct: Signature["scanDistinct"];
 export declare const catchError: Signature["catchError"];
 export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];

@@ -42,6 +42,7 @@
 - [repeat](functions/repeat.md)
 - [retry](functions/retry.md)
 - [scan](functions/scan.md)
+- [scanDistinct](functions/scanDistinct.md)
 - [skipFirst](functions/skipFirst.md)
 - [subscribeOn](functions/subscribeOn.md)
 - [takeFirst](functions/takeFirst.md)

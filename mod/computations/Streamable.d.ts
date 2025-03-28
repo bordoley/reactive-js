@@ -28,7 +28,7 @@ export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {
  * @noInheritDoc
  */
 export interface StreamableModule {
-    actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
+    scanDistinct<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
     animation<T>(animation: PureSynchronousObservableLike<T>, options?: {

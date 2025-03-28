@@ -1,4 +1,3 @@
-import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   BroadcasterLike,
   ComputationBaseOf,
@@ -15,7 +14,6 @@ import {
   ConcurrentReactiveComputationModule,
   DeferredComputationLike,
   DeferredComputationOf,
-  DeferredComputationOfModule,
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
   NewPureInstanceOf,
@@ -60,9 +58,12 @@ import {
 } from "../utils.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
+import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
 import Computation_empty from "./Computation/__private__/Computation.empty.js";
+import Computation_fromReadonlyArray from "./Computation/__private__/Computation.fromReadonlyArray.js";
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
+import Computation_startWith from "./Computation/__private__/Computation.startWith.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import * as DeferredSource from "./__internal__/DeferredSource.js";
 
@@ -249,6 +250,22 @@ export interface Signature {
     readonly raise?: Factory<unknown>;
   }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
+  startWith<
+    TComputationModule extends PickComputationModule<
+      SequentialComputationModule & ComputationModule,
+      "concat" | "genPure"
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    value: T,
+    ...values: readonly T[]
+  ) => PureComputationOperator<
+    ComputationTypeOfModule<TComputationModule>,
+    T,
+    T
+  >;
+
   subscribe<
     TComputationModule extends PickComputationModule<
       ComputationModule,
@@ -318,29 +335,12 @@ export const broadcast: Signature["broadcast"] = /*@__PURE__*/ memoize(
       compose(m.toProducer(options), Producer_broadcast()),
 );
 
-export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoize(
-  m =>
-    <T>(...tail: DeferredComputationOfModule<typeof m, T>[]) =>
-    (fst: DeferredComputationOfModule<typeof m, T>) =>
-      m.concat(fst, ...tail),
-) as Signature["concatWith"];
+export const concatWith: Signature["concatWith"] = Computation_concatWith;
 
 export const empty: Signature["empty"] = Computation_empty;
 
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  /*@__PURE__*/ memoize(
-    m =>
-      <T>(options?: { readonly count?: number; readonly start?: number }) =>
-      (array: readonly T[]) =>
-        m.genPure<T>(function* ComputationFromReadonlyArray() {
-          let [start, count] = parseArrayBounds(array, options);
-
-          while (count !== 0) {
-            yield array[start];
-            count > 0 ? (start++, count--) : (start--, count++);
-          }
-        }, options),
-  ) as Signature["fromReadonlyArray"];
+  Computation_fromReadonlyArray;
 
 export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =
@@ -395,6 +395,8 @@ export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
         pipe(factory(), error, Functions_raise);
       }),
 );
+
+export const startWith: Signature["startWith"] = Computation_startWith;
 
 export const subscribe: Signature["subscribe"] = /*@__PURE__*/ memoize(
   m =>

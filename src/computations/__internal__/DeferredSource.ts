@@ -10,12 +10,16 @@ import {
   HigherOrderInnerComputationLike,
   IterableLike,
   PickComputationModule,
+  SequentialComputationModule,
   SourceLike_subscribe,
 } from "../../computations.js";
 import {
+  Equality,
+  Factory,
   Function1,
   Optional,
   Predicate,
+  Reducer,
   SideEffect1,
   alwaysTrue,
   bind,
@@ -30,6 +34,7 @@ import {
   none,
   pipe,
   pipeUnsafe,
+  returns,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -44,6 +49,7 @@ import Computation_areAllPure from "../Computation/__private__/Computation.areAl
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
+import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
 import {
   LiftedSinkLike,
   LiftedSourceLike_sink,
@@ -274,6 +280,27 @@ interface Signature {
     DeferredSourceLike<T, TConsumer>
   >;
 
+  scanDistinct<
+    TModule extends PickComputationModule<
+      ComputationModule & SequentialComputationModule,
+      "genPure" | "concat" | "distinctUntilChanged" | "scan"
+    >,
+  >(
+    m: TModule,
+  ): <
+    T,
+    TAcc,
+    TConsumer extends ConsumerLike<T>,
+    TAccConsumer extends ConsumerLike<TAcc>,
+  >(
+    reducer: Reducer<T, TAcc>,
+    initialState: Factory<TAcc>,
+    options?: { readonly equality?: Equality<TAcc> },
+  ) => Function1<
+    DeferredSourceLike<T, TConsumer>,
+    DeferredSourceLike<TAcc, TAccConsumer>
+  >;
+
   takeLast<
     TComputationModule extends PickComputationModule<
       ComputationModule,
@@ -292,6 +319,37 @@ interface Signature {
     DeferredSourceLike<T, TConsumer>
   >;
 }
+
+export const scanDistinct: Signature["scanDistinct"] = memoize(
+  m =>
+    <
+      T,
+      TAcc,
+      TConsumer extends ConsumerLike<T>,
+      TAccConsumer extends ConsumerLike<TAcc>,
+    >(
+      reducer: Reducer<T, TAcc>,
+      initialState: Factory<TAcc>,
+      options?: { readonly equality?: Equality<TAcc> },
+    ) =>
+    (source: DeferredSourceLike<T, TConsumer>) =>
+      create<TAcc, TAccConsumer>(
+        consumer => {
+          const acc: TAcc = initialState();
+
+          const lifted = pipe(
+            source,
+            m.scan<T, TAcc>(reducer, returns(acc)),
+            Computation_startWith(m)<TAcc>(acc),
+            m.distinctUntilChanged<TAcc>(options),
+          );
+
+          lifted[SourceLike_subscribe](consumer);
+        },
+
+        source,
+      ),
+);
 
 export const catchError: Signature["catchError"] =
   <

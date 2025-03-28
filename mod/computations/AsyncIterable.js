@@ -363,6 +363,35 @@ class RetryAsyncIterable {
 }
 export const retry = ((shouldRetry) => (deferable) => newInstance(RetryAsyncIterable, deferable, shouldRetry ?? alwaysTrue));
 export const scan = ((scanner, initialValue) => (iter) => newInstance(ScanAsyncIterable, iter, scanner, initialValue));
+class ScanDistinctAsyncIterable {
+    s;
+    r;
+    iv;
+    o;
+    [ComputationLike_isPure];
+    [ComputationLike_isSynchronous] = false;
+    constructor(s, r, iv, o) {
+        this.s = s;
+        this.r = r;
+        this.iv = iv;
+        this.o = o;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    async *[Symbol.asyncIterator]() {
+        const { r: reducer, iv: initialValue, s: src, o: options } = this;
+        const equals = options?.equality ?? strictEquality;
+        let acc = initialValue();
+        yield acc;
+        for await (const v of src) {
+            const prevAcc = acc;
+            acc = reducer(acc, v);
+            if (!equals(prevAcc, acc)) {
+                yield acc;
+            }
+        }
+    }
+}
+export const scanDistinct = ((scanner, initialValue, options) => (iter) => newInstance(ScanDistinctAsyncIterable, iter, scanner, initialValue, options));
 class SkipFirstAsyncIterable {
     s;
     c;

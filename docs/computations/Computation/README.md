@@ -27,6 +27,7 @@
 - [makeModule](functions/makeModule.md)
 - [mergeWith](functions/mergeWith.md)
 - [raise](functions/raise.md)
+- [startWith](functions/startWith.md)
 - [subscribe](functions/subscribe.md)
 - [toObservable](functions/toObservable.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)

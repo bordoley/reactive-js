@@ -58,42 +58,6 @@
 
 ## Methods
 
-### actionReducer()
-
-> **actionReducer**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TAction`, `T`\>
-
-#### Type Parameters
-
-• **TAction**
-
-• **T**
-
-#### Parameters
-
-##### reducer
-
-[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`TAction`, `T`\>
-
-##### initialState
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### equality?
-
-[`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>
-
-#### Returns
-
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TAction`, `T`\>
-
-#### Inherited from
-
-[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md).[`actionReducer`](../../interfaces/SequentialReactiveComputationModule.md#actionreducer)
-
-***
-
 ### buffer()
 
 > **buffer**\<`T`\>(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, readonly `T`[]\>
@@ -1075,6 +1039,42 @@
 #### Inherited from
 
 [`ComputationModule`](../../interfaces/ComputationModule.md).[`scan`](../../interfaces/ComputationModule.md#scan)
+
+***
+
+### scanDistinct()
+
+> **scanDistinct**\<`T`, `TAcc`\>(`reducer`, `initialState`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `TAcc`\>
+
+#### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+#### Parameters
+
+##### reducer
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+##### initialState
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+##### options?
+
+###### equality?
+
+[`Equality`](../../../functions/type-aliases/Equality.md)\<`TAcc`\>
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`scanDistinct`](../../interfaces/SequentialComputationModule.md#scandistinct)
 
 ***
 

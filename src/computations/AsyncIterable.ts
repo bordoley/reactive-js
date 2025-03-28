@@ -590,6 +590,52 @@ export const scan: Signature["scan"] = (<T, TAcc>(
       initialValue,
     )) as Signature["scan"];
 
+class ScanDistinctAsyncIterable<T, TAcc> {
+  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+
+  constructor(
+    private readonly s: AsyncIterableLike<T>,
+    private readonly r: Reducer<T, TAcc>,
+    private readonly iv: Factory<TAcc>,
+    private readonly o?: { readonly equality?: Equality<TAcc> },
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const { r: reducer, iv: initialValue, s: src, o: options } = this;
+    const equals = options?.equality ?? strictEquality;
+
+    let acc = initialValue();
+
+    yield acc;
+
+    for await (const v of src) {
+      const prevAcc = acc;
+      acc = reducer(acc, v);
+
+      if (!equals(prevAcc, acc)) {
+        yield acc;
+      }
+    }
+  }
+}
+
+export const scanDistinct: Signature["scanDistinct"] = (<T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+    options?: { readonly equality?: Equality<TAcc> },
+  ) =>
+  (iter: AsyncIterableLike<T>) =>
+    newInstance(
+      ScanDistinctAsyncIterable,
+      iter,
+      scanner,
+      initialValue,
+      options,
+    )) as Signature["scanDistinct"];
+
 class SkipFirstAsyncIterable<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
   public readonly [ComputationLike_isPure]?: boolean;

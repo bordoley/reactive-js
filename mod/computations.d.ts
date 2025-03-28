@@ -279,6 +279,9 @@ export interface SequentialComputationModule<TComputationType extends AnyComputa
     repeat<T>(count: number): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(): PureComputationOperator<TComputationType, T, T>;
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureComputationOperator<TComputationType, T, T>;
+    scanDistinct<T, TAcc>(reducer: Reducer<T, TAcc>, initialState: Factory<TAcc>, options?: {
+        readonly equality?: Equality<TAcc>;
+    }): PureComputationOperator<TComputationType, T, TAcc>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
 }
 export interface SynchronousComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
@@ -302,9 +305,6 @@ export interface ConcurrentDeferredComputationModule<TComputationType extends Co
     genPureAsync<T>(factory: Factory<AsyncIterator<T>>): NewPureInstanceOf<TComputationType, T>;
 }
 export interface SequentialReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
-    actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
-        readonly equality?: Equality<T>;
-    }): PureComputationOperator<TComputationType, TAction, T>;
     buffer<T>(options?: {
         count?: number;
     }): PureComputationOperator<TComputationType, T, readonly T[]>;

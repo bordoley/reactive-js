@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule } from "../computations.js";
+import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule } from "../computations.js";
 /**
  * @noInheritDoc
  */
@@ -6,6 +6,9 @@ export interface RunnableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
     readonly [Computation_pureSynchronousOfT]?: PureRunnableLike<this[typeof Computation_T]>;
     readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
+    readonly [Computation_pureDeferredOfT]?: never;
+    readonly [Computation_deferredWithSideEffectsOfT]?: never;
+    readonly [Computation_multicastOfT]?: never;
 }
 export type Computation = RunnableComputation;
 export interface RunnableModule extends ComputationModule<RunnableComputation>, SequentialComputationModule<RunnableComputation>, SequentialReactiveComputationModule<RunnableComputation>, SynchronousComputationModule<RunnableComputation> {
@@ -26,6 +29,7 @@ export declare const pairwise: Signature["pairwise"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
+export declare const scanDistinct: Signature["scanDistinct"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
