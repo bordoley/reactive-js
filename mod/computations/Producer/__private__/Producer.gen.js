@@ -1,64 +1,7 @@
 /// <reference types="./Producer.gen.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { error, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { pipe } from "../../../functions.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import * as Source from "../../__internal__/DeferredSource.js";
-const genFactory = (factory) => async (consumer) => {
-    const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(consumer));
-    let isActive = false;
-    const continue_ = async () => {
-        if (isActive) {
-            return;
-        }
-        isActive = true;
-        let isReady = consumer[FlowControllerLike_isReady];
-        let isCompleted = consumer[SinkLike_isCompleted];
-        try {
-            while (isReady &&
-                !isCompleted &&
-                enumerator[EnumeratorLike_moveNext]()) {
-                const value = enumerator[EnumeratorLike_current];
-                consumer[EventListenerLike_notify](value);
-                isReady = consumer[FlowControllerLike_isReady];
-                isCompleted = consumer[SinkLike_isCompleted];
-                if (!isReady || isCompleted) {
-                    break;
-                }
-                await Promise.resolve();
-            }
-            // Reassign because these values may change after
-            // hopping the micro task queue
-            isReady = consumer[FlowControllerLike_isReady];
-            isCompleted = consumer[SinkLike_isCompleted];
-            if (isReady || !isCompleted) {
-                consumer[SinkLike_complete]();
-                isReady = false;
-                isCompleted = true;
-            }
-            isActive = false;
-        }
-        catch (e) {
-            consumer[DisposableLike_dispose](error(e));
-            isReady = false;
-        }
-        // Return and let the onReadySink reschedule
-        // the continuation
-    };
-    consumer[FlowControllerLike_addOnReadyListener](async () => {
-        await Promise.resolve();
-        continue_;
-    });
-    await Promise.resolve();
-    continue_();
-};
-export const Producer_gen = (factory => Source.create(genFactory(factory), {
-    [ComputationLike_isPure]: false,
-    [ComputationLike_isSynchronous]: false,
-}));
-export const Producer_genPure = (factory => Source.create(genFactory(factory), {
-    [ComputationLike_isPure]: true,
-    [ComputationLike_isSynchronous]: false,
-}));
+import { Producer_genAsyncEnumerator, Producer_genPureAsyncEnumerator, } from "./Producer.genAsyncEnumerator.js";
+export const Producer_gen = (factory => Producer_genAsyncEnumerator(() => pipe(factory(), Iterator.toAsyncEnumerator())));
+export const Producer_genPure = (factory => Producer_genPureAsyncEnumerator(() => pipe(factory(), Iterator.toAsyncEnumerator())));

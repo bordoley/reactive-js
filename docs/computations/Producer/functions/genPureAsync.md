@@ -20,9 +20,7 @@
 
 ### options?
 
-#### maxYieldInterval?
-
-`number`
+`unknown`
 
 ## Returns
 

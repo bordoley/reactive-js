@@ -72,13 +72,7 @@ export type Computation = ProducerComputation;
 
 export interface ProducerModule
   extends ComputationModule<ProducerComputation>,
-    ConcurrentDeferredComputationModule<
-      ProducerComputation,
-      {
-        genAsync: { maxYieldInterval?: number };
-        genPureAsync: { maxYieldInterval?: number };
-      }
-    >,
+    ConcurrentDeferredComputationModule<ProducerComputation>,
     ConcurrentReactiveComputationModule<ProducerComputation>,
     SequentialComputationModule<ProducerComputation>,
     SequentialReactiveComputationModule<ProducerComputation>,

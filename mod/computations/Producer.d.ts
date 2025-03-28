@@ -12,14 +12,7 @@ export interface ProducerComputation extends ComputationType {
     readonly [Computation_multicastOfT]?: never;
 }
 export type Computation = ProducerComputation;
-export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation, {
-    genAsync: {
-        maxYieldInterval?: number;
-    };
-    genPureAsync: {
-        maxYieldInterval?: number;
-    };
-}>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, ConcurrentComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation> {
+export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, ConcurrentComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation> {
     create<T>(f: (consumer: ConsumerLike<T>) => void): ProducerWithSideEffectsLike<T>;
 }
 export type Signature = ProducerModule;

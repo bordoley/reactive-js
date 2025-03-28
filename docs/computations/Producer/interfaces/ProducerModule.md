@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md), \{ `genAsync`: \{ `maxYieldInterval`: `number`; \}; `genPureAsync`: \{ `maxYieldInterval`: `number`; \}; \}\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentComputationModule`](../../interfaces/ConcurrentComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>
 
 ## Properties
 
@@ -602,9 +602,7 @@
 
 ##### options?
 
-###### maxYieldInterval?
-
-`number`
+`unknown`
 
 #### Returns
 
@@ -660,9 +658,7 @@
 
 ##### options?
 
-###### maxYieldInterval?
-
-`number`
+`unknown`
 
 #### Returns
 
