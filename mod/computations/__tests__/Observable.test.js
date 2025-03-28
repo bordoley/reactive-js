@@ -8,8 +8,9 @@ import * as Observable from "../Observable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
+import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 const m = Computation.makeModule()(Observable);
-testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m))({
+testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m))({
     beforeEach() {
         const scheduler = HostScheduler.create();
         DefaultScheduler.set(scheduler);

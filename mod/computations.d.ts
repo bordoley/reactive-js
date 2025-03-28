@@ -286,7 +286,7 @@ export interface SynchronousComputationModule<TComputationType extends AnyComput
 } = {}> extends ComputationModuleLike<TComputationType> {
     toRunnable<T>(options?: TCreationOptions["toRunnable"]): ToRunnableOperator<TComputationType, T>;
 }
-export interface InteractiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+export interface InteractiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
     zip: ZipConstructor<TComputationType>;
 }

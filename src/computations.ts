@@ -1119,7 +1119,7 @@ export interface SynchronousComputationModule<
 }
 
 export interface InteractiveComputationModule<
-  TComputationType extends ComputationType,
+  TComputationType extends AnyComputationType = AnyComputationType,
 > extends ComputationModuleLike<TComputationType> {
   toObservable<T>(): ToObservableOperator<TComputationType, T>;
 
