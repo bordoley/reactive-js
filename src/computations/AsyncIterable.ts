@@ -59,15 +59,13 @@ import {
 import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
 import * as ComputationM from "./Computation.js";
 import {
-  Producer_genAsync,
-  Producer_genPureAsync,
-} from "./Producer/__private__/Producer.genAsync.js";
-/*
-import {
   Observable_genAsync,
   Observable_genPureAsync,
 } from "./Observable/__private__/Observable.genAsync.js";
-*/
+import {
+  Producer_genAsync,
+  Producer_genPureAsync,
+} from "./Producer/__private__/Producer.genAsync.js";
 
 /**
  * @noInheritDoc
@@ -749,7 +747,7 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       iter,
       factory,
     )) as Signature["throwIfEmpty"];
-/*
+
 export const toObservable: Signature["toObservable"] =
   //  @__PURE__
   returns((iter: AsyncIterableLike) =>
@@ -757,7 +755,6 @@ export const toObservable: Signature["toObservable"] =
       ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
       : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)),
   ) as Signature["toObservable"];
-*/
 
 export const toProducer: Signature["toProducer"] =
   //   @__PURE__

@@ -6,7 +6,6 @@ import {
 import {
   ComputationModule,
   InteractiveComputationModule,
-  PickComputationModule,
 } from "../../../computations.js";
 import {
   Tuple3,
@@ -17,8 +16,7 @@ import {
 import * as Computation from "../../Computation.js";
 
 const InteractiveComputationModuleTests = <
-  TComputationModule extends ComputationModule &
-    PickComputationModule<InteractiveComputationModule, "zip">,
+  TComputationModule extends ComputationModule & InteractiveComputationModule,
 >(
   m: TComputationModule,
 ) =>

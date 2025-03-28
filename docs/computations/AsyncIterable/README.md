@@ -41,5 +41,6 @@
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
+- [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
 - [zip](functions/zip.md)

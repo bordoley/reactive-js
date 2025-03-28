@@ -6,6 +6,7 @@ import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newI
 import { clampPositiveInteger } from "../math.js";
 import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
+import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Observable.gen.js";
 import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
 class CatchErrorIterable {
     s;
@@ -367,7 +368,11 @@ class ThrowIfEmptyIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
-//export const toObservable: Signature["toObservable"] = Iterable_toObservable;
+export const toObservable = 
+//  @__PURE__
+returns((iter) => ComputationM.isPure(iter)
+    ? Observable_genPure(bindMethod(iter, Symbol.iterator))
+    : Observable_gen(bindMethod(iter, Symbol.iterator)));
 export const toProducer = /*@__PURE__*/ returns((iterable) => ComputationM.isPure(iterable)
     ? Producer_genPure(bindMethod(iterable, Symbol.iterator))
     : Producer_gen(bindMethod(iterable, Symbol.iterator)));

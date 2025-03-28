@@ -41,5 +41,6 @@ export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toProducer: Signature["toProducer"];
 export declare const zip: Signature["zip"];

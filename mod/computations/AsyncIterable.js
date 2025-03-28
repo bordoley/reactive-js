@@ -9,6 +9,7 @@ import * as Iterator from "../utils/__internal__/Iterator.js";
 import { EnumeratorLike_current, EnumeratorLike_moveNext, } from "../utils.js";
 import AsyncIterable_broadcast from "./AsyncIterable/__private__/AsyncIterable.broadcast.js";
 import * as ComputationM from "./Computation.js";
+import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
 export const broadcast = AsyncIterable_broadcast;
 class CatchErrorAsyncIterable {
@@ -459,15 +460,11 @@ class ThrowIfEmptyAsyncIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyAsyncIterable, iter, factory));
-/*
-export const toObservable: Signature["toObservable"] =
-  //  @__PURE__
-  returns((iter: AsyncIterableLike) =>
-    ComputationM.isPure(iter)
-      ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
-      : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)),
-  ) as Signature["toObservable"];
-*/
+export const toObservable = 
+//  @__PURE__
+returns((iter) => ComputationM.isPure(iter)
+    ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
+    : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)));
 export const toProducer = 
 //   @__PURE__
 returns((iter) => ComputationM.isPure(iter)

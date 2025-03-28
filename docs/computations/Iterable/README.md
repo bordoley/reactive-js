@@ -36,6 +36,7 @@
 - [takeFirst](functions/takeFirst.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
+- [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
 - [toRunnable](functions/toRunnable.md)
 - [zip](functions/zip.md)

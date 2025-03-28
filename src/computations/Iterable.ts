@@ -57,6 +57,10 @@ import {
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
+  Observable_gen,
+  Observable_genPure,
+} from "./Observable/__private__/Observable.gen.js";
+import {
   Producer_gen,
   Producer_genPure,
 } from "./Producer/__private__/Producer.gen.js";
@@ -621,7 +625,13 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
-//export const toObservable: Signature["toObservable"] = Iterable_toObservable;
+export const toObservable: Signature["toObservable"] =
+  //  @__PURE__
+  returns((iter: IterableLike) =>
+    ComputationM.isPure(iter)
+      ? Observable_genPure(bindMethod(iter, Symbol.iterator))
+      : Observable_gen(bindMethod(iter, Symbol.iterator)),
+  ) as Signature["toObservable"];
 
 export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
   (iterable: IterableLike) =>

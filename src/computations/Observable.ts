@@ -37,6 +37,10 @@ import {
   Observable_gen,
   Observable_genPure,
 } from "./Observable/__private__/Observable.gen.js";
+import {
+  Observable_genAsync,
+  Observable_genPureAsync,
+} from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
@@ -163,7 +167,9 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const gen: Signature["gen"] = Observable_gen;
+export const genAsync: Signature["genAsync"] = Observable_genAsync;
 export const genPure: Signature["genPure"] = Observable_genPure;
+export const genPureAsync: Signature["genPureAsync"] = Observable_genPureAsync;
 export const keep: Signature["keep"] = Observable_keep;
 export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
