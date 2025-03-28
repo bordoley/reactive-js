@@ -113,26 +113,6 @@
 
 ***
 
-### makeModule()
-
-> **makeModule**\<`TModule`\>(`o`): `TModule` & `object`
-
-#### Type Parameters
-
-• **TModule** *extends* `object`
-
-#### Parameters
-
-##### o
-
-`TModule`
-
-#### Returns
-
-`TModule` & `object`
-
-***
-
 ### map()
 
 > **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>

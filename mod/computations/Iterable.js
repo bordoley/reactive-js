@@ -2,7 +2,7 @@
 
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, RunnableLike_eval, } from "../computations.js";
-import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
@@ -174,7 +174,6 @@ class MapIterable {
         }
     }
 }
-export const makeModule = identity;
 export const map = ((mapper) => (iterable) => newInstance(MapIterable, iterable, mapper));
 class PairwiseIterable {
     s;

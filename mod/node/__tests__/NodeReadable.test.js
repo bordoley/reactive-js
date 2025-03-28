@@ -10,7 +10,7 @@ import { invoke, newInstance, pipe, pipeAsync, returns, } from "../../functions.
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
 import * as NodeReadable from "../NodeReadable.js";
-const m = Producer.makeModule(Producer);
+const m = Computation.makeModule()(Producer);
 testModule("NodeReadable", describe("create", testAsync("reading from readable", async () => {
     function* generate() {
         yield Buffer.from("abc", "utf8");

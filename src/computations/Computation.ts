@@ -18,6 +18,7 @@ import {
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
   NewPureInstanceOf,
+  PickComputationModule,
   PureAsynchronousComputationOperator,
   PureComputationLike,
   PureComputationOperator,
@@ -37,6 +38,7 @@ import {
   Optional,
   bindMethod,
   error,
+  identity,
   memoize,
   pipe,
   returns,
@@ -114,27 +116,27 @@ export interface Signature {
   ): computations is readonly (TComputationType & SynchronousComputationLike)[];
 
   concatWith<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       SequentialComputationModule,
-      "concat" | typeof ComputationModuleLike_computationType
+      "concat"
     >,
   >(
     m: TComputationModule,
   ): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
 
   empty<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ComputationModule,
-      "genPure" | typeof ComputationModuleLike_computationType
+      "genPure"
     >,
   >(
     m: TComputationModule,
   ): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   fromReadonlyArray<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ComputationModule,
-      "genPure" | typeof ComputationModuleLike_computationType
+      "genPure"
     >,
   >(
     m: TComputationModule,
@@ -161,9 +163,9 @@ export interface Signature {
   ): computation is TComputationType & SynchronousComputationLike;
 
   last<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       SynchronousComputationModule,
-      "toRunnable" | typeof ComputationModuleLike_computationType
+      "toRunnable"
     >,
   >(
     m: TComputationModule,
@@ -172,9 +174,9 @@ export interface Signature {
   ) => Function1<ComputationOfModule<TComputationModule, T>, Optional<T>>;
 
   lastAsync<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ComputationModule,
-      "toProducer" | typeof ComputationModuleLike_computationType
+      "toProducer"
     >,
   >(
     m: TComputationModule,
@@ -185,19 +187,27 @@ export interface Signature {
     Promise<Optional<T>>
   >;
 
+  makeModule<TComputationType>(): <
+    TModule extends { [key: string]: any } = { [key: string]: any },
+  >(
+    o: TModule,
+  ) => TModule & {
+    [ComputationModuleLike_computationType]?: TComputationType;
+  };
+
   mergeWith<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ConcurrentReactiveComputationModule,
-      "merge" | typeof ComputationModuleLike_computationType
+      "merge"
     >,
   >(
     m: TComputationModule,
   ): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
 
   raise<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ComputationModule,
-      "genPure" | typeof ComputationModuleLike_computationType
+      "genPure"
     >,
   >(
     m: TComputationModule,
@@ -206,9 +216,9 @@ export interface Signature {
   }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   toReadonlyArray<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       SynchronousComputationModule,
-      "toRunnable" | typeof ComputationModuleLike_computationType
+      "toRunnable"
     >,
   >(
     m: TComputationModule,
@@ -217,9 +227,9 @@ export interface Signature {
   ) => Function1<ComputationOfModule<TComputationModule, T>, ReadonlyArray<T>>;
 
   toReadonlyArrayAsync<
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ComputationModule,
-      "toProducer" | typeof ComputationModuleLike_computationType
+      "toProducer"
     >,
   >(
     m: TComputationModule,
@@ -312,6 +322,8 @@ export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ memoize(
       return pipe(consumer, Iterable_first<T>());
     },
 );
+
+export const makeModule: Signature["makeModule"] = returns(identity);
 
 export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoize(
   m =>

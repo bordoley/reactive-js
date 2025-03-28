@@ -54,7 +54,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"concat"` \| *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md)\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"concat"`\>
 
 #### Parameters
 
@@ -74,7 +74,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"genPure"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"genPure"`\>
 
 #### Parameters
 
@@ -102,7 +102,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"genPure"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"genPure"`\>
 
 #### Parameters
 
@@ -196,7 +196,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toRunnable"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"toRunnable"`\>
 
 #### Parameters
 
@@ -230,7 +230,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toProducer"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"toProducer"`\>
 
 #### Parameters
 
@@ -258,13 +258,41 @@ readonly `TComputationType`[]
 
 ***
 
+### makeModule()
+
+> **makeModule**\<`TComputationType`\>(): \<`TModule`\>(`o`) => `TModule` & `object`
+
+#### Type Parameters
+
+• **TComputationType**
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **TModule** *extends* `object` = \{\}
+
+##### Parameters
+
+###### o
+
+`TModule`
+
+##### Returns
+
+`TModule` & `object`
+
+***
+
 ### mergeWith()
 
 > **mergeWith**\<`TComputationModule`\>(`m`): [`MergeWithOperator`](MergeWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ComputationType`](../../type-aliases/ComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"merge"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ComputationType`](../../type-aliases/ComputationType.md), \{\}\>, `"merge"`\>
 
 #### Parameters
 
@@ -284,7 +312,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"genPure"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"genPure"`\>
 
 #### Parameters
 
@@ -320,7 +348,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toRunnable"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"toRunnable"`\>
 
 #### Parameters
 
@@ -354,7 +382,7 @@ readonly `TComputationType`[]
 
 #### Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toProducer"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"toProducer"`\>
 
 #### Parameters
 

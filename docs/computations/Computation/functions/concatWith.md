@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"concat"` \| *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md)\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"concat"`\>
 
 ## Parameters
 

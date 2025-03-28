@@ -36,7 +36,6 @@ export const forEach = Runnable_forEach;
 export const gen = Runnable_gen;
 export const genPure = Runnable_genPure;
 export const keep = Runnable_keep;
-export const makeModule = identity;
 export const map = Runnable_map;
 export const pairwise = Runnable_pairwise;
 //export const repeat: Signature["repeat"] = Runnable_repeat;

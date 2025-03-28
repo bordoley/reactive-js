@@ -4,14 +4,12 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / PickComputationModule
 
-# Type Alias: PickComputationModule\<TComputationType, TComputationModule, K\>
+# Type Alias: PickComputationModule\<TModule, K\>
 
-> **PickComputationModule**\<`TComputationType`, `TComputationModule`, `K`\>: `Pick`\<`TComputationModule`, `K` \| *typeof* [`ComputationModuleLike_computationType`](../variables/ComputationModuleLike_computationType.md)\>
+> **PickComputationModule**\<`TModule`, `K`\>: `Pick`\<`TModule`, `K` \| *typeof* [`ComputationModuleLike_computationType`](../variables/ComputationModuleLike_computationType.md)\>
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TModule** *extends* [`ComputationModuleLike`](../interfaces/ComputationModuleLike.md)
 
-• **TComputationModule** *extends* [`ComputationModuleLike`](../interfaces/ComputationModuleLike.md)\<`TComputationType`\>
-
-• **K** *extends* keyof `TComputationModule`
+• **K** *extends* keyof `TModule`

@@ -794,30 +794,6 @@
 
 ***
 
-### makeModule()
-
-> **makeModule**\<`TModule`\>(`o`): `TModule` & `object`
-
-#### Type Parameters
-
-• **TModule** *extends* `object`
-
-#### Parameters
-
-##### o
-
-`TModule`
-
-#### Returns
-
-`TModule` & `object`
-
-#### Inherited from
-
-[`ComputationModule`](../../interfaces/ComputationModule.md).[`makeModule`](../../interfaces/ComputationModule.md#makemodule)
-
-***
-
 ### map()
 
 > **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `TA`, `TB`\>

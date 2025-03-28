@@ -76,7 +76,6 @@ export const forEach: Signature["forEach"] = Runnable_forEach;
 export const gen: Signature["gen"] = Runnable_gen;
 export const genPure: Signature["genPure"] = Runnable_genPure;
 export const keep: Signature["keep"] = Runnable_keep;
-export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Runnable_map;
 export const pairwise: Signature["pairwise"] = Runnable_pairwise;
 //export const repeat: Signature["repeat"] = Runnable_repeat;

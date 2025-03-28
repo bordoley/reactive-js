@@ -31,7 +31,6 @@ export declare const genAsync: Signature["genAsync"];
 export declare const genPure: Signature["genPure"];
 export declare const genPureAsync: Signature["genPureAsync"];
 export declare const keep: Signature["keep"];
-export declare const makeModule: Signature["makeModule"];
 export declare const map: Signature["map"];
 export declare const of: Signature["of"];
 export declare const pairwise: Signature["pairwise"];

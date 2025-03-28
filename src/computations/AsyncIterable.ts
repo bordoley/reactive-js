@@ -35,7 +35,6 @@ import {
   alwaysTrue,
   bindMethod,
   error,
-  identity,
   invoke,
   isFunction,
   isNone,
@@ -419,8 +418,6 @@ class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
 export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
   (iterable: AsyncIterableLike<T>) =>
     newInstance(KeepAsyncIterable, iterable, predicate)) as Signature["keep"];
-
-export const makeModule: Signature["makeModule"] = identity;
 
 class MapAsyncIterable<TA, TB> implements AsyncIterableLike<TB> {
   public readonly [ComputationLike_isPure]?: boolean;

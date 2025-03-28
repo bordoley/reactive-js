@@ -21,7 +21,6 @@ export declare const forEach: Signature["forEach"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
-export declare const makeModule: Signature["makeModule"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const scan: Signature["scan"];

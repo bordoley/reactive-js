@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"genPure"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"genPure"`\>
 
 ## Parameters
 

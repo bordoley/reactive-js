@@ -28,7 +28,6 @@
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
-- [makeModule](functions/makeModule.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)

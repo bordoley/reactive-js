@@ -23,6 +23,7 @@
 - [isSynchronous](functions/isSynchronous.md)
 - [last](functions/last.md)
 - [lastAsync](functions/lastAsync.md)
+- [makeModule](functions/makeModule.md)
 - [mergeWith](functions/mergeWith.md)
 - [raise](functions/raise.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)

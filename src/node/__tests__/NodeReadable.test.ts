@@ -23,7 +23,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
 import * as NodeReadable from "../NodeReadable.js";
 
-const m = Producer.makeModule(Producer);
+const m = Computation.makeModule<Producer.Computation>()(Producer);
 
 testModule(
   "NodeReadable",

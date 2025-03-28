@@ -23,7 +23,7 @@ import {
   SynchronousComputationModule,
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
-import { Function1, Function2, identity } from "../functions.js";
+import { Function1, Function2 } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -193,7 +193,6 @@ export const forEach: Signature["forEach"] = Observable_forEach;
 export const gen: Signature["gen"] = Observable_gen;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const keep: Signature["keep"] = Observable_keep;
-export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Observable_map;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const scan: Signature["scan"] = Observable_scan;

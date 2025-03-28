@@ -12,7 +12,7 @@ import {
   ConcurrentComputationModule,
   ConcurrentReactiveComputationModule,
 } from "../computations.js";
-import { Function1, SideEffect1, identity } from "../functions.js";
+import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
@@ -96,7 +96,6 @@ export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;
 export const fromPromise: Signature["fromPromise"] = Broadcaster_fromPromise;
 export const genPure: Signature["genPure"] = Broadcaster_genPure;
 export const keep: Signature["keep"] = Broadcaster_keep;
-export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Broadcaster_map;
 export const merge: Signature["merge"] = Broadcaster_merge;
 export const pairwise: Signature["pairwise"] = Broadcaster_pairwise;

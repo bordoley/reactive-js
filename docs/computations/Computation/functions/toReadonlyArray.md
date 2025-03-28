@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"toRunnable"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"toRunnable"`\>
 
 ## Parameters
 

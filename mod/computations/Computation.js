@@ -1,8 +1,8 @@
 /// <reference types="./Computation.d.ts" />
 
 import parseArrayBounds from "../__internal__/parseArrayBounds.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, SourceLike_subscribe, } from "../computations.js";
-import { raise as Functions_raise, bindMethod, error, memoize, pipe, returns, } from "../functions.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModuleLike_computationType, RunnableLike_eval, SourceLike_subscribe, } from "../computations.js";
+import { raise as Functions_raise, bindMethod, error, identity, memoize, pipe, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
@@ -35,6 +35,7 @@ export const lastAsync = /*@__PURE__*/ memoize(m => (options) => async (src) => 
     await DisposableContainer.toPromise(consumer);
     return pipe(consumer, Iterable_first());
 });
+export const makeModule = returns(identity);
 export const mergeWith = /*@__PURE__*/ memoize(m => (...tail) => (fst) => m.merge(fst, ...tail));
 export const raise = /*@__PURE__*/ memoize(m => (options) => m.genPure(function* RaiseComputation() {
     const { raise: factory = Functions_raise } = options ?? {};

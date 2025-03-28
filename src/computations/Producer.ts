@@ -108,7 +108,6 @@ export const genAsync: Signature["genAsync"] = Producer_genAsync;
 export const genPure: Signature["genPure"] = Producer_genPure;
 export const genPureAsync: Signature["genPureAsync"] = Producer_genPureAsync;
 export const keep: Signature["keep"] = Producer_keep;
-export const makeModule: Signature["makeModule"] = identity;
 export const map: Signature["map"] = Producer_map;
 export const pairwise: Signature["pairwise"] = Producer_pairwise;
 export const scan: Signature["scan"] = Producer_scan;

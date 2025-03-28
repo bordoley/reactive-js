@@ -1,9 +1,10 @@
 import { testModule } from "../../__internal__/testing.js";
 import * as AsyncIterable from "../AsyncIterable.js";
+import * as Computation from "../Computation.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 
-const m = AsyncIterable.makeModule(AsyncIterable);
+const m = Computation.makeModule<AsyncIterable.Computation>()(AsyncIterable);
 
 testModule(
   "AsyncIterable",

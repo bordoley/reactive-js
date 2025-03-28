@@ -32,7 +32,6 @@
 - [genPure](functions/genPure.md)
 - [genPureAsync](functions/genPureAsync.md)
 - [keep](functions/keep.md)
-- [makeModule](functions/makeModule.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [scan](functions/scan.md)

@@ -1,14 +1,9 @@
-import { ComputationModuleLike_computationType } from "../../../computations.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import type * as Producer from "../../Producer.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import { Producer_genPure } from "./Producer.gen.js";
 
-const m: {
-  genPure: Producer.Signature["genPure"];
-  createDelegatingNotifyOnlyNonCompletingNonDisposing: typeof Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing;
-  [ComputationModuleLike_computationType]?: Producer.Computation;
-} = {
+const m = {
   genPure: Producer_genPure,
   createDelegatingNotifyOnlyNonCompletingNonDisposing:
     Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,

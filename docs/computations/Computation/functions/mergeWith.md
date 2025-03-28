@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TComputationModule** *extends* `Pick`\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ComputationType`](../../type-aliases/ComputationType.md), \{\}\>, *typeof* [`ComputationModuleLike_computationType`](../../variables/ComputationModuleLike_computationType.md) \| `"merge"`\>
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ComputationType`](../../type-aliases/ComputationType.md), \{\}\>, `"merge"`\>
 
 ## Parameters
 

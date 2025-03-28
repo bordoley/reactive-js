@@ -230,7 +230,7 @@ export interface ComputationModuleLike<TComputationType extends ComputationType 
     [ComputationModuleLike_computationType]?: TComputationType;
 }
 export type ComputationTypeOfModule<TModule extends ComputationModuleLike> = NonNullable<TModule[typeof ComputationModuleLike_computationType]>;
-export type PickComputationModule<TComputationType extends ComputationType, TComputationModule extends ComputationModuleLike<TComputationType>, K extends keyof TComputationModule> = Pick<TComputationModule, K | typeof ComputationModuleLike_computationType>;
+export type PickComputationModule<TModule extends ComputationModuleLike, K extends keyof TModule> = Pick<TModule, K | typeof ComputationModuleLike_computationType>;
 export type ComputationOfModule<TModule extends ComputationModuleLike, T> = ComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type DeferredComputationOfModule<TModule extends ComputationModuleLike, T> = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type MulticastComputationOfModule<TModule extends ComputationModuleLike, T> = MulticastComputationOf<ComputationTypeOfModule<TModule>, T>;
@@ -248,11 +248,6 @@ export interface ComputationModule<TComputationType extends AnyComputationType =
     encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
     genPure<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["genPure"]): NewPureInstanceOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<TComputationType, T, T>;
-    makeModule<TModule extends {
-        [key: string]: any;
-    }>(o: TModule): TModule & {
-        [ComputationModuleLike_computationType]?: TComputationType;
-    };
     map<TA, TB>(selector: Function1<TA, TB>): PureComputationOperator<TComputationType, TA, TB>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureComputationOperator<TComputationType, T, TAcc>;
     pairwise<T>(): PureComputationOperator<TComputationType, T, Tuple2<T, T>>;

@@ -2,7 +2,7 @@
 
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
-import { alwaysTrue, bindMethod, error, identity, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
+import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
@@ -226,7 +226,6 @@ class KeepAsyncIterable {
     }
 }
 export const keep = ((predicate) => (iterable) => newInstance(KeepAsyncIterable, iterable, predicate));
-export const makeModule = identity;
 class MapAsyncIterable {
     d;
     m;

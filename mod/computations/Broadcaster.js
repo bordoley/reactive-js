@@ -1,7 +1,6 @@
 /// <reference types="./Broadcaster.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { identity } from "../functions.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
@@ -28,7 +27,6 @@ export const encodeUtf8 = Broadcaster_encodeUtf8;
 export const fromPromise = Broadcaster_fromPromise;
 export const genPure = Broadcaster_genPure;
 export const keep = Broadcaster_keep;
-export const makeModule = identity;
 export const map = Broadcaster_map;
 export const merge = Broadcaster_merge;
 export const pairwise = Broadcaster_pairwise;

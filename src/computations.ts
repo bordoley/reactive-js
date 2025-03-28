@@ -959,10 +959,9 @@ export type ComputationTypeOfModule<TModule extends ComputationModuleLike> =
   NonNullable<TModule[typeof ComputationModuleLike_computationType]>;
 
 export type PickComputationModule<
-  TComputationType extends ComputationType,
-  TComputationModule extends ComputationModuleLike<TComputationType>,
-  K extends keyof TComputationModule,
-> = Pick<TComputationModule, K | typeof ComputationModuleLike_computationType>;
+  TModule extends ComputationModuleLike,
+  K extends keyof TModule,
+> = Pick<TModule, K | typeof ComputationModuleLike_computationType>;
 
 export type ComputationOfModule<
   TModule extends ComputationModuleLike,
@@ -1004,12 +1003,6 @@ export interface ComputationModule<
   keep<T>(
     predicate: Predicate<T>,
   ): PureComputationOperator<TComputationType, T, T>;
-
-  makeModule<TModule extends { [key: string]: any }>(
-    o: TModule,
-  ): TModule & {
-    [ComputationModuleLike_computationType]?: TComputationType;
-  };
 
   map<TA, TB>(
     selector: Function1<TA, TB>,

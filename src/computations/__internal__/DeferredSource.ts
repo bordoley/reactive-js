@@ -6,9 +6,9 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
-  ComputationModuleLike_computationType,
   HigherOrderInnerComputationLike,
   IterableLike,
+  PickComputationModule,
   SourceLike,
   SourceLike_subscribe,
 } from "../../computations.js";
@@ -298,9 +298,9 @@ export const creatConcat = <
 
 export const createTakeLast =
   <
-    TComputationModule extends Pick<
+    TComputationModule extends PickComputationModule<
       ComputationModule,
-      "genPure" | typeof ComputationModuleLike_computationType
+      "genPure"
     >,
   >(
     m: TComputationModule,

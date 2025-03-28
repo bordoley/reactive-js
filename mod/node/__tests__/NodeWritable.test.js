@@ -63,7 +63,7 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as NodeWritable from "../NodeWritable.js";
-const ProducerModule = Producer.makeModule(Producer);
+const ProducerModule = Computation.makeModule()(Producer);
 testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable", async () => {
     let data = "";
     const writable = newInstance(Writable, {

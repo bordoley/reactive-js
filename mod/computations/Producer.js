@@ -39,7 +39,6 @@ export const genAsync = Producer_genAsync;
 export const genPure = Producer_genPure;
 export const genPureAsync = Producer_genPureAsync;
 export const keep = Producer_keep;
-export const makeModule = identity;
 export const map = Producer_map;
 export const pairwise = Producer_pairwise;
 export const scan = Producer_scan;

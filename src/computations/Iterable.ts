@@ -36,7 +36,6 @@ import {
   alwaysTrue,
   bindMethod,
   error,
-  identity,
   invoke,
   isFunction,
   isNone,
@@ -334,8 +333,6 @@ class MapIterable<TA, TB> implements IterableLike<TB> {
     }
   }
 }
-
-export const makeModule: Signature["makeModule"] = identity;
 
 export const map: Signature["map"] = (<TA, TB>(mapper: Function1<TA, TB>) =>
   (iterable: IterableLike<TA>) =>
