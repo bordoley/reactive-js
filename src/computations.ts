@@ -1409,8 +1409,8 @@ export interface SourceLike<
 
 export interface DeferredSourceLike<
   T = unknown,
-  TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
-> extends SourceLike<T, TEventListener> {
+  TConsumer extends ConsumerLike<T> = ConsumerLike<T>,
+> extends SourceLike<T, TConsumer> {
   [ComputationLike_isDeferred]?: true;
 }
 

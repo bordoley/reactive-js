@@ -4,17 +4,17 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredSourceLike
 
-# Interface: DeferredSourceLike\<T, TEventListener\>
+# Interface: DeferredSourceLike\<T, TConsumer\>
 
 ## Extends
 
-- [`SourceLike`](SourceLike.md)\<`T`, `TEventListener`\>
+- [`SourceLike`](SourceLike.md)\<`T`, `TConsumer`\>
 
 ## Type Parameters
 
 • **T** = `unknown`
 
-• **TEventListener** *extends* [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\> = [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
+• **TConsumer** *extends* [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\> = [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\>
 
 ## Properties
 
@@ -56,7 +56,7 @@
 
 ##### EventListener
 
-`TEventListener`
+`TConsumer`
 
 #### Returns
 

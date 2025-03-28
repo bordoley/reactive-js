@@ -408,7 +408,7 @@ export declare const SourceLike_subscribe: unique symbol;
 export interface SourceLike<T = unknown, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends ComputationLike {
     [SourceLike_subscribe](EventListener: TEventListener): void;
 }
-export interface DeferredSourceLike<T = unknown, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends SourceLike<T, TEventListener> {
+export interface DeferredSourceLike<T = unknown, TConsumer extends ConsumerLike<T> = ConsumerLike<T>> extends SourceLike<T, TConsumer> {
     [ComputationLike_isDeferred]?: true;
 }
 /**

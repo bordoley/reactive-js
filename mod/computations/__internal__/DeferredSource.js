@@ -1,14 +1,18 @@
 /// <reference types="./DeferredSource.d.ts" />
 
 import { Array_length } from "../../__internal__/constants.js";
-import { mixInstanceFactory, props } from "../../__internal__/mixins.js";
+import { mixInstanceFactory, props, proto } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { bind, bindMethod, error, invoke, isSome, memoize, newInstance, none, pipe, } from "../../functions.js";
+import { bind, bindMethod, error, invoke, isSome, memoize, newInstance, none, pipe, pipeUnsafe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
+import * as Sink from "../../utils/__internal__/Sink.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
+import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
+import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
+import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
 export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(sink => {
     const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addToContainer(sink), DisposableContainer.onError(err => {
@@ -107,6 +111,35 @@ class CreateSource {
     }
 }
 export const create = ((effect, options) => newInstance((CreateSource), effect, options));
+export const createLifted = /*@__PURE__*/ (() => {
+    const LiftedSource_liftedSinkToConsumer = Symbol("LiftedSource_liftedSinkToConsumer");
+    return mixInstanceFactory(function LiftedObservable(source, op, liftedSinkToConsumer, config) {
+        const liftedSource = source[LiftedSourceLike_source] ?? source;
+        const ops = [op, ...(source[LiftedSourceLike_sink] ?? [])];
+        this[LiftedSourceLike_source] = liftedSource;
+        this[LiftedSourceLike_sink] = ops;
+        this[LiftedSource_liftedSinkToConsumer] = liftedSinkToConsumer;
+        this[ComputationLike_isSynchronous] =
+            Computation_isSynchronous(source) &&
+                Computation_isSynchronous(config ?? {});
+        this[ComputationLike_isPure] =
+            Computation_isPure(source) && Computation_isPure(config ?? {});
+        return this;
+    }, props({
+        [LiftedSource_liftedSinkToConsumer]: none,
+        [LiftedSourceLike_source]: none,
+        [LiftedSourceLike_sink]: none,
+        [ComputationLike_isPure]: false,
+        [ComputationLike_isSynchronous]: false,
+    }), proto({
+        [ComputationLike_isDeferred]: true,
+        [SourceLike_subscribe](observer) {
+            const source = this[LiftedSourceLike_source];
+            const destinationOp = pipeUnsafe(observer, Sink.toLiftedSink(), ...this[LiftedSourceLike_sink], this[LiftedSource_liftedSinkToConsumer]);
+            source[SourceLike_subscribe](destinationOp);
+        },
+    }));
+})();
 export const takeLast = memoize(m => (takeLast, options) => (obs) => create(sink => {
     const count = options?.count ?? 1;
     const takeLastSink = pipe(takeLast(sink, count), Disposable.addTo(sink), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, sink))));
