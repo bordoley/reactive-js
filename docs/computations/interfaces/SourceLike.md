@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`DeferredSourceLike`](DeferredSourceLike.md)
 - [`ProducerLike`](ProducerLike.md)
 - [`ObservableLike`](ObservableLike.md)
 - [`BroadcasterLike`](BroadcasterLike.md)

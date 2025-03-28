@@ -1406,6 +1406,14 @@ export interface SourceLike<
 > extends ComputationLike {
   [SourceLike_subscribe](EventListener: TEventListener): void;
 }
+
+export interface DeferredSourceLike<
+  T = unknown,
+  TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
+> extends SourceLike<T, TEventListener> {
+  [ComputationLike_isDeferred]?: true;
+}
+
 /**
  * @noInheritDoc
  */

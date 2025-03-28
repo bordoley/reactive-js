@@ -14,7 +14,10 @@ import {
   tuple,
 } from "../../functions.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
+import * as Disposable from "../../utils/Disposable.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
+import { VirtualTimeSchedulerLike_run } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
@@ -22,9 +25,6 @@ import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReact
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
-import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { VirtualTimeSchedulerLike_run } from "../../utils.js";
-import * as Disposable from "../../utils/Disposable.js";
 
 const m = Computation.makeModule<Observable.Computation>()(Observable);
 

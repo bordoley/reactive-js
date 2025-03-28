@@ -6,5 +6,5 @@ import { Producer_genPure } from "./Producer.gen.js";
 const m = {
     genPure: Producer_genPure,
 };
-const Producer_takeLast = ((options) => DeferredSource.createTakeLast(m)(Observer.takeLast, options));
+const Producer_takeLast = ((options) => DeferredSource.takeLast(m)(Observer.takeLast, options));
 export default Producer_takeLast;

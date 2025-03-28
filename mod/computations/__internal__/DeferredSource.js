@@ -3,36 +3,13 @@
 import { Array_length } from "../../__internal__/constants.js";
 import { mixInstanceFactory, props } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { bind, bindMethod, error, invoke, isSome, newInstance, none, pipe, } from "../../functions.js";
+import { bind, bindMethod, error, invoke, isSome, memoize, newInstance, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
-import Computation_empty from "../Computation/__private__/Computation.empty.js";
-//import * as Computation from "../Computation.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
-class CreateSource {
-    static [ComputationLike_isDeferred] = true;
-    [ComputationLike_isPure];
-    [ComputationLike_isSynchronous];
-    [CreateSource_effect];
-    constructor(effect, config) {
-        this[CreateSource_effect] = effect;
-        this[ComputationLike_isPure] = config?.[ComputationLike_isPure];
-        this[ComputationLike_isSynchronous] =
-            config?.[ComputationLike_isSynchronous];
-    }
-    [SourceLike_subscribe](listener) {
-        try {
-            this[CreateSource_effect](listener);
-        }
-        catch (e) {
-            listener[DisposableLike_dispose](error(e));
-        }
-    }
-}
-export const create = ((effect, options) => newInstance((CreateSource), effect, options));
 export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(sink => {
     const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addToContainer(sink), DisposableContainer.onError(err => {
         let action = none;
@@ -54,7 +31,7 @@ export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, 
     [ComputationLike_isPure]: options?.innerType?.[ComputationLike_isPure],
     [ComputationLike_isSynchronous]: options?.innerType?.[ComputationLike_isSynchronous],
 });
-export const creatConcat = (m) => {
+export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {
     const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");
     const ConcatSinkCtx_sources = Symbol("ConcatSinkCtx_sources");
     const ConcatSinkCtx_nextIndex = Symbol("ConcatSinkCtx_nextIndex");
@@ -73,7 +50,7 @@ export const creatConcat = (m) => {
     }
     const createConcatSink = (ctx) => {
         const delegate = ctx[ConcatSinkCtx_delegate];
-        return pipe(m.createDelegatingNotifyOnlyNonCompletingNonDisposing(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onConcatSinkComplete, ctx)));
+        return pipe(createDelegatingNotifyOnlyNonCompletingNonDisposingSink(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onConcatSinkComplete, ctx)));
     };
     const ConcatSource_sources = Symbol("ConcatSource_sources");
     const isConcatSource = (observable) => isSome(observable[ConcatSource_sources]);
@@ -106,15 +83,32 @@ export const creatConcat = (m) => {
     });
     return (...sources) => {
         const length = sources[Array_length];
-        return length === 0
-            ? Computation_empty(m)()
-            : length === 1
-                ? sources[0]
-                : createConcatSource(sources);
+        return length === 1 ? sources[0] : createConcatSource(sources);
     };
 };
-export const createTakeLast = (m) => (takeLast, options) => (obs) => create(sink => {
+class CreateSource {
+    static [ComputationLike_isDeferred] = true;
+    [ComputationLike_isPure];
+    [ComputationLike_isSynchronous];
+    [CreateSource_effect];
+    constructor(effect, config) {
+        this[CreateSource_effect] = effect;
+        this[ComputationLike_isPure] = config?.[ComputationLike_isPure];
+        this[ComputationLike_isSynchronous] =
+            config?.[ComputationLike_isSynchronous];
+    }
+    [SourceLike_subscribe](listener) {
+        try {
+            this[CreateSource_effect](listener);
+        }
+        catch (e) {
+            listener[DisposableLike_dispose](error(e));
+        }
+    }
+}
+export const create = ((effect, options) => newInstance((CreateSource), effect, options));
+export const takeLast = memoize(m => (takeLast, options) => (obs) => create(sink => {
     const count = options?.count ?? 1;
     const takeLastSink = pipe(takeLast(sink, count), Disposable.addTo(sink), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, sink))));
     pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
-}, obs);
+}, obs));

@@ -1,15 +1,10 @@
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import type * as Observable from "../../Observable.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
-import { Observable_genPure } from "./Observable.gen.js";
-
-const m = {
-  genPure: Observable_genPure,
-  createDelegatingNotifyOnlyNonCompletingNonDisposing:
-    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
-};
 
 const Observable_concat: Observable.Signature["concat"] =
-  /*@__PURE__*/ DeferredSource.creatConcat(m) as Observable.Signature["concat"];
+  /*@__PURE__*/ DeferredSource.concat(
+    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+  ) as Observable.Signature["concat"];
 
 export default Observable_concat;

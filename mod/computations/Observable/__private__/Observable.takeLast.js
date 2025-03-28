@@ -6,5 +6,5 @@ import { Observable_genPure } from "./Observable.gen.js";
 const m = {
     genPure: Observable_genPure,
 };
-const Observable_takeLast = ((options) => DeferredSource.createTakeLast(m)(Observer.takeLast, options));
+const Observable_takeLast = ((options) => DeferredSource.takeLast(m)(Observer.takeLast, options));
 export default Observable_takeLast;

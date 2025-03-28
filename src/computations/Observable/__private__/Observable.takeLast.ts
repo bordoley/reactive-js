@@ -10,7 +10,7 @@ const m = {
 const Observable_takeLast: Observable.Signature["takeLast"] = (<T>(options?: {
   readonly count?: number;
 }) =>
-  DeferredSource.createTakeLast(m)<ObserverLike<T>, T>(
+  DeferredSource.takeLast(m)<ObserverLike<T>, T>(
     Observer.takeLast,
     options,
   )) as Observable.Signature["takeLast"];

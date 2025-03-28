@@ -22,6 +22,7 @@
 - [DeferredComputationLike](interfaces/DeferredComputationLike.md)
 - [DeferredComputationWithSideEffectsLike](interfaces/DeferredComputationWithSideEffectsLike.md)
 - [DeferredReactiveComputationModule](interfaces/DeferredReactiveComputationModule.md)
+- [DeferredSourceLike](interfaces/DeferredSourceLike.md)
 - [GenericComputationType](interfaces/GenericComputationType.md)
 - [InteractiveComputationModule](interfaces/InteractiveComputationModule.md)
 - [IterableLike](interfaces/IterableLike.md)
