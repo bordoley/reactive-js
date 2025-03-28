@@ -8,6 +8,38 @@
 
 ## Methods
 
+### actionReducer()
+
+> **actionReducer**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`\>
+
+#### Type Parameters
+
+• **TAction**
+
+• **T**
+
+#### Parameters
+
+##### reducer
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`TAction`, `T`\>
+
+##### initialState
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+###### equality?
+
+[`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>
+
+#### Returns
+
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`\>
+
+***
+
 ### animation()
 
 #### Call Signature
@@ -153,38 +185,6 @@
 #### Returns
 
 [`StreamableLike`](../../interfaces/StreamableLike.md)\<`T`, `T`, [`StreamLike`](../../interfaces/StreamLike.md)\<`T`, `T`\>\>
-
-***
-
-### scanDistinct()
-
-> **scanDistinct**\<`TAction`, `T`\>(`reducer`, `initialState`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`\>
-
-#### Type Parameters
-
-• **TAction**
-
-• **T**
-
-#### Parameters
-
-##### reducer
-
-[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`TAction`, `T`\>
-
-##### initialState
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### equality?
-
-[`Equality`](../../../functions/type-aliases/Equality.md)\<`T`\>
-
-#### Returns
-
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TAction`, `T`\>
 
 ***
 

@@ -28,7 +28,7 @@ export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {
  * @noInheritDoc
  */
 export interface StreamableModule {
-    scanDistinct<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
+    actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<TAction, T>;
     animation<T>(animation: PureSynchronousObservableLike<T>, options?: {
@@ -70,4 +70,6 @@ export interface StreamableModule {
 }
 export type Signature = StreamableModule;
 export declare const create: Signature["create"];
+export declare const actionReducer: Signature["actionReducer"];
 export declare const identity: Signature["identity"];
+export declare const stateStore: Signature["stateStore"];
