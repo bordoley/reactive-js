@@ -1,4 +1,4 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 /**
@@ -6,6 +6,8 @@ import { SchedulerLike } from "../utils.js";
  */
 export interface AsyncIterableComputation extends ComputationType {
     readonly [Computation_baseOfT]?: AsyncIterableLike<this[typeof Computation_T]>;
+    readonly [Computation_pureSynchronousOfT]?: never;
+    readonly [Computation_synchronousWithSideEffectsOfT]?: never;
     readonly [Computation_deferredWithSideEffectsOfT]?: AsyncIterableWithSideEffectsLike<this[typeof Computation_T]>;
     readonly [Computation_pureDeferredOfT]?: PureAsyncIterableLike<this[typeof Computation_T]>;
 }

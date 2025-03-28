@@ -39,3 +39,23 @@
 #### Overrides
 
 `ComputationType.[Computation_pureDeferredOfT]`
+
+***
+
+### \[Computation\_pureSynchronousOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: `undefined`
+
+#### Overrides
+
+`ComputationType.[Computation_pureSynchronousOfT]`
+
+***
+
+### \[Computation\_synchronousWithSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: `undefined`
+
+#### Overrides
+
+`ComputationType.[Computation_synchronousWithSideEffectsOfT]`

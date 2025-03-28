@@ -6,7 +6,7 @@
 
 # Function: genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): `never`
+> **genPure**\<`T`\>(`factory`, `options`?): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-`never`
+[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>

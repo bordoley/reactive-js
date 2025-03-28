@@ -1134,8 +1134,6 @@ export interface ConcurrentDeferredComputationModule<
   TCreationOptions extends {
     broadcast?: Record<string, any>;
     fromAsyncFactory?: Record<string, any>;
-    genAsync?: Record<string, any>;
-    genPureAsync?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
   broadcast<T>(
@@ -1156,12 +1154,10 @@ export interface ConcurrentDeferredComputationModule<
 
   genAsync<T>(
     factory: Factory<AsyncIterator<T>>,
-    options?: TCreationOptions["genAsync"],
   ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   genPureAsync<T>(
     factory: Factory<AsyncIterator<T>>,
-    options?: TCreationOptions["genPureAsync"],
   ): NewPureInstanceOf<TComputationType, T>;
 }
 

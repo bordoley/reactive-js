@@ -76,7 +76,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`, `options`?): [`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+> **genAsync**\<`T`\>(`factory`): [`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -87,10 +87,6 @@
 ##### factory
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`TCreationOptions`\[`"genAsync"`\]
 
 #### Returns
 
@@ -100,7 +96,7 @@
 
 ### genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`, `options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+> **genPureAsync**\<`T`\>(`factory`): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -111,10 +107,6 @@
 ##### factory
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`TCreationOptions`\[`"genPureAsync"`\]
 
 #### Returns
 

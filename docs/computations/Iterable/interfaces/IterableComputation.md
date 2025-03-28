@@ -22,6 +22,26 @@
 
 ***
 
+### \[Computation\_deferredWithSideEffectsOfT\]?
+
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationType.[Computation_deferredWithSideEffectsOfT]`
+
+***
+
+### \[Computation\_pureDeferredOfT\]?
+
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>
+
+#### Overrides
+
+`ComputationType.[Computation_pureDeferredOfT]`
+
+***
+
 ### \[Computation\_pureSynchronousOfT\]?
 
 > `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>

@@ -6,7 +6,7 @@
 
 # Function: genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+> **genPureAsync**\<`T`\>(`factory`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -17,10 +17,6 @@
 ### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
-
-### options?
-
-`unknown`
 
 ## Returns
 

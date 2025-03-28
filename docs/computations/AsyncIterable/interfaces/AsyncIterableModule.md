@@ -340,7 +340,7 @@
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): `never`
+> **gen**\<`T`\>(`factory`, `options`?): [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -358,7 +358,7 @@
 
 #### Returns
 
-`never`
+[`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Inherited from
 
@@ -368,7 +368,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`, `options`?): `never`
+> **genAsync**\<`T`\>(`factory`): [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -380,13 +380,9 @@
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
 
-##### options?
-
-`unknown`
-
 #### Returns
 
-`never`
+[`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Inherited from
 
@@ -396,7 +392,7 @@
 
 ### genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): `never`
+> **genPure**\<`T`\>(`factory`, `options`?): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -414,7 +410,7 @@
 
 #### Returns
 
-`never`
+[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Inherited from
 
@@ -424,7 +420,7 @@
 
 ### genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`, `options`?): `never`
+> **genPureAsync**\<`T`\>(`factory`): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -436,13 +432,9 @@
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
 
-##### options?
-
-`unknown`
-
 #### Returns
 
-`never`
+[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 #### Inherited from
 

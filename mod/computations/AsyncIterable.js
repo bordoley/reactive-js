@@ -1,7 +1,7 @@
 /// <reference types="./AsyncIterable.d.ts" />
 
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";

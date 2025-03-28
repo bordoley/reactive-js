@@ -44,7 +44,7 @@
 
 ## Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -54,15 +54,15 @@
 
 #### computations
 
-...readonly [`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>[]
+...readonly [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>[]
 
 ### Returns
 
-[`PureDeferredComputationLike`](../../interfaces/PureDeferredComputationLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 ## Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
 
 ### Type Parameters
 
@@ -76,4 +76,4 @@
 
 ### Returns
 
-[`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md) & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>

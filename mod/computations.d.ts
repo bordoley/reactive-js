@@ -293,8 +293,6 @@ export interface InteractiveComputationModule<TComputationType extends AnyComput
 export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
     broadcast?: Record<string, any>;
     fromAsyncFactory?: Record<string, any>;
-    genAsync?: Record<string, any>;
-    genPureAsync?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     broadcast<T>(options?: {
         autoDispose?: boolean;
@@ -302,8 +300,8 @@ export interface ConcurrentDeferredComputationModule<TComputationType extends Co
     fromAsyncFactory<T>(options?: TCreationOptions["fromAsyncFactory"]): Function1<(options?: {
         signal?: AbortSignal;
     }) => Promise<T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
-    genAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genAsync"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
-    genPureAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genPureAsync"]): NewPureInstanceOf<TComputationType, T>;
+    genAsync<T>(factory: Factory<AsyncIterator<T>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    genPureAsync<T>(factory: Factory<AsyncIterator<T>>): NewPureInstanceOf<TComputationType, T>;
 }
 export interface SequentialReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
