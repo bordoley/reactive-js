@@ -1123,8 +1123,13 @@ export interface SynchronousComputationModule<
 
 export interface InteractiveComputationModule<
   TComputationType extends AnyComputationType = AnyComputationType,
+  TCreationOptions extends {
+    toObservable?: Record<string, any>;
+  } = {},
 > extends ComputationModuleLike<TComputationType> {
-  toObservable<T>(): ToObservableOperator<TComputationType, T>;
+  toObservable<T>(
+    options?: TCreationOptions["toObservable"],
+  ): ToObservableOperator<TComputationType, T>;
 
   zip: ZipConstructor<TComputationType>;
 }

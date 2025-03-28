@@ -286,8 +286,10 @@ export interface SynchronousComputationModule<TComputationType extends AnyComput
 } = {}> extends ComputationModuleLike<TComputationType> {
     toRunnable<T>(options?: TCreationOptions["toRunnable"]): ToRunnableOperator<TComputationType, T>;
 }
-export interface InteractiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
-    toObservable<T>(): ToObservableOperator<TComputationType, T>;
+export interface InteractiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
+    toObservable?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    toObservable<T>(options?: TCreationOptions["toObservable"]): ToObservableOperator<TComputationType, T>;
     zip: ZipConstructor<TComputationType>;
 }
 export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {

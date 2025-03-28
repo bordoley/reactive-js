@@ -368,11 +368,9 @@ class ThrowIfEmptyIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyIterable, iter, factory));
-export const toObservable = 
-//  @__PURE__
-returns((iter) => ComputationM.isPure(iter)
-    ? Observable_genPure(bindMethod(iter, Symbol.iterator))
-    : Observable_gen(bindMethod(iter, Symbol.iterator)));
+export const toObservable = ((options) => (iter) => ComputationM.isPure(iter)
+    ? Observable_genPure(bindMethod(iter, Symbol.iterator), options)
+    : Observable_gen(bindMethod(iter, Symbol.iterator), options));
 export const toProducer = /*@__PURE__*/ returns((iterable) => ComputationM.isPure(iterable)
     ? Producer_genPure(bindMethod(iterable, Symbol.iterator))
     : Producer_gen(bindMethod(iterable, Symbol.iterator)));

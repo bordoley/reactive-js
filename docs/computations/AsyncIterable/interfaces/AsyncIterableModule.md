@@ -730,11 +730,17 @@
 
 ### toObservable()
 
-> **toObservable**\<`T`\>(): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+> **toObservable**\<`T`\>(`options`?): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`unknown`
 
 #### Returns
 

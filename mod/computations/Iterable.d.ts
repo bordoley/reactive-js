@@ -10,7 +10,12 @@ export interface IterableComputation extends ComputationType {
     readonly [Computation_deferredWithSideEffectsOfT]?: IterableWithSideEffectsLike<this[typeof Computation_T]>;
 }
 export type Computation = IterableComputation;
-export interface IterableModule extends ComputationModule<IterableComputation>, SequentialComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
+export interface IterableModule extends ComputationModule<IterableComputation>, SequentialComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation, {
+    toObservable: {
+        delay?: number;
+        delayStart?: boolean;
+    };
+}> {
 }
 export type Signature = IterableModule;
 export declare const catchError: Signature["catchError"];
