@@ -15,13 +15,13 @@ import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToObserverMixin from "../../__mixins__/LiftedSinkToObserverMixin.js";
 
 export const liftedSinkToObserver: <T>(
-  delegate: LiftedSinkLike<ObserverLike, any>,
+  delegate: LiftedSinkLike<ObserverLike, unknown>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(LiftedSinkToObserverMixin()),
     function OperatorToObserver(
       this: unknown,
-      operator: LiftedSinkLike<ObserverLike, any>,
+      operator: LiftedSinkLike<ObserverLike, unknown>,
     ): ObserverLike<T> {
       init(LiftedSinkToObserverMixin(), this, operator);
 

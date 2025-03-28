@@ -10,6 +10,6 @@ export declare const LiftedSourceLike_sink: unique symbol;
 export declare const LiftedSourceLike_source: unique symbol;
 export interface LiftedSourceLike<TIn, TOut, TEventListenerIn extends EventListenerLike<TIn>, TEventListenerOut extends EventListenerLike<TOut>, TSource extends SourceLike<TIn, TEventListenerIn>> extends SourceLike<TOut, TEventListenerOut> {
     readonly [LiftedSourceLike_source]: TSource;
-    readonly [LiftedSourceLike_sink]: ReadonlyArray<LiftOperator<any, any, TEventListenerOut>>;
+    readonly [LiftedSourceLike_sink]: ReadonlyArray<LiftOperator<TEventListenerOut, unknown, unknown>>;
     [SourceLike_subscribe](listener: TEventListenerOut): void;
 }

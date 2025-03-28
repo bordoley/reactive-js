@@ -2,7 +2,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike }
 import { Function1 } from "../../../functions.js";
 import { ObserverLike } from "../../../utils.js";
 import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
-export declare const liftedSinkToObserver: <T>(delegate: LiftedSinkLike<ObserverLike, any>) => ObserverLike<T>;
+export declare const liftedSinkToObserver: <T>(delegate: LiftedSinkLike<ObserverLike, unknown>) => ObserverLike<T>;
 declare const Observable_lift: <TIn, TOut>(config?: {
     [ComputationLike_isPure]?: boolean;
     [ComputationLike_isSynchronous]?: boolean;

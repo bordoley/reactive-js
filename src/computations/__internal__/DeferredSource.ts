@@ -138,7 +138,7 @@ interface Signature {
       LiftedSinkLike<TConsumerOut, TIn>
     >,
     liftedSinkToConsumer: Function1<
-      LiftedSinkLike<TConsumerOut, any>,
+      LiftedSinkLike<TConsumerOut, unknown>,
       TConsumerIn
     >,
     config?: {
@@ -161,7 +161,7 @@ interface Signature {
       LiftedSinkLike<TConsumerOut, TIn>
     >,
     liftedSinkToConsumer: Function1<
-      LiftedSinkLike<TConsumerOut, any>,
+      LiftedSinkLike<TConsumerOut, unknown>,
       TConsumerIn
     >,
     config?: {
@@ -184,7 +184,7 @@ interface Signature {
       LiftedSinkLike<TConsumerOut, TIn>
     >,
     liftedSinkToConsumer: Function1<
-      LiftedSinkLike<TConsumerOut, any>,
+      LiftedSinkLike<TConsumerOut, unknown>,
       TConsumerIn
     >,
     config?: {
@@ -207,7 +207,7 @@ interface Signature {
       LiftedSinkLike<TConsumerOut, TIn>
     >,
     liftedSinkToConsumer: Function1<
-      LiftedSinkLike<TConsumerOut, any>,
+      LiftedSinkLike<TConsumerOut, unknown>,
       TConsumerIn
     >,
     config?: {
@@ -230,7 +230,7 @@ interface Signature {
       LiftedSinkLike<TConsumerOut, TIn>
     >,
     liftedSinkToConsumer: Function1<
-      LiftedSinkLike<TConsumerOut, any>,
+      LiftedSinkLike<TConsumerOut, unknown>,
       TConsumerIn
     >,
     config?: {
@@ -462,7 +462,7 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
 
   type TProperties = {
     [LiftedSource_liftedSinkToConsumer]: Function1<
-      LiftedSinkLike<TConsumerOut, any>,
+      LiftedSinkLike<TConsumerOut, unknown>,
       TConsumerIn
     >;
     [ComputationLike_isPure]: boolean;
@@ -470,8 +470,8 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
     [LiftedSourceLike_source]: DeferredSourceLike<TIn, TConsumerIn>;
     [LiftedSourceLike_sink]: ReadonlyArray<
       Function1<
-        LiftedSinkLike<TConsumerOut, any>,
-        LiftedSinkLike<TConsumerOut, any>
+        LiftedSinkLike<TConsumerOut, unknown>,
+        LiftedSinkLike<TConsumerOut, unknown>
       >
     >;
   };
@@ -490,7 +490,7 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
         LiftedSinkLike<TConsumerOut, TIn>
       >,
       liftedSinkToConsumer: Function1<
-        LiftedSinkLike<TConsumerOut, any>,
+        LiftedSinkLike<TConsumerOut, unknown>,
         TConsumerIn
       >,
       config?: {

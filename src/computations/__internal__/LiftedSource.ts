@@ -32,7 +32,7 @@ export interface LiftedSourceLike<
 > extends SourceLike<TOut, TEventListenerOut> {
   readonly [LiftedSourceLike_source]: TSource;
   readonly [LiftedSourceLike_sink]: ReadonlyArray<
-    LiftOperator<any, any, TEventListenerOut>
+    LiftOperator<TEventListenerOut, unknown, unknown>
   >;
 
   [SourceLike_subscribe](listener: TEventListenerOut): void;
