@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -11,15 +12,34 @@ import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
 } from "../../computations/__internal__/LiftedSource.js";
-import { Function1, none, returns } from "../../functions.js";
 import {
+  Function1,
+  SideEffect1,
+  none,
+  pipe,
+  returns,
+} from "../../functions.js";
+import {
+  ConsumerLike,
+  DisposableLike,
   EventListenerLike_notify,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
+  ObserverLike,
+  OverflowBackpressureStrategy,
+  SchedulerLike,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
+import * as Disposable from "../Disposable.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
+import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
+
+import * as Consumer from "./Consumer.js";
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: SinkLike<T>,
@@ -74,3 +94,47 @@ export const toLiftedSink: <T>() => Function1<
     ),
   );
 })();
+
+export const toConsumer: <T>() => Function1<SinkLike<T>, ConsumerLike<T>> =
+  /*@__PURE__*/ (<T>() => {
+    type TPrototype = {
+      [FlowControllerLike_isReady]: true;
+      [FlowControllerLike_backpressureStrategy]: typeof OverflowBackpressureStrategy;
+      [FlowControllerLike_capacity]: number;
+      [FlowControllerLike_addOnReadyListener](
+        callback: SideEffect1<void>,
+      ): DisposableLike;
+    };
+
+    return returns(
+      mixInstanceFactory(
+        include(DelegatingDisposableMixin, DelegatingSinkMixin()),
+        function SinkToConsumer(
+          this: TPrototype,
+          delegate: SinkLike<T>,
+        ): ConsumerLike<T> {
+          init(DelegatingDisposableMixin, this, delegate);
+          init(DelegatingSinkMixin<T>(), this, delegate);
+
+          return this;
+        },
+        props(),
+        proto({
+          [FlowControllerLike_isReady]: true as const,
+          [FlowControllerLike_backpressureStrategy]:
+            OverflowBackpressureStrategy,
+          [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+          [FlowControllerLike_addOnReadyListener](_: SideEffect1<void>) {
+            return Disposable.disposed;
+          },
+        }),
+      ),
+    );
+  })();
+
+export const toObserver: <T>(
+  scheduler: SchedulerLike,
+) => Function1<SinkLike<T>, ObserverLike<T>> =
+  <T>(scheduler: SchedulerLike) =>
+  (sink: SinkLike<T>) =>
+    pipe(sink, toConsumer(), Consumer.toObserver(scheduler));

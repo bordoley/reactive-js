@@ -48,6 +48,7 @@ import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.
 import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
+import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 
@@ -174,6 +175,7 @@ export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
+export const toRunnable: Signature["toRunnable"] = Observable_toRunnable;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =

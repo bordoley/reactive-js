@@ -42,5 +42,6 @@
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
+- [toRunnable](functions/toRunnable.md)
 - [withCurrentTime](functions/withCurrentTime.md)
 - [withLatestFrom](functions/withLatestFrom.md)
