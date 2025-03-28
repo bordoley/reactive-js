@@ -1,12 +1,12 @@
 import {
-  Mixin1,
+  Mixin2,
   include,
   init,
   mix,
   props,
   proto,
 } from "../../__internal__/mixins.js";
-import { none, returns } from "../../functions.js";
+import { Optional, returns } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import ObserverMixin, {
@@ -14,6 +14,7 @@ import ObserverMixin, {
   ObserverMixinLike_notify,
 } from "../../utils/__mixins__/ObserverMixin.js";
 import {
+  BackpressureStrategy,
   EventListenerLike_notify,
   ObserverLike,
   SinkLike_complete,
@@ -40,57 +41,67 @@ type TReturn<TSubscription extends ObserverLike, T> = LiftedSinkToObserverLike<
 const LiftedSinkToObserverMixin: <
   TSubscription extends ObserverLike,
   T,
->() => Mixin1<TReturn<TSubscription, T>, LiftedSinkLike<TSubscription, T>> =
-  /*@__PURE__*/ (<TSubscription extends ObserverLike, T>() => {
-    return returns(
-      mix(
-        include(
-          DelegatingDisposableMixin,
-          DelegatingSchedulerMixin,
-          LiftedSinkToEventListenerMixin(),
-          ObserverMixin(),
-        ),
-        function LiftedSinkToObserverMixin(
-          this: unknown,
-          operator: LiftedSinkLike<TSubscription, T>,
-        ): TReturn<TSubscription, T> {
-          const delegate = operator[LiftedSinkLike_subscription];
-          init(DelegatingDisposableMixin, this, delegate);
-          init(DelegatingSchedulerMixin, this, delegate);
-          init(
-            LiftedSinkToEventListenerMixin<TSubscription, T>(),
-            this,
-            operator,
-          );
-          init(
-            ObserverMixin<TSubscription, T>(),
-            this,
-            delegate,
-            delegate,
-            none,
-          );
-
-          return this;
-        },
-        props(),
-        proto({
-          [ObserverMixinLike_notify](
-            this: LiftedSinkToEventListenerLike<TSubscription, T>,
-            next: T,
-          ) {
-            this[LiftedSinkToEventListenerLike_operator][
-              EventListenerLike_notify
-            ](next);
-          },
-
-          [ObserverMixinLike_complete](
-            this: LiftedSinkToEventListenerLike<TSubscription, T>,
-          ) {
-            this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
-          },
-        }),
+>() => Mixin2<
+  TReturn<TSubscription, T>,
+  LiftedSinkLike<TSubscription, T>,
+  Optional<{
+    capacity?: number;
+    backpressureStrategy?: BackpressureStrategy;
+  }>
+> = /*@__PURE__*/ (<TSubscription extends ObserverLike, T>() => {
+  return returns(
+    mix(
+      include(
+        DelegatingDisposableMixin,
+        DelegatingSchedulerMixin,
+        LiftedSinkToEventListenerMixin(),
+        ObserverMixin(),
       ),
-    );
-  })();
+      function LiftedSinkToObserverMixin(
+        this: unknown,
+        operator: LiftedSinkLike<TSubscription, T>,
+        backPressure: Optional<{
+          capacity?: number;
+          backpressureStrategy?: BackpressureStrategy;
+        }>,
+      ): TReturn<TSubscription, T> {
+        const delegate = operator[LiftedSinkLike_subscription];
+        init(DelegatingDisposableMixin, this, delegate);
+        init(DelegatingSchedulerMixin, this, delegate);
+        init(
+          LiftedSinkToEventListenerMixin<TSubscription, T>(),
+          this,
+          operator,
+        );
+        init(
+          ObserverMixin<TSubscription, T>(),
+          this,
+          delegate,
+          delegate,
+          backPressure,
+        );
+
+        return this;
+      },
+      props(),
+      proto({
+        [ObserverMixinLike_notify](
+          this: LiftedSinkToEventListenerLike<TSubscription, T>,
+          next: T,
+        ) {
+          this[LiftedSinkToEventListenerLike_operator][
+            EventListenerLike_notify
+          ](next);
+        },
+
+        [ObserverMixinLike_complete](
+          this: LiftedSinkToEventListenerLike<TSubscription, T>,
+        ) {
+          this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
+        },
+      }),
+    ),
+  );
+})();
 
 export default LiftedSinkToObserverMixin;

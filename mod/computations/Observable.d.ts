@@ -51,6 +51,10 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly precision?: number;
     }): PureSynchronousObservableLike<number>;
     subscribeOn<T>(scheduler: SchedulerLike): PureAsynchronousComputationOperator<ObservableComputation, T, T>;
+    withBackpressure<T>(config: {
+        capacity: number;
+        backpressureStrategy: BackpressureStrategy;
+    }): PureComputationOperator<ObservableComputation, T, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<ObservableComputation, TA, TB>;
 }
 export type Signature = ObservableModule;
@@ -79,5 +83,6 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toRunnable: Signature["toRunnable"];
+export declare const withBackpressure: Signature["withBackpressure"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];

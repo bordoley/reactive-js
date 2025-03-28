@@ -52,6 +52,7 @@ import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_toRunnable from "./Observable/__private__/Observable.toRunnable.js";
+import Observable_withBackpressure from "./Observable/__private__/Observable.withBackpressure.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 
@@ -155,6 +156,14 @@ export interface ObservableModule
     options?: { readonly mode?: ThrottleMode },
   ): PureComputationOperator<ObservableComputation, T, T>;
 */
+
+  // FIXME: Implement this on producer as well and move into
+  // a computation module
+  withBackpressure<T>(config: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+  }): PureComputationOperator<ObservableComputation, T, T>;
+
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
   ): PureComputationOperator<ObservableComputation, TA, TB>;
@@ -190,6 +199,8 @@ export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toRunnable: Signature["toRunnable"] = Observable_toRunnable;
+export const withBackpressure: Signature["withBackpressure"] =
+  Observable_withBackpressure;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =

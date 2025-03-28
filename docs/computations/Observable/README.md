@@ -46,5 +46,6 @@
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
 - [toRunnable](functions/toRunnable.md)
+- [withBackpressure](functions/withBackpressure.md)
 - [withCurrentTime](functions/withCurrentTime.md)
 - [withLatestFrom](functions/withLatestFrom.md)
