@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentComputationModule, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, PureProducerLike, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
+import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, PureProducerLike, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
 import { ConsumerLike } from "../utils.js";
 /**
  * @noInheritDoc
@@ -12,7 +12,7 @@ export interface ProducerComputation extends ComputationType {
     readonly [Computation_multicastOfT]?: never;
 }
 export type Computation = ProducerComputation;
-export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, ConcurrentComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation> {
+export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation> {
     create<T>(f: (consumer: ConsumerLike<T>) => void): ProducerWithSideEffectsLike<T>;
 }
 export type Signature = ProducerModule;

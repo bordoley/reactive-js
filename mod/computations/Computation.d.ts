@@ -1,4 +1,4 @@
-import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOfModule, ComputationOperatorWithSideEffects, ComputationType, ComputationTypeOfModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationWithSideEffectsOf, MulticastComputationOf, NewPureInstanceOf, PickComputationModule, PureAsynchronousComputationOperator, PureComputationLike, PureComputationOperator, PureDeferredComputationOf, PureSynchronousComputationOf, SequentialComputationModule, SynchronousComputationLike, SynchronousComputationModule, SynchronousComputationOf } from "../computations.js";
+import { ComputationBaseOf, ComputationLike, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOfModule, ComputationOperatorWithSideEffects, ComputationType, ComputationTypeOfModule, ConcurrentReactiveComputationModule, DeferredComputationLike, DeferredComputationOf, DeferredComputationWithSideEffectsOf, MulticastComputationOf, NewPureInstanceOf, ObservableWithSideEffectsLike, PickComputationModule, PureAsynchronousComputationOperator, PureComputationLike, PureComputationOperator, PureDeferredComputationOf, PureObservableLike, PureSynchronousComputationOf, SequentialComputationModule, SynchronousComputationLike, SynchronousComputationModule, SynchronousComputationOf } from "../computations.js";
 import { Factory, Function1, Optional } from "../functions.js";
 import { DisposableLike } from "../utils.js";
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
@@ -41,6 +41,7 @@ export interface Signature {
         readonly raise?: Factory<unknown>;
     }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     subscribe<TComputationModule extends PickComputationModule<ComputationModule, "toProducer">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toProducer"]>[0]) => Function1<ComputationOfModule<TComputationModule, T>, DisposableLike>;
+    toObservable<TComputationModule extends PickComputationModule<ComputationModule, "toProducer">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toProducer"]>[0]) => <TComputationBaseOf extends ComputationOfModule<TComputationModule, T>>(computation: TComputationBaseOf) => TComputationBaseOf extends PureDeferredComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? PureObservableLike<T> : TComputationBaseOf extends DeferredComputationWithSideEffectsOf<ComputationTypeOfModule<TComputationModule>, T> ? ObservableWithSideEffectsLike<T> : TComputationBaseOf extends MulticastComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? PureObservableLike<T> : never;
     toReadonlyArray<TComputationModule extends PickComputationModule<SynchronousComputationModule, "toRunnable">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toRunnable"]>[0]) => Function1<ComputationOfModule<TComputationModule, T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<TComputationModule extends PickComputationModule<ComputationModule, "toProducer">>(m: TComputationModule): <T>(options?: Parameters<TComputationModule["toProducer"]>[0]) => Function1<ComputationOfModule<TComputationModule, T>, Promise<ReadonlyArray<T>>>;
 }
@@ -57,5 +58,6 @@ export declare const makeModule: Signature["makeModule"];
 export declare const mergeWith: Signature["mergeWith"];
 export declare const raise: Signature["raise"];
 export declare const subscribe: Signature["subscribe"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

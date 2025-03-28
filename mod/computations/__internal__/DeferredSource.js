@@ -7,7 +7,10 @@ import { bind, bindMethod, error, invoke, isSome, newInstance, none, pipe, } fro
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../utils.js";
-import * as Computation from "../Computation.js";
+import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
+import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
+import Computation_empty from "../Computation/__private__/Computation.empty.js";
+//import * as Computation from "../Computation.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
 class CreateSource {
     static [ComputationLike_isDeferred] = true;
@@ -48,8 +51,8 @@ export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, 
     }));
     source[SourceLike_subscribe](onErrorSink);
 }, {
-    [ComputationLike_isPure]: Computation.isPure(options?.innerType ?? {}),
-    [ComputationLike_isSynchronous]: Computation.isSynchronous(options?.innerType ?? {}),
+    [ComputationLike_isPure]: options?.innerType?.[ComputationLike_isPure],
+    [ComputationLike_isSynchronous]: options?.innerType?.[ComputationLike_isSynchronous],
 });
 export const creatConcat = (m) => {
     const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");
@@ -80,9 +83,9 @@ export const creatConcat = (m) => {
             : observable)
         : sources;
     const createConcatSource = mixInstanceFactory(function ConcatSource(sources) {
-        this[ComputationLike_isPure] = Computation.areAllPure(sources);
+        this[ComputationLike_isPure] = Computation_areAllPure(sources);
         this[ComputationLike_isSynchronous] =
-            Computation.areAllSynchronous(sources);
+            Computation_areAllSynchronous(sources);
         this[ConcatSource_sources] = flattenSources(sources);
         return this;
     }, props({
@@ -104,7 +107,7 @@ export const creatConcat = (m) => {
     return (...sources) => {
         const length = sources[Array_length];
         return length === 0
-            ? Computation.empty(m)()
+            ? Computation_empty(m)()
             : length === 1
                 ? sources[0]
                 : createConcatSource(sources);

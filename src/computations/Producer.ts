@@ -8,7 +8,6 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  ConcurrentComputationModule,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredReactiveComputationModule,
@@ -76,7 +75,6 @@ export interface ProducerModule
     ConcurrentReactiveComputationModule<ProducerComputation>,
     SequentialComputationModule<ProducerComputation>,
     SequentialReactiveComputationModule<ProducerComputation>,
-    ConcurrentComputationModule<ProducerComputation>,
     DeferredReactiveComputationModule<ProducerComputation> {
   create<T>(
     f: (consumer: ConsumerLike<T>) => void,

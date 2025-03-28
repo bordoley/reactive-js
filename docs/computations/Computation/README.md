@@ -27,5 +27,6 @@
 - [mergeWith](functions/mergeWith.md)
 - [raise](functions/raise.md)
 - [subscribe](functions/subscribe.md)
+- [toObservable](functions/toObservable.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

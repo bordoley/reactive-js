@@ -16,7 +16,6 @@ import {
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
-  ConcurrentComputationModule,
   ConcurrentDeferredComputationModule,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
@@ -89,7 +88,6 @@ export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
     SequentialComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
-    ConcurrentComputationModule<AsyncIterableComputation>,
     ConcurrentDeferredComputationModule<
       AsyncIterableComputation,
       {

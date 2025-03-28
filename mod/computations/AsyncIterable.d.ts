@@ -1,4 +1,4 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentComputationModule, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 /**
@@ -10,7 +10,7 @@ export interface AsyncIterableComputation extends ComputationType {
     readonly [Computation_pureDeferredOfT]?: PureAsyncIterableLike<this[typeof Computation_T]>;
 }
 export type Computation = AsyncIterableComputation;
-export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation, {
+export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation, {
     broadcast: {
         readonly scheduler?: SchedulerLike;
     };

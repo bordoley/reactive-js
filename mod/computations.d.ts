@@ -290,9 +290,6 @@ export interface InteractiveComputationModule<TComputationType extends AnyComput
     toObservable<T>(): ToObservableOperator<TComputationType, T>;
     zip: ZipConstructor<TComputationType>;
 }
-export interface ConcurrentComputationModule<TComputationType extends ComputationType> {
-    toObservable<T>(): ToObservableOperator<TComputationType, T>;
-}
 export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
     broadcast?: Record<string, any>;
     fromAsyncFactory?: Record<string, any>;

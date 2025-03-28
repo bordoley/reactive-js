@@ -8,7 +8,6 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  ConcurrentComputationModule,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredReactiveComputationModule,
@@ -112,7 +111,6 @@ export interface ObservableModule
         };
       }
     >,
-    ConcurrentComputationModule<ObservableComputation>,
     DeferredReactiveComputationModule<ObservableComputation> {
   backpressureStrategy<T>(options: {
     capacity: number;

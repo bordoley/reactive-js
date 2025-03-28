@@ -9,7 +9,6 @@ import {
   Computation_pureDeferredOfT,
   Computation_pureSynchronousOfT,
   Computation_synchronousWithSideEffectsOfT,
-  ConcurrentComputationModule,
   ConcurrentReactiveComputationModule,
 } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
@@ -57,7 +56,6 @@ export type Computation = BroadcasterComputation;
  */
 export interface BroadcasterModule
   extends ComputationModule<BroadcasterComputation>,
-    ConcurrentComputationModule<BroadcasterComputation>,
     ConcurrentReactiveComputationModule<BroadcasterComputation> {
   addEventHandler<T>(
     onNotify: SideEffect1<T>,

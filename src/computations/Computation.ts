@@ -18,12 +18,14 @@ import {
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
   NewPureInstanceOf,
+  ObservableWithSideEffectsLike,
   PickComputationModule,
   ProducerLike,
   PureAsynchronousComputationOperator,
   PureComputationLike,
   PureComputationOperator,
   PureDeferredComputationOf,
+  PureObservableLike,
   PureSynchronousComputationOf,
   RunnableLike_eval,
   SequentialComputationModule,
@@ -48,7 +50,17 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Consumer from "../utils/__internal__/Consumer.js";
-import { CollectionEnumeratorLike_peek, DisposableLike } from "../utils.js";
+import {
+  CollectionEnumeratorLike_peek,
+  DisposableLike,
+  ObserverLike,
+} from "../utils.js";
+import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
+import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
+import Computation_empty from "./Computation/__private__/Computation.empty.js";
+import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
+import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
+import * as DeferredSource from "./__internal__/DeferredSource.js";
 
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
@@ -228,6 +240,26 @@ export interface Signature {
     options?: Parameters<TComputationModule["toProducer"]>[0],
   ) => Function1<ComputationOfModule<TComputationModule, T>, DisposableLike>;
 
+  // prettier-ignore
+  toObservable<
+    TComputationModule extends PickComputationModule<
+      ComputationModule,
+      "toProducer"
+    >,
+  >(
+    m: TComputationModule,
+  ): <T>(
+    options?: Parameters<TComputationModule["toProducer"]>[0],
+  ) => <TComputationBaseOf extends ComputationOfModule<TComputationModule, T>>(
+    computation: TComputationBaseOf,
+  ) =>  TComputationBaseOf extends PureDeferredComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? 
+          PureObservableLike<T> : 
+        TComputationBaseOf extends DeferredComputationWithSideEffectsOf<ComputationTypeOfModule<TComputationModule>, T> ? 
+          ObservableWithSideEffectsLike<T> : 
+        TComputationBaseOf extends MulticastComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? 
+          PureObservableLike<T> : 
+          never;
+
   toReadonlyArray<
     TComputationModule extends PickComputationModule<
       SynchronousComputationModule,
@@ -254,19 +286,9 @@ export interface Signature {
   >;
 }
 
-export const areAllPure: Signature["areAllPure"] = <
-  TComputationType extends ComputationLike,
->(
-  computations: readonly TComputationType[],
-): computations is readonly (TComputationType & PureComputationLike)[] =>
-  computations.every(isPure);
-
-export const areAllSynchronous: Signature["areAllSynchronous"] = <
-  TComputationType extends ComputationLike,
->(
-  computations: readonly TComputationType[],
-): computations is readonly (TComputationType & SynchronousComputationLike)[] =>
-  computations.every(isSynchronous);
+export const areAllPure: Signature["areAllPure"] = Computation_areAllPure;
+export const areAllSynchronous: Signature["areAllSynchronous"] =
+  Computation_areAllSynchronous;
 
 export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoize(
   m =>
@@ -275,9 +297,7 @@ export const concatWith: Signature["concatWith"] = /*@__PURE__*/ memoize(
       m.concat(fst, ...tail),
 ) as Signature["concatWith"];
 
-export const empty: Signature["empty"] = /*@__PURE__*/ memoize(m =>
-  returns(m.genPure(bindMethod([], Symbol.iterator))),
-);
+export const empty: Signature["empty"] = Computation_empty;
 
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   /*@__PURE__*/ memoize(
@@ -294,19 +314,9 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
         }, options),
   ) as Signature["fromReadonlyArray"];
 
-export const isPure: Signature["isPure"] = <
-  TComputationType extends ComputationLike,
->(
-  computation: TComputationType,
-): computation is TComputationType & PureComputationLike =>
-  computation[ComputationLike_isPure] ?? true;
-
-export const isSynchronous: Signature["isSynchronous"] = <
-  TComputationType extends ComputationLike,
->(
-  computation: TComputationType,
-): computation is TComputationType & SynchronousComputationLike =>
-  computation[ComputationLike_isSynchronous] ?? true;
+export const isPure: Signature["isPure"] = Computation_isPure;
+export const isSynchronous: Signature["isSynchronous"] =
+  Computation_isSynchronous;
 
 export const last: Signature["last"] = /*@__PURE__*/ memoize(
   m =>
@@ -374,6 +384,22 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ memoize(
       return consumer;
     },
 );
+
+export const toObservable: Signature["toObservable"] = /*@__PURE__*/ memoize(
+  m =>
+    <T>(options?: Parameters<typeof m.toProducer>[0]) =>
+    (src: ComputationOfModule<typeof m, T>) => {
+      const producer = pipe(src, m.toProducer(options));
+
+      return DeferredSource.create<T, ObserverLike<T>>(
+        bindMethod(producer, SourceLike_subscribe),
+        {
+          [ComputationLike_isPure]: producer[ComputationLike_isPure],
+          [ComputationLike_isSynchronous]: false,
+        },
+      );
+    },
+) as Signature["toObservable"];
 
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   /*@__PURE__*/ memoize(
