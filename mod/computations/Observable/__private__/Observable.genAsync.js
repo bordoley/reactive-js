@@ -16,7 +16,7 @@ const genFactory = (factory) => (observer) => {
         const startTime = observer[SchedulerLike_now];
         let isReady = observer[FlowControllerLike_isReady];
         let isCompleted = observer[SinkLike_isCompleted];
-        let shouldYield = isReady && !isCompleted;
+        let shouldYield = false;
         if (isActive || isCompleted) {
             return;
         }

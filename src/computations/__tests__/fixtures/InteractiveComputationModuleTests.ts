@@ -14,6 +14,10 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
+import * as Observable from "../../Observable.js";
+
+const ObservableModule =
+  Computation.makeModule<Observable.Computation>()(Observable);
 
 const InteractiveComputationModuleTests = <
   TComputationModule extends ComputationModule & InteractiveComputationModule,
@@ -22,7 +26,18 @@ const InteractiveComputationModuleTests = <
 ) =>
   describe(
     "InteractiveComputationModuleTests",
-
+    describe(
+      "toObservable",
+      testAsync(
+        "The observable publishes all the values from the source",
+        pipeLazyAsync(
+          Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]),
+          m.toObservable<number>(),
+          Computation.toReadonlyArrayAsync(ObservableModule)(),
+          expectArrayEquals([0, 1, 2, 3, 4]),
+        ),
+      ),
+    ),
     describe(
       "zip",
       testAsync(

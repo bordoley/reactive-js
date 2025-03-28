@@ -321,7 +321,6 @@ export interface SequentialReactiveComputationModule<TComputationType extends An
 }
 export interface ConcurrentReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
     fromAsyncIterable?: Record<string, any>;
-    fromBroadcaster?: Record<string, any>;
     never?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     fromBroadcaster<T>(): Function1<BroadcasterLike<T>, PureDeferredComputationOf<TComputationType, T>>;
