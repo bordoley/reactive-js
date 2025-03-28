@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentDeferredComputationModule
 
-# Interface: ConcurrentDeferredComputationModule\<TComputationType, TCreationOptions\>
+# Interface: ConcurrentDeferredComputationModule\<TComputationType\>
 
 ## Extends
 
@@ -20,8 +20,6 @@
 
 • **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
 
-• **TCreationOptions** *extends* `object` = \{\}
-
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -33,26 +31,6 @@
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
 ## Methods
-
-### fromAsyncFactory()
-
-> **fromAsyncFactory**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<(`options`?) => `Promise`\<`T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"fromAsyncFactory"`\]
-
-#### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<(`options`?) => `Promise`\<`T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
-
-***
 
 ### genAsync()
 

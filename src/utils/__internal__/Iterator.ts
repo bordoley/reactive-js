@@ -30,12 +30,7 @@ import {
 
 interface Signature {
   toAsyncEnumerator<T>(): Function1<Iterator<T>, AsyncEnumeratorLike<T>>;
-  toAsyncGenerator<T>(): Function1<
-    Iterator<T>,
-    AsyncGenerator<Awaited<T>, void, unknown>
-  >;
   toEnumerator<T>(): Function1<Iterator<T>, EnumeratorLike<T>>;
-  toGenerator<T>(): Function1<Iterator<T>, Generator<T, void, unknown>>;
 }
 
 export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =

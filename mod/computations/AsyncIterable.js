@@ -96,6 +96,38 @@ class DistinctUntilChangedAsyncIterable {
     }
 }
 export const distinctUntilChanged = ((options) => (iterable) => newInstance(DistinctUntilChangedAsyncIterable, iterable, options?.equality ?? strictEquality));
+class AsyncFactoryIterator {
+    a;
+    p;
+    hv = false;
+    constructor(a, p) {
+        this.a = a;
+        this.p = p;
+    }
+    async next() {
+        const { hv: hasValue, p: promise } = this;
+        if (hasValue) {
+            return { done: true, value: none };
+        }
+        const value = await promise;
+        this.hv = true;
+        return { value };
+    }
+    async return() {
+        const { a: abortController, hv: hasValue } = this;
+        if (!hasValue) {
+            abortController.abort();
+        }
+        return { done: true, value: none };
+    }
+    async throw(e) {
+        const { a: abortController, hv: hasValue } = this;
+        if (!hasValue) {
+            abortController.abort(e);
+        }
+        return { done: true, value: none };
+    }
+}
 class FromAsyncFactoryIterable {
     f;
     [ComputationLike_isPure] = false;
@@ -103,9 +135,10 @@ class FromAsyncFactoryIterable {
     constructor(f) {
         this.f = f;
     }
-    async *[Symbol.asyncIterator]() {
-        const result = await this.f();
-        yield result;
+    [Symbol.asyncIterator]() {
+        const abortController = newInstance(AbortController);
+        const promise = this.f({ signal: abortController.signal });
+        return newInstance((AsyncFactoryIterator), abortController, promise);
     }
 }
 export const fromAsyncFactory = returns(factory => newInstance(FromAsyncFactoryIterable, factory));

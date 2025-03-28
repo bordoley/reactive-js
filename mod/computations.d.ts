@@ -295,12 +295,7 @@ export interface InteractiveComputationModule<TComputationType extends AnyComput
     toObservable<T>(options?: TCreationOptions["toObservable"]): ToObservableOperator<TComputationType, T>;
     zip: ZipConstructor<TComputationType>;
 }
-export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType, TCreationOptions extends {
-    fromAsyncFactory?: Record<string, any>;
-} = {}> extends ComputationModuleLike<TComputationType> {
-    fromAsyncFactory<T>(options?: TCreationOptions["fromAsyncFactory"]): Function1<(options?: {
-        signal?: AbortSignal;
-    }) => Promise<T>, DeferredComputationWithSideEffectsOf<TComputationType, T>>;
+export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
     genAsync<T>(factory: Factory<AsyncIterator<T>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
     genPureAsync<T>(factory: Factory<AsyncIterator<T>>): NewPureInstanceOf<TComputationType, T>;
 }

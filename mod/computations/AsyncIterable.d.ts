@@ -12,6 +12,9 @@ export interface AsyncIterableComputation extends ComputationType {
 }
 export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
+    fromAsyncFactory<T>(): Function1<(options?: {
+        signal?: AbortSignal;
+    }) => Promise<T>, AsyncIterableWithSideEffectsLike<T>>;
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 }
 export type Signature = AsyncIterableModule;

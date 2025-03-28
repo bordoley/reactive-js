@@ -1142,17 +1142,7 @@ export interface InteractiveComputationModule<
 
 export interface ConcurrentDeferredComputationModule<
   TComputationType extends ComputationType,
-  TCreationOptions extends {
-    fromAsyncFactory?: Record<string, any>;
-  } = {},
 > extends ComputationModuleLike<TComputationType> {
-  fromAsyncFactory<T>(
-    options?: TCreationOptions["fromAsyncFactory"],
-  ): Function1<
-    (options?: { signal?: AbortSignal }) => Promise<T>,
-    DeferredComputationWithSideEffectsOf<TComputationType, T>
-  >;
-
   genAsync<T>(
     factory: Factory<AsyncIterator<T>>,
   ): NewInstanceWithSideEffectsOf<TComputationType, T>;

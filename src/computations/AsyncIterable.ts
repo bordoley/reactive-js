@@ -89,6 +89,11 @@ export interface AsyncIterableModule
     SequentialComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
+  fromAsyncFactory<T>(): Function1<
+    (options?: { signal?: AbortSignal }) => Promise<T>,
+    AsyncIterableWithSideEffectsLike<T>
+  >;
+
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 }
 
@@ -237,6 +242,42 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] = (<
       options?.equality ?? strictEquality,
     )) as Signature["distinctUntilChanged"];
 
+class AsyncFactoryIterator<T> implements AsyncIterator<T> {
+  private hv = false;
+
+  constructor(
+    private readonly a: AbortController,
+    private readonly p: Promise<T>,
+  ) {}
+
+  async next(): Promise<IteratorResult<T, any>> {
+    const { hv: hasValue, p: promise } = this;
+
+    if (hasValue) {
+      return { done: true, value: none };
+    }
+    const value = await promise;
+    this.hv = true;
+    return { value };
+  }
+
+  async return?(): Promise<IteratorResult<T, any>> {
+    const { a: abortController, hv: hasValue } = this;
+    if (!hasValue) {
+      abortController.abort();
+    }
+    return { done: true, value: none };
+  }
+
+  async throw?(e?: any): Promise<IteratorResult<T, any>> {
+    const { a: abortController, hv: hasValue } = this;
+    if (!hasValue) {
+      abortController.abort(e);
+    }
+    return { done: true, value: none };
+  }
+}
+
 class FromAsyncFactoryIterable<T>
   implements AsyncIterableWithSideEffectsLike<T>
 {
@@ -245,9 +286,10 @@ class FromAsyncFactoryIterable<T>
 
   constructor(private f: (options?: { signal: AbortSignal }) => Promise<T>) {}
 
-  async *[Symbol.asyncIterator]() {
-    const result = await this.f();
-    yield result;
+  [Symbol.asyncIterator]() {
+    const abortController: AbortController = newInstance(AbortController);
+    const promise = this.f({ signal: abortController.signal });
+    return newInstance(AsyncFactoryIterator<T>, abortController, promise);
   }
 }
 
