@@ -6,6 +6,7 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
+  PickComputationModule,
   SequentialReactiveComputationModule,
 } from "../../../computations.js";
 import {
@@ -18,7 +19,7 @@ import * as Computation from "../../Computation.js";
 
 const SequentialReactiveComputationModuleTests = <
   TComputationModule extends ComputationModule &
-    Pick<
+    PickComputationModule<
       SequentialReactiveComputationModule,
       "buffer" | "decodeWithCharset" | "takeLast"
     >,

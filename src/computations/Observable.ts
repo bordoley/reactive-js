@@ -22,7 +22,7 @@ import {
   SynchronousComputationModule,
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
-import { Function1, Function2 } from "../functions.js";
+import { Function1, Function2, identity, returns } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -101,7 +101,15 @@ export interface ObservableModule
       }
     >,
     ConcurrentReactiveComputationModule<ObservableComputation>,
-    SequentialComputationModule<ObservableComputation>,
+    SequentialComputationModule<
+      ObservableComputation,
+      {
+        gen: {
+          readonly delay?: number;
+          readonly delayStart?: boolean;
+        };
+      }
+    >,
     SequentialReactiveComputationModule<ObservableComputation>,
     SynchronousComputationModule<
       ObservableComputation,
@@ -164,6 +172,8 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromObservable: Signature["fromObservable"] =
+  /*@__PURE__*/ returns(identity) as Signature["fromObservable"];
 export const gen: Signature["gen"] = Observable_gen;
 export const genAsync: Signature["genAsync"] = Observable_genAsync;
 export const genPure: Signature["genPure"] = Observable_genPure;

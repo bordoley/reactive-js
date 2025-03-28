@@ -18,6 +18,7 @@ import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js"
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
+import { Broadcaster_fromObservable } from "./Broadcaster/__private__/Broadcaster.fromObservable.js";
 import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
@@ -91,6 +92,8 @@ export const createPauseable: Signature["createPauseable"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Broadcaster_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;
+export const fromObservable: Signature["fromObservable"] =
+  Broadcaster_fromObservable;
 export const fromPromise: Signature["fromPromise"] = Broadcaster_fromPromise;
 export const genPure: Signature["genPure"] = Broadcaster_genPure;
 export const keep: Signature["keep"] = Broadcaster_keep;

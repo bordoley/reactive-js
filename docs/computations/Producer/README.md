@@ -27,6 +27,7 @@
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
 - [forEach](functions/forEach.md)
+- [fromObservable](functions/fromObservable.md)
 - [gen](functions/gen.md)
 - [genAsync](functions/genAsync.md)
 - [genPure](functions/genPure.md)

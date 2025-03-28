@@ -24,6 +24,7 @@ export declare const create: Signature["create"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
+export declare const fromObservable: Signature["fromObservable"];
 export declare const forEach: Signature["forEach"];
 export declare const gen: Signature["gen"];
 export declare const genAsync: Signature["genAsync"];

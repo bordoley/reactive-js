@@ -111,14 +111,20 @@ const genFactory =
     );
   };
 
-export const Observable_gen: Observable.Signature["gen"] = (factory =>
-  DeferredSource.create(genFactory(factory), {
+export const Observable_gen: Observable.Signature["gen"] = ((
+  factory,
+  options,
+) =>
+  DeferredSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   })) as Observable.Signature["gen"];
 
-export const Observable_genPure: Observable.Signature["genPure"] = (factory =>
-  DeferredSource.create(genFactory(factory), {
+export const Observable_genPure: Observable.Signature["genPure"] = ((
+  factory,
+  options,
+) =>
+  DeferredSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
   })) as Observable.Signature["genPure"];

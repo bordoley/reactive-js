@@ -2,6 +2,7 @@
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
 import { identity, returns } from "../functions.js";
+import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
 import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
@@ -32,6 +33,7 @@ export const create = Producer_create;
 export const decodeWithCharset = Producer_decodeWithCharset;
 export const distinctUntilChanged = Producer_distinctUntilChanged;
 export const encodeUtf8 = Producer_encodeUtf8;
+export const fromObservable = Observable_toProducer;
 export const forEach = Producer_forEach;
 export const gen = Producer_gen;
 export const genAsync = Producer_genAsync;

@@ -23,6 +23,7 @@
 - [createPauseable](functions/createPauseable.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
+- [fromObservable](functions/fromObservable.md)
 - [fromPromise](functions/fromPromise.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)

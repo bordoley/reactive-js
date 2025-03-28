@@ -32,6 +32,7 @@ export declare const create: Signature["create"];
 export declare const createPauseable: Signature["createPauseable"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
+export declare const fromObservable: Signature["fromObservable"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];

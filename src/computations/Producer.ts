@@ -19,6 +19,7 @@ import {
 } from "../computations.js";
 import { identity, returns } from "../functions.js";
 import { ConsumerLike } from "../utils.js";
+import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
 import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
@@ -93,6 +94,8 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Producer_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Producer_encodeUtf8;
+export const fromObservable: Signature["fromObservable"] =
+  Observable_toProducer as Signature["fromObservable"];
 export const forEach: Signature["forEach"] = Producer_forEach;
 export const gen: Signature["gen"] = Producer_gen;
 export const genAsync: Signature["genAsync"] = Producer_genAsync;

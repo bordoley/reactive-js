@@ -54,11 +54,11 @@ const genFactory = (factory, options) => (observer) => {
     observer[FlowControllerLike_addOnReadyListener](pipeLazy(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer)));
     pipe(observer[SchedulerLike_schedule](continue_, delayStart ? options : none), Disposable.addTo(observer));
 };
-export const Observable_gen = (factory => DeferredSource.create(genFactory(factory), {
+export const Observable_gen = ((factory, options) => DeferredSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
 }));
-export const Observable_genPure = (factory => DeferredSource.create(genFactory(factory), {
+export const Observable_genPure = ((factory, options) => DeferredSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 }));

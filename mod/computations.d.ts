@@ -319,7 +319,7 @@ export interface SequentialReactiveComputationModule<TComputationType extends An
         readonly count?: number;
     }): PureComputationOperator<TComputationType, T, T>;
 }
-export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationType = ComputationType, TCreationOptions extends {
+export interface ConcurrentReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
     fromAsyncIterable?: Record<string, any>;
     fromBroadcaster?: Record<string, any>;
     never?: Record<string, any>;
