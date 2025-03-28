@@ -164,6 +164,9 @@ export interface GenericComputationType<
   readonly [Computation_multicastOfT]?: TMulticastComputationOfT;
 }
 
+// FIXME: There has to be a better way. This is letting unintentional
+// any's sneak breaking typesafety when coding strictly.
+// Maybe kill generic computation in favor of all unknowns. need test.
 export type AnyComputationType = GenericComputationType<
   any,
   any,
