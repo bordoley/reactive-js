@@ -29,7 +29,7 @@ import {
   identity,
   returns,
 } from "../functions.js";
-import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
+import { ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import {
@@ -179,13 +179,6 @@ export interface ObservableModule
     duration: number,
     options?: { readonly mode?: ThrottleMode },
   ): PureComputationOperator<ObservableComputation, T, T>;
-
-  // FIXME: Implement this on producer as well and move into
-  // a computation module
-  withBackpressure<T>(config: {
-    capacity: number;
-    backpressureStrategy: BackpressureStrategy;
-  }): PureComputationOperator<ObservableComputation, T, T>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,

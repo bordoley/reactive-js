@@ -1324,6 +1324,13 @@ export interface DeferredReactiveComputationModule<
     HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
     T
   >;
+
+  // FIXME: Implement this on producer as well and move into
+  // a computation module
+  withBackpressure<T>(config: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+  }): PureComputationOperator<TComputationType, T, T>;
 }
 
 export interface IterableLike<T = unknown>

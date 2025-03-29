@@ -122,3 +122,29 @@
 #### Returns
 
 [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `T`\>, `T`\>
+
+***
+
+### withBackpressure()
+
+> **withBackpressure**\<`T`\>(`config`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### config
+
+###### backpressureStrategy
+
+[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity
+
+`number`
+
+#### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>

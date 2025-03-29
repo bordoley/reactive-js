@@ -23,7 +23,7 @@ export const liftedSinkToObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(LiftedSinkToObserverMixin()),
-    function OperatorToObserver(
+    function LiftedSinkToObserver(
       this: unknown,
       operator: LiftedSinkLike<ObserverLike, unknown>,
       backPressure: Optional<{

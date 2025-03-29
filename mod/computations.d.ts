@@ -361,6 +361,10 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
     switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly innerType: TInnerLike;
     }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
+    withBackpressure<T>(config: {
+        capacity: number;
+        backpressureStrategy: BackpressureStrategy;
+    }): PureComputationOperator<TComputationType, T, T>;
 }
 export interface IterableLike<T = unknown> extends Iterable<T>, SynchronousComputationLike, DeferredComputationLike {
     [ComputationLike_isDeferred]?: true;

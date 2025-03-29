@@ -47,4 +47,5 @@
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
+- [withBackpressure](functions/withBackpressure.md)
 - [withLatestFrom](functions/withLatestFrom.md)

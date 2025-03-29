@@ -8,28 +8,42 @@ import {
   ComputationLike_isSynchronous,
   ProducerLike,
 } from "../../../computations.js";
-import { Function1 } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { ConsumerLike } from "../../../utils.js";
+import { Function1, Optional } from "../../../functions.js";
+import { BackpressureStrategy, ConsumerLike } from "../../../utils.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToConsumerMixin from "../../__mixins__/LiftedSinkToConsumerMixin.js";
 
-const liftedSinkToConsumer: <T>(
-  delegate: LiftedSinkLike<ConsumerLike, any>,
+export const liftedSinkToConsumer: <T>(
+  delegate: LiftedSinkLike<ConsumerLike, unknown>,
+  backPressure?: Optional<{
+    capacity?: number;
+    backpressureStrategy?: BackpressureStrategy;
+  }>,
 ) => ConsumerLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(LiftedSinkToConsumerMixin(), DelegatingDisposableMixin),
-    function OperatorToConsumer(
+    include(LiftedSinkToConsumerMixin()),
+    function LiftedSinkToConsumer(
       this: unknown,
-      delegate: LiftedSinkLike<ConsumerLike, any>,
+      operator: LiftedSinkLike<ConsumerLike, unknown>,
+      backPressure: Optional<{
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+      }>,
     ): ConsumerLike<T> {
-      init(LiftedSinkToConsumerMixin(), this, delegate);
-      init(DelegatingDisposableMixin, this, delegate);
+      init(LiftedSinkToConsumerMixin(), this, operator, backPressure);
 
       return this;
     },
   ))();
+
+export const liftedSinkToConsumerWithBackPressure =
+  <T>(config: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+  }) =>
+  (sink: LiftedSinkLike<ConsumerLike, T>) =>
+    liftedSinkToConsumer(sink, config);
 
 const Producer_lift =
   <TIn, TOut>(config?: { [ComputationLike_isPure]?: boolean }) =>

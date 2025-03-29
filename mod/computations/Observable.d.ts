@@ -1,6 +1,6 @@
 import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ObservableLike, ObservableWithSideEffectsLike, PureAsynchronousComputationOperator, PureComputationOperator, PureObservableLike, PureSynchronousObservableLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableWithSideEffectsLike } from "../computations.js";
 import { Factory, Function1, Function2 } from "../functions.js";
-import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
+import { ObserverLike, SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -53,10 +53,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     subscribeOn<T>(scheduler: SchedulerLike): PureAsynchronousComputationOperator<ObservableComputation, T, T>;
     throttle<T>(duration: number, options?: {
         readonly mode?: ThrottleMode;
-    }): PureComputationOperator<ObservableComputation, T, T>;
-    withBackpressure<T>(config: {
-        capacity: number;
-        backpressureStrategy: BackpressureStrategy;
     }): PureComputationOperator<ObservableComputation, T, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<ObservableComputation, TA, TB>;
 }

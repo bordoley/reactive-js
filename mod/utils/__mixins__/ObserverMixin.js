@@ -1,9 +1,10 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
-import { bind, call, memoize, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { bind, call, none, pipe, returns } from "../../functions.js";
 import { ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 export const ObserverMixinLike_notify = Symbol("ObserverMixinLike_notify");
@@ -18,8 +19,6 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             // Avoid dequeing values if the downstream consumer
             // is applying backpressure.
             if (!consumer[FlowControllerLike_isReady]) {
-                // Set up the onReady sink
-                call(scheduleDrainQueue, this);
                 break;
             }
             this[EnumeratorLike_moveNext]();
@@ -33,23 +32,17 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             this[ObserverMixinLike_complete]();
         }
     }
-    // memoize to avoid adding a local proper to track if
-    // we already have a consumer lister setup. Not that performant.
-    const setUpOnConsumerReadySinkMemoized = memoize((observer) => {
-        const consumer = observer[ObserverMixinLike_consumer];
-        return pipe(consumer[FlowControllerLike_addOnReadyListener](pipeLazy(observer, scheduleDrainQueue)), Disposable.addTo(observer));
-    });
     function scheduleDrainQueue() {
         const consumer = this[ObserverMixinLike_consumer];
         const isConsumerReady = consumer[FlowControllerLike_isReady];
-        const isConsumerDisposed = consumer[DisposableLike_isDisposed];
         const isDrainScheduled = !this[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
-        if (!isDrainScheduled && isConsumerReady) {
-            this[ObserverMixin_schedulerSubscription] = this[SchedulerLike_schedule](bind(observerSchedulerContinuation, this));
+        if (isDrainScheduled || !isConsumerReady) {
+            return;
         }
-        else if (!isConsumerReady && !isConsumerDisposed) {
-            setUpOnConsumerReadySinkMemoized(this);
-        }
+        this[ObserverMixin_schedulerSubscription] = this[SchedulerLike_schedule](bind(observerSchedulerContinuation, this));
+    }
+    function onObserverDisposed() {
+        this[SinkLike_isCompleted] = true;
     }
     const ObserverMixin_schedulerSubscription = Symbol("ObserverMixin_schedulerSubscription");
     return returns(mix(include(FlowControllerQueueMixin(), DelegatingSchedulerMixin), function ObserverMixin(consumer, scheduler, options) {
@@ -57,6 +50,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         init(DelegatingSchedulerMixin, this, scheduler);
         this[ObserverMixinLike_consumer] = consumer;
         this[FlowControllerEnumeratorLike_addOnDataAvailableListener](bind(scheduleDrainQueue, this));
+        pipe(this, DisposableContainer.onDisposed(onObserverDisposed), Disposable.add(consumer[FlowControllerLike_addOnReadyListener](bind(scheduleDrainQueue, this))));
         return this;
     }, props({
         [ObserverMixinLike_consumer]: none,

@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins
 import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import LiftedSinkToObserverMixin from "../../__mixins__/LiftedSinkToObserverMixin.js";
-export const liftedSinkToObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToObserverMixin()), function OperatorToObserver(operator, backPressure) {
+export const liftedSinkToObserver = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToObserverMixin()), function LiftedSinkToObserver(operator, backPressure) {
     init(LiftedSinkToObserverMixin(), this, operator, backPressure);
     return this;
 }))();
