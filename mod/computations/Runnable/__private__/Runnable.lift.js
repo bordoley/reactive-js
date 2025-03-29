@@ -1,25 +1,31 @@
 /// <reference types="./Runnable.lift.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance, pipeUnsafe } from "../../../functions.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import * as Computation from "../../Computation.js";
 class LiftedRunnable {
     src;
     ops;
     [ComputationLike_isPure];
     [ComputationLike_isDeferred] = false;
-    constructor(src, ops, isPure) {
+    [ComputationLike_isSynchronous] = true;
+    constructor(src, ops, config) {
         this.src = src;
         this.ops = ops;
-        this[ComputationLike_isPure] = isPure && Computation.isPure(src);
+        this[ComputationLike_isPure] = Computation.isPure(config ?? {});
     }
     [RunnableLike_eval](sink) {
-        this.src[RunnableLike_eval](pipeUnsafe(sink, ...this.ops));
+        const destinationOp = pipeUnsafe(sink, Sink.toLiftedSink(), ...this.ops);
+        this.src[RunnableLike_eval](destinationOp);
     }
 }
-const Runnable_lift = ((operator, isPure) => (source) => {
+const Runnable_lift = ((config) => (operator) => (source) => {
     const src = source.src ?? source;
     const ops = [operator, ...(source.ops ?? [])];
-    return newInstance(LiftedRunnable, src, ops, (isPure ?? true) && Computation.isPure(source));
+    const liftedConfig = {
+        [ComputationLike_isPure]: Computation.isPure(source) && Computation.isPure(config ?? {}),
+    };
+    return newInstance(LiftedRunnable, src, ops, liftedConfig);
 });
 export default Runnable_lift;

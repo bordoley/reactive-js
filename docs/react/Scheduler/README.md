@@ -9,3 +9,4 @@
 ## Functions
 
 - [get](functions/get.md)
+- [getImpl](functions/getImpl.md)

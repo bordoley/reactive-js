@@ -1,9 +1,10 @@
 /// <reference types="./Runnable.repeat.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
-import { alwaysTrue, isFunction, isNone, newInstance, } from "../../../functions.js";
-import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
-import { SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { alwaysTrue, error, isFunction, isNone, newInstance, pipe, } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
+import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class RepeatRunnable {
     s;
@@ -18,12 +19,18 @@ class RepeatRunnable {
     [RunnableLike_eval](sink) {
         const source = this.s;
         const predicate = this.p;
-        const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);
         let cnt = 0;
         while (true) {
+            const delegatingSink = pipe(Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addTo(sink));
             source[RunnableLike_eval](delegatingSink);
             cnt++;
-            if (sink[SinkLike_isCompleted] || !predicate(cnt)) {
+            try {
+                if (sink[SinkLike_isCompleted] || !predicate(cnt)) {
+                    break;
+                }
+            }
+            catch (e) {
+                sink[DisposableLike_dispose](error(e));
                 break;
             }
         }

@@ -17,15 +17,29 @@ export interface DelegatingEventListenerLike<
   readonly [DelegatingEventListenerLike_delegate]: TDelegateEventListener;
 }
 
+type TReturn<
+  T,
+  TDelegateEventListener extends EventListenerLike<T> = EventListenerLike<T>,
+> = Omit<
+  DelegatingEventListenerLike<T, TDelegateEventListener>,
+  keyof DisposableLike
+>;
+
+type TPrototype<
+  T,
+  TDelegateEventListener extends EventListenerLike<T> = EventListenerLike<T>,
+> = Omit<
+  DelegatingEventListenerLike<T, TDelegateEventListener>,
+  keyof DisposableLike | typeof DelegatingEventListenerLike_delegate
+>;
+
 const DelegatingEventListenerMixin: <
   T,
   TDelegateEventListener extends EventListenerLike<T> = EventListenerLike<T>,
 >() => Mixin1<
-  Omit<
-    DelegatingEventListenerLike<T, TDelegateEventListener>,
-    keyof DisposableLike
-  >,
-  TDelegateEventListener
+  TReturn<T, TDelegateEventListener>,
+  TDelegateEventListener,
+  TPrototype<T, TDelegateEventListener>
 > = /*@__PURE__*/ (<
   T,
   TDelegateEventListener extends EventListenerLike<T> = EventListenerLike<T>,
@@ -37,16 +51,9 @@ const DelegatingEventListenerMixin: <
   return returns(
     mix(
       function DelegatingEventListenerMixin(
-        this: TProperties &
-          Omit<
-            DelegatingEventListenerLike<T, TDelegateEventListener>,
-            keyof DisposableLike
-          >,
+        this: TProperties & TPrototype<T, TDelegateEventListener>,
         delegate: TDelegateEventListener,
-      ): Omit<
-        DelegatingEventListenerLike<T, TDelegateEventListener>,
-        keyof DisposableLike
-      > {
+      ): TReturn<T, TDelegateEventListener> {
         this[DelegatingEventListenerLike_delegate] = delegate;
 
         return this;

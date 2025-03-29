@@ -1,85 +1,88 @@
 /// <reference types="./Observable.throttle.d.ts" />
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
-import { bind, isSome, none, partial, pipe, pipeLazy, } from "../../../functions.js";
+import { bind, call, isSome, none, partial, pipe, returns, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { LiftedEventListenerLike_delegate, LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
-import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { LiftedSinkLike_complete, LiftedSinkLike_completeDelegate, } from "../../../utils/__mixins__/LiftedSinkMixin.js";
-import { DisposableLike_isDisposed, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
-import Observable_forEach from "./Observable.forEach.js";
-import Observable_fromValue from "./Observable.fromValue.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-import Observable_subscribe from "./Observable.subscribe.js";
-export const ThrottleFirstMode = "first";
-export const ThrottleLastMode = "last";
-export const ThrottleIntervalMode = "interval";
-const createThrottleObserver = /*@__PURE__*/ (() => {
-    const ThrottleObserver_value = Symbol("ThrottleObserver_value");
-    const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
-    const ThrottleObserver_durationSubscription = Symbol("ThrottleObserver_durationSubscription");
-    const ThrottleObserver_durationFunction = Symbol("ThrottleObserver_durationFunction");
-    const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
+import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import * as Source from "../../Source.js";
+import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import Observable_delay from "./Observable.delay.js";
+import Observable_lift from "./Observable.lift.js";
+const ThrottleFirstMode = "first";
+const ThrottleLastMode = "last";
+const ThrottleIntervalMode = "interval";
+const createThrottleSink = /*@__PURE__*/ (() => {
+    const ThrottleSink_value = Symbol("ThrottleSink_value");
+    const ThrottleSink_hasValue = Symbol("ThrottleSink_hasValue");
+    const ThrottleSink_durationSubscription = Symbol("ThrottleSink_durationSubscription");
+    const ThrottleSink_durationFunction = Symbol("ThrottleSink_durationFunction");
+    const ThrottleSink_mode = Symbol("ThrottleSink_mode");
     function notifyThrottleObserverDelegate(_) {
-        const delegate = this[LiftedEventListenerLike_delegate];
+        const delegate = this[DelegatingLiftedSinkLike_delegate];
         const delegateIsCompleted = delegate[SinkLike_isCompleted];
-        if (this[ThrottleObserver_hasValue] && !delegateIsCompleted) {
-            const value = this[ThrottleObserver_value];
-            this[ThrottleObserver_value] = none;
-            this[ThrottleObserver_hasValue] = false;
-            this[LiftedEventListenerLike_notifyDelegate](value);
+        if (this[ThrottleSink_hasValue] && !delegateIsCompleted) {
+            const value = this[ThrottleSink_value];
+            this[ThrottleSink_value] = none;
+            this[ThrottleSink_hasValue] = false;
+            delegate[EventListenerLike_notify](value);
             setupDurationSubscription(this, value);
         }
     }
-    const setupDurationSubscription = (observer, next) => {
-        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(bind(notifyThrottleObserverDelegate, observer)), Observable_subscribe(observer), Disposable.addTo(observer));
+    const setupDurationSubscription = (thiz, next) => {
+        const scheduler = thiz[LiftedSinkLike_subscription];
+        thiz[ThrottleSink_durationSubscription][SerialDisposableLike_current] =
+            pipe(thiz[ThrottleSink_durationFunction](next), Source.subscribe({ scheduler }), 
+            // This works because dispose is called in a scheduler
+            // continuation immediately after the sink is completed.
+            DisposableContainer.onComplete(bind(notifyThrottleObserverDelegate, thiz)), Disposable.addTo(thiz));
     };
-    return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function ThrottleObserver(delegate, durationFunction, mode) {
-        init(DelegatingDisposableMixin, this, delegate);
-        init(LiftedObserverMixin(), this, delegate, none);
-        this[ThrottleObserver_durationFunction] = durationFunction;
-        this[ThrottleObserver_mode] = mode;
-        this[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ThrowIfEmptySink(delegate, durationFunction, mode) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
+        this[ThrottleSink_durationFunction] = durationFunction;
+        this[ThrottleSink_mode] = mode;
+        this[ThrottleSink_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
         return this;
     }, props({
-        [ThrottleObserver_value]: none,
-        [ThrottleObserver_hasValue]: false,
-        [ThrottleObserver_durationSubscription]: none,
-        [ThrottleObserver_durationFunction]: none,
-        [ThrottleObserver_mode]: ThrottleIntervalMode,
+        [ThrottleSink_value]: none,
+        [ThrottleSink_hasValue]: false,
+        [ThrottleSink_durationSubscription]: none,
+        [ThrottleSink_durationFunction]: none,
+        [ThrottleSink_mode]: ThrottleIntervalMode,
     }), proto({
-        [LiftedEventListenerLike_notify](next) {
-            this[ThrottleObserver_value] = next;
-            this[ThrottleObserver_hasValue] = true;
-            const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
+        [EventListenerLike_notify](next) {
+            this[ThrottleSink_value] = next;
+            this[ThrottleSink_hasValue] = true;
+            const durationSubscriptionDisposableIsDisposed = this[ThrottleSink_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
             if (durationSubscriptionDisposableIsDisposed &&
-                this[ThrottleObserver_mode] !== ThrottleLastMode) {
-                notifyThrottleObserverDelegate.call(this);
+                this[ThrottleSink_mode] !== ThrottleLastMode) {
+                call(notifyThrottleObserverDelegate, this);
             }
             else if (durationSubscriptionDisposableIsDisposed) {
                 setupDurationSubscription(this, next);
             }
         },
-        [LiftedSinkLike_complete]() {
-            const delegate = this[LiftedEventListenerLike_delegate];
-            if (this[ThrottleObserver_mode] !== ThrottleFirstMode &&
-                this[ThrottleObserver_hasValue] &&
-                !delegate[SinkLike_isCompleted] &&
-                isSome(this[ThrottleObserver_value])) {
-                const value = this[ThrottleObserver_value];
-                this[ThrottleObserver_value] = none;
-                this[ThrottleObserver_hasValue] = false;
-                this[LiftedEventListenerLike_notifyDelegate](value);
+        [DelegatingLiftedSinkLike_onCompleted]() {
+            const delegate = this[DelegatingLiftedSinkLike_delegate];
+            const delegateIsComplete = delegate[SinkLike_isCompleted];
+            if (this[ThrottleSink_mode] !== ThrottleFirstMode &&
+                this[ThrottleSink_hasValue] &&
+                !delegateIsComplete &&
+                isSome(this[ThrottleSink_value])) {
+                const value = this[ThrottleSink_value];
+                this[ThrottleSink_value] = none;
+                this[ThrottleSink_hasValue] = false;
+                delegate[EventListenerLike_notify](value);
             }
-            this[LiftedSinkLike_completeDelegate]();
+            delegate[SinkLike_complete]();
         },
     }));
 })();
-const Observable_throttle = (duration, options = {}) => {
+const Observable_throttle = ((duration, options = {}) => {
     const { mode = ThrottleIntervalMode } = options;
-    const durationObservable = pipeLazy(none, Observable_fromValue({ delay: duration }));
-    return pipe((createThrottleObserver), partial(durationObservable, mode), Observable_liftPureDeferred);
-};
+    const durationObservable = returns(Observable_delay(duration));
+    return pipe((createThrottleSink), partial(durationObservable, mode), Observable_lift());
+});
 export default Observable_throttle;

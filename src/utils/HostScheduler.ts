@@ -7,7 +7,6 @@ import {
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as Iterable from "../computations/Iterable.js";
 import {
   Optional,
   isNone,
@@ -18,8 +17,17 @@ import {
   pipeLazy,
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
+import SchedulerMixin, {
+  SchedulerContinuation,
+  SchedulerContinuationLike,
+  SchedulerContinuationLike_dueTime,
+  SchedulerContinuationLike_run,
+  SchedulerMixinHostLike,
+  SchedulerMixinHostLike_schedule,
+  SchedulerMixinHostLike_shouldYield,
+} from "../utils/__mixins__/SchedulerMixin.js";
 import {
+  CollectionEnumeratorLike_peek,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -37,23 +45,10 @@ import {
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
-import {
-  SchedulerContinuation,
-  SchedulerContinuationLike,
-  SchedulerContinuationLike_dueTime,
-  SchedulerContinuationLike_run,
-  SchedulerMixinHostLike,
-  SchedulerMixinHostLike_schedule,
-  SchedulerMixinHostLike_shouldYield,
-} from "./__mixins__/SchedulerMixin.js";
 import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 
 interface Signature {
   create(): SchedulerLike & DisposableLike;
-
-  get(): SchedulerLike;
-
-  setMaxYieldInterval(maxYieldInterval: number): void;
 }
 
 export const create: Signature["create"] = /*@PURE__*/ (() => {
@@ -83,7 +78,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   ): Optional<SchedulerContinuationLike> => {
     let continuation: Optional<SchedulerContinuationLike> = none;
     while (true) {
-      continuation = pipe(instance, Iterable.first());
+      continuation = instance[CollectionEnumeratorLike_peek];
 
       if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
         break;
@@ -216,7 +211,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   }
 
   const createHostSchedulerInstance = mixInstanceFactory(
-    include(CurrentTimeSchedulerMixin, SerialDisposableMixin(), QueueMixin()),
+    include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()),
     function HostScheduler(
       this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         Mutable<TProperties>,
@@ -224,7 +219,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     ): SchedulerLike & DisposableLike {
       this[SchedulerLike_maxYieldInterval] = maxYieldInterval;
 
-      init(CurrentTimeSchedulerMixin, this);
+      init(SchedulerMixin, this);
       init(SerialDisposableMixin(), this, Disposable.disposed);
       init(QueueMixin<SchedulerContinuationLike>(), this, {
         comparator: SchedulerContinuation.compare,
@@ -245,7 +240,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       return this;
     },
     props<TProperties>({
-      [SchedulerLike_maxYieldInterval]: 300,
+      [SchedulerLike_maxYieldInterval]: 5,
       [HostScheduler_hostSchedulerContinuationDueTime]: 0,
       [HostScheduler_activeContinuation]: none,
       [HostScheduler_messageChannel]: none,
@@ -293,22 +288,3 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     return createHostSchedulerInstance(clampPositiveInteger(maxYieldInterval));
   };
 })();
-
-let globalHostScheduler: Optional<SchedulerLike & DisposableLike> = none;
-
-export const get: Signature["get"] = () => {
-  if (isNone(globalHostScheduler)) {
-    const scheduler = create();
-    globalHostScheduler = scheduler;
-  }
-
-  return globalHostScheduler;
-};
-
-export const setMaxYieldInterval: Signature["setMaxYieldInterval"] = (
-  maxYieldInterval: number,
-) => {
-  const scheduler = get();
-  (scheduler as Mutable<SchedulerLike>)[SchedulerLike_maxYieldInterval] =
-    clampPositiveInteger(maxYieldInterval);
-};

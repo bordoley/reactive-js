@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`Collection`](../../interfaces/Collection.md)\<`number`\>
+- [`CollectionType`](../../interfaces/CollectionType.md)\<`number`\>
 
 ## Properties
 
@@ -18,4 +18,4 @@
 
 #### Overrides
 
-[`Collection`](../../interfaces/Collection.md).[`[Collection_type]`](../../interfaces/Collection.md#collection_type)
+[`CollectionType`](../../interfaces/CollectionType.md).[`[Collection_type]`](../../interfaces/CollectionType.md#collection_type)

@@ -1,26 +1,48 @@
 /// <reference types="./Runnable.gen.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
-import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { error, newInstance, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as Iterator from "../../../utils/__internal__/Iterator.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 class GenRunnable {
     f;
-    [ComputationLike_isPure] = true;
+    [ComputationLike_isPure];
     [ComputationLike_isDeferred] = false;
     [ComputationLike_isSynchronous] = true;
-    constructor(f) {
+    constructor(f, config) {
         this.f = f;
+        this[ComputationLike_isPure] = Computation.isPure(config ?? {});
     }
     [RunnableLike_eval](sink) {
-        const iter = this.f();
-        for (const v of iter) {
-            if (sink[SinkLike_isCompleted]) {
-                break;
+        const enumerator = pipe(this.f(), Iterator.toEnumerator(), Disposable.addTo(sink));
+        let isCompleted = sink[SinkLike_isCompleted];
+        try {
+            while (!isCompleted && enumerator[EnumeratorLike_moveNext]()) {
+                const value = enumerator[EnumeratorLike_current];
+                sink[EventListenerLike_notify](value);
+                isCompleted = sink[SinkLike_isCompleted];
+                if (isCompleted) {
+                    break;
+                }
             }
-            sink[EventListenerLike_notify](v);
+            // Reassign because these values may change after
+            // hopping the micro task queue
+            isCompleted = sink[SinkLike_isCompleted];
+            if (!isCompleted) {
+                sink[SinkLike_complete]();
+                isCompleted = true;
+            }
         }
-        sink[SinkLike_complete]();
+        catch (e) {
+            sink[DisposableLike_dispose](error(e));
+        }
     }
 }
-const Runnable_gen = (factory) => newInstance((GenRunnable), factory);
-export default Runnable_gen;
+export const Runnable_gen = ((factory) => newInstance((GenRunnable), factory, {
+    [ComputationLike_isPure]: false,
+}));
+export const Runnable_genPure = ((factory) => newInstance((GenRunnable), factory, {
+    [ComputationLike_isPure]: false,
+}));

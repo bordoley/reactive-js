@@ -386,4 +386,4 @@ testModule(
       pipeLazy(tuple(1, 2, 3), expectArrayEquals([1, 2, 3])),
     ),
   ),
-);
+)();

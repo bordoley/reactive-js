@@ -1,17 +1,18 @@
 import { Array_length, Array_push } from "../../__internal__/constants.js";
 import {
-  describe,
   expectArrayEquals,
   expectEquals,
   expectFalse,
+  expectTrue,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Iterable from "../../computations/Iterable.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { floor, random } from "../../math.js";
 import {
   CollectionEnumeratorLike_count,
+  CollectionEnumeratorLike_peek,
+  DisposableLike_dispose,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   QueueLike_enqueue,
@@ -68,12 +69,18 @@ testModule(
   test("push/pull/count", () => {
     const queue = Queue.create<number>();
 
-    pipe(queue, Iterable.first(), expectEquals(none as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(none as Optional<number>),
+    );
     pipe(queue[EnumeratorLike_moveNext](), expectFalse());
 
     for (let i = 0; i < 8; i++) {
       queue[QueueLike_enqueue](i);
-      pipe(queue, Iterable.first(), expectEquals<Optional<number>>(0));
+      pipe(
+        queue[CollectionEnumeratorLike_peek],
+        expectEquals<Optional<number>>(0),
+      );
     }
 
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(8));
@@ -82,53 +89,80 @@ testModule(
       (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(0 as Optional<number>),
     );
-    pipe(queue, Iterable.first(), expectEquals(1 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(1 as Optional<number>),
+    );
 
     pipe(
       (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(1 as Optional<number>),
     );
-    pipe(queue, Iterable.first(), expectEquals(2 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(2 as Optional<number>),
+    );
 
     pipe(
       (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(2 as Optional<number>),
     );
-    pipe(queue, Iterable.first(), expectEquals(3 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(3 as Optional<number>),
+    );
 
     for (let i = 8; i < 16; i++) {
       queue[QueueLike_enqueue](i);
-      pipe(queue, Iterable.first(), expectEquals(3 as Optional<number>));
+      pipe(
+        queue[CollectionEnumeratorLike_peek],
+        expectEquals(3 as Optional<number>),
+      );
     }
 
     pipe(
       (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(3 as Optional<number>),
     );
-    pipe(queue, Iterable.first(), expectEquals(4 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(4 as Optional<number>),
+    );
 
     pipe(
       (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(4 as Optional<number>),
     );
-    pipe(queue, Iterable.first(), expectEquals(5 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(5 as Optional<number>),
+    );
 
     pipe(
       (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(5 as Optional<number>),
     );
-    pipe(queue, Iterable.first(), expectEquals(6 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(6 as Optional<number>),
+    );
 
     for (let i = 16; i < 32; i++) {
       queue[QueueLike_enqueue](i);
-      pipe(queue, Iterable.first(), expectEquals(6 as Optional<number>));
+      pipe(
+        queue[CollectionEnumeratorLike_peek],
+        expectEquals(6 as Optional<number>),
+      );
     }
 
     for (let i = 0; i < 20; i++) {
       queue[EnumeratorLike_moveNext]();
     }
 
-    pipe(queue, Iterable.first(), expectEquals(26 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(26 as Optional<number>),
+    );
   }),
   test("shrink", () => {
     const queue = Queue.create<number>();
@@ -141,7 +175,10 @@ testModule(
       queue[EnumeratorLike_moveNext]();
     }
 
-    pipe(queue, Iterable.first(), expectEquals(50 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(50 as Optional<number>),
+    );
 
     for (let i = 300; i < 500; i++) {
       queue[QueueLike_enqueue](i);
@@ -151,7 +188,10 @@ testModule(
       queue[EnumeratorLike_moveNext]();
     }
 
-    pipe(queue, Iterable.first(), expectEquals(250 as Optional<number>));
+    pipe(
+      queue[CollectionEnumeratorLike_peek],
+      expectEquals(250 as Optional<number>),
+    );
   }),
   test("iterator", () => {
     const queue = Queue.create<number>();
@@ -174,22 +214,49 @@ testModule(
       prev = v;
     }
   }),
-  describe(
-    "priority queue",
-    test("push", () => {
-      const queue = createSorted();
-      const shuffledArray = makeShuffledArray(100);
-      for (let i = 0; i < shuffledArray[Array_length]; i++) {
-        queue[QueueLike_enqueue](shuffledArray[i]);
-      }
+  test("push when sorted", () => {
+    const queue = createSorted();
+    const shuffledArray = makeShuffledArray(100);
+    for (let i = 0; i < shuffledArray[Array_length]; i++) {
+      queue[QueueLike_enqueue](shuffledArray[i]);
+    }
 
-      const acc: number[] = [];
-      while (queue[CollectionEnumeratorLike_count] > 0) {
-        queue[EnumeratorLike_moveNext]();
-        acc[Array_push](queue[EnumeratorLike_current] as number);
-      }
+    const acc: number[] = [];
+    while (queue[CollectionEnumeratorLike_count] > 0) {
+      queue[EnumeratorLike_moveNext]();
+      acc[Array_push](queue[EnumeratorLike_current] as number);
+    }
 
-      pipe(acc, expectArrayEquals(makeSortedArray(100)));
-    }),
-  ),
-);
+    pipe(acc, expectArrayEquals(makeSortedArray(100)));
+  }),
+  test("enqueueing after dispose does nothing", () => {
+    const queue = Queue.create();
+    queue[DisposableLike_dispose]();
+    queue[QueueLike_enqueue](0);
+    queue[QueueLike_enqueue](1);
+    queue[QueueLike_enqueue](2);
+
+    pipe(queue[CollectionEnumeratorLike_count], expectEquals(0));
+  }),
+  test("enumerating after dispose", () => {
+    const queue = Queue.create<number>();
+    queue[QueueLike_enqueue](0);
+    queue[QueueLike_enqueue](1);
+    queue[QueueLike_enqueue](2);
+
+    queue[DisposableLike_dispose]();
+
+    for (let i = 0; i < 3; i++) {
+      pipe(
+        queue[EnumeratorLike_moveNext](),
+        expectTrue("expected enumerator to have value"),
+      );
+      pipe(queue[EnumeratorLike_current], expectEquals(i));
+    }
+
+    pipe(
+      queue[EnumeratorLike_moveNext](),
+      expectFalse("expected enumerator to been consumed"),
+    );
+  }),
+)();

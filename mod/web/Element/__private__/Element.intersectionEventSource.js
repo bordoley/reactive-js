@@ -26,11 +26,11 @@ const Element_intersectionEventSource =
                     const cb = (entries) => {
                         for (const entry of entries) {
                             const { target } = entry;
-                            const listener = eventPublishers[Map_get](root)?.[Map_get](target);
-                            if (isNone(listener)) {
+                            const sink = eventPublishers[Map_get](root)?.[Map_get](target);
+                            if (isNone(sink)) {
                                 continue;
                             }
-                            listener[EventListenerLike_notify](entry);
+                            sink[EventListenerLike_notify](entry);
                         }
                     };
                     const intersectionObserver = newInstance(IntersectionObserver, cb, { root });

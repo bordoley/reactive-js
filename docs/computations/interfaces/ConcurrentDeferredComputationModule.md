@@ -14,6 +14,7 @@
 
 - [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters
 
@@ -31,14 +32,40 @@
 
 ## Methods
 
-### fromAsyncFactory()
+### genAsync()
 
-> **fromAsyncFactory**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<(`options`?) => `Promise`\<`T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+> **genAsync**\<`T`\>(`factory`): [`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
 • **T**
 
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<(`options`?) => `Promise`\<`T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+[`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+***
+
+### genPureAsync()
+
+> **genPureAsync**\<`T`\>(`factory`): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+#### Returns
+
+[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>

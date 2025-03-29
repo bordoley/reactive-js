@@ -6,7 +6,7 @@
 
 # Function: buffer()
 
-> **buffer**\<`T`\>(`options`?): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>
+> **buffer**\<`T`\>(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`, readonly `T`[]\>

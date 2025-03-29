@@ -2,8 +2,8 @@
 
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
-import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { error, newInstance } from "../../../functions.js";
+import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 class FromReadonlyArrayRunnable {
     arr;
     count;
@@ -16,13 +16,18 @@ class FromReadonlyArrayRunnable {
         this.start = start;
     }
     [RunnableLike_eval](sink) {
-        let { arr, start, count } = this;
-        while (count !== 0 && !sink[SinkLike_isCompleted]) {
-            const next = arr[start];
-            sink[EventListenerLike_notify](next);
-            count > 0 ? (start++, count--) : (start--, count++);
+        try {
+            let { arr, start, count } = this;
+            while (count !== 0 && !sink[SinkLike_isCompleted]) {
+                const next = arr[start];
+                sink[EventListenerLike_notify](next);
+                count > 0 ? (start++, count--) : (start--, count++);
+            }
+            sink[SinkLike_complete]();
         }
-        sink[SinkLike_complete]();
+        catch (e) {
+            sink[DisposableLike_dispose](error(e));
+        }
     }
 }
 const Runnable_fromReadonlyArray = (options) => (arr) => {

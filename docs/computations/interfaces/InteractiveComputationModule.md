@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / InteractiveComputationModule
 
-# Interface: InteractiveComputationModule\<TComputationType\>
+# Interface: InteractiveComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -17,7 +17,9 @@
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+
+• **TCreationOptions** *extends* `object` = \{\}
 
 ## Properties
 
@@ -34,3 +36,23 @@
 ### zip
 
 > **zip**: `ZipConstructor`\<`TComputationType`\>
+
+## Methods
+
+### toObservable()
+
+> **toObservable**\<`T`\>(`options`?): [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toObservable"`\]
+
+#### Returns
+
+[`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>

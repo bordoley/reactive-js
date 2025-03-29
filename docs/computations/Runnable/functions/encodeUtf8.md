@@ -6,8 +6,8 @@
 
 # Function: encodeUtf8()
 
-> **encodeUtf8**(): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+> **encodeUtf8**(): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ## Returns
 
-[`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `string`, `Uint8Array`\<`ArrayBufferLike`\>\>

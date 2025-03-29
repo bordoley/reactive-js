@@ -1,9 +1,9 @@
-import { Collection, CollectionModule, CollectionOf, Collection_T, Collection_type, KeyOf } from "../collections.js";
+import { CollectionModule, CollectionOf, CollectionType, Collection_T, Collection_type, KeyOf } from "../collections.js";
 import { Function1, Tuple2 } from "../functions.js";
 /**
  * @noInheritDoc
  */
-export interface ReadonlyArrayCollection extends Collection<number> {
+export interface ReadonlyArrayCollection extends CollectionType<number> {
     readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
 }
 export type TKeyBase = KeyOf<ReadonlyArrayCollection>;
@@ -31,6 +31,7 @@ export interface ReadonlyArrayModule extends CollectionModule<ReadonlyArrayColle
     }): Function1<CollectionOf<ReadonlyArrayCollection, T>, ReadonlyArray<T>>;
 }
 export type Signature = ReadonlyArrayModule;
+export type Collection = ReadonlyArrayCollection;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];

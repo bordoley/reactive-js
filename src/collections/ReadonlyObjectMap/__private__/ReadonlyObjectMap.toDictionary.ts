@@ -4,7 +4,7 @@ import {
   DictionaryLike_keys,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
-import { Optional, newInstance, pipe } from "../../../functions.js";
+import { Optional, newInstance, pipe, returns } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
@@ -25,12 +25,8 @@ class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
 }
 
 const ReadonlyObjectMap_toDictionary: ReadonlyObjectMap.Signature["toDictionary"] =
-
-    <
-      T,
-      TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase,
-    >() =>
-    (map: ReadonlyObjectMapLike<TKey, T>) =>
-      newInstance(ReadonlyObjectMapDictionary, map);
+  /*@__PURE__*/ returns((map: ReadonlyObjectMapLike) =>
+    newInstance(ReadonlyObjectMapDictionary, map),
+  ) as ReadonlyObjectMap.Signature["toDictionary"];
 
 export default ReadonlyObjectMap_toDictionary;

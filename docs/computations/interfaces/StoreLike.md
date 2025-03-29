@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EventSourceLike`](EventSourceLike.md)\<`T`\>
+- [`BroadcasterLike`](BroadcasterLike.md)\<`T`\>
 
 ## Extended by
 

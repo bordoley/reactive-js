@@ -13,8 +13,11 @@
 ## Extended by
 
 - [`SerialDisposableLike`](SerialDisposableLike.md)
-- [`EventListenerLike`](EventListenerLike.md)
+- [`FlowControllerLike`](FlowControllerLike.md)
+- [`EnumeratorLike`](EnumeratorLike.md)
+- [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
+- [`EventListenerLike`](EventListenerLike.md)
 
 ## Properties
 

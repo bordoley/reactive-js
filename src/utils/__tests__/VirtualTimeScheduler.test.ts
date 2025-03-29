@@ -1,13 +1,20 @@
 import { Array_push } from "../../__internal__/constants.js";
 import {
   expectArrayEquals,
+  expectEquals,
+  expectIsNone,
+  expectIsSome,
+  expectTrue,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { pipe } from "../../functions.js";
+import { ignore, pipe, raise } from "../../functions.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  SchedulerLike_requestYield,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
@@ -147,4 +154,79 @@ testModule(
       expectArrayEquals([0, 100, 101, 1, 100, 101, 2, 100, 101, 3, 100, 101]),
     );
   }),
-);
+
+  test("when continuation throws an exception", () => {
+    using vts = VirtualTimeScheduler.create({
+      maxMicroTaskTicks: 1,
+    });
+
+    const disposable = vts[SchedulerLike_schedule](() => {
+      raise("throwing");
+    });
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    pipe(disposable[DisposableLike_error], expectIsSome);
+    pipe(vts[DisposableLike_error], expectIsNone);
+  }),
+
+  test("scheduling a continuation after being disposed does nothing.", () => {
+    using vts = VirtualTimeScheduler.create({
+      maxMicroTaskTicks: 1,
+    });
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    const disposable = vts[SchedulerLike_schedule](ignore);
+
+    pipe(
+      disposable[DisposableLike_isDisposed],
+      expectTrue("scheduled continuation should be immediately disposed"),
+    );
+    pipe(disposable[DisposableLike_error], expectIsNone);
+  }),
+
+  test("requesting yield", () => {
+    using vts = VirtualTimeScheduler.create({
+      maxMicroTaskTicks: 100,
+    });
+
+    let runCount = 0;
+    vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
+      vts[SchedulerLike_requestYield]();
+      if (runCount < 1) {
+        runCount++;
+        ctx[ContinuationContextLike_yield]();
+      }
+    });
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    pipe(runCount, expectEquals(1));
+  }),
+
+  test("with multiple delayed continuations with same delay", () => {
+    using vts = VirtualTimeScheduler.create({
+      maxMicroTaskTicks: 1,
+    });
+
+    let count = 0;
+    vts[SchedulerLike_schedule](
+      () => {
+        count++;
+      },
+      { delay: 1 },
+    );
+
+    vts[SchedulerLike_schedule](
+      () => {
+        count++;
+      },
+      { delay: 1 },
+    );
+
+    vts[VirtualTimeSchedulerLike_run]();
+
+    pipe(count, expectEquals(2));
+  }),
+)();

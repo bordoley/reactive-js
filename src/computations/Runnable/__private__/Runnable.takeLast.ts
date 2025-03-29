@@ -1,65 +1,56 @@
-import { Optional, newInstance } from "../../../functions.js";
-import { clampPositiveInteger } from "../../../math.js";
-import * as Queue from "../../../utils/Queue.js";
-import AbstractDelegatingDisposableSink from "../../../utils/Sink/__internal__/AbstractDelegatingDisposableSink.js";
 import {
-  EnumeratorLike_current,
-  EnumeratorLike_moveNext,
-  EventListenerLike_notify,
-  QueueLike,
-  QueueLike_enqueue,
-  SinkLike,
-  SinkLike_complete,
-  SinkLike_isCompleted,
-} from "../../../utils.js";
+  ComputationLike_isDeferred,
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+  RunnableLike,
+  RunnableLike_eval,
+} from "../../../computations.js";
+import { bindMethod, invoke, newInstance, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import * as Consumer from "../../../utils/__internal__/Consumer.js";
+import { SinkLike } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
-import Runnable_lift from "./Runnable.lift.js";
+import { Runnable_genPure } from "./Runnable.gen.js";
 
-class TakeLastSink<T>
-  extends AbstractDelegatingDisposableSink<T>
-  implements SinkLike<T>
-{
-  public [SinkLike_isCompleted] = false;
-  private readonly q: QueueLike<T>;
+class TakeLastRunnable<T> implements RunnableLike<T> {
+  readonly [ComputationLike_isPure]?: boolean;
+  readonly [ComputationLike_isDeferred]: false = false as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
-    private readonly sink: SinkLike<T>,
-    cnt: number,
+    private readonly s: RunnableLike<T>,
+    private readonly c: number,
   ) {
-    super(sink);
-
-    this.q = Queue.createDropOldest<T>(cnt);
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
   }
 
-  [EventListenerLike_notify](next: T): void {
-    this.q[QueueLike_enqueue](next);
-  }
+  [RunnableLike_eval](sink: SinkLike<T>): void {
+    const count = this.c;
 
-  [SinkLike_complete](): void {
-    this[SinkLike_isCompleted] = true;
-    const queue = this.q;
-    const sink = this.sink;
+    const takeLastSink = pipe(
+      Consumer.takeLast<T>(count),
+      Disposable.addTo(sink),
+      DisposableContainer.onComplete(() =>
+        pipe(
+          Runnable_genPure(bindMethod(takeLastSink, Symbol.iterator)),
+          invoke(RunnableLike_eval, sink),
+        ),
+      ),
+    );
 
-    while (!sink[SinkLike_isCompleted] && queue[EnumeratorLike_moveNext]()) {
-      let v: Optional<T> = queue[EnumeratorLike_current];
-      sink[EventListenerLike_notify](v as T);
-    }
-
-    sink[SinkLike_complete]();
+    pipe(this.s, invoke(RunnableLike_eval, takeLastSink));
   }
 }
 
-const Runnable_takeLast: Runnable.Signature["takeLast"] = <T>(options?: {
-  readonly count?: number;
-}) =>
-  Runnable_lift(
-    (sink: SinkLike<T>) =>
-      newInstance(
-        TakeLastSink<T>,
-        sink,
-        clampPositiveInteger(options?.count ?? 1),
-      ),
-    true,
-  );
+const Runnable_takeLast: Runnable.Signature["takeLast"] = (<T>(options?: {
+    readonly count?: number;
+  }) =>
+  (runnable: RunnableLike<T>) =>
+    newInstance(
+      TakeLastRunnable,
+      runnable,
+      options?.count ?? 1,
+    )) as Runnable.Signature["takeLast"];
 
 export default Runnable_takeLast;

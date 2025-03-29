@@ -90,7 +90,7 @@
 
 ### eventSource()
 
-> **eventSource**\<`TEventTarget`, `TEventName`\>(`eventName`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **eventSource**\<`TEventTarget`, `TEventName`\>(`eventName`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -120,13 +120,13 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TEventTarget`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<[`EventMapOf`](../../type-aliases/EventMapOf.md)\<`TEventTarget`\>\[`TEventName`\]\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ***
 
 ### intersectionEventSource()
 
-> **intersectionEventSource**(`parent`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
+> **intersectionEventSource**(`parent`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<`IntersectionObserverEntry`\>\>
 
 #### Parameters
 
@@ -136,7 +136,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`IntersectionObserverEntry`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Element`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<`IntersectionObserverEntry`\>\>
 
 ***
 
@@ -156,7 +156,7 @@
 
 ### resizeEventSource()
 
-> **resizeEventSource**\<`TElement`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
+> **resizeEventSource**\<`TElement`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<`ResizeObserverEntry`\>\>
 
 #### Type Parameters
 
@@ -170,13 +170,13 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<`ResizeObserverEntry`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<`ResizeObserverEntry`\>\>
 
 ***
 
 ### scrollEventSource()
 
-> **scrollEventSource**\<`TElement`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
+> **scrollEventSource**\<`TElement`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
 
 #### Type Parameters
 
@@ -184,4 +184,4 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`EventSourceLike`](../../../computations/interfaces/EventSourceLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`TElement`, [`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<[`ScrollValue`](../../interfaces/ScrollValue.md)\>\>

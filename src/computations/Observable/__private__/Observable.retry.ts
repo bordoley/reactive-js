@@ -1,19 +1,14 @@
-import { isNone, isSome } from "../../../functions.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
+import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
-const Observable_retry: Observable.Signature["retry"] = /*@__PURE__*/ (() => {
-  const defaultRetryPredicate = (_: number, error?: Error): boolean =>
-    isSome(error);
-
-  return (predicate?: (count: number, error: Error) => boolean) => {
-    const retryPredicate = isNone(predicate)
-      ? defaultRetryPredicate
-      : (count: number, error?: Error) =>
-          isSome(error) && predicate(count, error);
-
-    return Observable_repeatOrRetry(retryPredicate);
-  };
-})();
+const Observable_retry: Observable.Signature["retry"] = (<T>(
+  shouldRetry?: (count: number, error: Error) => boolean,
+) =>
+  DeferredSource.retry<ObserverLike<T>, T>(
+    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    shouldRetry,
+  )) as Observable.Signature["retry"];
 
 export default Observable_retry;

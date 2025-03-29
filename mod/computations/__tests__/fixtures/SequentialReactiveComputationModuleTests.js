@@ -1,52 +1,29 @@
 /// <reference types="./SequentialReactiveComputationModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
-import { arrayEquality, invoke, pipe, pipeLazy, tuple, } from "../../../functions.js";
-import StatefulSynchronousComputationOperatorTests from "./operators/StatefulSynchronousComputationOperatorTests.js";
-const SequentialReactiveComputationModuleTests = (m, computations) => describe("SequentialReactiveComputationModule", describe("buffer", StatefulSynchronousComputationOperatorTests(computations, m.buffer()), test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
+import { describe, expectArrayEquals, expectEquals, testAsync, } from "../../../__internal__/testing.js";
+import { arrayEquality, invoke, pipeAsync, pipeLazyAsync, } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
+import * as Source from "../../Source.js";
+const SequentialReactiveComputationModuleTests = (m) => describe("SequentialReactiveComputationModule", describe("buffer", testAsync("with multiple sub buffers", pipeLazyAsync([1, 2, 3, 4, 5, 6, 7, 8, 9], Computation.fromReadonlyArray(m)(), m.buffer({ count: 3 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
-], { valuesEquality: arrayEquality() }))), test("last buffer is short", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
+], { valuesEquality: arrayEquality() }))), testAsync("last buffer is short", pipeLazyAsync([1, 2, 3, 4, 5, 6, 7, 8], Computation.fromReadonlyArray(m)(), m.buffer({ count: 3 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8],
-], { valuesEquality: arrayEquality() }))), test("buffers all values when no count is provided", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer(), m.toReadonlyArray(), expectArrayEquals([[1, 2, 3, 4, 5, 6, 7, 8]], {
+], { valuesEquality: arrayEquality() }))), testAsync("buffers all values when no count is provided", pipeLazyAsync([1, 2, 3, 4, 5, 6, 7, 8], Computation.fromReadonlyArray(m)(), m.buffer(), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([[1, 2, 3, 4, 5, 6, 7, 8]], {
     valuesEquality: arrayEquality(),
-})))), describe("decodeWithCharset", StatefulSynchronousComputationOperatorTests(computations, m.decodeWithCharset()), test("decoding ascii", () => {
+})))), describe("decodeWithCharset", testAsync("decoding ascii", async () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals(str));
-}), test("decoding ascii", () => {
+    await pipeAsync([str], Computation.fromReadonlyArray(m)(), m.encodeUtf8(), m.decodeWithCharset(), m.toProducer(), Source.toReadonlyArrayAsync(), invoke("join"), expectEquals(str));
+}), testAsync("decoding ascii", async () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals(str));
-}), test("decoding multi-byte code points", () => {
+    await pipeAsync([str], Computation.fromReadonlyArray(m)(), m.encodeUtf8(), m.decodeWithCharset(), m.toProducer(), Source.toReadonlyArrayAsync(), invoke("join"), expectEquals(str));
+}), testAsync("decoding multi-byte code points", async () => {
     const str = String.fromCodePoint(8364);
-    pipe([str], m.fromReadonlyArray(), m.encodeUtf8(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals(str));
-}), test("multi-byte decoding divided between multiple buffers", () => {
-    pipe([new Uint8Array([226, 153]), new Uint8Array([165])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals("♥"));
-}), test("multi-byte decoding with missing tail", () => {
-    pipe([new Uint8Array([226])], m.fromReadonlyArray(), m.decodeWithCharset(), m.toReadonlyArray(), invoke("join"), expectEquals("�"));
-})), describe("distinctUntilChanged", StatefulSynchronousComputationOperatorTests(computations, m.distinctUntilChanged()), test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromReadonlyArray(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy(m.empty(), m.distinctUntilChanged(), m.toReadonlyArray(), expectArrayEquals([]))), test("when equality operator throws", () => {
-    const err = new Error();
-    const equality = (_a, _b) => {
-        throw err;
-    };
-    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.distinctUntilChanged({ equality }), m.toReadonlyArray()), expectToThrowError(err));
-}), test("with custom equality functions", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromReadonlyArray(), m.distinctUntilChanged({
-    equality: () => true,
-}), m.toReadonlyArray(), expectArrayEquals([1])))), describe("pairwise", StatefulSynchronousComputationOperatorTests(computations, m.pairwise()), test("when there are more than one input value", pipeLazy([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([
-    tuple(0, 1),
-    tuple(1, 2),
-    tuple(2, 3),
-    tuple(3, 4),
-    tuple(4, 5),
-    tuple(5, 6),
-    tuple(6, 7),
-    tuple(7, 8),
-    tuple(8, 9),
-], { valuesEquality: arrayEquality() }))), test("when the input only provides 1 value", pipeLazy([0], m.fromReadonlyArray(), m.pairwise(), m.toReadonlyArray(), expectArrayEquals([], {
-    valuesEquality: arrayEquality(),
-})))), describe("skipFirst", StatefulSynchronousComputationOperatorTests(computations, m.skipFirst()), test("with default count", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst(), m.toReadonlyArray(), expectArrayEquals([2, 3]))), test("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 2 }), m.toReadonlyArray(), expectArrayEquals([3]))), test("when all elements are skipped", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 4 }), m.toReadonlyArray(), expectArrayEquals([])))), describe("takeLast", StatefulSynchronousComputationOperatorTests(computations, m.takeLast()), test("with default count", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast(), m.toReadonlyArray(), expectArrayEquals([5]))), test("when count is 0", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), 
+    await pipeAsync([str], Computation.fromReadonlyArray(m)(), m.encodeUtf8(), m.decodeWithCharset(), m.toProducer(), Source.toReadonlyArrayAsync(), invoke("join"), expectEquals(str));
+}), testAsync("multi-byte decoding divided between multiple buffers", pipeLazyAsync([new Uint8Array([226, 153]), new Uint8Array([165])], Computation.fromReadonlyArray(m)(), m.decodeWithCharset(), m.toProducer(), Source.toReadonlyArrayAsync(), invoke("join"), expectEquals("♥"))), testAsync("multi-byte decoding with missing tail", pipeLazyAsync([new Uint8Array([226])], Computation.fromReadonlyArray(m)(), m.decodeWithCharset(), m.toProducer(), Source.toReadonlyArrayAsync(), invoke("join"), expectEquals("�")))), describe("takeLast", testAsync("with default count", pipeLazyAsync([1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)(), m.takeLast(), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([5]))), testAsync("when count is 0", pipeLazyAsync([1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)(), 
 // Some implementations special case this
-m.takeLast({ count: 0 }), m.toReadonlyArray(), expectArrayEquals([]))), test("when count is less than the total number of elements", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([3, 4, 5]))), test("when count is greater than the total number of elements", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast({ count: 10 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("with default count", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast(), m.toReadonlyArray(), expectArrayEquals([5])))));
+m.takeLast({ count: 0 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([]))), testAsync("when count is less than the total number of elements", pipeLazyAsync([1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)(), m.takeLast({ count: 3 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([3, 4, 5]))), testAsync("when count is greater than the total number of elements", pipeLazyAsync([1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)(), m.takeLast({ count: 10 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5]))), testAsync("with default count", pipeLazyAsync([1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)(), m.takeLast(), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([5])))));
 export default SequentialReactiveComputationModuleTests;

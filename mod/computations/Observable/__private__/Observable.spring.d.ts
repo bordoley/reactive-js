@@ -1,6 +1,3 @@
-declare const Observable_spring: (options?: {
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-}) => import("../../../computations.js").PureSynchronousObservableLike<number> & import("../../../computations.js").ObservableLike<number>;
+import type * as Observable from "../../Observable.js";
+declare const Observable_spring: Observable.Signature["spring"];
 export default Observable_spring;

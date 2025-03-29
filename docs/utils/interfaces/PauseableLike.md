@@ -12,8 +12,7 @@
 
 ## Extended by
 
-- [`AnimationGroupStreamLike`](../../computations/Streamable/interfaces/AnimationGroupStreamLike.md)
-- [`AnimationStreamLike`](../../computations/Streamable/interfaces/AnimationStreamLike.md)
+- [`AnimationLike`](../../computations/Streamable/interfaces/AnimationLike.md)
 - [`PauseableSchedulerLike`](PauseableSchedulerLike.md)
 
 ## Properties

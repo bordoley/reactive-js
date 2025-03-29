@@ -1,76 +1,63 @@
 /// <reference types="./Producer.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
-import { include, init, mixInstanceFactory, props, proto, } from "../__internal__/mixins.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, ProducerLike_consume, } from "../computations.js";
-import { bindMethod, error, newInstance, none, pipe, raise, returns, } from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
-import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
-import * as Broadcaster from "./Broadcaster.js";
-import * as EventSource from "./EventSource.js";
-import * as Observable from "./Observable.js";
-class CreateProducer {
-    f;
-    [ComputationLike_isPure] = false;
-    [ComputationLike_isSynchronous] = false;
-    constructor(f) {
-        this.f = f;
-    }
-    [ProducerLike_consume](consumer) {
-        try {
-            this.f(consumer);
-        }
-        catch (e) {
-            consumer[DisposableLike_dispose](error(e));
-        }
-    }
-}
-export const create = f => newInstance(CreateProducer, f);
-const createPauseableConsumer = /*@__PURE__*/ (() => {
-    const EventListenerToPauseableConsumer_delegate = Symbol("EventListenerToPauseableConsumer_delegate");
-    const EventListenerToPauseableConsumer_mode = Symbol("EventListenerToPauseableConsumer_mode");
-    return mixInstanceFactory(include(DelegatingDisposableMixin), function EventListenerToPauseableConsumer(sink, mode) {
-        init(DelegatingDisposableMixin, this, sink);
-        this[EventListenerToPauseableConsumer_delegate] = sink;
-        this[EventListenerToPauseableConsumer_mode] = mode;
-        pipe(mode, EventSource.addEventHandler(isPaused => {
-            this[ConsumerLike_isReady] = !isPaused;
-        }), Disposable.addTo(this));
-        return this;
-    }, props({
-        [EventListenerToPauseableConsumer_delegate]: none,
-        [EventListenerToPauseableConsumer_mode]: none,
-        [SinkLike_isCompleted]: false,
-        [ConsumerLike_isReady]: false,
-    }), proto({
-        [ConsumerLike_backpressureStrategy]: ThrowBackpressureStrategy,
-        [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
-        [ConsumerLike_addOnReadyListener](callback) {
-            return pipe(this[EventListenerToPauseableConsumer_mode], EventSource.addEventHandler(isPaused => {
-                if (!isPaused) {
-                    callback();
-                }
-            }), Disposable.addTo(this));
-        },
-        [EventListenerLike_notify](next) {
-            if (this[SinkLike_isCompleted]) {
-                return;
-            }
-            else if (!this[ConsumerLike_isReady]) {
-                raise(newInstance(BackPressureError, this));
-            }
-            this[EventListenerToPauseableConsumer_delegate][EventListenerLike_notify](next);
-        },
-        [SinkLike_complete]() {
-            this[SinkLike_isCompleted] = true;
-            const delegate = this[EventListenerToPauseableConsumer_delegate];
-            delegate[SinkLike_complete]();
-        },
-    }));
-})();
-export const broadcast = (options) => (producer) => Broadcaster.createPauseable(mode => pipe(Broadcaster.create(sink => {
-    const consumer = createPauseableConsumer(sink, mode);
-    producer[ProducerLike_consume](consumer);
-}, options), Disposable.bindTo(mode)));
-export const toObservable = /*@__PURE__*/ returns((producer) => Observable.create(bindMethod(producer, ProducerLike_consume)));
+import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { identity, returns } from "../functions.js";
+import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
+import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
+import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
+import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
+import Producer_concat from "./Producer/__private__/Producer.concat.js";
+import Producer_create from "./Producer/__private__/Producer.create.js";
+import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
+import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
+import Producer_encodeUtf8 from "./Producer/__private__/Producer.encodeUtf8.js";
+import Producer_forEach from "./Producer/__private__/Producer.forEach.js";
+import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
+import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
+import Producer_keep from "./Producer/__private__/Producer.keep.js";
+import Producer_map from "./Producer/__private__/Producer.map.js";
+import Producer_merge from "./Producer/__private__/Producer.merge.js";
+import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
+import Producer_repeat from "./Producer/__private__/Producer.repeat.js";
+import Producer_retry from "./Producer/__private__/Producer.retry.js";
+import Producer_scan from "./Producer/__private__/Producer.scan.js";
+import Producer_scanDistinct from "./Producer/__private__/Producer.scanDistinct.js";
+import Producer_skipFirst from "./Producer/__private__/Producer.skipFirst.js";
+import Producer_takeFirst from "./Producer/__private__/Producer.takeFirst.js";
+import Producer_takeLast from "./Producer/__private__/Producer.takeLast.js";
+import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
+import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
+import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
+import Producer_withBackpressure from "./Producer/__private__/Producer.withBackpressure.js";
+import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
+export const buffer = Producer_buffer;
+export const broadcast = Producer_broadcast;
+export const catchError = Producer_catchError;
+export const concat = Producer_concat;
+export const create = Producer_create;
+export const decodeWithCharset = Producer_decodeWithCharset;
+export const distinctUntilChanged = Producer_distinctUntilChanged;
+export const encodeUtf8 = Producer_encodeUtf8;
+export const fromObservable = Observable_toProducer;
+export const forEach = Producer_forEach;
+export const gen = Producer_gen;
+export const genAsync = Producer_genAsync;
+export const genPure = Producer_genPure;
+export const genPureAsync = Producer_genPureAsync;
+export const keep = Producer_keep;
+export const map = Producer_map;
+export const merge = Producer_merge;
+export const pairwise = Producer_pairwise;
+export const repeat = Producer_repeat;
+export const retry = Producer_retry;
+export const scan = Producer_scan;
+export const scanDistinct = Producer_scanDistinct;
+export const skipFirst = Producer_skipFirst;
+export const takeFirst = Producer_takeFirst;
+export const takeLast = Producer_takeLast;
+export const takeUntil = Producer_takeUntil;
+export const takeWhile = Producer_takeWhile;
+export const throwIfEmpty = Producer_throwIfEmpty;
+export const toProducer = /*@__PURE__*/ returns(identity);
+export const withBackpressure = Producer_withBackpressure;
+export const withLatestFrom = Producer_withLatestFrom;

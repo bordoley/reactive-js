@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentReactiveComputationModule
 
-# Interface: ConcurrentReactiveComputationModule\<TComputationType\>
+# Interface: ConcurrentReactiveComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -12,12 +12,15 @@
 
 ## Extended by
 
-- [`EventSourceModule`](../EventSource/interfaces/EventSourceModule.md)
+- [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+
+• **TCreationOptions** *extends* `object` = \{\}
 
 ## Properties
 
@@ -33,19 +36,25 @@
 
 ### combineLatest
 
-> **combineLatest**: `CombineConstructor`\<`TComputationType`\>
+> **combineLatest**: [`CombineConstructor`](CombineConstructor.md)\<`TComputationType`\>
 
 ***
 
 ### forkMerge
 
-> **forkMerge**: [`ForkMerge`](ForkMerge.md)\<`TComputationType`\>
+> **forkMerge**: [`ForkMerge`](../type-aliases/ForkMerge.md)\<`TComputationType`\>
 
 ***
 
-### fromObservable()
+### zipLatest
 
-> **fromObservable**: \<`T`\>(`scheduler`) => [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
+> **zipLatest**: [`CombineConstructor`](CombineConstructor.md)\<`TComputationType`\>
+
+## Methods
+
+### fromAsyncIterable()
+
+> **fromAsyncIterable**\<`T`\>(`options`?): [`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -53,7 +62,43 @@
 
 #### Parameters
 
-##### scheduler
+##### options?
+
+`TCreationOptions`\[`"fromAsyncIterable"`\]
+
+#### Returns
+
+[`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputationType`, `T`\>
+
+***
+
+### fromBroadcaster()
+
+> **fromBroadcaster**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+
+#### Type Parameters
+
+• **T**
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+
+***
+
+### fromObservable()
+
+> **fromObservable**\<`T`\>(`options`?): [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### scheduler?
 
 [`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
 
@@ -63,15 +108,9 @@
 
 ***
 
-### zipLatest
+### fromProducer()
 
-> **zipLatest**: `CombineConstructor`\<`TComputationType`\>
-
-## Methods
-
-### fromAsyncIterable()
-
-> **fromAsyncIterable**\<`T`\>(): [`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputationType`, `T`\>
+> **fromProducer**\<`T`\>(): [`FromProducerOperator`](../type-aliases/FromProducerOperator.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -79,7 +118,7 @@
 
 #### Returns
 
-[`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputationType`, `T`\>
+[`FromProducerOperator`](../type-aliases/FromProducerOperator.md)\<`TComputationType`, `T`\>
 
 ***
 
@@ -177,25 +216,7 @@
 
 #### Call Signature
 
-> **merge**\<`T`\>(...`computations`): [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>[]
-
-##### Returns
-
-[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+> **merge**\<`T`\>(...`computations`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
 
 ##### Type Parameters
 
@@ -209,7 +230,27 @@
 
 ##### Returns
 
-[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+
+***
+
+### never()
+
+> **never**\<`T`\>(`options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"never"`\]
+
+#### Returns
+
+[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 ***
 
@@ -217,7 +258,7 @@
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -231,7 +272,7 @@
 
 ##### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Call Signature
 
@@ -253,7 +294,7 @@
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`StatefulAsynchronousComputationOperator`](../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -267,7 +308,7 @@
 
 ##### Returns
 
-[`StatefulAsynchronousComputationOperator`](../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Call Signature
 
@@ -289,7 +330,7 @@
 
 #### Call Signature
 
-> **takeUntil**\<`T`\>(`notifier`): [`StatelessAsynchronousComputationOperator`](../type-aliases/StatelessAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ##### Type Parameters
 
@@ -303,7 +344,7 @@
 
 ##### Returns
 
-[`StatelessAsynchronousComputationOperator`](../type-aliases/StatelessAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
@@ -311,7 +352,7 @@
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -327,11 +368,11 @@
 
 ##### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -353,7 +394,7 @@
 
 ##### Returns
 
-[`StatefulSynchronousComputationOperator`](../type-aliases/StatefulSynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
 
 #### Call Signature
 
@@ -403,7 +444,7 @@
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatefulAsynchronousComputationOperator`](../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -419,11 +460,11 @@
 
 ##### Returns
 
-[`StatefulAsynchronousComputationOperator`](../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatefulAsynchronousComputationOperator`](../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -445,7 +486,7 @@
 
 ##### Returns
 
-[`StatefulAsynchronousComputationOperator`](../type-aliases/StatefulAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
 
 #### Call Signature
 
@@ -495,7 +536,7 @@
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`StatelessAsynchronousComputationOperator`](../type-aliases/StatelessAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -511,11 +552,11 @@
 
 ##### Returns
 
-[`StatelessAsynchronousComputationOperator`](../type-aliases/StatelessAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`StatelessAsynchronousComputationOperator`](../type-aliases/StatelessAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
 
 ##### Type Parameters
 
@@ -537,4 +578,4 @@
 
 ##### Returns
 
-[`StatelessAsynchronousComputationOperator`](../type-aliases/StatelessAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>

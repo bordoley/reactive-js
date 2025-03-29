@@ -6,7 +6,7 @@
 
 # Function: decodeWithCharset()
 
-> **decodeWithCharset**(`options`?): [`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>
+> **decodeWithCharset**(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>
 
 ## Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`StatefulSynchronousComputationOperator`](../../type-aliases/StatefulSynchronousComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `ArrayBuffer`, `string`\>

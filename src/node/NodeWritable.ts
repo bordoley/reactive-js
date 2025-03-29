@@ -8,7 +8,7 @@ import {
   proto,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as EventSource from "../computations/EventSource.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Publisher from "../computations/Publisher.js";
 import { PublisherLike } from "../computations.js";
 import {
@@ -28,13 +28,14 @@ import {
   BackPressureError,
   BackpressureStrategy,
   ConsumerLike,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
   DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
+  FlowControllerLike,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
   ThrowBackpressureStrategy,
@@ -98,11 +99,11 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       [WritableConsumer_onReadyPublisher]: none,
     }),
     proto({
-      [ConsumerLike_backpressureStrategy]:
+      [FlowControllerLike_backpressureStrategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
-      [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
+      [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
 
-      get [ConsumerLike_isReady]() {
+      get [FlowControllerLike_isReady]() {
         unsafeCast<TProperties>(this);
         const writable = this[WritableConsumer_writable];
         const needsDrain = writable.writableNeedDrain;
@@ -111,7 +112,7 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
         return result;
       },
 
-      [ConsumerLike_addOnReadyListener](
+      [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike,
         callback: SideEffect1<void>,
       ) {
@@ -133,16 +134,16 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
 
         return pipe(
           publisher,
-          EventSource.addEventHandler(callback),
+          Broadcaster.addEventHandler(callback),
           Disposable.addTo(this),
         );
       },
 
       [EventListenerLike_notify](
-        this: TProperties & ConsumerLike,
+        this: TProperties & FlowControllerLike,
         data: Uint8Array,
       ) {
-        if (this[ConsumerLike_isReady]) {
+        if (this[FlowControllerLike_isReady]) {
           const writable = this[WritableConsumer_writable];
           writable.write(Buffer.from(data));
         } else {

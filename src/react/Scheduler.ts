@@ -17,6 +17,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { bindMethod, newInstance, none, pipe } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import SchedulerMixin, {
   SchedulerContinuationLike,
@@ -26,12 +27,7 @@ import SchedulerMixin, {
   SchedulerMixinHostLike_schedule,
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
-import {
-  DisposableLike,
-  SchedulerLike,
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
-} from "../utils.js";
+import { DisposableLike, SchedulerLike, SchedulerLike_now } from "../utils.js";
 
 interface ReactSchedulerModule {
   get(priority?: 1 | 2 | 3 | 4 | 5): SchedulerLike;
@@ -60,8 +56,6 @@ const createReactScheduler = /*@__PURE__*/ (() => {
       [ReactScheduler_priority]: 3,
     }),
     {
-      [SchedulerLike_maxYieldInterval]: 300,
-
       get [SchedulerLike_now](): number {
         return unstable_now();
       },
@@ -71,7 +65,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
       },
 
       [SchedulerMixinHostLike_schedule](
-        this: SchedulerMixinHostLike & TProperties,
+        this: SchedulerLike & SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];
@@ -88,10 +82,10 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   );
 })();
 
-export const get: Signature["get"] = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
-    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
-  return (priority = unstable_NormalPriority) =>
+export const getImpl = /*@__PURE__*/ (() => {
+  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike & DisposableLike> =
+    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike & DisposableLike>>(Map);
+  return (priority: 1 | 2 | 3 | 4 | 5 = unstable_NormalPriority) =>
     schedulerCache[Map_get](priority) ??
     (() => {
       const scheduler = createReactScheduler(priority);
@@ -104,3 +98,8 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       );
     })();
 })();
+
+export const get: Signature["get"] = (priority = unstable_NormalPriority) =>
+  getImpl(priority);
+
+DefaultScheduler.set(getImpl(unstable_NormalPriority));

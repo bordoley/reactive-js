@@ -1,25 +1,25 @@
 /// <reference types="./Observable.toRunnable.d.ts" />
 
-import * as Computation from "../../../computations/Computation.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
-import { bindMethod, newInstance, pipe } from "../../../functions.js";
-import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import Observable_forEach from "./Observable.forEach.js";
-import Observable_run from "./Observable.run.js";
-import Observable_takeWhile from "./Observable.takeWhile.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, SourceLike_subscribe, } from "../../../computations.js";
+import { newInstance, pipe } from "../../../functions.js";
+import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
+import { VirtualTimeSchedulerLike_run } from "../../../utils.js";
 class SynchronousObservableRunnable {
-    obs;
-    options;
+    s;
+    o;
     [ComputationLike_isPure];
     [ComputationLike_isDeferred] = false;
-    constructor(obs, options) {
-        this.obs = obs;
-        this.options = options;
-        this[ComputationLike_isPure] = Computation.isPure(obs);
+    constructor(s, o) {
+        this.s = s;
+        this.o = o;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [RunnableLike_eval](sink) {
-        pipe(this.obs, Observable_takeWhile(_ => !sink[SinkLike_isCompleted]), Observable_forEach(bindMethod(sink, EventListenerLike_notify)), Observable_run(this.options));
-        sink[SinkLike_complete]();
+        const scheduler = VirtualTimeScheduler.create(this.o);
+        const observer = pipe(sink, Sink.toObserver(scheduler));
+        this.s[SourceLike_subscribe](observer);
+        scheduler[VirtualTimeSchedulerLike_run]();
     }
 }
 const Observable_toRunnable = ((options) => (runnable) => newInstance(SynchronousObservableRunnable, runnable, options));

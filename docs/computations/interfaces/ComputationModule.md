@@ -13,14 +13,15 @@
 ## Extended by
 
 - [`AsyncIterableModule`](../AsyncIterable/interfaces/AsyncIterableModule.md)
-- [`EventSourceModule`](../EventSource/interfaces/EventSourceModule.md)
+- [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
+- [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
 
 • **TCreationOptions** *extends* `object` = \{\}
 
@@ -36,29 +37,9 @@
 
 ## Methods
 
-### empty()
+### distinctUntilChanged()
 
-> **empty**\<`T`\>(`options`?): [`EmptyOf`](../type-aliases/EmptyOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"empty"`\]
-
-#### Returns
-
-[`EmptyOf`](../type-aliases/EmptyOf.md)\<`TComputationType`, `T`\>
-
-***
-
-### firstAsync()
-
-> **firstAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+> **distinctUntilChanged**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -68,57 +49,29 @@
 
 ##### options?
 
-`TCreationOptions`\[`"firstAsync"`\]
+###### equality?
+
+[`Equality`](../../functions/type-aliases/Equality.md)\<`T`\>
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
-### fromReadonlyArray()
+### encodeUtf8()
 
-> **fromReadonlyArray**\<`T`\>(`options`?): [`FromReadonlyArrayOperator`](../type-aliases/FromReadonlyArrayOperator.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`object` & `TCreationOptions`\[`"fromReadonlyArray"`\]
+> **encodeUtf8**(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 #### Returns
 
-[`FromReadonlyArrayOperator`](../type-aliases/FromReadonlyArrayOperator.md)\<`TComputationType`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `string`, `Uint8Array`\<`ArrayBufferLike`\>\>
 
 ***
 
-### fromValue()
+### genPure()
 
-> **fromValue**\<`T`\>(`options`?): [`FromValueOperator`](../type-aliases/FromValueOperator.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"fromValue"`\]
-
-#### Returns
-
-[`FromValueOperator`](../type-aliases/FromValueOperator.md)\<`TComputationType`, `T`\>
-
-***
-
-### gen()
-
-> **gen**\<`T`\>(`factory`, `options`?): [`GenPureConstructor`](../type-aliases/GenPureConstructor.md)\<`TComputationType`, `T`\>
+> **genPure**\<`T`\>(`factory`, `options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -128,45 +81,21 @@
 
 ##### factory
 
-[`Factory`](../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
+[`Factory`](../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
 
 ##### options?
 
-`TCreationOptions`\[`"gen"`\]
+`TCreationOptions`\[`"genPure"`\]
 
 #### Returns
 
-[`GenPureConstructor`](../type-aliases/GenPureConstructor.md)\<`TComputationType`, `T`\>
-
-***
-
-### genWithSideEffects()
-
-> **genWithSideEffects**\<`T`\>(`factory`, `options`?): [`GenWithSideEffectsConstructor`](../type-aliases/GenWithSideEffectsConstructor.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### factory
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`TCreationOptions`\[`"gen"`\]
-
-#### Returns
-
-[`GenWithSideEffectsConstructor`](../type-aliases/GenWithSideEffectsConstructor.md)\<`TComputationType`, `T`\>
+[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 ***
 
 ### keep()
 
-> **keep**\<`T`\>(`predicate`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+> **keep**\<`T`\>(`predicate`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -180,33 +109,13 @@
 
 #### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-***
-
-### lastAsync()
-
-> **lastAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"lastAsync"`\]
-
-#### Returns
-
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`Optional`](../../functions/type-aliases/Optional.md)\<`T`\>\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
 ### map()
 
-> **map**\<`TA`, `TB`\>(`selector`): [`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
+> **map**\<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
 
 #### Type Parameters
 
@@ -222,33 +131,27 @@
 
 #### Returns
 
-[`StatelessComputationOperator`](../type-aliases/StatelessComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TA`, `TB`\>
 
 ***
 
-### raise()
+### pairwise()
 
-> **raise**\<`T`\>(`options`?): [`RaiseOf`](../type-aliases/RaiseOf.md)\<`TComputationType`, `T`\>
+> **pairwise**\<`T`\>(): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 #### Type Parameters
 
 • **T**
 
-#### Parameters
-
-##### options?
-
-`object` & `TCreationOptions`\[`"raise"`\]
-
 #### Returns
 
-[`RaiseOf`](../type-aliases/RaiseOf.md)\<`TComputationType`, `T`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`T`, `T`\>\>
 
 ***
 
-### reduceAsync()
+### scan()
 
-> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
+> **scan**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
 
 #### Type Parameters
 
@@ -258,7 +161,7 @@
 
 #### Parameters
 
-##### reducer
+##### scanner
 
 [`Reducer`](../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
 
@@ -266,33 +169,15 @@
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
 
-##### options?
-
-`TCreationOptions`\[`"reduceAsync"`\]
-
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, `TAcc`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
 
 ***
 
-### toObservable()
+### skipFirst()
 
-> **toObservable**\<`T`\>(): [`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-[`ToObservableOperator`](../type-aliases/ToObservableOperator.md)\<`TComputationType`, `T`\>
-
-***
-
-### toReadonlyArrayAsync()
-
-> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
+> **skipFirst**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 #### Type Parameters
 
@@ -302,8 +187,78 @@
 
 ##### options?
 
-`TCreationOptions`\[`"toReadonlyArrayAsync"`\]
+###### count?
+
+`number`
 
 #### Returns
 
-[`AsyncFunction1`](../../functions/type-aliases/AsyncFunction1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, readonly `T`[]\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+***
+
+### takeFirst()
+
+> **takeFirst**\<`T`\>(`options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+***
+
+### takeWhile()
+
+> **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### predicate
+
+[`Predicate`](../../functions/type-aliases/Predicate.md)\<`T`\>
+
+##### options?
+
+###### inclusive?
+
+`boolean`
+
+#### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+***
+
+### toProducer()
+
+> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toProducer"`\]
+
+#### Returns
+
+[`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>

@@ -5,48 +5,69 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
-  ComputationType,
   InteractiveComputationModule,
-  SequentialComputationModule,
 } from "../../../computations.js";
-import { pipeLazyAsync } from "../../../functions.js";
+import {
+  Tuple3,
+  arrayEquality,
+  pipeLazyAsync,
+  tuple,
+} from "../../../functions.js";
 import * as Computation from "../../Computation.js";
+import * as Source from "../../Source.js";
 
 const InteractiveComputationModuleTests = <
-  TComputationType extends ComputationType,
+  TComputationModule extends ComputationModule & InteractiveComputationModule,
 >(
-  m: InteractiveComputationModule<TComputationType> &
-    SequentialComputationModule<TComputationType> &
-    ComputationModule<TComputationType>,
+  m: TComputationModule,
 ) =>
   describe(
-    "InteractiveComputationModule",
+    "InteractiveComputationModuleTests",
+    describe(
+      "toObservable",
+      testAsync(
+        "The observable publishes all the values from the source",
+        pipeLazyAsync(
+          Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]),
+          m.toObservable<number>(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([0, 1, 2, 3, 4]),
+        ),
+      ),
+    ),
     describe(
       "zip",
       testAsync(
         "different length iterables",
         pipeLazyAsync(
           m.zip(
-            m.fromReadonlyArray<number>()([0, 1, 2, 3, 4]),
-            m.fromReadonlyArray<number>()([0, 1, 2]),
-            m.fromReadonlyArray<number>()([0, 1, 2, 3]),
+            Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]),
+            Computation.fromReadonlyArray(m)()([0, 1, 2]),
+            Computation.fromReadonlyArray(m)()([0, 1, 2, 3]),
           ),
-          Computation.concatMap(m)(m.fromReadonlyArray<number>()),
-          m.toReadonlyArrayAsync<number>(),
-          expectArrayEquals([0, 0, 0, 1, 1, 1, 2, 2, 2]),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
+          expectArrayEquals<Tuple3<number, number, number>>(
+            [tuple(0, 0, 0), tuple(1, 1, 1), tuple(2, 2, 2)],
+            {
+              valuesEquality: arrayEquality(),
+            },
+          ),
         ),
       ),
       testAsync(
         "with empty iterable",
         pipeLazyAsync(
           m.zip(
-            m.fromReadonlyArray<number>()([0, 1, 2, 3, 4]),
-            m.fromReadonlyArray<number>()([]),
-            m.fromReadonlyArray<number>()([0, 1, 2, 3]),
+            Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]),
+            Computation.fromReadonlyArray(m)()([]),
+            Computation.fromReadonlyArray(m)()([0, 1, 2, 3]),
           ),
-          Computation.concatMap(m)(m.fromReadonlyArray<number>()),
-          m.toReadonlyArrayAsync<number>(),
-          expectArrayEquals<number>([]),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
+          expectArrayEquals<Tuple3<number, number, number>>([], {
+            valuesEquality: arrayEquality(),
+          }),
         ),
       ),
     ),

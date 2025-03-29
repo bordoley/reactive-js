@@ -1,47 +1,64 @@
 /// <reference types="./Observable.gen.d.ts" />
 
-import { Iterator_done, Iterator_next, Iterator_value, Symbol, } from "../../../__internal__/constants.js";
-import { error, isSome, none, pipe, } from "../../../functions.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
+import { bindMethod, error, none, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import { ConsumerLike_addOnReadyListener, ConsumerLike_isReady, ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, SerialDisposableLike_current, SinkLike_complete, } from "../../../utils.js";
-import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
-const Observable_gen = (factory, options) => Observable_createPureSynchronousObservable((observer) => {
+import * as Iterator from "../../../utils/__internal__/Iterator.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import * as DeferredSource from "../../__internal__/DeferredSource.js";
+const genFactory = (factory, options) => (observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
-    const iterable = factory();
-    const iterator = iterable[Symbol.iterator]();
-    const subscription = SerialDisposable.create();
-    pipe(observer, DisposableContainer.onDisposed(() => iterator.return(none)), Disposable.add(observer));
-    const continuation = (ctx) => {
-        while (observer[ConsumerLike_isReady]) {
-            let next = none;
-            try {
-                next = iterator[Iterator_next]();
+    const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(observer));
+    let isActive = false;
+    const continue_ = (ctx) => {
+        if (isActive) {
+            return;
+        }
+        isActive = true;
+        let shouldYield = false;
+        let isReady = observer[FlowControllerLike_isReady];
+        let isCompleted = observer[SinkLike_isCompleted];
+        try {
+            while (isReady &&
+                !isCompleted &&
+                !shouldYield &&
+                enumerator[EnumeratorLike_moveNext]()) {
+                const value = enumerator[EnumeratorLike_current];
+                observer[EventListenerLike_notify](value);
+                isReady = observer[FlowControllerLike_isReady];
+                isCompleted = observer[SinkLike_isCompleted];
+                // Only request a yield if the observer is ready
+                // to accept more notifications, but the scheduler
+                // has requested a yield or we want to intentionally delay
+                shouldYield =
+                    (delay > 0 || observer[SchedulerLike_shouldYield]) &&
+                        isReady &&
+                        !isCompleted;
             }
-            catch (e) {
-                // Catch any errors thrown by the iterator
-                observer[DisposableLike_dispose](error(e));
-                break;
-            }
-            if (isSome(next) && !next[Iterator_done]) {
-                const v = next[Iterator_value];
-                observer[EventListenerLike_notify](v);
-                ctx[ContinuationContextLike_yield](delay);
-            }
-            else {
+            if (!shouldYield && isReady && !isCompleted) {
                 observer[SinkLike_complete]();
             }
         }
-    };
-    subscription[SerialDisposableLike_current] = pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable.addTo(observer));
-    observer[ConsumerLike_addOnReadyListener](() => {
-        const active = !subscription[SerialDisposableLike_current][DisposableLike_isDisposed];
-        if (active) {
-            return;
+        catch (e) {
+            observer[DisposableLike_dispose](error(e));
+            isReady = false;
         }
-        subscription[SerialDisposableLike_current] = pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
-    });
-    subscription[SerialDisposableLike_current] = pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable.addTo(observer));
-});
-export default Observable_gen;
+        isActive = false;
+        if (shouldYield) {
+            ctx[ContinuationContextLike_yield](delay);
+            // Will throw a yield exception and we'll exit the continuation
+        }
+        // Otherwise return and let the onReadySink reschedule
+        // the continuations
+    };
+    observer[FlowControllerLike_addOnReadyListener](pipeLazy(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer)));
+    pipe(observer[SchedulerLike_schedule](continue_, delayStart ? options : none), Disposable.addTo(observer));
+};
+export const Observable_gen = ((factory, options) => DeferredSource.create(genFactory(factory, options), {
+    [ComputationLike_isPure]: false,
+    [ComputationLike_isSynchronous]: true,
+}));
+export const Observable_genPure = ((factory, options) => DeferredSource.create(genFactory(factory, options), {
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: true,
+}));

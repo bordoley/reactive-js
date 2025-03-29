@@ -1,8 +1,9 @@
 /// <reference types="./Runnable.catchError.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
-import { error, isSome, newInstance, none, } from "../../../functions.js";
-import { SinkLike_complete } from "../../../utils.js";
+import { error, isNone, isSome, newInstance, none, } from "../../../functions.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
+import { DisposableLike_dispose, DisposableLike_error, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class CatchErrorRunnable {
     s;
@@ -15,24 +16,28 @@ class CatchErrorRunnable {
         this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
     }
     [RunnableLike_eval](sink) {
+        const delegatingSink = Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink);
+        this.s[RunnableLike_eval](delegatingSink);
+        const err = delegatingSink[DisposableLike_error];
+        if (isNone(err)) {
+            sink[SinkLike_complete]();
+            return;
+        }
+        let action = none;
         try {
-            this.s[RunnableLike_eval](sink);
+            action = this.onError(err);
         }
         catch (e) {
-            const err = error(e);
-            let action = none;
-            try {
-                action = this.onError(err);
-            }
-            catch (e) {
-                throw error([error(e), err]);
-            }
-            if (isSome(action)) {
-                action[RunnableLike_eval](sink);
-            }
+            sink[DisposableLike_dispose](error([error(e), err]));
+        }
+        if (isSome(action) && !sink[SinkLike_isCompleted]) {
+            action[RunnableLike_eval](sink);
+            sink[SinkLike_complete]();
+        }
+        else {
             sink[SinkLike_complete]();
         }
     }
 }
-const Runnable_catchError = ((onError, options) => (deferable) => newInstance((CatchErrorRunnable), deferable, onError, options?.innerType?.[ComputationLike_isPure] ?? true));
+const Runnable_catchError = ((onError, options) => (runnable) => newInstance((CatchErrorRunnable), runnable, onError, options?.innerType?.[ComputationLike_isPure] ?? true));
 export default Runnable_catchError;

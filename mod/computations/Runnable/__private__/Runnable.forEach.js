@@ -1,19 +1,10 @@
 /// <reference types="./Runnable.forEach.d.ts" />
 
-import { newInstance } from "../../../functions.js";
-import AbstractSink, { AbstractSink_delegate, } from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { EventListenerLike_notify } from "../../../utils.js";
+import { ComputationLike_isPure } from "../../../computations.js";
+import { partial, pipe } from "../../../functions.js";
+import * as ForEachSink from "../../__internal__/sinks/ForEachSink.js";
 import Runnable_lift from "./Runnable.lift.js";
-class ForEachSink extends AbstractSink {
-    ef;
-    constructor(sink, ef) {
-        super(sink);
-        this.ef = ef;
-    }
-    [EventListenerLike_notify](next) {
-        this.ef(next);
-        this[AbstractSink_delegate][EventListenerLike_notify](next);
-    }
-}
-const Runnable_forEach = (ef) => Runnable_lift((sink) => newInstance((ForEachSink), sink, ef), false);
+const Runnable_forEach = (predicate) => pipe(ForEachSink.create, partial(predicate), Runnable_lift({
+    [ComputationLike_isPure]: false,
+}));
 export default Runnable_forEach;

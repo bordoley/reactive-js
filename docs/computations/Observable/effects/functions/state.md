@@ -28,10 +28,6 @@
 
 [`Optional`](../../../../functions/type-aliases/Optional.md)\<[`Equality`](../../../../functions/type-aliases/Equality.md)\<`T`\>\>
 
-#### replay?
-
-`number`
-
 #### scheduler?
 
 [`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)

@@ -9,17 +9,20 @@ import DelegatingConsumerMixin from "../../utils/__mixins__/DelegatingConsumerMi
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { OverflowBackpressureStrategy, } from "../../utils.js";
 import * as Observable from "../Observable.js";
+import * as Producer from "../Producer.js";
 import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
-import DelegatingMulticastObservableMixin from "../__mixins__/DelegatingMulticastObservableMixin.js";
-const StreamMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin, DelegatingConsumerMixin(), DelegatingMulticastObservableMixin()), function Stream(op, scheduler, options) {
+import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
+const StreamMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin, DelegatingConsumerMixin(), DelegatingBroadcasterMixin()), function Stream(op, scheduler, options) {
     const consumer = ConsumerObservable.create(options);
-    const delegate = pipe(consumer, Observable.backpressureStrategy({
+    const delegate = pipe(consumer, Observable.withBackpressure({
         backpressureStrategy: options?.backpressureStrategy ?? OverflowBackpressureStrategy,
         capacity: clampPositiveInteger(options?.capacity ?? MAX_SAFE_INTEGER),
-    }), op, Observable.multicast(scheduler, options), Disposable.addTo(consumer));
+    }), op, Observable.toProducer({ scheduler }), Producer.broadcast({
+        autoDispose: options?.autoDispose,
+    }), Disposable.addTo(consumer));
     init(DelegatingDisposableMixin, this, consumer);
     init(DelegatingConsumerMixin(), this, consumer);
-    init(DelegatingMulticastObservableMixin(), this, delegate);
+    init(DelegatingBroadcasterMixin(), this, delegate);
     return this;
 })))();
 export default StreamMixin;

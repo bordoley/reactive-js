@@ -7,11 +7,9 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Broadcaster from "../../computations/Broadcaster.js";
-import * as Iterable from "../../computations/Iterable.js";
-import * as Observable from "../../computations/Observable.js";
 import * as Producer from "../../computations/Producer.js";
-import { ProducerLike_consume } from "../../computations.js";
+import * as Source from "../../computations/Source.js";
+import { SourceLike_subscribe } from "../../computations.js";
 import {
   Optional,
   invoke,
@@ -20,15 +18,11 @@ import {
   pipeAsync,
   returns,
 } from "../../functions.js";
-import * as Consumer from "../../utils/Consumer.js";
-import * as Disposable from "../../utils/Disposable.js";
+import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-import {
-  DisposableLike_isDisposed,
-  PauseableLike_pause,
-  PauseableLike_resume,
-} from "../../utils.js";
+import * as Consumer from "../../utils/__internal__/Consumer.js";
+import { CollectionEnumeratorLike_peek } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
 
 testModule(
@@ -41,30 +35,17 @@ testModule(
         yield Buffer.from("defg", "utf8");
       }
 
-      using scheduler = HostScheduler.create();
-
       const readable = Readable.from(generate(), {
         autoDestroy: false,
       });
 
-      const src = pipe(
+      await pipeAsync(
         readable,
         returns,
         NodeReadable.create,
-        Producer.broadcast({ autoDispose: true }),
-        Disposable.addTo(scheduler),
-      );
-
-      src[PauseableLike_resume]();
-      src[PauseableLike_pause]();
-      src[PauseableLike_resume]();
-
-      await pipeAsync(
-        src,
-        Broadcaster.toObservable(),
-        Observable.decodeWithCharset(),
-        Observable.scan((acc: string, next: string) => acc + next, returns("")),
-        Observable.lastAsync<string>({ scheduler }),
+        Producer.decodeWithCharset(),
+        Producer.scan((acc: string, next: string) => acc + next, returns("")),
+        Source.lastAsync<string>(),
         expectEquals<Optional<string>>("abcdefg"),
       );
 
@@ -76,35 +57,19 @@ testModule(
         yield Buffer.from("defg", "utf8");
       }
 
-      using scheduler = HostScheduler.create();
-
-      const src = pipe(
-        Readable.from(generate()),
-        returns,
-        NodeReadable.create,
-        Producer.broadcast({ autoDispose: true }),
-        Disposable.addTo(scheduler),
-      );
-
-      const queue = Consumer.createDropOldestWithoutBackpressure<string>(1, {
-        autoDispose: true,
-      });
+      const queue = Consumer.takeLast<string>(1);
       pipe(
-        src,
-        Broadcaster.toObservable(),
-        Observable.decodeWithCharset(),
-        Observable.scan((acc: string, next: string) => acc + next, returns("")),
-        Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, queue),
+        NodeReadable.create(() => Readable.from(generate())),
+        Producer.decodeWithCharset(),
+        Producer.scan((acc: string, next: string) => acc + next, returns("")),
+        invoke(SourceLike_subscribe, queue),
       );
-      src[PauseableLike_resume]();
 
       await DisposableContainer.toPromise(queue);
 
-      pipe(queue, Iterable.first(), expectEquals<Optional<string>>("abcdefg"));
       pipe(
-        src[DisposableLike_isDisposed],
-        expectTrue("expected flowed to be disposed"),
+        queue[CollectionEnumeratorLike_peek],
+        expectEquals<Optional<string>>("abcdefg"),
       );
     }),
     testAsync("reading from readable that throws", async () => {
@@ -115,25 +80,19 @@ testModule(
         throw err;
       }
 
-      using scheduler = HostScheduler.create();
-
-      const src = pipe(
-        generate(),
-        Readable.from,
-        returns,
-        NodeReadable.create,
-        Producer.broadcast({ autoDispose: true }),
-        Disposable.addTo(scheduler),
-      );
-
-      src[PauseableLike_resume]();
-
       await pipe(
-        src,
-        Broadcaster.toObservable(),
-        Observable.lastAsync({ scheduler }),
+        NodeReadable.create(() => Readable.from(generate())),
+        Source.lastAsync<Uint8Array>(),
         expectPromiseToThrow,
       );
     }),
   ),
-);
+)({
+  beforeEach() {
+    const scheduler = HostScheduler.create();
+    DefaultScheduler.set(scheduler);
+  },
+  afterEach() {
+    DefaultScheduler.dispose();
+  },
+});

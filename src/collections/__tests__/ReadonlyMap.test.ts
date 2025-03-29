@@ -11,6 +11,6 @@ testModule(
     compose(ReadonlyArray.entries<T, number>(), ReadonlyMap.fromEntries()),
   ),
   DictionaryCollectionModuleTests(ReadonlyMap),
-);
+)();
 
 ((_: ReadonlyMap.Signature) => {})(ReadonlyMap);

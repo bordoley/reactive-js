@@ -1,11 +1,12 @@
 /// <reference types="./QueueMixin.d.ts" />
 
 import { Array, Array_length } from "../../__internal__/constants.js";
-import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, returns, } from "../../functions.js";
 import { floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../../utils.js";
-const QueueMixin = /*@__PURE__*/ (() => {
+import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../../utils.js";
+const QueueMixin = 
+/*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
     const QueueMixin_head = Symbol("QueueMixin_head");
     const QueueMixin_tail = Symbol("QueueMixin_tail");
@@ -48,8 +49,8 @@ const QueueMixin = /*@__PURE__*/ (() => {
         [QueueMixin_capacityMask]: 31,
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
-    }), {
-        /*get [QueueLike_tail]() {
+    }), proto({
+        /*get [FlowControllerQueueLike_tail]() {
           unsafeCast<TProperties>(this);
           const head = this[QueueMixin_head];
           const tail = this[QueueMixin_tail];
@@ -58,13 +59,25 @@ const QueueMixin = /*@__PURE__*/ (() => {
 
           return head === tail ? none : values[index];
         },*/
+        get [CollectionEnumeratorLike_peek]() {
+            unsafeCast(this);
+            const head = this[QueueMixin_head];
+            const values = this[QueueMixin_values];
+            const count = this[CollectionEnumeratorLike_count];
+            return count === 0
+                ? none
+                : count === 1
+                    ? values
+                    : values[head];
+        },
         [EnumeratorLike_moveNext]() {
             const count = this[CollectionEnumeratorLike_count];
             const values = this[QueueMixin_values];
             if (count < 1) {
+                // Queue was empty to start with;
                 this[EnumeratorLike_current] = none;
                 this[EnumeratorLike_hasCurrent] = false;
-                return this[EnumeratorLike_hasCurrent];
+                return false;
             }
             if (count === 1) {
                 const item = this[QueueMixin_values];
@@ -72,7 +85,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_values] = none;
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
-                return this[EnumeratorLike_hasCurrent];
+                return true;
             }
             unsafeCast(values);
             const isSorted = isSome(this[QueueMixin_comparator]);
@@ -87,7 +100,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 this[QueueMixin_values] = values[newHead];
                 this[EnumeratorLike_current] = item;
                 this[EnumeratorLike_hasCurrent] = true;
-                return this[EnumeratorLike_hasCurrent];
+                return true;
             }
             if (isSorted) {
                 const compare = this[QueueMixin_comparator];
@@ -141,7 +154,9 @@ const QueueMixin = /*@__PURE__*/ (() => {
                 ? newValuesLength - 1
                 : capacityMask;
             // Inline: shrink
-            if (shouldShrink && newTail >= newHead && newTail < newValuesLength) {
+            if (shouldShrink &&
+                newTail >= newHead &&
+                newTail < newValuesLength) {
                 values[Array_length] = newValuesLength;
             }
             else if (shouldShrink) {
@@ -152,7 +167,7 @@ const QueueMixin = /*@__PURE__*/ (() => {
             this[QueueMixin_capacityMask] = newCapacityMask;
             this[EnumeratorLike_current] = item;
             this[EnumeratorLike_hasCurrent] = true;
-            return this[EnumeratorLike_hasCurrent];
+            return true;
         },
         *[Symbol.iterator]() {
             const values = this[QueueMixin_values];
@@ -176,8 +191,9 @@ const QueueMixin = /*@__PURE__*/ (() => {
             }
         },
         [QueueLike_enqueue](item) {
-            // Assign these after applying backpressure because backpressure
-            // can mutate the state of the queue.
+            if (this[DisposableLike_isDisposed]) {
+                return;
+            }
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;
@@ -229,6 +245,6 @@ const QueueMixin = /*@__PURE__*/ (() => {
             }
             this[QueueMixin_capacityMask] = newCapacityMask;
         },
-    }));
+    })));
 })();
 export default QueueMixin;

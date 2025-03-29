@@ -8,9 +8,9 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  ObservableLike_observe,
   PublisherLike,
-  PureDeferredObservableLike,
+  PureObservableLike,
+  SourceLike_subscribe,
 } from "../../computations.js";
 import {
   Optional,
@@ -20,35 +20,35 @@ import {
   none,
   pipe,
 } from "../../functions.js";
-import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as Consumer from "../../utils/__internal__/Consumer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_backpressureStrategy,
-  ConsumerLike_capacity,
-  ConsumerLike_isReady,
   DisposableLike,
+  DisposableLike_dispose,
+  EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_backpressureStrategy,
+  FlowControllerLike_capacity,
+  FlowControllerLike_isReady,
   ObserverLike,
-  QueueLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import * as EventSource from "../EventSource.js";
+import * as Broadcaster from "../Broadcaster.js";
 import * as Publisher from "../Publisher.js";
 
 export interface ConsumerObservableLike<out T>
-  extends PureDeferredObservableLike<T>,
+  extends PureObservableLike<T>,
     ConsumerLike,
     DisposableLike {}
 
 export const create: <T>(config?: {
-  autoDispose?: boolean;
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
 }) => ConsumerObservableLike<T> = (<T>() => {
@@ -67,7 +67,6 @@ export const create: <T>(config?: {
     function ConsumerObservable(
       this: Omit<ConsumerObservableLike<T>, keyof DisposableLike> & TProperties,
       config: Optional<{
-        autoDispose?: boolean;
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
@@ -81,7 +80,7 @@ export const create: <T>(config?: {
       this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
 
       pipe(
-        queue[ConsumerLike_addOnReadyListener](
+        queue[FlowControllerLike_addOnReadyListener](
           bindMethod(onReadyPublisher, EventListenerLike_notify),
         ),
         Disposable.addTo(this),
@@ -97,21 +96,21 @@ export const create: <T>(config?: {
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
-      get [ConsumerLike_backpressureStrategy]() {
+      get [FlowControllerLike_backpressureStrategy]() {
         unsafeCast<TProperties>(this);
         return this[ConsumerObservable_delegate][
-          ConsumerLike_backpressureStrategy
+          FlowControllerLike_backpressureStrategy
         ];
       },
 
-      get [ConsumerLike_capacity]() {
+      get [FlowControllerLike_capacity]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][ConsumerLike_capacity];
+        return this[ConsumerObservable_delegate][FlowControllerLike_capacity];
       },
 
-      get [ConsumerLike_isReady]() {
+      get [FlowControllerLike_isReady]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][ConsumerLike_isReady];
+        return this[ConsumerObservable_delegate][FlowControllerLike_isReady];
       },
 
       get [SinkLike_isCompleted]() {
@@ -119,7 +118,7 @@ export const create: <T>(config?: {
         return this[ConsumerObservable_delegate][SinkLike_isCompleted];
       },
 
-      [ObservableLike_observe](
+      [SourceLike_subscribe](
         this: ConsumerObservableLike<T> & TProperties,
         observer: ObserverLike<T>,
       ) {
@@ -128,7 +127,7 @@ export const create: <T>(config?: {
         pipe(this, Disposable.bindTo(observer));
 
         pipe(
-          observer[ConsumerLike_addOnReadyListener](
+          observer[FlowControllerLike_addOnReadyListener](
             bindMethod(
               this[ConsumerObservable_onReadyPublisher],
               EventListenerLike_notify,
@@ -138,7 +137,7 @@ export const create: <T>(config?: {
         );
 
         if (isSome((oldDelegate as any)[EnumeratorLike_moveNext])) {
-          unsafeCast<QueueLike<T>>(oldDelegate);
+          unsafeCast<EnumeratorLike<T>>(oldDelegate);
 
           while (oldDelegate[EnumeratorLike_moveNext]()) {
             const v = oldDelegate[EnumeratorLike_current];
@@ -150,7 +149,7 @@ export const create: <T>(config?: {
           observer[SinkLike_complete]();
         }
 
-        oldDelegate[SinkLike_complete]();
+        oldDelegate[DisposableLike_dispose]();
       },
 
       [SinkLike_complete](this: TProperties & DisposableLike) {
@@ -161,13 +160,13 @@ export const create: <T>(config?: {
         this[ConsumerObservable_delegate][EventListenerLike_notify](v);
       },
 
-      [ConsumerLike_addOnReadyListener](
+      [FlowControllerLike_addOnReadyListener](
         this: TProperties & DisposableLike,
         callback: SideEffect1<void>,
       ) {
         return pipe(
           this[ConsumerObservable_onReadyPublisher],
-          EventSource.addEventHandler(callback),
+          Broadcaster.addEventHandler(callback),
           Disposable.addTo(this),
         );
       },

@@ -2,8 +2,9 @@
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { alwaysTrue, error, newInstance } from "../../../functions.js";
-import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
-import { SinkLike_complete } from "../../../utils.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
+import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 class RetryRunnable {
     s;
@@ -18,16 +19,27 @@ class RetryRunnable {
     [RunnableLike_eval](sink) {
         const source = this.s;
         const predicate = this.p;
-        const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);
         let cnt = 0;
         while (true) {
             try {
+                const delegatingSink = Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink);
                 source[RunnableLike_eval](delegatingSink);
+                Disposable.raiseIfDisposedWithError(delegatingSink);
                 break;
             }
             catch (e) {
+                if (sink[SinkLike_isCompleted]) {
+                    break;
+                }
                 cnt++;
-                if (!predicate(cnt, error(e))) {
+                try {
+                    if (!predicate(cnt, error(e))) {
+                        sink[DisposableLike_dispose](error(e));
+                        break;
+                    }
+                }
+                catch (ePredicate) {
+                    sink[DisposableLike_dispose](error([e, ePredicate]));
                     break;
                 }
             }

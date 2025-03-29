@@ -3,16 +3,17 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
 } from "../../../__internal__/mixins.js";
 import {
   BroadcasterLike,
-  EventSourceLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../../../computations.js";
 import { Function1, none, pipe } from "../../../functions.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
+  DisposableContainerLike,
   DisposableLike,
   PauseableLike,
   PauseableLike_isPaused,
@@ -32,18 +33,17 @@ export const Broadcaster_createPauseable: Broadcaster.Signature["createPauseable
     return mixInstanceFactory(
       include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()),
       function PauseableBroadcaster(
-        this: Pick<
-          PauseableLike,
-          typeof PauseableLike_pause | typeof PauseableLike_resume
-        > &
-          TProperties,
+        this: Omit<PauseableLike, keyof DisposableContainerLike> & TProperties,
         op: Function1<
-          EventSourceLike<boolean> & DisposableLike,
+          BroadcasterLike<boolean> & DisposableLike,
           BroadcasterLike<T>
         >,
+        options?: {
+          readonly autoDispose?: boolean;
+        },
       ): PauseableLike & BroadcasterLike<T> & DisposableLike {
-        const writableStore = (this[PauseableLike_isPaused] =
-          WritableStore.create(true));
+        const writableStore = WritableStore.create(true, options);
+        this[PauseableLike_isPaused] = writableStore;
 
         const delegate = pipe(writableStore, op);
 
@@ -57,7 +57,7 @@ export const Broadcaster_createPauseable: Broadcaster.Signature["createPauseable
       props<TProperties>({
         [PauseableLike_isPaused]: none,
       }),
-      {
+      proto({
         [PauseableLike_pause](this: TProperties) {
           this[PauseableLike_isPaused][StoreLike_value] = true;
         },
@@ -65,7 +65,7 @@ export const Broadcaster_createPauseable: Broadcaster.Signature["createPauseable
         [PauseableLike_resume](this: TProperties) {
           this[PauseableLike_isPaused][StoreLike_value] = false;
         },
-      },
+      }),
     );
   })();
 

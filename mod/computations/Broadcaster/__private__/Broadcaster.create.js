@@ -2,9 +2,9 @@
 
 import { error } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
-import * as Subject from "../../Subject.js";
+import * as Publisher from "../../Publisher.js";
 const Broadcaster_create = (setup, options) => {
-    const delegate = Subject.create(options);
+    const delegate = Publisher.create(options);
     try {
         setup(delegate);
     }

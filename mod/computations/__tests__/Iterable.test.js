@@ -1,15 +1,21 @@
 /// <reference types="./Iterable.test.d.ts" />
 
 import { testModule } from "../../__internal__/testing.js";
-import { Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
-import { ignore, pipe } from "../../functions.js";
+import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
-const IterableTypes = {
-    [Computation_pureSynchronousOfT]: Iterable.empty(),
-    [Computation_synchronousWithSideEffectsOfT]: pipe(Iterable.empty(), Iterable.forEach(ignore)),
-};
-testModule("Iterable", ComputationModuleTests(Iterable, IterableTypes), SequentialComputationModuleTests(Iterable, IterableTypes), SynchronousComputationModuleTests(Iterable), InteractiveComputationModuleTests(Iterable));
+const m = Computation.makeModule()(Iterable);
+testModule("Iterable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SynchronousComputationModuleTests(m), InteractiveComputationModuleTests(m))({
+    beforeEach() {
+        const scheduler = HostScheduler.create();
+        DefaultScheduler.set(scheduler);
+    },
+    afterEach() {
+        DefaultScheduler.dispose();
+    },
+});

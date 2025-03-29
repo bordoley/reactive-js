@@ -12,8 +12,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import { bindMethod, ignore, newInstance, pipe } from "../functions.js";
-import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
-import {
+import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
@@ -62,13 +61,13 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
   };
 
   return mixInstanceFactory(
-    include(CurrentTimeSchedulerMixin),
+    include(SchedulerMixin),
     function PostTaskScheduler(
       this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         TProperties,
       priority: "user-blocking" | "user-visible" | "background",
     ): SchedulerLike & DisposableLike {
-      init(CurrentTimeSchedulerMixin, this);
+      init(SchedulerMixin, this);
       this[PostTaskScheduler_priority] = priority;
       return this;
     },
@@ -81,7 +80,7 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
       [SchedulerMixinHostLike_shouldYield]: false as const,
 
       [SchedulerMixinHostLike_schedule](
-        this: SchedulerMixinHostLike & TProperties,
+        this: SchedulerLike & SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];

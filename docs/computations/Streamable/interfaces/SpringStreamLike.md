@@ -8,4 +8,14 @@
 
 ## Extends
 
-- [`AnimationStreamLike`](AnimationStreamLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`\>
+- [`AnimationLike`](AnimationLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`\>
+
+## Properties
+
+### \[AnimationLike\_isRunning\]
+
+> `readonly` **\[AnimationLike\_isRunning\]**: [`StoreLike`](../../interfaces/StoreLike.md)\<`boolean`\>
+
+#### Inherited from
+
+[`AnimationLike`](AnimationLike.md).[`[AnimationLike_isRunning]`](AnimationLike.md#animationlike_isrunning)

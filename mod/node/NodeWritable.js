@@ -2,13 +2,13 @@
 
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
-import * as EventSource from "../computations/EventSource.js";
+import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Publisher from "../computations/Publisher.js";
 import { bindMethod, newInstance, none, pipe, raise, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import { BackPressureError, ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
+import { BackPressureError, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 export const toConsumer = /*@__PURE__*/ (() => {
     const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
@@ -32,16 +32,16 @@ export const toConsumer = /*@__PURE__*/ (() => {
         [SinkLike_isCompleted]: false,
         [WritableConsumer_onReadyPublisher]: none,
     }), proto({
-        [ConsumerLike_backpressureStrategy]: ThrowBackpressureStrategy,
-        [ConsumerLike_capacity]: MAX_SAFE_INTEGER,
-        get [ConsumerLike_isReady]() {
+        [FlowControllerLike_backpressureStrategy]: ThrowBackpressureStrategy,
+        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             const writable = this[WritableConsumer_writable];
             const needsDrain = writable.writableNeedDrain;
             const result = !this[SinkLike_isCompleted] && !needsDrain;
             return result;
         },
-        [ConsumerLike_addOnReadyListener](callback) {
+        [FlowControllerLike_addOnReadyListener](callback) {
             const publisher = this[WritableConsumer_onReadyPublisher] ??
                 (() => {
                     const writable = this[WritableConsumer_writable];
@@ -51,10 +51,10 @@ export const toConsumer = /*@__PURE__*/ (() => {
                     this[WritableConsumer_onReadyPublisher] = publisher;
                     return publisher;
                 })();
-            return pipe(publisher, EventSource.addEventHandler(callback), Disposable.addTo(this));
+            return pipe(publisher, Broadcaster.addEventHandler(callback), Disposable.addTo(this));
         },
         [EventListenerLike_notify](data) {
-            if (this[ConsumerLike_isReady]) {
+            if (this[FlowControllerLike_isReady]) {
                 const writable = this[WritableConsumer_writable];
                 writable.write(Buffer.from(data));
             }

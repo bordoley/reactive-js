@@ -177,13 +177,13 @@ export const expectPromiseToThrow = async (promise) => {
     }
     //return promise;
 };
-const createTests = (testGroup, parents, debug = false) => {
+const createTests = (testGroup, parents, setup, debug = false) => {
     const path = [...parents, testGroup.name];
     if (testGroup.type === DescribeType) {
         const forEachCreateTests = () => {
             const { tests } = testGroup;
             for (const test of tests) {
-                createTests(test, path, debug);
+                createTests(test, path, setup, debug);
             }
         };
         if (__DENO__) {
@@ -197,17 +197,46 @@ const createTests = (testGroup, parents, debug = false) => {
     }
     else if (!debug || testGroup.type === TestDebugType) {
         const name = path.join(":");
-        if (__DENO__) {
-            globalObject.Deno?.test(name, testGroup.f(name));
+        if (__DENO__ &&
+            (testGroup.type === TestType || testGroup.type === TestDebugType)) {
+            globalObject.Deno?.test(name, () => {
+                setup.beforeEach();
+                testGroup.f(name)();
+                setup.afterEach();
+            });
         }
-        else {
-            globalObject.test?.(testGroup.name, testGroup.f(name));
+        else if (__DENO__ && testGroup.type === TestAsyncType) {
+            globalObject.Deno?.test(name, async () => {
+                setup.beforeEach();
+                await testGroup.f(name)();
+                setup.afterEach();
+            });
+        }
+        else if (testGroup.type === TestType) {
+            globalObject.test?.(testGroup.name, () => {
+                setup.beforeEach();
+                testGroup.f(name)();
+                setup.afterEach();
+            });
+        }
+        else if (testGroup.type === TestAsyncType) {
+            globalObject.test?.(testGroup.name, async () => {
+                setup.beforeEach();
+                await testGroup.f(name)();
+                setup.afterEach();
+            });
         }
     }
 };
-export const testModule = (name, ...testGroups) => {
-    createTests(describe(name, ...testGroups), []);
+export const testModule = (name, ...testGroups) => (options) => {
+    createTests(describe(name, ...testGroups), [], {
+        beforeEach: options?.beforeEach ?? (() => { }),
+        afterEach: options?.afterEach ?? (() => { }),
+    });
 };
-export const testDebugModule = (name, ...testGroups) => {
-    createTests(describe(name, ...testGroups), [], true);
+export const testDebugModule = (name, ...testGroups) => (options) => {
+    createTests(describe(name, ...testGroups), [], {
+        beforeEach: options?.beforeEach ?? (() => { }),
+        afterEach: options?.afterEach ?? (() => { }),
+    }, true);
 };

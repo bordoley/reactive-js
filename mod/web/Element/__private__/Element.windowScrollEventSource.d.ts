@@ -1,3 +1,3 @@
-import { EventSourceLike } from "../../../computations.js";
-declare const Element_windowScrollEventSource: () => EventSourceLike<Event>;
+import { BroadcasterLike } from "../../../computations.js";
+declare const Element_windowScrollEventSource: () => BroadcasterLike<Event>;
 export default Element_windowScrollEventSource;

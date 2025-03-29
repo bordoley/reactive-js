@@ -6,4 +6,4 @@
 
 # Type Alias: ThrottleMode
 
-> **ThrottleMode**: *typeof* [`ThrottleFirstMode`](../variables/ThrottleFirstMode.md) \| *typeof* [`ThrottleLastMode`](../variables/ThrottleLastMode.md) \| *typeof* [`ThrottleIntervalMode`](../variables/ThrottleIntervalMode.md)
+> **ThrottleMode**: `"first"` \| `"last"` \| `"interval"`

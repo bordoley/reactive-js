@@ -10,6 +10,7 @@ import {
 import { returns } from "../../functions.js";
 import {
   DisposableLike,
+  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -25,25 +26,34 @@ export interface DelegatingSinkLike<
 > extends DelegatingEventListenerLike<T, TDelegateSink>,
     SinkLike<T> {}
 
+type TReturn<T, TDelegateSink extends SinkLike<T> = SinkLike<T>> = Omit<
+  DelegatingSinkLike<T, TDelegateSink>,
+  keyof DisposableLike
+>;
+
+type TPrototype<T, TDelegateSink extends SinkLike<T> = SinkLike<T>> = Omit<
+  DelegatingSinkLike<T, TDelegateSink>,
+  | keyof DisposableLike
+  | typeof DelegatingEventListenerLike_delegate
+  | typeof EventListenerLike_notify
+>;
+
 const DelegatingSinkMixin: <
   T,
   TDelegateSink extends SinkLike<T> = SinkLike<T>,
 >() => Mixin1<
-  Omit<DelegatingSinkLike<T, TDelegateSink>, keyof DisposableLike>,
-  TDelegateSink
-> = /*@__PURE__*/ (<T, TDelegateSink extends SinkLike<T> = SinkLike<T>>() =>
-  returns(
+  TReturn<T, TDelegateSink>,
+  TDelegateSink,
+  TPrototype<T, TDelegateSink>
+> = /*@__PURE__*/ (<T, TDelegateSink extends SinkLike<T> = SinkLike<T>>() => {
+  return returns(
     mix(
       include(DelegatingEventListenerMixin()),
       function DelegatingSinkMixin(
-        this: Pick<
-          DelegatingSinkLike<T, TDelegateSink>,
-          typeof SinkLike_isCompleted | typeof SinkLike_complete
-        >,
+        this: TPrototype<T, TDelegateSink>,
         delegate: TDelegateSink,
-      ): Omit<DelegatingSinkLike<T, TDelegateSink>, keyof DisposableLike> {
+      ): TReturn<T, TDelegateSink> {
         init(DelegatingEventListenerMixin<T, TDelegateSink>(), this, delegate);
-
         return this;
       },
       props(),
@@ -60,6 +70,7 @@ const DelegatingSinkMixin: <
         },
       }),
     ),
-  ))();
+  );
+})();
 
 export default DelegatingSinkMixin;

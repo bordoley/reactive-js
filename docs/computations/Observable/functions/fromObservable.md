@@ -6,7 +6,7 @@
 
 # Function: fromObservable()
 
-> **fromObservable**\<`T`\>(`scheduler`): [`FromObservableOperator`](../../type-aliases/FromObservableOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
+> **fromObservable**\<`T`\>(`options`?): [`FromObservableOperator`](../../type-aliases/FromObservableOperator.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,7 +14,9 @@
 
 ## Parameters
 
-### scheduler
+### options?
+
+#### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 

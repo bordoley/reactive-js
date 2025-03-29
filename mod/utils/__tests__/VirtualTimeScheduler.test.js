@@ -53,9 +53,9 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 });
 import { Array_push } from "../../__internal__/constants.js";
-import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
-import { pipe } from "../../functions.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
+import { ignore, pipe, raise } from "../../functions.js";
+import { ContinuationContextLike_yield, DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_requestYield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
@@ -201,4 +201,89 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     finally {
         __disposeResources(env_5);
     }
-}));
+}), test("when continuation throws an exception", () => {
+    const env_6 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create({
+            maxMicroTaskTicks: 1,
+        }), false);
+        const disposable = vts[SchedulerLike_schedule](() => {
+            raise("throwing");
+        });
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(disposable[DisposableLike_error], expectIsSome);
+        pipe(vts[DisposableLike_error], expectIsNone);
+    }
+    catch (e_6) {
+        env_6.error = e_6;
+        env_6.hasError = true;
+    }
+    finally {
+        __disposeResources(env_6);
+    }
+}), test("scheduling a continuation after being disposed does nothing.", () => {
+    const env_7 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_7, VirtualTimeScheduler.create({
+            maxMicroTaskTicks: 1,
+        }), false);
+        vts[VirtualTimeSchedulerLike_run]();
+        const disposable = vts[SchedulerLike_schedule](ignore);
+        pipe(disposable[DisposableLike_isDisposed], expectTrue("scheduled continuation should be immediately disposed"));
+        pipe(disposable[DisposableLike_error], expectIsNone);
+    }
+    catch (e_7) {
+        env_7.error = e_7;
+        env_7.hasError = true;
+    }
+    finally {
+        __disposeResources(env_7);
+    }
+}), test("requesting yield", () => {
+    const env_8 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_8, VirtualTimeScheduler.create({
+            maxMicroTaskTicks: 100,
+        }), false);
+        let runCount = 0;
+        vts[SchedulerLike_schedule]((ctx) => {
+            vts[SchedulerLike_requestYield]();
+            if (runCount < 1) {
+                runCount++;
+                ctx[ContinuationContextLike_yield]();
+            }
+        });
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(runCount, expectEquals(1));
+    }
+    catch (e_8) {
+        env_8.error = e_8;
+        env_8.hasError = true;
+    }
+    finally {
+        __disposeResources(env_8);
+    }
+}), test("with multiple delayed continuations with same delay", () => {
+    const env_9 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_9, VirtualTimeScheduler.create({
+            maxMicroTaskTicks: 1,
+        }), false);
+        let count = 0;
+        vts[SchedulerLike_schedule](() => {
+            count++;
+        }, { delay: 1 });
+        vts[SchedulerLike_schedule](() => {
+            count++;
+        }, { delay: 1 });
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(count, expectEquals(2));
+    }
+    catch (e_9) {
+        env_9.error = e_9;
+        env_9.hasError = true;
+    }
+    finally {
+        __disposeResources(env_9);
+    }
+}))();

@@ -1,36 +1,17 @@
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationOperatorWithSideEffects, DeferredObservableWithSideEffectsLike, ObservableLike, StatefulSynchronousComputationOperator, StatelessComputationOperator } from "../../../computations.js";
-import { Function1 } from "../../../functions.js";
-import { ObserverLike } from "../../../utils.js";
-import type * as Observable from "../../Observable.js";
-export declare const ObservableLift_isStateless: unique symbol;
-interface ObservableLift {
-    lift(options: {
-        [ObservableLift_isStateless]: true;
-        [ComputationLike_isDeferred]: boolean;
-        [ComputationLike_isPure]: true;
-        [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => StatelessComputationOperator<Observable.Computation, TA, TB>;
-    lift(options: {
-        [ComputationLike_isDeferred]: true;
-        [ComputationLike_isPure]: true;
-        [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => StatefulSynchronousComputationOperator<Observable.Computation, TA, TB>;
-    lift(options: {
-        [ComputationLike_isDeferred]: true;
-        [ComputationLike_isPure]: false;
-        [ComputationLike_isSynchronous]: true;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ComputationOperatorWithSideEffects<Observable.Computation, TA, TB>;
-    lift(options: {
-        [ComputationLike_isDeferred]: true;
-        [ComputationLike_isPure]: false;
-        [ComputationLike_isSynchronous]: false;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => Function1<ObservableLike<TA>, DeferredObservableWithSideEffectsLike<TB>>;
-    lift(options: {
-        [ObservableLift_isStateless]: boolean;
-        [ComputationLike_isDeferred]: boolean;
-        [ComputationLike_isPure]: boolean;
-        [ComputationLike_isSynchronous]: boolean;
-    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-}
-declare const Observable_lift: ObservableLift["lift"];
+import { ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike } from "../../../computations.js";
+import { Function1, Optional } from "../../../functions.js";
+import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
+import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
+export declare const liftedSinkToObserver: <T>(delegate: LiftedSinkLike<ObserverLike, unknown>, backPressure?: Optional<{
+    capacity?: number;
+    backpressureStrategy?: BackpressureStrategy;
+}>) => ObserverLike<T>;
+export declare const liftedSinkToObserverWithBackPressure: <T>(config: {
+    capacity: number;
+    backpressureStrategy: BackpressureStrategy;
+}) => (sink: LiftedSinkLike<ObserverLike, T>) => ObserverLike<unknown>;
+declare const Observable_lift: <TIn, TOut>(config?: {
+    [ComputationLike_isPure]?: boolean;
+    [ComputationLike_isSynchronous]?: boolean;
+}) => (operator: Function1<LiftedSinkLike<ObserverLike, TOut>, LiftedSinkLike<ObserverLike, TIn>>) => (source: ObservableLike<TIn>) => ObservableLike<TOut>;
 export default Observable_lift;

@@ -1,16 +1,12 @@
 import {
   Array_map,
-  Array_push,
   Iterator_done,
   Iterator_next,
   Iterator_value,
-  MAX_SAFE_INTEGER,
 } from "../__internal__/constants.js";
-import parseArrayBounds from "../__internal__/parseArrayBounds.js";
 import {
   AsyncIterableLike,
   AsyncIterableWithSideEffectsLike,
-  BroadcasterLike,
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
@@ -20,21 +16,23 @@ import {
   Computation_baseOfT,
   Computation_deferredWithSideEffectsOfT,
   Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
-  EventSourceLike,
   HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   PureAsyncIterableLike,
   SequentialComputationModule,
 } from "../computations.js";
 import {
+  Equality,
   Factory,
   Function1,
   Optional,
   Predicate,
   Reducer,
-  SideEffect,
   SideEffect1,
+  Tuple2,
   alwaysTrue,
   bindMethod,
   error,
@@ -46,30 +44,24 @@ import {
   none,
   pick,
   pipe,
-  pipeSome,
   raiseError,
   returns,
+  strictEquality,
+  tuple,
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as DisposableContainer from "../utils/DisposableContainer.js";
-import {
-  DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-  EventListenerLike_notify,
-  PauseableLike,
-  SchedulerLike,
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  SinkLike,
-  SinkLike_complete,
-} from "../utils.js";
-import * as Broadcaster from "./Broadcaster.js";
+import * as Iterator from "../utils/__internal__/Iterator.js";
+import { EnumeratorLike_current, EnumeratorLike_moveNext } from "../utils.js";
 import * as ComputationM from "./Computation.js";
-import EventSource_addEventHandler from "./EventSource/__private__/EventSource.addEventHandler.js";
-import Observable_fromAsyncIterable from "./Observable/__private__/Observable.fromAsyncIterable.js";
+import {
+  Observable_genAsync,
+  Observable_genPureAsync,
+} from "./Observable/__private__/Observable.genAsync.js";
+import {
+  Producer_genAsync,
+  Producer_genPureAsync,
+} from "./Producer/__private__/Producer.genAsync.js";
 
 /**
  * @noInheritDoc
@@ -78,6 +70,9 @@ export interface AsyncIterableComputation extends ComputationType {
   readonly [Computation_baseOfT]?: AsyncIterableLike<
     this[typeof Computation_T]
   >;
+
+  readonly [Computation_pureSynchronousOfT]?: never;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
 
   readonly [Computation_deferredWithSideEffectsOfT]?: AsyncIterableWithSideEffectsLike<
     this[typeof Computation_T]
@@ -94,90 +89,15 @@ export interface AsyncIterableModule
     SequentialComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
-  of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
-
-  broadcast<T>(options?: {
-    readonly autoDispose?: boolean;
-    readonly replay?: number;
-    readonly scheduler?: SchedulerLike;
-  }): Function1<
-    AsyncIterableLike<T>,
-    PauseableLike & BroadcasterLike<T> & DisposableLike
+  fromAsyncFactory<T>(): Function1<
+    (options?: { signal?: AbortSignal }) => Promise<T>,
+    AsyncIterableWithSideEffectsLike<T>
   >;
+
+  of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 }
 
 export type Signature = AsyncIterableModule;
-
-export const broadcast: Signature["broadcast"] =
-  <T>(options?: {
-    readonly autoDispose?: boolean;
-    readonly replay?: number;
-    readonly scheduler?: SchedulerLike;
-  }) =>
-  (iterable: AsyncIterableLike<T>) =>
-    Broadcaster.createPauseable<T>((modeObs: EventSourceLike<boolean>) =>
-      pipe(
-        Broadcaster.create((sink: SinkLike<T>) => {
-          const scheduler = options?.scheduler;
-          const iterator = iterable[Symbol.asyncIterator]();
-
-          const maxYieldInterval =
-            scheduler?.[SchedulerLike_maxYieldInterval] ?? MAX_SAFE_INTEGER;
-
-          let isPaused = true;
-
-          const continuation = async () => {
-            const startTime = scheduler?.[SchedulerLike_now] ?? 0;
-
-            try {
-              while (
-                !sink[DisposableLike_isDisposed] &&
-                !isPaused &&
-                (scheduler?.[SchedulerLike_now] ?? 0) - startTime <
-                  maxYieldInterval
-              ) {
-                const next = await iterator[Iterator_next]();
-
-                if (next[Iterator_done]) {
-                  sink[SinkLike_complete]();
-                  break;
-                } else {
-                  const v = next[Iterator_value];
-                  sink[EventListenerLike_notify](v);
-                }
-              }
-            } catch (e) {
-              sink[DisposableLike_dispose](error(e));
-            }
-
-            pipeSome(
-              !isPaused ? scheduler : none,
-              invoke(SchedulerLike_schedule, continuation),
-              Disposable.addTo(sink),
-            );
-          };
-
-          pipe(
-            modeObs,
-            EventSource_addEventHandler((mode: boolean) => {
-              const wasPaused = isPaused;
-              isPaused = mode;
-
-              if (!isPaused && wasPaused) {
-                pipeSome(
-                  scheduler,
-                  invoke(SchedulerLike_schedule, continuation),
-                  Disposable.addTo(sink),
-                ) ?? continuation();
-              }
-            }),
-            Disposable.addTo(sink),
-            DisposableContainer.onComplete(bindMethod(sink, SinkLike_complete)),
-          );
-        }, options),
-        Disposable.addToContainer(modeObs),
-      ),
-    );
 
 class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -280,6 +200,84 @@ export const concat: Signature["concat"] = (<T>(
     iterables,
   )) as unknown as Signature["concat"];
 
+class DistinctUntilChangedAsyncIterable<T> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isPure]?: boolean;
+
+  constructor(
+    private s: AsyncIterableLike<T>,
+    private eq: Equality<T>,
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const equals = this.eq;
+
+    let hasPrev = false;
+    let prev: T = none as T;
+
+    for await (const v of this.s) {
+      if (!hasPrev) {
+        hasPrev = true;
+        prev = v;
+        yield v;
+      } else if (!equals(v, prev)) {
+        prev = v;
+        yield v;
+      }
+    }
+  }
+}
+
+export const distinctUntilChanged: Signature["distinctUntilChanged"] = (<
+    T,
+  >(options?: {
+    readonly equality?: Equality<T>;
+  }) =>
+  (iterable: AsyncIterableLike<T>) =>
+    newInstance(
+      DistinctUntilChangedAsyncIterable,
+      iterable,
+      options?.equality ?? strictEquality,
+    )) as Signature["distinctUntilChanged"];
+
+class AsyncFactoryIterator<T> implements AsyncIterator<T> {
+  private hv = false;
+
+  constructor(
+    private readonly a: AbortController,
+    private readonly p: Promise<T>,
+  ) {}
+
+  async next(): Promise<IteratorResult<T, any>> {
+    const { hv: hasValue, p: promise } = this;
+
+    if (hasValue) {
+      return { done: true, value: none };
+    }
+    const value = await promise;
+    this.hv = true;
+    return { value };
+  }
+
+  async return?(): Promise<IteratorResult<T, any>> {
+    const { a: abortController, hv: hasValue } = this;
+    if (!hasValue) {
+      abortController.abort();
+    }
+    return { done: true, value: none };
+  }
+
+  async throw?(e?: any): Promise<IteratorResult<T, any>> {
+    const { a: abortController, hv: hasValue } = this;
+    if (!hasValue) {
+      abortController.abort(e);
+    }
+    return { done: true, value: none };
+  }
+}
+
 class FromAsyncFactoryIterable<T>
   implements AsyncIterableWithSideEffectsLike<T>
 {
@@ -288,49 +286,16 @@ class FromAsyncFactoryIterable<T>
 
   constructor(private f: (options?: { signal: AbortSignal }) => Promise<T>) {}
 
-  async *[Symbol.asyncIterator]() {
-    const result = await this.f();
-    yield result;
+  [Symbol.asyncIterator]() {
+    const abortController: AbortController = newInstance(AbortController);
+    const promise = this.f({ signal: abortController.signal });
+    return newInstance(AsyncFactoryIterator<T>, abortController, promise);
   }
 }
 
 export const fromAsyncFactory: Signature["fromAsyncFactory"] = returns(
   factory => newInstance(FromAsyncFactoryIterable, factory),
 );
-
-class FromReadonlyArrayAsyncIterable<T> implements PureAsyncIterableLike<T> {
-  public readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  constructor(
-    private readonly arr: readonly T[],
-    private readonly count: number,
-    private readonly start: number,
-  ) {}
-
-  async *[Symbol.asyncIterator]() {
-    let { arr, start, count } = this;
-    while (count !== 0) {
-      const next = arr[start];
-      yield next;
-
-      count > 0 ? (start++, count--) : (start--, count++);
-    }
-  }
-}
-
-export const fromReadonlyArray: Signature["fromReadonlyArray"] = (<
-    T,
-  >(options?: {
-    readonly count?: number;
-    readonly start?: number;
-  }) =>
-  (arr: readonly T[]) => {
-    let [start, count] = parseArrayBounds(arr, options);
-    return newInstance(FromReadonlyArrayAsyncIterable, arr, count, start);
-  }) as Signature["fromReadonlyArray"];
-
-export const empty: Signature["empty"] = (<T>() =>
-  pipe([], fromReadonlyArray<T>(), returns))() as Signature["empty"];
 
 class EncodeUtf8AsyncIterable
   implements AsyncIterableLike<Uint8Array<ArrayBufferLike>>
@@ -354,15 +319,6 @@ class EncodeUtf8AsyncIterable
 export const encodeUtf8: Signature["encodeUtf8"] = (() =>
   (iterable: AsyncIterableLike<string>) =>
     newInstance(EncodeUtf8AsyncIterable, iterable)) as Signature["encodeUtf8"];
-
-export const firstAsync: Signature["firstAsync"] = /*@__PURE__*/ returns(
-  async (iter: AsyncIterableLike) => {
-    for await (const v of iter) {
-      return v;
-    }
-    return none;
-  },
-) as Signature["firstAsync"];
 
 class ForEachAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
@@ -388,48 +344,79 @@ export const forEach: Signature["forEach"] = (<T>(effect: SideEffect1<T>) =>
   (iter: AsyncIterableLike<T>) =>
     newInstance(ForEachAsyncIterable, iter, effect)) as Signature["forEach"];
 
-export const fromValue: Signature["fromValue"] =
-  /*@__PURE__*/
-  returns(v => fromReadonlyArray()([v])) as Signature["fromValue"];
-
-class GenAsyncIterable<T> implements PureAsyncIterableLike<T> {
-  public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isDeferred]: true = true as const;
-  public readonly [ComputationLike_isPure]: true = true as const;
-
-  constructor(readonly f: Factory<Generator<T>>) {}
-
-  async *[Symbol.asyncIterator]() {
-    const iter = this.f();
-    yield* iter;
-  }
-}
-
-export const gen: Signature["gen"] = (<T>(factory: Factory<Generator<T>>) =>
-  newInstance(GenAsyncIterable<T>, factory)) as Signature["gen"];
-
-class GenWithSideEffectsAsyncIterable<T>
-  implements AsyncIterableWithSideEffectsLike<T>
-{
+class GenAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isPure]: false = false as const;
 
-  constructor(readonly f: Factory<Generator<T>>) {}
+  constructor(readonly f: Factory<Iterator<T>>) {}
 
-  async *[Symbol.asyncIterator]() {
-    const iter = this.f();
-    yield* iter;
+  async *[Symbol.asyncIterator](): AsyncIterator<T, any, any> {
+    const enumerator = pipe(this.f(), Iterator.toEnumerator<T>());
+
+    while (enumerator[EnumeratorLike_moveNext]()) {
+      yield Promise.resolve(enumerator[EnumeratorLike_current]);
+    }
+    Disposable.raiseIfDisposedWithError(enumerator);
   }
 }
 
-export const genWithSideEffects: Signature["genWithSideEffects"] = (<T>(
-  factory: Factory<Generator<T>>,
+export const gen: Signature["gen"] = (<T>(factory: Factory<Iterator<T>>) =>
+  newInstance(GenAsyncIterable<T>, factory)) as Signature["gen"];
+
+class GenAsyncAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: false = false as const;
+
+  constructor(readonly f: Factory<AsyncIterator<T>>) {}
+
+  [Symbol.asyncIterator]() {
+    return this.f();
+  }
+}
+
+export const genAsync: Signature["genAsync"] = (<T>(
+  factory: Factory<AsyncIterator<T>>,
+) => newInstance(GenAsyncAsyncIterable, factory)) as Signature["genAsync"];
+
+class GenPureAsyncIterable<T> implements PureAsyncIterableLike<T> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: true = true as const;
+
+  constructor(readonly f: Factory<Iterator<T>>) {}
+
+  async *[Symbol.asyncIterator]() {
+    const enumerator = pipe(this.f(), Iterator.toEnumerator<T>());
+
+    while (enumerator[EnumeratorLike_moveNext]()) {
+      yield Promise.resolve(enumerator[EnumeratorLike_current]);
+    }
+    Disposable.raiseIfDisposedWithError(enumerator);
+  }
+}
+
+export const genPure: Signature["genPure"] = (<T>(
+  factory: Factory<Iterator<T>>,
+) => newInstance(GenPureAsyncIterable<T>, factory)) as Signature["genPure"];
+
+class GenPureAsyncAsyncIterable<T> implements PureAsyncIterableLike<T> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isPure]: true = true as const;
+
+  constructor(readonly f: Factory<AsyncIterator<T>>) {}
+
+  [Symbol.asyncIterator]() {
+    return this.f();
+  }
+}
+
+export const genPureAsync: Signature["genPureAsync"] = (<T>(
+  factory: Factory<AsyncIterator<T>>,
 ) =>
-  newInstance(
-    GenWithSideEffectsAsyncIterable<T>,
-    factory,
-  )) as Signature["genWithSideEffects"];
+  newInstance(GenPureAsyncAsyncIterable, factory)) as Signature["genPureAsync"];
 
 class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -457,16 +444,6 @@ class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
 export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
   (iterable: AsyncIterableLike<T>) =>
     newInstance(KeepAsyncIterable, iterable, predicate)) as Signature["keep"];
-
-export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ returns(
-  async (iter: AsyncIterableLike) => {
-    let result: Optional<unknown> = none;
-    for await (const v of iter) {
-      result = v;
-    }
-    return result;
-  },
-) as Signature["lastAsync"];
 
 class MapAsyncIterable<TA, TB> implements AsyncIterableLike<TB> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -508,6 +485,36 @@ export const of: Signature["of"] = /*@__PURE__*/ returns(iter =>
   newInstance(AsyncIterableOf, iter),
 );
 
+class PairwiseAsyncIterable<T> implements AsyncIterableLike<Tuple2<T, T>> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isPure]?: boolean;
+
+  constructor(private s: AsyncIterableLike<T>) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    let hasPrev = false;
+    let prev: T = none as T;
+
+    for await (const v of this.s) {
+      if (!hasPrev) {
+        hasPrev = true;
+        prev = v;
+      } else {
+        const result = tuple(prev, v);
+        prev = v;
+
+        yield result;
+      }
+    }
+  }
+}
+
+export const pairwise: Signature["pairwise"] = (<T>() =>
+  (iterable: AsyncIterableLike<T>) =>
+    newInstance(PairwiseAsyncIterable<T>, iterable)) as Signature["pairwise"];
+
 class ScanAsyncIterable<T, TAcc> implements AsyncIterableLike<TAcc> {
   public readonly [ComputationLike_isPure]?: boolean;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
@@ -530,35 +537,6 @@ class ScanAsyncIterable<T, TAcc> implements AsyncIterableLike<TAcc> {
     }
   }
 }
-
-class RaiseAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: true;
-  public readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  constructor(private r: SideEffect) {}
-
-  async *[Symbol.asyncIterator]() {
-    raiseError(error(this.r()));
-  }
-}
-
-export const raise: Signature["raise"] = (<T>(options?: {
-  readonly raise?: SideEffect;
-}) => {
-  const { raise: factory = raise } = options ?? {};
-  return newInstance(RaiseAsyncIterable<T>, factory);
-}) as Signature["raise"];
-
-export const reduceAsync: Signature["reduceAsync"] =
-  <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-  async (iterable: AsyncIterableLike<T>) => {
-    let acc = initialValue();
-    for await (let v of iterable) {
-      acc = reducer(acc, v);
-    }
-
-    return acc;
-  };
 
 class RepeatAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -621,10 +599,11 @@ class RetryAsyncIterable<T> implements AsyncIterableLike<T> {
     while (true) {
       try {
         yield* iterable;
+        return;
       } catch (e) {
         cnt++;
         if (!predicate(cnt, error(e))) {
-          break;
+          throw e;
         }
       }
     }
@@ -652,6 +631,86 @@ export const scan: Signature["scan"] = (<T, TAcc>(
       scanner,
       initialValue,
     )) as Signature["scan"];
+
+class ScanDistinctAsyncIterable<T, TAcc> {
+  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+
+  constructor(
+    private readonly s: AsyncIterableLike<T>,
+    private readonly r: Reducer<T, TAcc>,
+    private readonly iv: Factory<TAcc>,
+    private readonly o?: { readonly equality?: Equality<TAcc> },
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const { r: reducer, iv: initialValue, s: src, o: options } = this;
+    const equals = options?.equality ?? strictEquality;
+
+    let acc = initialValue();
+
+    yield acc;
+
+    for await (const v of src) {
+      const prevAcc = acc;
+      acc = reducer(acc, v);
+
+      if (!equals(prevAcc, acc)) {
+        yield acc;
+      }
+    }
+  }
+}
+
+export const scanDistinct: Signature["scanDistinct"] = (<T, TAcc>(
+    scanner: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+    options?: { readonly equality?: Equality<TAcc> },
+  ) =>
+  (iter: AsyncIterableLike<T>) =>
+    newInstance(
+      ScanDistinctAsyncIterable,
+      iter,
+      scanner,
+      initialValue,
+      options,
+    )) as Signature["scanDistinct"];
+
+class SkipFirstAsyncIterable<T> {
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isPure]?: boolean;
+
+  constructor(
+    private s: AsyncIterableLike<T>,
+    private c: number,
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const skipCount = this.c;
+    let count = 0;
+
+    for await (const v of this.s) {
+      if (count >= skipCount) {
+        yield v;
+      }
+      count++;
+    }
+  }
+}
+
+export const skipFirst: Signature["skipFirst"] = (<T>(options?: {
+    readonly count?: number;
+  }) =>
+  (iterable: AsyncIterableLike<T>) =>
+    newInstance(
+      SkipFirstAsyncIterable,
+      iterable,
+      clampPositiveInteger(options?.count ?? 1),
+    )) as Signature["skipFirst"];
 
 class TakeFirstAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]?: boolean;
@@ -768,17 +827,20 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
     )) as Signature["throwIfEmpty"];
 
 export const toObservable: Signature["toObservable"] =
-  Observable_fromAsyncIterable as Signature["toObservable"];
+  //  @__PURE__
+  returns((iter: AsyncIterableLike) =>
+    ComputationM.isPure(iter)
+      ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
+      : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)),
+  ) as Signature["toObservable"];
 
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  /*@__PURE__*/
-  returns(async (iter: AsyncIterableLike) => {
-    const result: any[] = [];
-    for await (const v of iter) {
-      result[Array_push](v);
-    }
-    return result;
-  });
+export const toProducer: Signature["toProducer"] =
+  //   @__PURE__
+  returns((iter: AsyncIterableLike) =>
+    ComputationM.isPure(iter)
+      ? Producer_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
+      : Producer_genAsync(bindMethod(iter, Symbol.asyncIterator)),
+  ) as Signature["toProducer"];
 
 class ZipAsyncIterable implements AsyncIterableLike {
   public readonly [ComputationLike_isPure]?: boolean;

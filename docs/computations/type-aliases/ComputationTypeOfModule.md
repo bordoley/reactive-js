@@ -6,7 +6,7 @@
 
 # Type Alias: ComputationTypeOfModule\<TModule\>
 
-> **ComputationTypeOfModule**\<`TModule`\>: `NonNullable`\<`TModule`\[*typeof* `ComputationModuleLike_computationType`\]\>
+> **ComputationTypeOfModule**\<`TModule`\>: `NonNullable`\<`TModule`\[*typeof* [`ComputationModuleLike_computationType`](../variables/ComputationModuleLike_computationType.md)\]\>
 
 ## Type Parameters
 

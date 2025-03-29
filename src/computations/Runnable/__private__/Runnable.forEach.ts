@@ -1,31 +1,18 @@
-import { SideEffect1, newInstance } from "../../../functions.js";
-import AbstractSink, {
-  AbstractSink_delegate,
-} from "../../../utils/Sink/__internal__/AbstractSink.js";
-import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
+import { ComputationLike_isPure } from "../../../computations.js";
+import { SideEffect1, partial, pipe } from "../../../functions.js";
 import type * as Runnable from "../../Runnable.js";
+import * as ForEachSink from "../../__internal__/sinks/ForEachSink.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-class ForEachSink<T> extends AbstractSink<T> {
-  constructor(
-    sink: SinkLike<T>,
-    private readonly ef: SideEffect1<T>,
-  ) {
-    super(sink);
-  }
-
-  [EventListenerLike_notify](next: T): void {
-    this.ef(next);
-    this[AbstractSink_delegate][EventListenerLike_notify](next);
-  }
-}
-
 const Runnable_forEach: Runnable.Signature["forEach"] = <T>(
-  ef: SideEffect1<T>,
+  predicate: SideEffect1<T>,
 ) =>
-  Runnable_lift(
-    (sink: SinkLike<T>) => newInstance(ForEachSink<T>, sink, ef),
-    false,
+  pipe(
+    ForEachSink.create,
+    partial(predicate),
+    Runnable_lift<T, T>({
+      [ComputationLike_isPure]: false,
+    }),
   );
 
 export default Runnable_forEach;

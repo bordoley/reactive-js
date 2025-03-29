@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`Collection`](../../interfaces/Collection.md)\<`TKey`\>
+- [`CollectionType`](../../interfaces/CollectionType.md)\<`TKey`\>
 
 ## Type Parameters
 
@@ -22,7 +22,7 @@
 
 #### Overrides
 
-[`Collection`](../../interfaces/Collection.md).[`[Collection_TKey]`](../../interfaces/Collection.md#collection_tkey)
+[`CollectionType`](../../interfaces/CollectionType.md).[`[Collection_TKey]`](../../interfaces/CollectionType.md#collection_tkey)
 
 ***
 
@@ -32,4 +32,4 @@
 
 #### Overrides
 
-[`Collection`](../../interfaces/Collection.md).[`[Collection_type]`](../../interfaces/Collection.md#collection_type)
+[`CollectionType`](../../interfaces/CollectionType.md).[`[Collection_type]`](../../interfaces/CollectionType.md#collection_type)

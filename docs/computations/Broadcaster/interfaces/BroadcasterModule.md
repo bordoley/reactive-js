@@ -6,7 +6,31 @@
 
 # Interface: BroadcasterModule
 
+## Extends
+
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>
+
 ## Methods
+
+### addEventHandler()
+
+> **addEventHandler**\<`T`\>(`onNotify`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### onNotify
+
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`T`\>
+
+#### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+***
 
 ### create()
 
@@ -20,17 +44,13 @@
 
 ##### setup
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SinkLike`](../../../utils/interfaces/SinkLike.md)\<`T`\>\>
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>
 
 ##### options?
 
 ###### autoDispose?
 
 `boolean`
-
-###### replay?
-
-`number`
 
 #### Returns
 
@@ -40,7 +60,7 @@
 
 ### createPauseable()
 
-> **createPauseable**\<`T`\>(`op`): [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+> **createPauseable**\<`T`\>(`op`, `options`?): [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
 
 #### Type Parameters
 
@@ -50,7 +70,13 @@
 
 ##### op
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`boolean`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`boolean`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
+
+##### options?
+
+###### autoDispose?
+
+`boolean`
 
 #### Returns
 
@@ -58,37 +84,9 @@
 
 ***
 
-### toEventSource()
+### fromPromise()
 
-> **toEventSource**\<`T`\>(): \<`TBroadcaster`\>(`broadcaster`) => `TBroadcaster` *extends* [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) ? [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> : [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Returns
-
-`Function`
-
-##### Type Parameters
-
-• **TBroadcaster** *extends* [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
-
-##### Parameters
-
-###### broadcaster
-
-`TBroadcaster`
-
-##### Returns
-
-`TBroadcaster` *extends* [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) ? [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\> : [`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`\>
-
-***
-
-### toObservable()
-
-> **toObservable**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+> **fromPromise**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -96,4 +94,4 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>

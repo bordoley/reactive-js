@@ -44,7 +44,7 @@
 
 #### Call Signature
 
-> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`void`, `T`\>\>
+> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `T`, [`AnimationLike`](AnimationLike.md)\<`void`, `T`\>\>
 
 ##### Type Parameters
 
@@ -64,11 +64,11 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`void`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `T`, [`AnimationLike`](AnimationLike.md)\<`void`, `T`\>\>
 
 #### Call Signature
 
-> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `T`, [`AnimationLike`](AnimationLike.md)\<`TEvent`, `T`\>\>
 
 ##### Type Parameters
 
@@ -90,7 +90,7 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationStreamLike`](AnimationStreamLike.md)\<`TEvent`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `T`, [`AnimationLike`](AnimationLike.md)\<`TEvent`, `T`\>\>
 
 ***
 
@@ -98,7 +98,7 @@
 
 #### Call Signature
 
-> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`void`, `TKey`, `T`\>\>
 
 ##### Type Parameters
 
@@ -120,11 +120,11 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`void`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`void`, `TKey`, `T`\>\>
 
 #### Call Signature
 
-> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ##### Type Parameters
 
@@ -148,7 +148,7 @@
 
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `boolean`, [`AnimationGroupStreamLike`](AnimationGroupStreamLike.md)\<`TEvent`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ***
 
@@ -166,7 +166,7 @@
 
 ##### op
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TReq`\>, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`TReq`\>, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 #### Returns
 
@@ -190,7 +190,7 @@
 
 ### spring()
 
-> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `boolean`, [`SpringStreamLike`](SpringStreamLike.md)\>
+> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringStreamLike`](SpringStreamLike.md)\>
 
 #### Parameters
 
@@ -214,7 +214,7 @@
 
 #### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `boolean`, [`SpringStreamLike`](SpringStreamLike.md)\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringStreamLike`](SpringStreamLike.md)\>
 
 ***
 
@@ -262,11 +262,11 @@ The initial accumulation value.
 
 ##### onInit
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>\>\>
 
 ##### onChange
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`T`, `T`, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>\>\>
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`T`, `T`, [`ObservableLike`](../../interfaces/ObservableLike.md)\<[`Updater`](../../../functions/type-aliases/Updater.md)\<`T`\>\>\>
 
 ##### options?
 

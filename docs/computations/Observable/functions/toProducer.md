@@ -6,7 +6,7 @@
 
 # Function: toProducer()
 
-> **toProducer**\<`T`\>(`scheduler`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
+> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../../type-aliases/ToProducer.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>
 
 ## Type Parameters
 
@@ -14,10 +14,12 @@
 
 ## Parameters
 
-### scheduler
+### options?
+
+#### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
+[`ToProducer`](../../type-aliases/ToProducer.md)\<[`ObservableComputation`](../interfaces/ObservableComputation.md), `T`\>

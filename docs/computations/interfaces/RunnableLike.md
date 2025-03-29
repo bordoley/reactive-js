@@ -6,8 +6,6 @@
 
 # Interface: RunnableLike\<T\>
 
-Represents a deferred computation that is synchronously evaluated.
-
 ## Extends
 
 - [`SynchronousComputationLike`](SynchronousComputationLike.md)
@@ -47,7 +45,7 @@ Represents a deferred computation that is synchronously evaluated.
 
 > `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
 
-#### Inherited from
+#### Overrides
 
 [`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationLike.md#computationlike_issynchronous)
 

@@ -6,4 +6,4 @@
 
 # Variable: ThrowBackpressureStrategy
 
-> `const` **ThrowBackpressureStrategy**: `"throw"` = `"throw"`
+> `const` **ThrowBackpressureStrategy**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)

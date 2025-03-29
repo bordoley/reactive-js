@@ -3,18 +3,17 @@ import {
   MIN_SAFE_INTEGER,
 } from "../__internal__/constants.js";
 import {
-  Mutable,
   include,
   init,
   mixInstanceFactory,
   props,
   unsafeCast,
 } from "../__internal__/mixins.js";
-import * as Iterable from "../computations/Iterable.js";
-import { Optional, none, pipe } from "../functions.js";
+import { Optional, none } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
 import {
   CollectionEnumeratorLike_count,
+  CollectionEnumeratorLike_peek,
   DisposableLike,
   DisposableLike_dispose,
   EnumeratorLike_current,
@@ -55,7 +54,7 @@ const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 
 type TProperties = {
   [SchedulerLike_now]: number;
-  readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
+  [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
   [VirtualTimeScheduler_queue]: QueueLike<SchedulerContinuationLike>;
 };
@@ -68,7 +67,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         VirtualTimeSchedulerLike,
         typeof VirtualTimeSchedulerLike_run
       > &
-        Mutable<TProperties> &
+        TProperties &
         SchedulerMixinHostLike,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
@@ -108,11 +107,20 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[CollectionEnumeratorLike_count] > 0)
         ) {
+          const currentTime = this[SchedulerLike_now];
+          const firstContinuation = queue[CollectionEnumeratorLike_peek];
+          const firstContinuationDueTime =
+            firstContinuation?.[SchedulerContinuationLike_dueTime] ??
+            MIN_SAFE_INTEGER;
+          if (firstContinuationDueTime > currentTime) {
+            // Fast forward time to avoid unnecessary loops
+            const dueTime = firstContinuationDueTime;
+            this[SchedulerLike_now] = max(dueTime, currentTime + 1);
+          }
+
           this[VirtualTimeScheduler_queue] = Queue.createSorted(
             SchedulerContinuation.compare,
           );
-
-          const currentTime = this[SchedulerLike_now];
 
           while (queue[EnumeratorLike_moveNext]()) {
             let continuation = queue[EnumeratorLike_current];
@@ -133,7 +141,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           }
 
           const queueHeadDueTime =
-            pipe(this[VirtualTimeScheduler_queue], Iterable.first())?.[
+            this[VirtualTimeScheduler_queue][CollectionEnumeratorLike_peek]?.[
               SchedulerContinuationLike_dueTime
             ] ?? MIN_SAFE_INTEGER;
 
@@ -143,9 +151,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         this[DisposableLike_dispose]();
       },
       [SchedulerMixinHostLike_schedule](
-        this: TProperties &
-          QueueLike<SchedulerContinuationLike> &
-          SchedulerLike,
+        this: TProperties & SchedulerLike,
         continuation: SchedulerContinuationLike,
       ) {
         this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);

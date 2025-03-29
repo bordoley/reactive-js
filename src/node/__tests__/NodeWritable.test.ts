@@ -8,62 +8,56 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Observable from "../../computations/Observable.js";
-import { ProducerLike_consume } from "../../computations.js";
+import * as Computation from "../../computations/Computation.js";
+import * as Producer from "../../computations/Producer.js";
+import { SourceLike_subscribe } from "../../computations.js";
 import { invoke, newInstance, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-
 import * as NodeWritable from "../NodeWritable.js";
+
+const ProducerModule = Computation.makeModule<Producer.Computation>()(Producer);
 
 testModule(
   "NodeWritable",
   describe(
     "toConsumer",
-    testAsync(
-      "writing to writable",
+    testAsync("writing to writable", async () => {
+      let data = "";
 
-      async () => {
-        using scheduler = HostScheduler.create();
-        let data = "";
+      const writable = newInstance(Writable, {
+        autoDestroy: false,
+        highWaterMark: 4,
 
-        const writable = newInstance(Writable, {
-          autoDestroy: false,
-          highWaterMark: 4,
+        write(chunk, _encoding, callback) {
+          data += chunk;
+          callback();
+        },
+      });
 
-          write(chunk, _encoding, callback) {
-            data += chunk;
-            callback();
-          },
-        });
+      const consumer = pipe(
+        writable,
+        NodeWritable.toConsumer({ autoDispose: true }),
+      );
 
-        const consumer = pipe(
-          writable,
-          NodeWritable.toConsumer({ autoDispose: true }),
-        );
+      pipe(
+        ["abc", "defg"],
+        Computation.fromReadonlyArray(ProducerModule)<string>(),
+        Producer.encodeUtf8(),
+        invoke(SourceLike_subscribe, consumer),
+      );
 
-        pipe(
-          ["abc", "defg", "xyz"],
-          Observable.fromReadonlyArray<string>(),
-          Observable.keep<string>(x => x !== "xyz"),
-          Observable.encodeUtf8(),
-          Observable.toProducer(scheduler),
-          invoke(ProducerLike_consume, consumer),
-        );
+      await DisposableContainer.toPromise(consumer);
 
-        await DisposableContainer.toPromise(consumer);
-
-        pipe(
-          writable.destroyed,
-          expectFalse("expected writable not to be destroyed"),
-        );
-        pipe(data, expectEquals("abcdefg"));
-        writable.destroy();
-      },
-    ),
+      pipe(
+        writable.destroyed,
+        expectFalse("expected writable not to be destroyed"),
+      );
+      pipe(data, expectEquals("abcdefg"));
+      writable.destroy();
+    }),
     testAsync("writing to writable that throws", async () => {
-      using scheduler = HostScheduler.create();
       const err = newInstance(Error);
       const writable = newInstance(Writable, {
         autoDestroy: true,
@@ -81,10 +75,9 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Observable.fromReadonlyArray(),
-        Observable.encodeUtf8(),
-        Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, consumer),
+        Computation.fromReadonlyArray(ProducerModule)(),
+        Producer.encodeUtf8(),
+        invoke(SourceLike_subscribe, consumer),
       );
 
       await pipe(consumer, DisposableContainer.toPromise, expectPromiseToThrow);
@@ -118,10 +111,9 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Observable.fromReadonlyArray(),
-        Observable.encodeUtf8(),
-        Observable.toProducer(scheduler),
-        invoke(ProducerLike_consume, consumer),
+        Computation.fromReadonlyArray(ProducerModule)(),
+        Producer.encodeUtf8(),
+        invoke(SourceLike_subscribe, consumer),
       );
 
       await DisposableContainer.toPromise(consumer);
@@ -130,4 +122,4 @@ testModule(
       pipe(data, expectEquals("abcdefg"));
     }),
   ),
-);
+)();

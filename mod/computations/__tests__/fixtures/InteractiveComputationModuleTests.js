@@ -1,7 +1,12 @@
 /// <reference types="./InteractiveComputationModuleTests.d.ts" />
 
 import { describe, expectArrayEquals, testAsync, } from "../../../__internal__/testing.js";
-import { pipeLazyAsync } from "../../../functions.js";
+import { arrayEquality, pipeLazyAsync, tuple, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
-const InteractiveComputationModuleTests = (m) => describe("InteractiveComputationModule", describe("zip", testAsync("different length iterables", pipeLazyAsync(m.zip(m.fromReadonlyArray()([0, 1, 2, 3, 4]), m.fromReadonlyArray()([0, 1, 2]), m.fromReadonlyArray()([0, 1, 2, 3])), Computation.concatMap(m)(m.fromReadonlyArray()), m.toReadonlyArrayAsync(), expectArrayEquals([0, 0, 0, 1, 1, 1, 2, 2, 2]))), testAsync("with empty iterable", pipeLazyAsync(m.zip(m.fromReadonlyArray()([0, 1, 2, 3, 4]), m.fromReadonlyArray()([]), m.fromReadonlyArray()([0, 1, 2, 3])), Computation.concatMap(m)(m.fromReadonlyArray()), m.toReadonlyArrayAsync(), expectArrayEquals([])))));
+import * as Source from "../../Source.js";
+const InteractiveComputationModuleTests = (m) => describe("InteractiveComputationModuleTests", describe("toObservable", testAsync("The observable publishes all the values from the source", pipeLazyAsync(Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]), m.toObservable(), Source.toReadonlyArrayAsync(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("zip", testAsync("different length iterables", pipeLazyAsync(m.zip(Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]), Computation.fromReadonlyArray(m)()([0, 1, 2]), Computation.fromReadonlyArray(m)()([0, 1, 2, 3])), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([tuple(0, 0, 0), tuple(1, 1, 1), tuple(2, 2, 2)], {
+    valuesEquality: arrayEquality(),
+}))), testAsync("with empty iterable", pipeLazyAsync(m.zip(Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]), Computation.fromReadonlyArray(m)()([]), Computation.fromReadonlyArray(m)()([0, 1, 2, 3])), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([], {
+    valuesEquality: arrayEquality(),
+})))));
 export default InteractiveComputationModuleTests;

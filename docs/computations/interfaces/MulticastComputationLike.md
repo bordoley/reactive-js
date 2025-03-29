@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`MulticastLike`](MulticastLike.md)
+- [`BroadcasterLike`](BroadcasterLike.md)
 
 ## Properties
 

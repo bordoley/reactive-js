@@ -16,7 +16,7 @@
 
 ### observable
 
-[`ObservableLike`](../../../interfaces/ObservableLike.md)\<`T`\>
+[`SourceLike`](../../../interfaces/SourceLike.md)\<`T`\>
 
 ## Returns
 

@@ -6,7 +6,7 @@
 
 # Function: \_\_observe()
 
-> **\_\_observe**\<`T`\>(`observable`): [`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
+> **\_\_observe**\<`T`\>(`src`): [`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
 
 ## Type Parameters
 
@@ -14,9 +14,9 @@
 
 ## Parameters
 
-### observable
+### src
 
-[`ObservableLike`](../../../interfaces/ObservableLike.md)\<`T`\>
+[`SourceLike`](../../../interfaces/SourceLike.md)\<`T`\>
 
 ## Returns
 

@@ -1,14 +1,14 @@
 /// <reference types="./Observable.currentTime.d.ts" />
 
-import { ObservableLike_observe } from "../../../computations.js";
+import { SourceLike_subscribe } from "../../../computations.js";
 import { invoke, pipe } from "../../../functions.js";
 import { SchedulerLike_now } from "../../../utils.js";
-import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
-import Observable_gen from "./Observable.gen.js";
+import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import { Observable_genPure } from "./Observable.gen.js";
 const Observable_currentTime = 
-/*@__PURE__*/ Observable_createPureSynchronousObservable((observer) => pipe(Observable_gen(function* CurrentTime() {
+/*@__PURE__*/ DeferredSource.create((observer) => pipe(Observable_genPure(function* CurrentTime() {
     while (true) {
         yield observer[SchedulerLike_now];
     }
-}), invoke(ObservableLike_observe, observer)));
+}), invoke(SourceLike_subscribe, observer)));
 export default Observable_currentTime;

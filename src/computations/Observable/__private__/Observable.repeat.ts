@@ -1,19 +1,15 @@
-import { Predicate, isNone, isNumber } from "../../../functions.js";
+import { Optional, Predicate } from "../../../functions.js";
+import * as Observer from "../../../utils/__internal__/Observer.js";
+import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
+import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
-const Observable_repeat: Observable.Signature["repeat"] = /*@__PURE__*/ (() => {
-  const defaultRepeatPredicate = (_: number, e?: Error): boolean => isNone(e);
-
-  return (predicate?: Predicate<number> | number) => {
-    const repeatPredicate = isNone(predicate)
-      ? defaultRepeatPredicate
-      : isNumber(predicate)
-        ? (count: number, e?: Error) => isNone(e) && count < predicate
-        : (count: number, e?: Error) => isNone(e) && predicate(count);
-
-    return Observable_repeatOrRetry(repeatPredicate);
-  };
-})();
+const Observable_repeat: Observable.Signature["repeat"] = (<T>(
+  shouldRepeat?: Optional<Predicate<number> | number>,
+) =>
+  DeferredSource.repeat<ObserverLike<T>, T>(
+    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    shouldRepeat,
+  )) as Observable.Signature["repeat"];
 
 export default Observable_repeat;

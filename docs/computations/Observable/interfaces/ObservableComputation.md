@@ -24,7 +24,7 @@
 
 ### \[Computation\_deferredWithSideEffectsOfT\]?
 
-> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`DeferredObservableWithSideEffectsLike`](../../interfaces/DeferredObservableWithSideEffectsLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`unknown`\>
 
 #### Overrides
 
@@ -32,9 +32,9 @@
 
 ***
 
-### \[Computation\_multicastOfT\]
+### \[Computation\_multicastOfT\]?
 
-> `readonly` **\[Computation\_multicastOfT\]**: [`MulticastObservableLike`](../../interfaces/MulticastObservableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_multicastOfT\]**: `undefined`
 
 #### Overrides
 
@@ -44,7 +44,7 @@
 
 ### \[Computation\_pureDeferredOfT\]?
 
-> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`unknown`\>
 
 #### Overrides
 
@@ -69,13 +69,3 @@
 #### Overrides
 
 `ComputationType.[Computation_synchronousWithSideEffectsOfT]`
-
-***
-
-### \[Computation\_T\]?
-
-> `readonly` `optional` **\[Computation\_T\]**: `unknown`
-
-#### Inherited from
-
-`ComputationType.[Computation_T]`

@@ -60,13 +60,6 @@ The scheduler to subscribe to the stream with.
 
 The capacity of the stream's request queue.
 
-###### replay?
-
-`number`
-
-The number of items to buffer for replay when an observer subscribes
-to the stream.
-
 #### Returns
 
 `TStream` & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)

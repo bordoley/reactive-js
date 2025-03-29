@@ -20,7 +20,7 @@
 
 ##### consumer
 
-[`ConsumerLike`](../interfaces/ConsumerLike.md)
+[`FlowControllerLike`](../interfaces/FlowControllerLike.md)
 
 #### Returns
 
@@ -32,18 +32,18 @@
 
 ## Properties
 
-### \[ConsumerLike\_backpressureStrategy\]
+### \[FlowControllerLike\_backpressureStrategy\]
 
-> `readonly` **\[ConsumerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
-
-***
-
-### \[ConsumerLike\_capacity\]
-
-> `readonly` **\[ConsumerLike\_capacity\]**: `number`
+> `readonly` **\[FlowControllerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
 
 ***
 
-### \[ConsumerLike\_isReady\]
+### \[FlowControllerLike\_capacity\]
 
-> `readonly` **\[ConsumerLike\_isReady\]**: `boolean`
+> `readonly` **\[FlowControllerLike\_capacity\]**: `number`
+
+***
+
+### \[FlowControllerLike\_isReady\]
+
+> `readonly` **\[FlowControllerLike\_isReady\]**: `boolean`

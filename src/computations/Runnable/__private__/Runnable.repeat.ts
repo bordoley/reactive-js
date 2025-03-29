@@ -7,12 +7,16 @@ import {
 import {
   Predicate,
   alwaysTrue,
+  error,
   isFunction,
   isNone,
   newInstance,
+  pipe,
 } from "../../../functions.js";
-import DelegatingNonCompletingSink from "../../../utils/Sink/__internal__/DelegatingNonCompletingSink.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
+  DisposableLike_dispose,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -34,13 +38,22 @@ class RepeatRunnable<T> implements RunnableLike<T> {
   [RunnableLike_eval](sink: SinkLike<T>): void {
     const source = this.s;
     const predicate = this.p;
-    const delegatingSink = newInstance(DelegatingNonCompletingSink, sink);
 
     let cnt = 0;
     while (true) {
+      const delegatingSink = pipe(
+        Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
+        Disposable.addTo(sink),
+      );
       source[RunnableLike_eval](delegatingSink);
       cnt++;
-      if (sink[SinkLike_isCompleted] || !predicate(cnt)) {
+
+      try {
+        if (sink[SinkLike_isCompleted] || !predicate(cnt)) {
+          break;
+        }
+      } catch (e) {
+        sink[DisposableLike_dispose](error(e));
         break;
       }
     }

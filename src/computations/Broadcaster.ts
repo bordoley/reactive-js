@@ -1,127 +1,110 @@
 import {
   BroadcasterLike,
-  BroadcasterLike_connect,
-  ComputationLike_isDeferred,
-  ComputationLike_isSynchronous,
-  DeferredObservableWithSideEffectsLike,
-  EventSourceLike,
-  EventSourceLike_addEventListener,
-  StoreLike,
+  ComputationModule,
+  ComputationType,
+  Computation_T,
+  Computation_baseOfT,
+  Computation_deferredWithSideEffectsOfT,
+  Computation_multicastOfT,
+  Computation_pureDeferredOfT,
+  Computation_pureSynchronousOfT,
+  Computation_synchronousWithSideEffectsOfT,
+  ConcurrentReactiveComputationModule,
 } from "../computations.js";
-import {
-  Function1,
-  SideEffect1,
-  isSome,
-  newInstance,
-  pipe,
-  returns,
-} from "../functions.js";
-import AbstractDelegatingDisposableContainer, {
-  AbstractDelegatingDisposableContainer_delegate,
-} from "../utils/DisposableContainer/__internal__/AbstractDelegatingDisposableContainer.js";
-import * as EventListener from "../utils/EventListener.js";
-import {
-  DisposableLike,
-  EventListenerLike,
-  PauseableLike,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  SinkLike,
-} from "../utils.js";
+import { Function1, SideEffect1 } from "../functions.js";
+import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
+import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
-import Observable_create from "./Observable/__private__/Observable.create.js";
+import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
+import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
+import { Broadcaster_fromObservable } from "./Broadcaster/__private__/Broadcaster.fromObservable.js";
+import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
+import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
+import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
+import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
+import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
+import Broadcaster_pairwise from "./Broadcaster/__private__/Broadcaster.pairwise.js";
+import Broadcaster_scan from "./Broadcaster/__private__/Broadcaster.scan.js";
+import Broadcaster_skipFirst from "./Broadcaster/__private__/Broadcaster.skipFirst.js";
+import Broadcaster_takeFirst from "./Broadcaster/__private__/Broadcaster.takeFirst.js";
+import Broadcaster_takeUntil from "./Broadcaster/__private__/Broadcaster.takeUntil.js";
+import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhile.js";
+import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
+import Broadcaster_withLatestFrom from "./Broadcaster/__private__/Broadcaster.withLatestFrom.js";
 
-export interface BroadcasterModule {
+/**
+ * @noInheritDoc
+ */
+export interface BroadcasterComputation extends ComputationType {
+  readonly [Computation_baseOfT]?: BroadcasterLike<this[typeof Computation_T]>;
+
+  readonly [Computation_pureSynchronousOfT]?: never;
+  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
+
+  readonly [Computation_pureDeferredOfT]?: never;
+  readonly [Computation_deferredWithSideEffectsOfT]?: never;
+
+  readonly [Computation_multicastOfT]?: BroadcasterLike<
+    this[typeof Computation_T]
+  >;
+}
+
+export type Computation = BroadcasterComputation;
+
+/**
+ * @noInheritDoc
+ */
+export interface BroadcasterModule
+  extends ComputationModule<BroadcasterComputation>,
+    ConcurrentReactiveComputationModule<BroadcasterComputation> {
+  addEventHandler<T>(
+    onNotify: SideEffect1<T>,
+  ): Function1<BroadcasterLike<T>, DisposableLike>;
+
   create<T>(
-    setup: SideEffect1<SinkLike<T>>,
+    setup: SideEffect1<EventListenerLike<T>>,
     options?: {
       readonly autoDispose?: boolean;
-      readonly replay?: number;
     },
   ): BroadcasterLike<T> & DisposableLike;
 
   createPauseable<T>(
     op: Function1<
-      EventSourceLike<boolean> & DisposableLike,
+      BroadcasterLike<boolean> & DisposableLike,
       BroadcasterLike<T>
     >,
+    options?: {
+      readonly autoDispose?: boolean;
+    },
   ): PauseableLike & BroadcasterLike<T> & DisposableLike;
 
-  toEventSource<T>(): <TBroadcaster extends BroadcasterLike<T>>(
-    broadcaster: TBroadcaster,
-  ) => TBroadcaster extends PauseableLike
-    ? PauseableLike & EventSourceLike<T>
-    : EventSourceLike<T>;
-
-  toObservable<T>(): Function1<
-    BroadcasterLike<T>,
-    DeferredObservableWithSideEffectsLike<T>
-  >;
+  fromPromise<T>(): Function1<Promise<T>, BroadcasterLike<T>>;
 }
 
 export type Signature = BroadcasterModule;
 
+export const addEventHandler: Signature["addEventHandler"] =
+  Broadcaster_addEventHandler;
 export const create: Signature["create"] = Broadcaster_create;
 export const createPauseable: Signature["createPauseable"] =
   Broadcaster_createPauseable;
-
-class BroadcasterToEventSource<T, TBroadcaster extends BroadcasterLike<T>>
-  extends AbstractDelegatingDisposableContainer<TBroadcaster>
-  implements EventSourceLike<T>
-{
-  readonly [ComputationLike_isDeferred]: false = false as const;
-  readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  [EventSourceLike_addEventListener](
-    listener: EventListenerLike<unknown>,
-  ): void {
-    const sink = pipe(listener, EventListener.toSink());
-    this[AbstractDelegatingDisposableContainer_delegate][
-      BroadcasterLike_connect
-    ](sink);
-  }
-}
-
-class BroadcasterToPauseableEventSource<T>
-  extends BroadcasterToEventSource<T, PauseableLike & BroadcasterLike<T>>
-  implements PauseableLike
-{
-  readonly [ComputationLike_isDeferred]: false = false as const;
-  readonly [ComputationLike_isSynchronous]: false = false as const;
-
-  get [PauseableLike_isPaused](): StoreLike<boolean> {
-    return this[AbstractDelegatingDisposableContainer_delegate][
-      PauseableLike_isPaused
-    ];
-  }
-
-  [PauseableLike_pause](): void {
-    return this[AbstractDelegatingDisposableContainer_delegate][
-      PauseableLike_pause
-    ]();
-  }
-  [PauseableLike_resume](): void {
-    return this[AbstractDelegatingDisposableContainer_delegate][
-      PauseableLike_resume
-    ]();
-  }
-}
-
-export const toEventSource: Signature["toEventSource"] = /*@__PURE__*/ returns(
-  broadcaster =>
-    isSome((broadcaster as any)[PauseableLike_isPaused])
-      ? newInstance(
-          BroadcasterToPauseableEventSource,
-          broadcaster as unknown as PauseableLike & BroadcasterLike,
-        )
-      : newInstance(BroadcasterToEventSource, broadcaster),
-) as Signature["toEventSource"];
-
-export const toObservable: Signature["toObservable"] = /*@__PURE__*/ (<T>() =>
-  returns((broadcaster: BroadcasterLike<T>) =>
-    Observable_create<T>(observer => {
-      broadcaster[BroadcasterLike_connect](observer);
-    }),
-  ))();
+export const distinctUntilChanged: Signature["distinctUntilChanged"] =
+  Broadcaster_distinctUntilChanged;
+export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;
+export const fromObservable: Signature["fromObservable"] =
+  Broadcaster_fromObservable;
+export const fromPromise: Signature["fromPromise"] = Broadcaster_fromPromise;
+export const genPure: Signature["genPure"] = Broadcaster_genPure;
+export const keep: Signature["keep"] = Broadcaster_keep;
+export const map: Signature["map"] = Broadcaster_map;
+export const merge: Signature["merge"] = Broadcaster_merge;
+export const pairwise: Signature["pairwise"] = Broadcaster_pairwise;
+export const scan: Signature["scan"] = Broadcaster_scan;
+export const skipFirst: Signature["skipFirst"] = Broadcaster_skipFirst;
+export const takeFirst: Signature["takeFirst"] = Broadcaster_takeFirst;
+export const takeUntil: Signature["takeUntil"] = Broadcaster_takeUntil;
+export const takeWhile: Signature["takeWhile"] = Broadcaster_takeWhile;
+export const toProducer: Signature["toProducer"] = Broadcaster_toProducer;
+export const withLatestFrom: Signature["withLatestFrom"] =
+  Broadcaster_withLatestFrom;

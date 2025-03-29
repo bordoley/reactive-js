@@ -1,4 +1,4 @@
-import { EventSourceLike, StoreLike } from "../computations.js";
+import { BroadcasterLike, StoreLike } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
 import {
@@ -47,12 +47,12 @@ export interface WebElementModule {
     options?: { passive?: boolean; capture?: boolean; autoDispose?: boolean },
   ): Function1<
     TEventTarget,
-    EventSourceLike<EventMapOf<TEventTarget>[TEventName]> & DisposableLike
+    BroadcasterLike<EventMapOf<TEventTarget>[TEventName]> & DisposableLike
   >;
 
   intersectionEventSource(
     parent?: Document | Element,
-  ): Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
+  ): Function1<Element, BroadcasterLike<IntersectionObserverEntry>>;
 
   measure<TElement extends HTMLElement | SVGElement>(): Function1<
     TElement,
@@ -61,11 +61,11 @@ export interface WebElementModule {
 
   resizeEventSource<TElement extends Element>(
     options?: ResizeObserverOptions,
-  ): Function1<TElement, EventSourceLike<ResizeObserverEntry>>;
+  ): Function1<TElement, BroadcasterLike<ResizeObserverEntry>>;
 
   scrollEventSource<TElement extends HTMLElement>(): Function1<
     TElement,
-    EventSourceLike<ScrollValue>
+    BroadcasterLike<ScrollValue>
   >;
 }
 

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`MulticastObservableLike`](../../computations/interfaces/MulticastObservableLike.md)\<[`WindowLocationURI`](WindowLocationURI.md)\>
+- [`BroadcasterLike`](../../computations/interfaces/BroadcasterLike.md)\<[`WindowLocationURI`](WindowLocationURI.md)\>
 
 ## Properties
 

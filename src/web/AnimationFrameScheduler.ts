@@ -15,11 +15,10 @@ import {
   pipeLazy,
   raiseIfNone,
 } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as HostScheduler from "../utils/HostScheduler.js";
 import * as Queue from "../utils/Queue.js";
-import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
-import {
+import SchedulerMixin, {
   SchedulerContinuationLike,
   SchedulerContinuationLike_dueTime,
   SchedulerContinuationLike_run,
@@ -111,12 +110,12 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
   };
 
   const createAnimationFrameScheduler = mixInstanceFactory(
-    include(CurrentTimeSchedulerMixin),
+    include(SchedulerMixin),
     function AnimationFrameScheduler(
       this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         TProperties,
     ): SchedulerLike & DisposableLike {
-      init(CurrentTimeSchedulerMixin, this);
+      init(SchedulerMixin, this);
 
       this[AnimationFrameScheduler_rafQueue] =
         Queue.create<SchedulerContinuationLike>();
@@ -133,7 +132,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       [SchedulerLike_shouldYield]: true,
 
       [SchedulerMixinHostLike_schedule](
-        this: SchedulerMixinHostLike & TProperties,
+        this: SchedulerLike & SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
         const now = this[SchedulerLike_now];
@@ -144,7 +143,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         // if its not more than a frame.
         if (delay > 16) {
           pipe(
-            HostScheduler.get(),
+            DefaultScheduler.get(),
             invoke(
               SchedulerLike_schedule,
               pipeLazy(

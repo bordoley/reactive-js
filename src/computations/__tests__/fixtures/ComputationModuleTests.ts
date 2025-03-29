@@ -1,170 +1,123 @@
 import {
   describe,
   expectArrayEquals,
-  expectEquals,
-  expectFalse,
-  expectIsNone,
-  expectToThrowAsync,
+  expectPromiseToThrow,
   expectToThrowErrorAsync,
-  expectTrue,
   testAsync,
 } from "../../../__internal__/testing.js";
+import { ComputationModule } from "../../../computations.js";
 import {
-  ComputationModule,
-  ComputationType,
-  ComputationTypeOf,
-} from "../../../computations.js";
-import {
-  Optional,
+  Tuple2,
   alwaysTrue,
+  arrayEquality,
+  bindMethod,
   greaterThan,
-  identity,
-  newInstance,
+  lessThan,
   pipe,
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
+  returns,
+  tuple,
 } from "../../../functions.js";
 import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
-import StatelessComputationOperatorTests from "./operators/StatelessComputationOperatorTests.js";
+import * as Source from "../../Source.js";
 
-const ComputationModuleTests = <TComputationType extends ComputationType>(
-  m: ComputationModule<TComputationType>,
-  computations: ComputationTypeOf<TComputationType>,
+const ComputationModuleTests = <TComputationModule extends ComputationModule>(
+  m: TComputationModule,
 ) =>
   describe(
     "ComputationModule",
     describe(
-      "empty",
+      "distinctUntilChanged",
       testAsync(
-        "produces no results",
+        "when source has duplicates in order",
         pipeLazyAsync(
-          m.empty<number>(),
-          m.toReadonlyArrayAsync(),
+          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          Computation.fromReadonlyArray(m)(),
+          m.distinctUntilChanged<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3, 4]),
+        ),
+      ),
+      testAsync(
+        "when source is empty",
+        pipeLazyAsync(
+          Computation.empty(m)<number>(),
+          m.distinctUntilChanged<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals<number>([]),
         ),
       ),
-    ),
-    describe(
-      "firstAsync",
-      testAsync(
-        "returns the first value",
-        pipeLazyAsync(
-          [1, 2, 3, 4, 5],
-          Computation.fromIterable<TComputationType, number>(m),
-          m.firstAsync(),
-          expectEquals<Optional<number>>(1),
-        ),
-      ),
-      testAsync(
-        "empty source",
-        pipeLazyAsync(
-          [],
-          Computation.fromIterable<TComputationType, number>(m),
-          m.firstAsync(),
-          expectIsNone,
-        ),
-      ),
-      testAsync(
-        "an iterable that throws",
-        pipeLazyAsync(
+      testAsync("when equality operator throws", async () => {
+        const err = new Error();
+        const equality = <T>(_a: T, _b: T): boolean => {
+          throw err;
+        };
+
+        await pipe(
           pipeLazy(
-            (function* Generator() {
-              throw newInstance(Error);
-            })(),
-            Computation.fromIterable<TComputationType, number>(m),
-            m.firstAsync(),
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.distinctUntilChanged({ equality }),
+            m.toProducer(),
+            Source.toReadonlyArrayAsync<number>(),
           ),
-          expectToThrowAsync,
-        ),
-      ),
-    ),
-    describe(
-      "fromReadonlyArray",
+          expectToThrowErrorAsync(err),
+        );
+      }),
       testAsync(
-        "starting at index greater than 0",
+        "with custom equality functions",
         pipeLazyAsync(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 1 }),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([2, 3, 4]),
-        ),
-      ),
-      testAsync(
-        "starting at index greater than 0 with count",
-        pipeLazyAsync(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 1, count: 2 }),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([2, 3]),
-        ),
-      ),
-      testAsync(
-        "starting at index greater than 0 with count exceeding the length",
-        pipeLazyAsync(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 1, count: 10 }),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([2, 3, 4]),
-        ),
-      ),
-      testAsync(
-        "negative count",
-        pipeLazyAsync(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ count: -2 }),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([4, 3]),
-        ),
-      ),
-      testAsync(
-        "starting at index greater than 0 with negative count",
-        pipeLazyAsync(
-          [1, 2, 3, 4],
-          m.fromReadonlyArray({ start: 2, count: -2 }),
-          m.toReadonlyArrayAsync(),
-          expectArrayEquals([3, 2]),
-        ),
-      ),
-    ),
-    describe(
-      "fromValue",
-      testAsync(
-        "with array",
-        pipeLazyAsync(
-          1,
-          m.fromValue(),
-          m.toReadonlyArrayAsync(),
+          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          Computation.fromReadonlyArray(m)(),
+          m.distinctUntilChanged<number>({
+            equality: () => true,
+          }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1]),
         ),
       ),
     ),
     describe(
-      "gen",
+      "genPure",
       testAsync(
-        "when the iterable throws",
+        "iterating an array iterator",
         pipeLazyAsync(
-          pipeLazy(
-            m.gen<number>(function* Generator() {
-              throw newInstance(Error);
-            }),
-            m.toReadonlyArrayAsync(),
-          ),
-          expectToThrowAsync,
+          bindMethod([1, 2, 3], Symbol.iterator),
+          m.genPure<number>,
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      testAsync(
+        "when the iterator throws",
+        pipeLazy(
+          function* () {
+            throw new Error();
+          },
+          m.genPure<number>,
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectPromiseToThrow,
         ),
       ),
     ),
     describe(
       "keep",
-      StatelessComputationOperatorTests(computations, m.keep(alwaysTrue)),
       testAsync(
         "keeps only values greater than 5",
         pipeLazyAsync(
           [4, 8, 10, 7],
-          m.fromReadonlyArray(),
+          Computation.fromReadonlyArray(m)(),
           m.keep(greaterThan(5)),
-          m.toReadonlyArrayAsync<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([8, 10, 7]),
         ),
       ),
@@ -177,9 +130,10 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            m.fromReadonlyArray(),
+            Computation.fromReadonlyArray(m)(),
             m.keep(predicate),
-            m.toReadonlyArrayAsync(),
+            m.toProducer(),
+            Source.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(err),
         );
@@ -187,14 +141,14 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
     ),
     describe(
       "map",
-      StatelessComputationOperatorTests(computations, m.map(identity)),
       testAsync(
         "maps every value",
         pipeLazyAsync(
           [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.map(increment),
-          m.toReadonlyArrayAsync<number>(),
+          Computation.fromReadonlyArray(m)(),
+          m.map<number, number>(increment),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([2, 3, 4]),
         ),
       ),
@@ -206,10 +160,11 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
 
         await pipeAsync(
           pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
+            [1, 2, 3],
+            Computation.fromReadonlyArray(m)(),
             m.map(selector),
-            m.toReadonlyArrayAsync(),
+            m.toProducer(),
+            Source.toReadonlyArrayAsync<number>(),
           ),
 
           expectToThrowErrorAsync(err),
@@ -217,139 +172,265 @@ const ComputationModuleTests = <TComputationType extends ComputationType>(
       }),
     ),
     describe(
-      "lastAsync",
+      "pairwise",
       testAsync(
-        "returns the last value",
+        "when there are more than one input value",
+        pipeLazyAsync(
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          Computation.fromReadonlyArray(m)(),
+          m.pairwise<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<Tuple2<number, number>>(),
+          expectArrayEquals(
+            [
+              tuple(0, 1),
+              tuple(1, 2),
+              tuple(2, 3),
+              tuple(3, 4),
+              tuple(4, 5),
+              tuple(5, 6),
+              tuple(6, 7),
+              tuple(7, 8),
+              tuple(8, 9),
+            ],
+            { valuesEquality: arrayEquality() },
+          ),
+        ),
+      ),
+      testAsync(
+        "when the input only provides 1 value",
+        pipeLazyAsync(
+          [0],
+          Computation.fromReadonlyArray(m)(),
+          m.pairwise<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<Tuple2<number, number>>(),
+          expectArrayEquals<Tuple2<number, number>>([], {
+            valuesEquality: arrayEquality(),
+          }),
+        ),
+      ),
+    ),
+    describe(
+      "scan",
+      testAsync(
+        "sums all the values in the array emitting intermediate values.",
+        pipeLazyAsync(
+          [1, 1, 1],
+          Computation.fromReadonlyArray(m)(),
+          m.scan<number, number>((a, b) => a + b, returns(0)),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      testAsync("throws when the scan function throws", async () => {
+        const err = new Error();
+        const scanner = <T>(_acc: T, _next: T): T => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.scan(scanner, returns(0)),
+            m.toProducer(),
+            Source.toReadonlyArrayAsync<number>(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+      testAsync("throws when the initial value function throws", async () => {
+        const err = new Error();
+        const initialValue = (): number => {
+          throw err;
+        };
+
+        await pipeAsync(
+          pipeLazy(
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.scan<number, number>((a, b) => a + b, initialValue),
+            m.toProducer(),
+            Source.toReadonlyArrayAsync<number>(),
+          ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
+    ),
+    describe(
+      "skipFirst",
+      testAsync(
+        "with default count",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.skipFirst<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([2, 3]),
+        ),
+      ),
+      testAsync(
+        "when skipped source has additional elements",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.skipFirst<number>({ count: 2 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([3]),
+        ),
+      ),
+      testAsync(
+        "when all elements are skipped",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.skipFirst<number>({ count: 4 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([] as number[]),
+        ),
+      ),
+    ),
+    describe(
+      "takeFirst",
+      testAsync(
+        "with default count",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromIterable<TComputationType, number>(m),
-          m.lastAsync(),
-          expectEquals<Optional<number>>(5),
+          Computation.fromReadonlyArray(m)(),
+          m.takeFirst<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1]),
         ),
       ),
       testAsync(
-        "empty source",
+        "when taking fewer than the total number of elements in the source",
         pipeLazyAsync(
-          [],
-          Computation.fromIterable<TComputationType, number>(m),
-          m.lastAsync(),
-          expectIsNone,
+          [1, 2, 3, 4, 5],
+          Computation.fromReadonlyArray(m)(),
+          m.takeFirst<number>({ count: 3 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
         ),
       ),
       testAsync(
-        "an iterable that throws",
+        "when taking more than all the items produced by the source",
         pipeLazyAsync(
-          pipeLazy(
-            (function* Generator() {
-              throw newInstance(Error);
-            })(),
-            Computation.fromIterable<TComputationType, number>(m),
-            m.lastAsync(),
-          ),
-          expectToThrowAsync,
+          [1, 2],
+          Computation.fromReadonlyArray(m)(),
+          m.takeFirst<number>({ count: 3 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2]),
+        ),
+      ),
+      testAsync(
+        "from iterable source",
+        pipeLazyAsync(
+          [1, 2, 3, 4],
+          Computation.fromReadonlyArray(m)(),
+          m.takeFirst<number>({ count: 2 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2]),
+        ),
+      ),
+      testAsync(
+        "when source is empty",
+        pipeLazyAsync(
+          Computation.empty(m)<number>(),
+          m.takeFirst<number>({ count: 3 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals<number>([]),
+        ),
+      ),
+      testAsync(
+        "with default count",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.takeFirst<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+      testAsync(
+        "when count is 0",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.takeFirst<number>({ count: 0 }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([] as number[]),
         ),
       ),
     ),
     describe(
-      "raise",
-      testAsync("when raise function returns an value", async () => {
-        const e1 = "e1";
+      "takeWhile",
+      testAsync("exclusive", async () => {
+        await pipeAsync(
+          [1, 2, 3, 4, 5],
+          Computation.fromReadonlyArray(m)(),
+          m.takeWhile<number>(lessThan(4)),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        );
 
-        try {
-          await pipeAsync(
-            m.raise({ raise: () => e1 }),
-            m.toReadonlyArrayAsync(),
-          );
-          expectFalse()(true);
-        } catch (e) {
-          pipe(
-            e instanceof Error,
-            expectTrue("expected e to be instance of an Error"),
-          );
-          pipe((e as Error).message, expectEquals(e1));
-        }
-      }),
-      testAsync("when raise function throws an exception", async () => {
-        const e1 = new Error();
+        await pipeAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.takeWhile<number>(alwaysTrue),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        );
 
-        try {
-          await pipeAsync(
-            m.raise({
-              raise: () => {
-                throw e1;
-              },
-            }),
-            m.toReadonlyArrayAsync(),
-          );
-          expectFalse()(true);
-        } catch (e) {
-          pipe(
-            e instanceof Error,
-            expectTrue("expected e to be instance of an Error"),
-          );
-          pipe(e, expectEquals<unknown>(e1));
-        }
+        await pipeAsync(
+          Computation.empty(m)<number>(),
+          m.takeWhile<number>(alwaysTrue),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([] as number[]),
+        );
       }),
-      testAsync("when raise function returns an exception", async () => {
-        const e1 = new Error();
-
-        try {
-          await pipeAsync(
-            m.raise({ raise: () => e1 }),
-            m.toReadonlyArrayAsync(),
-          );
-          expectFalse()(true);
-        } catch (e) {
-          pipe(
-            e instanceof Error,
-            expectTrue("expected e to be instance of an Error"),
-          );
-          pipe(e, expectEquals<unknown>(e1));
-        }
-      }),
-    ),
-    describe(
-      "reduceAsync",
       testAsync(
-        "returns the sum of values",
+        "inclusive",
         pipeLazyAsync(
-          [1, 1, 1, 1, 1],
-          Computation.fromIterable<TComputationType, number>(m),
-          m.reduceAsync(
-            (acc, next) => next + acc,
-            () => 0,
-          ),
-          expectEquals(5),
+          [1, 2, 3, 4, 5, 6],
+          Computation.fromReadonlyArray(m)(),
+          m.takeWhile(lessThan(4), { inclusive: true }),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3, 4]),
         ),
       ),
-      testAsync(
-        "empty source",
-        pipeLazyAsync(
-          [],
-          Computation.fromIterable<TComputationType, number>(m),
-          m.reduceAsync(
-            (acc, next) => next + acc,
-            () => 0,
-          ),
-          expectEquals(0),
-        ),
-      ),
-      testAsync(
-        "an iterable that throws",
-        pipeLazyAsync(
+      testAsync("when predicate throws", async () => {
+        const err = new Error();
+        const predicate = (_: unknown): boolean => {
+          throw err;
+        };
+
+        await pipeAsync(
           pipeLazy(
-            (function* Generator() {
-              throw newInstance(Error);
-            })(),
-            Computation.fromIterable<TComputationType, number>(m),
-            m.reduceAsync(
-              (acc, next) => next + acc,
-              () => 0,
-            ),
+            [1, 1],
+            Computation.fromReadonlyArray(m)(),
+            m.takeWhile(predicate),
+            m.toProducer(),
+            Source.toReadonlyArrayAsync<number>(),
           ),
-          expectToThrowAsync,
-        ),
-      ),
+          expectToThrowErrorAsync(err),
+        );
+      }),
     ),
   );
 

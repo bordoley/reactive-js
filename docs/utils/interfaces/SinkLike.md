@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`SubjectLike`](../../computations/interfaces/SubjectLike.md)
+- [`PublisherLike`](../../computations/interfaces/PublisherLike.md)
 - [`ConsumerLike`](ConsumerLike.md)
 
 ## Type Parameters

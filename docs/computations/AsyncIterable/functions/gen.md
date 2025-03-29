@@ -6,7 +6,7 @@
 
 # Function: gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): `never`
+> **gen**\<`T`\>(`factory`, `options`?): [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,7 +16,7 @@
 
 ### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`Generator`\<`T`, `any`, `any`\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
 
 ### options?
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-`never`
+[`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>

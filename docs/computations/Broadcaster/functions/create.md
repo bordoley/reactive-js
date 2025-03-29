@@ -16,17 +16,13 @@
 
 ### setup
 
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`SinkLike`](../../../utils/interfaces/SinkLike.md)\<`T`\>\>
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>
 
 ### options?
 
 #### autoDispose?
 
 `boolean`
-
-#### replay?
-
-`number`
 
 ## Returns
 

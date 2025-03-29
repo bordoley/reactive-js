@@ -1,14 +1,15 @@
 /// <reference types="./SchedulerMixin.d.ts" />
 
+import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerQueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
-import QueueMixin from "./QueueMixin.js";
+import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 export const SchedulerContinuationLike_run = Symbol("SchedulerContinuationLike_run");
 export const SchedulerContinuationLike_dueTime = Symbol("SchedulerContinuationLike_dueTime");
 export const SchedulerContinuationLike_id = Symbol("SchedulerContinuationLike_id");
@@ -23,35 +24,36 @@ export const SchedulerContinuation = {
 };
 export const SchedulerMixinHostLike_shouldYield = Symbol("SchedulerMixinHostLike_shouldYield");
 export const SchedulerMixinHostLike_schedule = Symbol("SchedulerMixinHostLike_schedule");
-const SchedulerMixin = /*@__PURE__*/ (() => {
-    const ConsumerSchedulerContinuationLike_parent = Symbol("ConsumerSchedulerContinuationLike_parent");
-    const ConsumerSchedulerContinuationLike_isReschedulingChildren = Symbol("ConsumerSchedulerContinuationLike_isReschedulingChildren");
+const SchedulerMixin = 
+/*@__PURE__*/ (() => {
+    const QueueSchedulerContinuationLike_parent = Symbol("QueueSchedulerContinuationLike_parent");
+    const QueueSchedulerContinuationLike_isReschedulingChildren = Symbol("QueueSchedulerContinuationLike_isReschedulingChildren");
     const SchedulerMixinLike_schedule = Symbol("SchedulerMixinLike_schedule");
     const SchedulerMixinLike_taskIDCounter = Symbol("SchedulerMixinLike_taskIDCounter");
     const SchedulerMixinLike_currentContinuation = Symbol("SchedulerMixinLike_currentContinuation");
     const SchedulerMixinLike_startTime = Symbol("SchedulerMixinLike_startTime");
     const SchedulerMixinLike_yieldRequested = Symbol("SchedulerMixinLike_yieldRequested");
-    const createConsumerContinuation = (() => {
+    const createQueueContinuation = (() => {
         class ContinuationYieldError {
             delay;
             constructor(delay) {
                 this.delay = delay;
             }
         }
-        const ConsumerContinuation_effect = Symbol("ConsumerContinuation_effect");
-        const ConsumerContinuation_scheduler = Symbol("ConsumerContinuation_scheduler");
+        const QueueContinuation_effect = Symbol("QueueContinuation_effect");
+        const QueueContinuation_scheduler = Symbol("QueueContinuation_scheduler");
         const findNearestNonDisposedParent = (continuation) => {
-            let parent = continuation[ConsumerSchedulerContinuationLike_parent];
+            let parent = continuation[QueueSchedulerContinuationLike_parent];
             while (isSome(parent) && parent[DisposableLike_isDisposed]) {
-                parent = parent[ConsumerSchedulerContinuationLike_parent];
+                parent = parent[QueueSchedulerContinuationLike_parent];
             }
             return parent;
         };
         const rescheduleContinuation = (continuation) => {
-            const scheduler = continuation[ConsumerContinuation_scheduler];
+            const scheduler = continuation[QueueContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
-                parent[QueueLike_enqueue](continuation);
+                parent[FlowControllerQueueLike_enqueue](continuation);
             }
             else {
                 continuation[SchedulerContinuationLike_dueTime] =
@@ -60,9 +62,9 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             }
         };
         const rescheduleChildrenOnParentOrScheduler = (continuation) => {
-            continuation[ConsumerSchedulerContinuationLike_isReschedulingChildren] =
+            continuation[QueueSchedulerContinuationLike_isReschedulingChildren] =
                 true;
-            const scheduler = continuation[ConsumerContinuation_scheduler];
+            const scheduler = continuation[QueueContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             while (continuation[EnumeratorLike_moveNext]()) {
                 const head = continuation[EnumeratorLike_current];
@@ -70,13 +72,13 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                     // continue
                 }
                 else if (isSome(parent)) {
-                    parent[QueueLike_enqueue](head);
+                    parent[FlowControllerQueueLike_enqueue](head);
                 }
                 else {
                     scheduler[SchedulerMixinLike_schedule](head);
                 }
             }
-            continuation[ConsumerSchedulerContinuationLike_isReschedulingChildren] =
+            continuation[QueueSchedulerContinuationLike_isReschedulingChildren] =
                 false;
         };
         function onContinuationDisposed() {
@@ -84,26 +86,26 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             // A continuation could be disposed and yet retained
             // by a scheduler in a queue so free all references
             // to avoid retaining memory.
-            this[ConsumerSchedulerContinuationLike_parent] = none;
-            this[ConsumerContinuation_scheduler] =
+            this[QueueSchedulerContinuationLike_parent] = none;
+            this[QueueContinuation_scheduler] =
                 none;
-            this[ConsumerContinuation_effect] =
+            this[QueueContinuation_effect] =
                 none;
         }
-        return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function ConsumerContinuation(scheduler, effect, dueTime) {
+        return mixInstanceFactory(include(DisposableMixin, FlowControllerQueueMixin()), function QueueContinuation(scheduler, effect, dueTime) {
             init(DisposableMixin, this);
-            init(QueueMixin(), this, none);
+            init(FlowControllerQueueMixin(), this, none);
             this[SchedulerContinuationLike_dueTime] = dueTime;
             this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
-            this[ConsumerContinuation_scheduler] = scheduler;
-            this[ConsumerContinuation_effect] = effect;
+            this[QueueContinuation_scheduler] = scheduler;
+            this[QueueContinuation_effect] = effect;
             pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
             return this;
         }, props({
-            [ConsumerSchedulerContinuationLike_parent]: none,
-            [ConsumerSchedulerContinuationLike_isReschedulingChildren]: false,
-            [ConsumerContinuation_scheduler]: none,
-            [ConsumerContinuation_effect]: none,
+            [QueueSchedulerContinuationLike_parent]: none,
+            [QueueSchedulerContinuationLike_isReschedulingChildren]: false,
+            [QueueContinuation_scheduler]: none,
+            [QueueContinuation_effect]: none,
             [SchedulerContinuationLike_dueTime]: 0,
             [SchedulerContinuationLike_id]: 0,
         }), proto({
@@ -111,10 +113,10 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 if (this[DisposableLike_isDisposed]) {
                     return;
                 }
-                const scheduler = this[ConsumerContinuation_scheduler];
+                const scheduler = this[QueueContinuation_scheduler];
                 const oldCurrentContinuation = scheduler[SchedulerMixinLike_currentContinuation];
                 scheduler[SchedulerMixinLike_currentContinuation] = this;
-                // A ConsumerSchedulerContinuationLike may run inner continuations that will
+                // A QueueSchedulerContinuationLike may run inner continuations that will
                 // set the currentContinuation to themselves, but we don't want to
                 // reset the startTime or yieldRequested flags in this case since these
                 // should be honored for the duration of the time that the synchronous
@@ -129,9 +131,9 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 // Run any inner continuations first.
                 while (this[EnumeratorLike_moveNext]()) {
                     const head = this[EnumeratorLike_current];
-                    head[ConsumerSchedulerContinuationLike_parent] = this;
+                    head[QueueSchedulerContinuationLike_parent] = this;
                     head[SchedulerContinuationLike_run]();
-                    head[ConsumerSchedulerContinuationLike_parent] = none;
+                    head[QueueSchedulerContinuationLike_parent] = none;
                     if (scheduler[SchedulerLike_shouldYield] &&
                         !this[DisposableLike_isDisposed]) {
                         rescheduleContinuation(this);
@@ -143,7 +145,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 let yieldError = none;
                 if (!rescheduled && !this[DisposableLike_isDisposed]) {
                     try {
-                        this[ConsumerContinuation_effect](this);
+                        this[QueueContinuation_effect](this);
                     }
                     catch (e) {
                         if (e instanceof ContinuationYieldError) {
@@ -179,7 +181,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                     oldCurrentContinuation;
             },
             [ContinuationContextLike_yield](delay = 0) {
-                const scheduler = this[ConsumerContinuation_scheduler];
+                const scheduler = this[QueueContinuation_scheduler];
                 if (__DEV__) {
                     const currentContinuation = scheduler[SchedulerMixinLike_currentContinuation];
                     raiseIf(currentContinuation !== this, "Attempted to invoke yield outside of a continuation's run context");
@@ -200,6 +202,10 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
         [SchedulerMixinLike_startTime]: 0,
         [SchedulerMixinLike_taskIDCounter]: 0,
     }), proto({
+        [SchedulerLike_maxYieldInterval]: 5,
+        get [SchedulerLike_now]() {
+            return CurrentTime.now();
+        },
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
             const currentContinuation = this[SchedulerMixinLike_currentContinuation];
@@ -216,7 +222,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
             const exceededMaxYieldInterval = this[SchedulerLike_now] >
                 this[SchedulerMixinLike_startTime] +
                     this[SchedulerLike_maxYieldInterval];
-            const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][CollectionEnumeratorLike_count] > 0;
+            const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][FlowControllerEnumeratorLike_isDataAvailable];
             return (isDisposed ||
                 yieldRequested ||
                 exceededMaxYieldInterval ||
@@ -238,11 +244,11 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 activeContinuation === continuation ||
                 // Occurs when an active continuation is rescheduling its
                 // children because it has been rescheduled in the future.
-                activeContinuation[ConsumerSchedulerContinuationLike_isReschedulingChildren]) {
+                activeContinuation[QueueSchedulerContinuationLike_isReschedulingChildren]) {
                 this[SchedulerMixinHostLike_schedule](continuation);
             }
             else {
-                activeContinuation[QueueLike_enqueue](continuation);
+                activeContinuation[FlowControllerQueueLike_enqueue](continuation);
             }
         },
         [SchedulerLike_schedule](effect, options) {
@@ -250,7 +256,7 @@ const SchedulerMixin = /*@__PURE__*/ (() => {
                 return Disposable.disposed;
             }
             const dueTime = this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
-            const continuation = pipe(createConsumerContinuation(this, effect, dueTime), Disposable.addToContainer(this));
+            const continuation = pipe(createQueueContinuation(this, effect, dueTime), Disposable.addToContainer(this));
             this[SchedulerMixinLike_schedule](continuation);
             return continuation;
         },

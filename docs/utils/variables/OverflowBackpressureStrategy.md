@@ -6,4 +6,4 @@
 
 # Variable: OverflowBackpressureStrategy
 
-> `const` **OverflowBackpressureStrategy**: `"overflow"` = `"overflow"`
+> `const` **OverflowBackpressureStrategy**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)

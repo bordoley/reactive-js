@@ -1,9 +1,8 @@
-import { PureDeferredObservableLike } from "../../computations.js";
+import { PureObservableLike } from "../../computations.js";
 import { BackpressureStrategy, ConsumerLike, DisposableLike } from "../../utils.js";
-export interface ConsumerObservableLike<out T> extends PureDeferredObservableLike<T>, ConsumerLike, DisposableLike {
+export interface ConsumerObservableLike<out T> extends PureObservableLike<T>, ConsumerLike, DisposableLike {
 }
 export declare const create: <T>(config?: {
-    autoDispose?: boolean;
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
 }) => ConsumerObservableLike<T>;

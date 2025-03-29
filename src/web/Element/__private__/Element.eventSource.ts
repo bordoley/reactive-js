@@ -1,11 +1,7 @@
-import * as EventSource from "../../../computations/EventSource.js";
-import { error, pipe } from "../../../functions.js";
+import * as Broadcaster from "../../../computations/Broadcaster.js";
+import { bindMethod, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import {
-  DisposableLike_dispose,
-  EventListenerLike,
-  EventListenerLike_notify,
-} from "../../../utils.js";
+import { EventListenerLike, EventListenerLike_notify } from "../../../utils.js";
 import { DOMEventTarget, EventKeysOf, EventMapOf } from "../../../web.js";
 import type * as Element from "../../Element.js";
 
@@ -18,26 +14,16 @@ const Element_eventSource: Element.Signature["eventSource"] =
     options?: { passive?: boolean; capture?: boolean; autoDispose?: boolean },
   ) =>
   (target: TEventTarget) =>
-    EventSource.create(
+    Broadcaster.create(
       (listener: EventListenerLike<EventMapOf<TEventTarget>[TEventName]>) => {
-        const eventHandler = (ev: EventMapOf<TEventTarget>[TEventName]) => {
-          try {
-            listener[EventListenerLike_notify](ev);
-          } catch (e) {
-            listener[DisposableLike_dispose](error(e));
-          }
-        };
+        const eventHandler = bindMethod(listener, EventListenerLike_notify);
 
-        const addEventListenerOptions = {
+        const addEventSinkOptions = {
           capture: options?.capture ?? false,
           passive: options?.passive ?? true,
         };
 
-        target.addEventListener(
-          eventName,
-          eventHandler,
-          addEventListenerOptions,
-        );
+        target.addEventListener(eventName, eventHandler, addEventSinkOptions);
 
         pipe(
           listener,

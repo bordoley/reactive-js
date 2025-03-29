@@ -6,6 +6,10 @@
 
 # computations/Observable/effects
 
+## Interfaces
+
+- [Signature](interfaces/Signature.md)
+
 ## Functions
 
 - [\_\_await](functions/await.md)

@@ -1,16 +1,24 @@
 /// <reference types="./Runnable.test.d.ts" />
 
-import { testModule } from "../../__internal__/testing.js";
-import { Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../../computations.js";
-import { ignore, pipe } from "../../functions.js";
+import { describe, expectArrayEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
+import { pipeLazy, raise } from "../../functions.js";
+import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
+import * as Computation from "../Computation.js";
 import * as Runnable from "../Runnable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
-const RunnableTypes = {
-    [Computation_pureSynchronousOfT]: Runnable.empty(),
-    [Computation_synchronousWithSideEffectsOfT]: pipe(Runnable.empty(), Runnable.forEach(ignore)),
-};
-testModule("Runnable", ComputationModuleTests(Runnable, RunnableTypes), SequentialComputationModuleTests(Runnable, RunnableTypes), SequentialReactiveComputationModuleTests(Runnable, RunnableTypes), SynchronousComputationModuleTests(Runnable));
-((_) => { })(Runnable);
+const m = Computation.makeModule()(Runnable);
+testModule("Runnable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), describe("fromReadonlyArray", test("produces the values", pipeLazy([1, 2, 3], Runnable.fromReadonlyArray(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("produces the values in reverse", pipeLazy([1, 2, 3], Runnable.fromReadonlyArray({ count: -3, start: 2 }), Runnable.toReadonlyArray(), expectArrayEquals([3, 2, 1]))), test("when the sink throws", pipeLazy(pipeLazy([1, 2, 3], Runnable.fromReadonlyArray(), Runnable.forEach(_ => {
+    raise("some exception");
+}), Runnable.last()), expectToThrow))))({
+    beforeEach() {
+        const scheduler = HostScheduler.create();
+        DefaultScheduler.set(scheduler);
+    },
+    afterEach() {
+        DefaultScheduler.dispose();
+    },
+});

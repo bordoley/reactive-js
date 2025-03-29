@@ -1,7 +1,7 @@
 /// <reference types="./DelegatingBroadcasterMixin.d.ts" />
 
-import { mix, props } from "../../__internal__/mixins.js";
-import { BroadcasterLike_connect, ComputationLike_isDeferred, ComputationLike_isSynchronous, } from "../../computations.js";
+import { mix, props, proto } from "../../__internal__/mixins.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { none, returns } from "../../functions.js";
 const DelegatingBroadcasterMixin = /*@__PURE__*/ (() => {
     const DelegatingBroadcasterMixin_delegate = Symbol("DelegatingBroadcasterMixin_delegate");
@@ -10,12 +10,13 @@ const DelegatingBroadcasterMixin = /*@__PURE__*/ (() => {
         return this;
     }, props({
         [DelegatingBroadcasterMixin_delegate]: none,
-    }), {
+    }), proto({
         [ComputationLike_isDeferred]: false,
+        [ComputationLike_isPure]: true,
         [ComputationLike_isSynchronous]: false,
-        [BroadcasterLike_connect](sink) {
-            this[DelegatingBroadcasterMixin_delegate][BroadcasterLike_connect](sink);
+        [SourceLike_subscribe](sink) {
+            this[DelegatingBroadcasterMixin_delegate][SourceLike_subscribe](sink);
         },
-    }));
+    })));
 })();
 export default DelegatingBroadcasterMixin;

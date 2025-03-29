@@ -1,13 +1,13 @@
 /// <reference types="./ConsumerObservable.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike_observe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
-import * as Consumer from "../../utils/Consumer.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as Consumer from "../../utils/__internal__/Consumer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
-import * as EventSource from "../EventSource.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import * as Broadcaster from "../Broadcaster.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
     const ConsumerObservable_delegate = Symbol("ConsumerObservable_delegate");
@@ -18,7 +18,7 @@ export const create = (() => {
         const queue = pipe(Consumer.create(config), Disposable.addTo(this));
         this[ConsumerObservable_delegate] = queue;
         this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
-        pipe(queue[ConsumerLike_addOnReadyListener](bindMethod(onReadyPublisher, EventListenerLike_notify)), Disposable.addTo(this));
+        pipe(queue[FlowControllerLike_addOnReadyListener](bindMethod(onReadyPublisher, EventListenerLike_notify)), Disposable.addTo(this));
         return this;
     }, props({
         [ConsumerObservable_delegate]: none,
@@ -26,27 +26,27 @@ export const create = (() => {
     }), {
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
-        get [ConsumerLike_backpressureStrategy]() {
+        get [FlowControllerLike_backpressureStrategy]() {
             unsafeCast(this);
-            return this[ConsumerObservable_delegate][ConsumerLike_backpressureStrategy];
+            return this[ConsumerObservable_delegate][FlowControllerLike_backpressureStrategy];
         },
-        get [ConsumerLike_capacity]() {
+        get [FlowControllerLike_capacity]() {
             unsafeCast(this);
-            return this[ConsumerObservable_delegate][ConsumerLike_capacity];
+            return this[ConsumerObservable_delegate][FlowControllerLike_capacity];
         },
-        get [ConsumerLike_isReady]() {
+        get [FlowControllerLike_isReady]() {
             unsafeCast(this);
-            return this[ConsumerObservable_delegate][ConsumerLike_isReady];
+            return this[ConsumerObservable_delegate][FlowControllerLike_isReady];
         },
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return this[ConsumerObservable_delegate][SinkLike_isCompleted];
         },
-        [ObservableLike_observe](observer) {
+        [SourceLike_subscribe](observer) {
             const oldDelegate = this[ConsumerObservable_delegate];
             this[ConsumerObservable_delegate] = observer;
             pipe(this, Disposable.bindTo(observer));
-            pipe(observer[ConsumerLike_addOnReadyListener](bindMethod(this[ConsumerObservable_onReadyPublisher], EventListenerLike_notify)), Disposable.addTo(this));
+            pipe(observer[FlowControllerLike_addOnReadyListener](bindMethod(this[ConsumerObservable_onReadyPublisher], EventListenerLike_notify)), Disposable.addTo(this));
             if (isSome(oldDelegate[EnumeratorLike_moveNext])) {
                 unsafeCast(oldDelegate);
                 while (oldDelegate[EnumeratorLike_moveNext]()) {
@@ -57,7 +57,7 @@ export const create = (() => {
             if (oldDelegate[SinkLike_isCompleted]) {
                 observer[SinkLike_complete]();
             }
-            oldDelegate[SinkLike_complete]();
+            oldDelegate[DisposableLike_dispose]();
         },
         [SinkLike_complete]() {
             this[ConsumerObservable_delegate][SinkLike_complete]();
@@ -65,8 +65,8 @@ export const create = (() => {
         [EventListenerLike_notify](v) {
             this[ConsumerObservable_delegate][EventListenerLike_notify](v);
         },
-        [ConsumerLike_addOnReadyListener](callback) {
-            return pipe(this[ConsumerObservable_onReadyPublisher], EventSource.addEventHandler(callback), Disposable.addTo(this));
+        [FlowControllerLike_addOnReadyListener](callback) {
+            return pipe(this[ConsumerObservable_onReadyPublisher], Broadcaster.addEventHandler(callback), Disposable.addTo(this));
         },
     });
 })();

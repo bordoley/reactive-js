@@ -14,5 +14,5 @@ testModule("Dictionary", CollectionModuleTests(Dictionary, () => compose(Readonl
     pipe(mapped[DictionaryLike_get](0), expectEquals(0));
     pipe(mapped[DictionaryLike_get](100), expectIsNone);
     pipe(mapped[DictionaryLike_keys], ReadonlyArray.fromIterable(), expectArrayEquals([0, 1, 2]));
-})));
+})))();
 ((_) => { })(Dictionary);

@@ -53,6 +53,12 @@ type MockFunction = {
 export declare const mockFn: (retval?: unknown) => MockFunction;
 export declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => MockFunction;
 export declare const expectPromiseToThrow: (promise: PromiseLike<unknown>) => Promise<void>;
-export declare const testModule: (name: string, ...testGroups: TestGroup[]) => void;
-export declare const testDebugModule: (name: string, ...testGroups: TestGroup[]) => void;
+export declare const testModule: (name: string, ...testGroups: TestGroup[]) => (options?: {
+    beforeEach?: () => void;
+    afterEach?: () => void;
+}) => void;
+export declare const testDebugModule: (name: string, ...testGroups: TestGroup[]) => (options?: {
+    beforeEach?: () => void;
+    afterEach?: () => void;
+}) => void;
 export {};

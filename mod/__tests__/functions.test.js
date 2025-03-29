@@ -84,4 +84,4 @@ testModule("functions", describe("alwaysFalse", testPredicateExpectingFalse(fals
     const f = returns(result);
     pipe(f(), expectEquals(result));
     pipe(f(1, 2, 3, 4, 5, 6), expectEquals(result));
-})), describe("tuple", test("returns a tuple of the provided values", pipeLazy(tuple(1, 2, 3), expectArrayEquals([1, 2, 3])))));
+})), describe("tuple", test("returns a tuple of the provided values", pipeLazy(tuple(1, 2, 3), expectArrayEquals([1, 2, 3])))))();

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationLike`](ComputationLike.md)
+- [`SourceLike`](SourceLike.md)\<`T`, [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\>\>.[`DeferredComputationLike`](DeferredComputationLike.md)
 
 ## Extended by
 
@@ -27,20 +27,14 @@
 
 #### Overrides
 
-[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationLike.md#computationlike_isdeferred)
 
-## Methods
+***
 
-### \[ProducerLike\_consume\]()
+### \[ComputationLike\_isSynchronous\]
 
-> **\[ProducerLike\_consume\]**(`consumer`): `void`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
 
-#### Parameters
+#### Overrides
 
-##### consumer
-
-[`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\>
-
-#### Returns
-
-`void`
+[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isSynchronous]`](DeferredComputationLike.md#computationlike_issynchronous)

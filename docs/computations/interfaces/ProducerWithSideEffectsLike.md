@@ -33,3 +33,13 @@
 #### Overrides
 
 [`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md).[`[ComputationLike_isPure]`](DeferredComputationWithSideEffectsLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+
+#### Overrides
+
+[`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md).[`[ComputationLike_isSynchronous]`](DeferredComputationWithSideEffectsLike.md#computationlike_issynchronous)

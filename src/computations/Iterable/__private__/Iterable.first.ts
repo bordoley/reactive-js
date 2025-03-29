@@ -1,14 +1,12 @@
 import { IterableLike } from "../../../computations.js";
-import { none, returns } from "../../../functions.js";
-import type * as Iterable from "../../Iterable.js";
+import { Function1, Optional, none, returns } from "../../../functions.js";
 
-const Iterable_first: Iterable.Signature["first"] = /*@__PURE__*/ returns(
-  (iter: IterableLike) => {
+const Iterable_first: <T>() => Function1<IterableLike<T>, Optional<T>> =
+  /*@__PURE__*/ returns((iter: IterableLike) => {
     for (const v of iter) {
       return v;
     }
     return none;
-  },
-) as Iterable.Signature["first"];
+  }) as <T>() => Function1<IterableLike<T>, Optional<T>>;
 
 export default Iterable_first;

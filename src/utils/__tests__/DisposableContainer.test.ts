@@ -139,6 +139,6 @@ testModule(
       pipe(signal.reason, expectEquals(error));
     }),
   ),
-);
+)();
 
 ((_: Disposable.Signature) => {})(Disposable);

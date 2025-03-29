@@ -51,14 +51,14 @@ const Element_intersectionEventSource: Element.Signature["intersectionEventSourc
               const cb = (entries: IntersectionObserverEntry[]) => {
                 for (const entry of entries) {
                   const { target } = entry;
-                  const listener =
+                  const sink =
                     eventPublishers[Map_get](root)?.[Map_get](target);
 
-                  if (isNone(listener)) {
+                  if (isNone(sink)) {
                     continue;
                   }
 
-                  listener[EventListenerLike_notify](entry);
+                  sink[EventListenerLike_notify](entry);
                 }
               };
 

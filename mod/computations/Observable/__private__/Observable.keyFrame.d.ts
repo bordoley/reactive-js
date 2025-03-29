@@ -1,6 +1,3 @@
-import { PureSynchronousObservableLike } from "../../../computations.js";
-import { Function1 } from "../../../functions.js";
-declare const Observable_keyFrame: (duration: number, options?: {
-    readonly easing?: Function1<number, number>;
-}) => PureSynchronousObservableLike<number>;
+import type * as Observable from "../../Observable.js";
+declare const Observable_keyFrame: Observable.Signature["keyFrame"];
 export default Observable_keyFrame;

@@ -1,149 +1,106 @@
 import {
   describe,
-  expectArrayEquals,
-  expectToThrowAsync,
+  expectEquals,
+  expectTrue,
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import {
-  Computation_deferredWithSideEffectsOfT,
-  Computation_pureDeferredOfT,
-} from "../../computations.js";
-import { error, none, pipe, pipeLazy, pipeLazyAsync } from "../../functions.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
+import { Optional, error, pipe, pipeLazyAsync } from "../../functions.js";
+import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-import {
-  PauseableLike_pause,
-  PauseableLike_resume,
-  SchedulerLike_schedule,
-} from "../../utils.js";
+import { DisposableLike_dispose } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
-import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
-import * as EventSource from "../EventSource.js";
 import * as Observable from "../Observable.js";
+import * as Source from "../Source.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import ConcurrentDeferredComputationModuleTests from "./fixtures/ConcurrentDeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 
-const AsyncIterableTypes = {
-  [Computation_deferredWithSideEffectsOfT]: pipe(
-    (async function* () {})(),
-    AsyncIterable.of(),
-  ),
-
-  [Computation_pureDeferredOfT]: pipe([], AsyncIterable.fromReadonlyArray()),
-};
+const m = Computation.makeModule<AsyncIterable.Computation>()(AsyncIterable);
 
 testModule(
   "AsyncIterable",
-  ComputationModuleTests(AsyncIterable, AsyncIterableTypes),
-  SequentialComputationModuleTests(AsyncIterable, AsyncIterableTypes),
-  InteractiveComputationModuleTests(AsyncIterable),
-  ConcurrentDeferredComputationModuleTests(AsyncIterable),
+  ComputationModuleTests(m),
+  SequentialComputationModuleTests(m),
+  InteractiveComputationModuleTests(m),
   describe(
-    "broadcast",
-    testAsync("infinite immediately resolving iterable", async () => {
-      using scheduler = HostScheduler.create();
+    "fromAsyncFactory",
+    testAsync("when disposed by an error", async () => {
+      // Note, we use the Observable scheduler to jump to the macrotask
+      // queue to avoid starving the microtask queue through rescheduling.
+      let exited = false;
+      const factory = async (options?: { signal?: AbortSignal }) => {
+        while (!(options?.signal?.aborted ?? true)) {
+          await pipe(Observable.delay(0), Source.lastAsync());
+        }
+        exited = true;
+      };
 
-      let timeout: any = none;
-      const obs = pipe(
-        (async function* foo() {
-          let i = 0;
-          while (true) {
-            await new Promise(resolve => {
-              timeout = setTimeout(resolve, 25);
-            });
-            yield i++;
-            timeout = none;
-          }
-        })(),
-        AsyncIterable.of(),
-        AsyncIterable.broadcast({ scheduler, autoDispose: true }),
-        DisposableContainer.onDisposed(_ => {
-          if (timeout !== none) {
-            clearTimeout(timeout);
-          }
-        }),
-      );
-      obs[PauseableLike_resume]();
-
-      scheduler[SchedulerLike_schedule](_ => obs[PauseableLike_pause](), {
-        delay: 20,
-      });
-
-      scheduler[SchedulerLike_schedule](_ => obs[PauseableLike_resume](), {
-        delay: 40,
-      });
-
-      const result = await pipe(
-        obs,
-        Broadcaster.toObservable(),
-        Observable.takeFirst({ count: 10 }),
-        Observable.buffer(),
-        Observable.lastAsync<readonly number[]>({ scheduler }),
-      );
-      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-    }),
-    testAsync("iterable that completes", async () => {
-      using scheduler = HostScheduler.create();
-      const stream = pipe(
-        (async function* foo() {
-          yield 1;
-          yield 2;
-          yield 3;
-        })(),
-        AsyncIterable.of(),
-        AsyncIterable.broadcast({ scheduler, autoDispose: true }),
-      );
-      stream[PauseableLike_resume]();
-
-      const result = await pipe(
-        stream,
-        Broadcaster.toObservable(),
-        Observable.buffer<number>(),
-        Observable.lastAsync({ scheduler }),
+      const subscription = pipe(
+        factory,
+        AsyncIterable.fromAsyncFactory(),
+        AsyncIterable.toObservable(),
+        Source.subscribe(),
       );
 
-      pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+      await Promise.resolve();
+
+      subscription[DisposableLike_dispose](error("something went wrong"));
+
+      await pipe(Observable.delay(0), Source.lastAsync());
+
+      expectTrue("expect the factory to have exited")(exited);
     }),
     testAsync(
-      "iterable that throws",
-      pipeLazy(async () => {
-        using scheduler = HostScheduler.create();
-        const e = error();
+      "disposing cancels a promise that has not yet resolve",
+      async () => {
+        // Note, we use the Observable scheduler to jump to the macrotask
+        // queue to avoid starving the microtask queue through rescheduling.
+        let exited = false;
+        const factory = async (options?: { signal?: AbortSignal }) => {
+          while (!(options?.signal?.aborted ?? true)) {
+            await pipe(Observable.delay(0), Source.lastAsync());
+          }
+          exited = true;
+        };
 
-        const stream = pipe(
-          (async function* foo() {
-            throw e;
-          })(),
-          AsyncIterable.of(),
-          AsyncIterable.broadcast({ scheduler, autoDispose: true }),
+        const subscription = pipe(
+          factory,
+          AsyncIterable.fromAsyncFactory(),
+          AsyncIterable.toObservable(),
+          Source.subscribe(),
         );
-        stream[PauseableLike_resume]();
 
-        await pipe(
-          stream,
-          Broadcaster.toObservable(),
-          Observable.lastAsync({ scheduler }),
-        );
-      }, expectToThrowAsync),
+        await Promise.resolve();
+
+        subscription[DisposableLike_dispose]();
+
+        await pipe(Observable.delay(0), Source.lastAsync());
+
+        expectTrue("expect the factory to have exited")(exited);
+      },
     ),
     testAsync(
-      "notifies all the values produced by the iterable",
+      "Produces a value ",
       pipeLazyAsync(
-        [1, 2, 3, 4],
-        Computation.fromIterable<AsyncIterable.Computation, number>(
-          AsyncIterable,
-        ),
-        AsyncIterable.broadcast({ autoDispose: true }),
-        Broadcaster.toEventSource(),
-        EventSource.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([1, 2, 3, 4]),
+        async (): Promise<number> => {
+          await Promise.resolve();
+          return 10;
+        },
+        AsyncIterable.fromAsyncFactory(),
+        AsyncIterable.toObservable(),
+        Source.lastAsync<number>(),
+        expectEquals<Optional<number>>(10),
       ),
     ),
   ),
-);
-
-((_: AsyncIterable.Signature) => {})(AsyncIterable);
+)({
+  beforeEach() {
+    const scheduler = HostScheduler.create();
+    DefaultScheduler.set(scheduler);
+  },
+  afterEach() {
+    DefaultScheduler.dispose();
+  },
+});

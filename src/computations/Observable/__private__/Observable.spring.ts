@@ -1,21 +1,19 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
-import * as Computation from "../../../computations/Computation.js";
-import {
-  Tuple3,
-  isNotEqualTo,
-  pipe,
-  returns,
-  tuple,
-} from "../../../functions.js";
+import { isNotEqualTo, pipe, returns } from "../../../functions.js";
 import { abs, clamp, min } from "../../../math.js";
+import type * as Observable from "../../Observable.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
-const ObservableModule = { map: Observable_map };
+type SpringState = {
+  lastTime: number;
+  last: number;
+  value: number;
+};
 
-const Observable_spring = (options?: {
+const Observable_spring: Observable.Signature["spring"] = (options?: {
   readonly stiffness?: number;
   readonly damping?: number;
   readonly precision?: number;
@@ -26,8 +24,8 @@ const Observable_spring = (options?: {
 
   return pipe(
     Observable_currentTime,
-    Observable_scan<number, Tuple3<number, number, number>>(
-      ([lastTime, last, value], now) => {
+    Observable_scan<number, SpringState>(
+      ({ lastTime, last, value }, now) => {
         lastTime = min(now, lastTime);
 
         const delta = 1 - value;
@@ -43,14 +41,12 @@ const Observable_spring = (options?: {
         const newValue =
           abs(d) < precision && abs(delta) < precision ? 1 : value + d;
 
-        return tuple(now, value, newValue);
+        return { lastTime: now, last: value, value: newValue };
       },
-      returns(tuple(MAX_VALUE, 0, 0)),
+      returns({ lastTime: MAX_VALUE, last: 0, value: 0 }),
     ),
-    Computation.pick(ObservableModule)<Tuple3<number, number, number>, number>(
-      2,
-    ),
-    Observable_takeWhile(isNotEqualTo(1), {
+    Observable_map<SpringState, number>(x => x.value),
+    Observable_takeWhile<number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

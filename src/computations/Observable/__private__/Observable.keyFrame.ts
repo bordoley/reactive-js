@@ -1,6 +1,4 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
-import * as Computation from "../../../computations/Computation.js";
-import { PureSynchronousObservableLike } from "../../../computations.js";
 import {
   Function1,
   Tuple2,
@@ -11,21 +9,18 @@ import {
   tuple,
 } from "../../../functions.js";
 import { min } from "../../../math.js";
+import type * as Observable from "../../Observable.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
-const ObservableModule = {
-  map: Observable_map,
-};
-
-const Observable_keyFrame = (
+const Observable_keyFrame: Observable.Signature["keyFrame"] = (
   duration: number,
   options?: {
     readonly easing?: Function1<number, number>;
   },
-): PureSynchronousObservableLike<number> => {
+) => {
   const { easing = identity } = options ?? {};
 
   return pipe(
@@ -40,7 +35,7 @@ const Observable_keyFrame = (
       },
       returns(tuple(MAX_VALUE, 0)),
     ),
-    Computation.pick(ObservableModule)<Tuple2<number, number>, number>(1),
+    Observable_map((x: Tuple2<number, number>) => x[1]),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

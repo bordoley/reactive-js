@@ -4,11 +4,10 @@ import * as CurrentTime from "../__internal__/CurrentTime.js";
 import { globalObject } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { invoke, isNone, none, pipe, pipeLazy, raiseIfNone, } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
-import * as HostScheduler from "../utils/HostScheduler.js";
 import * as Queue from "../utils/Queue.js";
-import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
-import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
 import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
@@ -52,8 +51,8 @@ export const get = /*@__PURE__*/ (() => {
             animationFrameScheduler[AnimationFrameScheduler_rafIsRunning] = false;
         }
     };
-    const createAnimationFrameScheduler = mixInstanceFactory(include(CurrentTimeSchedulerMixin), function AnimationFrameScheduler() {
-        init(CurrentTimeSchedulerMixin, this);
+    const createAnimationFrameScheduler = mixInstanceFactory(include(SchedulerMixin), function AnimationFrameScheduler() {
+        init(SchedulerMixin, this);
         this[AnimationFrameScheduler_rafQueue] =
             Queue.create();
         return this;
@@ -71,7 +70,7 @@ export const get = /*@__PURE__*/ (() => {
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {
-                pipe(HostScheduler.get(), invoke(SchedulerLike_schedule, pipeLazy(this, invoke(SchedulerMixinHostLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
+                pipe(DefaultScheduler.get(), invoke(SchedulerLike_schedule, pipeLazy(this, invoke(SchedulerMixinHostLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
             }
             else {
                 this[AnimationFrameScheduler_rafQueue][QueueLike_enqueue](continuation);

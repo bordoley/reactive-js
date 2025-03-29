@@ -2,27 +2,25 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { LiftedEventListenerLike_notify, LiftedEventListenerLike_notifyDelegate, } from "../../../utils/__mixins__/LiftedEventListenerMixin.js";
-import LiftedObserverMixin from "../../../utils/__mixins__/LiftedObserverMixin.js";
-import { SchedulerLike_now } from "../../../utils.js";
-import Observable_liftPureDeferred from "./Observable.liftPureDeferred.js";
-const createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
-    const WithCurrentTimeObserver_selector = Symbol("WithCurrentTimeObserver_selector");
-    return mixInstanceFactory(include(DelegatingDisposableMixin, LiftedObserverMixin()), function WithCurrentTimeObserver(delegate, selector) {
-        init(DelegatingDisposableMixin, this, delegate);
-        init(LiftedObserverMixin(), this, delegate, none);
-        this[WithCurrentTimeObserver_selector] = selector;
+import { EventListenerLike_notify, SchedulerLike_now, } from "../../../utils.js";
+import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import Observable_lift from "./Observable.lift.js";
+const createWithCurrentTimeOperator = /*@__PURE__*/ (() => {
+    const WithCurrentTimeOperator_selector = Symbol("WithCurrentTimeOperator_selector");
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function WithCurrentTimeOperator(delegate, selector) {
+        init(DelegatingLiftedSinkMixin(), this, delegate);
+        this[WithCurrentTimeOperator_selector] = selector;
         return this;
     }, props({
-        [WithCurrentTimeObserver_selector]: none,
+        [WithCurrentTimeOperator_selector]: none,
     }), proto({
-        [LiftedEventListenerLike_notify](next) {
-            const currentTime = this[SchedulerLike_now];
-            const mapped = this[WithCurrentTimeObserver_selector](currentTime, next);
-            this[LiftedEventListenerLike_notifyDelegate](mapped);
+        [EventListenerLike_notify](next) {
+            const currentTime = this[LiftedSinkLike_subscription][SchedulerLike_now];
+            const mapped = this[WithCurrentTimeOperator_selector](currentTime, next);
+            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](mapped);
         },
     }));
 })();
-const Observable_withCurrentTime = (selector) => pipe((createWithCurrentTimeObserver), partial(selector), Observable_liftPureDeferred);
+const Observable_withCurrentTime = ((selector) => pipe((createWithCurrentTimeOperator), partial(selector), Observable_lift()));
 export default Observable_withCurrentTime;

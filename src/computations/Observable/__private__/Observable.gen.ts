@@ -1,107 +1,130 @@
 import {
-  Iterator_done,
-  Iterator_next,
-  Iterator_value,
-  Symbol,
-} from "../../../__internal__/constants.js";
+  ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+} from "../../../computations.js";
 import {
   Factory,
-  Optional,
+  bindMethod,
   error,
-  isSome,
   none,
   pipe,
+  pipeLazy,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as SerialDisposable from "../../../utils/SerialDisposable.js";
+import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import {
-  ConsumerLike_addOnReadyListener,
-  ConsumerLike_isReady,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_isReady,
   ObserverLike,
   SchedulerLike_schedule,
-  SerialDisposableLike_current,
+  SchedulerLike_shouldYield,
   SinkLike_complete,
+  SinkLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createPureSynchronousObservable from "./Observable.createPureSynchronousObservable.js";
+import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
-const Observable_gen: Observable.Signature["gen"] = <T>(
-  factory: Factory<Generator<T>>,
-  options?: {
-    delay?: number;
-    delayStart?: boolean;
-  },
-) =>
-  Observable_createPureSynchronousObservable((observer: ObserverLike<T>) => {
+const genFactory =
+  <T>(
+    factory: Factory<Iterator<T>>,
+    options?: {
+      delay?: number;
+      delayStart?: boolean;
+    },
+  ) =>
+  (observer: ObserverLike<T>) => {
     const { delay = 0, delayStart = false } = options ?? {};
-    const iterable = factory();
-
-    const iterator = iterable[Symbol.iterator]();
-    const subscription = SerialDisposable.create();
-
-    pipe(
-      observer,
-      DisposableContainer.onDisposed(() => iterator.return(none)),
-      Disposable.add(observer),
-    );
-
-    const continuation = (ctx: ContinuationContextLike) => {
-      while (observer[ConsumerLike_isReady]) {
-        let next: Optional<IteratorResult<T, any>> = none;
-
-        try {
-          next = iterator[Iterator_next]();
-        } catch (e) {
-          // Catch any errors thrown by the iterator
-          observer[DisposableLike_dispose](error(e));
-          break;
-        }
-
-        if (isSome(next) && !next[Iterator_done]) {
-          const v = next[Iterator_value];
-          observer[EventListenerLike_notify](v);
-          ctx[ContinuationContextLike_yield](delay);
-        } else {
-          observer[SinkLike_complete]();
-        }
-      }
-    };
-
-    subscription[SerialDisposableLike_current] = pipe(
-      observer[SchedulerLike_schedule](
-        continuation,
-        delayStart ? options : none,
-      ),
+    const enumerator = pipe(
+      factory(),
+      Iterator.toEnumerator(),
       Disposable.addTo(observer),
     );
 
-    observer[ConsumerLike_addOnReadyListener](() => {
-      const active =
-        !subscription[SerialDisposableLike_current][DisposableLike_isDisposed];
-
-      if (active) {
+    let isActive = false;
+    const continue_ = (ctx: ContinuationContextLike) => {
+      if (isActive) {
         return;
       }
 
-      subscription[SerialDisposableLike_current] = pipe(
-        observer[SchedulerLike_schedule](continuation),
-        Disposable.addTo(observer),
-      );
-    });
+      isActive = true;
 
-    subscription[SerialDisposableLike_current] = pipe(
-      observer[SchedulerLike_schedule](
-        continuation,
-        delayStart ? options : none,
+      let shouldYield = false;
+      let isReady = observer[FlowControllerLike_isReady];
+      let isCompleted = observer[SinkLike_isCompleted];
+
+      try {
+        while (
+          isReady &&
+          !isCompleted &&
+          !shouldYield &&
+          enumerator[EnumeratorLike_moveNext]()
+        ) {
+          const value = enumerator[EnumeratorLike_current];
+          observer[EventListenerLike_notify](value);
+
+          isReady = observer[FlowControllerLike_isReady];
+          isCompleted = observer[SinkLike_isCompleted];
+
+          // Only request a yield if the observer is ready
+          // to accept more notifications, but the scheduler
+          // has requested a yield or we want to intentionally delay
+          shouldYield =
+            (delay > 0 || observer[SchedulerLike_shouldYield]) &&
+            isReady &&
+            !isCompleted;
+        }
+
+        if (!shouldYield && isReady && !isCompleted) {
+          observer[SinkLike_complete]();
+        }
+      } catch (e) {
+        observer[DisposableLike_dispose](error(e));
+        isReady = false;
+      }
+
+      isActive = false;
+      if (shouldYield) {
+        ctx[ContinuationContextLike_yield](delay);
+        // Will throw a yield exception and we'll exit the continuation
+      }
+      // Otherwise return and let the onReadySink reschedule
+      // the continuations
+    };
+
+    observer[FlowControllerLike_addOnReadyListener](
+      pipeLazy(
+        continue_,
+        bindMethod(observer, SchedulerLike_schedule),
+        Disposable.addTo(observer),
       ),
+    );
+
+    pipe(
+      observer[SchedulerLike_schedule](continue_, delayStart ? options : none),
       Disposable.addTo(observer),
     );
-  });
+  };
 
-export default Observable_gen;
+export const Observable_gen: Observable.Signature["gen"] = ((
+  factory,
+  options,
+) =>
+  DeferredSource.create(genFactory(factory, options), {
+    [ComputationLike_isPure]: false,
+    [ComputationLike_isSynchronous]: true,
+  })) as Observable.Signature["gen"];
+
+export const Observable_genPure: Observable.Signature["genPure"] = ((
+  factory,
+  options,
+) =>
+  DeferredSource.create(genFactory(factory, options), {
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: true,
+  })) as Observable.Signature["genPure"];

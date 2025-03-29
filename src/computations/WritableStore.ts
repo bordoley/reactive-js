@@ -9,12 +9,12 @@ import {
 import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
-  EventSourceLike_addEventListener,
+  PublisherLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../computations.js";
 import { Equality, none, strictEquality } from "../functions.js";
-import { DisposableLike, EventListenerLike_notify } from "../utils.js";
+import { EventListenerLike_notify } from "../utils.js";
 import PublisherMixin from "./__mixins__/PublisherMixin.js";
 
 export const create: <T>(
@@ -35,11 +35,7 @@ export const create: <T>(
   return mixInstanceFactory(
     include(PublisherMixin<T>()),
     function WritableStore(
-      this: TProperties &
-        Omit<
-          WritableStoreLike<T>,
-          keyof DisposableLike | typeof EventSourceLike_addEventListener
-        >,
+      this: TProperties & Omit<WritableStoreLike<T>, keyof PublisherLike<T>>,
       initialValue: T,
       options?: {
         readonly equality?: Equality<T>;

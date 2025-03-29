@@ -18,7 +18,7 @@
 
 ### op
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureDeferredObservableLike`](../../interfaces/PureDeferredObservableLike.md)\<`TReq`\>, [`DeferredObservableLike`](../../interfaces/DeferredObservableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`TReq`\>, [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
 
 ## Returns
 

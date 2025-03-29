@@ -6,11 +6,23 @@
 
 # Function: toObservable()
 
-> **toObservable**\<`T`\>(): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+> **toObservable**\<`T`\>(`options`?): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
 
 ## Type Parameters
 
 • **T**
+
+## Parameters
+
+### options?
+
+#### delay?
+
+`number`
+
+#### delayStart?
+
+`boolean`
 
 ## Returns
 

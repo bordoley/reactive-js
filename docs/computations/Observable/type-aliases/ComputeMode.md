@@ -6,4 +6,4 @@
 
 # Type Alias: ComputeMode
 
-> **ComputeMode**: *typeof* [`BatchedComputeMode`](../variables/BatchedComputeMode.md) \| *typeof* [`CombineLatestComputeMode`](../variables/CombineLatestComputeMode.md)
+> **ComputeMode**: `"batched"` \| `"combine-latest"`

@@ -1,4 +1,4 @@
-import { EventSourceLike, StoreLike } from "../computations.js";
+import { BroadcasterLike, StoreLike } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
 import { DOMEventTarget, EventKeysOf, EventMapOf, Rect, ScrollValue } from "../web.js";
@@ -16,11 +16,11 @@ export interface WebElementModule {
         passive?: boolean;
         capture?: boolean;
         autoDispose?: boolean;
-    }): Function1<TEventTarget, EventSourceLike<EventMapOf<TEventTarget>[TEventName]> & DisposableLike>;
-    intersectionEventSource(parent?: Document | Element): Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
+    }): Function1<TEventTarget, BroadcasterLike<EventMapOf<TEventTarget>[TEventName]> & DisposableLike>;
+    intersectionEventSource(parent?: Document | Element): Function1<Element, BroadcasterLike<IntersectionObserverEntry>>;
     measure<TElement extends HTMLElement | SVGElement>(): Function1<TElement, StoreLike<Rect>>;
-    resizeEventSource<TElement extends Element>(options?: ResizeObserverOptions): Function1<TElement, EventSourceLike<ResizeObserverEntry>>;
-    scrollEventSource<TElement extends HTMLElement>(): Function1<TElement, EventSourceLike<ScrollValue>>;
+    resizeEventSource<TElement extends Element>(options?: ResizeObserverOptions): Function1<TElement, BroadcasterLike<ResizeObserverEntry>>;
+    scrollEventSource<TElement extends HTMLElement>(): Function1<TElement, BroadcasterLike<ScrollValue>>;
 }
 export type Signature = WebElementModule;
 export declare const addEventHandler: Signature["addEventHandler"];

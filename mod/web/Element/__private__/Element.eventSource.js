@@ -1,23 +1,16 @@
 /// <reference types="./Element.eventSource.d.ts" />
 
-import * as EventSource from "../../../computations/EventSource.js";
-import { error, pipe } from "../../../functions.js";
+import * as Broadcaster from "../../../computations/Broadcaster.js";
+import { bindMethod, pipe } from "../../../functions.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
-const Element_eventSource = (eventName, options) => (target) => EventSource.create((listener) => {
-    const eventHandler = (ev) => {
-        try {
-            listener[EventListenerLike_notify](ev);
-        }
-        catch (e) {
-            listener[DisposableLike_dispose](error(e));
-        }
-    };
-    const addEventListenerOptions = {
+import { EventListenerLike_notify } from "../../../utils.js";
+const Element_eventSource = (eventName, options) => (target) => Broadcaster.create((listener) => {
+    const eventHandler = bindMethod(listener, EventListenerLike_notify);
+    const addEventSinkOptions = {
         capture: options?.capture ?? false,
         passive: options?.passive ?? true,
     };
-    target.addEventListener(eventName, eventHandler, addEventListenerOptions);
+    target.addEventListener(eventName, eventHandler, addEventSinkOptions);
     pipe(listener, DisposableContainer.onDisposed(_ => {
         target.removeEventListener(eventName, eventHandler);
     }));

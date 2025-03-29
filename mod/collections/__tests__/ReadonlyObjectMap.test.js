@@ -26,5 +26,5 @@ testModule("ReadonlyObjectMap", DictionaryCollectionModuleTests(ReadonlyObjectMa
 })), describe("toReadonlyMap", test("from non-empty map", () => {
     const dict = pipe([tuple("0", "b"), tuple("1", "d"), tuple("2", "v")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.toReadonlyMap());
     pipe(dict, ReadonlyMap.keys(), ReadonlyArray.fromIterable(), expectArrayEquals(["0", "1", "2"]));
-})));
+})))();
 ((_) => { })(ReadonlyObjectMap);

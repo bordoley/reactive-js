@@ -13,37 +13,41 @@ export const DisposableLike_dispose =
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 export const SerialDisposableLike_current = Symbol("SerialDisposableLike_current");
-export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
-export const SinkLike_complete = Symbol("SinkLike_complete");
-export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
 export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
-export const ConsumerLike_backpressureStrategy = Symbol("ConsumerLike_backpressureStrategy");
-export const ConsumerLike_capacity = Symbol("ConsumerLike_capacity");
-export const ConsumerLike_isReady = Symbol("ConsumerLike_isReady");
-export const ConsumerLike_addOnReadyListener = Symbol("ConsumerLike_addOnReadyListener");
-export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
-export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
+export const FlowControllerLike_backpressureStrategy = Symbol("FlowControllerLike_backpressureStrategy");
+export const FlowControllerLike_capacity = Symbol("FlowControllerLike_capacity");
+export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
+export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 /**
  * @noInheritDoc
  */
 export class BackPressureError extends Error {
-    [ConsumerLike_capacity];
-    [ConsumerLike_backpressureStrategy];
-    [ConsumerLike_isReady];
+    [FlowControllerLike_capacity];
+    [FlowControllerLike_backpressureStrategy];
+    [FlowControllerLike_isReady];
     constructor(consumer) {
         super();
-        this[ConsumerLike_capacity] = consumer[ConsumerLike_capacity];
-        this[ConsumerLike_backpressureStrategy] =
-            consumer[ConsumerLike_backpressureStrategy];
-        this[ConsumerLike_isReady] = consumer[ConsumerLike_isReady];
+        this[FlowControllerLike_capacity] = consumer[FlowControllerLike_capacity];
+        this[FlowControllerLike_backpressureStrategy] =
+            consumer[FlowControllerLike_backpressureStrategy];
+        this[FlowControllerLike_isReady] = consumer[FlowControllerLike_isReady];
     }
 }
+export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
+export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext");
+export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
+export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
+export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
+export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_peek");
+export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
+export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol("FlowControllerEnumeratorLike_addOnDataAvailableListener");
+export const FlowControllerEnumeratorLike_isDataAvailable = Symbol("FlowControllerEnumeratorLike_isDataAvailable");
+export const FlowControllerQueueLike_enqueue = Symbol("FlowControllerQueueLike_enqueue");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");
 export const SchedulerLike_now = Symbol("SchedulerLike_now");
@@ -55,3 +59,6 @@ export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run
 export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
 export const PauseableLike_pause = Symbol("PauseableLike_pause");
 export const PauseableLike_resume = Symbol("PauseableLike_resume");
+export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
+export const SinkLike_complete = Symbol("SinkLike_complete");
+export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");

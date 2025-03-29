@@ -6,18 +6,18 @@
 
 # Function: concatWith()
 
-> **concatWith**\<`TComputationType`\>(`m`): [`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<`TComputationType`\>
+> **concatWith**\<`TComputationModule`\>(`m`): [`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../../type-aliases/ComputationType.md)
+• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AnyComputationType`](../../type-aliases/AnyComputationType.md), \{\}\>, `"concat"`\>
 
 ## Parameters
 
 ### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<`TComputationType`, [`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`\>, `"concat"`\>
+`TComputationModule`
 
 ## Returns
 
-[`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<`TComputationType`\>
+[`ConcatWithOperator`](../interfaces/ConcatWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>

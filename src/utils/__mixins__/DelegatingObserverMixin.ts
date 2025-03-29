@@ -12,30 +12,32 @@ export interface DelegatingObserverLike<
 > extends DelegatingConsumerLike<T, TDelegateObserver>,
     ObserverLike<T> {}
 
+type TReturn<
+  T,
+  TDelegateObserver extends ObserverLike<T> = ObserverLike<T>,
+> = Omit<DelegatingObserverLike<T, TDelegateObserver>, keyof DisposableLike>;
+
 const DelegatingObserverMixin: <
   T,
   TDelegateObserver extends ObserverLike<T> = ObserverLike<T>,
->() => Mixin1<
-  DelegatingObserverLike<T, TDelegateObserver>,
-  TDelegateObserver,
-  Pick<DelegatingObserverLike<T, TDelegateObserver>, keyof DisposableLike>
-> = /*@__PURE__*/ (<
-  T,
-  TDelegateObserver extends ObserverLike<T> = ObserverLike<T>,
->() => {
-  return returns(
-    mix(
-      include(DelegatingConsumerMixin(), DelegatingSchedulerMixin),
-      function DelegatingObserverMixin(
-        this: DisposableLike,
-        delegate: TDelegateObserver,
-      ): DelegatingObserverLike<T, TDelegateObserver> {
-        init(DelegatingConsumerMixin<T, TDelegateObserver>(), this, delegate);
-        init(DelegatingSchedulerMixin, this, delegate);
-        return this;
-      },
-    ),
-  );
-})();
+>() => Mixin1<TReturn<T, TDelegateObserver>, TDelegateObserver> =
+  /*@__PURE__*/ (<
+    T,
+    TDelegateObserver extends ObserverLike<T> = ObserverLike<T>,
+  >() => {
+    return returns(
+      mix(
+        include(DelegatingConsumerMixin(), DelegatingSchedulerMixin),
+        function DelegatingObserverMixin(
+          this: unknown,
+          delegate: TDelegateObserver,
+        ): TReturn<T, TDelegateObserver> {
+          init(DelegatingConsumerMixin<T, TDelegateObserver>(), this, delegate);
+          init(DelegatingSchedulerMixin, this, delegate);
+          return this;
+        },
+      ),
+    );
+  })();
 
 export default DelegatingObserverMixin;

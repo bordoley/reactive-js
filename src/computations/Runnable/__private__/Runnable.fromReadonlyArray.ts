@@ -5,8 +5,9 @@ import {
   PureRunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { newInstance } from "../../../functions.js";
+import { error, newInstance } from "../../../functions.js";
 import {
+  DisposableLike_dispose,
   EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
@@ -25,14 +26,18 @@ class FromReadonlyArrayRunnable<T> implements PureRunnableLike<T> {
   ) {}
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
-    let { arr, start, count } = this;
-    while (count !== 0 && !sink[SinkLike_isCompleted]) {
-      const next = arr[start];
-      sink[EventListenerLike_notify](next);
+    try {
+      let { arr, start, count } = this;
+      while (count !== 0 && !sink[SinkLike_isCompleted]) {
+        const next = arr[start];
+        sink[EventListenerLike_notify](next);
 
-      count > 0 ? (start++, count--) : (start--, count++);
+        count > 0 ? (start++, count--) : (start--, count++);
+      }
+      sink[SinkLike_complete]();
+    } catch (e) {
+      sink[DisposableLike_dispose](error(e));
     }
-    sink[SinkLike_complete]();
   }
 }
 

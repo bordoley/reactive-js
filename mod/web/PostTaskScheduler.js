@@ -4,14 +4,13 @@ import * as DisposableContainer from "..//utils/DisposableContainer.js";
 import { Map, Map_delete, Map_get, Map_set, } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { bindMethod, ignore, newInstance, pipe } from "../functions.js";
-import CurrentTimeSchedulerMixin from "../utils/__mixins__/CurrentTimeSchedulerMixin.js";
-import { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
+import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js";
 const createPostTaskScheduler = /*@__PURE__*/ (() => {
     const postTaskScheduler = globalThis.scheduler;
     const PostTaskScheduler_priority = Symbol("PostTaskScheduler_priority");
-    return mixInstanceFactory(include(CurrentTimeSchedulerMixin), function PostTaskScheduler(priority) {
-        init(CurrentTimeSchedulerMixin, this);
+    return mixInstanceFactory(include(SchedulerMixin), function PostTaskScheduler(priority) {
+        init(SchedulerMixin, this);
         this[PostTaskScheduler_priority] = priority;
         return this;
     }, props({

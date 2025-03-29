@@ -1,16 +1,20 @@
-import { Mixin1, mix, props } from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, proto } from "../../__internal__/mixins.js";
 import {
   BroadcasterLike,
-  BroadcasterLike_connect,
   ComputationLike_isDeferred,
+  ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  SourceLike_subscribe,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
 import { DisposableContainerLike, SinkLike } from "../../utils.js";
 
+type TReturn<T> = Omit<BroadcasterLike<T>, keyof DisposableContainerLike>;
+
 const DelegatingBroadcasterMixin: <T>() => Mixin1<
-  Omit<BroadcasterLike<T>, keyof DisposableContainerLike>,
-  BroadcasterLike<T>
+  TReturn<T>,
+  BroadcasterLike<T>,
+  TReturn<T>
 > = /*@__PURE__*/ (<
   T,
   TBroadcasterDelegate extends BroadcasterLike<T> = BroadcasterLike<T>,
@@ -24,10 +28,9 @@ const DelegatingBroadcasterMixin: <T>() => Mixin1<
   return returns(
     mix(
       function DelegatingBroadcasterMixin(
-        this: Omit<BroadcasterLike<T>, keyof DisposableContainerLike> &
-          TProperties,
+        this: TReturn<T> & TProperties,
         delegate: TBroadcasterDelegate,
-      ): Omit<BroadcasterLike<T>, keyof DisposableContainerLike> {
+      ): TReturn<T> {
         this[DelegatingBroadcasterMixin_delegate] = delegate;
 
         return this;
@@ -35,16 +38,15 @@ const DelegatingBroadcasterMixin: <T>() => Mixin1<
       props<TProperties>({
         [DelegatingBroadcasterMixin_delegate]: none,
       }),
-      {
+      proto<TReturn<T>>({
         [ComputationLike_isDeferred]: false as const,
+        [ComputationLike_isPure]: true as const,
         [ComputationLike_isSynchronous]: false as const,
 
-        [BroadcasterLike_connect](this: TProperties, sink: SinkLike<T>) {
-          this[DelegatingBroadcasterMixin_delegate][BroadcasterLike_connect](
-            sink,
-          );
+        [SourceLike_subscribe](this: TProperties, sink: SinkLike<T>) {
+          this[DelegatingBroadcasterMixin_delegate][SourceLike_subscribe](sink);
         },
-      },
+      }),
     ),
   );
 })();

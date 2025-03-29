@@ -8,15 +8,32 @@
 
 ## Interfaces
 
+- [BroadcasterComputation](interfaces/BroadcasterComputation.md)
 - [BroadcasterModule](interfaces/BroadcasterModule.md)
 
 ## Type Aliases
 
+- [Computation](type-aliases/Computation.md)
 - [Signature](type-aliases/Signature.md)
 
 ## Functions
 
+- [addEventHandler](functions/addEventHandler.md)
 - [create](functions/create.md)
 - [createPauseable](functions/createPauseable.md)
-- [toEventSource](functions/toEventSource.md)
-- [toObservable](functions/toObservable.md)
+- [distinctUntilChanged](functions/distinctUntilChanged.md)
+- [encodeUtf8](functions/encodeUtf8.md)
+- [fromObservable](functions/fromObservable.md)
+- [fromPromise](functions/fromPromise.md)
+- [genPure](functions/genPure.md)
+- [keep](functions/keep.md)
+- [map](functions/map.md)
+- [merge](functions/merge.md)
+- [pairwise](functions/pairwise.md)
+- [scan](functions/scan.md)
+- [skipFirst](functions/skipFirst.md)
+- [takeFirst](functions/takeFirst.md)
+- [takeUntil](functions/takeUntil.md)
+- [takeWhile](functions/takeWhile.md)
+- [toProducer](functions/toProducer.md)
+- [withLatestFrom](functions/withLatestFrom.md)

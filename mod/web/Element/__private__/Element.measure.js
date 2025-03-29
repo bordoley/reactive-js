@@ -2,9 +2,9 @@
 
 import { Array_every } from "../../../__internal__/constants.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import * as EventSource from "../../../computations/EventSource.js";
+import * as Broadcaster from "../../../computations/Broadcaster.js";
 import * as WritableStore from "../../../computations/WritableStore.js";
-import { EventSourceLike_addEventListener, } from "../../../computations.js";
+import { SourceLike_subscribe, } from "../../../computations.js";
 import { invoke, isNull, newInstance, pipe, pipeLazy, returns, } from "../../../functions.js";
 import Element_eventSource from "./Element.eventSource.js";
 import Element_windowResizeEventSource from "./Element.windowResizeEventSource.js";
@@ -64,7 +64,7 @@ const Element_measure = /*@__PURE__*/ (() => {
             const scrollContainerEventSources = pipe(findScrollContainers(element), ReadonlyArray.map(Element_eventSource("scroll", {
                 autoDispose: true,
             })));
-            pipe(EventSource.merge(windowResizeEventSource, windowScrollEventSource, ...scrollContainerEventSources), EventSource.map(pipeLazy(element, measureElement)), invoke(EventSourceLike_addEventListener, store));
+            pipe(Broadcaster.merge(windowResizeEventSource, windowScrollEventSource, ...scrollContainerEventSources), Broadcaster.map(pipeLazy(element, measureElement)), invoke(SourceLike_subscribe, store));
             return store;
         })());
 })();

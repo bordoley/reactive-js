@@ -12,7 +12,7 @@ const Streamable_actionReducer: Streamable.Signature["actionReducer"] = <
   options?: { readonly equality?: Equality<T> },
 ) =>
   Streamable_create<TAction, T>(
-    Observable.actionReducer<TAction, T>(reducer, initialState, options),
+    Observable.scanDistinct<TAction, T>(reducer, initialState, options),
   );
 
 export default Streamable_actionReducer;

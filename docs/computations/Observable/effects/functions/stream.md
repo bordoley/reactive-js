@@ -32,10 +32,6 @@
 
 `number`
 
-#### replay?
-
-`number`
-
 #### scheduler?
 
 [`SchedulerLike`](../../../../utils/interfaces/SchedulerLike.md)

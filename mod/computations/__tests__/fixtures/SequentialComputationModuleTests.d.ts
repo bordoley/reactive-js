@@ -1,3 +1,3 @@
-import { ComputationModule, ComputationType, ComputationTypeOf, SequentialComputationModule } from "../../../computations.js";
-declare const SequentialComputationModuleTests: <TComputationType extends ComputationType>(m: SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, computations: ComputationTypeOf<TComputationType>) => import("../../../__internal__/testing.js").Describe;
+import { ComputationModule, SequentialComputationModule } from "../../../computations.js";
+declare const SequentialComputationModuleTests: <TComputationModule extends ComputationModule & Pick<SequentialComputationModule, "scanDistinct" | "catchError" | "concat" | "forEach" | "gen" | "repeat" | "retry" | "throwIfEmpty">>(m: TComputationModule) => import("../../../__internal__/testing.js").Describe;
 export default SequentialComputationModuleTests;

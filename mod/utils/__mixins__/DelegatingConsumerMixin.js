@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import { ConsumerLike_addOnReadyListener, ConsumerLike_backpressureStrategy, ConsumerLike_capacity, ConsumerLike_isReady, } from "../../utils.js";
+import { FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, } from "../../utils.js";
 import { DelegatingEventListenerLike_delegate } from "./DelegatingEventListenerMixin.js";
 import DelegatingSinkMixin from "./DelegatingSinkMixin.js";
 const DelegatingConsumerMixin = /*@__PURE__*/ (() => {
@@ -10,20 +10,20 @@ const DelegatingConsumerMixin = /*@__PURE__*/ (() => {
         init(DelegatingSinkMixin(), this, delegate);
         return this;
     }, props(), proto({
-        get [ConsumerLike_isReady]() {
+        get [FlowControllerLike_isReady]() {
             unsafeCast(this);
-            return this[DelegatingEventListenerLike_delegate][ConsumerLike_isReady];
+            return this[DelegatingEventListenerLike_delegate][FlowControllerLike_isReady];
         },
-        get [ConsumerLike_backpressureStrategy]() {
+        get [FlowControllerLike_backpressureStrategy]() {
             unsafeCast(this);
-            return this[DelegatingEventListenerLike_delegate][ConsumerLike_backpressureStrategy];
+            return this[DelegatingEventListenerLike_delegate][FlowControllerLike_backpressureStrategy];
         },
-        get [ConsumerLike_capacity]() {
+        get [FlowControllerLike_capacity]() {
             unsafeCast(this);
-            return this[DelegatingEventListenerLike_delegate][ConsumerLike_capacity];
+            return this[DelegatingEventListenerLike_delegate][FlowControllerLike_capacity];
         },
-        [ConsumerLike_addOnReadyListener](callback) {
-            return this[DelegatingEventListenerLike_delegate][ConsumerLike_addOnReadyListener](callback);
+        [FlowControllerLike_addOnReadyListener](callback) {
+            return this[DelegatingEventListenerLike_delegate][FlowControllerLike_addOnReadyListener](callback);
         },
     })));
 })();
