@@ -16,15 +16,16 @@ import {
   SchedulerLike,
   SinkLike_complete,
 } from "../../utils.js";
+import {
+  ConsumerMixinLike,
+  ConsumerMixinLike_complete,
+  ConsumerMixinLike_consumer,
+  ConsumerMixinLike_notify,
+} from "../__mixins__/ConsumerMixin.js";
 import { ConsumerQueueMixin } from "../__mixins__/ConsumerQueueMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
-import ObserverMixin, {
-  ObserverMixinLike,
-  ObserverMixinLike_complete,
-  ObserverMixinLike_consumer,
-  ObserverMixinLike_notify,
-} from "../__mixins__/ObserverMixin.js";
+import ObserverMixin from "../__mixins__/ObserverMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
 
 export const create: <T>(options?: {
@@ -68,17 +69,17 @@ export const toObserver: <T>(
     },
     props(),
     proto({
-      [ObserverMixinLike_notify](
-        this: ObserverMixinLike<ConsumerLike<T>, T>,
+      [ConsumerMixinLike_notify](
+        this: ConsumerMixinLike<ConsumerLike<T>, T>,
         next: T,
       ) {
-        this[ObserverMixinLike_consumer][EventListenerLike_notify](next);
+        this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
       },
 
-      [ObserverMixinLike_complete](
-        this: ObserverMixinLike<ConsumerLike<T>, T>,
+      [ConsumerMixinLike_complete](
+        this: ConsumerMixinLike<ConsumerLike<T>, T>,
       ) {
-        this[ObserverMixinLike_consumer][SinkLike_complete]();
+        this[ConsumerMixinLike_consumer][SinkLike_complete]();
       },
     }),
   );
