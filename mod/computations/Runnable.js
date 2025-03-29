@@ -10,6 +10,7 @@ import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWi
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_encodeUtf8 from "./Runnable/__private__/Runnable.encodeUtf8.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
+import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
 import { Runnable_gen, Runnable_genPure, } from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
@@ -32,6 +33,7 @@ export const decodeWithCharset = Runnable_decodeWithCharset;
 export const distinctUntilChanged = Runnable_distinctUntilChanged;
 export const encodeUtf8 = Runnable_encodeUtf8;
 export const forEach = Runnable_forEach;
+export const fromReadonlyArray = Runnable_fromReadonlyArray;
 export const gen = Runnable_gen;
 export const genPure = Runnable_genPure;
 export const keep = Runnable_keep;

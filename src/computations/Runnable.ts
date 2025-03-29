@@ -15,7 +15,7 @@ import {
   SequentialReactiveComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
-import { identity, returns } from "../functions.js";
+import { Function1, identity, returns } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -24,6 +24,7 @@ import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWi
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_encodeUtf8 from "./Runnable/__private__/Runnable.encodeUtf8.js";
 import Runnable_forEach from "./Runnable/__private__/Runnable.forEach.js";
+import Runnable_fromReadonlyArray from "./Runnable/__private__/Runnable.fromReadonlyArray.js";
 import {
   Runnable_gen,
   Runnable_genPure,
@@ -65,7 +66,12 @@ export interface RunnableModule
   extends ComputationModule<RunnableComputation>,
     SequentialComputationModule<RunnableComputation>,
     SequentialReactiveComputationModule<RunnableComputation>,
-    SynchronousComputationModule<RunnableComputation> {}
+    SynchronousComputationModule<RunnableComputation> {
+  fromReadonlyArray<T>(options?: {
+    count?: number;
+    start?: number;
+  }): Function1<ReadonlyArray<T>, PureRunnableLike<T>>;
+}
 
 export type Signature = RunnableModule;
 
@@ -79,6 +85,8 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Runnable_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Runnable_encodeUtf8;
 export const forEach: Signature["forEach"] = Runnable_forEach;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  Runnable_fromReadonlyArray;
 export const gen: Signature["gen"] = Runnable_gen;
 export const genPure: Signature["genPure"] = Runnable_genPure;
 export const keep: Signature["keep"] = Runnable_keep;

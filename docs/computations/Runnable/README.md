@@ -25,6 +25,7 @@
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
 - [forEach](functions/forEach.md)
+- [fromReadonlyArray](functions/fromReadonlyArray.md)
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)

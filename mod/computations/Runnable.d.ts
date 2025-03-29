@@ -1,4 +1,5 @@
 import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, PureRunnableLike, RunnableLike, RunnableWithSideEffectsLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule } from "../computations.js";
+import { Function1 } from "../functions.js";
 /**
  * @noInheritDoc
  */
@@ -12,6 +13,10 @@ export interface RunnableComputation extends ComputationType {
 }
 export type Computation = RunnableComputation;
 export interface RunnableModule extends ComputationModule<RunnableComputation>, SequentialComputationModule<RunnableComputation>, SequentialReactiveComputationModule<RunnableComputation>, SynchronousComputationModule<RunnableComputation> {
+    fromReadonlyArray<T>(options?: {
+        count?: number;
+        start?: number;
+    }): Function1<ReadonlyArray<T>, PureRunnableLike<T>>;
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
@@ -21,6 +26,7 @@ export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const forEach: Signature["forEach"];
+export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const gen: Signature["gen"];
 export declare const genPure: Signature["genPure"];
 export declare const keep: Signature["keep"];
