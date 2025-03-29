@@ -1,9 +1,10 @@
 /// <reference types="./Observable.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { identity, returns } from "../functions.js";
+import { identity, returns, } from "../functions.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
+import { Observable_computeDeferred, Observable_computeSynchronous, } from "./Observable/__private__/Observable.compute.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
@@ -36,11 +37,10 @@ import Observable_toRunnable from "./Observable/__private__/Observable.toRunnabl
 import Observable_withBackpressure from "./Observable/__private__/Observable.withBackpressure.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
-export const ThrottleFirstMode = "first";
-export const ThrottleLastMode = "last";
-export const ThrottleIntervalMode = "interval";
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
+export const computeDeferred = Observable_computeDeferred;
+export const computeSynchronous = Observable_computeSynchronous;
 export const concat = Observable_concat;
 export const currentTime = Observable_currentTime;
 export const decodeWithCharset = Observable_decodeWithCharset;

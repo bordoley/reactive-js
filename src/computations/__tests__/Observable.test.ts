@@ -1,3 +1,4 @@
+import { Array_push } from "../../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -9,23 +10,31 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import { PureSynchronousObservableLike } from "../../computations.js";
 import {
   Optional,
   arrayEquality,
+  bindMethod,
+  isSome,
   newInstance,
   pipe,
   pipeLazy,
   pipeLazyAsync,
+  raise,
   returns,
   tuple,
 } from "../../functions.js";
-import { scale } from "../../math.js";
+import { increment, scale } from "../../math.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { VirtualTimeSchedulerLike_run } from "../../utils.js";
+import {
+  DisposableLike_error,
+  VirtualTimeSchedulerLike_run,
+} from "../../utils.js";
 import * as Computation from "../Computation.js";
+import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Observable from "../Observable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
@@ -42,6 +51,235 @@ testModule(
   SequentialReactiveComputationModuleTests(m),
   SynchronousComputationModuleTests(m),
   ConcurrentReactiveComputationModuleTests(m),
+  /*describe(
+    "computeDeferred",
+    testAsync("__stream", async () => {
+      using scheduler = HostScheduler.create();
+      await pipeAsync(
+        Observable.computeDeferred(() => {
+          const stream = __stream(Streamable.identity<number>());
+          const push = bindMethod(stream, EventListenerLike_notify);
+
+          const streamObservable = __constant(
+            pipe(stream, Broadcaster.toProducer(), Producer.to )
+          );
+          const result = __observe(stream) ?? 0;
+          __do(push, result + 1);
+
+          return result;
+        }),
+        Observable.takeFirst<number>({ count: 10 }),
+        Observable.buffer<number>(),
+        Computation.lastAsync(Observable)<number[]>({ scheduler }),
+        x => x ?? [],
+        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
+      );
+    }),
+    testAsync("__state", async () => {
+      using scheduler = HostScheduler.create();
+      await pipeAsync(
+        Observable.computeDeferred(() => {
+          const initialState = __constant((): number => 0);
+          const state = __state(initialState);
+          const push = bindMethod(state, EventListenerLike_notify);
+          const result = __observe(state) ?? -1;
+
+          if (result > -1) {
+            __do(push, () => result + 1);
+          }
+
+          return result;
+        }),
+        Observable.takeFirst({ count: 10 }),
+        Observable.buffer(),
+        Computation.lastAsync(Observable)<readonly number[]>({ scheduler }),
+        x => x ?? [],
+        expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]),
+      );
+    }),
+    testAsync("awaiting a Multicast Observable", async () => {
+      using scheduler = HostScheduler.create();
+      const subject = Publisher.create<number>();
+      subject[EventListenerLike_notify](200);
+      subject[EventListenerLike_notify](100);
+
+      const subjectObs = pipe(subject, Broadcaster.toObservable());
+
+      await pipeAsync(
+        Observable.computeDeferred(
+          () => {
+            const result = __await(subjectObs);
+
+            // Need to dispose the subject or the test will hang
+            __do(bindMethod(subject, DisposableLike_dispose));
+
+            return result;
+          },
+          { mode: "combine-latest" },
+        ),
+        Observable.distinctUntilChanged<number>(),
+        Computation.toReadonlyArrayAsync(Observable)<number>({ scheduler }),
+        expectArrayEquals([200, 100]),
+      );
+    }),
+  ),*/
+  describe(
+    "computeSynchronous",
+    test("batch mode", () => {
+      const result: number[] = [];
+      pipe(
+        Observable.computeSynchronous(() => {
+          const fromValueWithDelay = __constant(
+            (
+              delay: number,
+              value: number,
+            ): PureSynchronousObservableLike<number> =>
+              pipe([value], Computation.fromReadonlyArray(m)({ delay })),
+          );
+          const obs1 = __memo(fromValueWithDelay, 10, 5);
+          const result1 = __await(obs1);
+          const obs2 = __memo(fromValueWithDelay, 20, 10);
+          const result2 = __await(obs2);
+          const obs3 = __memo(fromValueWithDelay, 30, 7);
+          const result3 = __await(obs3);
+
+          return result1 + result2 + result3;
+        }),
+        Observable.takeLast<number>(),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
+        Computation.last(m)(),
+      );
+
+      pipe(result, expectArrayEquals([22]));
+    }),
+    test("combined-latest mode", () => {
+      const result: number[] = [];
+      pipe(
+        Observable.computeSynchronous(
+          () => {
+            const oneTwoThreeDelayed = __constant(
+              pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })),
+            );
+            const createOneTwoThree = __constant((_: unknown) =>
+              pipe([1, 2, 3], Computation.fromReadonlyArray(m)()),
+            );
+
+            const v = __await(oneTwoThreeDelayed);
+            const next = __memo(createOneTwoThree, v);
+            return __await(next);
+          },
+          { mode: "combine-latest" },
+        ),
+        Observable.keep(isSome),
+        Observable.forEach<number>(bindMethod(result, Array_push)),
+        Computation.last(m)(),
+      );
+
+      pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+    }),
+    test("when compute function throws", () => {
+      using vts = VirtualTimeScheduler.create();
+      const error = newInstance(Error);
+
+      const subscription = pipe(
+        Observable.computeSynchronous(() => {
+          raise(error);
+        }),
+        Computation.subscribe(m)({ scheduler: vts }),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(
+        subscription[DisposableLike_error],
+        expectEquals<Optional<Error>>(error),
+      );
+    }),
+    test(
+      "conditional hooks",
+      pipeLazy(
+        Observable.computeSynchronous(
+          () => {
+            const src = __constant(
+              pipe(
+                [0, 1, 2, 3, 4, 5],
+                Computation.fromReadonlyArray(m)({ delay: 5 }),
+              ),
+            );
+            const src2 = __constant(
+              Observable.genPure(
+                function* () {
+                  let x = 100;
+                  while (true) {
+                    x++;
+                    yield x;
+                  }
+                },
+                { delay: 2 },
+              ),
+            );
+
+            const v = __await(src);
+
+            if (v % 2 === 0) {
+              __memo(increment, 1);
+              return __await(src2);
+            }
+            return v;
+          },
+          { mode: "batched" },
+        ),
+        Computation.toReadonlyArray(m)<number>(),
+        expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
+      ),
+    ),
+    test(
+      "conditional await",
+      pipeLazy(
+        Observable.computeSynchronous<number>(() => {
+          const src = __constant(
+            pipe(
+              [0, 1, 2, 3, 4, 5],
+              Computation.fromReadonlyArray(m)({ delay: 5 }),
+            ),
+          );
+          const src2 = __constant(
+            Observable.genPure(
+              function* () {
+                let x = 100;
+                while (true) {
+                  x++;
+                  yield x;
+                }
+              },
+              { delay: 2 },
+            ),
+          );
+
+          const src3 = __constant(
+            pipe(
+              [1],
+              Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }),
+              Observable.repeat(40),
+            ),
+          );
+
+          const v = __await(src);
+
+          if (v % 2 === 0) {
+            __memo(increment, 1);
+            return __await(src2);
+          } else {
+            __await(src3);
+            return v;
+          }
+        }),
+        Observable.distinctUntilChanged<number>(),
+        Computation.toReadonlyArray(m)(),
+        expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
+      ),
+    ),
+  ),
   describe(
     "keyFrame",
     test(

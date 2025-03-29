@@ -1,5 +1,5 @@
 import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ObservableLike, ObservableWithSideEffectsLike, PureAsynchronousComputationOperator, PureComputationOperator, PureObservableLike, PureSynchronousObservableLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableWithSideEffectsLike } from "../computations.js";
-import { Function1, Function2 } from "../functions.js";
+import { Factory, Function1, Function2 } from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
@@ -14,9 +14,7 @@ export interface ObservableComputation extends ComputationType {
 }
 export type Computation = ObservableComputation;
 export type ThrottleMode = "first" | "last" | "interval";
-export declare const ThrottleFirstMode: ThrottleMode;
-export declare const ThrottleLastMode: ThrottleMode;
-export declare const ThrottleIntervalMode: ThrottleMode;
+export type ComputeMode = "batched" | "combine-latest";
 export interface ObservableModule extends ComputationModule<ObservableComputation, {
     genPure: {
         readonly delay?: number;
@@ -35,6 +33,12 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly maxMicroTaskTicks?: number;
     };
 }>, DeferredReactiveComputationModule<ObservableComputation> {
+    computeDeferred<T>(computation: Factory<T>, options?: {
+        readonly mode?: ComputeMode;
+    }): ObservableWithSideEffectsLike<T>;
+    computeSynchronous<T>(computation: Factory<T>, options?: {
+        readonly mode?: ComputeMode;
+    }): SynchronousObservableWithSideEffectsLike<T>;
     create<T>(f: (observer: ObserverLike<T>) => void): ObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     delay(duration: number): PureSynchronousObservableLike;
@@ -59,6 +63,8 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
 export type Signature = ObservableModule;
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
+export declare const computeDeferred: Signature["computeDeferred"];
+export declare const computeSynchronous: Signature["computeSynchronous"];
 export declare const concat: Signature["concat"];
 export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];

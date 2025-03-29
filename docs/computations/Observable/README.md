@@ -14,20 +14,20 @@
 ## Type Aliases
 
 - [Computation](type-aliases/Computation.md)
+- [ComputeMode](type-aliases/ComputeMode.md)
 - [Signature](type-aliases/Signature.md)
 - [ThrottleMode](type-aliases/ThrottleMode.md)
 
 ## Variables
 
 - [currentTime](variables/currentTime.md)
-- [ThrottleFirstMode](variables/ThrottleFirstMode.md)
-- [ThrottleIntervalMode](variables/ThrottleIntervalMode.md)
-- [ThrottleLastMode](variables/ThrottleLastMode.md)
 
 ## Functions
 
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
+- [computeDeferred](functions/computeDeferred.md)
+- [computeSynchronous](functions/computeSynchronous.md)
 - [concat](functions/concat.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [delay](functions/delay.md)

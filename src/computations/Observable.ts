@@ -22,10 +22,20 @@ import {
   SynchronousComputationModule,
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
-import { Function1, Function2, identity, returns } from "../functions.js";
+import {
+  Factory,
+  Function1,
+  Function2,
+  identity,
+  returns,
+} from "../functions.js";
 import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../utils.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
+import {
+  Observable_computeDeferred,
+  Observable_computeSynchronous,
+} from "./Observable/__private__/Observable.compute.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
@@ -90,9 +100,7 @@ export interface ObservableComputation extends ComputationType {
 export type Computation = ObservableComputation;
 
 export type ThrottleMode = "first" | "last" | "interval";
-export const ThrottleFirstMode: ThrottleMode = "first";
-export const ThrottleLastMode: ThrottleMode = "last";
-export const ThrottleIntervalMode: ThrottleMode = "interval";
+export type ComputeMode = "batched" | "combine-latest";
 
 export interface ObservableModule
   extends ComputationModule<
@@ -128,6 +136,20 @@ export interface ObservableModule
       }
     >,
     DeferredReactiveComputationModule<ObservableComputation> {
+  computeDeferred<T>(
+    computation: Factory<T>,
+    options?: {
+      readonly mode?: ComputeMode;
+    },
+  ): ObservableWithSideEffectsLike<T>;
+
+  computeSynchronous<T>(
+    computation: Factory<T>,
+    options?: {
+      readonly mode?: ComputeMode;
+    },
+  ): SynchronousObservableWithSideEffectsLike<T>;
+
   create<T>(
     f: (observer: ObserverLike<T>) => void,
   ): ObservableWithSideEffectsLike<T>;
@@ -174,6 +196,10 @@ export type Signature = ObservableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
+export const computeDeferred: Signature["computeDeferred"] =
+  Observable_computeDeferred;
+export const computeSynchronous: Signature["computeSynchronous"] =
+  Observable_computeSynchronous;
 export const concat: Signature["concat"] = Observable_concat;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
