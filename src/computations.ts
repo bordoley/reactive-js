@@ -1279,9 +1279,9 @@ export interface DeferredReactiveComputationModule<
     },
   ): HigherOrderComputationOperator<TComputationType, TInnerLike, T, TAcc>;
 
-  switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
-    readonly innerType: TInnerLike;
-  }): HigherOrderComputationOperator<
+  switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(
+    innerType: TInnerLike,
+  ): HigherOrderComputationOperator<
     TComputationType,
     TInnerLike,
     HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,

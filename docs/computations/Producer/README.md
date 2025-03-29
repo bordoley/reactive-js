@@ -41,6 +41,7 @@
 - [scan](functions/scan.md)
 - [scanDistinct](functions/scanDistinct.md)
 - [skipFirst](functions/skipFirst.md)
+- [switchAll](functions/switchAll.md)
 - [takeFirst](functions/takeFirst.md)
 - [takeLast](functions/takeLast.md)
 - [takeUntil](functions/takeUntil.md)

@@ -26,6 +26,7 @@ import Observable_scanDistinct from "./Observable/__private__/Observable.scanDis
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
 import Observable_spring from "./Observable/__private__/Observable.spring.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
+import Observable_switchAll from "./Observable/__private__/Observable.switchAll.js";
 import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__private__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.js";
@@ -66,6 +67,7 @@ export const scanDistinct = Observable_scanDistinct;
 export const skipFirst = Observable_skipFirst;
 export const spring = Observable_spring;
 export const subscribeOn = Observable_subscribeOn;
+export const switchAll = Observable_switchAll;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeUntil = Observable_takeUntil;

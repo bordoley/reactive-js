@@ -1,17 +1,51 @@
-import { describe } from "../../../__internal__/testing.js";
+import {
+  describe,
+  expectArrayEquals,
+  testAsync,
+} from "../../../__internal__/testing.js";
 import {
   ComputationModule,
   DeferredReactiveComputationModule,
+  PureDeferredComputation,
+  PureDeferredComputationLike,
 } from "../../../computations.js";
+import { pipeLazyAsync } from "../../../functions.js";
+import * as Computation from "../../Computation.js";
+import * as Source from "../../Source.js";
 
 const DeferredReactiveComputationModuleTests = <
   TComputationModule extends ComputationModule &
-    Pick<DeferredReactiveComputationModule, "withBackpressure">,
+    Pick<DeferredReactiveComputationModule, "switchAll" | "withBackpressure">,
 >(
-  _m: TComputationModule,
+  m: TComputationModule,
 ) =>
   describe(
     "ComputationModule",
+    describe(
+      "switchAll",
+      testAsync(
+        "with empty source",
+        pipeLazyAsync(
+          Computation.empty(m)(),
+          m.switchAll<number, PureDeferredComputationLike>(
+            PureDeferredComputation,
+          ),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([] as readonly number[]),
+        ),
+      ) /*
+      testAsync(
+        "only produce the last observable",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Computation.fromReadonlyArray(m)(),
+          m.map(x => pipe([x, x, x], Computation.fromReadonlyArray(m)())),
+          m.switchAll(PureDeferredComputation),
+          Source.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([3, 3, 3]),
+        ),
+      ),*/,
+    ),
     /*
     describe(
       "withBackpressure",

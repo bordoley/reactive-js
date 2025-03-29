@@ -347,9 +347,7 @@ export interface DeferredReactiveComputationModule<TComputationType extends AnyC
     scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(scanner: Function2<TAcc, T, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TAcc>>, initialValue: Factory<TAcc>, options: {
         readonly innerType: TInnerLike;
     }): HigherOrderComputationOperator<TComputationType, TInnerLike, T, TAcc>;
-    switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
-        readonly innerType: TInnerLike;
-    }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
+    switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(innerType: TInnerLike): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
     withBackpressure<T>(config: {
         capacity: number;
         backpressureStrategy: BackpressureStrategy;

@@ -85,6 +85,7 @@ export declare const scanDistinct: Signature["scanDistinct"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const spring: Signature["spring"];
 export declare const subscribeOn: Signature["subscribeOn"];
+export declare const switchAll: Signature["switchAll"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];

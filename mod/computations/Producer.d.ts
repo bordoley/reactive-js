@@ -43,6 +43,7 @@ export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const scanDistinct: Signature["scanDistinct"];
 export declare const skipFirst: Signature["skipFirst"];
+export declare const switchAll: Signature["switchAll"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];

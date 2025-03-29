@@ -51,6 +51,7 @@
 - [skipFirst](functions/skipFirst.md)
 - [spring](functions/spring.md)
 - [subscribeOn](functions/subscribeOn.md)
+- [switchAll](functions/switchAll.md)
 - [takeFirst](functions/takeFirst.md)
 - [takeLast](functions/takeLast.md)
 - [takeUntil](functions/takeUntil.md)
