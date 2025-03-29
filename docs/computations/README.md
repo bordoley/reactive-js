@@ -59,7 +59,6 @@
 ## Type Aliases
 
 - [AnyComputationType](type-aliases/AnyComputationType.md)
-- [BroadcastOperator](type-aliases/BroadcastOperator.md)
 - [ComputationBaseOf](type-aliases/ComputationBaseOf.md)
 - [ComputationOf](type-aliases/ComputationOf.md)
 - [ComputationOfModule](type-aliases/ComputationOfModule.md)
@@ -70,7 +69,6 @@
 - [DeferredComputationOf](type-aliases/DeferredComputationOf.md)
 - [DeferredComputationOfModule](type-aliases/DeferredComputationOfModule.md)
 - [DeferredComputationWithSideEffectsOf](type-aliases/DeferredComputationWithSideEffectsOf.md)
-- [FlattenedHigherOrderComputationLike](type-aliases/FlattenedHigherOrderComputationLike.md)
 - [ForkMerge](type-aliases/ForkMerge.md)
 - [FromAsyncIterableOperator](type-aliases/FromAsyncIterableOperator.md)
 - [FromIterableOperator](type-aliases/FromIterableOperator.md)
@@ -80,7 +78,6 @@
 - [HigherOrderInnerComputationLike](type-aliases/HigherOrderInnerComputationLike.md)
 - [HigherOrderInnerComputationOf](type-aliases/HigherOrderInnerComputationOf.md)
 - [MulticastComputationOf](type-aliases/MulticastComputationOf.md)
-- [MulticastComputationOfModule](type-aliases/MulticastComputationOfModule.md)
 - [NewInstanceWithSideEffectsOf](type-aliases/NewInstanceWithSideEffectsOf.md)
 - [NewPureInstanceOf](type-aliases/NewPureInstanceOf.md)
 - [NewPureInstanceType](type-aliases/NewPureInstanceType.md)

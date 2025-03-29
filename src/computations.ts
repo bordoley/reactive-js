@@ -506,25 +506,6 @@ export type HigherOrderInnerComputationOf<
       DeferredComputationWithSideEffectsOf<TComputationType, T> :
     never;
 
-export type FlattenedHigherOrderComputationLike<
-  TOuter extends ComputationLike,
-  TInner extends ComputationLike,
-> = {
-  // defaults to true when not specified so that Arrays are classified as PureIterables
-  readonly [ComputationLike_isPure]?: NonNullable<
-    TOuter[typeof ComputationLike_isPure]
-  > &
-    NonNullable<TInner[typeof ComputationLike_isPure]>;
-  readonly [ComputationLike_isSynchronous]?: NonNullable<
-    TOuter[typeof ComputationLike_isSynchronous]
-  > &
-    NonNullable<TInner[typeof ComputationLike_isSynchronous]>;
-  readonly [ComputationLike_isDeferred]?: NonNullable<
-    TOuter[typeof ComputationLike_isDeferred]
-  > &
-    NonNullable<TInner[typeof ComputationLike_isDeferred]>;
-};
-
 // prettier-ignore
 export type HigherOrderComputationOperator<
   TComputationType extends ComputationType,
@@ -543,19 +524,6 @@ export type HigherOrderComputationOperator<
      TComputationIn extends DeferredComputationWithSideEffectsOf<TComputationType, TA> ? 
        HigherOrderDeferredComputationWithSideEffectsOut<TComputationType, TInnerLike, TB> : 
      never;
-
-/**
-  FIXME: Consider using FlattenedHigherOrderComputationLike<TComputationIn, TInnerLike> &
-  ComputationOf<TComputationType, TB> instead.
- */
-
-export type BroadcastOperator<TComputationType extends ComputationType, T> = <
-  TComputationBaseOf extends ComputationBaseOf<TComputationType, T>,
->(
-  computation: TComputationBaseOf,
-) => TComputationBaseOf extends DeferredComputationOf<TComputationType, T>
-  ? BroadcasterLike<T>
-  : never;
 
 // prettier-ignore
 type FromPureAsyncIterableOf<
@@ -974,11 +942,6 @@ export type DeferredComputationOfModule<
   TModule extends ComputationModuleLike,
   T,
 > = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
-
-export type MulticastComputationOfModule<
-  TModule extends ComputationModuleLike,
-  T,
-> = MulticastComputationOf<ComputationTypeOfModule<TModule>, T>;
 
 export interface ComputationModule<
   TComputationType extends AnyComputationType = AnyComputationType,
