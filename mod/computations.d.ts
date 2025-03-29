@@ -348,7 +348,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends An
     withLatestFrom<TA, TB, T>(other: MulticastComputationOf<TComputationType, TB>, selector: Function2<TA, TB, T>): PureAsynchronousComputationOperator<TComputationType, TA, T>;
     zipLatest: CombineConstructor<TComputationType>;
 }
-export interface DeferredReactiveComputationModule<TComputationType extends ComputationType> extends ComputationModuleLike<TComputationType> {
+export interface DeferredReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
     mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;

@@ -1290,7 +1290,7 @@ export interface ConcurrentReactiveComputationModule<
 }
 
 export interface DeferredReactiveComputationModule<
-  TComputationType extends ComputationType,
+  TComputationType extends AnyComputationType = AnyComputationType,
 > extends ComputationModuleLike<TComputationType> {
   mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
     readonly backpressureStrategy?: BackpressureStrategy;
@@ -1325,8 +1325,6 @@ export interface DeferredReactiveComputationModule<
     T
   >;
 
-  // FIXME: Implement this on producer as well and move into
-  // a computation module
   withBackpressure<T>(config: {
     capacity: number;
     backpressureStrategy: BackpressureStrategy;
