@@ -15,7 +15,7 @@ import {
   SequentialReactiveComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
-import { Function1, identity, returns } from "../functions.js";
+import { Function1, Optional, identity, returns } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -30,6 +30,7 @@ import {
   Runnable_genPure,
 } from "./Runnable/__private__/Runnable.gen.js";
 import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
+import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
 import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
@@ -42,6 +43,7 @@ import Runnable_takeLast from "./Runnable/__private__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
 import Runnable_toProducer from "./Runnable/__private__/Runnable.toProducer.js";
+import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonlyArray.js";
 
 /**
  * @noInheritDoc
@@ -71,6 +73,10 @@ export interface RunnableModule
     count?: number;
     start?: number;
   }): Function1<ReadonlyArray<T>, PureRunnableLike<T>>;
+
+  last<T>(): Function1<RunnableLike<T>, Optional<T>>;
+
+  toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
 }
 
 export type Signature = RunnableModule;
@@ -91,6 +97,7 @@ export const gen: Signature["gen"] = Runnable_gen;
 export const genPure: Signature["genPure"] = Runnable_genPure;
 export const keep: Signature["keep"] = Runnable_keep;
 export const map: Signature["map"] = Runnable_map;
+export const last: Signature["last"] = Runnable_last;
 export const pairwise: Signature["pairwise"] = Runnable_pairwise;
 export const repeat: Signature["repeat"] = Runnable_repeat;
 export const retry: Signature["retry"] = Runnable_retry;
@@ -102,6 +109,8 @@ export const takeLast: Signature["takeLast"] = Runnable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Runnable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Runnable_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = Runnable_toProducer;
+export const toReadonlyArray: Signature["toReadonlyArray"] =
+  Runnable_toReadonlyArray;
 export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toRunnable"];

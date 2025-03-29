@@ -39,7 +39,7 @@ import {
   SchedulerLike_schedule,
   SinkLike_complete,
 } from "../../utils.js";
-import * as Computation from "../Computation.js";
+import * as Source from "../Source.js";
 import * as Streamable from "../Streamable.js";
 import * as DeferredSource from "../__internal__/DeferredSource.js";
 import {
@@ -50,7 +50,6 @@ import {
   ComputeContext_observer,
   assertCurrentContext,
 } from "./__private__/Observable.compute.js";
-import Observable_toProducer from "./__private__/Observable.toProducer.js";
 
 interface __Memo {
   __memo<T>(fn: Factory<T>): T;
@@ -152,12 +151,6 @@ const createDeferredbservableWithSideEffects = <T>(
     [ComputationLike_isPure]: false,
   });
 
-const m = {
-  toProducer: Observable_toProducer,
-};
-
-const subscribe = Computation.subscribe(m);
-
 export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
   const deferSideEffect = (
     create: (f: SideEffect1<ObserverLike<unknown>>) => ObservableLike,
@@ -191,10 +184,13 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       f,
       ...args,
     );
+
+    const schedulerOption = __constant({ scheduler }, scheduler);
+
     const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](
       false,
-      subscribe,
-      scheduler,
+      Source.subscribe,
+      schedulerOption,
     );
     ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
   };

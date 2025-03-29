@@ -29,6 +29,7 @@
 - [gen](functions/gen.md)
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
+- [last](functions/last.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
 - [repeat](functions/repeat.md)
@@ -41,4 +42,5 @@
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
+- [toReadonlyArray](functions/toReadonlyArray.md)
 - [toRunnable](functions/toRunnable.md)

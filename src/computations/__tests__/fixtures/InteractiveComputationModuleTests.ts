@@ -14,10 +14,7 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
-import * as Observable from "../../Observable.js";
-
-const ObservableModule =
-  Computation.makeModule<Observable.Computation>()(Observable);
+import * as Source from "../../Source.js";
 
 const InteractiveComputationModuleTests = <
   TComputationModule extends ComputationModule & InteractiveComputationModule,
@@ -33,7 +30,7 @@ const InteractiveComputationModuleTests = <
         pipeLazyAsync(
           Computation.fromReadonlyArray(m)()([0, 1, 2, 3, 4]),
           m.toObservable<number>(),
-          Computation.toReadonlyArrayAsync(ObservableModule)(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([0, 1, 2, 3, 4]),
         ),
       ),
@@ -48,7 +45,8 @@ const InteractiveComputationModuleTests = <
             Computation.fromReadonlyArray(m)()([0, 1, 2]),
             Computation.fromReadonlyArray(m)()([0, 1, 2, 3]),
           ),
-          Computation.toReadonlyArrayAsync(m)(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync(),
           expectArrayEquals<Tuple3<number, number, number>>(
             [tuple(0, 0, 0), tuple(1, 1, 1), tuple(2, 2, 2)],
             {
@@ -65,7 +63,8 @@ const InteractiveComputationModuleTests = <
             Computation.fromReadonlyArray(m)()([]),
             Computation.fromReadonlyArray(m)()([0, 1, 2, 3]),
           ),
-          Computation.toReadonlyArrayAsync(m)(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync(),
           expectArrayEquals<Tuple3<number, number, number>>([], {
             valuesEquality: arrayEquality(),
           }),

@@ -7,8 +7,8 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as Computation from "../../computations/Computation.js";
 import * as Producer from "../../computations/Producer.js";
+import * as Source from "../../computations/Source.js";
 import { SourceLike_subscribe } from "../../computations.js";
 import {
   Optional,
@@ -18,12 +18,12 @@ import {
   pipeAsync,
   returns,
 } from "../../functions.js";
+import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
+import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
 import { CollectionEnumeratorLike_peek } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
-
-const m = Computation.makeModule<Producer.Computation>()(Producer);
 
 testModule(
   "NodeReadable",
@@ -45,7 +45,7 @@ testModule(
         NodeReadable.create,
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        Computation.lastAsync(m)<string>(),
+        Source.lastAsync<string>(),
         expectEquals<Optional<string>>("abcdefg"),
       );
 
@@ -82,9 +82,17 @@ testModule(
 
       await pipe(
         NodeReadable.create(() => Readable.from(generate())),
-        Computation.lastAsync(m)<Uint8Array>(),
+        Source.lastAsync<Uint8Array>(),
         expectPromiseToThrow,
       );
     }),
   ),
-)();
+)({
+  beforeEach() {
+    const scheduler = HostScheduler.create();
+    DefaultScheduler.set(scheduler);
+  },
+  afterEach() {
+    DefaultScheduler.dispose();
+  },
+});

@@ -13,6 +13,7 @@ import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { PureSynchronousObservableLike } from "../../computations.js";
 import {
   Optional,
+  Tuple2,
   arrayEquality,
   bindMethod,
   isSome,
@@ -36,6 +37,8 @@ import {
 import * as Computation from "../Computation.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Observable from "../Observable.js";
+import * as Runnable from "../Runnable.js";
+import * as Source from "../Source.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
@@ -72,7 +75,7 @@ testModule(
         }),
         Observable.takeFirst<number>({ count: 10 }),
         Observable.buffer<number>(),
-        Computation.lastAsync(Observable)<number[]>({ scheduler }),
+        Source.lastAsync<number[]>({ scheduler }),
         x => x ?? [],
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       );
@@ -94,7 +97,7 @@ testModule(
         }),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Computation.lastAsync(Observable)<readonly number[]>({ scheduler }),
+        Source.lastAsync<readonly number[]>({ scheduler }),
         x => x ?? [],
         expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]),
       );
@@ -120,7 +123,7 @@ testModule(
           { mode: "combine-latest" },
         ),
         Observable.distinctUntilChanged<number>(),
-        Computation.toReadonlyArrayAsync(Observable)<number>({ scheduler }),
+        Source.toReadonlyArrayAsync<number>({ scheduler }),
         expectArrayEquals([200, 100]),
       );
     }),
@@ -149,7 +152,8 @@ testModule(
         }),
         Observable.takeLast<number>(),
         Observable.forEach<number>(bindMethod(result, Array_push)),
-        Computation.last(m)(),
+        Observable.toRunnable(),
+        Runnable.last(),
       );
 
       pipe(result, expectArrayEquals([22]));
@@ -174,7 +178,8 @@ testModule(
         ),
         Observable.keep(isSome),
         Observable.forEach<number>(bindMethod(result, Array_push)),
-        Computation.last(m)(),
+        Observable.toRunnable(),
+        Runnable.last(),
       );
 
       pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
@@ -187,7 +192,7 @@ testModule(
         Observable.computeSynchronous(() => {
           raise(error);
         }),
-        Computation.subscribe(m)({ scheduler: vts }),
+        Source.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -231,7 +236,8 @@ testModule(
           },
           { mode: "batched" },
         ),
-        Computation.toReadonlyArray(m)<number>(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
     ),
@@ -277,7 +283,8 @@ testModule(
           }
         }),
         Observable.distinctUntilChanged<number>(),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
     ),
@@ -289,9 +296,10 @@ testModule(
       pipeLazy(
         Observable.keyFrame(10),
         Observable.map(scale(0, 10)),
-        Computation.toReadonlyArray(m)({
+        Observable.toRunnable({
           maxMicroTaskTicks: 1,
         }),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
       ),
     ),
@@ -313,7 +321,8 @@ testModule(
 
       pipe(
         Observable.merge(ev1, ev2, ev3),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]),
       );
     }),
@@ -330,7 +339,8 @@ testModule(
             Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }),
           ),
         ),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
       ),
     ),
@@ -342,7 +352,7 @@ testModule(
           pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2 })),
           Observable.concat(Observable.delay(5), Computation.raise(m)()),
         ),
-        Computation.subscribe(m)({ scheduler: vts }),
+        Source.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -379,7 +389,8 @@ testModule(
             ),
           ),
         ),
-        Computation.toReadonlyArray(m)<number>(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
       );
     }),
@@ -390,7 +401,8 @@ testModule(
       "test with spring",
       pipeLazyAsync(
         Observable.spring(),
-        Computation.lastAsync(m)(),
+        Observable.toRunnable({ maxMicroTaskTicks: 1 }),
+        Runnable.last<number>(),
         expectEquals<Optional<number>>(1),
       ),
     ),
@@ -408,7 +420,8 @@ testModule(
             Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }),
           ),
         ),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([10, 20]),
       ),
     ),
@@ -434,7 +447,8 @@ testModule(
         ),
         Observable.takeFirst({ count: 101 }),
         Observable.throttle<number>(50, { mode: "first" }),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([0, 49, 99]),
       ),
     ),
@@ -457,7 +471,8 @@ testModule(
         ),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(50, { mode: "last" }),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([49, 99, 149, 199]),
       ),
     ),
@@ -480,7 +495,8 @@ testModule(
         ),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(75, { mode: "interval" }),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
@@ -495,7 +511,8 @@ testModule(
         Observable.withLatestFrom<number, number>(
           pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })),
         ),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<Tuple2<number, number>>(),
         expectArrayEquals(
           [tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)],
           {
@@ -514,7 +531,8 @@ testModule(
 
           returns(1),
         ),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([] as number[]),
       ),
     ),
@@ -531,7 +549,7 @@ testModule(
           }),
           returns(1),
         ),
-        Computation.subscribe(m)({ scheduler: vts }),
+        Source.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -550,7 +568,8 @@ testModule(
           pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })),
           (x, y) => x + y,
         ),
-        Computation.toReadonlyArray(m)(),
+        Observable.toRunnable(),
+        Runnable.toReadonlyArray<number>(),
         expectArrayEquals([0, 1, 3, 4]),
       ),
     ),

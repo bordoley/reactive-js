@@ -11,6 +11,7 @@ import {
 import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Observable from "../../Observable.js";
+import * as Source from "../../Source.js";
 
 const ObservableModule =
   Computation.makeModule<Observable.Computation>()(Observable);
@@ -34,7 +35,8 @@ const ConcurrentReactiveComputationModuleTests = <
           [1, 2, 3],
           Computation.fromReadonlyArray(ObservableModule)(),
           m.fromObservable(),
-          Computation.toReadonlyArrayAsync(m)<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),

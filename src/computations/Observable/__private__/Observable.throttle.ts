@@ -29,8 +29,8 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
+import * as Source from "../../Source.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -42,7 +42,6 @@ import DelegatingLiftedSinkMixin, {
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_delay from "./Observable.delay.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_toProducer from "./Observable.toProducer.js";
 
 const ThrottleFirstMode = "first";
 const ThrottleLastMode = "last";
@@ -53,10 +52,6 @@ const createThrottleSink: <T>(
   durationFunction: Function1<T, ObservableLike>,
   mode: Observable.ThrottleMode,
 ) => LiftedSinkLike<ObserverLike, T> = /*@__PURE__*/ (<T>() => {
-  const m = {
-    toProducer: Observable_toProducer,
-  };
-
   const ThrottleSink_value = Symbol("ThrottleSink_value");
   const ThrottleSink_hasValue = Symbol("ThrottleSink_hasValue");
   const ThrottleSink_durationSubscription = Symbol(
@@ -100,7 +95,7 @@ const createThrottleSink: <T>(
     thiz[ThrottleSink_durationSubscription][SerialDisposableLike_current] =
       pipe(
         thiz[ThrottleSink_durationFunction](next),
-        Computation.subscribe(m)({ scheduler }),
+        Source.subscribe({ scheduler }),
         // This works because dispose is called in a scheduler
         // continuation immediately after the sink is completed.
         DisposableContainer.onComplete(

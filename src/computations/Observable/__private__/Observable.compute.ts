@@ -38,6 +38,7 @@ import {
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
+import * as Source from "../../Source.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
@@ -312,7 +313,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Computation.subscribe(m)({ scheduler: observer }),
+        Source.subscribe({ scheduler: observer }),
         Disposable.addTo(observer),
         DisposableContainer.onComplete(this[ComputeContext_cleanup]),
       );

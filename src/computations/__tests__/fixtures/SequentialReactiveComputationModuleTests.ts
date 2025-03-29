@@ -16,6 +16,7 @@ import {
   pipeLazyAsync,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
+import * as Source from "../../Source.js";
 
 const SequentialReactiveComputationModuleTests = <
   TComputationModule extends ComputationModule &
@@ -36,7 +37,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
           Computation.fromReadonlyArray(m)(),
           m.buffer<number>({ count: 3 }),
-          Computation.toReadonlyArrayAsync(m)<readonly number[]>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<readonly number[]>(),
           expectArrayEquals<readonly number[]>(
             [
               [1, 2, 3],
@@ -53,7 +55,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5, 6, 7, 8],
           Computation.fromReadonlyArray(m)(),
           m.buffer<number>({ count: 3 }),
-          Computation.toReadonlyArrayAsync(m)<readonly number[]>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<readonly number[]>(),
           expectArrayEquals<readonly number[]>(
             [
               [1, 2, 3],
@@ -70,7 +73,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5, 6, 7, 8],
           Computation.fromReadonlyArray(m)(),
           m.buffer<number>(),
-          Computation.toReadonlyArrayAsync(m)<readonly number[]>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<readonly number[]>(),
           expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
             valuesEquality: arrayEquality(),
           }),
@@ -87,7 +91,8 @@ const SequentialReactiveComputationModuleTests = <
           Computation.fromReadonlyArray(m)(),
           m.encodeUtf8(),
           m.decodeWithCharset(),
-          Computation.toReadonlyArrayAsync(m)<string>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<string>(),
           invoke("join"),
           expectEquals(str),
         );
@@ -100,7 +105,8 @@ const SequentialReactiveComputationModuleTests = <
           Computation.fromReadonlyArray(m)(),
           m.encodeUtf8(),
           m.decodeWithCharset(),
-          Computation.toReadonlyArrayAsync(m)<string>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<string>(),
           invoke("join"),
           expectEquals(str),
         );
@@ -112,7 +118,8 @@ const SequentialReactiveComputationModuleTests = <
           Computation.fromReadonlyArray(m)(),
           m.encodeUtf8(),
           m.decodeWithCharset(),
-          Computation.toReadonlyArrayAsync(m)<string>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<string>(),
           invoke("join"),
           expectEquals(str),
         );
@@ -123,7 +130,8 @@ const SequentialReactiveComputationModuleTests = <
           [new Uint8Array([226, 153]), new Uint8Array([165])],
           Computation.fromReadonlyArray(m)(),
           m.decodeWithCharset(),
-          Computation.toReadonlyArrayAsync(m)<string>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<string>(),
           invoke("join"),
           expectEquals("♥"),
         ),
@@ -134,7 +142,8 @@ const SequentialReactiveComputationModuleTests = <
           [new Uint8Array([226])],
           Computation.fromReadonlyArray(m)(),
           m.decodeWithCharset(),
-          Computation.toReadonlyArrayAsync(m)<string>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<string>(),
           invoke("join"),
           expectEquals("�"),
         ),
@@ -148,7 +157,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5],
           Computation.fromReadonlyArray(m)(),
           m.takeLast<number>(),
-          Computation.toReadonlyArrayAsync(m)<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([5]),
         ),
       ),
@@ -159,7 +169,8 @@ const SequentialReactiveComputationModuleTests = <
           Computation.fromReadonlyArray(m)(),
           // Some implementations special case this
           m.takeLast<number>({ count: 0 }),
-          Computation.toReadonlyArrayAsync(m)<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([] as number[]),
         ),
       ),
@@ -169,7 +180,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5],
           Computation.fromReadonlyArray(m)(),
           m.takeLast<number>({ count: 3 }),
-          Computation.toReadonlyArrayAsync(m)<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([3, 4, 5]),
         ),
       ),
@@ -179,7 +191,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5],
           Computation.fromReadonlyArray(m)(),
           m.takeLast<number>({ count: 10 }),
-          Computation.toReadonlyArrayAsync(m)<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 4, 5]),
         ),
       ),
@@ -189,7 +202,8 @@ const SequentialReactiveComputationModuleTests = <
           [1, 2, 3, 4, 5],
           Computation.fromReadonlyArray(m)(),
           m.takeLast<number>(),
-          Computation.toReadonlyArrayAsync(m)<number>(),
+          m.toProducer(),
+          Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([5]),
         ),
       ),

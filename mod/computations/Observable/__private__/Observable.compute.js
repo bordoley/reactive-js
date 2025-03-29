@@ -7,6 +7,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, SinkLike_complete, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
+import * as Source from "../../Source.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
@@ -147,7 +148,7 @@ class ComputeContext {
                             ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
-            }), Computation.subscribe(m)({ scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
+            }), Source.subscribe({ scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }

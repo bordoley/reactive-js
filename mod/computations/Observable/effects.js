@@ -4,11 +4,10 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, StreamableLike_s
 import { isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { EventListenerLike_notify, SchedulerLike_schedule, SinkLike_complete, } from "../../utils.js";
-import * as Computation from "../Computation.js";
+import * as Source from "../Source.js";
 import * as Streamable from "../Streamable.js";
 import * as DeferredSource from "../__internal__/DeferredSource.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.compute.js";
-import Observable_toProducer from "./__private__/Observable.toProducer.js";
 export const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[ComputeContext_memoOrUse](false, f, ...args);
@@ -33,10 +32,6 @@ const createDeferredbservableWithSideEffects = (f) => DeferredSource.create(f, {
     [ComputationLike_isSynchronous]: false,
     [ComputationLike_isPure]: false,
 });
-const m = {
-    toProducer: Observable_toProducer,
-};
-const subscribe = Computation.subscribe(m);
 export const __do = /*@__PURE__*/ (() => {
     const deferSideEffect = (create, f, ...args) => create(observer => {
         const callback = () => {
@@ -53,7 +48,8 @@ export const __do = /*@__PURE__*/ (() => {
         const observable = ctx[ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ComputationLike_isSynchronous]
             ? createSynchronousObservableWithSideEffects
             : createDeferredbservableWithSideEffects, f, ...args);
-        const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, subscribe, scheduler);
+        const schedulerOption = __constant({ scheduler }, scheduler);
+        const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, Source.subscribe, schedulerOption);
         ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
     };
 })();

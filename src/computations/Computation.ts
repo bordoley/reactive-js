@@ -1,9 +1,6 @@
 import {
-  BroadcasterLike,
   ComputationBaseOf,
   ComputationLike,
-  ComputationLike_isPure,
-  ComputationLike_isSynchronous,
   ComputationModule,
   ComputationModuleLike_computationType,
   ComputationOf,
@@ -17,45 +14,26 @@ import {
   DeferredComputationWithSideEffectsOf,
   MulticastComputationOf,
   NewPureInstanceOf,
-  ObservableWithSideEffectsLike,
   PickComputationModule,
-  ProducerLike,
   PureAsynchronousComputationOperator,
   PureComputationLike,
   PureComputationOperator,
   PureDeferredComputationOf,
-  PureObservableLike,
   PureSynchronousComputationOf,
-  RunnableLike_eval,
   SequentialComputationModule,
-  SourceLike_subscribe,
   SynchronousComputationLike,
-  SynchronousComputationModule,
   SynchronousComputationOf,
 } from "../computations.js";
 import {
   Factory,
   Function1,
   raise as Functions_raise,
-  Optional,
-  bindMethod,
-  compose,
   error,
   identity,
-  invoke,
   memoize,
   pipe,
   returns,
 } from "../functions.js";
-import * as Disposable from "../utils/Disposable.js";
-import * as DisposableContainer from "../utils/DisposableContainer.js";
-import * as Consumer from "../utils/__internal__/Consumer.js";
-import {
-  CollectionEnumeratorLike_peek,
-  DisposableLike,
-  ObserverLike,
-  PauseableLike,
-} from "../utils.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
@@ -64,8 +42,6 @@ import Computation_fromReadonlyArray from "./Computation/__private__/Computation
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "./Computation/__private__/Computation.startWith.js";
-import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
-import * as DeferredSource from "./__internal__/DeferredSource.js";
 
 export interface ConcatWithOperator<TComputationType extends ComputationType> {
   <T>(
@@ -134,22 +110,6 @@ export interface Signature {
     computations: readonly TComputationType[],
   ): computations is readonly (TComputationType & SynchronousComputationLike)[];
 
-  broadcast<
-    TComputationModule extends PickComputationModule<
-      ComputationModule,
-      "toProducer"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: {
-      autoDispose?: boolean;
-    } & Parameters<TComputationModule["toProducer"]>[0],
-  ) => Function1<
-    ComputationOfModule<TComputationModule, T>,
-    BroadcasterLike<T> & PauseableLike & DisposableLike
-  >;
-
   concatWith<
     TComputationModule extends PickComputationModule<
       SequentialComputationModule,
@@ -197,31 +157,6 @@ export interface Signature {
     computation: TComputationType,
   ): computation is TComputationType & SynchronousComputationLike;
 
-  last<
-    TComputationModule extends PickComputationModule<
-      SynchronousComputationModule,
-      "toRunnable"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: Parameters<TComputationModule["toRunnable"]>[0],
-  ) => Function1<ComputationOfModule<TComputationModule, T>, Optional<T>>;
-
-  lastAsync<
-    TComputationModule extends PickComputationModule<
-      ComputationModule,
-      "toProducer"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: Parameters<TComputationModule["toProducer"]>[0],
-  ) => Function1<
-    ComputationOfModule<TComputationModule, T>,
-    Promise<Optional<T>>
-  >;
-
   makeModule<TComputationType>(): <
     TModule extends { [key: string]: any } = { [key: string]: any },
   >(
@@ -265,75 +200,11 @@ export interface Signature {
     T,
     T
   >;
-
-  subscribe<
-    TComputationModule extends PickComputationModule<
-      ComputationModule,
-      "toProducer"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: Parameters<TComputationModule["toProducer"]>[0],
-  ) => Function1<ComputationOfModule<TComputationModule, T>, DisposableLike>;
-
-  // prettier-ignore
-  toObservable<
-    TComputationModule extends PickComputationModule<
-      ComputationModule,
-      "toProducer"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: Parameters<TComputationModule["toProducer"]>[0],
-  ) => <TComputationBaseOf extends ComputationOfModule<TComputationModule, T>>(
-    computation: TComputationBaseOf,
-  ) =>  TComputationBaseOf extends PureDeferredComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? 
-          PureObservableLike<T> : 
-        TComputationBaseOf extends DeferredComputationWithSideEffectsOf<ComputationTypeOfModule<TComputationModule>, T> ? 
-          ObservableWithSideEffectsLike<T> : 
-        TComputationBaseOf extends MulticastComputationOf<ComputationTypeOfModule<TComputationModule>, T> ? 
-          PureObservableLike<T> : 
-          never;
-
-  toReadonlyArray<
-    TComputationModule extends PickComputationModule<
-      SynchronousComputationModule,
-      "toRunnable"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: Parameters<TComputationModule["toRunnable"]>[0],
-  ) => Function1<ComputationOfModule<TComputationModule, T>, ReadonlyArray<T>>;
-
-  toReadonlyArrayAsync<
-    TComputationModule extends PickComputationModule<
-      ComputationModule,
-      "toProducer"
-    >,
-  >(
-    m: TComputationModule,
-  ): <T>(
-    options?: Parameters<TComputationModule["toProducer"]>[0],
-  ) => Function1<
-    ComputationOfModule<TComputationModule, T>,
-    Promise<ReadonlyArray<T>>
-  >;
 }
 
 export const areAllPure: Signature["areAllPure"] = Computation_areAllPure;
 export const areAllSynchronous: Signature["areAllSynchronous"] =
   Computation_areAllSynchronous;
-
-export const broadcast: Signature["broadcast"] = /*@__PURE__*/ memoize(
-  m =>
-    (
-      options?: { autoDispose?: boolean } & Parameters<typeof m.toProducer>[0],
-    ) =>
-      compose(m.toProducer(options), Producer_broadcast()),
-);
 
 export const concatWith: Signature["concatWith"] = Computation_concatWith;
 
@@ -345,34 +216,6 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
 export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =
   Computation_isSynchronous;
-
-export const last: Signature["last"] = /*@__PURE__*/ memoize(
-  m =>
-    <T>(options?: Parameters<typeof m.toRunnable>[0]) =>
-    (src: ComputationOfModule<typeof m, T>) => {
-      const producer = pipe(src, m.toRunnable(options));
-
-      const consumer = Consumer.takeLast<T>(1);
-      producer[RunnableLike_eval](consumer);
-      Disposable.raiseIfDisposedWithError(consumer);
-
-      return consumer[CollectionEnumeratorLike_peek];
-    },
-);
-
-export const lastAsync: Signature["lastAsync"] = /*@__PURE__*/ memoize(
-  m =>
-    <T>(options?: Parameters<typeof m.toProducer>[0]) =>
-    async (src: ComputationOfModule<typeof m, T>) => {
-      const producer = pipe(src, m.toProducer(options));
-
-      const consumer = Consumer.takeLast<T>(1);
-      producer[SourceLike_subscribe](consumer);
-      await DisposableContainer.toPromise(consumer);
-
-      return consumer[CollectionEnumeratorLike_peek];
-    },
-);
 
 export const makeModule: Signature["makeModule"] = returns(identity);
 
@@ -397,66 +240,3 @@ export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
 );
 
 export const startWith: Signature["startWith"] = Computation_startWith;
-
-export const subscribe: Signature["subscribe"] = /*@__PURE__*/ memoize(
-  m =>
-    <T>(options?: Parameters<typeof m.toProducer>[0]) =>
-    (src: ComputationOfModule<typeof m, T>) => {
-      const consumer = Consumer.takeLast<T>(0);
-      pipe(
-        src,
-        m.toProducer<T>(options),
-        invoke<ProducerLike, typeof SourceLike_subscribe>(
-          SourceLike_subscribe,
-          consumer,
-        ),
-      );
-      return consumer;
-    },
-);
-
-export const toObservable: Signature["toObservable"] = /*@__PURE__*/ memoize(
-  m =>
-    <T>(options?: Parameters<typeof m.toProducer>[0]) =>
-    (src: ComputationOfModule<typeof m, T>) => {
-      const producer = pipe(src, m.toProducer(options));
-
-      return DeferredSource.create<T, ObserverLike<T>>(
-        bindMethod(producer, SourceLike_subscribe),
-        {
-          [ComputationLike_isPure]: producer[ComputationLike_isPure],
-          [ComputationLike_isSynchronous]: false,
-        },
-      );
-    },
-) as Signature["toObservable"];
-
-export const toReadonlyArray: Signature["toReadonlyArray"] =
-  /*@__PURE__*/ memoize(
-    m =>
-      <T>(options?: Parameters<typeof m.toRunnable>[0]) =>
-      (src: ComputationOfModule<typeof m, T>) => {
-        const producer = pipe(src, m.toRunnable(options));
-
-        const consumer = Consumer.create<T>();
-        producer[RunnableLike_eval](consumer);
-        Disposable.raiseIfDisposedWithError(consumer);
-
-        return Array.from(consumer);
-      },
-  );
-
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  /*@__PURE__*/ memoize(
-    m =>
-      <T>(options?: Parameters<typeof m.toProducer>[0]) =>
-      async (src: ComputationOfModule<typeof m, T>) => {
-        const producer = pipe(src, m.toProducer(options));
-
-        const consumer = Consumer.create<T>();
-        producer[SourceLike_subscribe](consumer);
-        await DisposableContainer.toPromise(consumer);
-
-        return Array.from(consumer);
-      },
-  );

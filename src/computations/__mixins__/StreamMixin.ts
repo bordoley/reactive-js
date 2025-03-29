@@ -16,14 +16,10 @@ import {
   OverflowBackpressureStrategy,
   SchedulerLike,
 } from "../../utils.js";
-import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
+import * as Producer from "../Producer.js";
 import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
 import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
-
-const m = {
-  toProducer: Observable.toProducer,
-};
 
 const StreamMixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
@@ -65,9 +61,9 @@ const StreamMixin: <TReq, T>() => Mixin3<
             ),
           }),
           op,
-          Computation.broadcast(m)<T>({
+          Observable.toProducer({ scheduler }),
+          Producer.broadcast<T>({
             autoDispose: options?.autoDispose,
-            scheduler,
           }),
           Disposable.addTo(consumer),
         );

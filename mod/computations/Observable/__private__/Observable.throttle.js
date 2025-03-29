@@ -6,19 +6,15 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
+import * as Source from "../../Source.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_delay from "./Observable.delay.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_toProducer from "./Observable.toProducer.js";
 const ThrottleFirstMode = "first";
 const ThrottleLastMode = "last";
 const ThrottleIntervalMode = "interval";
 const createThrottleSink = /*@__PURE__*/ (() => {
-    const m = {
-        toProducer: Observable_toProducer,
-    };
     const ThrottleSink_value = Symbol("ThrottleSink_value");
     const ThrottleSink_hasValue = Symbol("ThrottleSink_hasValue");
     const ThrottleSink_durationSubscription = Symbol("ThrottleSink_durationSubscription");
@@ -38,7 +34,7 @@ const createThrottleSink = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (thiz, next) => {
         const scheduler = thiz[LiftedSinkLike_subscription];
         thiz[ThrottleSink_durationSubscription][SerialDisposableLike_current] =
-            pipe(thiz[ThrottleSink_durationFunction](next), Computation.subscribe(m)({ scheduler }), 
+            pipe(thiz[ThrottleSink_durationFunction](next), Source.subscribe({ scheduler }), 
             // This works because dispose is called in a scheduler
             // continuation immediately after the sink is completed.
             DisposableContainer.onComplete(bind(notifyThrottleObserverDelegate, thiz)), Disposable.addTo(thiz));
