@@ -19,6 +19,7 @@
 - [concatWith](functions/concatWith.md)
 - [empty](functions/empty.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
+- [isDeferred](functions/isDeferred.md)
 - [isPure](functions/isPure.md)
 - [isSynchronous](functions/isSynchronous.md)
 - [makeModule](functions/makeModule.md)

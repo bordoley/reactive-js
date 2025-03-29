@@ -39,6 +39,7 @@ import Computation_areAllSynchronous from "./Computation/__private__/Computation
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
 import Computation_empty from "./Computation/__private__/Computation.empty.js";
 import Computation_fromReadonlyArray from "./Computation/__private__/Computation.fromReadonlyArray.js";
+import Computation_isDeferred from "./Computation/__private__/Computation.isDeferred.js";
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "./Computation/__private__/Computation.startWith.js";
@@ -213,6 +214,7 @@ export const empty: Signature["empty"] = Computation_empty;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Computation_fromReadonlyArray;
 
+export const isDeferred: Signature["isDeferred"] = Computation_isDeferred;
 export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =
   Computation_isSynchronous;

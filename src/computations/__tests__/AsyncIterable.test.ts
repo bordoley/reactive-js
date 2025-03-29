@@ -90,7 +90,7 @@ testModule(
         },
         AsyncIterable.fromAsyncFactory(),
         AsyncIterable.toObservable(),
-        Source.lastAsync(),
+        Source.lastAsync<number>(),
         expectEquals<Optional<number>>(10),
       ),
     ),

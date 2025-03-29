@@ -11,12 +11,10 @@ import * as Source from "../../Source.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
-import Observable_toProducer from "./Observable.toProducer.js";
 export const BatchedComputeMode = "batched";
 export const CombineLatestComputeMode = "combine-latest";
 const m = Computation.makeModule()({
     genPure: Observable_genPure,
-    toProducer: Observable_toProducer,
 });
 const Memo = 1;
 const Await = 2;

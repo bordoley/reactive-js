@@ -6,7 +6,7 @@
 
 # Function: lastAsync()
 
-> **lastAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+> **lastAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>

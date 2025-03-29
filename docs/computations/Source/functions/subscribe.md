@@ -6,7 +6,7 @@
 
 # Function: subscribe()
 
-> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>

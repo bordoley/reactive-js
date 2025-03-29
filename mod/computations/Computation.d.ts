@@ -44,6 +44,7 @@ export declare const areAllSynchronous: Signature["areAllSynchronous"];
 export declare const concatWith: Signature["concatWith"];
 export declare const empty: Signature["empty"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
+export declare const isDeferred: Signature["isDeferred"];
 export declare const isPure: Signature["isPure"];
 export declare const isSynchronous: Signature["isSynchronous"];
 export declare const makeModule: Signature["makeModule"];

@@ -46,7 +46,7 @@ const InteractiveComputationModuleTests = <
             Computation.fromReadonlyArray(m)()([0, 1, 2, 3]),
           ),
           m.toProducer(),
-          Source.toReadonlyArrayAsync(),
+          Source.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
           expectArrayEquals<Tuple3<number, number, number>>(
             [tuple(0, 0, 0), tuple(1, 1, 1), tuple(2, 2, 2)],
             {
@@ -64,7 +64,7 @@ const InteractiveComputationModuleTests = <
             Computation.fromReadonlyArray(m)()([0, 1, 2, 3]),
           ),
           m.toProducer(),
-          Source.toReadonlyArrayAsync(),
+          Source.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
           expectArrayEquals<Tuple3<number, number, number>>([], {
             valuesEquality: arrayEquality(),
           }),

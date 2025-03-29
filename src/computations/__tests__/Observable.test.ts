@@ -59,35 +59,30 @@ testModule(
   /*describe(
     "computeDeferred",
     testAsync("__stream", async () => {
-      using scheduler = HostScheduler.create();
       await pipeAsync(
         Observable.computeDeferred(() => {
           const stream = __stream(Streamable.identity<number>());
           const push = bindMethod(stream, EventListenerLike_notify);
 
-          const streamObservable = __constant(
-            pipe(stream, Broadcaster.toProducer(), Producer.to )
-          );
-          const result = __observe(stream) ?? 0;
+          const result = __observe<number>(stream) ?? 0;
           __do(push, result + 1);
 
           return result;
         }),
         Observable.takeFirst<number>({ count: 10 }),
         Observable.buffer<number>(),
-        Source.lastAsync<number[]>({ scheduler }),
+        Source.lastAsync<number[]>(),
         x => x ?? [],
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       );
     }),
     testAsync("__state", async () => {
-      using scheduler = HostScheduler.create();
       await pipeAsync(
         Observable.computeDeferred(() => {
           const initialState = __constant((): number => 0);
           const state = __state(initialState);
           const push = bindMethod(state, EventListenerLike_notify);
-          const result = __observe(state) ?? -1;
+          const result = __observe<number>(state) ?? -1;
 
           if (result > -1) {
             __do(push, () => result + 1);
@@ -97,33 +92,36 @@ testModule(
         }),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Source.lastAsync<readonly number[]>({ scheduler }),
+        Source.lastAsync<readonly number[]>(),
         x => x ?? [],
         expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]),
       );
     }),
     testAsync("awaiting a Multicast Observable", async () => {
-      using scheduler = HostScheduler.create();
-      const subject = Publisher.create<number>();
-      subject[EventListenerLike_notify](200);
-      subject[EventListenerLike_notify](100);
+      const publisher = Publisher.create<number>();
 
-      const subjectObs = pipe(subject, Broadcaster.toObservable());
-
+     (async () =>{
+        publisher[EventListenerLike_notify](200);
+        await pipe(Observable.delay(10), Source.lastAsync());
+        publisher[EventListenerLike_notify](100);
+        await pipe(Observable.delay(10), Source.lastAsync());
+        publisher[SinkLike_complete]();
+      })()
+     
       await pipeAsync(
         Observable.computeDeferred(
           () => {
-            const result = __await(subjectObs);
+            const result = __observe(publisher);
 
             // Need to dispose the subject or the test will hang
-            __do(bindMethod(subject, DisposableLike_dispose));
+            //__do(f);
 
             return result;
           },
           { mode: "combine-latest" },
         ),
         Observable.distinctUntilChanged<number>(),
-        Source.toReadonlyArrayAsync<number>({ scheduler }),
+        Source.toReadonlyArrayAsync<number>(),
         expectArrayEquals([200, 100]),
       );
     }),
@@ -142,11 +140,11 @@ testModule(
               pipe([value], Computation.fromReadonlyArray(m)({ delay })),
           );
           const obs1 = __memo(fromValueWithDelay, 10, 5);
-          const result1 = __await(obs1);
+          const result1 = __await<number>(obs1);
           const obs2 = __memo(fromValueWithDelay, 20, 10);
-          const result2 = __await(obs2);
+          const result2 = __await<number>(obs2);
           const obs3 = __memo(fromValueWithDelay, 30, 7);
-          const result3 = __await(obs3);
+          const result3 = __await<number>(obs3);
 
           return result1 + result2 + result3;
         }),

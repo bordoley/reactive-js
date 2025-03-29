@@ -6,27 +6,26 @@ import * as Observer from "../utils/__internal__/Observer.js";
 import {
   CollectionEnumeratorLike_peek,
   DisposableLike,
-  ObserverLike,
   SchedulerLike,
 } from "../utils.js";
 
 export interface Signature {
   lastAsync<T>(options?: {
     scheduler: SchedulerLike;
-  }): Function1<SourceLike<T, ObserverLike>, Promise<Optional<T>>>;
+  }): Function1<SourceLike<T>, Promise<Optional<T>>>;
 
   subscribe<T>(options?: {
     scheduler: SchedulerLike;
-  }): Function1<SourceLike<T, ObserverLike>, DisposableLike>;
+  }): Function1<SourceLike<T>, DisposableLike>;
 
   toReadonlyArrayAsync<T>(options?: {
     scheduler: SchedulerLike;
-  }): Function1<SourceLike<T, ObserverLike>, Promise<ReadonlyArray<T>>>;
+  }): Function1<SourceLike<T>, Promise<ReadonlyArray<T>>>;
 }
 
 export const lastAsync: Signature["lastAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
-  async (src: SourceLike<T, ObserverLike>) => {
+  async (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const observer = Observer.takeLast<T>(scheduler, 1);
 
@@ -38,7 +37,7 @@ export const lastAsync: Signature["lastAsync"] =
 
 export const subscribe: Signature["subscribe"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
-  (src: SourceLike<T, ObserverLike>) => {
+  (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const observer = Observer.takeLast(scheduler, 0);
     src[SourceLike_subscribe](observer);
@@ -48,7 +47,7 @@ export const subscribe: Signature["subscribe"] =
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
-  async (src: SourceLike<T, ObserverLike>) => {
+  async (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const observer = Observer.create<T>(scheduler);
     src[SourceLike_subscribe](observer);

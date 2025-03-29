@@ -204,7 +204,7 @@ const ComputationModuleTests = <TComputationModule extends ComputationModule>(
           Computation.fromReadonlyArray(m)(),
           m.pairwise<number>(),
           m.toProducer(),
-          Source.toReadonlyArrayAsync(),
+          Source.toReadonlyArrayAsync<Tuple2<number, number>>(),
           expectArrayEquals<Tuple2<number, number>>([], {
             valuesEquality: arrayEquality(),
           }),

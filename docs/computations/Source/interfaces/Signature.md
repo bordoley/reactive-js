@@ -10,7 +10,7 @@
 
 ### lastAsync()
 
-> **lastAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+> **lastAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
 
 #### Type Parameters
 
@@ -26,13 +26,13 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
 
 ***
 
 ### subscribe()
 
-> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 #### Type Parameters
 
@@ -48,13 +48,13 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
 ***
 
 ### toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, `Promise`\<readonly `T`[]\>\>
+> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<readonly `T`[]\>\>
 
 #### Type Parameters
 
@@ -70,4 +70,4 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`ObserverLike`](../../../utils/interfaces/ObserverLike.md)\<`unknown`\>\>, `Promise`\<readonly `T`[]\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`SourceLike`](../../interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<readonly `T`[]\>\>

@@ -1,9 +1,10 @@
 /// <reference types="./effects.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, StreamableLike_stream, } from "../../computations.js";
-import { isSome, none, pipe, } from "../../functions.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, StreamableLike_stream, } from "../../computations.js";
+import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { EventListenerLike_notify, SchedulerLike_schedule, SinkLike_complete, } from "../../utils.js";
+import * as Computation from "../Computation.js";
 import * as Source from "../Source.js";
 import * as Streamable from "../Streamable.js";
 import * as DeferredSource from "../__internal__/DeferredSource.js";
@@ -12,16 +13,28 @@ export const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[ComputeContext_memoOrUse](false, f, ...args);
 };
-export const __await = (observable) => {
+export const __await = (src) => {
     const ctx = assertCurrentContext();
+    const observable = Computation.isDeferred(src)
+        ? src
+        : DeferredSource.create(bindMethod(src, SourceLike_subscribe), {
+            [ComputationLike_isPure]: src[ComputationLike_isPure],
+            [ComputationLike_isSynchronous]: false,
+        });
     return ctx[ComputeContext_awaitOrObserve](observable, true);
 };
 export const __constant = (value, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[ComputeContext_constant](value, ...args);
 };
-export const __observe = (observable) => {
+export const __observe = (src) => {
     const ctx = assertCurrentContext();
+    const observable = Computation.isDeferred(src)
+        ? src
+        : DeferredSource.create(bindMethod(src, SourceLike_subscribe), {
+            [ComputationLike_isPure]: src[ComputationLike_isPure],
+            [ComputationLike_isSynchronous]: false,
+        });
     return ctx[ComputeContext_awaitOrObserve](observable, false);
 };
 const createSynchronousObservableWithSideEffects = (f) => DeferredSource.create(f, {
