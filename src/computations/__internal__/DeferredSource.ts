@@ -14,8 +14,12 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
+  ComputationOfModule,
+  ConcurrentReactiveComputationModule,
+  DeferredAsynchronousReactiveComputationModule,
   DeferredSourceLike,
   HigherOrderInnerComputationLike,
+  HigherOrderInnerComputationOf,
   IterableLike,
   PickComputationModule,
   SequentialComputationModule,
@@ -53,6 +57,7 @@ import {
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
+  EventListenerLike_notify,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -61,6 +66,7 @@ import Computation_areAllSynchronous from "../Computation/__private__/Computatio
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
+import * as Publisher from "../Publisher.js";
 
 import {
   LatestEventListenerContextLike,
@@ -357,6 +363,39 @@ interface Signature {
     reducer: Reducer<T, TAcc>,
     initialState: Factory<TAcc>,
     options?: { readonly equality?: Equality<TAcc> },
+  ) => Function1<
+    DeferredSourceLike<T, TConsumer>,
+    DeferredSourceLike<TAcc, TAccConsumer>
+  >;
+
+  scanMany<
+    TModule extends PickComputationModule<
+      ComputationModule &
+        ConcurrentReactiveComputationModule &
+        DeferredAsynchronousReactiveComputationModule &
+        SequentialComputationModule,
+      "forEach" | "fromBroadcaster" | "map" | "switchAll" | "withLatestFrom"
+    >,
+  >(
+    m: TModule,
+  ): <
+    T,
+    TAcc,
+    TInnerLike extends HigherOrderInnerComputationLike,
+    TConsumer extends ConsumerLike<T>,
+    TAccConsumer extends ConsumerLike<TAcc>,
+  >(
+    scanner: Function2<
+      TAcc,
+      T,
+      HigherOrderInnerComputationOf<
+        ComputationOfModule<TModule, T>,
+        TInnerLike,
+        TAcc
+      >
+    >,
+    initialValue: Factory<TAcc>,
+    options: TInnerLike,
   ) => Function1<
     DeferredSourceLike<T, TConsumer>,
     DeferredSourceLike<TAcc, TAccConsumer>
@@ -998,6 +1037,72 @@ export const retry: Signature["retry"] = (<
         );
       src[SourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["retry"];
+
+export const scanMany: Signature["scanMany"] = /*@__PURE__*/ (<
+  TModule extends PickComputationModule<
+    ComputationModule &
+      ConcurrentReactiveComputationModule &
+      DeferredAsynchronousReactiveComputationModule &
+      SequentialComputationModule,
+    "forEach" | "fromBroadcaster" | "map" | "switchAll" | "withLatestFrom"
+  >,
+>() =>
+  memoize(
+    m =>
+      <
+        T,
+        TAcc,
+        TInnerLike extends HigherOrderInnerComputationLike,
+        TConsumer extends ConsumerLike<T>,
+        TAccConsumer extends ConsumerLike<TAcc>,
+      >(
+        scanner: Function2<
+          TAcc,
+          T,
+          HigherOrderInnerComputationOf<
+            ComputationOfModule<TModule, T>,
+            TInnerLike,
+            TAcc
+          >
+        >,
+        initialValue: Factory<TAcc>,
+        innerType: TInnerLike,
+      ) =>
+      (source: DeferredSourceLike<T, TConsumer>) =>
+        create<TAcc, TAccConsumer>(
+          (consumer: TAccConsumer) => {
+            const accFeedbackPublisher = pipe(
+              Publisher.create<TAcc>(),
+              Disposable.addTo(consumer),
+            );
+
+            // FIXME: any leak.
+            const feedbackSource = pipe(
+              accFeedbackPublisher,
+              m.fromBroadcaster<TAcc>(),
+            );
+
+            (
+              pipe(
+                source,
+                m.withLatestFrom(feedbackSource, (next: T, acc: TAcc) =>
+                  scanner(acc, next),
+                ),
+                m.switchAll(innerType),
+                m.forEach(
+                  bindMethod(accFeedbackPublisher, EventListenerLike_notify),
+                ),
+              ) as any
+            )[SourceLike_subscribe](consumer);
+
+            accFeedbackPublisher[EventListenerLike_notify](initialValue());
+          },
+          {
+            [ComputationLike_isPure]:
+              Computation_isPure(source) && Computation_isPure(innerType),
+          },
+        ),
+  ))();
 
 export const takeLast: Signature["takeLast"] = memoize(
   m =>

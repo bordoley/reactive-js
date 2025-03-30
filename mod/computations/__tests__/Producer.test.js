@@ -20,4 +20,4 @@ testModule("Producer", ComputationModuleTests(m), SequentialComputationModuleTes
         DefaultScheduler.dispose();
     },
 });
-//((_: Producer.Signature) => {})(Producer);
+((_) => { })(Producer);

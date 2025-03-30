@@ -8,12 +8,13 @@ import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
+import * as Publisher from "../Publisher.js";
 import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
@@ -271,6 +272,15 @@ export const retry = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsum
     const createDelegateConsumer = () => pipe(consumer, createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, DisposableContainer.onError(onDelegateConsumerError), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)));
     src[SourceLike_subscribe](createDelegateConsumer());
 }, src));
+export const scanMany = /*@__PURE__*/ (() => memoize(m => (scanner, initialValue, innerType) => (source) => create((consumer) => {
+    const accFeedbackPublisher = pipe(Publisher.create(), Disposable.addTo(consumer));
+    // FIXME: any leak.
+    const feedbackSource = pipe(accFeedbackPublisher, m.fromBroadcaster());
+    pipe(source, m.withLatestFrom(feedbackSource, (next, acc) => scanner(acc, next)), m.switchAll(innerType), m.forEach(bindMethod(accFeedbackPublisher, EventListenerLike_notify)))[SourceLike_subscribe](consumer);
+    accFeedbackPublisher[EventListenerLike_notify](initialValue());
+}, {
+    [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType),
+})))();
 export const takeLast = memoize(m => (takeLast, options) => (obs) => create(consumer => {
     const count = options?.count ?? 1;
     const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, consumer))));

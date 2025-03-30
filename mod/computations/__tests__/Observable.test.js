@@ -333,4 +333,4 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
         DefaultScheduler.dispose();
     },
 });
-//((_: Observable.Signature) => {})(Observable);
+((_) => { })(Observable);

@@ -679,4 +679,4 @@ testModule(
   },
 });
 
-//((_: Observable.Signature) => {})(Observable);
+((_: Observable.Signature) => {})(Observable);

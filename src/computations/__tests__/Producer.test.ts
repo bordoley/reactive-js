@@ -28,4 +28,4 @@ testModule(
   },
 });
 
-//((_: Producer.Signature) => {})(Producer);
+((_: Producer.Signature) => {})(Producer);

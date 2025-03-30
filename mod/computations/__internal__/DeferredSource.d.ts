@@ -1,4 +1,4 @@
-import { BroadcasterLike, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule, SequentialComputationModule } from "../../computations.js";
+import { BroadcasterLike, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, ComputationOfModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, HigherOrderInnerComputationOf, IterableLike, PickComputationModule, SequentialComputationModule } from "../../computations.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "../../functions.js";
 import { ConsumerLike, DisposableLike } from "../../utils.js";
 import { LatestEventListenerContextLike, LatestEventListenerLike, LatestEventListenerMode } from "../__mixins__/LatestEventListenerMixin.js";
@@ -86,6 +86,7 @@ interface Signature {
     scanDistinct<TModule extends PickComputationModule<ComputationModule & SequentialComputationModule, "genPure" | "concat" | "distinctUntilChanged" | "scan">>(m: TModule): <T, TAcc, TConsumer extends ConsumerLike<T>, TAccConsumer extends ConsumerLike<TAcc>>(reducer: Reducer<T, TAcc>, initialState: Factory<TAcc>, options?: {
         readonly equality?: Equality<TAcc>;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<TAcc, TAccConsumer>>;
+    scanMany<TModule extends PickComputationModule<ComputationModule & ConcurrentReactiveComputationModule & DeferredAsynchronousReactiveComputationModule & SequentialComputationModule, "forEach" | "fromBroadcaster" | "map" | "switchAll" | "withLatestFrom">>(m: TModule): <T, TAcc, TInnerLike extends HigherOrderInnerComputationLike, TConsumer extends ConsumerLike<T>, TAccConsumer extends ConsumerLike<TAcc>>(scanner: Function2<TAcc, T, HigherOrderInnerComputationOf<ComputationOfModule<TModule, T>, TInnerLike, TAcc>>, initialValue: Factory<TAcc>, options: TInnerLike) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<TAcc, TAccConsumer>>;
     takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (consumer: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
         readonly count?: number;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
@@ -103,6 +104,7 @@ export declare const latest: Signature["latest"];
 export declare const merge: Signature["merge"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
+export declare const scanMany: Signature["scanMany"];
 export declare const takeLast: Signature["takeLast"];
 export declare const withEffect: Signature["withEffect"];
 export {};

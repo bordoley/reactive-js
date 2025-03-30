@@ -46,6 +46,7 @@
 - [retry](functions/retry.md)
 - [scan](functions/scan.md)
 - [scanDistinct](functions/scanDistinct.md)
+- [scanMany](functions/scanMany.md)
 - [skipFirst](functions/skipFirst.md)
 - [switchAll](functions/switchAll.md)
 - [takeFirst](functions/takeFirst.md)
