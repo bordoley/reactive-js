@@ -44,7 +44,7 @@
 
 #### Call Signature
 
-> **animation**\<`T`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `T`, [`AnimationLike`](AnimationLike.md)\<`void`, `T`\>\>
+> **animation**\<`T`\>(`animation`): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `T`, [`AnimationLike`](AnimationLike.md)\<`void`, `T`\>\>
 
 ##### Type Parameters
 
@@ -56,19 +56,13 @@
 
 [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>
 
-###### options?
-
-###### animationScheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
 ##### Returns
 
 [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `T`, [`AnimationLike`](AnimationLike.md)\<`void`, `T`\>\>
 
 #### Call Signature
 
-> **animation**\<`T`, `TEvent`\>(`animation`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `T`, [`AnimationLike`](AnimationLike.md)\<`TEvent`, `T`\>\>
+> **animation**\<`T`, `TEvent`\>(`animation`): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `T`, [`AnimationLike`](AnimationLike.md)\<`TEvent`, `T`\>\>
 
 ##### Type Parameters
 
@@ -81,12 +75,6 @@
 ###### animation
 
 [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> | [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
-
-###### options?
-
-###### animationScheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
 ##### Returns
 

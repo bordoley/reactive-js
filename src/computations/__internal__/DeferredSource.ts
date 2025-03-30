@@ -48,6 +48,8 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
 import {
   ConsumerLike,
+  DisposableContainerLike_add,
+  DisposableLike,
   DisposableLike_dispose,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -284,6 +286,15 @@ interface Signature {
   ): <T>(
     ...sources: readonly DeferredSourceLike<T, TConsumer>[]
   ) => DeferredSourceLike<T, TConsumer>;
+
+  onSubscribe<T, TConsumer extends ConsumerLike<T>>(
+    effect: () => DisposableLike | SideEffect1<Optional<Error>>,
+  ): Function1<
+    DeferredSourceLike<T, TConsumer>,
+    DeferredSourceLike<T, TConsumer> & {
+      [ComputationLike_isPure]: false;
+    }
+  >;
 
   repeat<TConsumer extends ConsumerLike<T>, T>(
     createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
@@ -791,6 +802,19 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
     return length === 1 ? sources[0] : createMergeSource(sources);
   };
 };
+
+export const onSubscribe: Signature["onSubscribe"] = (effect => source =>
+  create(
+    consumer => {
+      const result = effect();
+      consumer[DisposableContainerLike_add](result as DisposableLike);
+      source[SourceLike_subscribe](consumer);
+    },
+    {
+      [ComputationLike_isPure]: false,
+      [ComputationLike_isSynchronous]: source[ComputationLike_isSynchronous],
+    },
+  )) as Signature["onSubscribe"];
 
 export const repeat: Signature["repeat"] = (<
     TConsumer extends ConsumerLike<T>,

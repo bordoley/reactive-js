@@ -6,4 +6,4 @@
 
 # Variable: AnimationLike\_isRunning
 
-> `const` **AnimationLike\_isRunning**: unique `symbol`
+> `const` **AnimationLike\_isRunning**: *typeof* `Animation_isRunning`

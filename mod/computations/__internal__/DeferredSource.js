@@ -7,7 +7,7 @@ import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
-import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
@@ -200,6 +200,14 @@ export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) =
         return length === 1 ? sources[0] : createMergeSource(sources);
     };
 };
+export const onSubscribe = (effect => source => create(consumer => {
+    const result = effect();
+    consumer[DisposableContainerLike_add](result);
+    source[SourceLike_subscribe](consumer);
+}, {
+    [ComputationLike_isPure]: false,
+    [ComputationLike_isSynchronous]: source[ComputationLike_isSynchronous],
+}));
 export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, shouldRepeat) => (src) => create((consumer) => {
     const repeatPredicate = isFunction(shouldRepeat)
         ? shouldRepeat

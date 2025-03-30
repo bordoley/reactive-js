@@ -18,7 +18,9 @@ import {
 } from "../functions.js";
 import { PauseableLike, SchedulerLike } from "../utils.js";
 import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
-//import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
+import Streamable_animation, {
+  AnimationLike_isRunning as Animation_isRunning,
+} from "./Streamable/__private__/Streamable.animation.js";
 //import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
@@ -26,7 +28,8 @@ import Streamable_identity from "./Streamable/__private__/Streamable.identity.js
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 //import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
-export const AnimationLike_isRunning = Symbol("AnimationLike_isRunning");
+export const AnimationLike_isRunning: typeof Animation_isRunning =
+  Animation_isRunning;
 /**
  * @noInheritDoc
  */
@@ -70,13 +73,11 @@ export interface StreamableModule {
 
   animation<T>(
     animation: PureSynchronousObservableLike<T>,
-    options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<void, T, AnimationLike<void, T>>;
   animation<T, TEvent>(
     animation:
       | Function1<TEvent, PureSynchronousObservableLike<T>>
       | PureSynchronousObservableLike<T>,
-    options?: { readonly animationScheduler?: SchedulerLike },
   ): StreamableLike<TEvent, T, AnimationLike<TEvent, T>>;
 
   animationGroup<T, TKey extends string = string>(
@@ -137,7 +138,7 @@ export type Signature = StreamableModule;
 export const create: Signature["create"] = Streamable_create;
 export const actionReducer: Signature["actionReducer"] =
   Streamable_actionReducer;
-//export const animation: Signature["animation"] = Streamable_animation;
+export const animation: Signature["animation"] = Streamable_animation;
 //export const animationGroup: Signature["animationGroup"] = Streamable_animationGroup;
 export const identity: Signature["identity"] = Streamable_identity;
 //export const spring: Signature["spring"] = Streamable_spring;

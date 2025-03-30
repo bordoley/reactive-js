@@ -26,6 +26,7 @@
 ## Functions
 
 - [actionReducer](functions/actionReducer.md)
+- [animation](functions/animation.md)
 - [create](functions/create.md)
 - [identity](functions/identity.md)
 - [stateStore](functions/stateStore.md)
