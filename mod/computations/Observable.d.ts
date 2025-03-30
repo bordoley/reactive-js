@@ -99,5 +99,6 @@ export declare const toProducer: Signature["toProducer"];
 export declare const toRunnable: Signature["toRunnable"];
 export declare const withBackpressure: Signature["withBackpressure"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
+export declare const withEffect: Signature["withEffect"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];

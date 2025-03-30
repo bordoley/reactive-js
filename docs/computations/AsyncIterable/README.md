@@ -43,4 +43,5 @@
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
+- [withEffect](functions/withEffect.md)
 - [zip](functions/zip.md)

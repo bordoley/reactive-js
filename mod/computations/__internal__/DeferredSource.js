@@ -200,14 +200,6 @@ export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) =
         return length === 1 ? sources[0] : createMergeSource(sources);
     };
 };
-export const onSubscribe = (effect => source => create(consumer => {
-    const result = effect();
-    consumer[DisposableContainerLike_add](result);
-    source[SourceLike_subscribe](consumer);
-}, {
-    [ComputationLike_isPure]: false,
-    [ComputationLike_isSynchronous]: source[ComputationLike_isSynchronous],
-}));
 export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, shouldRepeat) => (src) => create((consumer) => {
     const repeatPredicate = isFunction(shouldRepeat)
         ? shouldRepeat
@@ -267,3 +259,16 @@ export const takeLast = memoize(m => (takeLast, options) => (obs) => create(cons
     const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, consumer))));
     pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
 }, obs));
+export const withEffect = (effect => source => create(consumer => {
+    const cleanup = effect();
+    if (isSome(cleanup) && isFunction(cleanup)) {
+        consumer[DisposableContainerLike_add](cleanup);
+    }
+    else if (isSome(cleanup)) {
+        pipe(consumer, Disposable.add(cleanup));
+    }
+    source[SourceLike_subscribe](consumer);
+}, {
+    [ComputationLike_isPure]: false,
+    [ComputationLike_isSynchronous]: source[ComputationLike_isSynchronous],
+}));

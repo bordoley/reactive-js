@@ -3,6 +3,7 @@ import type {
   Factory,
   Function1,
   Function2,
+  Optional,
   Predicate,
   Reducer,
   SideEffect1,
@@ -1075,6 +1076,10 @@ export interface SequentialComputationModule<
     factory: Factory<unknown>,
     options?: undefined,
   ): PureComputationOperator<TComputationType, T, T>;
+
+  withEffect<T>(
+    effect: () => void | DisposableLike | SideEffect1<Optional<Error>>,
+  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 }
 
 export interface SynchronousComputationModule<

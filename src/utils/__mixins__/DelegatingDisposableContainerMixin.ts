@@ -10,6 +10,7 @@ import {
 import {
   DisposableContainerLike,
   DisposableContainerLike_add,
+  DisposableLike,
 } from "../../utils.js";
 
 const DelegatingDisposableContainerMixin: () => Mixin1<
@@ -48,7 +49,7 @@ const DelegatingDisposableContainerMixin: () => Mixin1<
       proto<DisposableContainerLike>({
         [DisposableContainerLike_add](
           this: TProperties,
-          disposable: Disposable | SideEffect1<Optional<Error>>,
+          disposable: DisposableLike | SideEffect1<Optional<Error>>,
         ) {
           this[DelegatingDisposableContainerMixin_delegate][
             DisposableContainerLike_add
@@ -56,7 +57,7 @@ const DelegatingDisposableContainerMixin: () => Mixin1<
             // Cast to make the typechecker happy even though its a lie.
             (isFunction(disposable)
               ? bind(disposable, this)
-              : disposable) as Disposable,
+              : disposable) as DisposableLike,
           );
         },
       }),

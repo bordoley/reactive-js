@@ -65,5 +65,6 @@
 - [toRunnable](functions/toRunnable.md)
 - [withBackpressure](functions/withBackpressure.md)
 - [withCurrentTime](functions/withCurrentTime.md)
+- [withEffect](functions/withEffect.md)
 - [withLatestFrom](functions/withLatestFrom.md)
 - [zipLatest](functions/zipLatest.md)

@@ -4,7 +4,8 @@ import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__i
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, RunnableLike_eval, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
+import * as Disposable from "../utils/Disposable.js";
+import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Observable.gen.js";
 import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
@@ -421,6 +422,50 @@ class IterableToRunnable {
     }
 }
 export const toRunnable = /*@__PURE__*/ returns((iterable) => newInstance(IterableToRunnable, iterable));
+class WithEffectIterable {
+    d;
+    e;
+    [ComputationLike_isPure] = false;
+    constructor(d, e) {
+        this.d = d;
+        this.e = e;
+    }
+    *[Symbol.iterator]() {
+        const delegate = this.d;
+        const effect = this.e;
+        const cleanup = effect();
+        if (isSome(cleanup) && !isFunction(cleanup)) {
+            Disposable.raiseIfDisposedWithError(cleanup);
+        }
+        let didThrow = false;
+        try {
+            for (const v of delegate) {
+                if (isSome(cleanup) && !isFunction(cleanup)) {
+                    Disposable.raiseIfDisposedWithError(cleanup);
+                }
+                yield v;
+            }
+        }
+        catch (e) {
+            didThrow = true;
+            if (isFunction(cleanup)) {
+                cleanup(error(e));
+            }
+            else if (isSome(cleanup)) {
+                cleanup[DisposableLike_dispose](error(e));
+            }
+        }
+        finally {
+            if (!didThrow && isFunction(cleanup)) {
+                cleanup(none);
+            }
+            else if (!didThrow && isSome(cleanup)) {
+                cleanup[DisposableLike_dispose]();
+            }
+        }
+    }
+}
+export const withEffect = ((effect) => (iterable) => newInstance(WithEffectIterable, iterable, effect));
 class ZipIterable {
     iters;
     [ComputationLike_isPure];

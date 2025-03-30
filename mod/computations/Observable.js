@@ -40,6 +40,7 @@ import Observable_toRunnable from "./Observable/__private__/Observable.toRunnabl
 import Observable_withBackpressure from "./Observable/__private__/Observable.withBackpressure.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
+import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;
@@ -83,5 +84,6 @@ export const toProducer = Observable_toProducer;
 export const toRunnable = Observable_toRunnable;
 export const withBackpressure = Observable_withBackpressure;
 export const withCurrentTime = Observable_withCurrentTime;
+export const withEffect = Observable_withEffect;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zipLatest = Observable_zipLatest;

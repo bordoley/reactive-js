@@ -1,4 +1,4 @@
-import type { Equality, Factory, Function1, Function2, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
+import type { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
 import type { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
@@ -268,6 +268,7 @@ export interface SequentialComputationModule<TComputationType extends AnyComputa
         readonly equality?: Equality<TAcc>;
     }): PureComputationOperator<TComputationType, T, TAcc>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
+    withEffect<T>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 }
 export interface SynchronousComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
     toRunnable?: Record<string, any>;

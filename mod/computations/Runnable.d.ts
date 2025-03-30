@@ -48,3 +48,4 @@ export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toRunnable: Signature["toRunnable"];
+export declare const withEffect: Signature["withEffect"];

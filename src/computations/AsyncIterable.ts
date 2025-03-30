@@ -52,7 +52,12 @@ import {
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext } from "../utils.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
+} from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
   Observable_genAsync,
@@ -841,6 +846,65 @@ export const toProducer: Signature["toProducer"] =
       ? Producer_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
       : Producer_genAsync(bindMethod(iter, Symbol.asyncIterator)),
   ) as Signature["toProducer"];
+
+class WithEffectAsyncIterable<T>
+  implements AsyncIterableWithSideEffectsLike<T>
+{
+  public [ComputationLike_isSynchronous]: false = false as const;
+  public [ComputationLike_isPure]: false = false as const;
+
+  constructor(
+    private readonly d: AsyncIterableLike<T>,
+    private readonly e: () =>
+      | void
+      | DisposableLike
+      | SideEffect1<Optional<Error>>,
+  ) {}
+
+  async *[Symbol.asyncIterator]() {
+    const delegate = this.d;
+    const effect = this.e;
+
+    const cleanup = effect();
+    if (isSome(cleanup) && !isFunction(cleanup)) {
+      Disposable.raiseIfDisposedWithError(cleanup as DisposableLike);
+    }
+
+    let didThrow = false;
+
+    try {
+      for await (const v of delegate) {
+        if (isSome(cleanup) && !isFunction(cleanup)) {
+          Disposable.raiseIfDisposedWithError(cleanup as DisposableLike);
+        }
+        yield v;
+      }
+    } catch (e) {
+      didThrow = true;
+      if (isFunction(cleanup)) {
+        cleanup(error(e));
+      } else if (isSome(cleanup)) {
+        (cleanup as DisposableLike)[DisposableLike_dispose](error(e));
+      }
+    } finally {
+      if (!didThrow && isFunction(cleanup)) {
+        cleanup(none);
+      } else if (!didThrow && isSome(cleanup)) {
+        (cleanup as DisposableLike)[DisposableLike_dispose]();
+      }
+    }
+  }
+}
+
+export const withEffect: Signature["withEffect"] = (<T>(
+    effect: () => void | DisposableLike | SideEffect1<Optional<Error>>,
+  ) =>
+  (iterable: AsyncIterableLike<T>) =>
+    newInstance(
+      WithEffectAsyncIterable,
+      iterable,
+      effect,
+    )) as Signature["withEffect"];
 
 class ZipAsyncIterable implements AsyncIterableLike {
   public readonly [ComputationLike_isPure]?: boolean;

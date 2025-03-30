@@ -6,7 +6,7 @@ import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newI
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext } from "../utils.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
@@ -531,6 +531,51 @@ export const toProducer =
 returns((iter) => ComputationM.isPure(iter)
     ? Producer_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
     : Producer_genAsync(bindMethod(iter, Symbol.asyncIterator)));
+class WithEffectAsyncIterable {
+    d;
+    e;
+    [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isPure] = false;
+    constructor(d, e) {
+        this.d = d;
+        this.e = e;
+    }
+    async *[Symbol.asyncIterator]() {
+        const delegate = this.d;
+        const effect = this.e;
+        const cleanup = effect();
+        if (isSome(cleanup) && !isFunction(cleanup)) {
+            Disposable.raiseIfDisposedWithError(cleanup);
+        }
+        let didThrow = false;
+        try {
+            for await (const v of delegate) {
+                if (isSome(cleanup) && !isFunction(cleanup)) {
+                    Disposable.raiseIfDisposedWithError(cleanup);
+                }
+                yield v;
+            }
+        }
+        catch (e) {
+            didThrow = true;
+            if (isFunction(cleanup)) {
+                cleanup(error(e));
+            }
+            else if (isSome(cleanup)) {
+                cleanup[DisposableLike_dispose](error(e));
+            }
+        }
+        finally {
+            if (!didThrow && isFunction(cleanup)) {
+                cleanup(none);
+            }
+            else if (!didThrow && isSome(cleanup)) {
+                cleanup[DisposableLike_dispose]();
+            }
+        }
+    }
+}
+export const withEffect = ((effect) => (iterable) => newInstance(WithEffectAsyncIterable, iterable, effect));
 class ZipAsyncIterable {
     iters;
     [ComputationLike_isPure];

@@ -45,3 +45,4 @@
 - [toProducer](functions/toProducer.md)
 - [toReadonlyArray](functions/toReadonlyArray.md)
 - [toRunnable](functions/toRunnable.md)
+- [withEffect](functions/withEffect.md)

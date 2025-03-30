@@ -27,7 +27,7 @@ Adds the given `DisposableLike` or teardown function to this container or dispos
 
 ###### disposable
 
-`Disposable`
+[`DisposableLike`](DisposableLike.md)
 
 The disposable to add.
 

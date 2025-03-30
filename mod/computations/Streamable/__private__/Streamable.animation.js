@@ -9,7 +9,6 @@ import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPausea
 import { PauseableLike_resume, } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import * as WritableStore from "../../WritableStore.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 export const AnimationLike_isRunning = Symbol("AnimationLike_isRunning");
 const Streamable_animation = /*@__PURE__*/ (() => {
@@ -17,9 +16,7 @@ const Streamable_animation = /*@__PURE__*/ (() => {
         const pauseableScheduler = PauseableScheduler.create(scheduler);
         const animationIsRunning = WritableStore.create(false);
         this[AnimationLike_isRunning] = animationIsRunning;
-        const operator = compose(Observable.map((event) => pipe(isFunction(animation) ? animation(event) : animation, 
-        // FIXME: Shouldn't use DeferredSource implement onSubscribe on Observable/Producer
-        DeferredSource.onSubscribe(() => {
+        const operator = compose(Observable.map((event) => pipe(isFunction(animation) ? animation(event) : animation, Observable.withEffect(() => {
             animationIsRunning[StoreLike_value] = true;
             return () => {
                 animationIsRunning[StoreLike_value] = false;

@@ -8,7 +8,7 @@ export interface DisposableContainerLike {
      *
      * @param disposable - The disposable to add.
      */
-    [DisposableContainerLike_add](disposable: Disposable): void;
+    [DisposableContainerLike_add](disposable: DisposableLike): void;
     /**
      * Adds the given teardown function to this container or disposes it if the container has been disposed.
      *

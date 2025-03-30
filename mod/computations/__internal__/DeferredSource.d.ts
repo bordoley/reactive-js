@@ -75,9 +75,6 @@ interface Signature {
     }): DeferredSourceLike<TOut, TConsumerOut>;
     latest<TConsumer extends ConsumerLike<ReadonlyArray<unknown>>, TSource extends DeferredSourceLike<unknown, TSourceConsumer>, TSourceConsumer extends ConsumerLike<unknown> & LatestEventListenerLike<unknown>>(sources: readonly TSource[], mode: LatestEventListenerMode, createLatestEventListener: Function2<TConsumer, LatestEventListenerContextLike, TSourceConsumer>): DeferredSourceLike<ReadonlyArray<unknown>, TConsumer>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
-    onSubscribe<T, TConsumer extends ConsumerLike<T>>(effect: () => DisposableLike | SideEffect1<Optional<Error>>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer> & {
-        [ComputationLike_isPure]: false;
-    }>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     scanDistinct<TModule extends PickComputationModule<ComputationModule & SequentialComputationModule, "genPure" | "concat" | "distinctUntilChanged" | "scan">>(m: TModule): <T, TAcc, TConsumer extends ConsumerLike<T>, TAccConsumer extends ConsumerLike<TAcc>>(reducer: Reducer<T, TAcc>, initialState: Factory<TAcc>, options?: {
@@ -86,6 +83,9 @@ interface Signature {
     takeLast<TComputationModule extends PickComputationModule<ComputationModule, "genPure">>(m: TComputationModule): <TConsumer extends ConsumerLike<T>, T>(takeLast: (consumer: TConsumer, count: number) => TConsumer & IterableLike<T>, options?: {
         readonly count?: number;
     }) => Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
+    withEffect<T, TConsumer extends ConsumerLike<T>>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer> & {
+        [ComputationLike_isPure]: false;
+    }>;
 }
 export declare const scanDistinct: Signature["scanDistinct"];
 export declare const catchError: Signature["catchError"];
@@ -94,8 +94,8 @@ export declare const create: Signature["create"];
 export declare const createLifted: Signature["createLifted"];
 export declare const latest: Signature["latest"];
 export declare const merge: Signature["merge"];
-export declare const onSubscribe: Signature["onSubscribe"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const takeLast: Signature["takeLast"];
+export declare const withEffect: Signature["withEffect"];
 export {};

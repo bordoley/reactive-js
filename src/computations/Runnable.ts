@@ -44,6 +44,7 @@ import Runnable_takeWhile from "./Runnable/__private__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__private__/Runnable.throwIfEmpty.js";
 import Runnable_toProducer from "./Runnable/__private__/Runnable.toProducer.js";
 import Runnable_toReadonlyArray from "./Runnable/__private__/Runnable.toReadonlyArray.js";
+import Runnable_withEffect from "./Runnable/__private__/Runnable.withEffect.js";
 
 /**
  * @noInheritDoc
@@ -114,3 +115,4 @@ export const toReadonlyArray: Signature["toReadonlyArray"] =
 export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toRunnable"];
+export const withEffect: Signature["withEffect"] = Runnable_withEffect;

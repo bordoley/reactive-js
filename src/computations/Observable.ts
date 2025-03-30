@@ -83,6 +83,7 @@ import Observable_toRunnable from "./Observable/__private__/Observable.toRunnabl
 import Observable_withBackpressure from "./Observable/__private__/Observable.withBackpressure.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
+import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
 
 /**
  * @noInheritDoc
@@ -246,6 +247,7 @@ export const withBackpressure: Signature["withBackpressure"] =
   Observable_withBackpressure;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
+export const withEffect: Signature["withEffect"] = Observable_withEffect;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Observable_withLatestFrom;
 export const zipLatest: Signature["zipLatest"] = Observable_zipLatest;

@@ -287,15 +287,6 @@ interface Signature {
     ...sources: readonly DeferredSourceLike<T, TConsumer>[]
   ) => DeferredSourceLike<T, TConsumer>;
 
-  onSubscribe<T, TConsumer extends ConsumerLike<T>>(
-    effect: () => DisposableLike | SideEffect1<Optional<Error>>,
-  ): Function1<
-    DeferredSourceLike<T, TConsumer>,
-    DeferredSourceLike<T, TConsumer> & {
-      [ComputationLike_isPure]: false;
-    }
-  >;
-
   repeat<TConsumer extends ConsumerLike<T>, T>(
     createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
       TConsumer,
@@ -355,6 +346,15 @@ interface Signature {
   ) => Function1<
     DeferredSourceLike<T, TConsumer>,
     DeferredSourceLike<T, TConsumer>
+  >;
+
+  withEffect<T, TConsumer extends ConsumerLike<T>>(
+    effect: () => void | DisposableLike | SideEffect1<Optional<Error>>,
+  ): Function1<
+    DeferredSourceLike<T, TConsumer>,
+    DeferredSourceLike<T, TConsumer> & {
+      [ComputationLike_isPure]: false;
+    }
   >;
 }
 
@@ -803,19 +803,6 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
   };
 };
 
-export const onSubscribe: Signature["onSubscribe"] = (effect => source =>
-  create(
-    consumer => {
-      const result = effect();
-      consumer[DisposableContainerLike_add](result as DisposableLike);
-      source[SourceLike_subscribe](consumer);
-    },
-    {
-      [ComputationLike_isPure]: false,
-      [ComputationLike_isSynchronous]: source[ComputationLike_isSynchronous],
-    },
-  )) as Signature["onSubscribe"];
-
 export const repeat: Signature["repeat"] = (<
     TConsumer extends ConsumerLike<T>,
     T,
@@ -943,3 +930,20 @@ export const takeLast: Signature["takeLast"] = memoize(
         pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
       }, obs),
 );
+
+export const withEffect: Signature["withEffect"] = (effect => source =>
+  create(
+    consumer => {
+      const cleanup = effect();
+      if (isSome(cleanup) && isFunction(cleanup)) {
+        consumer[DisposableContainerLike_add](cleanup);
+      } else if (isSome(cleanup)) {
+        pipe(consumer, Disposable.add(cleanup as DisposableLike));
+      }
+      source[SourceLike_subscribe](consumer);
+    },
+    {
+      [ComputationLike_isPure]: false,
+      [ComputationLike_isSynchronous]: source[ComputationLike_isSynchronous],
+    },
+  )) as Signature["withEffect"];

@@ -40,4 +40,5 @@ export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toProducer: Signature["toProducer"];
 export declare const toRunnable: Signature["toRunnable"];
+export declare const withEffect: Signature["withEffect"];
 export declare const zip: Signature["zip"];

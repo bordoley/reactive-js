@@ -51,7 +51,10 @@ import {
   tuple,
 } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
+import * as Disposable from "../utils/Disposable.js";
 import {
+  DisposableLike,
+  DisposableLike_dispose,
   EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
@@ -728,6 +731,62 @@ class IterableToRunnable<T> implements RunnableLike<T> {
 export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
   (iterable: IterableLike) => newInstance(IterableToRunnable, iterable),
 ) as Signature["toRunnable"];
+
+class WithEffectIterable<T> implements IterableWithSideEffectsLike<T> {
+  public [ComputationLike_isPure]: false = false as const;
+
+  constructor(
+    private readonly d: IterableLike<T>,
+    private readonly e: () =>
+      | void
+      | DisposableLike
+      | SideEffect1<Optional<Error>>,
+  ) {}
+
+  *[Symbol.iterator]() {
+    const delegate = this.d;
+    const effect = this.e;
+
+    const cleanup = effect();
+    if (isSome(cleanup) && !isFunction(cleanup)) {
+      Disposable.raiseIfDisposedWithError(cleanup as DisposableLike);
+    }
+
+    let didThrow = false;
+
+    try {
+      for (const v of delegate) {
+        if (isSome(cleanup) && !isFunction(cleanup)) {
+          Disposable.raiseIfDisposedWithError(cleanup as DisposableLike);
+        }
+        yield v;
+      }
+    } catch (e) {
+      didThrow = true;
+      if (isFunction(cleanup)) {
+        cleanup(error(e));
+      } else if (isSome(cleanup)) {
+        (cleanup as DisposableLike)[DisposableLike_dispose](error(e));
+      }
+    } finally {
+      if (!didThrow && isFunction(cleanup)) {
+        cleanup(none);
+      } else if (!didThrow && isSome(cleanup)) {
+        (cleanup as DisposableLike)[DisposableLike_dispose]();
+      }
+    }
+  }
+}
+
+export const withEffect: Signature["withEffect"] = (<T>(
+    effect: () => void | DisposableLike | SideEffect1<Optional<Error>>,
+  ) =>
+  (iterable: IterableLike<T>) =>
+    newInstance(
+      WithEffectIterable,
+      iterable,
+      effect,
+    )) as Signature["withEffect"];
 
 class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;

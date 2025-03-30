@@ -40,4 +40,5 @@
 - [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
 - [toRunnable](functions/toRunnable.md)
+- [withEffect](functions/withEffect.md)
 - [zip](functions/zip.md)
