@@ -19,7 +19,7 @@ import { Function1, Optional, identity, returns } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
-//import Runnable_concatAll from "./Runnable/__private__/Runnable.concatAll.js";
+import Runnable_concatAll from "./Runnable/__private__/Runnable.concatAll.js";
 import Runnable_decodeWithCharset from "./Runnable/__private__/Runnable.decodeWithCharset.js";
 import Runnable_distinctUntilChanged from "./Runnable/__private__/Runnable.distinctUntilChanged.js";
 import Runnable_encodeUtf8 from "./Runnable/__private__/Runnable.encodeUtf8.js";
@@ -83,7 +83,7 @@ export type Signature = RunnableModule;
 
 export const buffer: Signature["buffer"] = Runnable_buffer;
 export const catchError: Signature["catchError"] = Runnable_catchError;
-//export const concatAll: Signature["concatAll"] = Runnable_concatAll;
+export const concatAll: Signature["concatAll"] = Runnable_concatAll;
 export const concat: Signature["concat"] = Runnable_concat;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Runnable_decodeWithCharset;

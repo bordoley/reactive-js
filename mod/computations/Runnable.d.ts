@@ -23,6 +23,7 @@ export interface RunnableModule extends ComputationModule<RunnableComputation>, 
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
+export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];

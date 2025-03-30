@@ -21,6 +21,7 @@
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
 - [concat](functions/concat.md)
+- [concatAll](functions/concatAll.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
