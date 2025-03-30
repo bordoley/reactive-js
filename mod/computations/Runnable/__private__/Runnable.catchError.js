@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.catchError.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { error, isNone, isSome, newInstance, none, } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import { DisposableLike_dispose, DisposableLike_error, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
@@ -9,7 +9,6 @@ class CatchErrorRunnable {
     s;
     onError;
     [ComputationLike_isPure];
-    [ComputationLike_isDeferred] = false;
     constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;

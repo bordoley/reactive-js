@@ -1,6 +1,6 @@
 /// <reference types="./Observable.toRunnable.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, SourceLike_subscribe, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, SourceLike_subscribe, } from "../../../computations.js";
 import { newInstance, pipe } from "../../../functions.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
@@ -9,7 +9,6 @@ class SynchronousObservableRunnable {
     s;
     o;
     [ComputationLike_isPure];
-    [ComputationLike_isDeferred] = false;
     constructor(s, o) {
         this.s = s;
         this.o = o;

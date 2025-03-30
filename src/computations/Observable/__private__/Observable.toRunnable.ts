@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   RunnableLike,
   RunnableLike_eval,
@@ -14,7 +13,6 @@ import type * as Observable from "../../Observable.js";
 
 class SynchronousObservableRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]?: boolean;
-  readonly [ComputationLike_isDeferred]: false = false as const;
 
   constructor(
     private readonly s: SynchronousComputationOf<Observable.Computation, T>,

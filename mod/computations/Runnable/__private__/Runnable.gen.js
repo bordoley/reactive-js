@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.gen.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { error, newInstance, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
@@ -9,8 +9,6 @@ import * as Computation from "../../Computation.js";
 class GenRunnable {
     f;
     [ComputationLike_isPure];
-    [ComputationLike_isDeferred] = false;
-    [ComputationLike_isSynchronous] = true;
     constructor(f, config) {
         this.f = f;
         this[ComputationLike_isPure] = Computation.isPure(config ?? {});

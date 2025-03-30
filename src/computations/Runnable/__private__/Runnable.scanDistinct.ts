@@ -1,5 +1,4 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationOf,
   RunnableLike,
@@ -31,7 +30,6 @@ const m = Computation.makeModule<Runnable.Computation>()({
 
 class ActionReducerRunnable<T, TAcc> implements RunnableLike<TAcc> {
   readonly [ComputationLike_isPure]: boolean;
-  readonly [ComputationLike_isDeferred]: false = false as const;
 
   constructor(
     private readonly s: ComputationOf<Runnable.Computation, T>,

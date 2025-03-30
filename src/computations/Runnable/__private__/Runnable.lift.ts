@@ -1,8 +1,6 @@
 import {
   ComputationBaseOf,
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
-  ComputationLike_isSynchronous,
   ComputationOperatorWithSideEffects,
   PureComputationOperator,
   RunnableLike,
@@ -17,8 +15,6 @@ import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
 
 class LiftedRunnable<TIn, TOut> implements RunnableLike<TOut> {
   readonly [ComputationLike_isPure]: boolean;
-  readonly [ComputationLike_isDeferred]: false = false as const;
-  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     public readonly src: RunnableLike<TIn>,

@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.fromReadonlyArray.d.ts" />
 
 import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { error, newInstance } from "../../../functions.js";
 import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 class FromReadonlyArrayRunnable {
@@ -9,7 +9,6 @@ class FromReadonlyArrayRunnable {
     count;
     start;
     [ComputationLike_isPure] = true;
-    [ComputationLike_isDeferred] = false;
     constructor(arr, count, start) {
         this.arr = arr;
         this.count = count;

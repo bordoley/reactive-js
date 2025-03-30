@@ -1,7 +1,5 @@
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
-  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
@@ -22,8 +20,6 @@ import type * as Runnable from "../../Runnable.js";
 
 class GenRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
-  readonly [ComputationLike_isDeferred]: false = false as const;
-  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly f: Factory<Iterator<T>>,

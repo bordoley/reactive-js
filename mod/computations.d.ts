@@ -371,7 +371,7 @@ export interface AsyncIterableWithSideEffectsLike<T = unknown> extends AsyncIter
 }
 export declare const RunnableLike_eval: unique symbol;
 export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
-    readonly [ComputationLike_isDeferred]: false;
+    readonly [ComputationLike_isDeferred]?: true;
     readonly [ComputationLike_isSynchronous]?: true;
     [RunnableLike_eval](sink: SinkLike<T>): void;
 }

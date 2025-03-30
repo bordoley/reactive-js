@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.lift.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance, pipeUnsafe } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import * as Computation from "../../Computation.js";
@@ -8,8 +8,6 @@ class LiftedRunnable {
     src;
     ops;
     [ComputationLike_isPure];
-    [ComputationLike_isDeferred] = false;
-    [ComputationLike_isSynchronous] = true;
     constructor(src, ops, config) {
         this.src = src;
         this.ops = ops;

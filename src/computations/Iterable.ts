@@ -708,7 +708,6 @@ export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
 ) as Signature["toProducer"];
 
 class IterableToRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isDeferred]: false = false as const;
   readonly [ComputationLike_isPure]?: boolean;
   constructor(private readonly s: IterableLike<T>) {
     this[ComputationLike_isPure] = s[ComputationLike_isPure];

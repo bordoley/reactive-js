@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.takeLast.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
 import { bindMethod, invoke, newInstance, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -10,8 +10,6 @@ class TakeLastRunnable {
     s;
     c;
     [ComputationLike_isPure];
-    [ComputationLike_isDeferred] = false;
-    [ComputationLike_isSynchronous] = true;
     constructor(s, c) {
         this.s = s;
         this.c = c;

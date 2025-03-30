@@ -405,7 +405,6 @@ export const toProducer = /*@__PURE__*/ returns((iterable) => ComputationM.isPur
     : Producer_gen(bindMethod(iterable, Symbol.iterator)));
 class IterableToRunnable {
     s;
-    [ComputationLike_isDeferred] = false;
     [ComputationLike_isPure];
     constructor(s) {
         this.s = s;
