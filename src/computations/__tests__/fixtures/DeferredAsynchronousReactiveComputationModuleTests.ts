@@ -5,7 +5,7 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
-  DeferredReactiveComputationModule,
+  DeferredAsynchronousReactiveComputationModule,
   PureDeferredComputation,
   PureDeferredComputationLike,
 } from "../../../computations.js";
@@ -13,9 +13,12 @@ import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Source from "../../Source.js";
 
-const DeferredReactiveComputationModuleTests = <
+const DeferredAsynchronousReactiveComputationModuleTests = <
   TComputationModule extends ComputationModule &
-    Pick<DeferredReactiveComputationModule, "switchAll" | "withBackpressure">,
+    Pick<
+      DeferredAsynchronousReactiveComputationModule,
+      "switchAll" | "withBackpressure"
+    >,
 >(
   m: TComputationModule,
 ) =>
@@ -154,4 +157,4 @@ const DeferredReactiveComputationModuleTests = <
     ),*/
   );
 
-export default DeferredReactiveComputationModuleTests;
+export default DeferredAsynchronousReactiveComputationModuleTests;

@@ -11,7 +11,7 @@ import {
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
-  DeferredReactiveComputationModule,
+  DeferredAsynchronousReactiveComputationModule,
   ProducerLike,
   ProducerWithSideEffectsLike,
   PureProducerLike,
@@ -91,7 +91,7 @@ export interface ProducerModule
     ConcurrentReactiveComputationModule<ProducerComputation>,
     SequentialComputationModule<ProducerComputation>,
     SequentialReactiveComputationModule<ProducerComputation>,
-    DeferredReactiveComputationModule<ProducerComputation> {
+    DeferredAsynchronousReactiveComputationModule<ProducerComputation> {
   broadcast<T>(options?: {
     autoDispose?: boolean;
   }): Function1<

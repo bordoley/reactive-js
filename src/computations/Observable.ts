@@ -10,7 +10,7 @@ import {
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
-  DeferredReactiveComputationModule,
+  DeferredAsynchronousReactiveComputationModule,
   ObservableLike,
   ObservableWithSideEffectsLike,
   PureAsynchronousComputationOperator,
@@ -144,7 +144,7 @@ export interface ObservableModule
         };
       }
     >,
-    DeferredReactiveComputationModule<ObservableComputation> {
+    DeferredAsynchronousReactiveComputationModule<ObservableComputation> {
   computeDeferred<T>(
     computation: Factory<T>,
     options?: {

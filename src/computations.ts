@@ -1238,7 +1238,7 @@ export interface ConcurrentReactiveComputationModule<
   zipLatest: CombineConstructor<TComputationType>;
 }
 
-export interface DeferredReactiveComputationModule<
+export interface DeferredAsynchronousReactiveComputationModule<
   TComputationType extends AnyComputationType = AnyComputationType,
 > extends ComputationModuleLike<TComputationType> {
   mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(

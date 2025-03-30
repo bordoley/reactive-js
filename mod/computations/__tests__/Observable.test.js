@@ -69,12 +69,12 @@ import * as Runnable from "../Runnable.js";
 import * as Source from "../Source.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
-import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
+import DeferredAsynchronousReactiveComputationModuleTests from "./fixtures/DeferredAsynchronousReactiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 const m = Computation.makeModule()(Observable);
-testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), ConcurrentReactiveComputationModuleTests(m), DeferredReactiveComputationModuleTests(m), 
+testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), ConcurrentReactiveComputationModuleTests(m), DeferredAsynchronousReactiveComputationModuleTests(m), 
 /*describe(
   "computeDeferred",
   testAsync("__stream", async () => {
