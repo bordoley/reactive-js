@@ -22,4 +22,4 @@ testModule(
   },
 });
 
-//((_: Broadcaster.Signature) => {})(Broadcaster);
+((_: Broadcaster.Signature) => {})(Broadcaster);

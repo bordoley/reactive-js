@@ -1,7 +1,8 @@
 /// <reference types="./Observable.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { identity, returns, } from "../functions.js";
+import { identityLazy } from "../functions.js";
+import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import { Observable_computeDeferred, Observable_computeSynchronous, } from "./Observable/__private__/Observable.compute.js";
@@ -12,6 +13,7 @@ import Observable_delay from "./Observable/__private__/Observable.delay.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
+import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Observable.gen.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
@@ -54,8 +56,11 @@ export const delay = Observable_delay;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 export const encodeUtf8 = Observable_encodeUtf8;
 export const forEach = Observable_forEach;
+export const forkMerge = Observable_forkMerge;
+export const fromBroadcaster = Broadcaster_toProducer;
 export const fromObservable = 
-/*@__PURE__*/ returns(identity);
+/*@__PURE__*/ identityLazy;
+export const fromProducer = identityLazy;
 export const gen = Observable_gen;
 export const genAsync = Observable_genAsync;
 export const genPure = Observable_genPure;

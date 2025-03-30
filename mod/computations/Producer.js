@@ -1,7 +1,8 @@
 /// <reference types="./Producer.d.ts" />
 
 import { Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
-import { identity, returns } from "../functions.js";
+import { identity, identityLazy, returns } from "../functions.js";
+import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
@@ -12,6 +13,7 @@ import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWi
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
 import Producer_encodeUtf8 from "./Producer/__private__/Producer.encodeUtf8.js";
 import Producer_forEach from "./Producer/__private__/Producer.forEach.js";
+import Producer_forkMerge from "./Producer/__private__/Producer.forkMerge.js";
 import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
@@ -44,7 +46,10 @@ export const create = Producer_create;
 export const decodeWithCharset = Producer_decodeWithCharset;
 export const distinctUntilChanged = Producer_distinctUntilChanged;
 export const encodeUtf8 = Producer_encodeUtf8;
+export const forkMerge = Producer_forkMerge;
+export const fromBroadcaster = Broadcaster_toProducer;
 export const fromObservable = Observable_toProducer;
+export const fromProducer = identityLazy;
 export const forEach = Producer_forEach;
 export const gen = Producer_gen;
 export const genAsync = Producer_genAsync;

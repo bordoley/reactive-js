@@ -34,7 +34,7 @@
 
 ### forkMerge
 
-> **forkMerge**: `MulticastComputationForkMerge`\<[`ProducerComputation`](ProducerComputation.md)\>
+> **forkMerge**: `DeferredComputationForkMerge`\<[`ProducerComputation`](ProducerComputation.md)\>
 
 #### Inherited from
 

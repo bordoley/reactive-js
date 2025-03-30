@@ -11,14 +11,15 @@ import {
   Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
 } from "../computations.js";
-import { Function1, SideEffect1 } from "../functions.js";
+import { Function1, SideEffect1, identityLazy } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
-import { Broadcaster_fromObservable } from "./Broadcaster/__private__/Broadcaster.fromObservable.js";
+import Broadcaster_forkMerge from "./Broadcaster/__private__/Broadcaster.forkMerge.js";
+import Broadcaster_fromObservable from "./Broadcaster/__private__/Broadcaster.fromObservable.js";
 import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
@@ -36,6 +37,7 @@ import Broadcaster_takeUntil from "./Broadcaster/__private__/Broadcaster.takeUnt
 import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhile.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Broadcaster_withLatestFrom from "./Broadcaster/__private__/Broadcaster.withLatestFrom.js";
+import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 
 /**
  * @noInheritDoc
@@ -98,8 +100,13 @@ export const createPauseable: Signature["createPauseable"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Broadcaster_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;
+export const forkMerge: Signature["forkMerge"] = Broadcaster_forkMerge;
+export const fromBroadcaster: Signature["fromBroadcaster"] =
+  identityLazy as Signature["fromBroadcaster"];
 export const fromObservable: Signature["fromObservable"] =
   Broadcaster_fromObservable;
+export const fromProducer: Signature["fromProducer"] =
+  Producer_broadcast as Signature["fromProducer"];
 export const fromPromise: Signature["fromPromise"] = Broadcaster_fromPromise;
 export const genPure: Signature["genPure"] = Broadcaster_genPure;
 export const keep: Signature["keep"] = Broadcaster_keep;

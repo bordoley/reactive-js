@@ -1,4 +1,4 @@
-import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule, SequentialComputationModule } from "../../computations.js";
+import { BroadcasterLike, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule, SequentialComputationModule } from "../../computations.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "../../functions.js";
 import { ConsumerLike, DisposableLike } from "../../utils.js";
 import { LatestEventListenerContextLike, LatestEventListenerLike, LatestEventListenerMode } from "../__mixins__/LatestEventListenerMixin.js";
@@ -73,6 +73,12 @@ interface Signature {
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
     }): DeferredSourceLike<TOut, TConsumerOut>;
+    forkMerge<TIn, TConsumer extends ConsumerLike<TIn>, TOut, TOutConsumer extends ConsumerLike<TOut>>(toBroadcaster: (consumer: TOutConsumer) => Function1<DeferredSourceLike<TIn, TConsumer>, BroadcasterLike<TIn>>, fromBroadcaster: () => Function1<BroadcasterLike<TIn>, DeferredSourceLike<TIn, TConsumer>>, merge: (...sources: readonly DeferredSourceLike<TOut, TOutConsumer>[]) => DeferredSourceLike<TOut, TOutConsumer>, ops: readonly [
+        ...Function1<DeferredSourceLike<TIn, TConsumer>, DeferredSourceLike<TOut, TOutConsumer>>[],
+        {
+            [ComputationLike_isPure]?: boolean;
+        }
+    ]): Function1<DeferredSourceLike<TIn, TConsumer>, DeferredSourceLike<TOut, TOutConsumer>>;
     latest<TConsumer extends ConsumerLike<ReadonlyArray<unknown>>, TSource extends DeferredSourceLike<unknown, TSourceConsumer>, TSourceConsumer extends ConsumerLike<unknown> & LatestEventListenerLike<unknown>>(sources: readonly TSource[], mode: LatestEventListenerMode, createLatestEventListener: Function2<TConsumer, LatestEventListenerContextLike, TSourceConsumer>): DeferredSourceLike<ReadonlyArray<unknown>, TConsumer>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
@@ -92,6 +98,7 @@ export declare const catchError: Signature["catchError"];
 export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];
 export declare const createLifted: Signature["createLifted"];
+export declare const forkMerge: Signature["forkMerge"];
 export declare const latest: Signature["latest"];
 export declare const merge: Signature["merge"];
 export declare const repeat: Signature["repeat"];

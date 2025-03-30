@@ -52,7 +52,7 @@
 
 ### fromBroadcaster()
 
-> **fromBroadcaster**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+> **fromBroadcaster**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
@@ -60,7 +60,7 @@
 
 #### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>\>
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 

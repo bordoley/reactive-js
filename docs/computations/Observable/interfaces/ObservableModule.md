@@ -40,7 +40,7 @@
 
 ### forkMerge
 
-> **forkMerge**: `MulticastComputationForkMerge`\<[`ObservableComputation`](ObservableComputation.md)\>
+> **forkMerge**: `DeferredComputationForkMerge`\<[`ObservableComputation`](ObservableComputation.md)\>
 
 #### Inherited from
 
@@ -326,26 +326,6 @@
 
 ***
 
-### create()
-
-> **create**\<`T`\>(`f`): [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### f
-
-(`observer`) => `void`
-
-#### Returns
-
-[`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
-
-***
-
 ### decodeWithCharset()
 
 > **decodeWithCharset**(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `ArrayBuffer`, `string`\>
@@ -458,7 +438,7 @@
 
 ### fromBroadcaster()
 
-> **fromBroadcaster**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+> **fromBroadcaster**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../../type-aliases/PureComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>\>
 
 #### Type Parameters
 
@@ -466,7 +446,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../../type-aliases/PureComputationOf.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>\>
 
 #### Inherited from
 

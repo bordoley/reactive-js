@@ -6,7 +6,7 @@
 
 # Type Alias: ForkMerge\<TComputationType\>
 
-> **ForkMerge**\<`TComputationType`\>: [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `any`\> *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `any`\> ? `MulticastComputationForkMerge`\<`TComputationType`\> : [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputationType`, `any`\> *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `any`\> ? `DeferredComputationForkMerge`\<`TComputationType`\> : `never`
+> **ForkMerge**\<`TComputationType`\>: [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputationType`, `any`\> *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `any`\> ? `DeferredComputationForkMerge`\<`TComputationType`\> : [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `any`\> *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `any`\> ? `MulticastComputationForkMerge`\<`TComputationType`\> : `never`
 
 ## Type Parameters
 

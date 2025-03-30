@@ -2,6 +2,7 @@
 
 import { Array_length } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
+import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, memoize, newInstance, none, pipe, pipeUnsafe, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -147,6 +148,22 @@ export const createLifted = /*@__PURE__*/ (() => {
         },
     }));
 })();
+export const forkMerge = ((toBroadcaster, fromBroadcaster, merge, args) => (source) => {
+    const argsLength = args[Array_length];
+    const lastArg = args[argsLength - 1];
+    const maybeConfig = isSome(lastArg) && !isFunction(lastArg) ? lastArg : none;
+    const ops = (isSome(maybeConfig) ? args.slice(0, argsLength - 1) : args);
+    const innerType = maybeConfig ?? {};
+    const isPure = Computation_isPure(innerType) && Computation_isPure(source);
+    return create((consumer) => {
+        const broadcastedDeferredSource = pipe(source, toBroadcaster(consumer), fromBroadcaster());
+        const merged = pipe(ops, ReadonlyArray.map(op => op(broadcastedDeferredSource)), broadcasters => merge(...broadcasters));
+        merged[SourceLike_subscribe](consumer);
+    }, {
+        [ComputationLike_isSynchronous]: false,
+        [ComputationLike_isPure]: isPure,
+    });
+});
 export const latest = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(LatestSourceMixin()), function DeferredLatestSource(sources, mode, createLatestEventListener) {
         init(LatestSourceMixin(), this, sources, mode, createLatestEventListener);

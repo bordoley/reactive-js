@@ -29,10 +29,9 @@ import {
   Function1,
   raise as Functions_raise,
   error,
-  identity,
+  identityLazy,
   memoize,
   pipe,
-  returns,
 } from "../functions.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
@@ -219,7 +218,8 @@ export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =
   Computation_isSynchronous;
 
-export const makeModule: Signature["makeModule"] = returns(identity);
+export const makeModule: Signature["makeModule"] =
+  identityLazy as Signature["makeModule"];
 
 export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ memoize(
   m =>

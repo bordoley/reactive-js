@@ -6,7 +6,9 @@ import {
   props,
   proto,
 } from "../../__internal__/mixins.js";
+import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import {
+  BroadcasterLike,
   ComputationLike,
   ComputationLike_isDeferred,
   ComputationLike_isPure,
@@ -262,6 +264,36 @@ interface Signature {
       [ComputationLike_isSynchronous]?: boolean;
     },
   ): DeferredSourceLike<TOut, TConsumerOut>;
+
+  forkMerge<
+    TIn,
+    TConsumer extends ConsumerLike<TIn>,
+    TOut,
+    TOutConsumer extends ConsumerLike<TOut>,
+  >(
+    toBroadcaster: (
+      consumer: TOutConsumer,
+    ) => Function1<DeferredSourceLike<TIn, TConsumer>, BroadcasterLike<TIn>>,
+    fromBroadcaster: () => Function1<
+      BroadcasterLike<TIn>,
+      DeferredSourceLike<TIn, TConsumer>
+    >,
+    merge: (
+      ...sources: readonly DeferredSourceLike<TOut, TOutConsumer>[]
+    ) => DeferredSourceLike<TOut, TOutConsumer>,
+    ops: readonly [
+      ...Function1<
+        DeferredSourceLike<TIn, TConsumer>,
+        DeferredSourceLike<TOut, TOutConsumer>
+      >[],
+      {
+        [ComputationLike_isPure]?: boolean;
+      },
+    ],
+  ): Function1<
+    DeferredSourceLike<TIn, TConsumer>,
+    DeferredSourceLike<TOut, TOutConsumer>
+  >;
 
   latest<
     TConsumer extends ConsumerLike<ReadonlyArray<unknown>>,
@@ -672,6 +704,70 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
     }),
   );
 })() as Signature["createLifted"];
+
+export const forkMerge: Signature["forkMerge"] = (<
+    TIn,
+    TConsumer extends ConsumerLike<TIn>,
+    TOut,
+    TOutConsumer extends ConsumerLike<TOut>,
+  >(
+    toBroadcaster: (
+      consumer: TOutConsumer,
+    ) => Function1<DeferredSourceLike<TIn, TConsumer>, BroadcasterLike<TIn>>,
+    fromBroadcaster: () => Function1<
+      BroadcasterLike<TIn>,
+      DeferredSourceLike<TIn, TConsumer>
+    >,
+    merge: (
+      ...sources: readonly DeferredSourceLike<TOut, TOutConsumer>[]
+    ) => DeferredSourceLike<TOut, TOutConsumer>,
+    args: readonly [
+      ...Function1<
+        DeferredSourceLike<TIn, TConsumer>,
+        DeferredSourceLike<TOut, TOutConsumer>
+      >[],
+      {
+        [ComputationLike_isPure]?: boolean;
+      },
+    ],
+  ) =>
+  (source: DeferredSourceLike<TIn, TConsumer>) => {
+    const argsLength = args[Array_length];
+    const lastArg = args[argsLength - 1];
+    const maybeConfig: Optional<{ [ComputationLike_isPure]?: boolean }> =
+      isSome(lastArg) && !isFunction(lastArg) ? lastArg : none;
+    const ops = (
+      isSome(maybeConfig) ? args.slice(0, argsLength - 1) : args
+    ) as ReadonlyArray<
+      Function1<
+        DeferredSourceLike<TIn, TConsumer>,
+        DeferredSourceLike<TOut, TOutConsumer>
+      >
+    >;
+    const innerType = maybeConfig ?? {};
+    const isPure = Computation_isPure(innerType) && Computation_isPure(source);
+
+    return create<TOut, TOutConsumer>(
+      (consumer: TOutConsumer) => {
+        const broadcastedDeferredSource = pipe(
+          source,
+          toBroadcaster(consumer),
+          fromBroadcaster(),
+        );
+
+        const merged = pipe(
+          ops,
+          ReadonlyArray.map(op => op(broadcastedDeferredSource)),
+          broadcasters => merge(...broadcasters),
+        );
+        merged[SourceLike_subscribe](consumer);
+      },
+      {
+        [ComputationLike_isSynchronous]: false,
+        [ComputationLike_isPure]: isPure,
+      },
+    );
+  }) as Signature["forkMerge"];
 
 export const latest: Signature["latest"] = /*@__PURE__*/ (<
   T,

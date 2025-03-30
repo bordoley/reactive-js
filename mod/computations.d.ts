@@ -189,18 +189,12 @@ interface MulticastComputationForkMerge<TComputationType extends ComputationType
     <TIn, TOut>(a: Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>>, b: Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>>, ...tail: Function1<MulticastComputationOf<TComputationType, TIn>, MulticastComputationOf<TComputationType, TOut>>[]): MulticastComputationOf<TComputationType, TOut>;
 }
 interface DeferredComputationForkMerge<TComputationType extends ComputationType> {
-    <TIn, TOut>(a: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, ...tail: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>[]): PureDeferredComputationOf<TComputationType, TOut>;
-    <TIn, TOut>(a: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, options: {
-        readonly innerType: DeferredComputationWithSideEffectsLike;
-    }): PureDeferredComputationOf<TComputationType, TOut>;
-    <TIn, TOut>(a: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, c: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, options: {
-        readonly innerType: DeferredComputationWithSideEffectsLike;
-    }): PureDeferredComputationOf<TComputationType, TOut>;
-    <TIn, TOut>(a: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, c: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, d: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>, options: {
-        readonly innerType: DeferredComputationWithSideEffectsLike;
-    }): PureDeferredComputationOf<TComputationType, TOut>;
+    <TIn, TOut>(a: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, ...tail: Function1<BroadcasterLike<TIn>, PureDeferredComputationOf<TComputationType, TOut>>[]): PureDeferredComputationOf<TComputationType, TOut>;
+    <TIn, TOut>(a: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, options?: DeferredComputationWithSideEffectsLike): PureDeferredComputationOf<TComputationType, TOut>;
+    <TIn, TOut>(a: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, c: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, options?: DeferredComputationWithSideEffectsLike): PureDeferredComputationOf<TComputationType, TOut>;
+    <TIn, TOut>(a: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, b: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, c: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, d: Function1<PureDeferredComputationOf<TComputationType, TIn>, PureDeferredComputationOf<TComputationType, TOut>>, options?: DeferredComputationWithSideEffectsLike): PureDeferredComputationOf<TComputationType, TOut>;
 }
-export type ForkMerge<TComputationType extends ComputationType> = MulticastComputationOf<TComputationType, any> extends ComputationBaseOf<TComputationType, any> ? MulticastComputationForkMerge<TComputationType> : DeferredComputationOf<TComputationType, any> extends ComputationBaseOf<TComputationType, any> ? DeferredComputationForkMerge<TComputationType> : never;
+export type ForkMerge<TComputationType extends ComputationType> = DeferredComputationOf<TComputationType, any> extends ComputationBaseOf<TComputationType, any> ? DeferredComputationForkMerge<TComputationType> : MulticastComputationOf<TComputationType, any> extends ComputationBaseOf<TComputationType, any> ? MulticastComputationForkMerge<TComputationType> : never;
 interface ZipConstructor<TComputationType extends ComputationType> {
     <TA, TB>(a: PureSynchronousComputationOf<TComputationType, TA>, b: PureSynchronousComputationOf<TComputationType, TB>): PureSynchronousComputationOf<TComputationType, Tuple2<TA, TB>>;
     <TA, TB, TC>(a: PureSynchronousComputationOf<TComputationType, TA>, b: PureSynchronousComputationOf<TComputationType, TB>, c: PureSynchronousComputationOf<TComputationType, TC>): PureSynchronousComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
@@ -299,7 +293,7 @@ export interface SequentialReactiveComputationModule<TComputationType extends An
     }): PureComputationOperator<TComputationType, T, T>;
 }
 export interface ConcurrentReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
-    fromBroadcaster<T>(): Function1<BroadcasterLike<T>, PureDeferredComputationOf<TComputationType, T>>;
+    fromBroadcaster<T>(): Function1<BroadcasterLike<T>, PureComputationOf<TComputationType, T>>;
     fromObservable<T>(options?: {
         scheduler?: SchedulerLike;
     }): FromObservableOperator<TComputationType, T>;

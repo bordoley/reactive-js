@@ -17,4 +17,4 @@ testModule("Broadcaster", ComputationModuleTests(m), ConcurrentReactiveComputati
         DefaultScheduler.dispose();
     },
 });
-//((_: Broadcaster.Signature) => {})(Broadcaster);
+((_) => { })(Broadcaster);

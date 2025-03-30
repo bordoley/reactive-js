@@ -1,6 +1,6 @@
 import { ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, ObservableLike, ObservableWithSideEffectsLike, PureAsynchronousComputationOperator, PureComputationOperator, PureObservableLike, PureSynchronousObservableLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableWithSideEffectsLike } from "../computations.js";
 import { Factory, Function1, Function2 } from "../functions.js";
-import { ObserverLike, SchedulerLike } from "../utils.js";
+import { SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -39,7 +39,6 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     computeSynchronous<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
     }): SynchronousObservableWithSideEffectsLike<T>;
-    create<T>(f: (observer: ObserverLike<T>) => void): ObservableWithSideEffectsLike<T>;
     currentTime: PureSynchronousObservableLike<number>;
     delay(duration: number): PureSynchronousObservableLike;
     keyFrame(duration: number, options?: {
@@ -70,7 +69,10 @@ export declare const delay: Signature["delay"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const forEach: Signature["forEach"];
+export declare const forkMerge: Signature["forkMerge"];
+export declare const fromBroadcaster: Signature["fromBroadcaster"];
 export declare const fromObservable: Signature["fromObservable"];
+export declare const fromProducer: Signature["fromProducer"];
 export declare const gen: Signature["gen"];
 export declare const genAsync: Signature["genAsync"];
 export declare const genPure: Signature["genPure"];

@@ -22,14 +22,9 @@ import {
   SynchronousComputationModule,
   SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
-import {
-  Factory,
-  Function1,
-  Function2,
-  identity,
-  returns,
-} from "../functions.js";
-import { ObserverLike, SchedulerLike } from "../utils.js";
+import { Factory, Function1, Function2, identityLazy } from "../functions.js";
+import { SchedulerLike } from "../utils.js";
+import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import {
@@ -43,6 +38,7 @@ import Observable_delay from "./Observable/__private__/Observable.delay.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
+import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
 import {
   Observable_gen,
   Observable_genPure,
@@ -160,10 +156,6 @@ export interface ObservableModule
     },
   ): SynchronousObservableWithSideEffectsLike<T>;
 
-  create<T>(
-    f: (observer: ObserverLike<T>) => void,
-  ): ObservableWithSideEffectsLike<T>;
-
   currentTime: PureSynchronousObservableLike<number>;
 
   delay(duration: number): PureSynchronousObservableLike;
@@ -215,8 +207,13 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
+export const fromBroadcaster: Signature["fromBroadcaster"] =
+  Broadcaster_toProducer as Signature["fromBroadcaster"];
 export const fromObservable: Signature["fromObservable"] =
-  /*@__PURE__*/ returns(identity) as Signature["fromObservable"];
+  /*@__PURE__*/ identityLazy as Signature["fromObservable"];
+export const fromProducer: Signature["fromProducer"] =
+  identityLazy as Signature["fromProducer"];
 export const gen: Signature["gen"] = Observable_gen;
 export const genAsync: Signature["genAsync"] = Observable_genAsync;
 export const genPure: Signature["genPure"] = Observable_genPure;

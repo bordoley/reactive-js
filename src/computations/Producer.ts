@@ -18,8 +18,9 @@ import {
   SequentialComputationModule,
   SequentialReactiveComputationModule,
 } from "../computations.js";
-import { Function1, identity, returns } from "../functions.js";
+import { Function1, identity, identityLazy, returns } from "../functions.js";
 import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
+import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
@@ -30,6 +31,7 @@ import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWi
 import Producer_distinctUntilChanged from "./Producer/__private__/Producer.distinctUntilChanged.js";
 import Producer_encodeUtf8 from "./Producer/__private__/Producer.encodeUtf8.js";
 import Producer_forEach from "./Producer/__private__/Producer.forEach.js";
+import Producer_forkMerge from "./Producer/__private__/Producer.forkMerge.js";
 import {
   Producer_gen,
   Producer_genPure,
@@ -119,8 +121,13 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Producer_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Producer_encodeUtf8;
+export const forkMerge: Signature["forkMerge"] = Producer_forkMerge;
+export const fromBroadcaster: Signature["fromBroadcaster"] =
+  Broadcaster_toProducer;
 export const fromObservable: Signature["fromObservable"] =
   Observable_toProducer as Signature["fromObservable"];
+export const fromProducer: Signature["fromProducer"] =
+  identityLazy as Signature["fromProducer"];
 export const forEach: Signature["forEach"] = Producer_forEach;
 export const gen: Signature["gen"] = Producer_gen;
 export const genAsync: Signature["genAsync"] = Producer_genAsync;
