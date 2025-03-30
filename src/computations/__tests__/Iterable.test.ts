@@ -25,3 +25,5 @@ testModule(
     DefaultScheduler.dispose();
   },
 });
+
+((_: Iterable.Signature) => {})(Iterable);

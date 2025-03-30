@@ -67,3 +67,5 @@ testModule(
     DefaultScheduler.dispose();
   },
 });
+
+//((_: Runnable.Signature) => {})(Runnable);

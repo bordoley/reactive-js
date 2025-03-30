@@ -22,9 +22,9 @@ export const create: <TSubscription extends DisposableLike, T>(
 >() => {
   const KeepSink_predicate = Symbol("KeepSink_predicate");
 
-  interface TProperties {
+  type TProperties = {
     [KeepSink_predicate]: Predicate<T>;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),

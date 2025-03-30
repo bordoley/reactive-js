@@ -19,3 +19,4 @@ testModule("Iterable", ComputationModuleTests(m), SequentialComputationModuleTes
         DefaultScheduler.dispose();
     },
 });
+((_) => { })(Iterable);

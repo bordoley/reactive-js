@@ -22,9 +22,9 @@ export const create: <TSubscription extends DisposableLike, T>(
 >() => {
   const ForEachSink_effect = Symbol("ForEachSink_effect");
 
-  interface TProperties {
+  type TProperties = {
     [ForEachSink_effect]: SideEffect1<T>;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),

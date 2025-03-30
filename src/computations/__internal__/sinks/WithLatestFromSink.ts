@@ -57,12 +57,12 @@ export const create: <TSubscription extends DisposableLike, TOther, TA, TB, T>(
     "WithLatestFromSink_otherSubscription",
   );
 
-  interface TProperties {
+  type TProperties = {
     [WithLatestFromSink_hasLatest]: boolean;
     [WithLatestFromSink_otherLatest]: Optional<TB>;
     [WithLatestFromSink_selector]: Function2<TA, TB, T>;
     [WithLatestFromSink_otherSubscription]: DisposableLike;
-  }
+  };
 
   function onWithLatestFromSinkOtherSubscriptionComplete(
     this: TProperties & LiftedSinkLike<TSubscription, TA>,

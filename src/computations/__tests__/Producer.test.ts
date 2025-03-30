@@ -27,3 +27,5 @@ testModule(
     DefaultScheduler.dispose();
   },
 });
+
+//((_: Producer.Signature) => {})(Producer);

@@ -414,6 +414,61 @@ testModule(
     }),
   ),
   describe(
+    "mergeAll",
+    test(
+      "with queueing",
+      pipeLazy(
+        [
+          pipe([1, 3, 5], Computation.fromReadonlyArray(m)({ delay: 3 })),
+          pipe([2, 4, 6], Computation.fromReadonlyArray(m)({ delay: 3 })),
+          pipe(
+            [9, 10],
+            Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }),
+          ),
+        ],
+        Computation.fromReadonlyArray(m)(),
+        Observable.mergeAll({
+          concurrency: 2,
+        }),
+        Observable.toRunnable<number>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
+      ),
+    ),
+    /*
+    testAsync(
+      "without delay, merge all observables as they are produced",
+      async () => {
+        using scheduler = HostScheduler.create();
+        await pipeAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          Computation.flatMap(Observable)<number, number>("mergeAll", x =>
+            pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+          ),
+          Observable.toReadonlyArrayAsync({ scheduler }),
+          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+        );
+      },
+    ),*/
+    test(
+      "without delay, merge all observables as they are produced",
+      pipeLazy(
+        [1, 2, 3],
+        Computation.fromReadonlyArray(m)(),
+        Observable.map(x =>
+          pipe([x, x, x], Computation.fromReadonlyArray(m)()),
+        ),
+        Observable.mergeAll({
+          concurrency: 1,
+        }),
+        Observable.toRunnable<number>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+  ),
+  describe(
     "spring",
     testAsync(
       "test with spring",
@@ -623,3 +678,5 @@ testModule(
     DefaultScheduler.dispose();
   },
 });
+
+//((_: Observable.Signature) => {})(Observable);

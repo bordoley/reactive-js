@@ -22,3 +22,4 @@ testModule("Runnable", ComputationModuleTests(m), SequentialComputationModuleTes
         DefaultScheduler.dispose();
     },
 });
+//((_: Runnable.Signature) => {})(Runnable);

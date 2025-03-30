@@ -251,17 +251,13 @@ export interface SequentialComputationModule<TComputationType extends AnyComputa
     gen?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     catchError<T>(onError: SideEffect1<Error>): PureComputationOperator<TComputationType, T, T>;
-    catchError<T, TInnerLike extends HigherOrderInnerComputationLike>(onError: Function1<Error, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>>, options: {
-        readonly innerType: TInnerLike;
-    }): HigherOrderComputationOperator<TComputationType, TInnerLike, T, T>;
+    catchError<T, TInnerLike extends HigherOrderInnerComputationLike>(onError: Function1<Error, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>>, options: TInnerLike): HigherOrderComputationOperator<TComputationType, TInnerLike, T, T>;
     concat<T>(...computations: readonly PureSynchronousComputationOf<TComputationType, T>[]): PureSynchronousComputationOf<TComputationType, T>;
     concat<T>(...computations: readonly SynchronousComputationOf<TComputationType, T>[]): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
     concat<T>(...computations: readonly PureDeferredComputationOf<TComputationType, T>[]): PureDeferredComputationOf<TComputationType, T>;
     concat<T>(...computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
     concatAll<T>(): HigherOrderComputationOperator<TComputationType, PureSynchronousComputationLike, HigherOrderInnerComputationOf<TComputationType, PureSynchronousComputationLike, T>, T>;
-    concatAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
-        readonly innerType: TInnerLike;
-    }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
+    concatAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: TInnerLike): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
     gen<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["gen"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
     repeat<T>(predicate: Predicate<number>): PureComputationOperator<TComputationType, T, T>;
@@ -342,11 +338,8 @@ export interface DeferredReactiveComputationModule<TComputationType extends AnyC
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
         readonly concurrency?: number;
-        readonly innerType: TInnerLike;
-    }): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
-    scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(scanner: Function2<TAcc, T, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TAcc>>, initialValue: Factory<TAcc>, options: {
-        readonly innerType: TInnerLike;
-    }): HigherOrderComputationOperator<TComputationType, TInnerLike, T, TAcc>;
+    } & TInnerLike): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
+    scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(scanner: Function2<TAcc, T, HigherOrderInnerComputationOf<TComputationType, TInnerLike, TAcc>>, initialValue: Factory<TAcc>, options: TInnerLike): HigherOrderComputationOperator<TComputationType, TInnerLike, T, TAcc>;
     switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(innerType: TInnerLike): HigherOrderComputationOperator<TComputationType, TInnerLike, HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>, T>;
     withBackpressure<T>(config: {
         capacity: number;

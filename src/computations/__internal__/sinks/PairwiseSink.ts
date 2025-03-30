@@ -22,10 +22,10 @@ export const create: <TSubscription extends DisposableLike, T>(
   const PairwiseSink_hasPrev = Symbol("PairwiseSink_hasPrev");
   const PairwiseSink_prev = Symbol("PairwiseSink_prev");
 
-  interface TProperties {
+  type TProperties = {
     [PairwiseSink_hasPrev]: boolean;
     [PairwiseSink_prev]: T;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),

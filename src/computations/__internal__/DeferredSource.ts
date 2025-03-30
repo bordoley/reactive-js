@@ -83,9 +83,7 @@ interface Signature {
       TConsumer
     >,
     errorHandler: SideEffect1<Error> | Function1<Error, TSource>,
-    options?: {
-      readonly innerType?: HigherOrderInnerComputationLike;
-    },
+    options?: HigherOrderInnerComputationLike,
   ): Function1<TSource, DeferredSourceLike<T, TConsumer>>;
 
   concat<TConsumer extends ConsumerLike>(
@@ -391,9 +389,7 @@ export const catchError: Signature["catchError"] =
       TConsumer
     >,
     errorHandler: SideEffect1<Error> | Function1<Error, TSource>,
-    options?: {
-      readonly innerType?: HigherOrderInnerComputationLike;
-    },
+    options?: HigherOrderInnerComputationLike,
   ) =>
   (source: TSource): DeferredSourceLike<T, TConsumer> =>
     create<T, TConsumer>(
@@ -423,9 +419,9 @@ export const catchError: Signature["catchError"] =
         source[SourceLike_subscribe](onErrorSink);
       },
       {
-        [ComputationLike_isPure]: options?.innerType?.[ComputationLike_isPure],
+        [ComputationLike_isPure]: options?.[ComputationLike_isPure],
         [ComputationLike_isSynchronous]:
-          options?.innerType?.[ComputationLike_isSynchronous],
+          options?.[ComputationLike_isSynchronous],
       },
     );
 

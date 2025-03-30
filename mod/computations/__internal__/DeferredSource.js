@@ -39,8 +39,8 @@ export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, 
     }));
     source[SourceLike_subscribe](onErrorSink);
 }, {
-    [ComputationLike_isPure]: options?.innerType?.[ComputationLike_isPure],
-    [ComputationLike_isSynchronous]: options?.innerType?.[ComputationLike_isSynchronous],
+    [ComputationLike_isPure]: options?.[ComputationLike_isPure],
+    [ComputationLike_isSynchronous]: options?.[ComputationLike_isSynchronous],
 });
 export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {
     const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");

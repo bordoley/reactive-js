@@ -36,10 +36,10 @@ export const create: <TSubscription extends DisposableLike, T>(
   const BufferSink_buffer = Symbol("BufferSink_buffer");
   const BufferSink_count = Symbol("BufferSink_count");
 
-  interface TProperties {
+  type TProperties = {
     [BufferSink_buffer]: T[];
     [BufferSink_count]: number;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),

@@ -30,9 +30,9 @@ const createWithCurrentTimeOperator: <TA, TB>(
     "WithCurrentTimeOperator_selector",
   );
 
-  interface TProperties {
+  type TProperties = {
     [WithCurrentTimeOperator_selector]: Function2<number, TA, TB>;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<ObserverLike, TA, TB>()),

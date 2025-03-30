@@ -252,7 +252,32 @@ describe("merge", test("with sources that have the same delays", () => {
     }
 }), test("merging merged sources", () => {
     pipe(Observable.merge(Observable.merge(pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })), Observable.concat(Observable.delay(3), Computation.empty(m)(), pipe([4, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1 }))), m.merge(Observable.concat(Observable.delay(6), Computation.empty(m)(), pipe([7, 8, 9], Computation.fromReadonlyArray(m)({ delay: 1 }))), Observable.concat(Observable.delay(9), Computation.empty(m)(), pipe([10, 11, 12], Computation.fromReadonlyArray(m)({ delay: 1 })))))), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
-})), describe("spring", testAsync("test with spring", pipeLazyAsync(Observable.spring(), Observable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.last(), expectEquals(1)))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m)({ delay: 2 }), Observable.takeUntil(pipe([1], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }))), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([10, 20])))), describe("throttle", test("first", pipeLazy(Observable.genPure(function* counter() {
+})), describe("mergeAll", test("with queueing", pipeLazy([
+    pipe([1, 3, 5], Computation.fromReadonlyArray(m)({ delay: 3 })),
+    pipe([2, 4, 6], Computation.fromReadonlyArray(m)({ delay: 3 })),
+    pipe([9, 10], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true })),
+], Computation.fromReadonlyArray(m)(), Observable.mergeAll({
+    concurrency: 2,
+}), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), 
+/*
+testAsync(
+  "without delay, merge all observables as they are produced",
+  async () => {
+    using scheduler = HostScheduler.create();
+    await pipeAsync(
+      [1, 2, 3],
+      Observable.fromReadonlyArray(),
+      Computation.flatMap(Observable)<number, number>("mergeAll", x =>
+        pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+      ),
+      Observable.toReadonlyArrayAsync({ scheduler }),
+      expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+    );
+  },
+),*/
+test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Computation.fromReadonlyArray(m)(), Observable.map(x => pipe([x, x, x], Computation.fromReadonlyArray(m)())), Observable.mergeAll({
+    concurrency: 1,
+}), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("spring", testAsync("test with spring", pipeLazyAsync(Observable.spring(), Observable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.last(), expectEquals(1)))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m)({ delay: 2 }), Observable.takeUntil(pipe([1], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }))), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([10, 20])))), describe("throttle", test("first", pipeLazy(Observable.genPure(function* counter() {
     let x = 0;
     while (true) {
         yield x;
@@ -308,3 +333,4 @@ describe("merge", test("with sources that have the same delays", () => {
         DefaultScheduler.dispose();
     },
 });
+//((_: Observable.Signature) => {})(Observable);

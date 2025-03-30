@@ -32,8 +32,6 @@
 
 #### options
 
-##### innerType
-
 `TInnerLike`
 
 ### Returns

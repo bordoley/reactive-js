@@ -21,3 +21,5 @@ testModule(
     DefaultScheduler.dispose();
   },
 });
+
+//((_: Broadcaster.Signature) => {})(Broadcaster);

@@ -1008,9 +1008,7 @@ export interface SequentialComputationModule<
       Error,
       HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>
     >,
-    options: {
-      readonly innerType: TInnerLike;
-    },
+    options: TInnerLike,
   ): HigherOrderComputationOperator<TComputationType, TInnerLike, T, T>;
 
   concat<T>(
@@ -1039,9 +1037,9 @@ export interface SequentialComputationModule<
     >,
     T
   >;
-  concatAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
-    readonly innerType: TInnerLike;
-  }): HigherOrderComputationOperator<
+  concatAll<T, TInnerLike extends HigherOrderInnerComputationLike>(
+    options: TInnerLike,
+  ): HigherOrderComputationOperator<
     TComputationType,
     TInnerLike,
     HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
@@ -1255,12 +1253,13 @@ export interface ConcurrentReactiveComputationModule<
 export interface DeferredReactiveComputationModule<
   TComputationType extends AnyComputationType = AnyComputationType,
 > extends ComputationModuleLike<TComputationType> {
-  mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(options: {
-    readonly backpressureStrategy?: BackpressureStrategy;
-    readonly capacity?: number;
-    readonly concurrency?: number;
-    readonly innerType: TInnerLike;
-  }): HigherOrderComputationOperator<
+  mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(
+    options: {
+      readonly backpressureStrategy?: BackpressureStrategy;
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    } & TInnerLike,
+  ): HigherOrderComputationOperator<
     TComputationType,
     TInnerLike,
     HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
@@ -1274,9 +1273,7 @@ export interface DeferredReactiveComputationModule<
       HigherOrderInnerComputationOf<TComputationType, TInnerLike, TAcc>
     >,
     initialValue: Factory<TAcc>,
-    options: {
-      readonly innerType: TInnerLike;
-    },
+    options: TInnerLike,
   ): HigherOrderComputationOperator<TComputationType, TInnerLike, T, TAcc>;
 
   switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(

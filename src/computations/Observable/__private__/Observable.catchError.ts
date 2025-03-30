@@ -9,9 +9,7 @@ import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
 const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
-  options?: {
-    readonly innerType?: HigherOrderInnerComputationLike;
-  },
+  options?: HigherOrderInnerComputationLike,
 ) =>
   DeferredSource.catchError(
     Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing<T>,

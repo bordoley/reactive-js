@@ -23,9 +23,9 @@ export const create: <TSubscription extends DisposableLike, T>(
 >() => {
   const SkipFirstSink_count = Symbol("SkipFirstSink_count");
 
-  interface TProperties {
+  type TProperties = {
     [SkipFirstSink_count]: number;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),

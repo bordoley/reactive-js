@@ -14,7 +14,10 @@ import QueueMixin from "./QueueMixin.js";
 const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
     const FlowControllerQueueMixin_onReadyPublisher = Symbol("FlowControllerQueueMixin_onReadyPublisher");
     function createPublisher() {
-        const publisher = pipe(Publisher.createAsync(), Disposable.addTo(this));
+        const publisher = pipe(
+        // FIXME: Maybe we should have a constructor flag to set this
+        // to use an async publisher. Better for real work, harder for tests.
+        Publisher.create(), Disposable.addTo(this));
         this[FlowControllerQueueMixin_onReadyPublisher] = publisher;
         return publisher;
     }

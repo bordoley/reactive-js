@@ -4,9 +4,7 @@ import { ConsumerLike } from "../../utils.js";
 import { LatestEventListenerContextLike, LatestEventListenerLike, LatestEventListenerMode } from "../__mixins__/LatestEventListenerMixin.js";
 import { LiftedSinkLike } from "./LiftedSource.js";
 interface Signature {
-    catchError<T, TSource extends DeferredSourceLike<T, TConsumer>, TConsumer extends ConsumerLike<T>>(createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<TConsumer, TConsumer>, errorHandler: SideEffect1<Error> | Function1<Error, TSource>, options?: {
-        readonly innerType?: HigherOrderInnerComputationLike;
-    }): Function1<TSource, DeferredSourceLike<T, TConsumer>>;
+    catchError<T, TSource extends DeferredSourceLike<T, TConsumer>, TConsumer extends ConsumerLike<T>>(createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<TConsumer, TConsumer>, errorHandler: SideEffect1<Error> | Function1<Error, TSource>, options?: HigherOrderInnerComputationLike): Function1<TSource, DeferredSourceLike<T, TConsumer>>;
     concat<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
     create<T, TConsumer extends ConsumerLike<T>>(effect: SideEffect1<TConsumer>): DeferredSourceLike<T, TConsumer> & {
         readonly [ComputationLike_isPure]?: true;

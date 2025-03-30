@@ -27,9 +27,9 @@ export const create: <TSubscription extends DisposableLike, T>(
 >() => {
   const TakeFirstSink_count = Symbol("TakeFirstSink_count");
 
-  interface TProperties {
+  type TProperties = {
     [TakeFirstSink_count]: number;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),

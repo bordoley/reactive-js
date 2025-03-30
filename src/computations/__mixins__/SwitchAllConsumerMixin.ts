@@ -56,7 +56,7 @@ const SwitchAllConsumerMixin: <
 
   const SwitchAllConsumer_delegate = Symbol("SwitchAllConsumer_delegate");
 
-  interface TProperties {
+  type TProperties = {
     [SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: Function1<
       TConsumer,
       TConsumer
@@ -64,7 +64,7 @@ const SwitchAllConsumerMixin: <
     [SwitchAllConsumer_innerSubscription]: DisposableLike;
     [SwitchAllConsumer_delegate]: TConsumer;
     [SinkLike_isCompleted]: boolean;
-  }
+  };
 
   function onSwitchAllConsumerInnerSourceComplete(this: TProperties) {
     if (this[SinkLike_isCompleted]) {

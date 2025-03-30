@@ -101,7 +101,9 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
     this: TProperties & DisposableLike,
   ): PublisherLike<"ready" | "data_ready"> {
     const publisher = pipe(
-      Publisher.createAsync<"ready" | "data_ready">(),
+      // FIXME: Maybe we should have a constructor flag to set this
+      // to use an async publisher. Better for real work, harder for tests.
+      Publisher.create<"ready" | "data_ready">(),
       Disposable.addTo(this),
     );
     this[FlowControllerQueueMixin_onReadyPublisher] = publisher;

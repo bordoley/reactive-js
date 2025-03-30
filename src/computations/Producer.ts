@@ -45,6 +45,10 @@ import {
 } from "./Producer/__private__/Producer.latest.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
 import Producer_merge from "./Producer/__private__/Producer.merge.js";
+import {
+  Producer_concatAll,
+  Producer_mergeAll,
+} from "./Producer/__private__/Producer.mergeAll.js";
 import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
 import Producer_repeat from "./Producer/__private__/Producer.repeat.js";
 import Producer_retry from "./Producer/__private__/Producer.retry.js";
@@ -107,6 +111,7 @@ export const broadcast: Signature["broadcast"] = Producer_broadcast;
 export const catchError: Signature["catchError"] = Producer_catchError;
 export const combineLatest: Signature["combineLatest"] = Producer_combineLatest;
 export const concat: Signature["concat"] = Producer_concat;
+export const concatAll: Signature["concatAll"] = Producer_concatAll;
 export const create: Signature["create"] = Producer_create;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Producer_decodeWithCharset;
@@ -123,6 +128,7 @@ export const genPureAsync: Signature["genPureAsync"] = Producer_genPureAsync;
 export const keep: Signature["keep"] = Producer_keep;
 export const map: Signature["map"] = Producer_map;
 export const merge: Signature["merge"] = Producer_merge;
+export const mergeAll: Signature["mergeAll"] = Producer_mergeAll;
 export const pairwise: Signature["pairwise"] = Producer_pairwise;
 export const repeat: Signature["repeat"] = Producer_repeat;
 export const retry: Signature["retry"] = Producer_retry;

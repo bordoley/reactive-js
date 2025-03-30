@@ -9,9 +9,7 @@ import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
 const Producer_catchError: Producer.Signature["catchError"] = (<T>(
   errorHandler: SideEffect1<Error> | Function1<Error, ProducerLike<T>>,
-  options?: {
-    readonly innerType?: HigherOrderInnerComputationLike;
-  },
+  options?: HigherOrderInnerComputationLike,
 ) =>
   DeferredSource.catchError(
     Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing<T>,

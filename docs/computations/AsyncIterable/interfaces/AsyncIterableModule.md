@@ -74,8 +74,6 @@
 
 ###### options
 
-###### innerType
-
 `TInnerLike`
 
 ##### Returns
@@ -211,8 +209,6 @@
 ##### Parameters
 
 ###### options
-
-###### innerType
 
 `TInnerLike`
 

@@ -55,3 +55,4 @@ testModule("AsyncIterable", ComputationModuleTests(m), SequentialComputationModu
         DefaultScheduler.dispose();
     },
 });
+((_) => { })(AsyncIterable);

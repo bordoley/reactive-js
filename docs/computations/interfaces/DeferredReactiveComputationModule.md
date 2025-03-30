@@ -45,21 +45,7 @@
 
 ##### options
 
-###### backpressureStrategy?
-
-[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity?
-
-`number`
-
-###### concurrency?
-
-`number`
-
-###### innerType
-
-`TInnerLike`
+`object` & `TInnerLike`
 
 #### Returns
 
@@ -90,8 +76,6 @@
 [`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
 
 ##### options
-
-###### innerType
 
 `TInnerLike`
 

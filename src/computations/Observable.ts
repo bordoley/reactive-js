@@ -59,6 +59,10 @@ import {
 } from "./Observable/__private__/Observable.latest.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_merge from "./Observable/__private__/Observable.merge.js";
+import {
+  Observable_concatAll,
+  Observable_mergeAll,
+} from "./Observable/__private__/Observable.mergeAll.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
 import Observable_repeat from "./Observable/__private__/Observable.repeat.js";
 import Observable_retry from "./Observable/__private__/Observable.retry.js";
@@ -201,6 +205,7 @@ export const computeDeferred: Signature["computeDeferred"] =
 export const computeSynchronous: Signature["computeSynchronous"] =
   Observable_computeSynchronous;
 export const concat: Signature["concat"] = Observable_concat;
+export const concatAll: Signature["concatAll"] = Observable_concatAll;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
@@ -219,6 +224,7 @@ export const keep: Signature["keep"] = Observable_keep;
 export const keyFrame: Signature["keyFrame"] = Observable_keyFrame;
 export const map: Signature["map"] = Observable_map;
 export const merge: Signature["merge"] = Observable_merge;
+export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;

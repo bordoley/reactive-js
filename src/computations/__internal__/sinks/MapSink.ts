@@ -23,9 +23,9 @@ export const create: <TSubscription extends DisposableLike, TA, TB>(
 >() => {
   const MapSink_selector = Symbol("MapSink_selector");
 
-  interface TProperties {
+  type TProperties = {
     [MapSink_selector]: Function1<TA, TB>;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, TA, TB>()),

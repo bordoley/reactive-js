@@ -104,3 +104,5 @@ testModule(
     DefaultScheduler.dispose();
   },
 });
+
+((_: AsyncIterable.Signature) => {})(AsyncIterable);

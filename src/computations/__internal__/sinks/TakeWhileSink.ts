@@ -28,10 +28,10 @@ export const create: <TSubscription extends DisposableLike, T>(
   const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");
   const TakeWhileMixin_predicate = Symbol("TakeWhileMixin_predicate");
 
-  interface TProperties {
+  type TProperties = {
     [TakeWhileMixin_inclusive]: boolean;
     [TakeWhileMixin_predicate]: Predicate<T>;
-  }
+  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<TSubscription, T>()),
