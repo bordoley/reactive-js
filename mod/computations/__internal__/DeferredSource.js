@@ -1,7 +1,7 @@
 /// <reference types="./DeferredSource.d.ts" />
 
 import { Array_length } from "../../__internal__/constants.js";
-import { mixInstanceFactory, props, proto } from "../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, memoize, newInstance, none, pipe, pipeUnsafe, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -13,6 +13,7 @@ import Computation_areAllSynchronous from "../Computation/__private__/Computatio
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
+import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
 export const scanDistinct = memoize(m => (reducer, initialState, options) => (source) => create(consumer => {
@@ -144,6 +145,20 @@ export const createLifted = /*@__PURE__*/ (() => {
             const destinationOp = pipeUnsafe(observer, Sink.toLiftedSink(), ...this[LiftedSourceLike_sink], this[LiftedSource_liftedSinkToConsumer]);
             source[SourceLike_subscribe](destinationOp);
         },
+    }));
+})();
+export const latest = /*@__PURE__*/ (() => {
+    return mixInstanceFactory(include(LatestSourceMixin()), function DeferredLatestSource(sources, mode, createLatestEventListener) {
+        init(LatestSourceMixin(), this, sources, mode, createLatestEventListener);
+        this[ComputationLike_isPure] = Computation_areAllPure(sources);
+        this[ComputationLike_isSynchronous] =
+            Computation_areAllSynchronous(sources);
+        return this;
+    }, props({
+        [ComputationLike_isPure]: false,
+        [ComputationLike_isSynchronous]: false,
+    }), proto({
+        [ComputationLike_isDeferred]: true,
     }));
 })();
 export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {

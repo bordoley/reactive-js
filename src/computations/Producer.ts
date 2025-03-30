@@ -39,6 +39,10 @@ import {
   Producer_genPureAsync,
 } from "./Producer/__private__/Producer.genAsync.js";
 import Producer_keep from "./Producer/__private__/Producer.keep.js";
+import {
+  Producer_combineLatest,
+  Producer_zipLatest,
+} from "./Producer/__private__/Producer.latest.js";
 import Producer_map from "./Producer/__private__/Producer.map.js";
 import Producer_merge from "./Producer/__private__/Producer.merge.js";
 import Producer_pairwise from "./Producer/__private__/Producer.pairwise.js";
@@ -101,6 +105,7 @@ export type Signature = ProducerModule;
 export const buffer: Signature["buffer"] = Producer_buffer;
 export const broadcast: Signature["broadcast"] = Producer_broadcast;
 export const catchError: Signature["catchError"] = Producer_catchError;
+export const combineLatest: Signature["combineLatest"] = Producer_combineLatest;
 export const concat: Signature["concat"] = Producer_concat;
 export const create: Signature["create"] = Producer_create;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
@@ -137,3 +142,4 @@ export const withBackpressure: Signature["withBackpressure"] =
   Producer_withBackpressure;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Producer_withLatestFrom;
+export const zipLatest: Signature["zipLatest"] = Producer_zipLatest;

@@ -1,5 +1,11 @@
 import { Array_length } from "../../__internal__/constants.js";
-import { mixInstanceFactory, props, proto } from "../../__internal__/mixins.js";
+import {
+  include,
+  init,
+  mixInstanceFactory,
+  props,
+  proto,
+} from "../../__internal__/mixins.js";
 import {
   ComputationLike,
   ComputationLike_isDeferred,
@@ -17,6 +23,7 @@ import {
   Equality,
   Factory,
   Function1,
+  Function2,
   Optional,
   Predicate,
   Reducer,
@@ -50,6 +57,13 @@ import Computation_areAllSynchronous from "../Computation/__private__/Computatio
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
+
+import {
+  LatestEventListenerContextLike,
+  LatestEventListenerLike,
+  LatestEventListenerMode,
+} from "../__mixins__/LatestEventListenerMixin.js";
+import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import {
   LiftedSinkLike,
   LiftedSourceLike_sink,
@@ -248,6 +262,21 @@ interface Signature {
       [ComputationLike_isSynchronous]?: boolean;
     },
   ): DeferredSourceLike<TOut, TConsumerOut>;
+
+  latest<
+    TConsumer extends ConsumerLike<ReadonlyArray<unknown>>,
+    TSource extends DeferredSourceLike<unknown, TSourceConsumer>,
+    TSourceConsumer extends ConsumerLike<unknown> &
+      LatestEventListenerLike<unknown>,
+  >(
+    sources: readonly TSource[],
+    mode: LatestEventListenerMode,
+    createLatestEventListener: Function2<
+      TConsumer,
+      LatestEventListenerContextLike,
+      TSourceConsumer
+    >,
+  ): DeferredSourceLike<ReadonlyArray<unknown>, TConsumer>;
 
   merge<TConsumer extends ConsumerLike>(
     createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
@@ -636,6 +665,56 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
     }),
   );
 })() as Signature["createLifted"];
+
+export const latest: Signature["latest"] = /*@__PURE__*/ (<
+  T,
+  TConsumer extends ConsumerLike<ReadonlyArray<T>>,
+  TSource extends DeferredSourceLike<T, TSourceConsumer>,
+  TSourceConsumer extends ConsumerLike<T> & LatestEventListenerLike<T>,
+>() => {
+  type TProperties = {
+    [ComputationLike_isPure]: boolean;
+    [ComputationLike_isSynchronous]: boolean;
+  };
+
+  type TPrototype = {
+    [ComputationLike_isDeferred]: true;
+  };
+
+  return mixInstanceFactory(
+    include(LatestSourceMixin()),
+    function DeferredLatestSource(
+      this: TProperties & TPrototype,
+      sources: readonly TSource[],
+      mode: LatestEventListenerMode,
+      createLatestEventListener: Function2<
+        TConsumer,
+        LatestEventListenerContextLike,
+        TSourceConsumer
+      >,
+    ): DeferredSourceLike<ReadonlyArray<T>, TConsumer> {
+      init(
+        LatestSourceMixin<T, TConsumer, TSource, TSourceConsumer>(),
+        this,
+        sources,
+        mode,
+        createLatestEventListener,
+      );
+      this[ComputationLike_isPure] = Computation_areAllPure(sources);
+      this[ComputationLike_isSynchronous] =
+        Computation_areAllSynchronous(sources);
+
+      return this;
+    },
+    props<TProperties>({
+      [ComputationLike_isPure]: false,
+      [ComputationLike_isSynchronous]: false,
+    }),
+    proto<TPrototype>({
+      [ComputationLike_isDeferred]: true as const,
+    }),
+  );
+})();
 
 export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
   createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<

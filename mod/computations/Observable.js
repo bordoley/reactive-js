@@ -16,6 +16,7 @@ import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Ob
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
+import { Observable_combineLatest, Observable_zipLatest, } from "./Observable/__private__/Observable.latest.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_merge from "./Observable/__private__/Observable.merge.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
@@ -40,6 +41,7 @@ import Observable_withCurrentTime from "./Observable/__private__/Observable.with
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
+export const combineLatest = Observable_combineLatest;
 export const computeDeferred = Observable_computeDeferred;
 export const computeSynchronous = Observable_computeSynchronous;
 export const concat = Observable_concat;
@@ -79,3 +81,4 @@ export const toRunnable = Observable_toRunnable;
 export const withBackpressure = Observable_withBackpressure;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
+export const zipLatest = Observable_zipLatest;

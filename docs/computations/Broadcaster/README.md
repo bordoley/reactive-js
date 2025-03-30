@@ -19,6 +19,7 @@
 ## Functions
 
 - [addEventHandler](functions/addEventHandler.md)
+- [combineLatest](functions/combineLatest.md)
 - [create](functions/create.md)
 - [createPauseable](functions/createPauseable.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
@@ -37,3 +38,4 @@
 - [takeWhile](functions/takeWhile.md)
 - [toProducer](functions/toProducer.md)
 - [withLatestFrom](functions/withLatestFrom.md)
+- [zipLatest](functions/zipLatest.md)

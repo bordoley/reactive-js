@@ -22,6 +22,10 @@ import { Broadcaster_fromObservable } from "./Broadcaster/__private__/Broadcaste
 import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
+import {
+  Broadcaster_combineLatest,
+  Broadcaster_zipLatest,
+} from "./Broadcaster/__private__/Broadcaster.latest.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
 import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
 import Broadcaster_pairwise from "./Broadcaster/__private__/Broadcaster.pairwise.js";
@@ -86,6 +90,8 @@ export type Signature = BroadcasterModule;
 
 export const addEventHandler: Signature["addEventHandler"] =
   Broadcaster_addEventHandler;
+export const combineLatest: Signature["combineLatest"] =
+  Broadcaster_combineLatest;
 export const create: Signature["create"] = Broadcaster_create;
 export const createPauseable: Signature["createPauseable"] =
   Broadcaster_createPauseable;
@@ -108,3 +114,4 @@ export const takeWhile: Signature["takeWhile"] = Broadcaster_takeWhile;
 export const toProducer: Signature["toProducer"] = Broadcaster_toProducer;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Broadcaster_withLatestFrom;
+export const zipLatest: Signature["zipLatest"] = Broadcaster_zipLatest;

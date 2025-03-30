@@ -22,17 +22,23 @@ import DelegatingEventListenerMixin, {
 
 export interface DelegatingSinkLike<
   T,
-  TDelegateSink extends SinkLike<T> = SinkLike<T>,
-> extends DelegatingEventListenerLike<T, TDelegateSink>,
+  TOut = T,
+  TDelegateSink extends SinkLike<TOut> = SinkLike<TOut>,
+> extends DelegatingEventListenerLike<T, TOut, TDelegateSink>,
     SinkLike<T> {}
 
-type TReturn<T, TDelegateSink extends SinkLike<T> = SinkLike<T>> = Omit<
-  DelegatingSinkLike<T, TDelegateSink>,
-  keyof DisposableLike
->;
+type TReturn<
+  T,
+  TOut = T,
+  TDelegateSink extends SinkLike<TOut> = SinkLike<TOut>,
+> = Omit<DelegatingSinkLike<T, TOut, TDelegateSink>, keyof DisposableLike>;
 
-type TPrototype<T, TDelegateSink extends SinkLike<T> = SinkLike<T>> = Omit<
-  DelegatingSinkLike<T, TDelegateSink>,
+type TPrototype<
+  T,
+  TOut = T,
+  TDelegateSink extends SinkLike<TOut> = SinkLike<TOut>,
+> = Omit<
+  DelegatingSinkLike<T, TOut, TDelegateSink>,
   | keyof DisposableLike
   | typeof DelegatingEventListenerLike_delegate
   | typeof EventListenerLike_notify
@@ -40,20 +46,29 @@ type TPrototype<T, TDelegateSink extends SinkLike<T> = SinkLike<T>> = Omit<
 
 const DelegatingSinkMixin: <
   T,
-  TDelegateSink extends SinkLike<T> = SinkLike<T>,
+  TOut = T,
+  TDelegateSink extends SinkLike<TOut> = SinkLike<TOut>,
 >() => Mixin1<
-  TReturn<T, TDelegateSink>,
+  TReturn<T, TOut, TDelegateSink>,
   TDelegateSink,
-  TPrototype<T, TDelegateSink>
-> = /*@__PURE__*/ (<T, TDelegateSink extends SinkLike<T> = SinkLike<T>>() => {
+  TPrototype<T, TOut, TDelegateSink>
+> = /*@__PURE__*/ (<
+  T,
+  TOut = T,
+  TDelegateSink extends SinkLike<TOut> = SinkLike<TOut>,
+>() => {
   return returns(
     mix(
       include(DelegatingEventListenerMixin()),
       function DelegatingSinkMixin(
-        this: TPrototype<T, TDelegateSink>,
+        this: TPrototype<T, TOut, TDelegateSink>,
         delegate: TDelegateSink,
-      ): TReturn<T, TDelegateSink> {
-        init(DelegatingEventListenerMixin<T, TDelegateSink>(), this, delegate);
+      ): TReturn<T, TOut, TDelegateSink> {
+        init(
+          DelegatingEventListenerMixin<T, TOut, TDelegateSink>(),
+          this,
+          delegate,
+        );
         return this;
       },
       props(),

@@ -21,6 +21,7 @@
 - [broadcast](functions/broadcast.md)
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
+- [combineLatest](functions/combineLatest.md)
 - [concat](functions/concat.md)
 - [create](functions/create.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
@@ -50,3 +51,4 @@
 - [toProducer](functions/toProducer.md)
 - [withBackpressure](functions/withBackpressure.md)
 - [withLatestFrom](functions/withLatestFrom.md)
+- [zipLatest](functions/zipLatest.md)

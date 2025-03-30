@@ -139,12 +139,11 @@ const SwitchAllConsumerMixin: <
         },
         [SinkLike_complete](this: TProperties) {
           const isCompleted = this[SinkLike_isCompleted];
+          this[SinkLike_isCompleted] = true;
           const innerSubscriptionIsDispoed =
             this[SwitchAllConsumer_innerSubscription][
               DisposableLike_isDisposed
             ];
-
-          this[SinkLike_isCompleted] = true;
 
           if (!isCompleted && innerSubscriptionIsDispoed) {
             this[SwitchAllConsumer_delegate][SinkLike_complete]();

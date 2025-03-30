@@ -26,6 +26,7 @@
 
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
+- [combineLatest](functions/combineLatest.md)
 - [computeDeferred](functions/computeDeferred.md)
 - [computeSynchronous](functions/computeSynchronous.md)
 - [concat](functions/concat.md)
@@ -63,3 +64,4 @@
 - [withBackpressure](functions/withBackpressure.md)
 - [withCurrentTime](functions/withCurrentTime.md)
 - [withLatestFrom](functions/withLatestFrom.md)
+- [zipLatest](functions/zipLatest.md)

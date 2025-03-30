@@ -27,20 +27,26 @@ import DelegatingSinkMixin, {
 
 export interface DelegatingConsumerLike<
   T,
-  TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
-> extends DelegatingSinkLike<T, TDelegateConsumer>,
+  TOut = T,
+  TDelegateConsumer extends ConsumerLike<TOut> = ConsumerLike<TOut>,
+> extends DelegatingSinkLike<T, TOut, TDelegateConsumer>,
     ConsumerLike<T> {}
 
 type TReturn<
   T,
-  TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
-> = Omit<DelegatingConsumerLike<T, TDelegateConsumer>, keyof DisposableLike>;
+  TOut = T,
+  TDelegateConsumer extends ConsumerLike<TOut> = ConsumerLike<TOut>,
+> = Omit<
+  DelegatingConsumerLike<T, TOut, TDelegateConsumer>,
+  keyof DisposableLike
+>;
 
 type TPrototype<
   T,
-  TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
+  TOut = T,
+  TDelegateConsumer extends ConsumerLike<TOut> = ConsumerLike<TOut>,
 > = Omit<
-  DelegatingConsumerLike<T, TDelegateConsumer>,
+  DelegatingConsumerLike<T, TOut, TDelegateConsumer>,
   | keyof DisposableLike
   | typeof DelegatingEventListenerLike_delegate
   | typeof EventListenerLike_notify
@@ -50,50 +56,52 @@ type TPrototype<
 
 const DelegatingConsumerMixin: <
   T,
-  TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
+  TOut = T,
+  TDelegateConsumer extends ConsumerLike<TOut> = ConsumerLike<TOut>,
 >() => Mixin1<
-  TReturn<T, TDelegateConsumer>,
+  TReturn<T, TOut, TDelegateConsumer>,
   TDelegateConsumer,
-  TPrototype<T, TDelegateConsumer>
+  TPrototype<T, TOut, TDelegateConsumer>
 > = /*@__PURE__*/ (<
   T,
-  TDelegateConsumer extends ConsumerLike<T> = ConsumerLike<T>,
+  TOut = T,
+  TDelegateConsumer extends ConsumerLike<TOut> = ConsumerLike<TOut>,
 >() => {
   return returns(
     mix(
       include(DelegatingSinkMixin()),
       function DelegatingConsumerMixin(
-        this: TPrototype<T, TDelegateConsumer>,
+        this: TPrototype<T, TOut, TDelegateConsumer>,
         delegate: TDelegateConsumer,
-      ): TReturn<T, TDelegateConsumer> {
-        init(DelegatingSinkMixin<T, TDelegateConsumer>(), this, delegate);
+      ): TReturn<T, TOut, TDelegateConsumer> {
+        init(DelegatingSinkMixin<T, TOut, TDelegateConsumer>(), this, delegate);
         return this;
       },
       props(),
       proto({
         get [FlowControllerLike_isReady](): boolean {
-          unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
+          unsafeCast<DelegatingConsumerLike<T, TOut, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
             FlowControllerLike_isReady
           ];
         },
 
         get [FlowControllerLike_backpressureStrategy](): BackpressureStrategy {
-          unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
+          unsafeCast<DelegatingConsumerLike<T, TOut, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
             FlowControllerLike_backpressureStrategy
           ];
         },
 
         get [FlowControllerLike_capacity](): number {
-          unsafeCast<DelegatingConsumerLike<T, TDelegateConsumer>>(this);
+          unsafeCast<DelegatingConsumerLike<T, TOut, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
             FlowControllerLike_capacity
           ];
         },
 
         [FlowControllerLike_addOnReadyListener](
-          this: DelegatingConsumerLike<T, TDelegateConsumer>,
+          this: DelegatingConsumerLike<T, TOut, TDelegateConsumer>,
           callback: SideEffect1<void>,
         ) {
           return this[DelegatingEventListenerLike_delegate][

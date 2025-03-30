@@ -10,6 +10,7 @@ import { Broadcaster_fromObservable } from "./Broadcaster/__private__/Broadcaste
 import Broadcaster_fromPromise from "./Broadcaster/__private__/Broadcaster.fromPromise.js";
 import Broadcaster_genPure from "./Broadcaster/__private__/Broadcaster.genPure.js";
 import Broadcaster_keep from "./Broadcaster/__private__/Broadcaster.keep.js";
+import { Broadcaster_combineLatest, Broadcaster_zipLatest, } from "./Broadcaster/__private__/Broadcaster.latest.js";
 import Broadcaster_map from "./Broadcaster/__private__/Broadcaster.map.js";
 import Broadcaster_merge from "./Broadcaster/__private__/Broadcaster.merge.js";
 import Broadcaster_pairwise from "./Broadcaster/__private__/Broadcaster.pairwise.js";
@@ -21,6 +22,7 @@ import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhi
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Broadcaster_withLatestFrom from "./Broadcaster/__private__/Broadcaster.withLatestFrom.js";
 export const addEventHandler = Broadcaster_addEventHandler;
+export const combineLatest = Broadcaster_combineLatest;
 export const create = Broadcaster_create;
 export const createPauseable = Broadcaster_createPauseable;
 export const distinctUntilChanged = Broadcaster_distinctUntilChanged;
@@ -39,3 +41,4 @@ export const takeUntil = Broadcaster_takeUntil;
 export const takeWhile = Broadcaster_takeWhile;
 export const toProducer = Broadcaster_toProducer;
 export const withLatestFrom = Broadcaster_withLatestFrom;
+export const zipLatest = Broadcaster_zipLatest;

@@ -145,7 +145,9 @@ testModule("Observable", ComputationModuleTests(m), SequentialComputationModuleT
     );
   }),
 ),*/
-describe("computeSynchronous", test("batch mode", () => {
+describe("combineLatest", test("combineLatest from two interspersing sources", pipeLazy(Observable.combineLatest(pipe([3, 5, 7], Computation.fromReadonlyArray(m)({ delay: 2 })), pipe([2, 4], Computation.fromReadonlyArray(m)({ delay: 3 }))), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
+    valuesEquality: arrayEquality(),
+})))), describe("computeSynchronous", test("batch mode", () => {
     const result = [];
     pipe(Observable.computeSynchronous(() => {
         const fromValueWithDelay = __constant((delay, value) => pipe([value], Computation.fromReadonlyArray(m)({ delay })));
@@ -297,7 +299,7 @@ describe("merge", test("with sources that have the same delays", () => {
     finally {
         __disposeResources(env_3);
     }
-}), test("with selector", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })), (x, y) => x + y), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 3, 4])))))({
+}), test("with selector", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })), (x, y) => x + y), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 3, 4])))), describe("zipLatest", test("zip two delayed sources", pipeLazy(Observable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }))), m.map(([a, b]) => a + b), Observable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11])))))({
     beforeEach() {
         const scheduler = HostScheduler.create();
         DefaultScheduler.set(scheduler);

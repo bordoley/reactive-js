@@ -59,6 +59,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
 export type Signature = ObservableModule;
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
+export declare const combineLatest: Signature["combineLatest"];
 export declare const computeDeferred: Signature["computeDeferred"];
 export declare const computeSynchronous: Signature["computeSynchronous"];
 export declare const concat: Signature["concat"];
@@ -97,3 +98,4 @@ export declare const toRunnable: Signature["toRunnable"];
 export declare const withBackpressure: Signature["withBackpressure"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
+export declare const zipLatest: Signature["zipLatest"];

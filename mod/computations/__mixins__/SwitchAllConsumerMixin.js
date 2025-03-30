@@ -47,8 +47,8 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];
-            const innerSubscriptionIsDispoed = this[SwitchAllConsumer_innerSubscription][DisposableLike_isDisposed];
             this[SinkLike_isCompleted] = true;
+            const innerSubscriptionIsDispoed = this[SwitchAllConsumer_innerSubscription][DisposableLike_isDisposed];
             if (!isCompleted && innerSubscriptionIsDispoed) {
                 this[SwitchAllConsumer_delegate][SinkLike_complete]();
             }

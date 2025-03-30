@@ -20,7 +20,11 @@ const ConcurrentReactiveComputationModuleTests = <
   TComputationModule extends ComputationModule &
     PickComputationModule<
       ConcurrentReactiveComputationModule,
-      "fromObservable" | "merge" | "takeUntil" | "withLatestFrom"
+      | "combineLatest"
+      | "fromObservable"
+      | "merge"
+      | "takeUntil"
+      | "withLatestFrom"
     >,
 >(
   m: TComputationModule,

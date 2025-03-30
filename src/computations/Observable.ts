@@ -53,6 +53,10 @@ import {
 } from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
+import {
+  Observable_combineLatest,
+  Observable_zipLatest,
+} from "./Observable/__private__/Observable.latest.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_merge from "./Observable/__private__/Observable.merge.js";
 import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js";
@@ -190,6 +194,8 @@ export type Signature = ObservableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
+export const combineLatest: Signature["combineLatest"] =
+  Observable_combineLatest;
 export const computeDeferred: Signature["computeDeferred"] =
   Observable_computeDeferred;
 export const computeSynchronous: Signature["computeSynchronous"] =
@@ -236,3 +242,4 @@ export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Observable_withLatestFrom;
+export const zipLatest: Signature["zipLatest"] = Observable_zipLatest;

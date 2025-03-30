@@ -127,6 +127,26 @@ testModule(
     }),
   ),*/
   describe(
+    "combineLatest",
+    test(
+      "combineLatest from two interspersing sources",
+      pipeLazy(
+        Observable.combineLatest<number, number>(
+          pipe([3, 5, 7], Computation.fromReadonlyArray(m)({ delay: 2 })),
+          pipe([2, 4], Computation.fromReadonlyArray(m)({ delay: 3 })),
+        ),
+        Observable.toRunnable<Tuple2<number, number>>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals(
+          [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
+          {
+            valuesEquality: arrayEquality(),
+          },
+        ),
+      ),
+    ),
+  ),
+  describe(
     "computeSynchronous",
     test("batch mode", () => {
       const result: number[] = [];
@@ -569,6 +589,28 @@ testModule(
         Observable.toRunnable(),
         Runnable.toReadonlyArray<number>(),
         expectArrayEquals([0, 1, 3, 4]),
+      ),
+    ),
+  ),
+  describe(
+    "zipLatest",
+    test(
+      "zip two delayed sources",
+      pipeLazy(
+        Observable.zipLatest<number, number>(
+          pipe(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }),
+          ),
+          pipe(
+            [1, 2, 3, 4],
+            Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }),
+          ),
+        ),
+        m.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+        Observable.toRunnable<number>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([2, 5, 8, 11]),
       ),
     ),
   ),

@@ -1,6 +1,7 @@
 import { ComputationLike_isPure, ComputationLike_isSynchronous, ComputationModule, DeferredSourceLike, HigherOrderInnerComputationLike, IterableLike, PickComputationModule, SequentialComputationModule } from "../../computations.js";
-import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1 } from "../../functions.js";
+import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "../../functions.js";
 import { ConsumerLike } from "../../utils.js";
+import { LatestEventListenerContextLike, LatestEventListenerLike, LatestEventListenerMode } from "../__mixins__/LatestEventListenerMixin.js";
 import { LiftedSinkLike } from "./LiftedSource.js";
 interface Signature {
     catchError<T, TSource extends DeferredSourceLike<T, TConsumer>, TConsumer extends ConsumerLike<T>>(createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<TConsumer, TConsumer>, errorHandler: SideEffect1<Error> | Function1<Error, TSource>, options?: {
@@ -74,6 +75,7 @@ interface Signature {
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
     }): DeferredSourceLike<TOut, TConsumerOut>;
+    latest<TConsumer extends ConsumerLike<ReadonlyArray<unknown>>, TSource extends DeferredSourceLike<unknown, TSourceConsumer>, TSourceConsumer extends ConsumerLike<unknown> & LatestEventListenerLike<unknown>>(sources: readonly TSource[], mode: LatestEventListenerMode, createLatestEventListener: Function2<TConsumer, LatestEventListenerContextLike, TSourceConsumer>): DeferredSourceLike<ReadonlyArray<unknown>, TConsumer>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
@@ -89,6 +91,7 @@ export declare const catchError: Signature["catchError"];
 export declare const concat: Signature["concat"];
 export declare const create: Signature["create"];
 export declare const createLifted: Signature["createLifted"];
+export declare const latest: Signature["latest"];
 export declare const merge: Signature["merge"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];

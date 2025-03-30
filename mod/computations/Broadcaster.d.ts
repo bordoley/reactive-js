@@ -28,6 +28,7 @@ export interface BroadcasterModule extends ComputationModule<BroadcasterComputat
 }
 export type Signature = BroadcasterModule;
 export declare const addEventHandler: Signature["addEventHandler"];
+export declare const combineLatest: Signature["combineLatest"];
 export declare const create: Signature["create"];
 export declare const createPauseable: Signature["createPauseable"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
@@ -46,3 +47,4 @@ export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const toProducer: Signature["toProducer"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
+export declare const zipLatest: Signature["zipLatest"];
