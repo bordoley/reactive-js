@@ -456,30 +456,6 @@
 
 ***
 
-### fromAsyncIterable()
-
-> **fromAsyncIterable**\<`T`\>(`options`?): [`FromAsyncIterableOperator`](../../type-aliases/FromAsyncIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`FromAsyncIterableOperator`](../../type-aliases/FromAsyncIterableOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromAsyncIterable`](../../interfaces/ConcurrentReactiveComputationModule.md#fromasynciterable)
-
-***
-
 ### fromBroadcaster()
 
 > **fromBroadcaster**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>\>
@@ -889,30 +865,6 @@
 #### Inherited from
 
 [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredReactiveComputationModule.md#mergeall)
-
-***
-
-### never()
-
-> **never**\<`T`\>(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> & [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`never`](../../interfaces/ConcurrentReactiveComputationModule.md#never)
 
 ***
 

@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentReactiveComputationModule
 
-# Interface: ConcurrentReactiveComputationModule\<TComputationType, TCreationOptions\>
+# Interface: ConcurrentReactiveComputationModule\<TComputationType\>
 
 ## Extends
 
@@ -19,8 +19,6 @@
 ## Type Parameters
 
 • **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
-
-• **TCreationOptions** *extends* `object` = \{\}
 
 ## Properties
 
@@ -51,26 +49,6 @@
 > **zipLatest**: [`CombineConstructor`](CombineConstructor.md)\<`TComputationType`\>
 
 ## Methods
-
-### fromAsyncIterable()
-
-> **fromAsyncIterable**\<`T`\>(`options`?): [`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"fromAsyncIterable"`\]
-
-#### Returns
-
-[`FromAsyncIterableOperator`](../type-aliases/FromAsyncIterableOperator.md)\<`TComputationType`, `T`\>
-
-***
 
 ### fromBroadcaster()
 
@@ -231,26 +209,6 @@
 ##### Returns
 
 [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
-
-***
-
-### never()
-
-> **never**\<`T`\>(`options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`TCreationOptions`\[`"never"`\]
-
-#### Returns
-
-[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 ***
 

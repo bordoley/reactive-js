@@ -404,30 +404,6 @@
 
 ***
 
-### fromAsyncIterable()
-
-> **fromAsyncIterable**\<`T`\>(`options`?): [`FromAsyncIterableOperator`](../../type-aliases/FromAsyncIterableOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`FromAsyncIterableOperator`](../../type-aliases/FromAsyncIterableOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromAsyncIterable`](../../interfaces/ConcurrentReactiveComputationModule.md#fromasynciterable)
-
-***
-
 ### fromBroadcaster()
 
 > **fromBroadcaster**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
@@ -803,30 +779,6 @@
 #### Inherited from
 
 [`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredReactiveComputationModule.md#mergeall)
-
-***
-
-### never()
-
-> **never**\<`T`\>(`options`?): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### options?
-
-`unknown`
-
-#### Returns
-
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`never`](../../interfaces/ConcurrentReactiveComputationModule.md#never)
 
 ***
 

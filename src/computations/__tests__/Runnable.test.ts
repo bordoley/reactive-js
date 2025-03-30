@@ -68,4 +68,4 @@ testModule(
   },
 });
 
-//((_: Runnable.Signature) => {})(Runnable);
+((_: Runnable.Signature) => {})(Runnable);

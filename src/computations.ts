@@ -1133,19 +1133,11 @@ export interface SequentialReactiveComputationModule<
 
 export interface ConcurrentReactiveComputationModule<
   TComputationType extends AnyComputationType = AnyComputationType,
-  TCreationOptions extends {
-    fromAsyncIterable?: Record<string, any>;
-    never?: Record<string, any>;
-  } = {},
 > extends ComputationModuleLike<TComputationType> {
   fromBroadcaster<T>(): Function1<
     BroadcasterLike<T>,
     PureDeferredComputationOf<TComputationType, T>
   >;
-
-  fromAsyncIterable<T>(
-    options?: TCreationOptions["fromAsyncIterable"],
-  ): FromAsyncIterableOperator<TComputationType, T>;
 
   fromObservable<T>(options?: {
     scheduler?: SchedulerLike;
@@ -1178,10 +1170,6 @@ export interface ConcurrentReactiveComputationModule<
   merge<T>(
     ...computations: readonly ComputationOf<TComputationType, T>[]
   ): ComputationOf<TComputationType, T> & DisposableLike;
-
-  never<T>(
-    options?: TCreationOptions["never"],
-  ): NewPureInstanceOf<TComputationType, T>;
 
   takeUntil<T>(
     notifier: PureSynchronousComputationOf<TComputationType, unknown>,

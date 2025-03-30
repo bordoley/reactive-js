@@ -297,12 +297,8 @@ export interface SequentialReactiveComputationModule<TComputationType extends An
         readonly count?: number;
     }): PureComputationOperator<TComputationType, T, T>;
 }
-export interface ConcurrentReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType, TCreationOptions extends {
-    fromAsyncIterable?: Record<string, any>;
-    never?: Record<string, any>;
-} = {}> extends ComputationModuleLike<TComputationType> {
+export interface ConcurrentReactiveComputationModule<TComputationType extends AnyComputationType = AnyComputationType> extends ComputationModuleLike<TComputationType> {
     fromBroadcaster<T>(): Function1<BroadcasterLike<T>, PureDeferredComputationOf<TComputationType, T>>;
-    fromAsyncIterable<T>(options?: TCreationOptions["fromAsyncIterable"]): FromAsyncIterableOperator<TComputationType, T>;
     fromObservable<T>(options?: {
         scheduler?: SchedulerLike;
     }): FromObservableOperator<TComputationType, T>;
@@ -315,7 +311,6 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends An
     merge<T>(...computations: readonly DeferredComputationOf<TComputationType, T>[]): DeferredComputationWithSideEffectsOf<TComputationType, T>;
     merge<T>(...computations: readonly MulticastComputationOf<TComputationType, T>[]): MulticastComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly ComputationOf<TComputationType, T>[]): ComputationOf<TComputationType, T> & DisposableLike;
-    never<T>(options?: TCreationOptions["never"]): NewPureInstanceOf<TComputationType, T>;
     takeUntil<T>(notifier: PureSynchronousComputationOf<TComputationType, unknown>): PureComputationOperator<TComputationType, T, T>;
     takeUntil<T>(notifier: SynchronousComputationWithSideEffectsOf<TComputationType, unknown>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
     takeUntil<T>(notifier: PureDeferredComputationOf<TComputationType, unknown>): PureAsynchronousComputationOperator<TComputationType, T, T>;
