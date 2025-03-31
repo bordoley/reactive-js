@@ -46,3 +46,4 @@
 - [web/Element](web/Element/README.md)
 - [web/PostTaskScheduler](web/PostTaskScheduler/README.md)
 - [web/ServerSideEventSource](web/ServerSideEventSource/README.md)
+- [web/WindowLocation](web/WindowLocation/README.md)
