@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { bindMethod, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { DisposableLike_dispose, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike_subscription, } from "../LiftedSource.js";
 export const create = /*@__PURE__*/ (() => {
     const TakeUntilSink_notifierSubscription = Symbol("TakeUntilSink_notifierSubscription");
@@ -18,7 +18,6 @@ export const create = /*@__PURE__*/ (() => {
     }), proto({
         [DelegatingLiftedSinkLike_onCompleted]() {
             this[TakeUntilSink_notifierSubscription][DisposableLike_dispose]();
-            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         },
     }));
 })();

@@ -2,7 +2,7 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, raise } from "../../../functions.js";
-import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_isEmpty = Symbol("ThrowIfEmptySink_isEmpty");
@@ -31,7 +31,6 @@ export const create = /*@__PURE__*/ (() => {
                 }
                 raise(err);
             }
-            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         },
     }));
 })();

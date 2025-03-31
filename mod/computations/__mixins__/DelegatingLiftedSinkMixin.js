@@ -8,7 +8,6 @@ import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
 export const DelegatingLiftedSinkLike_delegate = Symbol("DelegatingLiftedSinkLike_delegate");
 export const DelegatingLiftedSinkLike_onCompleted = Symbol("DelegatingLiftedSinkLike_onCompleted");
 const DelegatingLiftedSinkMixin = /*@__PURE__*/ (() => {
-    const DelegatingLiftedSinkMixin_isCompleted = Symbol("DelegatingLiftedSinkMixin_isCompleted");
     return returns(mix(include(DelegatingDisposableMixin), function DelegatingLiftedSinkMixin(delegate) {
         this[DelegatingLiftedSinkLike_delegate] = delegate;
         this[LiftedSinkLike_subscription] =
@@ -17,24 +16,22 @@ const DelegatingLiftedSinkMixin = /*@__PURE__*/ (() => {
         return this;
     }, props({
         [DelegatingLiftedSinkLike_delegate]: none,
-        [DelegatingLiftedSinkMixin_isCompleted]: false,
         [LiftedSinkLike_subscription]: none,
     }), proto({
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return this[LiftedSinkLike_subscription][SinkLike_isCompleted];
         },
-        [DelegatingLiftedSinkLike_onCompleted]() {
-            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
-        },
+        [DelegatingLiftedSinkLike_onCompleted]() { },
         [EventListenerLike_notify](next) {
             this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];
-            this[DelegatingLiftedSinkMixin_isCompleted] = true;
             if (!isCompleted) {
+                const delegate = this[DelegatingLiftedSinkLike_delegate];
                 this[DelegatingLiftedSinkLike_onCompleted]();
+                delegate[SinkLike_complete]();
             }
         },
     })));

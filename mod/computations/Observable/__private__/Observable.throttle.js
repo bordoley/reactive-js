@@ -5,7 +5,7 @@ import { bind, call, isSome, none, partial, pipe, returns, } from "../../../func
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
-import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Source from "../../Source.js";
 import SynchronousObservable_delay from "../../SynchronousObservable/__private__/SynchronousObservable.delay.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
@@ -76,7 +76,6 @@ const createThrottleSink = /*@__PURE__*/ (() => {
                 this[ThrottleSink_hasValue] = false;
                 delegate[EventListenerLike_notify](value);
             }
-            delegate[SinkLike_complete]();
         },
     }));
 })();

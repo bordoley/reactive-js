@@ -26,7 +26,6 @@ import {
   ObserverLike,
   SerialDisposableLike,
   SerialDisposableLike_current,
-  SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -175,7 +174,6 @@ const createThrottleSink: <T>(
           this[ThrottleSink_hasValue] = false;
           delegate[EventListenerLike_notify](value);
         }
-        delegate[SinkLike_complete]();
       },
     }),
   );

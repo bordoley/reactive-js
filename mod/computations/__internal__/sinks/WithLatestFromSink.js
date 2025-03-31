@@ -35,7 +35,6 @@ export const create = /*@__PURE__*/ (() => {
     }), proto({
         [DelegatingLiftedSinkLike_onCompleted]() {
             this[WithLatestFromSink_otherSubscription][DisposableLike_dispose]();
-            this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         },
         [EventListenerLike_notify](next) {
             const shouldEmit = this[WithLatestFromSink_hasLatest];

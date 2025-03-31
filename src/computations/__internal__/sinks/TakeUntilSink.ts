@@ -22,7 +22,6 @@ import {
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import {
@@ -86,7 +85,6 @@ export const create: <TSubscription extends SinkLike, T, TNotifier>(
         this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
       ) {
         this[TakeUntilSink_notifierSubscription][DisposableLike_dispose]();
-        this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
       },
     }),
   );

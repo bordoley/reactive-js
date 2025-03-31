@@ -7,11 +7,7 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Optional, newInstance, none } from "../../../functions.js";
-import {
-  EventListenerLike_notify,
-  SinkLike,
-  SinkLike_complete,
-} from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
@@ -106,8 +102,6 @@ export const create: <TSubscription extends SinkLike>(
         if (data[Array_length] > 0) {
           delegate[EventListenerLike_notify](data);
         }
-
-        delegate[SinkLike_complete]();
       },
     }),
   );

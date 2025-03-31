@@ -121,7 +121,6 @@ export const create: <TSubscription extends SinkLike, TOther, TA, TB, T>(
         this: TProperties & DelegatingLiftedSinkLike<TSubscription, T>,
       ) {
         this[WithLatestFromSink_otherSubscription][DisposableLike_dispose]();
-        this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
       },
 
       [EventListenerLike_notify](

@@ -3,7 +3,7 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
-import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const DecodeWithCharsetSink_textDecoder = Symbol("DecodeWithCharsetSink_textDecoder");
@@ -32,7 +32,6 @@ export const create = /*@__PURE__*/ (() => {
             if (data[Array_length] > 0) {
                 delegate[EventListenerLike_notify](data);
             }
-            delegate[SinkLike_complete]();
         },
     }));
 })();

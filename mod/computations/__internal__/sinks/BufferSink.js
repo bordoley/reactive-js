@@ -4,7 +4,7 @@ import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
-import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
+import { EventListenerLike_notify } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const BufferSink_buffer = Symbol("BufferSink_buffer");
@@ -35,7 +35,6 @@ export const create = /*@__PURE__*/ (() => {
             if (buffer[Array_length] > 0) {
                 delegate[EventListenerLike_notify](buffer);
             }
-            delegate[SinkLike_complete]();
         },
     }));
 })();

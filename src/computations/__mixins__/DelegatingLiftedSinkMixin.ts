@@ -68,12 +68,8 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {
-  const DelegatingLiftedSinkMixin_isCompleted = Symbol(
-    "DelegatingLiftedSinkMixin_isCompleted",
-  );
   type TProperties = {
     [DelegatingLiftedSinkLike_delegate]: LiftedSinkLike<TSubscription, TB>;
-    [DelegatingLiftedSinkMixin_isCompleted]: boolean;
     [LiftedSinkLike_subscription]: TSubscription;
   };
 
@@ -98,7 +94,6 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
       },
       props<TProperties>({
         [DelegatingLiftedSinkLike_delegate]: none,
-        [DelegatingLiftedSinkMixin_isCompleted]: false,
         [LiftedSinkLike_subscription]: none,
       }),
       proto<TPrototype<TSubscription, TA>>({
@@ -107,9 +102,7 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
           return this[LiftedSinkLike_subscription][SinkLike_isCompleted];
         },
 
-        [DelegatingLiftedSinkLike_onCompleted](this: TProperties) {
-          this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
-        },
+        [DelegatingLiftedSinkLike_onCompleted](this: TProperties) {},
 
         [EventListenerLike_notify](this: TProperties, next: TA) {
           this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
@@ -121,10 +114,11 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
           this: TProperties & TPrototype<TSubscription, TA, TB>,
         ) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[DelegatingLiftedSinkMixin_isCompleted] = true;
 
           if (!isCompleted) {
+            const delegate = this[DelegatingLiftedSinkLike_delegate];
             this[DelegatingLiftedSinkLike_onCompleted]();
+            delegate[SinkLike_complete]();
           }
         },
       }),
