@@ -1,3 +1,3 @@
-import { DisposableLike } from "../../../utils.js";
+import { SinkLike } from "../../../utils.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
-export declare const create: <TSubscription extends DisposableLike>(delegate: LiftedSinkLike<TSubscription, ArrayBuffer>) => LiftedSinkLike<TSubscription, string>;
+export declare const create: <TSubscription extends SinkLike>(delegate: LiftedSinkLike<TSubscription, ArrayBuffer>) => LiftedSinkLike<TSubscription, string>;

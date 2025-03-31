@@ -10,8 +10,8 @@ import {
 import { none, returns } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  DisposableLike,
   EventListenerLike_notify,
+  SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -29,7 +29,7 @@ export const DelegatingLiftedSinkLike_onCompleted = Symbol(
 );
 
 export interface DelegatingLiftedSinkLike<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   TA,
   TB = TA,
 > extends LiftedSinkLike<TSubscription, TA> {
@@ -41,7 +41,7 @@ export interface DelegatingLiftedSinkLike<
   [DelegatingLiftedSinkLike_onCompleted](): void;
 }
 
-type TPrototype<TSubscription extends DisposableLike, TA, TB = TA> = Pick<
+type TPrototype<TSubscription extends SinkLike, TA, TB = TA> = Pick<
   DelegatingLiftedSinkLike<TSubscription, TA, TB>,
   | typeof EventListenerLike_notify
   | typeof SinkLike_isCompleted
@@ -50,13 +50,13 @@ type TPrototype<TSubscription extends DisposableLike, TA, TB = TA> = Pick<
 >;
 
 interface DelegatingLiftedSinkMixin {
-  <TSubscription extends DisposableLike, TA, TB>(): Mixin1<
+  <TSubscription extends SinkLike, TA, TB>(): Mixin1<
     DelegatingLiftedSinkLike<TSubscription, TA, TB>,
     LiftedSinkLike<TSubscription, TB>,
     TPrototype<TSubscription, TA>
   >;
 
-  <TSubscription extends DisposableLike, T>(): Mixin1<
+  <TSubscription extends SinkLike, T>(): Mixin1<
     DelegatingLiftedSinkLike<TSubscription, T>,
     LiftedSinkLike<TSubscription, T>,
     TPrototype<TSubscription, T>
@@ -64,7 +64,7 @@ interface DelegatingLiftedSinkMixin {
 }
 
 const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   TA,
   TB,
 >() => {
@@ -104,10 +104,7 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
       proto<TPrototype<TSubscription, TA>>({
         get [SinkLike_isCompleted]() {
           unsafeCast<TProperties>(this);
-          return (
-            this[DelegatingLiftedSinkMixin_isCompleted] ||
-            this[DelegatingLiftedSinkLike_delegate][SinkLike_isCompleted]
-          );
+          return this[LiftedSinkLike_subscription][SinkLike_isCompleted];
         },
 
         [DelegatingLiftedSinkLike_onCompleted](this: TProperties) {

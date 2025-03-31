@@ -13,8 +13,8 @@ import {
 import { Optional, none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
 import {
-  DisposableLike,
   EventListenerLike_notify,
+  SinkLike,
   SinkLike_complete,
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
@@ -24,13 +24,13 @@ import DelegatingLiftedSinkMixin, {
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike, T>(
+export const create: <TSubscription extends SinkLike, T>(
   delegate: LiftedSinkLike<TSubscription, ReadonlyArray<T>>,
   options: Optional<{
     count?: number;
   }>,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   T,
 >() => {
   const BufferSink_buffer = Symbol("BufferSink_buffer");

@@ -6,18 +6,18 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Function1, none } from "../../../functions.js";
-import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike, TA, TB>(
+export const create: <TSubscription extends SinkLike, TA, TB>(
   delegate: LiftedSinkLike<TSubscription, TB>,
   selector: Function1<TA, TB>,
 ) => LiftedSinkLike<TSubscription, TA> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   TA,
   TB,
 >() => {

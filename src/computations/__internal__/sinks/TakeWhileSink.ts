@@ -7,8 +7,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, Predicate, none } from "../../../functions.js";
 import {
-  DisposableLike,
   EventListenerLike_notify,
+  SinkLike,
   SinkLike_complete,
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
@@ -17,12 +17,12 @@ import DelegatingLiftedSinkMixin, {
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike, T>(
+export const create: <TSubscription extends SinkLike, T>(
   delegate: LiftedSinkLike<TSubscription, T>,
   predicate: Predicate<T>,
   options: Optional<{ readonly inclusive?: boolean }>,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   T,
 >() => {
   const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");

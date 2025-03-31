@@ -1,6 +1,6 @@
 import { BroadcasterLike } from "../../../computations.js";
 import { SideEffect, partial, pipe } from "../../../functions.js";
-import { EventListenerLike } from "../../../utils.js";
+import { EventListenerLike, SinkLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
 import * as TakeUntilSink from "../../__internal__/sinks/TakeUntilSink.js";
 import Broadcaster_addEventHandler from "./Broadcaster.addEventHandler.js";
@@ -13,7 +13,7 @@ const Broadcaster_takeUntil: Broadcaster.Signature["takeUntil"] = (<T>(
   notifier: BroadcasterLike,
 ) =>
   pipe(
-    TakeUntilSink.create<EventListenerLike, T, BroadcasterLike>,
+    TakeUntilSink.create<SinkLike, T, BroadcasterLike>,
     partial(notifier, addEventListener),
     Broadcaster_lift,
   )) as Broadcaster.Signature["takeUntil"];

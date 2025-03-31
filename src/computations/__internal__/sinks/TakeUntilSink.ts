@@ -17,6 +17,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
+  SinkLike,
   SinkLike_complete,
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
@@ -29,7 +30,7 @@ import {
   LiftedSinkLike_subscription,
 } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike, T, TNotifier>(
+export const create: <TSubscription extends SinkLike, T, TNotifier>(
   delegate: LiftedSinkLike<TSubscription, T>,
   notifier: TNotifier,
   addEventListener: Function2<
@@ -38,7 +39,7 @@ export const create: <TSubscription extends DisposableLike, T, TNotifier>(
     Function1<TNotifier, DisposableLike>
   >,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   T,
   TNotifier,
 >() => {

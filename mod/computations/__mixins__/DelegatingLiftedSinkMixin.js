@@ -22,8 +22,7 @@ const DelegatingLiftedSinkMixin = /*@__PURE__*/ (() => {
     }), proto({
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
-            return (this[DelegatingLiftedSinkMixin_isCompleted] ||
-                this[DelegatingLiftedSinkLike_delegate][SinkLike_isCompleted]);
+            return this[LiftedSinkLike_subscription][SinkLike_isCompleted];
         },
         [DelegatingLiftedSinkLike_onCompleted]() {
             this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();

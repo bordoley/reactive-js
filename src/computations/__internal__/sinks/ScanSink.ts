@@ -7,9 +7,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Factory, Reducer, error, none } from "../../../functions.js";
 import {
-  DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
+  SinkLike,
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
@@ -17,12 +17,12 @@ import DelegatingLiftedSinkMixin, {
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike, T, TAcc>(
+export const create: <TSubscription extends SinkLike, T, TAcc>(
   delegate: LiftedSinkLike<TSubscription, TAcc>,
   selector: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   T,
   TAcc,
 >() => {

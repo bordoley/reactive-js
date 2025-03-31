@@ -6,33 +6,20 @@ import {
   mixInstanceFactory,
   props,
   proto,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
-import {
-  LiftedSinkLike,
-  LiftedSinkLike_subscription,
-} from "../../computations/__internal__/LiftedSource.js";
-import {
-  Function1,
-  SideEffect1,
-  none,
-  pipe,
-  returns,
-} from "../../functions.js";
+import { LiftedSinkLike } from "../../computations/__internal__/LiftedSource.js";
+import { Function1, SideEffect1, pipe, returns } from "../../functions.js";
 import {
   BackPressureConfig_capacity,
   BackPressureConfig_strategy,
   ConsumerLike,
   DisposableLike,
-  EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
   OverflowBackpressureStrategy,
   SchedulerLike,
   SinkLike,
-  SinkLike_complete,
-  SinkLike_isCompleted,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
@@ -40,6 +27,7 @@ import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins_
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 
 import * as Consumer from "./Consumer.js";
+import { Sink_toLiftedSink } from "./Sink/__private__/Sink.toLiftedSink.js";
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: SinkLike<T>,
@@ -51,49 +39,7 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
 export const toLiftedSink: <T>() => Function1<
   SinkLike<T>,
   LiftedSinkLike<SinkLike<T>, T>
-> = /*@__PURE__*/ (<T>() => {
-  type TProperties = {
-    [LiftedSinkLike_subscription]: SinkLike<T>;
-  };
-
-  type TPrototype = Pick<
-    LiftedSinkLike<SinkLike<T>, T>,
-    | typeof SinkLike_isCompleted
-    | typeof EventListenerLike_notify
-    | typeof SinkLike_complete
-  >;
-
-  return returns(
-    mixInstanceFactory(
-      include(DelegatingDisposableMixin),
-      function SinktoLiftedSink(
-        this: TPrototype & TProperties,
-        listener: SinkLike<T>,
-      ): LiftedSinkLike<SinkLike<T>, T> {
-        init(DelegatingDisposableMixin, this, listener);
-        this[LiftedSinkLike_subscription] = listener;
-        return this;
-      },
-      props<TProperties>({
-        [LiftedSinkLike_subscription]: none,
-      }),
-      proto<TPrototype>({
-        get [SinkLike_isCompleted](): boolean {
-          unsafeCast<TProperties>(this);
-          return this[LiftedSinkLike_subscription][SinkLike_isCompleted];
-        },
-
-        [EventListenerLike_notify](this: TProperties, next: T) {
-          this[LiftedSinkLike_subscription][EventListenerLike_notify](next);
-        },
-
-        [SinkLike_complete](this: TProperties) {
-          this[LiftedSinkLike_subscription][SinkLike_complete]();
-        },
-      }),
-    ),
-  );
-})();
+> = Sink_toLiftedSink;
 
 export const toConsumer: <T>() => Function1<SinkLike<T>, ConsumerLike<T>> =
   /*@__PURE__*/ (<T>() => {

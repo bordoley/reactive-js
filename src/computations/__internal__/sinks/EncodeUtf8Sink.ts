@@ -6,17 +6,17 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
-import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike>(
+export const create: <TSubscription extends SinkLike>(
   delegate: LiftedSinkLike<TSubscription, ArrayBuffer>,
 ) => LiftedSinkLike<TSubscription, string> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
 >() => {
   const EncodeUtf8Sink_textEncoder = Symbol("EncodeUtf8Sink_textEncoder");
 

@@ -7,18 +7,18 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none } from "../../../functions.js";
 import { clampPositiveInteger, max } from "../../../math.js";
-import { DisposableLike, EventListenerLike_notify } from "../../../utils.js";
+import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
   DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
-export const create: <TSubscription extends DisposableLike, T>(
+export const create: <TSubscription extends SinkLike, T>(
   delegate: LiftedSinkLike<TSubscription, T>,
   skipCount: Optional<number>,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
-  TSubscription extends DisposableLike,
+  TSubscription extends SinkLike,
   T,
 >() => {
   const SkipFirstSink_count = Symbol("SkipFirstSink_count");
