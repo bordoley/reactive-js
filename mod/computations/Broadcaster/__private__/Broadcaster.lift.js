@@ -9,9 +9,9 @@ import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/Delega
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToEventListenerMixin from "../../__mixins__/LiftedSinkToEventListenerMixin.js";
-const sinkToEventListener = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToEventListenerMixin(), DelegatingDisposableMixin), function OperatorToEventListener(operator) {
-    init(LiftedSinkToEventListenerMixin(), this, operator);
-    init(DelegatingDisposableMixin, this, operator);
+const sinkToEventListener = /*@__PURE__*/ (() => mixInstanceFactory(include(LiftedSinkToEventListenerMixin(), DelegatingDisposableMixin), function OperatorToEventListener(liftedSink) {
+    init(LiftedSinkToEventListenerMixin(), this, liftedSink);
+    init(DelegatingDisposableMixin, this, liftedSink);
     return this;
 }))();
 const createLiftedBroadcaster = /*@__PURE__*/ (() => {

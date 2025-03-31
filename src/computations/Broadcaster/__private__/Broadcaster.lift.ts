@@ -58,10 +58,10 @@ const sinkToEventListener: <T>(
     include(LiftedSinkToEventListenerMixin(), DelegatingDisposableMixin),
     function OperatorToEventListener(
       this: unknown,
-      operator: LiftedSinkLike<SinkLike, any>,
+      liftedSink: LiftedSinkLike<SinkLike, any>,
     ): EventListenerLike<T> {
-      init(LiftedSinkToEventListenerMixin<SinkLike, T>(), this, operator);
-      init(DelegatingDisposableMixin, this, operator);
+      init(LiftedSinkToEventListenerMixin<SinkLike, T>(), this, liftedSink);
+      init(DelegatingDisposableMixin, this, liftedSink);
 
       return this;
     },

@@ -1,21 +1,14 @@
 /// <reference types="./LiftedSinkToSinkMixin.d.ts" />
 
-import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
+import { include, init, mix } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import { SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
-import LiftedSinkToEventListenerMixin, { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
+import DelegatingSinkMixin from "../../utils/__mixins__/DelegatingSinkMixin.js";
+import LiftedSinkToEventListenerMixin from "./LiftedSinkToEventListenerMixin.js";
 const LiftedSinkToSinkMixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(LiftedSinkToEventListenerMixin()), function LiftedSinkToSinkMixin(operator) {
-        init(LiftedSinkToEventListenerMixin(), this, operator);
+    return returns(mix(include(DelegatingSinkMixin(), LiftedSinkToEventListenerMixin()), function LiftedSinkToSinkMixin(liftedSink) {
+        init(DelegatingSinkMixin(), this, liftedSink);
+        init(LiftedSinkToEventListenerMixin(), this, liftedSink);
         return this;
-    }, props(), proto({
-        get [SinkLike_isCompleted]() {
-            unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_isCompleted];
-        },
-        [SinkLike_complete]() {
-            this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
-        },
-    })));
+    }));
 })();
 export default LiftedSinkToSinkMixin;
