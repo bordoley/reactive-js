@@ -24,6 +24,7 @@ import {
 } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
 import {
+  CollectionEnumeratorLike_count,
   ContinuationContextLike,
   ContinuationContextLike_yield,
   DisposableContainerLike,
@@ -33,9 +34,8 @@ import {
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
-  FlowControllerEnumeratorLike_isDataAvailable,
-  FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
+  QueueLike,
+  QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -47,7 +47,7 @@ import {
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import DisposableMixin from "./DisposableMixin.js";
-import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
+import QueueMixin from "./QueueMixin.js";
 
 export const SchedulerContinuationLike_run = Symbol(
   "SchedulerContinuationLike_run",
@@ -112,7 +112,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
 
     interface QueueSchedulerContinuationLike
       extends SchedulerContinuationLike,
-        FlowControllerQueueLike<QueueSchedulerContinuationLike> {
+        QueueLike<QueueSchedulerContinuationLike> {
       [QueueSchedulerContinuationLike_parent]: Optional<QueueSchedulerContinuationLike>;
       readonly [QueueSchedulerContinuationLike_isReschedulingChildren]: boolean;
     }
@@ -186,7 +186,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         const parent = findNearestNonDisposedParent(continuation);
 
         if (isSome(parent)) {
-          parent[FlowControllerQueueLike_enqueue](continuation);
+          parent[QueueLike_enqueue](continuation);
         } else {
           continuation[SchedulerContinuationLike_dueTime] =
             scheduler[SchedulerLike_now];
@@ -207,7 +207,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           if (head[DisposableLike_isDisposed]) {
             // continue
           } else if (isSome(parent)) {
-            parent[FlowControllerQueueLike_enqueue](head);
+            parent[QueueLike_enqueue](head);
           } else {
             scheduler[SchedulerMixinLike_schedule](head);
           }
@@ -233,10 +233,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
       }
 
       return mixInstanceFactory(
-        include(
-          DisposableMixin,
-          FlowControllerQueueMixin<QueueSchedulerContinuationLike>(),
-        ),
+        include(DisposableMixin, QueueMixin<QueueSchedulerContinuationLike>()),
         function QueueContinuation(
           this: Pick<
             QueueSchedulerContinuationLike,
@@ -250,11 +247,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         ): QueueSchedulerContinuationLike & ContinuationContextLike {
           init(DisposableMixin, this);
 
-          init(
-            FlowControllerQueueMixin<QueueSchedulerContinuationLike>(),
-            this,
-            none,
-          );
+          init(QueueMixin<QueueSchedulerContinuationLike>(), this, none);
 
           this[SchedulerContinuationLike_dueTime] = dueTime;
 
@@ -280,7 +273,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         proto({
           [SchedulerContinuationLike_run](
             this: QueueSchedulerContinuationLike &
-              FlowControllerQueueLike<QueueSchedulerContinuationLike> &
+              QueueLike<QueueSchedulerContinuationLike> &
               ContinuationContextLike &
               TProperties &
               SchedulerLike,
@@ -453,11 +446,12 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             this[SchedulerLike_now] >
             this[SchedulerMixinLike_startTime] +
               this[SchedulerLike_maxYieldInterval];
-          const currentContinuationHasScheduledChildren = (
-            this[
-              SchedulerMixinLike_currentContinuation
-            ] as QueueSchedulerContinuationLike
-          )[FlowControllerEnumeratorLike_isDataAvailable];
+          const currentContinuationHasScheduledChildren =
+            (
+              this[
+                SchedulerMixinLike_currentContinuation
+              ] as QueueSchedulerContinuationLike
+            )[CollectionEnumeratorLike_count] > 0;
 
           return (
             isDisposed ||
@@ -497,7 +491,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           ) {
             this[SchedulerMixinHostLike_schedule](continuation);
           } else {
-            activeContinuation[FlowControllerQueueLike_enqueue](continuation);
+            activeContinuation[QueueLike_enqueue](continuation);
           }
         },
 
