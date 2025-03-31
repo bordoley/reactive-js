@@ -6,7 +6,7 @@
 
 # Function: genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+> **genPure**\<`T`\>(`factory`, `options`?): [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Type Parameters
 
@@ -24,4 +24,4 @@
 
 ## Returns
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`T`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)

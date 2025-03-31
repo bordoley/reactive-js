@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.animation.d.ts" />
 
 import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
-import { DeferredComputationWithSideEffects, StoreLike_value, StreamableLike_stream, } from "../../../computations.js";
+import { ComputationLike_isPure, StoreLike_value, StreamableLike_stream, } from "../../../computations.js";
 import { compose, isFunction, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
@@ -21,7 +21,9 @@ const Streamable_animation = /*@__PURE__*/ (() => {
             return () => {
                 animationIsRunning[StoreLike_value] = false;
             };
-        }))), Observable.switchAll(DeferredComputationWithSideEffects), Observable.subscribeOn(pauseableScheduler));
+        }))), Observable.switchAll({
+            [ComputationLike_isPure]: false,
+        }), Observable.subscribeOn(pauseableScheduler));
         init(StreamMixin(), this, operator, scheduler, options);
         init(DelegatingPauseableMixin, this, pauseableScheduler);
         pipe(animationIsRunning, Disposable.addTo(this));

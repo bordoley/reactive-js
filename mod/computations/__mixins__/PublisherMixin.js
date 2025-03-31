@@ -2,12 +2,11 @@
 
 import { Set_add, Set_delete, Set_has, Set_size, } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
-import Iterable_first from "../Iterable/__private__/Iterable.first.js";
 const PublisherMixin = /*@__PURE__*/ (() => {
     const Publisher_EventListeners = Symbol("Publisher_EventListeners");
     const Publisher_onSinkDisposed = Symbol("Publisher_onSinkDisposed");
@@ -43,8 +42,9 @@ const PublisherMixin = /*@__PURE__*/ (() => {
             }
             if (maybeEventListeners instanceof Set &&
                 maybeEventListeners[Set_size] == 1) {
-                instance[Publisher_EventListeners] =
-                    Iterable_first()(maybeEventListeners);
+                for (const listener of maybeEventListeners) {
+                    instance[Publisher_EventListeners] = listener;
+                }
             }
             if (autoDispose && isNone(instance[Publisher_EventListeners])) {
                 instance[DisposableLike_dispose]();
@@ -58,6 +58,7 @@ const PublisherMixin = /*@__PURE__*/ (() => {
     }), proto({
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
+        [ComputationLike_isPure]: true,
         [EventListenerLike_notify](next) {
             if (this[SinkLike_isCompleted]) {
                 return;

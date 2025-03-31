@@ -7,6 +7,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
+  ComputationLike_isPure,
   ComputationLike_isSynchronous,
   PublisherLike,
   PureObservableLike,
@@ -93,6 +94,7 @@ export const create: <T>(config?: {
       [ConsumerObservable_onReadyPublisher]: none,
     }),
     {
+      [ComputationLike_isPure]: true as const,
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 

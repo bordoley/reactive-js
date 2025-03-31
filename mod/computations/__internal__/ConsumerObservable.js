@@ -1,7 +1,7 @@
 /// <reference types="./ConsumerObservable.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
@@ -24,6 +24,7 @@ export const create = (() => {
         [ConsumerObservable_delegate]: none,
         [ConsumerObservable_onReadyPublisher]: none,
     }), {
+        [ComputationLike_isPure]: true,
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
         get [FlowControllerLike_backpressureStrategy]() {

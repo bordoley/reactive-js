@@ -20,16 +20,6 @@
 
 [`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/ConcurrentDeferredComputationModule.md#computationmodulelike_computationtype)
 
-***
-
-### zip
-
-> **zip**: `ZipConstructor`\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
-
-#### Inherited from
-
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)
-
 ## Methods
 
 ### catchError()
@@ -58,27 +48,55 @@
 
 #### Call Signature
 
-> **catchError**\<`T`, `TInnerLike`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
+
+###### onError
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
 
 ##### Parameters
 
 ###### onError
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, `T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ###### options
 
-`TInnerLike`
+###### [ComputationLike_isPure]
+
+`false`
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -90,7 +108,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): `never`
+> **concat**\<`T`\>(...`computations`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -100,11 +118,11 @@
 
 ###### computations
 
-...readonly `never`[]
+...readonly [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)[]
 
 ##### Returns
 
-`never`
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
@@ -112,7 +130,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): `never`
+> **concat**\<`T`\>(...`computations`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Type Parameters
 
@@ -122,55 +140,11 @@
 
 ###### computations
 
-...readonly `never`[]
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>[]
 
 ##### Returns
 
-`never`
-
-##### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
-
-#### Call Signature
-
-> **concat**\<`T`\>(...`computations`): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>[]
-
-##### Returns
-
-[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
-
-##### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
-
-#### Call Signature
-
-> **concat**\<`T`\>(...`computations`): [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>[]
-
-##### Returns
-
-[`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Inherited from
 
@@ -182,7 +156,7 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `never`, `T`\>
+> **concatAll**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Type Parameters
 
@@ -190,7 +164,7 @@
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `never`, `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Inherited from
 
@@ -198,23 +172,47 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`, `TInnerLike`\>(`options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, `T`\>, `T`\>
+> **concatAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+
+#### Call Signature
+
+> **concatAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>\>, [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Type Parameters
+
+• **T**
 
 ##### Parameters
 
 ###### options
 
-`TInnerLike`
+###### [ComputationLike_isPure]
+
+`false`
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TInnerLike`, `T`\>, `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>\>, [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
 
 ##### Inherited from
 
@@ -302,7 +300,7 @@
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+> **gen**\<`T`\>(`factory`, `options`?): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -320,7 +318,7 @@
 
 #### Returns
 
-[`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Inherited from
 
@@ -330,7 +328,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`): [`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+> **genAsync**\<`T`\>(`factory`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -344,7 +342,7 @@
 
 #### Returns
 
-[`AsyncIterableWithSideEffectsLike`](../../interfaces/AsyncIterableWithSideEffectsLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Inherited from
 
@@ -354,7 +352,7 @@
 
 ### genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+> **genPure**\<`T`\>(`factory`, `options`?): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -372,7 +370,7 @@
 
 #### Returns
 
-[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Inherited from
 
@@ -382,7 +380,7 @@
 
 ### genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`): [`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+> **genPureAsync**\<`T`\>(`factory`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -396,7 +394,7 @@
 
 #### Returns
 
-[`PureAsyncIterableLike`](../../interfaces/PureAsyncIterableLike.md)\<`T`\> & [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Inherited from
 
@@ -752,7 +750,7 @@
 
 ### toObservable()
 
-> **toObservable**\<`T`\>(`options`?): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+> **toObservable**\<`T`\>(`options`?): \<`TAsyncIterable`\>(`iter`) => `TAsyncIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
 
 #### Type Parameters
 
@@ -762,21 +760,37 @@
 
 ##### options?
 
-`unknown`
+###### delay
+
+`number`
+
+###### delayStart
+
+`boolean`
 
 #### Returns
 
-[`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+`Function`
 
-#### Inherited from
+##### Type Parameters
 
-[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`toObservable`](../../interfaces/InteractiveComputationModule.md#toobservable)
+• **TAsyncIterable** *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iter
+
+`TAsyncIterable`
+
+##### Returns
+
+`TAsyncIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
 
 ***
 
 ### toProducer()
 
-> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../../type-aliases/ToProducer.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+> **toProducer**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -790,7 +804,21 @@
 
 #### Returns
 
-[`ToProducer`](../../type-aliases/ToProducer.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Inherited from
 
@@ -819,3 +847,211 @@
 #### Inherited from
 
 [`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`withEffect`](../../interfaces/SequentialComputationModule.md#witheffect)
+
+***
+
+### zip()
+
+#### Call Signature
+
+> **zip**\<`TA`, `TB`\>(`a`, `b`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Returns
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)
+
+#### Call Signature
+
+> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### c
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Returns
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)
+
+#### Call Signature
+
+> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### c
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### d
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`TD`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Returns
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)
+
+#### Call Signature
+
+> **zip**\<`TA`, `TB`\>(`a`, `b`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TB`\>
+
+##### Returns
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)
+
+#### Call Signature
+
+> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TB`\>
+
+###### c
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TC`\>
+
+##### Returns
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)
+
+#### Call Signature
+
+> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TB`\>
+
+###### c
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TC`\>
+
+###### d
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `TD`\>
+
+##### Returns
+
+[`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`zip`](../../interfaces/InteractiveComputationModule.md#zip)

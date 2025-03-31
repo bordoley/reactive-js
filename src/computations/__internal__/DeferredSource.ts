@@ -13,26 +13,15 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ComputationModule,
-  ComputationOfModule,
-  ConcurrentReactiveComputationModule,
-  DeferredAsynchronousReactiveComputationModule,
   DeferredSourceLike,
-  HigherOrderInnerComputationLike,
-  HigherOrderInnerComputationOf,
-  IterableLike,
-  PickComputationModule,
-  SequentialComputationModule,
   SourceLike_subscribe,
 } from "../../computations.js";
 import {
-  Equality,
   Factory,
   Function1,
   Function2,
   Optional,
   Predicate,
-  Reducer,
   SideEffect1,
   alwaysTrue,
   bind,
@@ -42,12 +31,10 @@ import {
   isFunction,
   isNone,
   isSome,
-  memoize,
   newInstance,
   none,
   pipe,
   pipeUnsafe,
-  returns,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -57,7 +44,6 @@ import {
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
-  EventListenerLike_notify,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -65,8 +51,6 @@ import Computation_areAllPure from "../Computation/__private__/Computation.areAl
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
-import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
-import * as Publisher from "../Publisher.js";
 
 import {
   LatestEventListenerContextLike,
@@ -93,7 +77,9 @@ interface Signature {
       TConsumer
     >,
     errorHandler: SideEffect1<Error> | Function1<Error, TSource>,
-    options?: HigherOrderInnerComputationLike,
+    options?: {
+      [ComputationLike_isPure]?: boolean;
+    },
   ): Function1<TSource, DeferredSourceLike<T, TConsumer>>;
 
   concat<TConsumer extends ConsumerLike>(
@@ -347,74 +333,13 @@ interface Signature {
     DeferredSourceLike<T, TConsumer>
   >;
 
-  scanDistinct<
-    TModule extends PickComputationModule<
-      ComputationModule & SequentialComputationModule,
-      "genPure" | "concat" | "distinctUntilChanged" | "scan"
-    >,
-  >(
-    m: TModule,
-  ): <
-    T,
-    TAcc,
-    TConsumer extends ConsumerLike<T>,
-    TAccConsumer extends ConsumerLike<TAcc>,
-  >(
-    reducer: Reducer<T, TAcc>,
-    initialState: Factory<TAcc>,
-    options?: { readonly equality?: Equality<TAcc> },
-  ) => Function1<
-    DeferredSourceLike<T, TConsumer>,
-    DeferredSourceLike<TAcc, TAccConsumer>
-  >;
-
-  scanMany<
-    TModule extends PickComputationModule<
-      ComputationModule &
-        ConcurrentReactiveComputationModule &
-        DeferredAsynchronousReactiveComputationModule &
-        SequentialComputationModule,
-      "forEach" | "fromBroadcaster" | "map" | "switchAll" | "withLatestFrom"
-    >,
-  >(
-    m: TModule,
-  ): <
-    T,
-    TAcc,
-    TInnerLike extends HigherOrderInnerComputationLike,
-    TConsumer extends ConsumerLike<T>,
-    TAccConsumer extends ConsumerLike<TAcc>,
-  >(
-    scanner: Function2<
-      TAcc,
-      T,
-      HigherOrderInnerComputationOf<
-        ComputationOfModule<TModule, T>,
-        TInnerLike,
-        TAcc
-      >
-    >,
-    initialValue: Factory<TAcc>,
-    options: TInnerLike,
-  ) => Function1<
-    DeferredSourceLike<T, TConsumer>,
-    DeferredSourceLike<TAcc, TAccConsumer>
-  >;
-
-  takeLast<
-    TComputationModule extends PickComputationModule<
-      ComputationModule,
-      "genPure"
-    >,
-  >(
-    m: TComputationModule,
-  ): <TConsumer extends ConsumerLike<T>, T>(
-    takeLast: (
-      consumer: TConsumer,
-      count: number,
-    ) => TConsumer & IterableLike<T>,
+  takeLast<TConsumer extends ConsumerLike<T>, T>(
+    genPure: (
+      factory: Factory<Iterator<T>>,
+    ) => DeferredSourceLike<T, TConsumer>,
+    takeLast: (consumer: TConsumer, count: number) => TConsumer & Iterable<T>,
     options?: { readonly count?: number },
-  ) => Function1<
+  ): Function1<
     DeferredSourceLike<T, TConsumer>,
     DeferredSourceLike<T, TConsumer>
   >;
@@ -429,37 +354,6 @@ interface Signature {
   >;
 }
 
-export const scanDistinct: Signature["scanDistinct"] = memoize(
-  m =>
-    <
-      T,
-      TAcc,
-      TConsumer extends ConsumerLike<T>,
-      TAccConsumer extends ConsumerLike<TAcc>,
-    >(
-      reducer: Reducer<T, TAcc>,
-      initialState: Factory<TAcc>,
-      options?: { readonly equality?: Equality<TAcc> },
-    ) =>
-    (source: DeferredSourceLike<T, TConsumer>) =>
-      create<TAcc, TAccConsumer>(
-        consumer => {
-          const acc: TAcc = initialState();
-
-          const lifted = pipe(
-            source,
-            m.scan<T, TAcc>(reducer, returns(acc)),
-            Computation_startWith(m)<TAcc>(acc),
-            m.distinctUntilChanged<TAcc>(options),
-          );
-
-          lifted[SourceLike_subscribe](consumer);
-        },
-
-        source,
-      ),
-);
-
 export const catchError: Signature["catchError"] =
   <
     T,
@@ -471,7 +365,9 @@ export const catchError: Signature["catchError"] =
       TConsumer
     >,
     errorHandler: SideEffect1<Error> | Function1<Error, TSource>,
-    options?: HigherOrderInnerComputationLike,
+    options?: {
+      [ComputationLike_isPure]?: boolean;
+    },
   ) =>
   (source: TSource): DeferredSourceLike<T, TConsumer> =>
     create<T, TConsumer>(
@@ -502,8 +398,6 @@ export const catchError: Signature["catchError"] =
       },
       {
         [ComputationLike_isPure]: options?.[ComputationLike_isPure],
-        [ComputationLike_isSynchronous]:
-          options?.[ComputationLike_isSynchronous],
       },
     );
 
@@ -617,10 +511,9 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
 class CreateSource<T, TConsumer extends ConsumerLike<T>>
   implements DeferredSourceLike<T, TConsumer>
 {
-  static readonly [ComputationLike_isDeferred]?: true = true as const;
-
-  readonly [ComputationLike_isPure]?: boolean | undefined;
-  readonly [ComputationLike_isSynchronous]?: boolean | undefined;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isSynchronous]: Optional<boolean>;
   private readonly [CreateSource_effect]: SideEffect1<TConsumer>;
 
   constructor(
@@ -683,7 +576,7 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
   };
 
   type TPrototype = {
-    [ComputationLike_isDeferred]?: true;
+    [ComputationLike_isDeferred]: true;
     [SourceLike_subscribe](observer: TConsumerOut): void;
   };
 
@@ -1038,99 +931,30 @@ export const retry: Signature["retry"] = (<
       src[SourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["retry"];
 
-export const scanMany: Signature["scanMany"] = /*@__PURE__*/ (<
-  TModule extends PickComputationModule<
-    ComputationModule &
-      ConcurrentReactiveComputationModule &
-      DeferredAsynchronousReactiveComputationModule &
-      SequentialComputationModule,
-    "forEach" | "fromBroadcaster" | "map" | "switchAll" | "withLatestFrom"
-  >,
->() =>
-  memoize(
-    m =>
-      <
-        T,
-        TAcc,
-        TInnerLike extends HigherOrderInnerComputationLike,
-        TConsumer extends ConsumerLike<T>,
-        TAccConsumer extends ConsumerLike<TAcc>,
-      >(
-        scanner: Function2<
-          TAcc,
-          T,
-          HigherOrderInnerComputationOf<
-            ComputationOfModule<TModule, T>,
-            TInnerLike,
-            TAcc
-          >
-        >,
-        initialValue: Factory<TAcc>,
-        innerType: TInnerLike,
-      ) =>
-      (source: DeferredSourceLike<T, TConsumer>) =>
-        create<TAcc, TAccConsumer>(
-          (consumer: TAccConsumer) => {
-            const accFeedbackPublisher = pipe(
-              Publisher.create<TAcc>(),
-              Disposable.addTo(consumer),
-            );
+export const takeLast: Signature["takeLast"] =
+  <TConsumer extends ConsumerLike<T>, T>(
+    genPure: (
+      factory: Factory<Iterator<T>>,
+    ) => DeferredSourceLike<T, TConsumer>,
+    takeLast: (consumer: TConsumer, count: number) => TConsumer & Iterable<T>,
+    options?: { readonly count?: number },
+  ) =>
+  (obs: DeferredSourceLike<T, TConsumer>) =>
+    create<T, TConsumer>(consumer => {
+      const count = options?.count ?? 1;
 
-            // FIXME: any leak.
-            const feedbackSource = pipe(
-              accFeedbackPublisher,
-              m.fromBroadcaster<TAcc>(),
-            );
-
-            (
-              pipe(
-                source,
-                m.withLatestFrom(feedbackSource, (next: T, acc: TAcc) =>
-                  scanner(acc, next),
-                ),
-                m.switchAll(innerType),
-                m.forEach(
-                  bindMethod(accFeedbackPublisher, EventListenerLike_notify),
-                ),
-              ) as any
-            )[SourceLike_subscribe](consumer);
-
-            accFeedbackPublisher[EventListenerLike_notify](initialValue());
-          },
-          {
-            [ComputationLike_isPure]:
-              Computation_isPure(source) && Computation_isPure(innerType),
-          },
+      const takeLastSink = pipe(
+        takeLast(consumer, count),
+        Disposable.addTo(consumer),
+        DisposableContainer.onComplete(() =>
+          genPure(bindMethod(takeLastSink, Symbol.iterator))[
+            SourceLike_subscribe
+          ](consumer),
         ),
-  ))();
+      );
 
-export const takeLast: Signature["takeLast"] = memoize(
-  m =>
-    <TConsumer extends ConsumerLike<T>, T>(
-      takeLast: (
-        consumer: TConsumer,
-        count: number,
-      ) => TConsumer & IterableLike<T>,
-      options?: { readonly count?: number },
-    ) =>
-    (obs: DeferredSourceLike<T, TConsumer>) =>
-      create<T, TConsumer>(consumer => {
-        const count = options?.count ?? 1;
-
-        const takeLastSink = pipe(
-          takeLast(consumer, count),
-          Disposable.addTo(consumer),
-          DisposableContainer.onComplete(() =>
-            pipe(
-              m.genPure(bindMethod(takeLastSink, Symbol.iterator)),
-              invoke(SourceLike_subscribe, consumer),
-            ),
-          ),
-        );
-
-        pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
-      }, obs),
-);
+      pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
+    }, obs);
 
 export const withEffect: Signature["withEffect"] = (effect => source =>
   create(

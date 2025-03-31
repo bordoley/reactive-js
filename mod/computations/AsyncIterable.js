@@ -1,7 +1,7 @@
 /// <reference types="./AsyncIterable.d.ts" />
 
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -15,6 +15,7 @@ class CatchErrorAsyncIterable {
     onError;
     [ComputationLike_isPure];
     [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isDeferred] = true;
     constructor(s, onError, isPure) {
         this.s = s;
         this.onError = onError;
@@ -37,11 +38,12 @@ class CatchErrorAsyncIterable {
         }
     }
 }
-export const catchError = ((onError, options) => (iter) => newInstance(CatchErrorAsyncIterable, iter, onError, options?.innerType?.[ComputationLike_isPure] ?? true));
+export const catchError = ((onError, options) => (iter) => newInstance(CatchErrorAsyncIterable, iter, onError, options?.[ComputationLike_isPure] ?? true));
 class ConcatAllAsyncIterable {
     s;
     [ComputationLike_isSynchronous] = false;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     constructor(s, isPure) {
         this.s = s;
         this[ComputationLike_isPure] = ComputationM.isPure(s) && isPure;
@@ -52,11 +54,12 @@ class ConcatAllAsyncIterable {
         }
     }
 }
-export const concatAll = ((options) => (iterable) => newInstance(ConcatAllAsyncIterable, iterable, options?.innerType?.[ComputationLike_isPure] ?? true));
+export const concatAll = ((options) => (iterable) => newInstance(ConcatAllAsyncIterable, iterable, options?.[ComputationLike_isPure] ?? true));
 class ConcatAsyncIterable {
     s;
     [ComputationLike_isSynchronous] = false;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     constructor(s) {
         this.s = s;
         this[ComputationLike_isPure] = ComputationM.areAllPure(s);
@@ -73,6 +76,7 @@ class DistinctUntilChangedAsyncIterable {
     eq;
     [ComputationLike_isSynchronous] = false;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     constructor(s, eq) {
         this.s = s;
         this.eq = eq;
@@ -132,6 +136,7 @@ class FromAsyncFactoryIterable {
     f;
     [ComputationLike_isPure] = false;
     [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isDeferred] = true;
     constructor(f) {
         this.f = f;
     }
@@ -144,8 +149,9 @@ class FromAsyncFactoryIterable {
 export const fromAsyncFactory = returns(factory => newInstance(FromAsyncFactoryIterable, factory));
 class EncodeUtf8AsyncIterable {
     s;
-    [ComputationLike_isPure];
     [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     constructor(s) {
         this.s = s;
         this[ComputationLike_isPure] = s[ComputationLike_isPure];
@@ -163,6 +169,7 @@ class ForEachAsyncIterable {
     ef;
     [ComputationLike_isPure] = false;
     [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isDeferred] = true;
     constructor(d, ef) {
         this.d = d;
         this.ef = ef;
@@ -241,6 +248,7 @@ class KeepAsyncIterable {
     d;
     p;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(d, p) {
         this.d = d;
@@ -262,6 +270,7 @@ class MapAsyncIterable {
     d;
     m;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(d, m) {
         this.d = d;
@@ -281,6 +290,7 @@ class AsyncIterableOf {
     d;
     [ComputationLike_isPure] = false;
     [ComputationLike_isSynchronous] = false;
+    [ComputationLike_isDeferred] = true;
     constructor(d) {
         this.d = d;
     }
@@ -293,6 +303,7 @@ class PairwiseAsyncIterable {
     s;
     [ComputationLike_isSynchronous] = false;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     constructor(s) {
         this.s = s;
         this[ComputationLike_isPure] = s[ComputationLike_isPure];
@@ -319,6 +330,7 @@ class ScanAsyncIterable {
     r;
     iv;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(s, r, iv) {
         this.s = s;
@@ -339,6 +351,7 @@ class RepeatAsyncIterable {
     i;
     p;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(i, p) {
         this.i = i;
@@ -370,6 +383,7 @@ class RetryAsyncIterable {
     i;
     p;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(i, p) {
         this.i = i;
@@ -402,6 +416,7 @@ class ScanDistinctAsyncIterable {
     iv;
     o;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(s, r, iv, o) {
         this.s = s;
@@ -430,6 +445,7 @@ class SkipFirstAsyncIterable {
     c;
     [ComputationLike_isSynchronous] = false;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     constructor(s, c) {
         this.s = s;
         this.c = c;
@@ -451,6 +467,7 @@ class TakeFirstAsyncIterable {
     s;
     c;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(s, c) {
         this.s = s;
@@ -477,6 +494,7 @@ class TakeWhileAsyncIterable {
     p;
     i;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(s, p, i) {
         this.s = s;
@@ -503,6 +521,7 @@ class ThrowIfEmptyAsyncIterable {
     i;
     f;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(i, f) {
         this.i = i;
@@ -536,6 +555,7 @@ class WithEffectAsyncIterable {
     e;
     [ComputationLike_isSynchronous] = false;
     [ComputationLike_isPure] = false;
+    [ComputationLike_isDeferred] = true;
     constructor(d, e) {
         this.d = d;
         this.e = e;
@@ -579,6 +599,7 @@ export const withEffect = ((effect) => (iterable) => newInstance(WithEffectAsync
 class ZipAsyncIterable {
     iters;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isSynchronous] = false;
     constructor(iters) {
         this.iters = iters;

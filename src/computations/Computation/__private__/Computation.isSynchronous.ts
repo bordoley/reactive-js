@@ -1,15 +1,16 @@
 import {
   ComputationLike,
   ComputationLike_isSynchronous,
-  SynchronousComputationLike,
 } from "../../../computations.js";
+import { Optional } from "../../../functions.js";
 import type * as Computation from "../../Computation.js";
 
 const Computation_isSynchronous: Computation.Signature["isSynchronous"] = <
-  TComputationType extends ComputationLike,
+  TComputationType extends Partial<ComputationLike>,
 >(
   computation: TComputationType,
-): computation is TComputationType & SynchronousComputationLike =>
-  computation[ComputationLike_isSynchronous] ?? true;
+): computation is TComputationType & {
+  [ComputationLike_isSynchronous]: Optional<true>;
+} => computation[ComputationLike_isSynchronous] ?? true;
 
 export default Computation_isSynchronous;

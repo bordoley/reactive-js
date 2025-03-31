@@ -14,6 +14,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
+  ComputationLike_isPure,
   ComputationLike_isSynchronous,
   PublisherLike,
   SourceLike_subscribe,
@@ -42,7 +43,6 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import Iterable_first from "../Iterable/__private__/Iterable.first.js";
 
 type TPrototype<T> = Omit<
   PublisherLike<T>,
@@ -118,8 +118,9 @@ const PublisherMixin: <T>() => Mixin1<
             maybeEventListeners instanceof Set &&
             maybeEventListeners[Set_size] == 1
           ) {
-            instance[Publisher_EventListeners] =
-              Iterable_first<EventListenerLike<T>>()(maybeEventListeners);
+            for (const listener of maybeEventListeners) {
+              instance[Publisher_EventListeners] = listener;
+            }
           }
 
           if (autoDispose && isNone(instance[Publisher_EventListeners])) {
@@ -137,6 +138,7 @@ const PublisherMixin: <T>() => Mixin1<
       proto<TPrototype<T>>({
         [ComputationLike_isDeferred]: false as const,
         [ComputationLike_isSynchronous]: false as const,
+        [ComputationLike_isPure]: true as const,
 
         [EventListenerLike_notify](
           this: TProperties & PublisherLike<T>,

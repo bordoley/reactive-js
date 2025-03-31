@@ -1,9 +1,17 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { bindMethod, invoke, newInstance, pipe } from "../../../functions.js";
+import {
+  Optional,
+  bindMethod,
+  invoke,
+  newInstance,
+  pipe,
+} from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
@@ -12,7 +20,9 @@ import type * as Runnable from "../../Runnable.js";
 import { Runnable_genPure } from "./Runnable.gen.js";
 
 class TakeLastRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isPure]?: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: RunnableLike<T>,

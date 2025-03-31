@@ -1,9 +1,12 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
 import {
+  Optional,
   Predicate,
   alwaysTrue,
   error,
@@ -20,17 +23,18 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class RepeatRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: RunnableLike<T>,
     private readonly p: Predicate<number>,
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(s);
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

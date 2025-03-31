@@ -1,13 +1,15 @@
 import { describe } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
+  ComputationTypeLike,
   SynchronousComputationModule,
 } from "../../../computations.js";
 
 const SynchronousComputationModuleTests = <
-  TComputationModule extends ComputationModule & SynchronousComputationModule,
+  TComputationType extends ComputationTypeLike,
 >(
-  _m: TComputationModule,
+  _m: ComputationModule<TComputationType> &
+    SynchronousComputationModule<TComputationType>,
 ) => describe("SynchronousComputationModule");
 
 export default SynchronousComputationModuleTests;

@@ -6,7 +6,7 @@ import {
 import type * as Computation from "../../Computation.js";
 
 const Computation_isPure: Computation.Signature["isPure"] = <
-  TComputationType extends ComputationLike,
+  TComputationType extends Partial<ComputationLike>,
 >(
   computation: TComputationType,
 ): computation is TComputationType & PureComputationLike =>

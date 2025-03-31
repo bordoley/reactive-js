@@ -1,19 +1,20 @@
 /// <reference types="./Runnable.repeat.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
 import { alwaysTrue, error, isFunction, isNone, newInstance, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
 class RepeatRunnable {
     s;
     p;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = true;
     constructor(s, p) {
         this.s = s;
         this.p = p;
-        this[ComputationLike_isPure] = Computation.isPure(s);
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [RunnableLike_eval](sink) {
         const source = this.s;

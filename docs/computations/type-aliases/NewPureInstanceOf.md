@@ -6,10 +6,10 @@
 
 # Type Alias: NewPureInstanceOf\<TComputationType, T\>
 
-> **NewPureInstanceOf**\<`TComputationType`, `T`\>: [`NewPureInstanceType`](NewPureInstanceType.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\> ? [`NewPureInstanceType`](NewPureInstanceType.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md) & [`PauseableLike`](../../utils/interfaces/PauseableLike.md) : [`NewPureInstanceType`](NewPureInstanceType.md)\<`TComputationType`, `T`\>
+> **NewPureInstanceOf**\<`TComputationType`, `T`\>: [`PureComputationOf`](PureComputationOf.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationLike`](../interfaces/MulticastComputationLike.md) ? [`PureComputationOf`](PureComputationOf.md)\<`TComputationType`, `T`\> & [`PauseableLike`](../../utils/interfaces/PauseableLike.md) & [`DisposableLike`](../../utils/interfaces/DisposableLike.md) : [`PureComputationOf`](PureComputationOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](../interfaces/ComputationTypeLike.md)
 
 • **T**

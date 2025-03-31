@@ -10,7 +10,7 @@
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* `Partial`\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
 ## Parameters
 

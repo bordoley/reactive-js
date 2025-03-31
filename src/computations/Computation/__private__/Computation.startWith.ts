@@ -1,4 +1,4 @@
-import { DeferredComputationOfModule } from "../../../computations.js";
+import { ComputationOfModule } from "../../../computations.js";
 import { memoize, pipe } from "../../../functions.js";
 import type * as Computation from "../../Computation.js";
 import Computation_concatWith from "./Computation.concatWith.js";
@@ -8,7 +8,7 @@ const Computation_startWith: Computation.Signature["startWith"] =
   /*@__PURE__*/ memoize(
     m =>
       <T>(...values: readonly T[]) =>
-      (computation: DeferredComputationOfModule<typeof m, T>) =>
+      (computation: ComputationOfModule<typeof m, T>) =>
         pipe(
           values,
           Computation_fromReadonlyArray(m)<T>(),

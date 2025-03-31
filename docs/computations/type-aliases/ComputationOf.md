@@ -6,10 +6,10 @@
 
 # Type Alias: ComputationOf\<TComputationType, T\>
 
-> **ComputationOf**\<`TComputationType`, `T`\>: [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputationType`, `T`\> \| [`SynchronousComputationOf`](SynchronousComputationOf.md)\<`TComputationType`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\>
+> **ComputationOf**\<`TComputationType`, `T`\>: [`PureComputationOf`](PureComputationOf.md)\<`TComputationType`, `T`\> \| [`ComputationWithSideEffectsOf`](ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](../interfaces/ComputationTypeLike.md)
 
-• **T**
+• **T** = `unknown`

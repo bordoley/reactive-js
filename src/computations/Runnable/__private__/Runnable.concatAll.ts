@@ -7,8 +7,9 @@ import {
   unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
-  HigherOrderInnerComputationLike,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
@@ -75,12 +76,15 @@ const createConcatAllSink: <T>(
 
 class ConcatAllRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: RunnableLike<RunnableLike<T>>,
-    innerType: HigherOrderInnerComputationLike,
+    innerType: {
+      [ComputationLike_isPure]?: boolean;
+    },
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(s);
     this[ComputationLike_isPure] =
       Computation.isPure(s) && Computation.isPure(innerType);
   }
@@ -92,12 +96,9 @@ class ConcatAllRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Runnable_concatAll: Runnable.Signature["concatAll"] = (<
-    T,
-    TInnerLike extends HigherOrderInnerComputationLike,
-  >(
-    innerType?: TInnerLike,
-  ) =>
+const Runnable_concatAll: Runnable.Signature["concatAll"] = (<T>(innerType?: {
+    [ComputationLike_isPure]?: boolean;
+  }) =>
   (runnable: RunnableLike<RunnableLike<T>>) =>
     newInstance(
       ConcatAllRunnable,

@@ -74,27 +74,55 @@
 
 #### Call Signature
 
-> **catchError**\<`T`, `TInnerLike`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
+
+###### onError
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`RunnableComputation`](RunnableComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
 
 ##### Parameters
 
 ###### onError
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, `T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ###### options
 
-`TInnerLike`
+###### [ComputationLike_isPure]
+
+`false`
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`RunnableComputation`](RunnableComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -106,7 +134,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -116,11 +144,11 @@
 
 ###### computations
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)[]
 
 ##### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
@@ -128,7 +156,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Type Parameters
 
@@ -138,55 +166,11 @@
 
 ###### computations
 
-...readonly [`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>[]
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>[]
 
 ##### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-##### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
-
-#### Call Signature
-
-> **concat**\<`T`\>(...`computations`): `never`
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly `never`[]
-
-##### Returns
-
-`never`
-
-##### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
-
-#### Call Signature
-
-> **concat**\<`T`\>(...`computations`): `never`
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly `never`[]
-
-##### Returns
-
-`never`
+[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Inherited from
 
@@ -198,7 +182,7 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+> **concatAll**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Type Parameters
 
@@ -206,7 +190,7 @@
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>, `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Inherited from
 
@@ -214,23 +198,47 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`, `TInnerLike`\>(`options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, `T`\>, `T`\>
+> **concatAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+
+#### Call Signature
+
+> **concatAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>\>, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Type Parameters
+
+• **T**
 
 ##### Parameters
 
 ###### options
 
-`TInnerLike`
+###### [ComputationLike_isPure]
+
+`false`
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `TInnerLike`, `T`\>, `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>\>, [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
 
 ##### Inherited from
 
@@ -360,7 +368,7 @@
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **gen**\<`T`\>(`factory`, `options`?): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -378,7 +386,7 @@
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Inherited from
 
@@ -388,7 +396,7 @@
 
 ### genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **genPure**\<`T`\>(`factory`, `options`?): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -406,7 +414,7 @@
 
 #### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Inherited from
 
@@ -788,7 +796,7 @@
 
 ### toProducer()
 
-> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../../type-aliases/ToProducer.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+> **toProducer**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -802,7 +810,21 @@
 
 #### Returns
 
-[`ToProducer`](../../type-aliases/ToProducer.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Inherited from
 
@@ -826,7 +848,7 @@
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(`options`?): [`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+> **toRunnable**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> : `TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -840,7 +862,21 @@
 
 #### Returns
 
-[`ToRunnableOperator`](../../type-aliases/ToRunnableOperator.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](RunnableComputation.md), `T`\>
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> : `TComputationOf` *extends* [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Inherited from
 

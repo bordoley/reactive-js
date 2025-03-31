@@ -1,4 +1,4 @@
-import { ComputationBaseOf, ComputationLike_isPure, ComputationOperatorWithSideEffects, PureComputationOperator } from "../../../computations.js";
+import { ComputationLike_isPure, ComputationOf, ComputationOperatorWithSideEffects, PureComputationOperator } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
 import { SinkLike } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
@@ -13,7 +13,7 @@ interface RunnableLift {
     }): (operator: Function1<LiftedSinkLike<SinkLike, TB>, LiftedSinkLike<SinkLike, TA>>) => ComputationOperatorWithSideEffects<Runnable.Computation, TA, TB>;
     lift<TA, TB>(config: {
         [ComputationLike_isPure]: boolean;
-    }): (operator: Function1<LiftedSinkLike<SinkLike, TB>, LiftedSinkLike<SinkLike, TA>>) => Function1<ComputationBaseOf<Runnable.Computation, TA>, ComputationBaseOf<Runnable.Computation, TB>>;
+    }): (operator: Function1<LiftedSinkLike<SinkLike, TB>, LiftedSinkLike<SinkLike, TA>>) => Function1<ComputationOf<Runnable.Computation, TA>, ComputationOf<Runnable.Computation, TB>>;
 }
 declare const Runnable_lift: RunnableLift["lift"];
 export default Runnable_lift;

@@ -1,5 +1,5 @@
 import {
-  HigherOrderInnerComputationLike,
+  ComputationLike_isPure,
   ObservableLike,
 } from "../../../computations.js";
 import { Function1, SideEffect1 } from "../../../functions.js";
@@ -9,7 +9,9 @@ import * as DeferredSource from "../../__internal__/DeferredSource.js";
 
 const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
-  options?: HigherOrderInnerComputationLike,
+  options?: {
+    [ComputationLike_isPure]?: boolean;
+  },
 ) =>
   DeferredSource.catchError(
     Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing<T>,

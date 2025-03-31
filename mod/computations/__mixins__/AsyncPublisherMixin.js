@@ -2,13 +2,12 @@
 
 import { Set_add, Set_delete, Set_has, Set_size, } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import QueueMixin from "../../utils/__mixins__/QueueMixin.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
-import Iterable_first from "../Iterable/__private__/Iterable.first.js";
 const AsyncPublisherMixin = /*@__PURE__*/ (() => {
     const AsyncPublisher_EventListeners = Symbol("AsyncPublisher_EventListeners");
     const AsyncPublisher_onSinkDisposed = Symbol("AsyncPublisher_onSinkDisposed");
@@ -82,8 +81,9 @@ const AsyncPublisherMixin = /*@__PURE__*/ (() => {
             }
             if (maybeEventListeners instanceof Set &&
                 maybeEventListeners[Set_size] == 1) {
-                instance[AsyncPublisher_EventListeners] =
-                    Iterable_first()(maybeEventListeners);
+                for (const listener of maybeEventListeners) {
+                    instance[AsyncPublisher_EventListeners] = listener;
+                }
             }
             if (autoDispose && isNone(instance[AsyncPublisher_EventListeners])) {
                 instance[DisposableLike_dispose]();
@@ -98,6 +98,7 @@ const AsyncPublisherMixin = /*@__PURE__*/ (() => {
     }), proto({
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
+        [ComputationLike_isPure]: true,
         [EventListenerLike_notify](next) {
             if (this[SinkLike_isCompleted]) {
                 return;

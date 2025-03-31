@@ -1,9 +1,17 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { Factory, error, newInstance, pipe } from "../../../functions.js";
+import {
+  Factory,
+  Optional,
+  error,
+  newInstance,
+  pipe,
+} from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import {
@@ -15,11 +23,12 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class GenRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly f: Factory<Iterator<T>>,
@@ -27,7 +36,7 @@ class GenRunnable<T> implements RunnableLike<T> {
       [ComputationLike_isPure]?: boolean;
     },
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(config ?? {});
+    this[ComputationLike_isPure] = config?.[ComputationLike_isPure];
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

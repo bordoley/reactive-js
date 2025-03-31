@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`SynchronousComputationLike`](SynchronousComputationLike.md)
+- [`ComputationLike`](ComputationLike.md)
 
 ## Extended by
 
@@ -21,33 +21,33 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isDeferred]`](SynchronousComputationLike.md#computationlike_isdeferred)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
 
 ***
 
-### \[ComputationLike\_isPure\]?
+### \[ComputationLike\_isPure\]
 
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `boolean`
+> `readonly` **\[ComputationLike\_isPure\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isPure]`](SynchronousComputationLike.md#computationlike_ispure)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isSynchronous\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 
-[`SynchronousComputationLike`](SynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationLike.md#computationlike_issynchronous)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isSynchronous]`](ComputationLike.md#computationlike_issynchronous)
 
 ## Methods
 

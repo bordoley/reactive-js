@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\>.[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md)
+- [`SynchronousObservableLike`](SynchronousObservableLike.md)\<`T`\>.[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,13 +16,13 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
 
-#### Overrides
+#### Inherited from
 
-[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md).[`[ComputationLike_isDeferred]`](SynchronousComputationWithSideEffectsLike.md#computationlike_isdeferred)
+[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[ComputationLike_isDeferred]`](ObservableWithSideEffectsLike.md#computationlike_isdeferred)
 
 ***
 
@@ -32,14 +32,34 @@
 
 #### Overrides
 
-[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md).[`[ComputationLike_isPure]`](SynchronousComputationWithSideEffectsLike.md#computationlike_ispure)
+[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[ComputationLike_isPure]`](ObservableWithSideEffectsLike.md#computationlike_ispure)
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isSynchronous\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 
-[`SynchronousComputationWithSideEffectsLike`](SynchronousComputationWithSideEffectsLike.md).[`[ComputationLike_isSynchronous]`](SynchronousComputationWithSideEffectsLike.md#computationlike_issynchronous)
+[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[ComputationLike_isSynchronous]`](ObservableWithSideEffectsLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[SourceLike\_subscribe\]()
+
+> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`ObserverLike`](../../utils/interfaces/ObserverLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[SourceLike_subscribe]`](ObservableWithSideEffectsLike.md#sourcelike_subscribe)

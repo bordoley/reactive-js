@@ -39,6 +39,7 @@ import {
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
 import * as Source from "../../Source.js";
+import type * as SynchronousObservable from "../../SynchronousObservable.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
@@ -253,7 +254,7 @@ class ComputeContext {
     mode: ComputeMode,
     config: Pick<
       ObservableLike,
-      typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
   ) {
     this[ComputeContext_observer] = observer;
@@ -395,38 +396,30 @@ export const assertCurrentContext = (): ComputeContext => {
   return currentCtx as ComputeContext;
 };
 
-interface ObservableComputeWithConfig {
-  computeWithConfig<T>(
+interface Signature {
+  compute<T>(
     computation: Factory<T>,
     config: Pick<
       SynchronousObservableWithSideEffectsLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
     options?: { readonly mode?: ComputeMode },
   ): SynchronousObservableWithSideEffectsLike<T>;
-  computeWithConfig<T>(
+  compute<T>(
     computation: Factory<T>,
     config: Pick<
       ObservableWithSideEffectsLike,
-      | typeof ComputationLike_isDeferred
-      | typeof ComputationLike_isPure
-      | typeof ComputationLike_isSynchronous
+      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
     >,
     options?: { readonly mode?: ComputeMode },
   ): ObservableWithSideEffectsLike<T>;
 }
 
-const Observable_compute: ObservableComputeWithConfig["computeWithConfig"] = (<
-  T,
->(
+const Observable_compute: Signature["compute"] = (<T>(
   computation: Factory<T>,
   config: Pick<
     ObservableWithSideEffectsLike,
-    | typeof ComputationLike_isDeferred
-    | typeof ComputationLike_isPure
-    | typeof ComputationLike_isSynchronous
+    typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
   >,
   { mode = BatchedComputeMode }: { readonly mode?: ComputeMode } = {},
 ) =>
@@ -537,23 +530,22 @@ const Observable_compute: ObservableComputeWithConfig["computeWithConfig"] = (<
       observer[SchedulerLike_schedule](runComputation),
       Disposable.addTo(observer),
     );
-  }, config)) as ObservableComputeWithConfig["computeWithConfig"];
+  }, config)) as Signature["compute"];
 
-export const Observable_computeDeferred: Observable.Signature["computeDeferred"] =
-  <T>(
-    computation: Factory<T>,
-    options: { mode?: "batched" | "combine-latest" } = {},
-  ) =>
-    Observable_compute(
-      computation,
-      {
-        [ComputationLike_isPure]: false,
-        [ComputationLike_isSynchronous]: false,
-      },
-      options,
-    );
+export const Observable_computeDeferred: Observable.Signature["compute"] = <T>(
+  computation: Factory<T>,
+  options: { mode?: "batched" | "combine-latest" } = {},
+) =>
+  Observable_compute<T>(
+    computation,
+    {
+      [ComputationLike_isPure]: false,
+      [ComputationLike_isSynchronous]: false,
+    },
+    options,
+  );
 
-export const Observable_computeSynchronous: Observable.Signature["computeSynchronous"] =
+export const Observable_computeSynchronous: SynchronousObservable.Signature["compute"] =
   <T>(
     computation: Factory<T>,
     options: { mode?: "batched" | "combine-latest" } = {},

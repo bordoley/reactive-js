@@ -8,6 +8,7 @@ import {
 import {
   BroadcasterLike,
   ComputationLike_isDeferred,
+  ComputationLike_isPure,
   ComputationLike_isSynchronous,
   SourceLike_subscribe,
 } from "../../../computations.js";
@@ -84,6 +85,7 @@ const Broadcaster_merge: Broadcaster.Signature["merge"] = /*@__PURE__*/ (<
     {
       [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
+      [ComputationLike_isPure]: true as const,
 
       [SourceLike_subscribe](
         this: TProperties,

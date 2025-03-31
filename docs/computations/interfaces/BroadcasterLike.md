@@ -33,9 +33,9 @@
 
 ***
 
-### \[ComputationLike\_isPure\]?
+### \[ComputationLike\_isPure\]
 
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
+> `readonly` **\[ComputationLike\_isPure\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 
@@ -50,3 +50,93 @@
 #### Overrides
 
 [`MulticastComputationLike`](MulticastComputationLike.md).[`[ComputationLike_isSynchronous]`](MulticastComputationLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[DisposableContainerLike\_add\]()
+
+#### Call Signature
+
+> **\[DisposableContainerLike\_add\]**(`disposable`): `void`
+
+Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
+
+##### Parameters
+
+###### disposable
+
+[`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+
+The disposable to add.
+
+##### Returns
+
+`void`
+
+##### Inherited from
+
+[`MulticastComputationLike`](MulticastComputationLike.md).[`[DisposableContainerLike_add]`](MulticastComputationLike.md#disposablecontainerlike_add)
+
+#### Call Signature
+
+> **\[DisposableContainerLike\_add\]**(`teardown`): `void`
+
+Adds the given teardown function to this container or disposes it if the container has been disposed.
+
+##### Parameters
+
+###### teardown
+
+[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
+
+The teardown function to add.
+
+##### Returns
+
+`void`
+
+##### Inherited from
+
+[`MulticastComputationLike`](MulticastComputationLike.md).[`[DisposableContainerLike_add]`](MulticastComputationLike.md#disposablecontainerlike_add)
+
+#### Call Signature
+
+> **\[DisposableContainerLike\_add\]**(`teardown`): `void`
+
+Adds the given teardown function to this container or disposes it if the container has been disposed.
+
+##### Parameters
+
+###### teardown
+
+[`Method1`](../../functions/type-aliases/Method1.md)\<[`DisposableLike`](../../utils/interfaces/DisposableLike.md), [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>\>
+
+The teardown function to add.
+
+##### Returns
+
+`void`
+
+##### Inherited from
+
+[`MulticastComputationLike`](MulticastComputationLike.md).[`[DisposableContainerLike_add]`](MulticastComputationLike.md#disposablecontainerlike_add)
+
+***
+
+### \[SourceLike\_subscribe\]()
+
+> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`SourceLike`](SourceLike.md).[`[SourceLike_subscribe]`](SourceLike.md#sourcelike_subscribe)

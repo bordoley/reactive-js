@@ -4,25 +4,18 @@ import { Array_length } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, memoize, newInstance, none, pipe, pipeUnsafe, returns, } from "../../functions.js";
+import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pipe, pipeUnsafe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
-import Computation_startWith from "../Computation/__private__/Computation.startWith.js";
-import * as Publisher from "../Publisher.js";
 import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import { LiftedSourceLike_sink, LiftedSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
-export const scanDistinct = memoize(m => (reducer, initialState, options) => (source) => create(consumer => {
-    const acc = initialState();
-    const lifted = pipe(source, m.scan(reducer, returns(acc)), Computation_startWith(m)(acc), m.distinctUntilChanged(options));
-    lifted[SourceLike_subscribe](consumer);
-}, source));
 export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(consumer => {
     const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer), Disposable.addToContainer(consumer), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)), DisposableContainer.onError(err => {
         let action = none;
@@ -42,7 +35,6 @@ export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, 
     source[SourceLike_subscribe](onErrorSink);
 }, {
     [ComputationLike_isPure]: options?.[ComputationLike_isPure],
-    [ComputationLike_isSynchronous]: options?.[ComputationLike_isSynchronous],
 });
 export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {
     const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");
@@ -100,7 +92,7 @@ export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) 
     };
 };
 class CreateSource {
-    static [ComputationLike_isDeferred] = true;
+    [ComputationLike_isDeferred] = true;
     [ComputationLike_isPure];
     [ComputationLike_isSynchronous];
     [CreateSource_effect];
@@ -272,20 +264,11 @@ export const retry = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsum
     const createDelegateConsumer = () => pipe(consumer, createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, DisposableContainer.onError(onDelegateConsumerError), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)));
     src[SourceLike_subscribe](createDelegateConsumer());
 }, src));
-export const scanMany = /*@__PURE__*/ (() => memoize(m => (scanner, initialValue, innerType) => (source) => create((consumer) => {
-    const accFeedbackPublisher = pipe(Publisher.create(), Disposable.addTo(consumer));
-    // FIXME: any leak.
-    const feedbackSource = pipe(accFeedbackPublisher, m.fromBroadcaster());
-    pipe(source, m.withLatestFrom(feedbackSource, (next, acc) => scanner(acc, next)), m.switchAll(innerType), m.forEach(bindMethod(accFeedbackPublisher, EventListenerLike_notify)))[SourceLike_subscribe](consumer);
-    accFeedbackPublisher[EventListenerLike_notify](initialValue());
-}, {
-    [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType),
-})))();
-export const takeLast = memoize(m => (takeLast, options) => (obs) => create(consumer => {
+export const takeLast = (genPure, takeLast, options) => (obs) => create(consumer => {
     const count = options?.count ?? 1;
-    const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => pipe(m.genPure(bindMethod(takeLastSink, Symbol.iterator)), invoke(SourceLike_subscribe, consumer))));
+    const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => genPure(bindMethod(takeLastSink, Symbol.iterator))[SourceLike_subscribe](consumer)));
     pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
-}, obs));
+}, obs);
 export const withEffect = (effect => source => create(consumer => {
     const cleanup = effect();
     if (isSome(cleanup) && isFunction(cleanup)) {

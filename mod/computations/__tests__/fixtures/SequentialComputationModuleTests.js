@@ -3,7 +3,7 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowAsync, expectToThrowErrorAsync, testAsync, } from "../../../__internal__/testing.js";
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { ignore, lessThan, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, returns, } from "../../../functions.js";
+import { ignore, lessThan, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Source from "../../Source.js";
 const SequentialComputationModuleTests = (m) => describe("SequentialComputationModule", describe("catchError", testAsync("when the source does not throw", pipeLazyAsync([1, 2, 3, 4], Computation.fromReadonlyArray(m)(), m.catchError(ignore), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4]))), testAsync("when the source throws", async () => {
@@ -39,12 +39,12 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
     await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.repeat(_ => {
         throw err;
     }), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-})), describe("retry", testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(Computation.fromReadonlyArray(m)()([1, 2, 3]), Computation.raise(m)()), m.retry(), m.takeFirst({ count: 6 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(Computation.raise(m)(), m.retry(Computation.raise(m)()), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(pipeLazyAsync(m.concat(Computation.fromReadonlyArray(m)()([1, 2, 3]), Computation.raise(m)()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])), expectToThrowAsync))), describe("scanDistinct", testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync([1, 1, 1], Computation.fromReadonlyArray(m)(), m.scanDistinct((a, b) => a + b, returns(0)), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([0, 1, 2, 3]))), testAsync("throws when the reduce function throws", async () => {
+})), describe("retry", testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(Computation.fromReadonlyArray(m)()([1, 2, 3]), Computation.raise(m)()), m.retry(), m.takeFirst({ count: 6 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(Computation.raise(m)(), m.retry(() => raise("")), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(pipeLazyAsync(m.concat(Computation.fromReadonlyArray(m)()([1, 2, 3]), Computation.raise(m)()), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])), expectToThrowAsync))), describe("scanDistinct", testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync([1, 1, 1], Computation.fromReadonlyArray(m)(), m.scanDistinct((a, b) => a + b, returns(0)), m.toProducer(), Source.toReadonlyArrayAsync(), expectArrayEquals([0, 1, 2, 3]))), testAsync("throws when the reduce function throws", async () => {
     const err = new Error();
     const scanner = (_acc, _next) => {
         throw err;
     };
-    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.scanDistinct(scanner, returns(0)), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
+    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.scanDistinct((scanner), returns(0)), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
 }), testAsync("throws when the initial value function throws", async () => {
     const err = new Error();
     const initialValue = () => {

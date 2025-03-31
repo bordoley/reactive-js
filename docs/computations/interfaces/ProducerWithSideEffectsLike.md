@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ProducerLike`](ProducerLike.md)\<`T`\>.[`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md)
+- [`ProducerLike`](ProducerLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,13 +16,13 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
 
-#### Overrides
+#### Inherited from
 
-[`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationWithSideEffectsLike.md#computationlike_isdeferred)
+[`ProducerLike`](ProducerLike.md).[`[ComputationLike_isDeferred]`](ProducerLike.md#computationlike_isdeferred)
 
 ***
 
@@ -32,7 +32,7 @@
 
 #### Overrides
 
-[`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md).[`[ComputationLike_isPure]`](DeferredComputationWithSideEffectsLike.md#computationlike_ispure)
+[`ProducerLike`](ProducerLike.md).[`[ComputationLike_isPure]`](ProducerLike.md#computationlike_ispure)
 
 ***
 
@@ -40,6 +40,26 @@
 
 > `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
 
-#### Overrides
+#### Inherited from
 
-[`DeferredComputationWithSideEffectsLike`](DeferredComputationWithSideEffectsLike.md).[`[ComputationLike_isSynchronous]`](DeferredComputationWithSideEffectsLike.md#computationlike_issynchronous)
+[`ProducerLike`](ProducerLike.md).[`[ComputationLike_isSynchronous]`](ProducerLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[SourceLike\_subscribe\]()
+
+> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`ProducerLike`](ProducerLike.md).[`[SourceLike_subscribe]`](ProducerLike.md#sourcelike_subscribe)

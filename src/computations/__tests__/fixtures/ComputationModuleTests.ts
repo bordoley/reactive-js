@@ -5,7 +5,10 @@ import {
   expectToThrowErrorAsync,
   testAsync,
 } from "../../../__internal__/testing.js";
-import { ComputationModule } from "../../../computations.js";
+import {
+  ComputationModule,
+  ComputationTypeLike,
+} from "../../../computations.js";
 import {
   Tuple2,
   alwaysTrue,
@@ -24,8 +27,8 @@ import { increment } from "../../../math.js";
 import * as Computation from "../../Computation.js";
 import * as Source from "../../Source.js";
 
-const ComputationModuleTests = <TComputationModule extends ComputationModule>(
-  m: TComputationModule,
+const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
+  m: ComputationModule<TComputationType>,
 ) =>
   describe(
     "ComputationModule",
@@ -62,7 +65,7 @@ const ComputationModuleTests = <TComputationModule extends ComputationModule>(
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.distinctUntilChanged({ equality }),
+            m.distinctUntilChanged<number>({ equality }),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
           ),
@@ -131,7 +134,7 @@ const ComputationModuleTests = <TComputationModule extends ComputationModule>(
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.keep(predicate),
+            m.keep<number>(predicate),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
           ),
@@ -164,7 +167,7 @@ const ComputationModuleTests = <TComputationModule extends ComputationModule>(
             Computation.fromReadonlyArray(m)(),
             m.map(selector),
             m.toProducer(),
-            Source.toReadonlyArrayAsync<number>(),
+            Source.toReadonlyArrayAsync<boolean>(),
           ),
 
           expectToThrowErrorAsync(err),
@@ -234,7 +237,7 @@ const ComputationModuleTests = <TComputationModule extends ComputationModule>(
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.scan(scanner, returns(0)),
+            m.scan(scanner<number>, returns(0)),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
           ),
@@ -424,7 +427,7 @@ const ComputationModuleTests = <TComputationModule extends ComputationModule>(
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.takeWhile(predicate),
+            m.takeWhile<number>(predicate),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
           ),

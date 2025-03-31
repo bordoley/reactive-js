@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`PureObservableLike`](PureObservableLike.md)\<`T`\>.[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md)
+- [`SynchronousObservableLike`](SynchronousObservableLike.md)\<`T`\>.[`PureObservableLike`](PureObservableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,30 +16,50 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
 
-#### Overrides
+#### Inherited from
 
-[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md).[`[ComputationLike_isDeferred]`](PureSynchronousComputationLike.md#computationlike_isdeferred)
-
-***
-
-### \[ComputationLike\_isPure\]?
-
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
-
-#### Overrides
-
-[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md).[`[ComputationLike_isPure]`](PureSynchronousComputationLike.md#computationlike_ispure)
+[`PureObservableLike`](PureObservableLike.md).[`[ComputationLike_isDeferred]`](PureObservableLike.md#computationlike_isdeferred)
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isPure\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` **\[ComputationLike\_isPure\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 
-[`PureSynchronousComputationLike`](PureSynchronousComputationLike.md).[`[ComputationLike_isSynchronous]`](PureSynchronousComputationLike.md#computationlike_issynchronous)
+[`PureObservableLike`](PureObservableLike.md).[`[ComputationLike_isPure]`](PureObservableLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+#### Overrides
+
+[`PureObservableLike`](PureObservableLike.md).[`[ComputationLike_isSynchronous]`](PureObservableLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[SourceLike\_subscribe\]()
+
+> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`ObserverLike`](../../utils/interfaces/ObserverLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`PureObservableLike`](PureObservableLike.md).[`[SourceLike_subscribe]`](PureObservableLike.md#sourcelike_subscribe)

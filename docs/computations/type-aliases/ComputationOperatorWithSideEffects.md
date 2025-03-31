@@ -6,26 +6,22 @@
 
 # Type Alias: ComputationOperatorWithSideEffects()\<TComputationType, TA, TB\>
 
-> **ComputationOperatorWithSideEffects**\<`TComputationType`, `TA`, `TB`\>: \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`SynchronousComputationOf`](SynchronousComputationOf.md)\<`TComputationType`, `TA`\> ? [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\> : `TComputationOf` *extends* [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputationType`, `TA`\> ? [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\> : `never`
+> **ComputationOperatorWithSideEffects**\<`TComputationType`, `TA`, `TB`\>: (`computation`) => [`ComputationWithSideEffectsOf`](ComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](../interfaces/ComputationTypeLike.md)
 
 • **TA**
 
 • **TB**
 
-## Type Parameters
-
-• **TComputationOf** *extends* [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `TA`\>
-
 ## Parameters
 
 ### computation
 
-`TComputationOf`
+[`ComputationOf`](ComputationOf.md)\<`TComputationType`, `TA`\>
 
 ## Returns
 
-`TComputationOf` *extends* [`SynchronousComputationOf`](SynchronousComputationOf.md)\<`TComputationType`, `TA`\> ? [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\> : `TComputationOf` *extends* [`DeferredComputationOf`](DeferredComputationOf.md)\<`TComputationType`, `TA`\> ? [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\> : `never`
+[`ComputationWithSideEffectsOf`](ComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>

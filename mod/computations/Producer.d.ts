@@ -1,19 +1,14 @@
-import { BroadcasterLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_multicastOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, PureProducerLike, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
+import { BroadcasterLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, SequentialComputationModule, SequentialReactiveComputationModule, SourceComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
-export interface ProducerComputation extends ComputationType {
+export interface ProducerComputation extends ComputationTypeLike {
     readonly [Computation_baseOfT]?: ProducerLike<this[typeof Computation_T]>;
-    readonly [Computation_pureSynchronousOfT]?: never;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: never;
-    readonly [Computation_pureDeferredOfT]?: PureProducerLike<this[typeof Computation_T]>;
-    readonly [Computation_deferredWithSideEffectsOfT]?: ProducerWithSideEffectsLike<this[typeof Computation_T]>;
-    readonly [Computation_multicastOfT]?: never;
 }
 export type Computation = ProducerComputation;
-export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredAsynchronousReactiveComputationModule<ProducerComputation> {
+export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredAsynchronousReactiveComputationModule<ProducerComputation>, SourceComputationModule<ProducerComputation> {
     broadcast<T>(options?: {
         autoDispose?: boolean;
     }): Function1<ProducerLike<T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;

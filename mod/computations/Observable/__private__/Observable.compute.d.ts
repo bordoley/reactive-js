@@ -1,7 +1,8 @@
-import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ObservableLike } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ObservableLike } from "../../../computations.js";
 import { Optional } from "../../../functions.js";
 import { DisposableLike, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
+import type * as SynchronousObservable from "../../SynchronousObservable.js";
 export declare const BatchedComputeMode = "batched";
 export declare const CombineLatestComputeMode = "combine-latest";
 type ComputeMode = "batched" | "combine-latest";
@@ -74,13 +75,13 @@ declare class ComputeContext {
     private readonly [ComputeContext_runComputation];
     private readonly [ComputeContext_mode];
     private readonly [ComputeContext_cleanup];
-    constructor(observer: ObserverLike, runComputation: () => void, mode: ComputeMode, config: Pick<ObservableLike, typeof ComputationLike_isDeferred | typeof ComputationLike_isSynchronous>);
+    constructor(observer: ObserverLike, runComputation: () => void, mode: ComputeMode, config: Pick<ObservableLike, typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous>);
     [ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
     [ComputeContext_constant]<T>(value: T, ...args: unknown[]): T;
     [ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
     [ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
 }
 export declare const assertCurrentContext: () => ComputeContext;
-export declare const Observable_computeDeferred: Observable.Signature["computeDeferred"];
-export declare const Observable_computeSynchronous: Observable.Signature["computeSynchronous"];
+export declare const Observable_computeDeferred: Observable.Signature["compute"];
+export declare const Observable_computeSynchronous: SynchronousObservable.Signature["compute"];
 export {};

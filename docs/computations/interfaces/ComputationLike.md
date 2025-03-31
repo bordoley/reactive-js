@@ -8,27 +8,29 @@
 
 ## Extended by
 
-- [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
 - [`PureComputationLike`](PureComputationLike.md)
-- [`DeferredComputationLike`](DeferredComputationLike.md)
-- [`SynchronousComputationLike`](SynchronousComputationLike.md)
-- [`MulticastComputationLike`](MulticastComputationLike.md)
+- [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+- [`IterableLike`](IterableLike.md)
+- [`AsyncIterableLike`](AsyncIterableLike.md)
+- [`RunnableLike`](RunnableLike.md)
 - [`SourceLike`](SourceLike.md)
+- [`ProducerLike`](ProducerLike.md)
+- [`ObservableLike`](ObservableLike.md)
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
-
-***
-
-### \[ComputationLike\_isPure\]?
-
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `boolean`
+> `readonly` **\[ComputationLike\_isDeferred\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isPure\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `boolean`
+> `readonly` **\[ComputationLike\_isPure\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+***
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>

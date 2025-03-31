@@ -1,14 +1,7 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationType, Computation_T, Computation_baseOfT, Computation_deferredWithSideEffectsOfT, Computation_pureDeferredOfT, Computation_pureSynchronousOfT, Computation_synchronousWithSideEffectsOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, PureAsyncIterableLike, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, ObservableWithSideEffectsLike, PureComputationLike, PureObservableLike, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
-/**
- * @noInheritDoc
- */
-export interface AsyncIterableComputation extends ComputationType {
+export interface AsyncIterableComputation extends ComputationTypeLike {
     readonly [Computation_baseOfT]?: AsyncIterableLike<this[typeof Computation_T]>;
-    readonly [Computation_pureSynchronousOfT]?: never;
-    readonly [Computation_synchronousWithSideEffectsOfT]?: never;
-    readonly [Computation_deferredWithSideEffectsOfT]?: AsyncIterableWithSideEffectsLike<this[typeof Computation_T]>;
-    readonly [Computation_pureDeferredOfT]?: PureAsyncIterableLike<this[typeof Computation_T]>;
 }
 export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
@@ -16,6 +9,10 @@ export interface AsyncIterableModule extends ComputationModule<AsyncIterableComp
         signal?: AbortSignal;
     }) => Promise<T>, AsyncIterableWithSideEffectsLike<T>>;
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
+    toObservable<T>(options?: {
+        delay: number;
+        delayStart: boolean;
+    }): <TAsyncIterable extends AsyncIterableLike<T>>(iter: TAsyncIterable) => TAsyncIterable extends PureComputationLike ? PureObservableLike<T> : ObservableWithSideEffectsLike<T>;
 }
 export type Signature = AsyncIterableModule;
 export declare const catchError: Signature["catchError"];

@@ -6,7 +6,8 @@
 
 # Interface: StreamLike\<TReq, T\>
 
-Represents a duplex stream
+A `ConsumerLike` type that consumes enqueued events to
+be consumed.
 
 ## Extends
 
@@ -21,3 +22,53 @@ Represents a duplex stream
 • **TReq**
 
 • **T**
+
+## Properties
+
+### \[ComputationLike\_isDeferred\]
+
+> `readonly` **\[ComputationLike\_isDeferred\]**: `false`
+
+#### Inherited from
+
+[`BroadcasterLike`](BroadcasterLike.md).[`[ComputationLike_isDeferred]`](BroadcasterLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isPure\]
+
+> `readonly` **\[ComputationLike\_isPure\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+#### Inherited from
+
+[`BroadcasterLike`](BroadcasterLike.md).[`[ComputationLike_isPure]`](BroadcasterLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+
+#### Inherited from
+
+[`BroadcasterLike`](BroadcasterLike.md).[`[ComputationLike_isSynchronous]`](BroadcasterLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[SourceLike\_subscribe\]()
+
+> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`BroadcasterLike`](BroadcasterLike.md).[`[SourceLike_subscribe]`](BroadcasterLike.md#sourcelike_subscribe)

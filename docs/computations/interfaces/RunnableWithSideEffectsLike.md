@@ -16,9 +16,9 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 
@@ -36,9 +36,9 @@
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isSynchronous\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `true`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 

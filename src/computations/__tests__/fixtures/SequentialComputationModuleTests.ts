@@ -10,6 +10,7 @@ import {
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   ComputationModule,
+  ComputationTypeLike,
   SequentialComputationModule,
 } from "../../../computations.js";
 import {
@@ -21,15 +22,18 @@ import {
   pipeAsync,
   pipeLazy,
   pipeLazyAsync,
+  raise,
   returns,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Source from "../../Source.js";
 
 const SequentialComputationModuleTests = <
-  TComputationModule extends ComputationModule &
+  TComputationType extends ComputationTypeLike,
+>(
+  m: ComputationModule<TComputationType> &
     Pick<
-      SequentialComputationModule,
+      SequentialComputationModule<TComputationType>,
       | "scanDistinct"
       | "catchError"
       | "concat"
@@ -39,8 +43,6 @@ const SequentialComputationModuleTests = <
       | "retry"
       | "throwIfEmpty"
     >,
->(
-  m: TComputationModule,
 ) =>
   describe(
     "SequentialComputationModule",
@@ -132,7 +134,7 @@ const SequentialComputationModuleTests = <
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.forEach(_ => {
+            m.forEach<number>(_ => {
               throw err;
             }),
             m.toProducer(),
@@ -184,7 +186,7 @@ const SequentialComputationModuleTests = <
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.repeat(_ => {
+            m.repeat<number>(_ => {
               throw err;
             }),
             m.toProducer(),
@@ -200,7 +202,7 @@ const SequentialComputationModuleTests = <
         "retrys with the default predicate",
         pipeLazyAsync(
           m.concat<number>(
-            Computation.fromReadonlyArray(m)()([1, 2, 3]),
+            Computation.fromReadonlyArray(m)<number>()([1, 2, 3]),
             Computation.raise(m)<number>(),
           ),
           m.retry<number>(),
@@ -214,8 +216,8 @@ const SequentialComputationModuleTests = <
         "when source and the retry predicate throw",
         pipeLazyAsync(
           pipeLazyAsync(
-            Computation.raise(m)(),
-            m.retry(Computation.raise(m)()),
+            Computation.raise(m)<number>(),
+            m.retry<number>(() => raise("")),
             m.toProducer(),
             Source.toReadonlyArrayAsync(),
           ),
@@ -227,7 +229,7 @@ const SequentialComputationModuleTests = <
         pipeLazyAsync(
           pipeLazyAsync(
             m.concat<number>(
-              Computation.fromReadonlyArray(m)()([1, 2, 3]),
+              Computation.fromReadonlyArray(m)<number>()([1, 2, 3]),
               Computation.raise(m)(),
             ),
             m.retry<number>((count, _) => count < 2),
@@ -263,7 +265,7 @@ const SequentialComputationModuleTests = <
           pipeLazy(
             [1, 1],
             Computation.fromReadonlyArray(m)(),
-            m.scanDistinct(scanner, returns(0)),
+            m.scanDistinct(scanner<number>, returns(0)),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
           ),
@@ -294,8 +296,8 @@ const SequentialComputationModuleTests = <
         const error = new Error();
         await pipe(
           pipeLazy(
-            Computation.empty(m)(),
-            m.throwIfEmpty(() => error),
+            Computation.empty(m)<number>(),
+            m.throwIfEmpty<number>(() => error),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
           ),
@@ -306,8 +308,8 @@ const SequentialComputationModuleTests = <
         const error = new Error();
         await pipe(
           pipeLazy(
-            Computation.empty(m)(),
-            m.throwIfEmpty(() => {
+            Computation.empty(m)<number>(),
+            m.throwIfEmpty<number>(() => {
               throw error;
             }),
             m.toProducer(),

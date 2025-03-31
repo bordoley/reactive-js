@@ -6,10 +6,10 @@
 
 # Type Alias: PureComputationOf\<TComputationType, T\>
 
-> **PureComputationOf**\<`TComputationType`, `T`\>: [`PureSynchronousComputationOf`](PureSynchronousComputationOf.md)\<`TComputationType`, `T`\> \| [`PureDeferredComputationOf`](PureDeferredComputationOf.md)\<`TComputationType`, `T`\> \| [`MulticastComputationOf`](MulticastComputationOf.md)\<`TComputationType`, `T`\>
+> **PureComputationOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_baseOfT`](../variables/Computation_baseOfT.md)\]\> & [`PureComputationLike`](../interfaces/PureComputationLike.md) : `object`
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](../interfaces/ComputationTypeLike.md)
 
-• **T**
+• **T** = `unknown`

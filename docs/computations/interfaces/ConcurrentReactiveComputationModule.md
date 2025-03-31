@@ -15,10 +15,11 @@
 - [`BroadcasterModule`](../Broadcaster/interfaces/BroadcasterModule.md)
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
+- [`SynchronousObservableModule`](../SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
 ## Properties
 
@@ -30,73 +31,425 @@
 
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
-***
-
-### combineLatest
-
-> **combineLatest**: [`CombineConstructor`](CombineConstructor.md)\<`TComputationType`\>
-
-***
-
-### forkMerge
-
-> **forkMerge**: [`ForkMerge`](../type-aliases/ForkMerge.md)\<`TComputationType`\>
-
-***
-
-### zipLatest
-
-> **zipLatest**: [`CombineConstructor`](CombineConstructor.md)\<`TComputationType`\>
-
 ## Methods
 
-### fromBroadcaster()
+### combineLatest()
 
-> **fromBroadcaster**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+#### Call Signature
 
-#### Type Parameters
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
-• **T**
+##### Type Parameters
 
-#### Returns
+• **TA**
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TC`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TC`\>
+
+###### d
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TD`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TC`\>
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TC`\>
+
+###### d
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TD`\>
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ***
 
-### fromObservable()
+### forkMerge()
 
-> **fromObservable**\<`T`\>(`options`?): [`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
+#### Call Signature
 
-#### Type Parameters
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
 
-• **T**
+##### Type Parameters
 
-#### Parameters
+• **TIn**
 
-##### options?
+• **TOut**
 
-###### scheduler?
+##### Parameters
 
-[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+###### a
 
-#### Returns
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
 
-[`FromObservableOperator`](../type-aliases/FromObservableOperator.md)\<`TComputationType`, `T`\>
+###### b
 
-***
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
 
-### fromProducer()
+###### tail
 
-> **fromProducer**\<`T`\>(): [`FromProducerOperator`](../type-aliases/FromProducerOperator.md)\<`TComputationType`, `T`\>
+...[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>[]
 
-#### Type Parameters
+##### Returns
 
-• **T**
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
 
-#### Returns
+#### Call Signature
 
-[`FromProducerOperator`](../type-aliases/FromProducerOperator.md)\<`TComputationType`, `T`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### b
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### b
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### b
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### c
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### b
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### c
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### b
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### c
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### d
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### b
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### c
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### d
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
 
 ***
 
@@ -104,7 +457,7 @@
 
 #### Call Signature
 
-> **merge**\<`T`\>(...`computations`): [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
+> **merge**\<`T`\>(...`computations`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 ##### Type Parameters
 
@@ -114,87 +467,15 @@
 
 ###### computations
 
-...readonly [`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>[]
+...readonly [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>[]
 
 ##### Returns
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 #### Call Signature
 
-> **merge**\<`T`\>(...`computations`): [`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`SynchronousComputationOf`](../type-aliases/SynchronousComputationOf.md)\<`TComputationType`, `T`\>[]
-
-##### Returns
-
-[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>[]
-
-##### Returns
-
-[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`DeferredComputationOf`](../type-aliases/DeferredComputationOf.md)\<`TComputationType`, `T`\>[]
-
-##### Returns
-
-[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>[]
-
-##### Returns
-
-[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `T`\>
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+> **merge**\<`T`\>(...`computations`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ##### Type Parameters
 
@@ -208,7 +489,7 @@
 
 ##### Returns
 
-[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ***
 
@@ -226,7 +507,7 @@
 
 ###### notifier
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `unknown`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `unknown`\>
 
 ##### Returns
 
@@ -244,65 +525,11 @@
 
 ###### notifier
 
-[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `unknown`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `unknown`\>
 
 ##### Returns
 
 [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `T`\>
-
-#### Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### notifier
-
-[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `unknown`\>
-
-##### Returns
-
-[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-#### Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### notifier
-
-[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `unknown`\>
-
-##### Returns
-
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
-
-#### Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### notifier
-
-[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `unknown`\>
-
-##### Returns
-
-[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `T`, `T`\>
 
 ***
 
@@ -322,7 +549,7 @@
 
 ###### other
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `TB`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
 
 ##### Returns
 
@@ -344,7 +571,7 @@
 
 ###### other
 
-[`PureSynchronousComputationOf`](../type-aliases/PureSynchronousComputationOf.md)\<`TComputationType`, `TB`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
 
 ###### selector
 
@@ -368,7 +595,7 @@
 
 ###### other
 
-[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
 
 ##### Returns
 
@@ -390,7 +617,7 @@
 
 ###### other
 
-[`SynchronousComputationWithSideEffectsOf`](../type-aliases/SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
 
 ###### selector
 
@@ -400,9 +627,13 @@
 
 [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TA`, `T`\>
 
+***
+
+### zipLatest()
+
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -412,17 +643,21 @@
 
 ##### Parameters
 
-###### other
+###### a
 
-[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `TB`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ##### Type Parameters
 
@@ -430,25 +665,65 @@
 
 • **TB**
 
-• **T**
+• **TC**
 
 ##### Parameters
 
-###### other
+###### a
 
-[`PureDeferredComputationOf`](../type-aliases/PureDeferredComputationOf.md)\<`TComputationType`, `TB`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TA`\>
 
-###### selector
+###### b
 
-[`Function2`](../../functions/type-aliases/Function2.md)\<`TA`, `TB`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TC`\>
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TC`\>
+
+###### d
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TD`\>
+
+##### Returns
+
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 ##### Type Parameters
 
@@ -458,17 +733,21 @@
 
 ##### Parameters
 
-###### other
+###### a
 
-[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>
+
+###### b
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
 
 ##### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 ##### Type Parameters
 
@@ -476,25 +755,29 @@
 
 • **TB**
 
-• **T**
+• **TC**
 
 ##### Parameters
 
-###### other
+###### a
 
-[`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>
 
-###### selector
+###### b
 
-[`Function2`](../../functions/type-aliases/Function2.md)\<`TA`, `TB`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TC`\>
 
 ##### Returns
 
-[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>, [`DeferredComputationWithSideEffectsOf`](../type-aliases/DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple3`](../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
 
 ##### Type Parameters
 
@@ -502,38 +785,28 @@
 
 • **TB**
 
-##### Parameters
+• **TC**
 
-###### other
-
-[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `TB`\>
-
-##### Returns
-
-[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, [`Tuple2`](../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-#### Call Signature
-
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **T**
+• **TD**
 
 ##### Parameters
 
-###### other
+###### a
 
-[`MulticastComputationOf`](../type-aliases/MulticastComputationOf.md)\<`TComputationType`, `TB`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TA`\>
 
-###### selector
+###### b
 
-[`Function2`](../../functions/type-aliases/Function2.md)\<`TA`, `TB`, `T`\>
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TB`\>
+
+###### c
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TC`\>
+
+###### d
+
+[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TD`\>
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../type-aliases/PureAsynchronousComputationOperator.md)\<`TComputationType`, `TA`, `T`\>
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, [`Tuple4`](../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>

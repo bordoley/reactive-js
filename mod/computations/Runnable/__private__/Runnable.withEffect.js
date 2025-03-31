@@ -1,18 +1,19 @@
 /// <reference types="./Runnable.withEffect.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
 import { error, isFunction, isSome, newInstance, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { DisposableContainerLike_add, DisposableLike_dispose, } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
 class WithEffectRunnable {
     s;
     e;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = true;
     constructor(s, e) {
         this.s = s;
         this.e = e;
-        this[ComputationLike_isPure] = Computation.isPure(s);
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [RunnableLike_eval](sink) {
         const source = this.s;

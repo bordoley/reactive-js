@@ -6,20 +6,6 @@
 
 # Interface: StreamableLike\<TReq, T, TStream\>
 
-A container that supports bi-directional streaming.
-
-## Typeparam
-
-TReq
-
-## Typeparam
-
-T
-
-## Typeparam
-
-TStream
-
 ## Type Parameters
 
 • **TReq** = `unknown`
@@ -34,15 +20,11 @@ TStream
 
 > **\[StreamableLike\_stream\]**(`scheduler`, `options`?): `TStream` & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)
 
-Subscribe to the Streamable.
-
 #### Parameters
 
 ##### scheduler
 
 [`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
-
-The scheduler to subscribe to the stream with.
 
 ##### options?
 
@@ -57,8 +39,6 @@ The scheduler to subscribe to the stream with.
 ###### capacity?
 
 `number`
-
-The capacity of the stream's request queue.
 
 #### Returns
 

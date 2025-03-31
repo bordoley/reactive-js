@@ -3,7 +3,7 @@ import type * as Computation from "../../Computation.js";
 import Computation_isPure from "./Computation.isPure.js";
 
 const Computation_areAllPure: Computation.Signature["areAllPure"] = <
-  TComputationType extends ComputationLike,
+  TComputationType extends Partial<ComputationLike>,
 >(
   computations: readonly TComputationType[],
 ): computations is readonly (TComputationType & PureComputationLike)[] =>

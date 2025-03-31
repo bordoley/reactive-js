@@ -6,11 +6,11 @@
 
 # Function: isDeferred()
 
-> **isDeferred**\<`TComputationType`\>(`computation`): `computation is TComputationType & DeferredComputationLike`
+> **isDeferred**\<`TComputationType`\>(`computation`): `computation is TComputationType & { [ComputationLike_isDeferred]: Optional<true> }`
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* `Partial`\<[`ComputationLike`](../../interfaces/ComputationLike.md)\> = `Partial`\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
 ## Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-`computation is TComputationType & DeferredComputationLike`
+`computation is TComputationType & { [ComputationLike_isDeferred]: Optional<true> }`

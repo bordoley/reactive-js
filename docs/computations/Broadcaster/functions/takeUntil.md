@@ -18,7 +18,7 @@
 
 #### notifier
 
-`never`
+[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Returns
 
@@ -36,62 +36,22 @@
 
 #### notifier
 
-`never`
+##### [ComputationLike_isDeferred]
+
+`false`
+
+##### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### [ComputationLike_isSynchronous]
+
+`false`
+
+##### [DisposableContainerLike_add]
+
+##### [SourceLike_subscribe]
 
 ### Returns
 
 [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`, `T`\>
-
-## Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`, `T`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### notifier
-
-`never`
-
-### Returns
-
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`, `T`\>
-
-## Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, `never`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### notifier
-
-`never`
-
-### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, `never`\>
-
-## Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`, `T`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### notifier
-
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`unknown`\>
-
-### Returns
-
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`, `T`\>

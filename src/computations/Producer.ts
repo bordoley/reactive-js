@@ -1,22 +1,17 @@
 import {
   BroadcasterLike,
   ComputationModule,
-  ComputationType,
+  ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
-  Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredAsynchronousReactiveComputationModule,
   ProducerLike,
   ProducerWithSideEffectsLike,
-  PureProducerLike,
   SequentialComputationModule,
   SequentialReactiveComputationModule,
+  SourceComputationModule,
 } from "../computations.js";
 import { Function1, identity, identityLazy, returns } from "../functions.js";
 import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
@@ -71,20 +66,8 @@ import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestF
 /**
  * @noInheritDoc
  */
-export interface ProducerComputation extends ComputationType {
+export interface ProducerComputation extends ComputationTypeLike {
   readonly [Computation_baseOfT]?: ProducerLike<this[typeof Computation_T]>;
-
-  readonly [Computation_pureSynchronousOfT]?: never;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
-
-  readonly [Computation_pureDeferredOfT]?: PureProducerLike<
-    this[typeof Computation_T]
-  >;
-  readonly [Computation_deferredWithSideEffectsOfT]?: ProducerWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
-
-  readonly [Computation_multicastOfT]?: never;
 }
 
 export type Computation = ProducerComputation;
@@ -95,7 +78,8 @@ export interface ProducerModule
     ConcurrentReactiveComputationModule<ProducerComputation>,
     SequentialComputationModule<ProducerComputation>,
     SequentialReactiveComputationModule<ProducerComputation>,
-    DeferredAsynchronousReactiveComputationModule<ProducerComputation> {
+    DeferredAsynchronousReactiveComputationModule<ProducerComputation>,
+    SourceComputationModule<ProducerComputation> {
   broadcast<T>(options?: {
     autoDispose?: boolean;
   }): Function1<

@@ -44,7 +44,7 @@ const ComputationModuleTests = (m) => describe("ComputationModule", describe("di
     const scanner = (_acc, _next) => {
         throw err;
     };
-    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.scan(scanner, returns(0)), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
+    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m)(), m.scan((scanner), returns(0)), m.toProducer(), Source.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
 }), testAsync("throws when the initial value function throws", async () => {
     const err = new Error();
     const initialValue = () => {

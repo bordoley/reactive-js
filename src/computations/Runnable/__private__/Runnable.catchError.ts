@@ -1,6 +1,7 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
-  HigherOrderInnerComputationLike,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
@@ -27,6 +28,8 @@ import type * as Runnable from "../../Runnable.js";
 
 class CatchErrorRunnable<T> implements RunnableLike<T> {
   readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: RunnableLike<T>,
@@ -67,13 +70,10 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
   }
 }
 
-const Runnable_catchError: Runnable.Signature["catchError"] = (<
-    T,
-    TInnerLike extends HigherOrderInnerComputationLike,
-  >(
+const Runnable_catchError: Runnable.Signature["catchError"] = (<T>(
     onError: SideEffect1<Error> | Function1<Error, RunnableLike<T>>,
     options?: {
-      readonly innerType: TInnerLike;
+      [ComputationLike_isPure]?: boolean;
     },
   ) =>
   (runnable: RunnableLike<T>) =>
@@ -81,7 +81,7 @@ const Runnable_catchError: Runnable.Signature["catchError"] = (<
       CatchErrorRunnable<T>,
       runnable,
       onError,
-      options?.innerType?.[ComputationLike_isPure] ?? true,
+      options?.[ComputationLike_isPure] ?? true,
     )) as Runnable.Signature["catchError"];
 
 export default Runnable_catchError;

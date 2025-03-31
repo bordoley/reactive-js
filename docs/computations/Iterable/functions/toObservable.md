@@ -6,7 +6,7 @@
 
 # Function: toObservable()
 
-> **toObservable**\<`T`\>(`options`?): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+> **toObservable**\<`T`\>(`options`?): \<`TIterable`\>(`iter`) => `TIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,14 +16,28 @@
 
 ### options?
 
-#### delay?
+#### delay
 
 `number`
 
-#### delayStart?
+#### delayStart
 
 `boolean`
 
 ## Returns
 
-[`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `T`\>
+`Function`
+
+### Type Parameters
+
+• **TIterable** *extends* [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\>
+
+### Parameters
+
+#### iter
+
+`TIterable`
+
+### Returns
+
+`TIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> : [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>

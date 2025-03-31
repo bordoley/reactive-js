@@ -4,13 +4,11 @@ import type * as Observable from "../../Observable.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import { Observable_genPure } from "./Observable.gen.js";
 
-const m = {
-  genPure: Observable_genPure,
-};
 const Observable_takeLast: Observable.Signature["takeLast"] = (<T>(options?: {
   readonly count?: number;
 }) =>
-  DeferredSource.takeLast(m)<ObserverLike<T>, T>(
+  DeferredSource.takeLast<ObserverLike<T>, T>(
+    Observable_genPure,
     Observer.takeLast,
     options,
   )) as Observable.Signature["takeLast"];

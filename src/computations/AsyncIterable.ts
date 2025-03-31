@@ -11,17 +11,15 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
-  ComputationType,
+  ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
   ConcurrentDeferredComputationModule,
-  HigherOrderInnerComputationLike,
   InteractiveComputationModule,
+  ObservableWithSideEffectsLike,
   PureAsyncIterableLike,
+  PureComputationLike,
+  PureObservableLike,
   SequentialComputationModule,
 } from "../computations.js";
 import {
@@ -68,22 +66,8 @@ import {
   Producer_genPureAsync,
 } from "./Producer/__private__/Producer.genAsync.js";
 
-/**
- * @noInheritDoc
- */
-export interface AsyncIterableComputation extends ComputationType {
+export interface AsyncIterableComputation extends ComputationTypeLike {
   readonly [Computation_baseOfT]?: AsyncIterableLike<
-    this[typeof Computation_T]
-  >;
-
-  readonly [Computation_pureSynchronousOfT]?: never;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
-
-  readonly [Computation_deferredWithSideEffectsOfT]?: AsyncIterableWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
-
-  readonly [Computation_pureDeferredOfT]?: PureAsyncIterableLike<
     this[typeof Computation_T]
   >;
 }
@@ -100,13 +84,23 @@ export interface AsyncIterableModule
   >;
 
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
+
+  toObservable<T>(options?: {
+    delay: number;
+    delayStart: boolean;
+  }): <TAsyncIterable extends AsyncIterableLike<T>>(
+    iter: TAsyncIterable,
+  ) => TAsyncIterable extends PureComputationLike
+    ? PureObservableLike<T>
+    : ObservableWithSideEffectsLike<T>;
 }
 
 export type Signature = AsyncIterableModule;
 
 class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(
     private readonly s: AsyncIterableLike<T>,
@@ -135,13 +129,10 @@ class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
   }
 }
 
-export const catchError: Signature["catchError"] = (<
-    T,
-    TInnerLike extends HigherOrderInnerComputationLike,
-  >(
+export const catchError: Signature["catchError"] = (<T>(
     onError: SideEffect1<Error> | Function1<Error, AsyncIterableLike<T>>,
     options?: {
-      readonly innerType: TInnerLike;
+      readonly [ComputationLike_isPure]: Optional<boolean>;
     },
   ) =>
   (iter: AsyncIterableLike<T>) =>
@@ -149,12 +140,13 @@ export const catchError: Signature["catchError"] = (<
       CatchErrorAsyncIterable,
       iter,
       onError,
-      options?.innerType?.[ComputationLike_isPure] ?? true,
+      options?.[ComputationLike_isPure] ?? true,
     )) as Signature["catchError"];
 
 class ConcatAllAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(
     private readonly s: AsyncIterableLike<AsyncIterableLike<T>>,
@@ -169,22 +161,20 @@ class ConcatAllAsyncIterable<T> implements AsyncIterableLike<T> {
     }
   }
 }
-export const concatAll: Signature["concatAll"] = (<
-    T,
-    TInnerLike extends HigherOrderInnerComputationLike,
-  >(options?: {
-    readonly innerType: TInnerLike;
+export const concatAll: Signature["concatAll"] = (<T>(options?: {
+    readonly [ComputationLike_isPure]: Optional<boolean>;
   }) =>
   (iterable: AsyncIterableLike<AsyncIterableLike<T>>) =>
     newInstance(
       ConcatAllAsyncIterable,
       iterable,
-      options?.innerType?.[ComputationLike_isPure] ?? true,
+      options?.[ComputationLike_isPure] ?? true,
     )) as Signature["concatAll"];
 
 class ConcatAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(private readonly s: ReadonlyArray<AsyncIterableLike<T>>) {
     this[ComputationLike_isPure] = ComputationM.areAllPure(s);
@@ -207,7 +197,8 @@ export const concat: Signature["concat"] = (<T>(
 
 class DistinctUntilChangedAsyncIterable<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(
     private s: AsyncIterableLike<T>,
@@ -288,6 +279,7 @@ class FromAsyncFactoryIterable<T>
 {
   public [ComputationLike_isPure]: false = false as const;
   public [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(private f: (options?: { signal: AbortSignal }) => Promise<T>) {}
 
@@ -305,8 +297,9 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] = returns(
 class EncodeUtf8AsyncIterable
   implements AsyncIterableLike<Uint8Array<ArrayBufferLike>>
 {
-  public readonly [ComputationLike_isPure]?: boolean;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(private readonly s: AsyncIterableLike<string>) {
     this[ComputationLike_isPure] = s[ComputationLike_isPure];
@@ -328,6 +321,7 @@ export const encodeUtf8: Signature["encodeUtf8"] = (() =>
 class ForEachAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
   public [ComputationLike_isPure]: false = false as const;
   public [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(
     private readonly d: AsyncIterableLike<T>,
@@ -424,7 +418,8 @@ export const genPureAsync: Signature["genPureAsync"] = (<T>(
   newInstance(GenPureAsyncAsyncIterable, factory)) as Signature["genPureAsync"];
 
 class KeepAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -451,7 +446,8 @@ export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
     newInstance(KeepAsyncIterable, iterable, predicate)) as Signature["keep"];
 
 class MapAsyncIterable<TA, TB> implements AsyncIterableLike<TB> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -478,6 +474,7 @@ export const map: Signature["map"] = (<TA, TB>(mapper: Function1<TA, TB>) =>
 class AsyncIterableOf<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]: false = false as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(private d: AsyncIterable<T>) {}
 
@@ -492,7 +489,8 @@ export const of: Signature["of"] = /*@__PURE__*/ returns(iter =>
 
 class PairwiseAsyncIterable<T> implements AsyncIterableLike<Tuple2<T, T>> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(private s: AsyncIterableLike<T>) {
     this[ComputationLike_isPure] = s[ComputationLike_isPure];
@@ -521,7 +519,8 @@ export const pairwise: Signature["pairwise"] = (<T>() =>
     newInstance(PairwiseAsyncIterable<T>, iterable)) as Signature["pairwise"];
 
 class ScanAsyncIterable<T, TAcc> implements AsyncIterableLike<TAcc> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -544,7 +543,8 @@ class ScanAsyncIterable<T, TAcc> implements AsyncIterableLike<TAcc> {
 }
 
 class RepeatAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -585,7 +585,8 @@ export const repeat: Signature["repeat"] = (<T>(
 }) as Signature["repeat"];
 
 class RetryAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -638,7 +639,8 @@ export const scan: Signature["scan"] = (<T, TAcc>(
     )) as Signature["scan"];
 
 class ScanDistinctAsyncIterable<T, TAcc> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -685,7 +687,8 @@ export const scanDistinct: Signature["scanDistinct"] = (<T, TAcc>(
 
 class SkipFirstAsyncIterable<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(
     private s: AsyncIterableLike<T>,
@@ -718,7 +721,8 @@ export const skipFirst: Signature["skipFirst"] = (<T>(options?: {
     )) as Signature["skipFirst"];
 
 class TakeFirstAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -754,7 +758,8 @@ export const takeFirst: Signature["takeFirst"] = (<T>(options?: {
     )) as Signature["takeFirst"];
 
 class TakeWhileAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -798,7 +803,8 @@ export const takeWhile: Signature["takeWhile"] = (<T>(
     )) as Signature["takeWhile"];
 
 class ThrowIfEmptyAsyncIterable<T> implements AsyncIterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(
@@ -852,6 +858,7 @@ class WithEffectAsyncIterable<T>
 {
   public [ComputationLike_isSynchronous]: false = false as const;
   public [ComputationLike_isPure]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
 
   constructor(
     private readonly d: AsyncIterableLike<T>,
@@ -907,7 +914,8 @@ export const withEffect: Signature["withEffect"] = (<T>(
     )) as Signature["withEffect"];
 
 class ZipAsyncIterable implements AsyncIterableLike {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
 
   constructor(private readonly iters: readonly AsyncIterableLike<any>[]) {

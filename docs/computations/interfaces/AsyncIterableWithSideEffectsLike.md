@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`AsyncIterableLike`](AsyncIterableLike.md)\<`T`\>.[`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+- [`AsyncIterableLike`](AsyncIterableLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,13 +16,13 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
-#### Overrides
+#### Inherited from
 
-[`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md).[`[ComputationLike_isDeferred]`](ComputationWithSideEffectsLike.md#computationlike_isdeferred)
+[`AsyncIterableLike`](AsyncIterableLike.md).[`[ComputationLike_isDeferred]`](AsyncIterableLike.md#computationlike_isdeferred)
 
 ***
 
@@ -32,7 +32,7 @@
 
 #### Overrides
 
-[`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md).[`[ComputationLike_isPure]`](ComputationWithSideEffectsLike.md#computationlike_ispure)
+[`AsyncIterableLike`](AsyncIterableLike.md).[`[ComputationLike_isPure]`](AsyncIterableLike.md#computationlike_ispure)
 
 ***
 
@@ -40,6 +40,6 @@
 
 > `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
 
-#### Overrides
+#### Inherited from
 
-[`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md).[`[ComputationLike_isSynchronous]`](ComputationWithSideEffectsLike.md#computationlike_issynchronous)
+[`AsyncIterableLike`](AsyncIterableLike.md).[`[ComputationLike_isSynchronous]`](AsyncIterableLike.md#computationlike_issynchronous)

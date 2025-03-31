@@ -1,22 +1,66 @@
+import {
+  ComputationLike_isPure,
+  ProducerLike,
+  SourceLike_subscribe,
+} from "../../../computations.js";
+import {
+  Factory,
+  Function2,
+  bindMethod,
+  invoke,
+  pipe,
+} from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import { ConsumerLike, EventListenerLike_notify } from "../../../utils.js";
 import Broadcaster_toProducer from "../../Broadcaster/__private__/Broadcaster.toProducer.js";
+import Computation_isPure from "../../Computation/__private__/Computation.isPure.js";
 import type * as Producer from "../../Producer.js";
+import * as Publisher from "../../Publisher.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import Producer_forEach from "./Producer.forEach.js";
-import Producer_map from "./Producer.map.js";
 import Producer_switchAll from "./Producer.switchAll.js";
 import Producer_withLatestFrom from "./Producer.withLatestFrom.js";
 
-const ProducerModule = {
-  forEach: Producer_forEach,
-  fromBroadcaster: Broadcaster_toProducer,
-  map: Producer_map,
-  switchAll: Producer_switchAll,
-  withLatestFrom: Producer_withLatestFrom,
-};
+const Producer_scanMany: Producer.Signature["scanMany"] = (<T, TAcc>(
+    scanner: Function2<TAcc, T, ProducerLike<TAcc>>,
+    initialValue: Factory<TAcc>,
+    innerType: {
+      [ComputationLike_isPure]: boolean;
+    },
+  ) =>
+  (source: ProducerLike<T>) =>
+    DeferredSource.create(
+      (consumer: ConsumerLike<TAcc>) => {
+        const accFeedbackPublisher = pipe(
+          Publisher.create<TAcc>(),
+          Disposable.addTo(consumer),
+        );
 
-const Producer_scanMany: Producer.Signature["scanMany"] =
-  /*@__PURE__*/ DeferredSource.scanMany(
-    ProducerModule,
-  ) as Producer.Signature["scanMany"];
+        const feedbackSource = pipe(
+          accFeedbackPublisher,
+          Broadcaster_toProducer<TAcc>(),
+        ) as ProducerLike<TAcc>;
+
+        pipe(
+          source,
+          Producer_withLatestFrom(feedbackSource, (next: T, acc: TAcc) =>
+            scanner(acc, next),
+          ),
+          Producer_switchAll({
+            [ComputationLike_isPure]: false,
+          }),
+          Producer_forEach(
+            bindMethod(accFeedbackPublisher, EventListenerLike_notify),
+          ),
+          invoke(SourceLike_subscribe, consumer),
+        );
+
+        accFeedbackPublisher[EventListenerLike_notify](initialValue());
+      },
+      {
+        [ComputationLike_isPure]:
+          Computation_isPure(source) && Computation_isPure(innerType),
+      },
+    )) as Producer.Signature["scanMany"];
 
 export default Producer_scanMany;

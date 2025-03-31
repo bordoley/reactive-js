@@ -8,6 +8,7 @@
 
 ## Extended by
 
+- [`MulticastComputationLike`](../../computations/interfaces/MulticastComputationLike.md)
 - [`BroadcasterLike`](../../computations/interfaces/BroadcasterLike.md)
 - [`DisposableLike`](DisposableLike.md)
 - [`SchedulerLike`](SchedulerLike.md)

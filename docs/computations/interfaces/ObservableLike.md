@@ -8,12 +8,13 @@
 
 ## Extends
 
-- [`SourceLike`](SourceLike.md)\<`T`, [`ObserverLike`](../../utils/interfaces/ObserverLike.md)\<`T`\>\>.[`DeferredComputationLike`](DeferredComputationLike.md)
+- [`DeferredSourceLike`](DeferredSourceLike.md)\<`T`, [`ObserverLike`](../../utils/interfaces/ObserverLike.md)\<`T`\>\>.[`ComputationLike`](ComputationLike.md)
 
 ## Extended by
 
 - [`PureObservableLike`](PureObservableLike.md)
 - [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)
+- [`SynchronousObservableLike`](SynchronousObservableLike.md)
 
 ## Type Parameters
 
@@ -21,10 +22,50 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Overrides
 
-[`DeferredComputationLike`](DeferredComputationLike.md).[`[ComputationLike_isDeferred]`](DeferredComputationLike.md#computationlike_isdeferred)
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isDeferred]`](ComputationLike.md#computationlike_isdeferred)
+
+***
+
+### \[ComputationLike\_isPure\]
+
+> `readonly` **\[ComputationLike\_isPure\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+#### Inherited from
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isPure]`](ComputationLike.md#computationlike_ispure)
+
+***
+
+### \[ComputationLike\_isSynchronous\]
+
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+#### Inherited from
+
+[`ComputationLike`](ComputationLike.md).[`[ComputationLike_isSynchronous]`](ComputationLike.md#computationlike_issynchronous)
+
+## Methods
+
+### \[SourceLike\_subscribe\]()
+
+> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`ObserverLike`](../../utils/interfaces/ObserverLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`DeferredSourceLike`](DeferredSourceLike.md).[`[SourceLike_subscribe]`](DeferredSourceLike.md#sourcelike_subscribe)

@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.scanDistinct.d.ts" />
 
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
 import { error, invoke, newInstance, pipe, returns, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import Computation_startWith from "../../Computation/__private__/Computation.startWith.js";
@@ -19,12 +19,14 @@ class ActionReducerRunnable {
     f;
     o;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = true;
     constructor(s, r, f, o) {
         this.s = s;
         this.r = r;
         this.f = f;
         this.o = o;
-        this[ComputationLike_isPure] = Computation.isPure(s);
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
     }
     [RunnableLike_eval](sink) {
         const { s: src, r: reducer, f: initialValue, o: options } = this;

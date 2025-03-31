@@ -18,21 +18,15 @@
 - [Signature](type-aliases/Signature.md)
 - [ThrottleMode](type-aliases/ThrottleMode.md)
 
-## Variables
-
-- [currentTime](variables/currentTime.md)
-
 ## Functions
 
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
 - [combineLatest](functions/combineLatest.md)
-- [computeDeferred](functions/computeDeferred.md)
-- [computeSynchronous](functions/computeSynchronous.md)
+- [compute](functions/compute.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
-- [delay](functions/delay.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
 - [forEach](functions/forEach.md)
@@ -45,7 +39,6 @@
 - [genPure](functions/genPure.md)
 - [genPureAsync](functions/genPureAsync.md)
 - [keep](functions/keep.md)
-- [keyFrame](functions/keyFrame.md)
 - [map](functions/map.md)
 - [merge](functions/merge.md)
 - [mergeAll](functions/mergeAll.md)
@@ -56,7 +49,6 @@
 - [scanDistinct](functions/scanDistinct.md)
 - [scanMany](functions/scanMany.md)
 - [skipFirst](functions/skipFirst.md)
-- [spring](functions/spring.md)
 - [subscribeOn](functions/subscribeOn.md)
 - [switchAll](functions/switchAll.md)
 - [takeFirst](functions/takeFirst.md)
@@ -66,7 +58,6 @@
 - [throttle](functions/throttle.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
-- [toRunnable](functions/toRunnable.md)
 - [withBackpressure](functions/withBackpressure.md)
 - [withCurrentTime](functions/withCurrentTime.md)
 - [withEffect](functions/withEffect.md)

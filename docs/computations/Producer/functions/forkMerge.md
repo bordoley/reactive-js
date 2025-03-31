@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -20,23 +20,23 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### tail
 
-...[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>[]
+...[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>[]
 
 ### Returns
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`?): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -48,23 +48,25 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-#### options?
+#### options
 
-[`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md)
+##### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
 
 ### Returns
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`?): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ### Type Parameters
 
@@ -76,27 +78,59 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
+
+#### options
+
+##### [ComputationLike_isPure]
+
+`false`
+
+### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+## Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+### Parameters
+
+#### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+#### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### c
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-#### options?
+#### options
 
-[`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md)
+##### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
 
 ### Returns
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`?): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ### Type Parameters
 
@@ -108,24 +142,98 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
 
 #### c
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
+
+#### options
+
+##### [ComputationLike_isPure]
+
+`false`
+
+### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+## Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+### Parameters
+
+#### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+#### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+#### c
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### d
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TIn`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-#### options?
+#### options
 
-[`DeferredComputationWithSideEffectsLike`](../../interfaces/DeferredComputationWithSideEffectsLike.md)
+##### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
 
 ### Returns
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TOut`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+## Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+### Parameters
+
+#### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
+
+#### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
+
+#### c
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
+
+#### d
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TOut`\>\>
+
+#### options
+
+##### [ComputationLike_isPure]
+
+`false`
+
+### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)

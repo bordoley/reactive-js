@@ -6,10 +6,10 @@
 
 # Type Alias: NewInstanceWithSideEffectsOf\<TComputationType, T\>
 
-> **NewInstanceWithSideEffectsOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[`FirstNotNeverComputation`\<`TComputationType`, *typeof* [`Computation_synchronousWithSideEffectsOfT`](../variables/Computation_synchronousWithSideEffectsOfT.md), *typeof* [`Computation_deferredWithSideEffectsOfT`](../variables/Computation_deferredWithSideEffectsOfT.md)\>\] & [`ComputationBaseOf`](ComputationBaseOf.md)\<`TComputationType`, `T`\>\> : `object`
+> **NewInstanceWithSideEffectsOf**\<`TComputationType`, `T`\>: [`ComputationWithSideEffectsOf`](ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](../interfaces/ComputationTypeLike.md)
 
 • **T**

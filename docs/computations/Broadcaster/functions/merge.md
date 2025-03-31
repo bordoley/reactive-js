@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **merge**\<`T`\>(...`computations`): `never`
+> **merge**\<`T`\>(...`computations`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -18,11 +18,11 @@
 
 #### computations
 
-...readonly `never`[]
+...readonly [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)[]
 
 ### Returns
 
-`never`
+[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
@@ -36,80 +36,8 @@
 
 #### computations
 
-...readonly `never`[]
+...readonly `object`[]
 
 ### Returns
 
 `never`
-
-## Call Signature
-
-> **merge**\<`T`\>(...`computations`): `never`
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### computations
-
-...readonly `never`[]
-
-### Returns
-
-`never`
-
-## Call Signature
-
-> **merge**\<`T`\>(...`computations`): `never`
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### computations
-
-...readonly `never`[]
-
-### Returns
-
-`never`
-
-## Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### computations
-
-...readonly [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>[]
-
-### Returns
-
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>
-
-## Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### computations
-
-...readonly [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>[]
-
-### Returns
-
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)

@@ -1,16 +1,10 @@
 import {
   ComputationModule,
-  ComputationType,
+  ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
-  Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
   PureRunnableLike,
   RunnableLike,
-  RunnableWithSideEffectsLike,
   SequentialComputationModule,
   SequentialReactiveComputationModule,
   SynchronousComputationModule,
@@ -49,18 +43,8 @@ import Runnable_withEffect from "./Runnable/__private__/Runnable.withEffect.js";
 /**
  * @noInheritDoc
  */
-export interface RunnableComputation extends ComputationType {
+export interface RunnableComputation extends ComputationTypeLike {
   readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
-  readonly [Computation_pureSynchronousOfT]?: PureRunnableLike<
-    this[typeof Computation_T]
-  >;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: RunnableWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
-
-  readonly [Computation_pureDeferredOfT]?: never;
-  readonly [Computation_deferredWithSideEffectsOfT]?: never;
-  readonly [Computation_multicastOfT]?: never;
 }
 
 export type Computation = RunnableComputation;

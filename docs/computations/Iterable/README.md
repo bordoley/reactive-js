@@ -28,6 +28,7 @@
 - [genPure](functions/genPure.md)
 - [keep](functions/keep.md)
 - [map](functions/map.md)
+- [of](functions/of.md)
 - [pairwise](functions/pairwise.md)
 - [repeat](functions/repeat.md)
 - [retry](functions/retry.md)

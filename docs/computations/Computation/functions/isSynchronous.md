@@ -6,11 +6,11 @@
 
 # Function: isSynchronous()
 
-> **isSynchronous**\<`TComputationType`\>(`computation`): `computation is TComputationType & SynchronousComputationLike`
+> **isSynchronous**\<`TComputationType`\>(`computation`): `computation is TComputationType & { [ComputationLike_isSynchronous]: Optional<true> }`
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md) = [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* `Partial`\<[`ComputationLike`](../../interfaces/ComputationLike.md)\> = `Partial`\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
 ## Parameters
 
@@ -20,4 +20,4 @@
 
 ## Returns
 
-`computation is TComputationType & SynchronousComputationLike`
+`computation is TComputationType & { [ComputationLike_isSynchronous]: Optional<true> }`

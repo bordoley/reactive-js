@@ -1,9 +1,16 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { alwaysTrue, error, newInstance } from "../../../functions.js";
+import {
+  Optional,
+  alwaysTrue,
+  error,
+  newInstance,
+} from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
@@ -12,17 +19,18 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class RetryRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: RunnableLike<T>,
     private readonly p: (count: number, error: Error) => boolean,
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(s);
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {

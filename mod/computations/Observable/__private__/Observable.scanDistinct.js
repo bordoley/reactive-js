@@ -1,15 +1,21 @@
 /// <reference types="./Observable.scanDistinct.d.ts" />
 
+import { SourceLike_subscribe, } from "../../../computations.js";
+import { pipe, returns, } from "../../../functions.js";
+import Computation_startWith from "../../Computation/__private__/Computation.startWith.js";
+import * as Computation from "../../Computation.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.js";
 import { Observable_genPure } from "./Observable.gen.js";
 import Observable_scan from "./Observable.scan.js";
-const m = {
+const m = Computation.makeModule()({
     concat: Observable_concat,
-    distinctUntilChanged: Observable_distinctUntilChanged,
     genPure: Observable_genPure,
-    scan: Observable_scan,
-};
-const Observable_scanDistinct = ((reducer, initialState, options) => DeferredSource.scanDistinct(m)(reducer, initialState, options));
+});
+const Observable_scanDistinct = ((reducer, initialState, options) => (source) => DeferredSource.create((observer) => {
+    const acc = initialState();
+    const lifted = pipe(source, Observable_scan(reducer, returns(acc)), Computation_startWith(m)(acc), x => x, Observable_distinctUntilChanged(options));
+    lifted[SourceLike_subscribe](observer);
+}, source));
 export default Observable_scanDistinct;

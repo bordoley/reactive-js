@@ -1,9 +1,11 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { newInstance, pipe } from "../../../functions.js";
+import { Optional, newInstance, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
@@ -16,7 +18,9 @@ import * as Computation from "../../Computation.js";
 import type * as Runnable from "../../Runnable.js";
 
 class ConcatRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(private readonly s: readonly RunnableLike<T>[]) {
     this[ComputationLike_isPure] = Computation.areAllPure(s);

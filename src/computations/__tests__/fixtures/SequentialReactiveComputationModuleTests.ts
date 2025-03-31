@@ -6,6 +6,7 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
+  ComputationTypeLike,
   PickComputationModule,
   SequentialReactiveComputationModule,
 } from "../../../computations.js";
@@ -19,13 +20,13 @@ import * as Computation from "../../Computation.js";
 import * as Source from "../../Source.js";
 
 const SequentialReactiveComputationModuleTests = <
-  TComputationModule extends ComputationModule &
+  TComputationType extends ComputationTypeLike,
+>(
+  m: ComputationModule<TComputationType> &
     PickComputationModule<
-      SequentialReactiveComputationModule,
+      SequentialReactiveComputationModule<TComputationType>,
       "buffer" | "decodeWithCharset" | "takeLast"
     >,
->(
-  m: TComputationModule,
 ) =>
   describe(
     "SequentialReactiveComputationModule",

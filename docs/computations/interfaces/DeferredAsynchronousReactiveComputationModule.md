@@ -14,10 +14,11 @@
 
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
+- [`SynchronousObservableModule`](../SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
 ## Properties
 
@@ -33,77 +34,241 @@
 
 ### mergeAll()
 
-> **mergeAll**\<`T`, `TInnerLike`\>(`options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `T`\>, `T`\>
+#### Call Signature
 
-#### Type Parameters
+> **mergeAll**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+
+##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
 
-#### Parameters
+###### options?
 
-##### options
+###### backpressureStrategy?
 
-`object` & `TInnerLike`
+[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
 
-#### Returns
+###### capacity?
 
-[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `T`\>, `T`\>
+`number`
+
+###### concurrency?
+
+`number`
+
+##### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+
+#### Call Signature
+
+> **mergeAll**\<`T`\>(`options`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### concurrency?
+
+`number`
+
+##### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+
+#### Call Signature
+
+> **mergeAll**\<`T`\>(`options`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>\>, [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### concurrency?
+
+`number`
+
+##### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>\>, [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 
 ### scanMany()
 
-> **scanMany**\<`T`, `TAcc`, `TInnerLike`\>(`scanner`, `initialValue`, `options`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, `T`, `TAcc`\>
+#### Call Signature
 
-#### Type Parameters
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
+
+##### Type Parameters
 
 • **T**
 
 • **TAcc**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
 
-#### Parameters
+###### scanner
 
-##### scanner
+[`Function2`](../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TAcc`\>\>
 
-[`Function2`](../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `TAcc`\>\>
-
-##### initialValue
+###### initialValue
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
 
-##### options
+##### Returns
 
-`TInnerLike`
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
 
-#### Returns
+#### Call Signature
 
-[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, `T`, `TAcc`\>
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+##### Parameters
+
+###### scanner
+
+[`Function2`](../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TAcc`\>\>
+
+###### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `TAcc`\>
+
+#### Call Signature
+
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `TAcc`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+##### Parameters
+
+###### scanner
+
+[`Function2`](../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `TAcc`\>\>
+
+###### initialValue
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `T`, `TAcc`\>
 
 ***
 
 ### switchAll()
 
-> **switchAll**\<`T`, `TInnerLike`\>(`innerType`): [`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `T`\>, `T`\>
+#### Call Signature
 
-#### Type Parameters
+> **switchAll**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+
+##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../type-aliases/HigherOrderInnerComputationLike.md)
+##### Returns
 
-#### Parameters
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
-##### innerType
+#### Call Signature
 
-`TInnerLike`
+> **switchAll**\<`T`\>(`options`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
-#### Returns
+##### Type Parameters
 
-[`HigherOrderComputationOperator`](../type-aliases/HigherOrderComputationOperator.md)\<`TComputationType`, `TInnerLike`, [`HigherOrderInnerComputationOf`](../type-aliases/HigherOrderInnerComputationOf.md)\<`TComputationType`, `TInnerLike`, `T`\>, `T`\>
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+
+#### Call Signature
+
+> **switchAll**\<`T`\>(`options`): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>\>, [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>\>, [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
 
 ***
 

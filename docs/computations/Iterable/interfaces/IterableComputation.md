@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationType`](../../type-aliases/ComputationType.md)
+- [`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)
 
 ## Properties
 
@@ -18,44 +18,4 @@
 
 #### Overrides
 
-`ComputationType.[Computation_baseOfT]`
-
-***
-
-### \[Computation\_deferredWithSideEffectsOfT\]?
-
-> `readonly` `optional` **\[Computation\_deferredWithSideEffectsOfT\]**: [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>
-
-#### Overrides
-
-`ComputationType.[Computation_deferredWithSideEffectsOfT]`
-
-***
-
-### \[Computation\_pureDeferredOfT\]?
-
-> `readonly` `optional` **\[Computation\_pureDeferredOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>
-
-#### Overrides
-
-`ComputationType.[Computation_pureDeferredOfT]`
-
-***
-
-### \[Computation\_pureSynchronousOfT\]?
-
-> `readonly` `optional` **\[Computation\_pureSynchronousOfT\]**: [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`unknown`\>
-
-#### Overrides
-
-`ComputationType.[Computation_pureSynchronousOfT]`
-
-***
-
-### \[Computation\_synchronousWithSideEffectsOfT\]?
-
-> `readonly` `optional` **\[Computation\_synchronousWithSideEffectsOfT\]**: [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<`unknown`\>
-
-#### Overrides
-
-`ComputationType.[Computation_synchronousWithSideEffectsOfT]`
+[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[Computation_baseOfT]`](../../interfaces/ComputationTypeLike.md#computation_baseoft)

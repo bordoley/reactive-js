@@ -4,7 +4,7 @@ import {
   mixInstanceFactory,
 } from "../../../__internal__/mixins.js";
 import {
-  DeferredComputationWithSideEffects,
+  ComputationLike_isPure,
   PureSynchronousObservableLike,
   StoreLike_value,
   StreamableLike,
@@ -71,7 +71,9 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
             }),
           ),
         ),
-        Observable.switchAll(DeferredComputationWithSideEffects),
+        Observable.switchAll({
+          [ComputationLike_isPure]: false,
+        }),
         Observable.subscribeOn(pauseableScheduler),
       );
 

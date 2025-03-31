@@ -18,7 +18,7 @@
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
 ## Properties
 
@@ -34,7 +34,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`): [`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+> **genAsync**\<`T`\>(`factory`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -48,7 +48,7 @@
 
 #### Returns
 
-[`NewInstanceWithSideEffectsOf`](../type-aliases/NewInstanceWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 ***
 

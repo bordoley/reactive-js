@@ -10,16 +10,11 @@
 
 - [`ComputationLike`](ComputationLike.md)
 
-## Extended by
-
-- [`PureAsyncIterableLike`](PureAsyncIterableLike.md)
-- [`PureObservableLike`](PureObservableLike.md)
-
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `readonly` `optional` **\[ComputationLike\_isDeferred\]**: `boolean`
+> `readonly` **\[ComputationLike\_isDeferred\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 
@@ -27,9 +22,9 @@
 
 ***
 
-### \[ComputationLike\_isPure\]?
+### \[ComputationLike\_isPure\]
 
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `true`
+> `readonly` **\[ComputationLike\_isPure\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 
@@ -37,9 +32,9 @@
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isSynchronous\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `boolean`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 

@@ -9,22 +9,20 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationModule,
-  ComputationType,
+  ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
-  HigherOrderInnerComputationLike,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
+  PureComputationLike,
   PureIterableLike,
+  PureSynchronousObservableLike,
   RunnableLike,
   RunnableLike_eval,
   SequentialComputationModule,
   SynchronousComputationModule,
+  SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
 import {
   Equality,
@@ -38,6 +36,7 @@ import {
   alwaysTrue,
   bindMethod,
   error,
+  identityLazy,
   invoke,
   isFunction,
   isNone,
@@ -73,22 +72,8 @@ import {
 /**
  * @noInheritDoc
  */
-export interface IterableComputation extends ComputationType {
+export interface IterableComputation extends ComputationTypeLike {
   readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
-
-  readonly [Computation_pureSynchronousOfT]?: PureIterableLike<
-    this[typeof Computation_T]
-  >;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: IterableWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
-
-  readonly [Computation_pureDeferredOfT]?: PureIterableLike<
-    this[typeof Computation_T]
-  >;
-  readonly [Computation_deferredWithSideEffectsOfT]?: IterableWithSideEffectsLike<
-    this[typeof Computation_T]
-  >;
 }
 
 export type Computation = IterableComputation;
@@ -97,20 +82,25 @@ export interface IterableModule
   extends ComputationModule<IterableComputation>,
     SequentialComputationModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
-    InteractiveComputationModule<
-      IterableComputation,
-      {
-        toObservable: {
-          delay?: number;
-          delayStart?: boolean;
-        };
-      }
-    > {}
+    InteractiveComputationModule<IterableComputation> {
+  of<T>(): Function1<Iterable<T>, PureIterableLike<T>>;
+
+  toObservable<T>(options?: {
+    delay: number;
+    delayStart: boolean;
+  }): <TIterable extends IterableLike<T>>(
+    iter: TIterable,
+  ) => TIterable extends PureComputationLike
+    ? PureSynchronousObservableLike<T>
+    : SynchronousObservableWithSideEffectsLike<T>;
+}
 
 export type Signature = IterableModule;
 
 class CatchErrorIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: IterableLike<T>,
@@ -139,13 +129,10 @@ class CatchErrorIterable<T> {
   }
 }
 
-export const catchError: Signature["catchError"] = (<
-    T,
-    TInnerLike extends HigherOrderInnerComputationLike,
-  >(
+export const catchError: Signature["catchError"] = (<T>(
     onError: SideEffect1<Error> | Function1<Error, IterableLike<T>>,
     options?: {
-      readonly innerType: TInnerLike;
+      [ComputationLike_isPure]: Optional<boolean>;
     },
   ) =>
   (iter: IterableLike<T>) =>
@@ -153,11 +140,13 @@ export const catchError: Signature["catchError"] = (<
       CatchErrorIterable,
       iter,
       onError,
-      options?.innerType?.[ComputationLike_isPure] ?? true,
+      options?.[ComputationLike_isPure] ?? true,
     )) as Signature["catchError"];
 
 class ConcatAllIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: IterableLike<IterableLike<T>>,
@@ -172,30 +161,31 @@ class ConcatAllIterable<T> {
     }
   }
 }
-export const concatAll: Signature["concatAll"] = (<
-    T,
-    TInnerLike extends HigherOrderInnerComputationLike,
-  >(options?: {
-    readonly innerType: TInnerLike;
+export const concatAll: Signature["concatAll"] = (<T>(options?: {
+    [ComputationLike_isPure]: Optional<boolean>;
   }) =>
   (iterable: IterableLike<IterableLike<T>>) =>
     newInstance(
       ConcatAllIterable,
       iterable,
-      options?.innerType?.[ComputationLike_isPure] ?? true,
+      options?.[ComputationLike_isPure] ?? true,
     )) as Signature["concatAll"];
 
 export const concat: Signature["concat"] = (<T>(
   ...iterables: ReadonlyArray<IterableLike<T>>
-) =>
-  newInstance(
+) => {
+  const iters = of<IterableLike<T>>()(iterables);
+  return newInstance(
     ConcatAllIterable,
-    iterables,
+    iters,
     ComputationM.areAllPure(iterables),
-  )) as Signature["concat"];
+  );
+}) as Signature["concat"];
 
 class DistinctUntilChangedIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private s: IterableLike<T>,
@@ -236,7 +226,9 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] = (<
     )) as Signature["distinctUntilChanged"];
 
 class EncodeUtf8Iterable implements IterableLike<Uint8Array<ArrayBufferLike>> {
-  public [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(private readonly s: IterableLike<string>) {
     this[ComputationLike_isPure] = s[ComputationLike_isPure];
@@ -256,7 +248,9 @@ export const encodeUtf8: Signature["encodeUtf8"] = (() =>
     newInstance(EncodeUtf8Iterable, iterable)) as Signature["encodeUtf8"];
 
 class ForEachIterable<T> implements IterableWithSideEffectsLike<T> {
-  public [ComputationLike_isPure]: false = false as const;
+  public readonly [ComputationLike_isPure]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly d: IterableLike<T>,
@@ -310,7 +304,9 @@ export const genPure: Signature["genPure"] = (<T>(
 ) => newInstance(GenPureIterable<T>, factory)) as Signature["genPure"];
 
 class KeepIterable<T> implements IterableLike<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly d: IterableLike<T>,
@@ -336,7 +332,9 @@ export const keep: Signature["keep"] = (<T>(predicate: Predicate<T>) =>
     newInstance(KeepIterable, iterable, predicate)) as Signature["keep"];
 
 class MapIterable<TA, TB> implements IterableLike<TB> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly d: IterableLike<TA>,
@@ -359,8 +357,12 @@ export const map: Signature["map"] = (<TA, TB>(mapper: Function1<TA, TB>) =>
   (iterable: IterableLike<TA>) =>
     newInstance(MapIterable, iterable, mapper)) as Signature["map"];
 
+export const of: Signature["of"] = identityLazy as Signature["of"];
+
 class PairwiseIterable<T> implements IterableLike<Tuple2<T, T>> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(private s: IterableLike<T>) {
     this[ComputationLike_isPure] = s[ComputationLike_isPure];
@@ -390,6 +392,8 @@ export const pairwise: Signature["pairwise"] = (<T>() =>
 
 class RepeatIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private i: IterableLike<T>,
@@ -430,6 +434,8 @@ export const repeat: Signature["repeat"] = (<T>(
 
 class RetryIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private i: IterableLike<T>,
@@ -470,6 +476,8 @@ export const retry: Signature["retry"] = (<T>(
 
 class ScanIterable<T, TAcc> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: IterableLike<T>,
@@ -504,6 +512,8 @@ export const scan: Signature["scan"] = (<T, TAcc>(
 
 class ScanDistinctIterable<T, TAcc> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: IterableLike<T>,
@@ -549,6 +559,8 @@ export const scanDistinct: Signature["scanDistinct"] = (<T, TAcc>(
 
 class SkipFirstIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private s: IterableLike<T>,
@@ -582,6 +594,8 @@ export const skipFirst: Signature["skipFirst"] = (<T>(options?: {
 
 class TakeFirstIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private s: IterableLike<T>,
@@ -617,6 +631,8 @@ export const takeFirst: Signature["takeFirst"] = (<T>(options?: {
 
 class TakeWhileIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private s: IterableLike<T>,
@@ -660,6 +676,8 @@ export const takeWhile: Signature["takeWhile"] = (<T>(
 
 class ThrowIfEmptyIterable<T> {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly i: IterableLike<T>,
@@ -711,7 +729,10 @@ export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
 ) as Signature["toProducer"];
 
 class IterableToRunnable<T> implements RunnableLike<T> {
-  readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
+
   constructor(private readonly s: IterableLike<T>) {
     this[ComputationLike_isPure] = s[ComputationLike_isPure];
   }
@@ -733,7 +754,9 @@ export const toRunnable: Signature["toRunnable"] = /*@__PURE__*/ returns(
 ) as Signature["toRunnable"];
 
 class WithEffectIterable<T> implements IterableWithSideEffectsLike<T> {
-  public [ComputationLike_isPure]: false = false as const;
+  public readonly [ComputationLike_isPure]: false = false as const;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly d: IterableLike<T>,
@@ -790,6 +813,8 @@ export const withEffect: Signature["withEffect"] = (<T>(
 
 class ZipIterable {
   public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(private readonly iters: readonly IterableLike<any>[]) {
     this[ComputationLike_isPure] = ComputationM.areAllPure(iters);

@@ -24,6 +24,7 @@
 - [computations/Runnable](computations/Runnable/README.md)
 - [computations/Source](computations/Source/README.md)
 - [computations/Streamable](computations/Streamable/README.md)
+- [computations/SynchronousObservable](computations/SynchronousObservable/README.md)
 - [computations/WritableStore](computations/WritableStore/README.md)
 - [functions](functions/README.md)
 - [math](math/README.md)

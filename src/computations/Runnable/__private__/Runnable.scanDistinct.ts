@@ -1,5 +1,7 @@
 import {
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
   ComputationOf,
   RunnableLike,
   RunnableLike_eval,
@@ -7,6 +9,7 @@ import {
 import {
   Equality,
   Factory,
+  Optional,
   Reducer,
   error,
   invoke,
@@ -29,7 +32,9 @@ const m = Computation.makeModule<Runnable.Computation>()({
 });
 
 class ActionReducerRunnable<T, TAcc> implements RunnableLike<TAcc> {
-  readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     private readonly s: ComputationOf<Runnable.Computation, T>,
@@ -37,7 +42,7 @@ class ActionReducerRunnable<T, TAcc> implements RunnableLike<TAcc> {
     private f: Factory<TAcc>,
     private readonly o?: { readonly equality?: Equality<TAcc> },
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(s);
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
   }
 
   [RunnableLike_eval](sink: SinkLike<TAcc>): void {

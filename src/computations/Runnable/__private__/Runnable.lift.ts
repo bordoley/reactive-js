@@ -1,12 +1,19 @@
 import {
-  ComputationBaseOf,
+  ComputationLike_isDeferred,
   ComputationLike_isPure,
+  ComputationLike_isSynchronous,
+  ComputationOf,
   ComputationOperatorWithSideEffects,
   PureComputationOperator,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
+import {
+  Function1,
+  Optional,
+  newInstance,
+  pipeUnsafe,
+} from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import { SinkLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
@@ -14,7 +21,9 @@ import type * as Runnable from "../../Runnable.js";
 import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
 
 class LiftedRunnable<TIn, TOut> implements RunnableLike<TOut> {
-  readonly [ComputationLike_isPure]: boolean;
+  readonly [ComputationLike_isPure]: Optional<boolean>;
+  readonly [ComputationLike_isDeferred]: true = true as const;
+  readonly [ComputationLike_isSynchronous]: true = true as const;
 
   constructor(
     public readonly src: RunnableLike<TIn>,
@@ -26,7 +35,7 @@ class LiftedRunnable<TIn, TOut> implements RunnableLike<TOut> {
       [ComputationLike_isPure]?: boolean;
     },
   ) {
-    this[ComputationLike_isPure] = Computation.isPure(config ?? {});
+    this[ComputationLike_isPure] = config?.[ComputationLike_isPure];
   }
 
   [RunnableLike_eval](sink: SinkLike<TOut>): void {
@@ -74,8 +83,8 @@ interface RunnableLift {
       LiftedSinkLike<SinkLike, TA>
     >,
   ) => Function1<
-    ComputationBaseOf<Runnable.Computation, TA>,
-    ComputationBaseOf<Runnable.Computation, TB>
+    ComputationOf<Runnable.Computation, TA>,
+    ComputationOf<Runnable.Computation, TB>
   >;
 }
 

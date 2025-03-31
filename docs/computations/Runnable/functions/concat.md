@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -18,15 +18,15 @@
 
 #### computations
 
-...readonly [`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>[]
+...readonly [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)[]
 
 ### Returns
 
-[`PureRunnableLike`](../../interfaces/PureRunnableLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **concat**\<`T`\>(...`computations`): [`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
+> **concat**\<`T`\>(...`computations`): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ### Type Parameters
 
@@ -36,44 +36,8 @@
 
 #### computations
 
-...readonly [`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>[]
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`RunnableComputation`](../interfaces/RunnableComputation.md), `T`\>[]
 
 ### Returns
 
-[`RunnableWithSideEffectsLike`](../../interfaces/RunnableWithSideEffectsLike.md)\<`T`\> & [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\>
-
-## Call Signature
-
-> **concat**\<`T`\>(...`computations`): `never`
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### computations
-
-...readonly `never`[]
-
-### Returns
-
-`never`
-
-## Call Signature
-
-> **concat**\<`T`\>(...`computations`): `never`
-
-### Type Parameters
-
-• **T**
-
-### Parameters
-
-#### computations
-
-...readonly `never`[]
-
-### Returns
-
-`never`
+[`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)

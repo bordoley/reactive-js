@@ -6,7 +6,7 @@
 
 # Function: fromProducer()
 
-> **fromProducer**\<`T`\>(): [`FromProducerOperator`](../../type-aliases/FromProducerOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`\>
+> **fromProducer**\<`T`\>(): \<`TProducer`\>(`iterable`) => `TProducer` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TProducer` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? `never` : `never`
 
 ## Type Parameters
 
@@ -14,4 +14,18 @@
 
 ## Returns
 
-[`FromProducerOperator`](../../type-aliases/FromProducerOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `T`\>
+`Function`
+
+### Type Parameters
+
+• **TProducer** *extends* [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+
+### Parameters
+
+#### iterable
+
+`TProducer`
+
+### Returns
+
+`TProducer` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TProducer` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? `never` : `never`

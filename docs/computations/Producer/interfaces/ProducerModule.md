@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>.[`SourceComputationModule`](../../interfaces/SourceComputationModule.md)\<[`ProducerComputation`](ProducerComputation.md)\>
 
 ## Properties
 
@@ -18,37 +18,7 @@
 
 #### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#computationmodulelike_computationtype)
-
-***
-
-### combineLatest
-
-> **combineLatest**: [`CombineConstructor`](../../interfaces/CombineConstructor.md)\<[`ProducerComputation`](ProducerComputation.md)\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
-
-***
-
-### forkMerge
-
-> **forkMerge**: `DeferredComputationForkMerge`\<[`ProducerComputation`](ProducerComputation.md)\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
-
-***
-
-### zipLatest
-
-> **zipLatest**: [`CombineConstructor`](../../interfaces/CombineConstructor.md)\<[`ProducerComputation`](ProducerComputation.md)\>
-
-#### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`SourceComputationModule`](../../interfaces/SourceComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/SourceComputationModule.md#computationmodulelike_computationtype)
 
 ## Methods
 
@@ -126,27 +96,55 @@
 
 #### Call Signature
 
-> **catchError**\<`T`, `TInnerLike`\>(`onError`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`, `T`\>
+> **catchError**\<`T`\>(`onError`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
+
+###### onError
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
+
+##### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+
+#### Call Signature
+
+> **catchError**\<`T`\>(`onError`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
+
+##### Type Parameters
+
+• **T**
 
 ##### Parameters
 
 ###### onError
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<`Error`, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ###### options
 
-`TInnerLike`
+###### [ComputationLike_isPure]
+
+`false`
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`, `T`\>
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -154,11 +152,219 @@
 
 ***
 
+### combineLatest()
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### c
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### c
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### d
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TD`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`\>(`a`, `b`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
+
+###### c
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TC`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+
+#### Call Signature
+
+> **combineLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
+
+###### c
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TC`\>
+
+###### d
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TD`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+
+***
+
 ### concat()
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): `never`
+> **concat**\<`T`\>(...`computations`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -168,11 +374,11 @@
 
 ###### computations
 
-...readonly `never`[]
+...readonly [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)[]
 
 ##### Returns
 
-`never`
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
@@ -180,7 +386,7 @@
 
 #### Call Signature
 
-> **concat**\<`T`\>(...`computations`): `never`
+> **concat**\<`T`\>(...`computations`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Type Parameters
 
@@ -190,55 +396,11 @@
 
 ###### computations
 
-...readonly `never`[]
+...readonly [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>[]
 
 ##### Returns
 
-`never`
-
-##### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
-
-#### Call Signature
-
-> **concat**\<`T`\>(...`computations`): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>[]
-
-##### Returns
-
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
-
-#### Call Signature
-
-> **concat**\<`T`\>(...`computations`): [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>[]
-
-##### Returns
-
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Inherited from
 
@@ -250,7 +412,7 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`\>(): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `never`, `T`\>
+> **concatAll**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Type Parameters
 
@@ -258,7 +420,7 @@
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), [`PureSynchronousComputationLike`](../../interfaces/PureSynchronousComputationLike.md), `never`, `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Inherited from
 
@@ -266,23 +428,47 @@
 
 #### Call Signature
 
-> **concatAll**\<`T`, `TInnerLike`\>(`options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>
+> **concatAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 ##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Inherited from
+
+[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+
+#### Call Signature
+
+> **concatAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Type Parameters
+
+• **T**
 
 ##### Parameters
 
 ###### options
 
-`TInnerLike`
+###### [ComputationLike_isPure]
+
+`false`
 
 ##### Returns
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
 
 ##### Inherited from
 
@@ -404,9 +590,273 @@
 
 ***
 
+### forkMerge()
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### tail
+
+...[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>[]
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### c
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### c
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### c
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### d
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+#### Call Signature
+
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TIn**
+
+• **TOut**
+
+##### Parameters
+
+###### a
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### b
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### c
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### d
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TOut`\>\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+
+***
+
 ### fromBroadcaster()
 
-> **fromBroadcaster**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
+> **fromBroadcaster**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### Type Parameters
 
@@ -414,17 +864,17 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
 #### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromBroadcaster`](../../interfaces/ConcurrentReactiveComputationModule.md#frombroadcaster)
+[`SourceComputationModule`](../../interfaces/SourceComputationModule.md).[`fromBroadcaster`](../../interfaces/SourceComputationModule.md#frombroadcaster)
 
 ***
 
 ### fromObservable()
 
-> **fromObservable**\<`T`\>(`options`?): [`FromObservableOperator`](../../type-aliases/FromObservableOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+> **fromObservable**\<`T`\>(`options`?): \<`TObservable`\>(`iterable`) => `TObservable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TObservable` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) : `never`
 
 #### Type Parameters
 
@@ -440,17 +890,31 @@
 
 #### Returns
 
-[`FromObservableOperator`](../../type-aliases/FromObservableOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TObservable** *extends* [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TObservable`
+
+##### Returns
+
+`TObservable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TObservable` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) : `never`
 
 #### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromObservable`](../../interfaces/ConcurrentReactiveComputationModule.md#fromobservable)
+[`SourceComputationModule`](../../interfaces/SourceComputationModule.md).[`fromObservable`](../../interfaces/SourceComputationModule.md#fromobservable)
 
 ***
 
 ### fromProducer()
 
-> **fromProducer**\<`T`\>(): [`FromProducerOperator`](../../type-aliases/FromProducerOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+> **fromProducer**\<`T`\>(): \<`TProducer`\>(`iterable`) => `TProducer` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TProducer` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) : `never`
 
 #### Type Parameters
 
@@ -458,17 +922,31 @@
 
 #### Returns
 
-[`FromProducerOperator`](../../type-aliases/FromProducerOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TProducer** *extends* [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+
+##### Parameters
+
+###### iterable
+
+`TProducer`
+
+##### Returns
+
+`TProducer` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TProducer` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) : `never`
 
 #### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`fromProducer`](../../interfaces/ConcurrentReactiveComputationModule.md#fromproducer)
+[`SourceComputationModule`](../../interfaces/SourceComputationModule.md).[`fromProducer`](../../interfaces/SourceComputationModule.md#fromproducer)
 
 ***
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+> **gen**\<`T`\>(`factory`, `options`?): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -486,7 +964,7 @@
 
 #### Returns
 
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Inherited from
 
@@ -496,7 +974,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`): [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+> **genAsync**\<`T`\>(`factory`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -510,7 +988,7 @@
 
 #### Returns
 
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Inherited from
 
@@ -520,7 +998,7 @@
 
 ### genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+> **genPure**\<`T`\>(`factory`, `options`?): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -538,7 +1016,7 @@
 
 #### Returns
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Inherited from
 
@@ -548,7 +1026,7 @@
 
 ### genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+> **genPureAsync**\<`T`\>(`factory`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -562,7 +1040,7 @@
 
 #### Returns
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Inherited from
 
@@ -624,7 +1102,7 @@
 
 #### Call Signature
 
-> **merge**\<`T`\>(...`computations`): `never`
+> **merge**\<`T`\>(...`computations`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -634,11 +1112,11 @@
 
 ###### computations
 
-...readonly `never`[]
+...readonly [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)[]
 
 ##### Returns
 
-`never`
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
@@ -646,95 +1124,7 @@
 
 #### Call Signature
 
-> **merge**\<`T`\>(...`computations`): `never`
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly `never`[]
-
-##### Returns
-
-`never`
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>[]
-
-##### Returns
-
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly [`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>[]
-
-##### Returns
-
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): `never`
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### computations
-
-...readonly `never`[]
-
-##### Returns
-
-`never`
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
-
-#### Call Signature
-
-> **merge**\<`T`\>(...`computations`): [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+> **merge**\<`T`\>(...`computations`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Type Parameters
 
@@ -748,7 +1138,7 @@
 
 ##### Returns
 
-[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Inherited from
 
@@ -758,25 +1148,107 @@
 
 ### mergeAll()
 
-> **mergeAll**\<`T`, `TInnerLike`\>(`options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>
+#### Call Signature
 
-#### Type Parameters
+> **mergeAll**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
 
-#### Parameters
+###### options?
 
-##### options
+###### backpressureStrategy?
 
-`object` & `TInnerLike`
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
 
-#### Returns
+###### capacity?
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>
+`number`
 
-#### Inherited from
+###### concurrency?
+
+`number`
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Inherited from
+
+[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#mergeall)
+
+#### Call Signature
+
+> **mergeAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### concurrency?
+
+`number`
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Inherited from
+
+[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#mergeall)
+
+#### Call Signature
+
+> **mergeAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+###### backpressureStrategy?
+
+[`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md)
+
+###### capacity?
+
+`number`
+
+###### concurrency?
+
+`number`
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Inherited from
 
 [`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#mergeall)
 
@@ -956,35 +1428,99 @@
 
 ### scanMany()
 
-> **scanMany**\<`T`, `TAcc`, `TInnerLike`\>(`scanner`, `initialValue`, `options`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`, `TAcc`\>
+#### Call Signature
 
-#### Type Parameters
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
+
+##### Type Parameters
 
 • **T**
 
 • **TAcc**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Parameters
 
-#### Parameters
+###### scanner
 
-##### scanner
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TAcc`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `TAcc`\>\>
-
-##### initialValue
+###### initialValue
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
 
-##### options
+##### Returns
 
-`TInnerLike`
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
 
-#### Returns
+##### Inherited from
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`, `TAcc`\>
+[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#scanmany)
 
-#### Inherited from
+#### Call Signature
+
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+##### Parameters
+
+###### scanner
+
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TAcc`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+###### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
+
+##### Inherited from
+
+[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#scanmany)
+
+#### Call Signature
+
+> **scanMany**\<`T`, `TAcc`\>(`scanner`, `initialValue`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
+
+##### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+##### Parameters
+
+###### scanner
+
+[`Function2`](../../../functions/type-aliases/Function2.md)\<`TAcc`, `T`, [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TAcc`\>\>
+
+###### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
+
+##### Inherited from
 
 [`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#scanmany)
 
@@ -1018,25 +1554,67 @@
 
 ### switchAll()
 
-> **switchAll**\<`T`, `TInnerLike`\>(`innerType`): [`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>
+#### Call Signature
 
-#### Type Parameters
+> **switchAll**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Type Parameters
 
 • **T**
 
-• **TInnerLike** *extends* [`HigherOrderInnerComputationLike`](../../type-aliases/HigherOrderInnerComputationLike.md)
+##### Returns
 
-#### Parameters
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-##### innerType
+##### Inherited from
 
-`TInnerLike`
+[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#switchall)
 
-#### Returns
+#### Call Signature
 
-[`HigherOrderComputationOperator`](../../type-aliases/HigherOrderComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, [`HigherOrderInnerComputationOf`](../../type-aliases/HigherOrderInnerComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TInnerLike`, `T`\>, `T`\>
+> **switchAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-#### Inherited from
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+[`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
+
+##### Inherited from
+
+[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#switchall)
+
+#### Call Signature
+
+> **switchAll**\<`T`\>(`options`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options
+
+###### [ComputationLike_isPure]
+
+`false`
+
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>\>, [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)\>
+
+##### Inherited from
 
 [`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#switchall)
 
@@ -1108,7 +1686,7 @@
 
 ###### notifier
 
-`never`
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Returns
 
@@ -1130,77 +1708,11 @@
 
 ###### notifier
 
-`never`
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `unknown`\>
 
 ##### Returns
 
 [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`takeUntil`](../../interfaces/ConcurrentReactiveComputationModule.md#takeuntil)
-
-#### Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### notifier
-
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`unknown`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`unknown`\>
-
-##### Returns
-
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`takeUntil`](../../interfaces/ConcurrentReactiveComputationModule.md#takeuntil)
-
-#### Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### notifier
-
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`unknown`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`unknown`\>
-
-##### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>, [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`takeUntil`](../../interfaces/ConcurrentReactiveComputationModule.md#takeuntil)
-
-#### Call Signature
-
-> **takeUntil**\<`T`\>(`notifier`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### notifier
-
-`never`
-
-##### Returns
-
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `T`\>
 
 ##### Inherited from
 
@@ -1268,7 +1780,7 @@
 
 ### toProducer()
 
-> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../../type-aliases/ToProducer.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+> **toProducer**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -1282,7 +1794,21 @@
 
 #### Returns
 
-[`ToProducer`](../../type-aliases/ToProducer.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `T`\>
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Inherited from
 
@@ -1360,7 +1886,7 @@
 
 ###### other
 
-`never`
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Returns
 
@@ -1386,7 +1912,7 @@
 
 ###### other
 
-`never`
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ###### selector
 
@@ -1414,7 +1940,7 @@
 
 ###### other
 
-`never`
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
 
 ##### Returns
 
@@ -1440,7 +1966,7 @@
 
 ###### other
 
-`never`
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
 
 ###### selector
 
@@ -1454,9 +1980,13 @@
 
 [`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
 
+***
+
+### zipLatest()
+
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -1466,21 +1996,25 @@
 
 ##### Parameters
 
-###### other
+###### a
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TB`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### b
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, `T`\>
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -1488,29 +2022,33 @@
 
 • **TB**
 
-• **T**
+• **TC**
 
 ##### Parameters
 
-###### other
+###### a
 
-[`PureProducerLike`](../../interfaces/PureProducerLike.md)\<`TB`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
-###### selector
+###### b
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TA`, `TB`, `T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### c
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, `T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>, [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Type Parameters
 
@@ -1518,53 +2056,39 @@
 
 • **TB**
 
-##### Parameters
+• **TC**
 
-###### other
-
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`TB`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\>
-
-##### Returns
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>, [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>\>
-
-##### Inherited from
-
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
-
-#### Call Signature
-
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>, [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
-
-##### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **T**
+• **TD**
 
 ##### Parameters
 
-###### other
+###### a
 
-[`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`TB`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
-###### selector
+###### b
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TA`, `TB`, `T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### c
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+###### d
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TD`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>, [`ProducerWithSideEffectsLike`](../../interfaces/ProducerWithSideEffectsLike.md)\<`T`\> & [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\>\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`\>(`other`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zipLatest**\<`TA`, `TB`\>(`a`, `b`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Type Parameters
 
@@ -1574,21 +2098,25 @@
 
 ##### Parameters
 
-###### other
+###### a
 
-`never`
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
-> **withLatestFrom**\<`TA`, `TB`, `T`\>(`other`, `selector`): [`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, `T`\>
+> **zipLatest**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Type Parameters
 
@@ -1596,22 +2124,66 @@
 
 • **TB**
 
-• **T**
+• **TC**
 
 ##### Parameters
 
-###### other
+###### a
 
-`never`
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>
 
-###### selector
+###### b
 
-[`Function2`](../../../functions/type-aliases/Function2.md)\<`TA`, `TB`, `T`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
+
+###### c
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TC`\>
 
 ##### Returns
 
-[`PureAsynchronousComputationOperator`](../../type-aliases/PureAsynchronousComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`, `T`\>
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+
+#### Call Signature
+
+> **zipLatest**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Type Parameters
+
+• **TA**
+
+• **TB**
+
+• **TC**
+
+• **TD**
+
+##### Parameters
+
+###### a
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TA`\>
+
+###### b
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TB`\>
+
+###### c
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TC`\>
+
+###### d
+
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`ProducerComputation`](ProducerComputation.md), `TD`\>
+
+##### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+##### Inherited from
+
+[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)

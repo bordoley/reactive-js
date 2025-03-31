@@ -1,10 +1,7 @@
 /// <reference types="./Producer.takeLast.d.ts" />
 
-import * as Observer from "../../../utils/__internal__/Observer.js";
+import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import * as DeferredSource from "../../__internal__/DeferredSource.js";
 import { Producer_genPure } from "./Producer.gen.js";
-const m = {
-    genPure: Producer_genPure,
-};
-const Producer_takeLast = ((options) => DeferredSource.takeLast(m)(Observer.takeLast, options));
+const Producer_takeLast = ((options) => DeferredSource.takeLast(Producer_genPure, (_, n) => Consumer.takeLast(n), options));
 export default Producer_takeLast;

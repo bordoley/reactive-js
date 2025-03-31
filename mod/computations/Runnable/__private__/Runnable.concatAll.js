@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.concatAll.d.ts" />
 
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure, RunnableLike_eval, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
@@ -34,9 +34,10 @@ const createConcatAllSink = (() => {
 class ConcatAllRunnable {
     s;
     [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = true;
     constructor(s, innerType) {
         this.s = s;
-        this[ComputationLike_isPure] = Computation.isPure(s);
         this[ComputationLike_isPure] =
             Computation.isPure(s) && Computation.isPure(innerType);
     }

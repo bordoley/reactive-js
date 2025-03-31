@@ -15,10 +15,11 @@
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
+- [`SynchronousObservableModule`](../SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
 ## Properties
 

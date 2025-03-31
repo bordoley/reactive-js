@@ -14,12 +14,13 @@
 - [`InteractiveComputationModule`](InteractiveComputationModule.md)
 - [`ConcurrentDeferredComputationModule`](ConcurrentDeferredComputationModule.md)
 - [`SequentialReactiveComputationModule`](SequentialReactiveComputationModule.md)
+- [`SourceComputationModule`](SourceComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 - [`DeferredAsynchronousReactiveComputationModule`](DeferredAsynchronousReactiveComputationModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](../type-aliases/ComputationType.md) = [`ComputationType`](../type-aliases/ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md) = [`ComputationTypeLike`](ComputationTypeLike.md)
 
 ## Properties
 

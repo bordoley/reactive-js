@@ -1,4 +1,4 @@
-import type {
+import {
   Equality,
   Factory,
   Function1,
@@ -11,7 +11,7 @@ import type {
   Tuple3,
   Tuple4,
 } from "./functions.js";
-import type {
+import {
   BackpressureStrategy,
   ConsumerLike,
   DisposableContainerLike,
@@ -30,241 +30,205 @@ export const ComputationLike_isSynchronous = Symbol(
 );
 
 export interface ComputationLike {
-  // defaults to true when not specified so that Arrays are classified as PureIterables
-  readonly [ComputationLike_isPure]?: boolean;
-  readonly [ComputationLike_isSynchronous]?: boolean;
-  readonly [ComputationLike_isDeferred]?: boolean;
+  readonly [ComputationLike_isPure]: Optional<true> | false;
+  readonly [ComputationLike_isSynchronous]: Optional<true> | false;
+  readonly [ComputationLike_isDeferred]: Optional<true> | false;
+}
+
+export interface PureComputationLike extends ComputationLike {
+  readonly [ComputationLike_isPure]: Optional<true>;
 }
 
 export interface ComputationWithSideEffectsLike extends ComputationLike {
   readonly [ComputationLike_isPure]: false;
 }
 
-export interface PureComputationLike extends ComputationLike {
-  readonly [ComputationLike_isPure]?: true;
-}
-
-export interface DeferredComputationLike extends ComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-}
-
-export interface PureDeferredComputationLike extends DeferredComputationLike {
-  readonly [ComputationLike_isPure]?: true;
-}
-
-export interface DeferredComputationWithSideEffectsLike
-  extends DeferredComputationLike {
-  readonly [ComputationLike_isPure]: false;
-}
-
-export interface SynchronousComputationLike extends ComputationLike {
-  readonly [ComputationLike_isSynchronous]?: true;
-}
-
-export interface PureSynchronousComputationLike
-  extends SynchronousComputationLike {
-  readonly [ComputationLike_isPure]?: true;
-}
-
-export interface SynchronousComputationWithSideEffectsLike
-  extends SynchronousComputationLike {
-  readonly [ComputationLike_isPure]: false;
-}
-
-export interface MulticastComputationLike extends ComputationLike {
+export interface MulticastComputationLike extends DisposableContainerLike {
+  readonly [ComputationLike_isPure]: Optional<true>;
   readonly [ComputationLike_isSynchronous]: false;
   readonly [ComputationLike_isDeferred]: false;
-  readonly [ComputationLike_isPure]?: true;
 }
 
-export const PureSynchronousDeferredComputation: PureSynchronousComputationLike =
-  {
-    [ComputationLike_isDeferred]: true,
-    [ComputationLike_isPure]: true,
-    [ComputationLike_isSynchronous]: true,
-  };
+export interface IterableLike<T = unknown>
+  extends Iterable<T>,
+    ComputationLike {
+  readonly [ComputationLike_isDeferred]: Optional<true>;
+  readonly [ComputationLike_isSynchronous]: Optional<true>;
+}
 
-export const PureSynchronousNonDeferredComputation: PureSynchronousComputationLike =
-  {
-    [ComputationLike_isDeferred]: false,
-    [ComputationLike_isPure]: true,
-    [ComputationLike_isSynchronous]: true,
-  };
+export interface PureIterableLike<T = unknown> extends IterableLike<T> {
+  readonly [ComputationLike_isPure]: Optional<true>;
+}
 
-export const SynchronousDeferredComputationWithSideEffects: SynchronousComputationWithSideEffectsLike =
-  {
-    [ComputationLike_isDeferred]: true,
-    [ComputationLike_isPure]: false,
-    [ComputationLike_isSynchronous]: true,
-  };
+export interface IterableWithSideEffectsLike<T = unknown>
+  extends IterableLike<T> {
+  readonly [ComputationLike_isPure]: false;
+}
 
-export const SynchronousNonDeferredComputationWithSideEffects: SynchronousComputationWithSideEffectsLike =
-  {
-    [ComputationLike_isDeferred]: false,
-    [ComputationLike_isPure]: false,
-    [ComputationLike_isSynchronous]: true,
-  };
+export interface AsyncIterableLike<T = unknown>
+  extends AsyncIterable<T>,
+    ComputationLike {
+  readonly [ComputationLike_isDeferred]: Optional<true>;
+  readonly [ComputationLike_isSynchronous]: false;
+}
 
-export const PureDeferredComputation: PureDeferredComputationLike = {
-  [ComputationLike_isDeferred]: true,
-  [ComputationLike_isPure]: true,
-  [ComputationLike_isSynchronous]: false,
-};
+export interface PureAsyncIterableLike<T = unknown>
+  extends AsyncIterableLike<T> {
+  readonly [ComputationLike_isPure]: Optional<true>;
+}
 
-export const DeferredComputationWithSideEffects: DeferredComputationWithSideEffectsLike =
-  {
-    [ComputationLike_isDeferred]: true,
-    [ComputationLike_isPure]: false,
-    [ComputationLike_isSynchronous]: false,
-  };
+export interface AsyncIterableWithSideEffectsLike<T = unknown>
+  extends AsyncIterableLike<T> {
+  readonly [ComputationLike_isPure]: false;
+}
 
-export const MulticastComputation: MulticastComputationLike = {
-  [ComputationLike_isDeferred]: false,
-  [ComputationLike_isPure]: true,
-  [ComputationLike_isSynchronous]: false,
-};
+export const RunnableLike_eval = Symbol("RunnableLike_eval");
+
+export interface RunnableLike<T = unknown> extends ComputationLike {
+  readonly [ComputationLike_isDeferred]: Optional<true>;
+  readonly [ComputationLike_isSynchronous]: Optional<true>;
+
+  [RunnableLike_eval](sink: SinkLike<T>): void;
+}
+
+export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
+  readonly [ComputationLike_isPure]: Optional<true>;
+}
+
+export interface RunnableWithSideEffectsLike<T = unknown>
+  extends RunnableLike<T> {
+  readonly [ComputationLike_isPure]: false;
+}
+
+export const SourceLike_subscribe = Symbol("SourceLike_subscribe");
+
+export interface SourceLike<
+  out T = unknown,
+  TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
+> extends ComputationLike {
+  [SourceLike_subscribe](EventListener: TEventListener): void;
+}
+
+export interface DeferredSourceLike<
+  T = unknown,
+  TConsumer extends ConsumerLike<T> = ConsumerLike<T>,
+> extends SourceLike<T, TConsumer> {
+  [ComputationLike_isDeferred]: true;
+}
+
+export interface ProducerLike<out T = unknown>
+  extends DeferredSourceLike<T, ConsumerLike<T>>,
+    ComputationLike {
+  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+export interface PureProducerLike<out T = unknown> extends ProducerLike<T> {
+  readonly [ComputationLike_isPure]: Optional<true>;
+}
+
+export interface ProducerWithSideEffectsLike<out T = unknown>
+  extends ProducerLike<T> {
+  readonly [ComputationLike_isPure]: false;
+}
+
+export interface ObservableLike<out T = unknown>
+  extends DeferredSourceLike<T, ObserverLike<T>>,
+    ComputationLike {
+  readonly [ComputationLike_isDeferred]: true;
+}
+
+export interface PureObservableLike<out T = unknown> extends ObservableLike<T> {
+  readonly [ComputationLike_isPure]: Optional<true>;
+}
+
+export interface ObservableWithSideEffectsLike<out T = unknown>
+  extends ObservableLike<T> {
+  readonly [ComputationLike_isPure]: false;
+}
+
+export interface SynchronousObservableLike<out T = unknown>
+  extends ObservableLike<T> {
+  readonly [ComputationLike_isSynchronous]: Optional<true>;
+}
+
+export interface PureSynchronousObservableLike<out T = unknown>
+  extends SynchronousObservableLike<T>,
+    PureObservableLike<T> {
+  readonly [ComputationLike_isSynchronous]: Optional<true>;
+  readonly [ComputationLike_isPure]: Optional<true>;
+}
+
+export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
+  extends SynchronousObservableLike<T>,
+    ObservableWithSideEffectsLike<T> {
+  readonly [ComputationLike_isSynchronous]: Optional<true>;
+  readonly [ComputationLike_isPure]: false;
+}
+
+export interface BroadcasterLike<out T = unknown>
+  extends SourceLike<T>,
+    DisposableContainerLike,
+    MulticastComputationLike {
+  readonly [ComputationLike_isDeferred]: false;
+  readonly [ComputationLike_isPure]: Optional<true>;
+  readonly [ComputationLike_isSynchronous]: false;
+}
+
+export interface PublisherLike<T = unknown>
+  extends BroadcasterLike<T>,
+    SinkLike<T> {}
+
+export const StoreLike_value = Symbol("StoreLike_value");
+
+export interface StoreLike<T = unknown> extends BroadcasterLike<T> {
+  readonly [StoreLike_value]: T;
+}
+
+export interface WritableStoreLike<T = unknown>
+  extends StoreLike<T>,
+    PublisherLike<T> {
+  [StoreLike_value]: T;
+}
+
+export const StreamableLike_stream = Symbol("StreamableLike_stream");
+
+export interface StreamLike<TReq, out T>
+  extends ConsumerLike<TReq>,
+    BroadcasterLike<T> {}
+
+export interface StreamableLike<
+  TReq = unknown,
+  out T = unknown,
+  TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
+> {
+  [StreamableLike_stream](
+    scheduler: SchedulerLike,
+    options?: {
+      readonly autoDispose?: boolean;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: BackpressureStrategy;
+    },
+  ): TStream & DisposableLike;
+}
+
+export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
+  TStreamable[typeof StreamableLike_stream]
+>;
 
 export const Computation_T = Symbol("Computation_T");
 export const Computation_baseOfT = Symbol("Computation_baseOfT");
-export const Computation_pureDeferredOfT = Symbol(
-  "Computation_pureDeferredOfT",
-);
-export const Computation_deferredWithSideEffectsOfT = Symbol(
-  "Computation_deferredWithSideEffectsOfT",
-);
-export const Computation_pureSynchronousOfT = Symbol(
-  "Computation_pureSynchronousOfT",
-);
-export const Computation_synchronousWithSideEffectsOfT = Symbol(
-  "Computation_synchronousWithSideEffectsOfT",
-);
-export const Computation_multicastOfT = Symbol("Computation_multicastOfT");
 
-/**
- * @noInheritDoc
- */
-// prettier-ignore
-export interface GenericComputationType<
-  TComputationBaseOfT extends ComputationLike,
-  TPureDeferredComputationOfT extends TComputationBaseOfT & PureDeferredComputationLike,
-  TDeferredDeferredComputationWithSideEffectsOfT extends TComputationBaseOfT & DeferredComputationWithSideEffectsLike,
-  TPureSynchronousOfT extends TComputationBaseOfT & PureSynchronousComputationLike,
-  TSynchronousWithSideEffectsOfT extends TComputationBaseOfT & SynchronousComputationWithSideEffectsLike,
-  TMulticastComputationOfT extends TComputationBaseOfT & MulticastComputationLike,
+export interface ComputationTypeLike<
+  TComputationBaseOfT extends ComputationLike = ComputationLike,
 > {
   readonly [Computation_T]?: unknown;
-
   readonly [Computation_baseOfT]?: TComputationBaseOfT;
-
-  readonly [Computation_pureDeferredOfT]?: TPureDeferredComputationOfT;
-  readonly [Computation_deferredWithSideEffectsOfT]?: TDeferredDeferredComputationWithSideEffectsOfT;
-
-  readonly [Computation_pureSynchronousOfT]?: TPureSynchronousOfT;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: TSynchronousWithSideEffectsOfT;
-
-  readonly [Computation_multicastOfT]?: TMulticastComputationOfT;
 }
 
-// FIXME: There has to be a better way. This is letting unintentional
-// any's sneak breaking typesafety when coding strictly.
-// Maybe kill generic computation in favor of all unknowns. need test.
-export type AnyComputationType = GenericComputationType<
-  any,
-  any,
-  any,
-  any,
-  any,
-  any
->;
-
-export type ComputationType = GenericComputationType<
-  ComputationLike,
-  PureDeferredComputationLike,
-  DeferredComputationWithSideEffectsLike,
-  PureSynchronousComputationLike,
-  SynchronousComputationWithSideEffectsLike,
-  MulticastComputationLike
->;
-
-// prettier-ignore
-export interface ComputationTypeOf<
-  TComputationType extends ComputationType,
+export type PureComputationOf<
+  TComputationType extends ComputationTypeLike,
   T = unknown,
-> {
-  readonly [Computation_pureSynchronousOfT]?: PureSynchronousComputationOf<TComputationType, T>;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: SynchronousComputationWithSideEffectsOf<TComputationType, T>;
-  readonly [Computation_pureDeferredOfT]?: PureDeferredComputationOf<TComputationType, T>;
-  readonly [Computation_deferredWithSideEffectsOfT]?: DeferredComputationWithSideEffectsOf<TComputationType, T>;
-  readonly [Computation_multicastOfT]?: MulticastComputationOf<TComputationType, T>;
-}
-
-// prettier-ignore
-type FirstNotNeverComputation<
-    T, 
-    K1 extends keyof T, 
-    K2 extends keyof T = never,
-    K3 extends keyof T = never, 
-> =
-  (NonNullable<T[K1]> extends never ? 
-  (NonNullable<T[K2]> extends never ? 
-  (NonNullable<T[K3]> extends never ? 
-    never : K3) : K2) : K1);
-
-// FIXME: Multicast types should be disposable
-export type NewInstanceWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[FirstNotNeverComputation<
-        TComputationType,
-        typeof Computation_synchronousWithSideEffectsOfT,
-        typeof Computation_deferredWithSideEffectsOfT
-      >] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type NewPureInstanceType<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[FirstNotNeverComputation<
-        TComputationType,
-        typeof Computation_pureSynchronousOfT,
-        typeof Computation_pureDeferredOfT,
-        typeof Computation_multicastOfT
-      >] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type NewPureInstanceOf<TComputationType extends ComputationType, T> =
-  NewPureInstanceType<TComputationType, T> extends MulticastComputationOf<
-    TComputationType,
-    T
-  >
-    ? NewPureInstanceType<TComputationType, T> & DisposableLike & PauseableLike
-    : NewPureInstanceType<TComputationType, T>;
-
-export type ComputationBaseOf<
-  TComputationType extends ComputationType,
-  T,
 > = TComputationType extends {
   readonly [Computation_baseOfT]?: unknown;
 }
@@ -272,656 +236,74 @@ export type ComputationBaseOf<
       (TComputationType & {
         readonly [Computation_T]: T;
       })[typeof Computation_baseOfT]
-    >
+    > &
+      PureComputationLike
   : {
       readonly _C: TComputationType;
       readonly _T: () => T;
     };
-
-export type DeferredComputationWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[typeof Computation_deferredWithSideEffectsOfT] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type PureDeferredComputationOf<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[typeof Computation_pureDeferredOfT] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type SynchronousComputationWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[typeof Computation_synchronousWithSideEffectsOfT] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type PureSynchronousComputationOf<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[typeof Computation_pureSynchronousOfT] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type MulticastComputationOf<
-  TComputationType extends ComputationType,
-  T,
-> = TComputationType extends {
-  readonly [Computation_baseOfT]?: unknown;
-}
-  ? NonNullable<
-      (TComputationType & {
-        readonly [Computation_T]: T;
-      })[typeof Computation_multicastOfT] &
-        ComputationBaseOf<TComputationType, T>
-    >
-  : {
-      readonly _C: TComputationType;
-      readonly _T: () => T;
-    };
-
-export type DeferredComputationOf<
-  TComputationType extends ComputationType,
-  T,
-> =
-  | PureDeferredComputationOf<TComputationType, T>
-  | DeferredComputationWithSideEffectsOf<TComputationType, T>;
-
-export type SynchronousComputationOf<
-  TComputationType extends ComputationType,
-  T,
-> =
-  | PureSynchronousComputationOf<TComputationType, T>
-  | SynchronousComputationWithSideEffectsOf<TComputationType, T>;
-
-export type PureComputationOf<TComputationType extends ComputationType, T> =
-  | PureSynchronousComputationOf<TComputationType, T>
-  | PureDeferredComputationOf<TComputationType, T>
-  | MulticastComputationOf<TComputationType, T>;
 
 export type ComputationWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> =
-  | SynchronousComputationWithSideEffectsOf<TComputationType, T>
-  | DeferredComputationWithSideEffectsOf<TComputationType, T>;
+  TComputationType extends ComputationTypeLike,
+  T = unknown,
+> = TComputationType extends {
+  readonly [Computation_baseOfT]?: unknown;
+}
+  ? NonNullable<
+      (TComputationType & {
+        readonly [Computation_T]: T;
+      })[typeof Computation_baseOfT]
+    > &
+      ComputationWithSideEffectsLike
+  : {
+      readonly _C: TComputationType;
+      readonly _T: () => T;
+    };
 
-export type ComputationOf<TComputationType extends ComputationType, T> =
-  | DeferredComputationOf<TComputationType, T>
-  | SynchronousComputationOf<TComputationType, T>
-  | MulticastComputationOf<TComputationType, T>;
+export type ComputationOf<
+  TComputationType extends ComputationTypeLike,
+  T = unknown,
+> =
+  | PureComputationOf<TComputationType, T>
+  | ComputationWithSideEffectsOf<TComputationType, T>;
+
+export type NewPureInstanceOf<TComputationType extends ComputationTypeLike, T> =
+  PureComputationOf<TComputationType, T> extends MulticastComputationLike
+    ? PureComputationOf<TComputationType, T> & PauseableLike & DisposableLike
+    : PureComputationOf<TComputationType, T>;
+
+export type NewInstanceWithSideEffectsOf<
+  TComputationType extends ComputationTypeLike,
+  T,
+> = ComputationWithSideEffectsOf<TComputationType, T>;
 
 // prettier-ignore
 export type PureComputationOperator<
-  TComputationType extends ComputationType,
+  TComputationType extends ComputationTypeLike,
   TA,
   out TB,
-> = <TComputationOf extends ComputationBaseOf<TComputationType, TA>>(
+> = <TComputationOf extends ComputationOf<TComputationType, TA>>(
   computation: TComputationOf,
-) => TComputationOf extends PureSynchronousComputationOf<TComputationType, TA> ? 
-       PureSynchronousComputationOf<TComputationType, TB> : 
-     TComputationOf extends SynchronousComputationWithSideEffectsOf<TComputationType, TA> ? 
-       SynchronousComputationWithSideEffectsOf<TComputationType, TB> : 
-     TComputationOf extends PureDeferredComputationOf<TComputationType, TA> ? 
-       PureDeferredComputationOf<TComputationType, TB> : 
-     TComputationOf extends DeferredComputationWithSideEffectsOf<TComputationType, TA> ?
-       DeferredComputationWithSideEffectsOf<TComputationType, TB> : 
-     TComputationOf extends MulticastComputationOf<TComputationType, TA> ?
-       MulticastComputationOf<TComputationType, TB> : 
-     never;
+) =>  TComputationOf extends PureComputationOf<TComputationType, TA> ?
+        PureComputationOf<TComputationType, TB> :
+      TComputationOf extends ComputationWithSideEffectsOf<TComputationType, TA> ?
+        ComputationWithSideEffectsOf<TComputationType, TB> :
+      never
 
-// prettier-ignore
 export type ComputationOperatorWithSideEffects<
-  TComputationType extends ComputationType,
+  TComputationType extends ComputationTypeLike,
   TA,
   out TB,
-> = <TComputationOf extends ComputationBaseOf<TComputationType, TA>>(
-  computation: TComputationOf,
-) => TComputationOf extends SynchronousComputationOf<TComputationType, TA> ? 
-       SynchronousComputationWithSideEffectsOf<TComputationType, TB> : 
-     TComputationOf extends DeferredComputationOf<TComputationType, TA> ?
-       DeferredComputationWithSideEffectsOf<TComputationType, TB> :
-     never;
-
-// prettier-ignore
-export type PureAsynchronousComputationOperator<
-  TComputationType extends ComputationType,
-  TA,
-  out TB,
-> = <TComputationOf extends ComputationBaseOf<TComputationType, TA>>(
-  computation: TComputationOf,
-) => TComputationOf extends PureDeferredComputationOf<TComputationType, TA> ? 
-       PureDeferredComputationOf<TComputationType, TB> : 
-     TComputationOf extends  DeferredComputationWithSideEffectsOf<TComputationType, TA> ?
-       DeferredComputationWithSideEffectsOf<TComputationType, TB> :
-     TComputationOf extends MulticastComputationOf<TComputationType, TA> ? 
-       MulticastComputationOf<TComputationType, TB> : 
-     never;
-
-// prettier-ignore
-type HigherOrderPureSynchronousComputationOut<
-  TComputationType extends ComputationType,
-  TInnerLike extends ComputationLike,
-  TB,
-> = TInnerLike extends PureSynchronousComputationLike ? 
-      PureSynchronousComputationOf<TComputationType, TB> : 
-    TInnerLike extends SynchronousComputationWithSideEffectsLike ? 
-      SynchronousComputationWithSideEffectsOf<TComputationType, TB> : 
-    TInnerLike extends PureDeferredComputationLike ? 
-      PureDeferredComputationOf<TComputationType, TB> : 
-    TInnerLike extends DeferredComputationWithSideEffectsLike ? 
-      DeferredComputationWithSideEffectsOf<TComputationType, TB> : 
-    never;
-
-// prettier-ignore
-type HigherOrderSynchronousComputationWithSideEffectsOut<
-  TComputationType extends ComputationType,
-  TInnerLike extends ComputationLike,
-  TB,
-> = TInnerLike extends SynchronousComputationLike ? 
-      SynchronousComputationWithSideEffectsOf<TComputationType, TB> : 
-    TInnerLike extends DeferredComputationLike ? 
-      DeferredComputationWithSideEffectsOf<TComputationType, TB> : 
-    never;
-
-// prettier-ignore
-type HigherOrderPureDeferredComputationOut<
-  TComputationType extends ComputationType,
-  TInnerLike extends ComputationLike,
-  TB,
-> = TInnerLike extends PureDeferredComputationLike ? 
-      PureDeferredComputationOf<TComputationType, TB> : 
-    TInnerLike extends DeferredComputationWithSideEffectsLike ? 
-      DeferredComputationWithSideEffectsOf<TComputationType, TB> : 
-    never;
-
-type HigherOrderDeferredComputationWithSideEffectsOut<
-  TComputationType extends ComputationType,
-  TInnerLike extends ComputationLike,
-  TB,
-> = TInnerLike extends DeferredComputationLike
-  ? DeferredComputationWithSideEffectsOf<TComputationType, TB>
-  : never;
-
-export type HigherOrderInnerComputationLike =
-  | PureSynchronousComputationLike
-  | SynchronousComputationWithSideEffectsLike
-  | PureDeferredComputationLike
-  | DeferredComputationWithSideEffectsLike;
-
-// prettier-ignore
-export type HigherOrderInnerComputationOf<
-  TComputationType extends ComputationType,
-  THigherOrderInnerComputation extends HigherOrderInnerComputationLike,
-  T,
-> = THigherOrderInnerComputation extends PureSynchronousComputationLike ? 
-      PureSynchronousComputationOf<TComputationType, T> :
-    THigherOrderInnerComputation extends SynchronousComputationWithSideEffectsLike ? 
-      SynchronousComputationOf<TComputationType, T> :
-    THigherOrderInnerComputation extends PureDeferredComputationLike ?
-      PureDeferredComputationOf<TComputationType, T> :
-    THigherOrderInnerComputation extends DeferredComputationWithSideEffectsLike ?
-      DeferredComputationWithSideEffectsOf<TComputationType, T> :
-    never;
-
-// prettier-ignore
-export type HigherOrderComputationOperator<
-  TComputationType extends ComputationType,
-  TInnerLike extends HigherOrderInnerComputationLike,
-  TA,
-  out TB,
-> = <TComputationIn extends ComputationBaseOf<TComputationType, TA>>(
-  computation: TComputationIn,
-) =>
-  TComputationIn extends PureSynchronousComputationOf<TComputationType, TA> ? 
-       HigherOrderPureSynchronousComputationOut<TComputationType, TInnerLike, TB> :
-     TComputationIn extends SynchronousComputationWithSideEffectsOf<TComputationType, TA> ?
-       HigherOrderSynchronousComputationWithSideEffectsOut<TComputationType, TInnerLike, TB> :
-     TComputationIn extends PureDeferredComputationOf<TComputationType, TA> ? 
-       HigherOrderPureDeferredComputationOut<TComputationType, TInnerLike, TB> : 
-     TComputationIn extends DeferredComputationWithSideEffectsOf<TComputationType, TA> ? 
-       HigherOrderDeferredComputationWithSideEffectsOut<TComputationType, TInnerLike, TB> : 
-     never;
-
-// prettier-ignore
-type FromPureAsyncIterableOf<
-  TComputationType extends ComputationType,
-  T,
-> = PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      PureDeferredComputationOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-type FromAsyncIterableWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> = DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      DeferredComputationWithSideEffectsOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-export type FromAsyncIterableOperator<
-  TComputationType extends ComputationType,
-  T,
-> = <TIterable extends AsyncIterableLike<T>>(
-  iterable: TIterable,
-) => TIterable extends PureAsyncIterableLike<T> ? 
-       FromPureAsyncIterableOf<TComputationType,T> :
-    TIterable extends AsyncIterableWithSideEffectsLike<T> ? 
-      FromAsyncIterableWithSideEffectsOf<TComputationType,T> :
-    never;
-
-// prettier-ignore
-type FromPureSynchronousOf<
-  TComputationType extends ComputationType,
-  T,
-> = PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      PureSynchronousComputationOf<TComputationType, T> :
-    PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      PureDeferredComputationOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-type FromSynchronousWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> = SynchronousComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      SynchronousComputationWithSideEffectsOf<TComputationType, T> :
-    DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      DeferredComputationWithSideEffectsOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-type FromPureDeferredOf<
-  TComputationType extends ComputationType,
-  T,
-> = PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      PureDeferredComputationOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-type FromDeferredWithSideEffectOf<
-  TComputationType extends ComputationType,
-  T,
-> = DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      DeferredComputationWithSideEffectsOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-export type FromObservableOperator<
-  TComputationType extends ComputationType,
-  T,
-> = <TObservable extends ObservableLike<T>>(
-  iterable: TObservable,
-) => TObservable extends PureSynchronousObservableLike ?
-       FromPureSynchronousOf<TComputationType, T> :
-     TObservable extends SynchronousObservableWithSideEffectsLike ?
-       FromSynchronousWithSideEffectsOf<TComputationType, T> :
-     TObservable extends PureObservableLike ? 
-       FromPureDeferredOf<TComputationType, T> :
-     TObservable extends ObservableWithSideEffectsLike ?
-       FromDeferredWithSideEffectOf<TComputationType, T> :
-     never;
-
-// prettier-ignore
-export type FromProducerOperator<
-  TComputationType extends ComputationType,
-  T,
-> = <TProducer extends ProducerLike<T>>(
-  iterable: TProducer,
-) => TProducer extends PureProducerLike ?
-       FromPureDeferredOf<TComputationType, T> :
-     TProducer extends ProducerWithSideEffectsLike ?
-       FromDeferredWithSideEffectOf<TComputationType, T> :
-     never;
-
-// prettier-ignore
-type FromPureIterableOf<
-  TComputationType extends ComputationType,
-  T,
-> = PureSynchronousComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      PureSynchronousComputationOf<TComputationType, T> :
-    PureDeferredComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      PureDeferredComputationOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-type FromIterableWithSideEffectsOf<
-  TComputationType extends ComputationType,
-  T,
-> = SynchronousComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      SynchronousComputationWithSideEffectsOf<TComputationType, T> :
-    DeferredComputationWithSideEffectsOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      DeferredComputationWithSideEffectsOf<TComputationType, T> :
-    MulticastComputationOf<TComputationType, T> extends ComputationBaseOf<TComputationType, T> ?
-      MulticastComputationOf<TComputationType, T> & DisposableLike :
-    never;
-
-// prettier-ignore
-export type FromIterableOperator<
-  TComputationType extends ComputationType,
-  T,
-> = <TIterable extends IterableLike<T>>(
-  iterable: TIterable,
-) => TIterable extends PureIterableLike<T> ? 
-       FromPureIterableOf<TComputationType,T> :
-    TIterable extends IterableWithSideEffectsLike<T> ? 
-      FromIterableWithSideEffectsOf<TComputationType,T> :
-    never;
-
-// prettier-ignore
-export type ToObservableOperator<
-  TComputationType extends ComputationType,
-  T,
-> = <TComputationBaseOf extends ComputationBaseOf<TComputationType, T>>(
-  computation: TComputationBaseOf,
-) => TComputationBaseOf extends PureSynchronousComputationOf<TComputationType, T> ? 
-       PureSynchronousObservableLike<T> :
-    TComputationBaseOf extends SynchronousComputationWithSideEffectsOf<TComputationType, T> ? 
-      SynchronousObservableWithSideEffectsLike<T> : 
-    TComputationBaseOf extends PureDeferredComputationOf<TComputationType, T> ? 
-      PureObservableLike<T> : 
-    TComputationBaseOf extends DeferredComputationWithSideEffectsOf<TComputationType, T> ? 
-      ObservableWithSideEffectsLike<T> : 
-    TComputationBaseOf extends MulticastComputationOf<TComputationType, T> ? 
-      PureObservableLike<T> : 
-    never;
-
-// prettier-ignore
-export type ToProducer<TComputationType extends ComputationType, T> = <
-  TComputationBaseOf extends ComputationBaseOf<TComputationType, T>,
->(
-  computation: TComputationBaseOf,
-) => TComputationBaseOf extends PureComputationOf<TComputationType, T>  ?
-       PureProducerLike<T> :
-     TComputationBaseOf extends ComputationWithSideEffectsOf<TComputationType, T> ? 
-       ProducerWithSideEffectsLike<T> : 
-     never;
-
-// prettier-ignore
-export type ToRunnableOperator<TComputationType extends ComputationType, T> = <
-  TComputationBaseOf extends ComputationBaseOf<TComputationType, T>,
->(
-  computation: TComputationBaseOf,
-) => TComputationBaseOf extends PureSynchronousComputationOf<TComputationType, T> ?
-       PureRunnableLike<T> :
-    TComputationBaseOf extends SynchronousComputationWithSideEffectsOf<TComputationType, T> ? 
-      RunnableWithSideEffectsLike<T> : 
-    never;
-
-export interface CombineConstructor<TComputationType extends ComputationType> {
-  <TA, TB>(
-    a: PureSynchronousComputationOf<TComputationType, TA>,
-    b: PureSynchronousComputationOf<TComputationType, TB>,
-  ): PureSynchronousComputationOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureSynchronousComputationOf<TComputationType, TA>,
-    b: PureSynchronousComputationOf<TComputationType, TB>,
-    c: PureSynchronousComputationOf<TComputationType, TC>,
-  ): PureSynchronousComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureSynchronousComputationOf<TComputationType, TA>,
-    b: PureSynchronousComputationOf<TComputationType, TB>,
-    c: PureSynchronousComputationOf<TComputationType, TC>,
-    d: PureSynchronousComputationOf<TComputationType, TD>,
-  ): PureSynchronousComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: SynchronousComputationOf<TComputationType, TA>,
-    b: SynchronousComputationOf<TComputationType, TB>,
-  ): SynchronousComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: SynchronousComputationOf<TComputationType, TA>,
-    b: SynchronousComputationOf<TComputationType, TB>,
-    c: SynchronousComputationOf<TComputationType, TC>,
-  ): SynchronousComputationWithSideEffectsOf<
-    TComputationType,
-    Tuple3<TA, TB, TC>
-  >;
-  <TA, TB, TC, TD>(
-    a: SynchronousComputationOf<TComputationType, TA>,
-    b: SynchronousComputationOf<TComputationType, TB>,
-    c: SynchronousComputationOf<TComputationType, TC>,
-    d: SynchronousComputationOf<TComputationType, TD>,
-  ): SynchronousComputationWithSideEffectsOf<
-    TComputationType,
-    Tuple4<TA, TB, TC, TD>
-  >;
-
-  <TA, TB>(
-    a: PureDeferredComputationOf<TComputationType, TA>,
-    b: PureDeferredComputationOf<TComputationType, TB>,
-  ): PureDeferredComputationOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureDeferredComputationOf<TComputationType, TA>,
-    b: PureDeferredComputationOf<TComputationType, TB>,
-    c: PureDeferredComputationOf<TComputationType, TC>,
-  ): PureDeferredComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureDeferredComputationOf<TComputationType, TA>,
-    b: PureDeferredComputationOf<TComputationType, TB>,
-    c: PureDeferredComputationOf<TComputationType, TC>,
-    d: PureDeferredComputationOf<TComputationType, TD>,
-  ): PureDeferredComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: DeferredComputationOf<TComputationType, TA>,
-    b: DeferredComputationOf<TComputationType, TB>,
-  ): DeferredComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: DeferredComputationOf<TComputationType, TA>,
-    b: DeferredComputationOf<TComputationType, TB>,
-    c: DeferredComputationOf<TComputationType, TC>,
-  ): DeferredComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: DeferredComputationOf<TComputationType, TA>,
-    b: DeferredComputationOf<TComputationType, TB>,
-    c: DeferredComputationOf<TComputationType, TC>,
-    d: DeferredComputationOf<TComputationType, TD>,
-  ): DeferredComputationWithSideEffectsOf<
-    TComputationType,
-    Tuple4<TA, TB, TC, TD>
-  >;
-
-  <TA, TB>(
-    a: MulticastComputationOf<TComputationType, TA>,
-    b: MulticastComputationOf<TComputationType, TB>,
-  ): MulticastComputationOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: MulticastComputationOf<TComputationType, TA>,
-    b: MulticastComputationOf<TComputationType, TB>,
-    c: MulticastComputationOf<TComputationType, TC>,
-  ): MulticastComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: MulticastComputationOf<TComputationType, TA>,
-    b: MulticastComputationOf<TComputationType, TB>,
-    c: MulticastComputationOf<TComputationType, TC>,
-    d: MulticastComputationOf<TComputationType, TD>,
-  ): MulticastComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-}
-// prettier-ignore
-interface MulticastComputationForkMerge<TComputationType extends ComputationType>  {
-  <TIn, TOut>(
-    a: Function1<MulticastComputationOf<TComputationType,TIn>,  MulticastComputationOf<TComputationType,TOut>>,
-    b: Function1<MulticastComputationOf<TComputationType,TIn>,  MulticastComputationOf<TComputationType,TOut>>,
-    ...tail:  Function1<MulticastComputationOf<TComputationType,TIn>,  MulticastComputationOf<TComputationType,TOut>>[]
-  ): MulticastComputationOf<TComputationType,TOut>;
-}
-
-// prettier-ignore
-interface DeferredComputationForkMerge<TComputationType extends ComputationType>  {
-  <TIn, TOut>(
-    a: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    b: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    ...tail:  Function1<BroadcasterLike<TIn>,  PureDeferredComputationOf<TComputationType,TOut>>[]
-  ): PureDeferredComputationOf<TComputationType,TOut>;
-
-  <TIn, TOut>(
-    a: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    b: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    options?: DeferredComputationWithSideEffectsLike
-  ): PureDeferredComputationOf<TComputationType,TOut>;
-  <TIn, TOut>(
-    a: Function1<PureDeferredComputationOf<TComputationType,TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    b: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    c: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    options?: DeferredComputationWithSideEffectsLike
-  ): PureDeferredComputationOf<TComputationType,TOut>;
-  <TIn, TOut>(
-    a: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    b: Function1<PureDeferredComputationOf<TComputationType, TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    c: Function1<PureDeferredComputationOf<TComputationType,TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    d: Function1<PureDeferredComputationOf<TComputationType,TIn>,  PureDeferredComputationOf<TComputationType,TOut>>,
-    options?: DeferredComputationWithSideEffectsLike
-  ): PureDeferredComputationOf<TComputationType,TOut>;
-}
-
-// prettier-ignore
-export type ForkMerge<TComputationType extends ComputationType> =
-   DeferredComputationOf<TComputationType, any> extends ComputationBaseOf<TComputationType, any> ?
-     DeferredComputationForkMerge<TComputationType> :
-   MulticastComputationOf<TComputationType, any> extends ComputationBaseOf<TComputationType, any> ? 
-     MulticastComputationForkMerge<TComputationType> :
-   never;
-
-interface ZipConstructor<TComputationType extends ComputationType> {
-  <TA, TB>(
-    a: PureSynchronousComputationOf<TComputationType, TA>,
-    b: PureSynchronousComputationOf<TComputationType, TB>,
-  ): PureSynchronousComputationOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureSynchronousComputationOf<TComputationType, TA>,
-    b: PureSynchronousComputationOf<TComputationType, TB>,
-    c: PureSynchronousComputationOf<TComputationType, TC>,
-  ): PureSynchronousComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureSynchronousComputationOf<TComputationType, TA>,
-    b: PureSynchronousComputationOf<TComputationType, TB>,
-    c: PureSynchronousComputationOf<TComputationType, TC>,
-    d: PureSynchronousComputationOf<TComputationType, TD>,
-  ): PureSynchronousComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: SynchronousComputationOf<TComputationType, TA>,
-    b: SynchronousComputationOf<TComputationType, TB>,
-  ): SynchronousComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: SynchronousComputationOf<TComputationType, TA>,
-    b: SynchronousComputationOf<TComputationType, TB>,
-    c: SynchronousComputationOf<TComputationType, TC>,
-  ): SynchronousComputationWithSideEffectsOf<
-    TComputationType,
-    Tuple3<TA, TB, TC>
-  >;
-  <TA, TB, TC, TD>(
-    a: SynchronousComputationOf<TComputationType, TA>,
-    b: SynchronousComputationOf<TComputationType, TB>,
-    c: SynchronousComputationOf<TComputationType, TC>,
-    d: SynchronousComputationOf<TComputationType, TD>,
-  ): SynchronousComputationWithSideEffectsOf<
-    TComputationType,
-    Tuple4<TA, TB, TC, TD>
-  >;
-
-  <TA, TB>(
-    a: PureDeferredComputationOf<TComputationType, TA>,
-    b: PureDeferredComputationOf<TComputationType, TB>,
-  ): PureDeferredComputationOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: PureDeferredComputationOf<TComputationType, TA>,
-    b: PureDeferredComputationOf<TComputationType, TB>,
-    c: PureDeferredComputationOf<TComputationType, TC>,
-  ): PureDeferredComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: PureDeferredComputationOf<TComputationType, TA>,
-    b: PureDeferredComputationOf<TComputationType, TB>,
-    c: PureDeferredComputationOf<TComputationType, TC>,
-    d: PureDeferredComputationOf<TComputationType, TD>,
-  ): PureDeferredComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-
-  <TA, TB>(
-    a: DeferredComputationOf<TComputationType, TA>,
-    b: DeferredComputationOf<TComputationType, TB>,
-  ): DeferredComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
-  <TA, TB, TC>(
-    a: DeferredComputationOf<TComputationType, TA>,
-    b: DeferredComputationOf<TComputationType, TB>,
-    c: DeferredComputationOf<TComputationType, TC>,
-  ): DeferredComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
-  <TA, TB, TC, TD>(
-    a: DeferredComputationOf<TComputationType, TA>,
-    b: DeferredComputationOf<TComputationType, TB>,
-    c: DeferredComputationOf<TComputationType, TC>,
-    d: DeferredComputationOf<TComputationType, TD>,
-  ): DeferredComputationWithSideEffectsOf<
-    TComputationType,
-    Tuple4<TA, TB, TC, TD>
-  >;
-}
+> = (
+  computation: ComputationOf<TComputationType, TA>,
+) => ComputationWithSideEffectsOf<TComputationType, TB>;
 
 export const ComputationModuleLike_computationType = Symbol(
   "ComputationModuleLike_computationType",
 );
 
 export interface ComputationModuleLike<
-  TComputationType extends ComputationType = ComputationType,
+  TComputationType extends ComputationTypeLike = ComputationTypeLike,
 > {
   [ComputationModuleLike_computationType]?: TComputationType;
 }
@@ -929,23 +311,18 @@ export interface ComputationModuleLike<
 export type ComputationTypeOfModule<TModule extends ComputationModuleLike> =
   NonNullable<TModule[typeof ComputationModuleLike_computationType]>;
 
-export type PickComputationModule<
-  TModule extends ComputationModuleLike,
-  K extends keyof TModule,
-> = Pick<TModule, K | typeof ComputationModuleLike_computationType>;
-
 export type ComputationOfModule<
   TModule extends ComputationModuleLike,
   T,
 > = ComputationOf<ComputationTypeOfModule<TModule>, T>;
 
-export type DeferredComputationOfModule<
+export type PickComputationModule<
   TModule extends ComputationModuleLike,
-  T,
-> = DeferredComputationOf<ComputationTypeOfModule<TModule>, T>;
+  K extends keyof TModule,
+> = Pick<TModule, K | typeof ComputationModuleLike_computationType>;
 
 export interface ComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
+  TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
     genPure?: Record<string, any>;
     toProducer?: Record<string, any>;
@@ -990,13 +367,20 @@ export interface ComputationModule<
     options?: { readonly inclusive?: boolean },
   ): PureComputationOperator<TComputationType, T, T>;
 
+  // prettier-ignore
   toProducer<T>(
     options?: TCreationOptions["toProducer"],
-  ): ToProducer<TComputationType, T>;
+  ): <TComputationOf extends ComputationOf<TComputationType, T>>(
+    computation: TComputationOf,
+  ) =>  TComputationOf extends PureComputationOf<TComputationType, T> ? 
+          PureProducerLike<T> :
+        TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ?
+          ProducerWithSideEffectsLike<T> : 
+        never;
 }
 
 export interface SequentialComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
+  TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
     gen?: Record<string, any>;
   } = {},
@@ -1004,47 +388,45 @@ export interface SequentialComputationModule<
   catchError<T>(
     onError: SideEffect1<Error>,
   ): PureComputationOperator<TComputationType, T, T>;
-  catchError<T, TInnerLike extends HigherOrderInnerComputationLike>(
-    onError: Function1<
-      Error,
-      HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>
-    >,
-    options: TInnerLike,
-  ): HigherOrderComputationOperator<TComputationType, TInnerLike, T, T>;
+  catchError<T>(
+    onError: Function1<Error, PureComputationOf<TComputationType, T>>,
+    options: {
+      readonly [ComputationLike_isPure]: Optional<true>;
+    },
+  ): PureComputationOperator<TComputationType, T, T>;
+  catchError<T>(
+    onError: Function1<Error, PureComputationOf<TComputationType, T>>,
+    options: {
+      readonly [ComputationLike_isPure]: false;
+    },
+  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
+  // prettier-ignore
   concat<T>(
-    ...computations: readonly PureSynchronousComputationOf<
-      TComputationType,
-      T
-    >[]
-  ): PureSynchronousComputationOf<TComputationType, T>;
+    ...computations: readonly PureComputationOf<TComputationType, T>[]
+  ): PureComputationOf<TComputationType, T>;
   concat<T>(
-    ...computations: readonly SynchronousComputationOf<TComputationType, T>[]
-  ): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
-  concat<T>(
-    ...computations: readonly PureDeferredComputationOf<TComputationType, T>[]
-  ): PureDeferredComputationOf<TComputationType, T>;
-  concat<T>(
-    ...computations: readonly DeferredComputationOf<TComputationType, T>[]
-  ): DeferredComputationWithSideEffectsOf<TComputationType, T>;
+    ...computations: readonly ComputationOf<TComputationType, T>[]
+  ): ComputationWithSideEffectsOf<TComputationType, T>;
 
-  concatAll<T>(): HigherOrderComputationOperator<
-    TComputationType,
-    PureSynchronousComputationLike,
-    HigherOrderInnerComputationOf<
-      TComputationType,
-      PureSynchronousComputationLike,
-      T
-    >,
-    T
-  >;
-  concatAll<T, TInnerLike extends HigherOrderInnerComputationLike>(
-    options: TInnerLike,
-  ): HigherOrderComputationOperator<
-    TComputationType,
-    TInnerLike,
-    HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
-    T
+  // prettier-ignore
+  concatAll<T>(): Function1<
+    PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
+    PureComputationOf<TComputationType, T>
+  >
+  // prettier-ignore
+  concatAll<T>(options: {
+    readonly [ComputationLike_isPure]: Optional<true>,
+  }): Function1<
+    PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
+    PureComputationOf<TComputationType, T>
+  >
+  // prettier-ignore
+  concatAll<T>(options: {
+    readonly [ComputationLike_isPure]: false,
+  }): Function1<
+    ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
+    ComputationWithSideEffectsOf<TComputationType, T>
   >;
 
   forEach<T>(
@@ -1083,31 +465,62 @@ export interface SequentialComputationModule<
 }
 
 export interface SynchronousComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
+  TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
+    toObservable?: Record<string, any>;
     toRunnable?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
+  // prettier-ignore
   toRunnable<T>(
     options?: TCreationOptions["toRunnable"],
-  ): ToRunnableOperator<TComputationType, T>;
+  ): <TComputationOf extends ComputationOf<TComputationType, T>>(
+    computation: TComputationOf,
+  ) =>  TComputationOf extends PureComputationOf<TComputationType, T> ? 
+          PureRunnableLike<T> :
+        TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ?
+          RunnableWithSideEffectsLike<T> : 
+        never;
 }
 
 export interface InteractiveComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
-  TCreationOptions extends {
-    toObservable?: Record<string, any>;
-  } = {},
+  TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
-  toObservable<T>(
-    options?: TCreationOptions["toObservable"],
-  ): ToObservableOperator<TComputationType, T>;
+  zip<TA, TB>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+  ): PureComputationOf<TComputationType, Tuple2<TA, TB>>;
+  zip<TA, TB, TC>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+    c: PureComputationOf<TComputationType, TC>,
+  ): PureComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
+  zip<TA, TB, TC, TD>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+    c: PureComputationOf<TComputationType, TC>,
+    d: PureComputationOf<TComputationType, TD>,
+  ): PureComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
 
-  zip: ZipConstructor<TComputationType>;
+  zip<TA, TB>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
+  zip<TA, TB, TC>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+    c: ComputationOf<TComputationType, TC>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
+  zip<TA, TB, TC, TD>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+    c: ComputationOf<TComputationType, TC>,
+    d: ComputationOf<TComputationType, TD>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
 }
 
 export interface ConcurrentDeferredComputationModule<
-  TComputationType extends ComputationType,
+  TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
   genAsync<T>(
     factory: Factory<AsyncIterator<T>>,
@@ -1119,7 +532,7 @@ export interface ConcurrentDeferredComputationModule<
 }
 
 export interface SequentialReactiveComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
+  TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
   buffer<T>(options?: {
     count?: number;
@@ -1136,146 +549,262 @@ export interface SequentialReactiveComputationModule<
   }): PureComputationOperator<TComputationType, T, T>;
 }
 
-export interface ConcurrentReactiveComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
+export interface SourceComputationModule<
+  TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
   fromBroadcaster<T>(): Function1<
     BroadcasterLike<T>,
     PureComputationOf<TComputationType, T>
   >;
 
+  // prettier-ignore
   fromObservable<T>(options?: {
     scheduler?: SchedulerLike;
-  }): FromObservableOperator<TComputationType, T>;
+  }): <TObservable extends ObservableLike<T>>(
+    iterable: TObservable,
+  ) => TObservable extends PureComputationLike ?
+         PureComputationOf<TComputationType, T> :
+       TObservable extends ComputationWithSideEffectsLike ?
+         ComputationWithSideEffectsOf<TComputationType, T> :
+       never;
 
-  fromProducer<T>(): FromProducerOperator<TComputationType, T>;
+  // prettier-ignore
+  fromProducer<T>(): <TProducer extends ProducerLike<T>>(
+    iterable: TProducer,
+  ) => TProducer extends PureComputationLike ? 
+        PureComputationOf<TComputationType, T> : 
+      TProducer extends ComputationWithSideEffectsLike ? 
+        ComputationWithSideEffectsOf<TComputationType, T> : 
+      never;
+}
 
-  combineLatest: CombineConstructor<TComputationType>;
+export interface ConcurrentReactiveComputationModule<
+  TComputationType extends ComputationTypeLike,
+> extends ComputationModuleLike<TComputationType> {
+  combineLatest<TA, TB>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+  ): PureComputationOf<TComputationType, Tuple2<TA, TB>>;
+  combineLatest<TA, TB, TC>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+    c: PureComputationOf<TComputationType, TC>,
+  ): PureComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
+  combineLatest<TA, TB, TC, TD>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+    c: PureComputationOf<TComputationType, TC>,
+    d: PureComputationOf<TComputationType, TD>,
+  ): PureComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
+  combineLatest<TA, TB>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
+  combineLatest<TA, TB, TC>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+    c: ComputationOf<TComputationType, TC>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
+  combineLatest<TA, TB, TC, TD>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+    c: ComputationOf<TComputationType, TC>,
+    d: ComputationOf<TComputationType, TD>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
 
-  forkMerge: ForkMerge<TComputationType>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    ...tail:  Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>[]
+  ): PureComputationOf<TComputationType,TOut>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    options: {
+      readonly [ComputationLike_isPure]: Optional<true>,
+    }
+  ): PureComputationOf<TComputationType,TOut>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    options: {
+      readonly [ComputationLike_isPure]: false,
+    }
+  ): ComputationWithSideEffectsOf<TComputationType,TOut>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    c: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    options: {
+      readonly [ComputationLike_isPure]: Optional<true>,
+    }
+  ): PureComputationOf<TComputationType,TOut>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    c: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    options: {
+      readonly [ComputationLike_isPure]: false,
+    }
+  ): ComputationWithSideEffectsOf<TComputationType,TOut>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    c: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    d: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
+    options: {
+      readonly [ComputationLike_isPure]: Optional<true>,
+    }
+  ): PureComputationOf<TComputationType,TOut>;
+  // prettier-ignore
+  forkMerge<TIn, TOut>(
+    a: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    b: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    c: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    d: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
+    options: {
+      readonly [ComputationLike_isPure]: false,
+    }
+  ): ComputationWithSideEffectsOf<TComputationType,TOut>;
 
   merge<T>(
-    ...computations: readonly PureSynchronousComputationOf<
-      TComputationType,
-      T
-    >[]
-  ): PureSynchronousComputationOf<TComputationType, T>;
-  merge<T>(
-    ...computations: readonly SynchronousComputationOf<TComputationType, T>[]
-  ): SynchronousComputationWithSideEffectsOf<TComputationType, T>;
-  merge<T>(
-    ...computations: readonly PureDeferredComputationOf<TComputationType, T>[]
-  ): PureDeferredComputationOf<TComputationType, T>;
-  merge<T>(
-    ...computations: readonly DeferredComputationOf<TComputationType, T>[]
-  ): DeferredComputationWithSideEffectsOf<TComputationType, T>;
-  merge<T>(
-    ...computations: readonly MulticastComputationOf<TComputationType, T>[]
-  ): MulticastComputationOf<TComputationType, T>;
+    ...computations: readonly PureComputationOf<TComputationType, T>[]
+  ): PureComputationOf<TComputationType, T>;
   merge<T>(
     ...computations: readonly ComputationOf<TComputationType, T>[]
-  ): ComputationOf<TComputationType, T> & DisposableLike;
+  ): ComputationWithSideEffectsOf<TComputationType, T>;
 
   takeUntil<T>(
-    notifier: PureSynchronousComputationOf<TComputationType, unknown>,
+    notifier: PureComputationOf<TComputationType, unknown>,
   ): PureComputationOperator<TComputationType, T, T>;
   takeUntil<T>(
-    notifier: SynchronousComputationWithSideEffectsOf<
-      TComputationType,
-      unknown
-    >,
+    notifier: ComputationOf<TComputationType, unknown>,
   ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
-  takeUntil<T>(
-    notifier: PureDeferredComputationOf<TComputationType, unknown>,
-  ): PureAsynchronousComputationOperator<TComputationType, T, T>;
-  takeUntil<T>(
-    notifier: DeferredComputationWithSideEffectsOf<TComputationType, unknown>,
-  ): Function1<
-    ComputationOf<TComputationType, T>,
-    DeferredComputationWithSideEffectsOf<TComputationType, T>
-  >;
-  takeUntil<T>(
-    notifier: MulticastComputationOf<TComputationType, unknown>,
-  ): PureAsynchronousComputationOperator<TComputationType, T, T>;
 
   withLatestFrom<TA, TB>(
-    other: PureSynchronousComputationOf<TComputationType, TB>,
+    other: PureComputationOf<TComputationType, TB>,
   ): PureComputationOperator<TComputationType, TA, Tuple2<TA, TB>>;
   withLatestFrom<TA, TB, T>(
-    other: PureSynchronousComputationOf<TComputationType, TB>,
+    other: PureComputationOf<TComputationType, TB>,
     selector: Function2<TA, TB, T>,
   ): PureComputationOperator<TComputationType, TA, T>;
   withLatestFrom<TA, TB>(
-    other: SynchronousComputationWithSideEffectsOf<TComputationType, TB>,
+    other: ComputationOf<TComputationType, TB>,
   ): ComputationOperatorWithSideEffects<TComputationType, TA, Tuple2<TA, TB>>;
   withLatestFrom<TA, TB, T>(
-    other: SynchronousComputationWithSideEffectsOf<TComputationType, TB>,
+    other: ComputationOf<TComputationType, TB>,
     selector: Function2<TA, TB, T>,
   ): ComputationOperatorWithSideEffects<TComputationType, TA, T>;
-  withLatestFrom<TA, TB>(
-    other: PureDeferredComputationOf<TComputationType, TB>,
-  ): PureAsynchronousComputationOperator<TComputationType, TA, Tuple2<TA, TB>>;
-  withLatestFrom<TA, TB, T>(
-    other: PureDeferredComputationOf<TComputationType, TB>,
-    selector: Function2<TA, TB, T>,
-  ): PureAsynchronousComputationOperator<TComputationType, TA, T>;
-  withLatestFrom<TA, TB>(
-    other: DeferredComputationWithSideEffectsOf<TComputationType, TB>,
-  ): Function1<
-    ComputationOf<TComputationType, TA>,
-    DeferredComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>
-  >;
-  withLatestFrom<TA, TB, T>(
-    other: DeferredComputationWithSideEffectsOf<TComputationType, TB>,
-    selector: Function2<TA, TB, T>,
-  ): Function1<
-    ComputationOf<TComputationType, TA>,
-    DeferredComputationWithSideEffectsOf<TComputationType, T>
-  >;
-  withLatestFrom<TA, TB>(
-    other: MulticastComputationOf<TComputationType, TB>,
-  ): PureAsynchronousComputationOperator<TComputationType, TA, Tuple2<TA, TB>>;
-  withLatestFrom<TA, TB, T>(
-    other: MulticastComputationOf<TComputationType, TB>,
-    selector: Function2<TA, TB, T>,
-  ): PureAsynchronousComputationOperator<TComputationType, TA, T>;
 
-  zipLatest: CombineConstructor<TComputationType>;
+  zipLatest<TA, TB>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+  ): PureComputationOf<TComputationType, Tuple2<TA, TB>>;
+  zipLatest<TA, TB, TC>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+    c: PureComputationOf<TComputationType, TC>,
+  ): PureComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
+  zipLatest<TA, TB, TC, TD>(
+    a: PureComputationOf<TComputationType, TA>,
+    b: PureComputationOf<TComputationType, TB>,
+    c: PureComputationOf<TComputationType, TC>,
+    d: PureComputationOf<TComputationType, TD>,
+  ): PureComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
+  zipLatest<TA, TB>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
+  zipLatest<TA, TB, TC>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+    c: ComputationOf<TComputationType, TC>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
+  zipLatest<TA, TB, TC, TD>(
+    a: ComputationOf<TComputationType, TA>,
+    b: ComputationOf<TComputationType, TB>,
+    c: ComputationOf<TComputationType, TC>,
+    d: ComputationOf<TComputationType, TD>,
+  ): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
 }
 
 export interface DeferredAsynchronousReactiveComputationModule<
-  TComputationType extends AnyComputationType = AnyComputationType,
+  TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
-  mergeAll<T, TInnerLike extends HigherOrderInnerComputationLike>(
-    options: {
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-      readonly concurrency?: number;
-    } & TInnerLike,
-  ): HigherOrderComputationOperator<
-    TComputationType,
-    TInnerLike,
-    HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
-    T
+  // prettier-ignore
+  mergeAll<T>(options?: {
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<
+    PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
+    PureComputationOf<TComputationType, T>
+  >
+  // prettier-ignore
+  mergeAll<T>(options: {
+    readonly [ComputationLike_isPure]: Optional<true>,
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<
+    PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
+    PureComputationOf<TComputationType, T>
+  >
+  // prettier-ignore
+  mergeAll<T>(options: {
+    readonly [ComputationLike_isPure]: false,
+    readonly backpressureStrategy?: BackpressureStrategy;
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<
+    ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
+    ComputationWithSideEffectsOf<TComputationType, T>
   >;
 
-  scanMany<T, TAcc, TInnerLike extends HigherOrderInnerComputationLike>(
-    scanner: Function2<
-      TAcc,
-      T,
-      HigherOrderInnerComputationOf<TComputationType, TInnerLike, TAcc>
-    >,
+  // prettier-ignore
+  scanMany<T, TAcc>(
+    scanner: Function2<TAcc, T, PureComputationOf<TComputationType, TAcc>>,
     initialValue: Factory<TAcc>,
-    options: TInnerLike,
-  ): HigherOrderComputationOperator<TComputationType, TInnerLike, T, TAcc>;
+  ): PureComputationOperator<TComputationType, T, TAcc>;
+  scanMany<T, TAcc>(
+    scanner: Function2<TAcc, T, PureComputationOf<TComputationType, TAcc>>,
+    initialValue: Factory<TAcc>,
+    options: {
+      readonly [ComputationLike_isPure]: Optional<true>;
+    },
+  ): PureComputationOperator<TComputationType, T, TAcc>;
+  scanMany<T, TAcc>(
+    scanner: Function2<TAcc, T, ComputationOf<TComputationType, TAcc>>,
+    initialValue: Factory<TAcc>,
+    options: {
+      readonly [ComputationLike_isPure]: Optional<true>;
+    },
+  ): ComputationOperatorWithSideEffects<TComputationType, T, TAcc>;
 
-  switchAll<T, TInnerLike extends HigherOrderInnerComputationLike>(
-    innerType: TInnerLike,
-  ): HigherOrderComputationOperator<
-    TComputationType,
-    TInnerLike,
-    HigherOrderInnerComputationOf<TComputationType, TInnerLike, T>,
-    T
+  // prettier-ignore
+  switchAll<T>(): Function1<
+    PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
+    PureComputationOf<TComputationType, T>
+  >
+  // prettier-ignore
+  switchAll<T>(options: {
+    readonly [ComputationLike_isPure]: Optional<true>,
+  }): Function1<
+    PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
+    PureComputationOf<TComputationType, T>
+  >
+  // prettier-ignore
+  switchAll<T>(options: {
+    readonly [ComputationLike_isPure]: false,
+  }): Function1<
+    ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
+    ComputationWithSideEffectsOf<TComputationType, T>
   >;
 
   withBackpressure<T>(config: {
@@ -1283,246 +812,3 @@ export interface DeferredAsynchronousReactiveComputationModule<
     backpressureStrategy: BackpressureStrategy;
   }): PureComputationOperator<TComputationType, T, T>;
 }
-
-export interface IterableLike<T = unknown>
-  extends Iterable<T>,
-    SynchronousComputationLike,
-    DeferredComputationLike {
-  [ComputationLike_isDeferred]?: true;
-  [ComputationLike_isSynchronous]?: true;
-}
-
-export interface PureIterableLike<T = unknown> extends IterableLike<T> {
-  readonly [ComputationLike_isPure]?: true;
-}
-
-export interface IterableWithSideEffectsLike<T = unknown>
-  extends IterableLike<T> {
-  readonly [ComputationLike_isPure]: false;
-}
-
-export interface AsyncIterableLike<T = unknown>
-  extends AsyncIterable<T>,
-    DeferredComputationLike {
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-export interface PureAsyncIterableLike<T = unknown>
-  extends AsyncIterableLike<T>,
-    PureComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-export interface AsyncIterableWithSideEffectsLike<T = unknown>
-  extends AsyncIterableLike<T>,
-    ComputationWithSideEffectsLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]: false;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-export const RunnableLike_eval = Symbol("RunnableLike_eval");
-
-export interface RunnableLike<T = unknown> extends SynchronousComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isSynchronous]?: true;
-
-  [RunnableLike_eval](sink: SinkLike<T>): void;
-}
-
-export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
-  readonly [ComputationLike_isPure]?: true;
-}
-
-export interface RunnableWithSideEffectsLike<T = unknown>
-  extends RunnableLike<T> {
-  readonly [ComputationLike_isPure]: false;
-}
-
-export const SourceLike_subscribe = Symbol("SourceLike_subscribe");
-
-export interface SourceLike<
-  out T = unknown,
-  TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
-> extends ComputationLike {
-  [SourceLike_subscribe](EventListener: TEventListener): void;
-}
-
-export interface DeferredSourceLike<
-  T = unknown,
-  TConsumer extends ConsumerLike<T> = ConsumerLike<T>,
-> extends SourceLike<T, TConsumer> {
-  [ComputationLike_isDeferred]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface ProducerLike<out T = unknown>
-  extends SourceLike<T, ConsumerLike<T>>,
-    DeferredComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-/**
- * @noInheritDoc
- */
-export interface PureProducerLike<out T = unknown>
-  extends ProducerLike<T>,
-    PureDeferredComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-/**
- * @noInheritDoc
- */
-export interface ProducerWithSideEffectsLike<out T = unknown>
-  extends ProducerLike<T>,
-    DeferredComputationWithSideEffectsLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]: false;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-/**
- * @noInheritDoc
- */
-export interface ObservableLike<out T = unknown>
-  extends SourceLike<T, ObserverLike<T>>,
-    DeferredComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface PureObservableLike<out T = unknown>
-  extends ObservableLike<T>,
-    PureComputationLike {
-  readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isDeferred]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface ObservableWithSideEffectsLike<out T = unknown>
-  extends ObservableLike<T>,
-    ComputationWithSideEffectsLike {
-  readonly [ComputationLike_isPure]: false;
-  readonly [ComputationLike_isDeferred]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface PureSynchronousObservableLike<out T = unknown>
-  extends PureObservableLike<T>,
-    PureSynchronousComputationLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isSynchronous]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
-  extends ObservableWithSideEffectsLike<T>,
-    SynchronousComputationWithSideEffectsLike {
-  readonly [ComputationLike_isDeferred]?: true;
-  readonly [ComputationLike_isPure]: false;
-  readonly [ComputationLike_isSynchronous]?: true;
-}
-
-/**
- * @noInheritDoc
- */
-export interface BroadcasterLike<out T = unknown>
-  extends SourceLike<T>,
-    DisposableContainerLike,
-    MulticastComputationLike {
-  readonly [ComputationLike_isDeferred]: false;
-  readonly [ComputationLike_isPure]?: true;
-  readonly [ComputationLike_isSynchronous]: false;
-}
-
-/**
- * @noInheritDoc
- */
-export interface PublisherLike<T = unknown>
-  extends BroadcasterLike<T>,
-    SinkLike<T> {}
-
-export const StoreLike_value = Symbol("StoreLike_value");
-
-/**
- * @noInheritDoc
- */
-export interface StoreLike<T = unknown> extends BroadcasterLike<T> {
-  readonly [StoreLike_value]: T;
-}
-
-/**
- * @noInheritDoc
- */
-export interface WritableStoreLike<T = unknown>
-  extends StoreLike<T>,
-    PublisherLike<T> {
-  [StoreLike_value]: T;
-}
-
-/**
- * Represents a duplex stream
- *
- * @noInheritDoc
- */
-export interface StreamLike<TReq, out T>
-  extends ConsumerLike<TReq>,
-    BroadcasterLike<T> {}
-
-export const StreamableLike_stream = Symbol("StreamableLike_stream");
-
-/**
- * A container that supports bi-directional streaming.
- *
- * @typeparam TReq
- * @typeparam T
- * @typeparam TStream
- *
- * @noInheritDoc
- */
-export interface StreamableLike<
-  TReq = unknown,
-  out T = unknown,
-  TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
-> {
-  /**
-   * Subscribe to the Streamable.
-   *
-   * @param scheduler - The scheduler to subscribe to the stream with.
-   * @param options
-   */
-  [StreamableLike_stream](
-    scheduler: SchedulerLike,
-    options?: {
-      readonly autoDispose?: boolean;
-
-      /**
-       * The capacity of the stream's request queue.
-       */
-      readonly capacity?: number;
-
-      readonly backpressureStrategy?: BackpressureStrategy;
-    },
-  ): TStream & DisposableLike;
-}
-
-export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
-  TStreamable[typeof StreamableLike_stream]
->;

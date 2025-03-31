@@ -13,12 +13,12 @@
 ## Extended by
 
 - [`IterableModule`](../Iterable/interfaces/IterableModule.md)
-- [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
+- [`SynchronousObservableModule`](../SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
 • **TCreationOptions** *extends* `object` = \{\}
 
@@ -36,7 +36,7 @@
 
 ### toRunnable()
 
-> **toRunnable**\<`T`\>(`options`?): [`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>
+> **toRunnable**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\> ? [`PureRunnableLike`](PureRunnableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`RunnableWithSideEffectsLike`](RunnableWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -50,4 +50,18 @@
 
 #### Returns
 
-[`ToRunnableOperator`](../type-aliases/ToRunnableOperator.md)\<`TComputationType`, `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationLike`](ComputationLike.md) & [`PureComputationLike`](PureComputationLike.md) \| [`ComputationLike`](ComputationLike.md) & [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\> ? [`PureRunnableLike`](PureRunnableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`RunnableWithSideEffectsLike`](RunnableWithSideEffectsLike.md)\<`T`\> : `never`

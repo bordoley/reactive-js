@@ -5,8 +5,10 @@ import {
 } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
+  ComputationTypeLike,
   ConcurrentReactiveComputationModule,
   PickComputationModule,
+  SourceComputationModule,
 } from "../../../computations.js";
 import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
@@ -17,17 +19,14 @@ const ObservableModule =
   Computation.makeModule<Observable.Computation>()(Observable);
 
 const ConcurrentReactiveComputationModuleTests = <
-  TComputationModule extends ComputationModule &
-    PickComputationModule<
-      ConcurrentReactiveComputationModule,
-      | "combineLatest"
-      | "fromObservable"
-      | "merge"
-      | "takeUntil"
-      | "withLatestFrom"
-    >,
+  TComputationType extends ComputationTypeLike,
 >(
-  m: TComputationModule,
+  m: ComputationModule<TComputationType> &
+    SourceComputationModule<TComputationType> &
+    PickComputationModule<
+      ConcurrentReactiveComputationModule<TComputationType>,
+      "combineLatest" | "merge" | "takeUntil" | "withLatestFrom"
+    >,
 ) =>
   describe(
     "ConcurrentReactiveComputationModuleTests",
@@ -38,7 +37,7 @@ const ConcurrentReactiveComputationModuleTests = <
         pipeLazyAsync(
           [1, 2, 3],
           Computation.fromReadonlyArray(ObservableModule)(),
-          m.fromObservable(),
+          m.fromObservable<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),

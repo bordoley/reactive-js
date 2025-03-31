@@ -18,10 +18,11 @@
 - [`ObservableModule`](../Observable/interfaces/ObservableModule.md)
 - [`ProducerModule`](../Producer/interfaces/ProducerModule.md)
 - [`RunnableModule`](../Runnable/interfaces/RunnableModule.md)
+- [`SynchronousObservableModule`](../SynchronousObservable/interfaces/SynchronousObservableModule.md)
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`AnyComputationType`](../type-aliases/AnyComputationType.md) = [`AnyComputationType`](../type-aliases/AnyComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
 • **TCreationOptions** *extends* `object` = \{\}
 
@@ -247,7 +248,7 @@
 
 ### toProducer()
 
-> **toProducer**\<`T`\>(`options`?): [`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>
+> **toProducer**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\> ? [`PureProducerLike`](PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`ProducerWithSideEffectsLike`](ProducerWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -261,4 +262,18 @@
 
 #### Returns
 
-[`ToProducer`](../type-aliases/ToProducer.md)\<`TComputationType`, `T`\>
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationLike`](ComputationLike.md) & [`PureComputationLike`](PureComputationLike.md) \| [`ComputationLike`](ComputationLike.md) & [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\> ? [`PureProducerLike`](PureProducerLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> ? [`ProducerWithSideEffectsLike`](ProducerWithSideEffectsLike.md)\<`T`\> : `never`

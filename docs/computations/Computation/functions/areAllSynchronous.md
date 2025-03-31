@@ -6,11 +6,11 @@
 
 # Function: areAllSynchronous()
 
-> **areAllSynchronous**\<`TComputationType`\>(`computations`): `computations is readonly (TComputationType & SynchronousComputationLike)[]`
+> **areAllSynchronous**\<`TComputationType`\>(`computations`): `computations is readonly (TComputationType & { [ComputationLike_isSynchronous]: Optional<true> })[]`
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationLike`](../../interfaces/ComputationLike.md)
+• **TComputationType** *extends* `Partial`\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
 ## Parameters
 
@@ -20,4 +20,4 @@ readonly `TComputationType`[]
 
 ## Returns
 
-`computations is readonly (TComputationType & SynchronousComputationLike)[]`
+`computations is readonly (TComputationType & { [ComputationLike_isSynchronous]: Optional<true> })[]`

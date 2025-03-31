@@ -10,6 +10,11 @@
 
 - [`SourceLike`](SourceLike.md)\<`T`, `TConsumer`\>
 
+## Extended by
+
+- [`ProducerLike`](ProducerLike.md)
+- [`ObservableLike`](ObservableLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`
@@ -18,9 +23,9 @@
 
 ## Properties
 
-### \[ComputationLike\_isDeferred\]?
+### \[ComputationLike\_isDeferred\]
 
-> `optional` **\[ComputationLike\_isDeferred\]**: `true`
+> **\[ComputationLike\_isDeferred\]**: `true`
 
 #### Overrides
 
@@ -28,9 +33,9 @@
 
 ***
 
-### \[ComputationLike\_isPure\]?
+### \[ComputationLike\_isPure\]
 
-> `readonly` `optional` **\[ComputationLike\_isPure\]**: `boolean`
+> `readonly` **\[ComputationLike\_isPure\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 
@@ -38,9 +43,9 @@
 
 ***
 
-### \[ComputationLike\_isSynchronous\]?
+### \[ComputationLike\_isSynchronous\]
 
-> `readonly` `optional` **\[ComputationLike\_isSynchronous\]**: `boolean`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 

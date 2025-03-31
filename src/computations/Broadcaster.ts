@@ -1,15 +1,11 @@
 import {
   BroadcasterLike,
   ComputationModule,
-  ComputationType,
+  ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  Computation_deferredWithSideEffectsOfT,
-  Computation_multicastOfT,
-  Computation_pureDeferredOfT,
-  Computation_pureSynchronousOfT,
-  Computation_synchronousWithSideEffectsOfT,
   ConcurrentReactiveComputationModule,
+  SourceComputationModule,
 } from "../computations.js";
 import { Function1, SideEffect1, identityLazy } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
@@ -42,18 +38,8 @@ import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 /**
  * @noInheritDoc
  */
-export interface BroadcasterComputation extends ComputationType {
+export interface BroadcasterComputation extends ComputationTypeLike {
   readonly [Computation_baseOfT]?: BroadcasterLike<this[typeof Computation_T]>;
-
-  readonly [Computation_pureSynchronousOfT]?: never;
-  readonly [Computation_synchronousWithSideEffectsOfT]?: never;
-
-  readonly [Computation_pureDeferredOfT]?: never;
-  readonly [Computation_deferredWithSideEffectsOfT]?: never;
-
-  readonly [Computation_multicastOfT]?: BroadcasterLike<
-    this[typeof Computation_T]
-  >;
 }
 
 export type Computation = BroadcasterComputation;
@@ -63,7 +49,8 @@ export type Computation = BroadcasterComputation;
  */
 export interface BroadcasterModule
   extends ComputationModule<BroadcasterComputation>,
-    ConcurrentReactiveComputationModule<BroadcasterComputation> {
+    ConcurrentReactiveComputationModule<BroadcasterComputation>,
+    SourceComputationModule<BroadcasterComputation> {
   addEventHandler<T>(
     onNotify: SideEffect1<T>,
   ): Function1<BroadcasterLike<T>, DisposableLike>;

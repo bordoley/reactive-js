@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **zip**\<`TA`, `TB`\>(`a`, `b`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zip**\<`TA`, `TB`\>(`a`, `b`): [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -20,109 +20,19 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Returns
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-### Parameters
-
-#### a
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
-
-#### b
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
-
-#### c
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TC`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\>
-
-### Returns
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-## Call Signature
-
-> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-### Parameters
-
-#### a
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
-
-#### b
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
-
-#### c
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TC`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\>
-
-#### d
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TD`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TD`\>
-
-### Returns
-
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-## Call Signature
-
-> **zip**\<`TA`, `TB`\>(`a`, `b`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-### Parameters
-
-#### a
-
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
-
-#### b
-
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
-
-### Returns
-
-[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-## Call Signature
-
-> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -136,23 +46,23 @@
 
 #### a
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### b
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### c
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TC`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Returns
 
-[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Type Parameters
 
@@ -168,27 +78,27 @@
 
 #### a
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### b
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### c
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TC`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### d
 
-[`SynchronousComputationOf`](../../type-aliases/SynchronousComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TD`\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<`TD`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ### Returns
 
-[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Call Signature
 
-> **zip**\<`TA`, `TB`\>(`a`, `b`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+> **zip**\<`TA`, `TB`\>(`a`, `b`): [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ### Type Parameters
 
@@ -200,19 +110,19 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
 
 ### Returns
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ## Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ### Type Parameters
 
@@ -226,23 +136,23 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
 
 #### c
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TC`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TC`\>
 
 ### Returns
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ## Call Signature
 
-> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ### Type Parameters
 
@@ -258,110 +168,20 @@
 
 #### a
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TA`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TA`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
 
 #### b
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TB`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TB`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
 
 #### c
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TC`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TC`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TC`\>
 
 #### d
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<`TD`\> & [`IterableLike`](../../interfaces/IterableLike.md)\<`TD`\>
+[`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TD`\>
 
 ### Returns
 
-[`PureIterableLike`](../../interfaces/PureIterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-## Call Signature
-
-> **zip**\<`TA`, `TB`\>(`a`, `b`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-### Parameters
-
-#### a
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
-
-#### b
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
-
-### Returns
-
-[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TA`, `TB`\>\>
-
-## Call Signature
-
-> **zip**\<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-### Parameters
-
-#### a
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
-
-#### b
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
-
-#### c
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TC`\>
-
-### Returns
-
-[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple3`](../../../functions/type-aliases/Tuple3.md)\<`TA`, `TB`, `TC`\>\>
-
-## Call Signature
-
-> **zip**\<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
-
-### Type Parameters
-
-• **TA**
-
-• **TB**
-
-• **TC**
-
-• **TD**
-
-### Parameters
-
-#### a
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TA`\>
-
-#### b
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TB`\>
-
-#### c
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TC`\>
-
-#### d
-
-[`DeferredComputationOf`](../../type-aliases/DeferredComputationOf.md)\<[`IterableComputation`](../interfaces/IterableComputation.md), `TD`\>
-
-### Returns
-
-[`IterableWithSideEffectsLike`](../../interfaces/IterableWithSideEffectsLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\>
+[`IterableLike`](../../interfaces/IterableLike.md)\<[`Tuple4`](../../../functions/type-aliases/Tuple4.md)\<`TA`, `TB`, `TC`, `TD`\>\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)

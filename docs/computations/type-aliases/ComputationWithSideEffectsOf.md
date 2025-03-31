@@ -6,10 +6,10 @@
 
 # Type Alias: ComputationWithSideEffectsOf\<TComputationType, T\>
 
-> **ComputationWithSideEffectsOf**\<`TComputationType`, `T`\>: [`SynchronousComputationWithSideEffectsOf`](SynchronousComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> \| [`DeferredComputationWithSideEffectsOf`](DeferredComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+> **ComputationWithSideEffectsOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_baseOfT`](../variables/Computation_baseOfT.md)\]\> & [`ComputationWithSideEffectsLike`](../interfaces/ComputationWithSideEffectsLike.md) : `object`
 
 ## Type Parameters
 
-• **TComputationType** *extends* [`ComputationType`](ComputationType.md)
+• **TComputationType** *extends* [`ComputationTypeLike`](../interfaces/ComputationTypeLike.md)
 
-• **T**
+• **T** = `unknown`

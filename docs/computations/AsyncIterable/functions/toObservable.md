@@ -6,7 +6,7 @@
 
 # Function: toObservable()
 
-> **toObservable**\<`T`\>(`options`?): [`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
+> **toObservable**\<`T`\>(`options`?): \<`TAsyncIterable`\>(`iter`) => `TAsyncIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
 
 ## Type Parameters
 
@@ -16,8 +16,28 @@
 
 ### options?
 
-`unknown`
+#### delay
+
+`number`
+
+#### delayStart
+
+`boolean`
 
 ## Returns
 
-[`ToObservableOperator`](../../type-aliases/ToObservableOperator.md)\<[`AsyncIterableComputation`](../interfaces/AsyncIterableComputation.md), `T`\>
+`Function`
+
+### Type Parameters
+
+• **TAsyncIterable** *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+
+### Parameters
+
+#### iter
+
+`TAsyncIterable`
+
+### Returns
+
+`TAsyncIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>

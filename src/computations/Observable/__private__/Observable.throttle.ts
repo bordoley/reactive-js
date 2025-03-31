@@ -31,6 +31,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as Source from "../../Source.js";
+import SynchronousObservable_delay from "../../SynchronousObservable/__private__/SynchronousObservable.delay.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -40,7 +41,6 @@ import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
-import Observable_delay from "./Observable.delay.js";
 import Observable_lift from "./Observable.lift.js";
 
 const ThrottleFirstMode = "first";
@@ -187,7 +187,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (<T>(
 ) => {
   const { mode = ThrottleIntervalMode } = options;
 
-  const durationObservable = returns(Observable_delay(duration));
+  const durationObservable = returns(SynchronousObservable_delay(duration));
 
   return pipe(
     createThrottleSink<T>,

@@ -35,7 +35,7 @@ interface LiftedBroadcasterLike<TIn, TOut>
     >,
     BroadcasterLike<TOut> {
   readonly [ComputationLike_isDeferred]: false;
-  readonly [ComputationLike_isPure]?: true;
+  readonly [ComputationLike_isPure]: true;
   readonly [ComputationLike_isSynchronous]: false;
 
   readonly [LiftedSourceLike_source]: BroadcasterLike<TIn>;
