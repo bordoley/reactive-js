@@ -16,14 +16,16 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
-  FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
-  SinkLike,
+  FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_isReady,
+  QueueLike,
+  QueueLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
+import * as Disposable from "../Disposable.js";
 import DisposableMixin from "./DisposableMixin.js";
-import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
+import QueueMixin from "./QueueMixin.js";
 
 export const ConsumerQueueMixin: <T>() => Mixin1<
   ConsumerLike<T> & CollectionEnumeratorLike<T>,
@@ -33,15 +35,17 @@ export const ConsumerQueueMixin: <T>() => Mixin1<
   }>
 > = /*@__PURE__*/ (<T>() => {
   type TPrototype = Pick<
-    SinkLike<T>,
+    ConsumerLike<T>,
     | typeof EventListenerLike_notify
     | typeof SinkLike_complete
     | typeof SinkLike_isCompleted
+    | typeof FlowControllerLike_addOnReadyListener
+    | typeof FlowControllerLike_isReady
   >;
 
   return returns(
     mix(
-      include(DisposableMixin, FlowControllerQueueMixin()),
+      include(DisposableMixin, QueueMixin()),
       function ConsumerQueue(
         this: TPrototype,
         options: Optional<{
@@ -50,7 +54,7 @@ export const ConsumerQueueMixin: <T>() => Mixin1<
         }>,
       ): ConsumerLike<T> & CollectionEnumeratorLike<T> {
         init(DisposableMixin, this);
-        init(FlowControllerQueueMixin<T>(), this, options);
+        init(QueueMixin<T>(), this, options);
 
         return this;
       },
@@ -61,14 +65,23 @@ export const ConsumerQueueMixin: <T>() => Mixin1<
           return this[DisposableLike_isDisposed];
         },
 
-        [EventListenerLike_notify](this: FlowControllerQueueLike<T>, item: T) {
+        get [FlowControllerLike_isReady]() {
+          unsafeCast<DisposableLike>(this);
+          return !this[DisposableLike_isDisposed];
+        },
+
+        [EventListenerLike_notify](this: QueueLike<T>, item: T) {
           if (!this[DisposableLike_isDisposed]) {
-            this[FlowControllerQueueLike_enqueue](item);
+            this[QueueLike_enqueue](item);
           }
         },
 
         [SinkLike_complete](this: DisposableLike) {
           this[DisposableLike_dispose]();
+        },
+
+        [FlowControllerLike_addOnReadyListener](this: DisposableLike) {
+          return Disposable.disposed;
         },
       }),
     ),
