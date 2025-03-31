@@ -6,7 +6,7 @@ import ConsumerMixin, { ConsumerMixinLike_complete, ConsumerMixinLike_notify, } 
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { BackPressureConfig_capacity, BackPressureConfig_strategy, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, } from "../../utils.js";
 import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
-import { LiftedSinkToEventListenerLike_operator, } from "./LiftedSinkToEventListenerMixin.js";
+import { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
 import LiftedSinkToSinkMixin from "./LiftedSinkToSinkMixin.js";
 const LiftedSinkToConsumerMixin = /*@__PURE__*/ (() => {
     return returns(mix(include(DelegatingDisposableMixin, LiftedSinkToSinkMixin(), ConsumerMixin()), function LiftedSinkToConsumerMixin(operator, backPressure) {
@@ -18,24 +18,24 @@ const LiftedSinkToConsumerMixin = /*@__PURE__*/ (() => {
     }, props(), proto({
         get [FlowControllerLike_isReady]() {
             unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][FlowControllerLike_isReady];
+            return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][FlowControllerLike_isReady];
         },
         get [BackPressureConfig_strategy]() {
             unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][BackPressureConfig_strategy];
+            return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][BackPressureConfig_strategy];
         },
         get [BackPressureConfig_capacity]() {
             unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][BackPressureConfig_capacity];
+            return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][BackPressureConfig_capacity];
         },
         [FlowControllerLike_addOnReadyListener](callback) {
-            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][FlowControllerLike_addOnReadyListener](callback);
+            return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][FlowControllerLike_addOnReadyListener](callback);
         },
         [ConsumerMixinLike_notify](next) {
-            this[LiftedSinkToEventListenerLike_operator][EventListenerLike_notify](next);
+            this[LiftedSinkToEventListenerLike_liftedSink][EventListenerLike_notify](next);
         },
         [ConsumerMixinLike_complete]() {
-            this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
+            this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
         },
     })));
 })();

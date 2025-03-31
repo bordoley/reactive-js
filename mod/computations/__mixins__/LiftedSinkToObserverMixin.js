@@ -8,7 +8,7 @@ import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingScheduler
 import ObserverMixin from "../../utils/__mixins__/ObserverMixin.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../utils.js";
 import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
-import LiftedSinkToEventListenerMixin, { LiftedSinkToEventListenerLike_operator, } from "./LiftedSinkToEventListenerMixin.js";
+import LiftedSinkToEventListenerMixin, { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
 const LiftedSinkToObserverMixin = /*@__PURE__*/ (() => {
     return returns(mix(include(DelegatingDisposableMixin, DelegatingSchedulerMixin, LiftedSinkToEventListenerMixin(), ObserverMixin()), function LiftedSinkToObserverMixin(operator, backPressure) {
         const delegate = operator[LiftedSinkLike_subscription];
@@ -19,10 +19,10 @@ const LiftedSinkToObserverMixin = /*@__PURE__*/ (() => {
         return this;
     }, props(), proto({
         [ConsumerMixinLike_notify](next) {
-            this[LiftedSinkToEventListenerLike_operator][EventListenerLike_notify](next);
+            this[LiftedSinkToEventListenerLike_liftedSink][EventListenerLike_notify](next);
         },
         [ConsumerMixinLike_complete]() {
-            this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
+            this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
         },
     })));
 })();

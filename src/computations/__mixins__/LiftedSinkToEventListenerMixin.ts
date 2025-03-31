@@ -7,15 +7,15 @@ import {
 } from "../../utils.js";
 import { LiftedSinkLike } from "../__internal__/LiftedSource.js";
 
-export const LiftedSinkToEventListenerLike_operator = Symbol(
-  "LiftedSinkToEventListenerLike_operator",
+export const LiftedSinkToEventListenerLike_liftedSink = Symbol(
+  "LiftedSinkToEventListenerLike_liftedSink",
 );
 
 export interface LiftedSinkToEventListenerLike<
   TSubscription extends EventListenerLike,
   T,
 > extends EventListenerLike<T> {
-  readonly [LiftedSinkToEventListenerLike_operator]: LiftedSinkLike<
+  readonly [LiftedSinkToEventListenerLike_liftedSink]: LiftedSinkLike<
     TSubscription,
     T
   >;
@@ -40,7 +40,10 @@ const LiftedSinkToEventListenerMixin: <
   TPrototype<TSubscription, T>
 > = /*@__PURE__*/ (<TSubscription extends EventListenerLike, T>() => {
   type TProperties = {
-    [LiftedSinkToEventListenerLike_operator]: LiftedSinkLike<TSubscription, T>;
+    [LiftedSinkToEventListenerLike_liftedSink]: LiftedSinkLike<
+      TSubscription,
+      T
+    >;
   };
 
   return returns(
@@ -49,16 +52,16 @@ const LiftedSinkToEventListenerMixin: <
         this: TProperties & TPrototype<TSubscription, T>,
         operator: LiftedSinkLike<TSubscription, T>,
       ): TReturn<TSubscription, T> {
-        this[LiftedSinkToEventListenerLike_operator] = operator;
+        this[LiftedSinkToEventListenerLike_liftedSink] = operator;
 
         return this;
       },
       props<TProperties>({
-        [LiftedSinkToEventListenerLike_operator]: none,
+        [LiftedSinkToEventListenerLike_liftedSink]: none,
       }),
       proto<TPrototype<TSubscription, T>>({
         [EventListenerLike_notify](this: TProperties, next: T) {
-          this[LiftedSinkToEventListenerLike_operator][
+          this[LiftedSinkToEventListenerLike_liftedSink][
             EventListenerLike_notify
           ](next);
         },

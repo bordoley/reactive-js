@@ -17,7 +17,7 @@ import {
 import { LiftedSinkLike } from "../__internal__/LiftedSource.js";
 import LiftedSinkToEventListenerMixin, {
   LiftedSinkToEventListenerLike,
-  LiftedSinkToEventListenerLike_operator,
+  LiftedSinkToEventListenerLike_liftedSink,
 } from "./LiftedSinkToEventListenerMixin.js";
 
 export interface LiftedSinkToSinkLike<TSubscription extends SinkLike, T>
@@ -58,12 +58,12 @@ const LiftedSinkToSinkMixin: <TSubscription extends SinkLike, T>() => Mixin1<
       proto<TPrototype<TSubscription, T>>({
         get [SinkLike_isCompleted]() {
           unsafeCast<LiftedSinkToSinkLike<TSubscription, T>>(this);
-          return this[LiftedSinkToEventListenerLike_operator][
+          return this[LiftedSinkToEventListenerLike_liftedSink][
             SinkLike_isCompleted
           ];
         },
         [SinkLike_complete](this: LiftedSinkToSinkLike<TSubscription, T>) {
-          this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
+          this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
         },
       }),
     ),

@@ -27,7 +27,7 @@ import {
 import { LiftedSinkToConsumerLike } from "./LiftedSinkToConsumerMixin.js";
 import LiftedSinkToEventListenerMixin, {
   LiftedSinkToEventListenerLike,
-  LiftedSinkToEventListenerLike_operator,
+  LiftedSinkToEventListenerLike_liftedSink,
 } from "./LiftedSinkToEventListenerMixin.js";
 
 export interface LiftedSinkToObserverLike<TSubscription extends ObserverLike, T>
@@ -90,7 +90,7 @@ const LiftedSinkToObserverMixin: <
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
           next: T,
         ) {
-          this[LiftedSinkToEventListenerLike_operator][
+          this[LiftedSinkToEventListenerLike_liftedSink][
             EventListenerLike_notify
           ](next);
         },
@@ -98,7 +98,7 @@ const LiftedSinkToObserverMixin: <
         [ConsumerMixinLike_complete](
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
         ) {
-          this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
+          this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
         },
       }),
     ),

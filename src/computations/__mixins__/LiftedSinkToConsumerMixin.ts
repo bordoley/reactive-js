@@ -29,7 +29,7 @@ import {
 } from "../__internal__/LiftedSource.js";
 import {
   LiftedSinkToEventListenerLike,
-  LiftedSinkToEventListenerLike_operator,
+  LiftedSinkToEventListenerLike_liftedSink,
 } from "./LiftedSinkToEventListenerMixin.js";
 import LiftedSinkToSinkMixin, {
   LiftedSinkToSinkLike,
@@ -90,21 +90,21 @@ const LiftedSinkToConsumerMixin: <
       proto<TPrototype<TSubscription, T>>({
         get [FlowControllerLike_isReady](): boolean {
           unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
-          return this[LiftedSinkToEventListenerLike_operator][
+          return this[LiftedSinkToEventListenerLike_liftedSink][
             LiftedSinkLike_subscription
           ][FlowControllerLike_isReady];
         },
 
         get [BackPressureConfig_strategy](): BackpressureStrategy {
           unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
-          return this[LiftedSinkToEventListenerLike_operator][
+          return this[LiftedSinkToEventListenerLike_liftedSink][
             LiftedSinkLike_subscription
           ][BackPressureConfig_strategy];
         },
 
         get [BackPressureConfig_capacity](): number {
           unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
-          return this[LiftedSinkToEventListenerLike_operator][
+          return this[LiftedSinkToEventListenerLike_liftedSink][
             LiftedSinkLike_subscription
           ][BackPressureConfig_capacity];
         },
@@ -113,7 +113,7 @@ const LiftedSinkToConsumerMixin: <
           this: LiftedSinkToConsumerLike<TSubscription, T>,
           callback: SideEffect1<void>,
         ) {
-          return this[LiftedSinkToEventListenerLike_operator][
+          return this[LiftedSinkToEventListenerLike_liftedSink][
             LiftedSinkLike_subscription
           ][FlowControllerLike_addOnReadyListener](callback);
         },
@@ -122,7 +122,7 @@ const LiftedSinkToConsumerMixin: <
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
           next: T,
         ) {
-          this[LiftedSinkToEventListenerLike_operator][
+          this[LiftedSinkToEventListenerLike_liftedSink][
             EventListenerLike_notify
           ](next);
         },
@@ -130,7 +130,7 @@ const LiftedSinkToConsumerMixin: <
         [ConsumerMixinLike_complete](
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
         ) {
-          this[LiftedSinkToEventListenerLike_operator][SinkLike_complete]();
+          this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
         },
       }),
     ),
