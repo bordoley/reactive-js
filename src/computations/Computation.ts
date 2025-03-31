@@ -164,6 +164,7 @@ export interface Signature {
   }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   startWith<
+    T,
     TComputationType extends ComputationTypeLike,
     TComputationModule extends PickComputationModule<
       SequentialComputationModule<TComputationType> &
@@ -172,14 +173,9 @@ export interface Signature {
     >,
   >(
     m: TComputationModule,
-  ): <T>(
     value: T,
     ...values: readonly T[]
-  ) => PureComputationOperator<
-    ComputationTypeOfModule<TComputationModule>,
-    T,
-    T
-  >;
+  ): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
 }
 
 export const areAllPure: Signature["areAllPure"] = Computation_areAllPure;

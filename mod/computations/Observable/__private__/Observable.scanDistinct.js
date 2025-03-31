@@ -15,7 +15,7 @@ const m = Computation.makeModule()({
 });
 const Observable_scanDistinct = ((reducer, initialState, options) => (source) => DeferredSource.create((observer) => {
     const acc = initialState();
-    const lifted = pipe(source, Observable_scan(reducer, returns(acc)), Computation_startWith(m)(acc), x => x, Observable_distinctUntilChanged(options));
+    const lifted = pipe(source, Observable_scan(reducer, returns(acc)), Computation_startWith(m, acc), x => x, Observable_distinctUntilChanged(options));
     lifted[SourceLike_subscribe](observer);
 }, source));
 export default Observable_scanDistinct;

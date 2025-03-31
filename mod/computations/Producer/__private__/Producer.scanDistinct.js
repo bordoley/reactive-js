@@ -15,7 +15,7 @@ const m = Computation.makeModule()({
 });
 const Producer_scanDistinct = ((reducer, initialState, options) => (source) => DeferredSource.create((observer) => {
     const acc = initialState();
-    const lifted = pipe(source, Producer_scan(reducer, returns(acc)), Computation_startWith(m)(acc), x => x, Producer_distinctUntilChanged(options));
+    const lifted = pipe(source, Producer_scan(reducer, returns(acc)), Computation_startWith(m, acc), x => x, Producer_distinctUntilChanged(options));
     lifted[SourceLike_subscribe](observer);
 }, source));
 export default Producer_scanDistinct;

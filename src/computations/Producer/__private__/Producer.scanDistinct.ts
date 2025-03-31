@@ -37,7 +37,7 @@ const Producer_scanDistinct: Producer.Signature["scanDistinct"] = (<T, TAcc>(
         const lifted = pipe(
           source,
           Producer_scan<T, TAcc>(reducer, returns(acc)),
-          Computation_startWith(m)<TAcc>(acc),
+          Computation_startWith(m, acc),
           x => x,
           Producer_distinctUntilChanged<TAcc>(options),
         );

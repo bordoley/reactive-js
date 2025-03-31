@@ -54,7 +54,7 @@ class ActionReducerRunnable<T, TAcc> implements RunnableLike<TAcc> {
       pipe(
         src,
         Runnable_scan<T, TAcc>(reducer, returns(acc)),
-        Computation_startWith(m)<TAcc>(acc),
+        Computation_startWith(m, acc),
         Runnable_distinctUntilChanged<TAcc>(options),
         invoke(RunnableLike_eval, sink),
       );

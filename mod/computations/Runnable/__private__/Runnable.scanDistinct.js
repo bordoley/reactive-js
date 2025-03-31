@@ -32,7 +32,7 @@ class ActionReducerRunnable {
         const { s: src, r: reducer, f: initialValue, o: options } = this;
         try {
             const acc = initialValue();
-            pipe(src, Runnable_scan(reducer, returns(acc)), Computation_startWith(m)(acc), Runnable_distinctUntilChanged(options), invoke(RunnableLike_eval, sink));
+            pipe(src, Runnable_scan(reducer, returns(acc)), Computation_startWith(m, acc), Runnable_distinctUntilChanged(options), invoke(RunnableLike_eval, sink));
         }
         catch (e) {
             sink[DisposableLike_dispose](error(e));

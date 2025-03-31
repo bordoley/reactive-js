@@ -37,7 +37,7 @@ export interface Signature {
     raise<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule): <T>(options?: {
         readonly raise?: Factory<unknown>;
     }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
-    startWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule): <T>(value: T, ...values: readonly T[]) => PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
+    startWith<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule, value: T, ...values: readonly T[]): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
 }
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];

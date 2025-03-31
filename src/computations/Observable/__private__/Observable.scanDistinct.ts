@@ -40,7 +40,7 @@ const Observable_scanDistinct: Observable.Signature["scanDistinct"] = (<
         const lifted = pipe(
           source,
           Observable_scan<T, TAcc>(reducer, returns(acc)),
-          Computation_startWith(m)<TAcc>(acc),
+          Computation_startWith(m, acc),
           x => x,
           Observable_distinctUntilChanged<TAcc>(options),
         );
