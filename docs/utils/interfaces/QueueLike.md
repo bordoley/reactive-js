@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>.`BackPressureConfig`
+- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>.[`BackPressureConfig`](../type-aliases/BackPressureConfig.md)
 
 ## Extended by
 

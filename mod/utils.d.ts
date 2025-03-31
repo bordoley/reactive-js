@@ -59,7 +59,7 @@ export declare const OverflowBackpressureStrategy: BackpressureStrategy;
 export declare const ThrowBackpressureStrategy: BackpressureStrategy;
 export declare const BackPressureConfig_strategy: unique symbol;
 export declare const BackPressureConfig_capacity: unique symbol;
-type BackPressureConfig = {
+export type BackPressureConfig = {
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -249,4 +249,3 @@ export interface ConsumerLike<T = unknown> extends SinkLike<T>, FlowControllerLi
  */
 export interface ObserverLike<T = unknown> extends ConsumerLike<T>, SchedulerLike {
 }
-export {};

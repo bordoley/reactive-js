@@ -12,7 +12,7 @@
 
 ## Implements
 
-- `BackPressureConfig`
+- [`BackPressureConfig`](../type-aliases/BackPressureConfig.md)
 
 ## Constructors
 
@@ -24,7 +24,7 @@
 
 ##### consumer
 
-`BackPressureConfig`
+[`BackPressureConfig`](../type-aliases/BackPressureConfig.md)
 
 #### Returns
 

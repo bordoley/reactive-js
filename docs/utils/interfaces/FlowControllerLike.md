@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DisposableLike`](DisposableLike.md).`BackPressureConfig`
+- [`DisposableLike`](DisposableLike.md).[`BackPressureConfig`](../type-aliases/BackPressureConfig.md)
 
 ## Extended by
 

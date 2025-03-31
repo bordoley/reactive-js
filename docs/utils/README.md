@@ -34,6 +34,7 @@
 
 ## Type Aliases
 
+- [BackPressureConfig](type-aliases/BackPressureConfig.md)
 - [BackpressureStrategy](type-aliases/BackpressureStrategy.md)
 
 ## Variables

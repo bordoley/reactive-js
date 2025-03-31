@@ -98,7 +98,7 @@ export const BackPressureConfig_capacity = Symbol(
   "BackPressureConfig_capacity",
 );
 
-type BackPressureConfig = {
+export type BackPressureConfig = {
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
