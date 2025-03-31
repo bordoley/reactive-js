@@ -6,6 +6,7 @@ import {
   mix,
   props,
   proto,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { SourceLike, SourceLike_subscribe } from "../../computations.js";
 import { Function1, Optional, none, pipe, returns } from "../../functions.js";
@@ -58,6 +59,7 @@ const MergeAllConsumerMixin: <
     );
   const MergeAllConsumer_delegate = Symbol("MergeAllConsumer_delegate");
   const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
+  const MergeAllConsumer_isCompleted = Symbol("MergeAllConsumer_isCompleted");
 
   type TProperties = {
     [MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: Function1<
@@ -65,7 +67,7 @@ const MergeAllConsumerMixin: <
       TConsumer
     >;
     [MergeAllConsumer_delegate]: TConsumer;
-    [SinkLike_isCompleted]: boolean;
+    [MergeAllConsumer_isCompleted]: boolean;
     [MergeAllConsumer_activeCount]: number;
   };
 
@@ -154,10 +156,18 @@ const MergeAllConsumerMixin: <
         [MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]:
           none,
         [MergeAllConsumer_delegate]: none,
-        [SinkLike_isCompleted]: false,
+        [MergeAllConsumer_isCompleted]: false,
         [MergeAllConsumer_activeCount]: 0,
       }),
       proto({
+        get [SinkLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return (
+            this[MergeAllConsumer_isCompleted] ||
+            this[MergeAllConsumer_delegate][SinkLike_isCompleted]
+          );
+        },
+
         [EventListenerLike_notify](
           this: TProperties &
             ConsumerLike<TInnerSource> &
@@ -166,10 +176,11 @@ const MergeAllConsumerMixin: <
         ) {
           this[FlowControllerQueueLike_enqueue](next);
         },
-        [SinkLike_complete](this: TProperties) {
+
+        [SinkLike_complete](this: TProperties & ConsumerLike<TInnerSource>) {
           const isCompleted = this[SinkLike_isCompleted];
           const activeCount = this[MergeAllConsumer_activeCount];
-          this[SinkLike_isCompleted] = true;
+          this[MergeAllConsumer_isCompleted] = true;
 
           if (isCompleted || activeCount > 0) {
             return;

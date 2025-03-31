@@ -6,6 +6,7 @@ import {
   mix,
   props,
   proto,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { SourceLike, SourceLike_subscribe } from "../../computations.js";
 import { Function1, bind, none, pipe, returns } from "../../functions.js";
@@ -53,7 +54,7 @@ const SwitchAllConsumerMixin: <
   const SwitchAllConsumer_innerSubscription = Symbol(
     "SwitchAllConsumer_innerSubscription",
   );
-
+  const SwitchAllConsumer_isCompleted = Symbol("SwitchAllConsumer_isCompleted");
   const SwitchAllConsumer_delegate = Symbol("SwitchAllConsumer_delegate");
 
   type TProperties = {
@@ -63,10 +64,12 @@ const SwitchAllConsumerMixin: <
     >;
     [SwitchAllConsumer_innerSubscription]: DisposableLike;
     [SwitchAllConsumer_delegate]: TConsumer;
-    [SinkLike_isCompleted]: boolean;
+    [SwitchAllConsumer_isCompleted]: boolean;
   };
 
-  function onSwitchAllConsumerInnerSourceComplete(this: TProperties) {
+  function onSwitchAllConsumerInnerSourceComplete(
+    this: TProperties & ConsumerLike<TInnerSource>,
+  ) {
     if (this[SinkLike_isCompleted]) {
       this[SwitchAllConsumer_delegate][SinkLike_complete]();
     }
@@ -98,9 +101,17 @@ const SwitchAllConsumerMixin: <
           none,
         [SwitchAllConsumer_innerSubscription]: Disposable.disposed,
         [SwitchAllConsumer_delegate]: none,
-        [SinkLike_isCompleted]: false,
+        [SwitchAllConsumer_isCompleted]: false,
       }),
       proto({
+        get [SinkLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return (
+            this[SwitchAllConsumer_isCompleted] ||
+            this[SwitchAllConsumer_delegate][SinkLike_isCompleted]
+          );
+        },
+
         [FlowControllerLike_isReady]: true as const,
         [FlowControllerLike_backpressureStrategy]: OverflowBackpressureStrategy,
 
@@ -137,15 +148,15 @@ const SwitchAllConsumerMixin: <
           this[SwitchAllConsumer_innerSubscription] =
             delegatingNotifyOnlyNonCompletingNonDisposing;
         },
-        [SinkLike_complete](this: TProperties) {
+        [SinkLike_complete](this: TProperties & ConsumerLike<TInnerSource>) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[SinkLike_isCompleted] = true;
-          const innerSubscriptionIsDispoed =
+          this[SwitchAllConsumer_isCompleted] = true;
+          const innerSubscriptionIsDispsoed =
             this[SwitchAllConsumer_innerSubscription][
               DisposableLike_isDisposed
             ];
 
-          if (!isCompleted && innerSubscriptionIsDispoed) {
+          if (!isCompleted && innerSubscriptionIsDispsoed) {
             this[SwitchAllConsumer_delegate][SinkLike_complete]();
           }
         },

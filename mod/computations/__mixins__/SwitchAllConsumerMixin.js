@@ -1,7 +1,7 @@
 /// <reference types="./SwitchAllConsumerMixin.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
-import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
+import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { SourceLike_subscribe } from "../../computations.js";
 import { bind, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -11,6 +11,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_no
 const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
     const SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
     const SwitchAllConsumer_innerSubscription = Symbol("SwitchAllConsumer_innerSubscription");
+    const SwitchAllConsumer_isCompleted = Symbol("SwitchAllConsumer_isCompleted");
     const SwitchAllConsumer_delegate = Symbol("SwitchAllConsumer_delegate");
     function onSwitchAllConsumerInnerSourceComplete() {
         if (this[SinkLike_isCompleted]) {
@@ -26,8 +27,13 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
         [SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: none,
         [SwitchAllConsumer_innerSubscription]: Disposable.disposed,
         [SwitchAllConsumer_delegate]: none,
-        [SinkLike_isCompleted]: false,
+        [SwitchAllConsumer_isCompleted]: false,
     }), proto({
+        get [SinkLike_isCompleted]() {
+            unsafeCast(this);
+            return (this[SwitchAllConsumer_isCompleted] ||
+                this[SwitchAllConsumer_delegate][SinkLike_isCompleted]);
+        },
         [FlowControllerLike_isReady]: true,
         [FlowControllerLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
@@ -47,9 +53,9 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];
-            this[SinkLike_isCompleted] = true;
-            const innerSubscriptionIsDispoed = this[SwitchAllConsumer_innerSubscription][DisposableLike_isDisposed];
-            if (!isCompleted && innerSubscriptionIsDispoed) {
+            this[SwitchAllConsumer_isCompleted] = true;
+            const innerSubscriptionIsDispsoed = this[SwitchAllConsumer_innerSubscription][DisposableLike_isDisposed];
+            if (!isCompleted && innerSubscriptionIsDispsoed) {
                 this[SwitchAllConsumer_delegate][SinkLike_complete]();
             }
         },

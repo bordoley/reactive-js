@@ -5,6 +5,7 @@ import {
   mix,
   props,
   proto,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { none, returns } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -43,6 +44,7 @@ export interface DelegatingLiftedSinkLike<
 type TPrototype<TSubscription extends DisposableLike, TA, TB = TA> = Pick<
   DelegatingLiftedSinkLike<TSubscription, TA, TB>,
   | typeof EventListenerLike_notify
+  | typeof SinkLike_isCompleted
   | typeof SinkLike_complete
   | typeof DelegatingLiftedSinkLike_onCompleted
 >;
@@ -66,9 +68,12 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {
+  const DelegatingLiftedSinkMixin_isCompleted = Symbol(
+    "DelegatingLiftedSinkMixin_isCompleted",
+  );
   type TProperties = {
     [DelegatingLiftedSinkLike_delegate]: LiftedSinkLike<TSubscription, TB>;
-    [SinkLike_isCompleted]: boolean;
+    [DelegatingLiftedSinkMixin_isCompleted]: boolean;
     [LiftedSinkLike_subscription]: TSubscription;
   };
 
@@ -93,10 +98,18 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
       },
       props<TProperties>({
         [DelegatingLiftedSinkLike_delegate]: none,
-        [SinkLike_isCompleted]: false,
+        [DelegatingLiftedSinkMixin_isCompleted]: false,
         [LiftedSinkLike_subscription]: none,
       }),
       proto<TPrototype<TSubscription, TA>>({
+        get [SinkLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return (
+            this[DelegatingLiftedSinkMixin_isCompleted] ||
+            this[DelegatingLiftedSinkLike_delegate][SinkLike_isCompleted]
+          );
+        },
+
         [DelegatingLiftedSinkLike_onCompleted](this: TProperties) {
           this[DelegatingLiftedSinkLike_delegate][SinkLike_complete]();
         },
@@ -111,7 +124,7 @@ const DelegatingLiftedSinkMixin: DelegatingLiftedSinkMixin = /*@__PURE__*/ (<
           this: TProperties & TPrototype<TSubscription, TA, TB>,
         ) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[SinkLike_isCompleted] = true;
+          this[DelegatingLiftedSinkMixin_isCompleted] = true;
 
           if (!isCompleted) {
             this[DelegatingLiftedSinkLike_onCompleted]();
