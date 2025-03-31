@@ -3,19 +3,14 @@
 import { Set_add, Set_delete, Set_has, Set_size, } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
-import { call, error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
+import { error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../utils.js";
 const PublisherMixin = /*@__PURE__*/ (() => {
     const Publisher_EventListeners = Symbol("Publisher_EventListeners");
     const Publisher_onSinkDisposed = Symbol("Publisher_onSinkDisposed");
     function onPublisherDisposed(e) {
-        const isCompleted = this[SinkLike_isCompleted];
-        this[SinkLike_isCompleted] = true;
-        if (isCompleted) {
-            return;
-        }
         const maybeEventListeners = this[Publisher_EventListeners];
         const EventListeners = maybeEventListeners instanceof Set
             ? maybeEventListeners
@@ -52,7 +47,6 @@ const PublisherMixin = /*@__PURE__*/ (() => {
         };
         return this;
     }, props({
-        [SinkLike_isCompleted]: false,
         [Publisher_EventListeners]: none,
         [Publisher_onSinkDisposed]: none,
     }), proto({
@@ -60,7 +54,7 @@ const PublisherMixin = /*@__PURE__*/ (() => {
         [ComputationLike_isSynchronous]: false,
         [ComputationLike_isPure]: true,
         [EventListenerLike_notify](next) {
-            if (this[SinkLike_isCompleted]) {
+            if (this[DisposableLike_isDisposed]) {
                 return;
             }
             // FIXME: Maybe we should invoke listeners asynchronously
@@ -79,9 +73,6 @@ const PublisherMixin = /*@__PURE__*/ (() => {
                     eventListener[DisposableLike_dispose](error(e));
                 }
             }
-        },
-        [SinkLike_complete]() {
-            call(onPublisherDisposed, this, none);
         },
         [SourceLike_subscribe](eventListener) {
             const maybeEventListeners = this[Publisher_EventListeners];

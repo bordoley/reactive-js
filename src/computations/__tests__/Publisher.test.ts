@@ -22,7 +22,6 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
-  SinkLike_complete,
 } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 
@@ -97,7 +96,7 @@ testModule(
 
     publisher[EventListenerLike_notify](1);
     publisher[EventListenerLike_notify](2);
-    publisher[SinkLike_complete]();
+    publisher[DisposableLike_dispose]();
 
     pipe(subscription1[DisposableLike_isDisposed], expectTrue());
     pipe(subscription2[DisposableLike_isDisposed], expectTrue());
@@ -122,7 +121,7 @@ testModule(
     const error = newInstance(Error);
 
     publisher[EventListenerLike_notify](1);
-    publisher[SinkLike_complete]();
+    publisher[DisposableLike_dispose]();
     publisher[DisposableLike_dispose](error);
 
     pipe(subscription1[DisposableLike_isDisposed], expectTrue());

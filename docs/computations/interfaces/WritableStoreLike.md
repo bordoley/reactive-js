@@ -46,13 +46,27 @@
 
 ***
 
-### \[SinkLike\_isCompleted\]
+### \[DisposableLike\_error\]
 
-> `readonly` **\[SinkLike\_isCompleted\]**: `boolean`
+> `readonly` **\[DisposableLike\_error\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>
+
+The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`PublisherLike`](PublisherLike.md).[`[SinkLike_isCompleted]`](PublisherLike.md#sinklike_iscompleted)
+[`PublisherLike`](PublisherLike.md).[`[DisposableLike_error]`](PublisherLike.md#disposablelike_error)
+
+***
+
+### \[DisposableLike\_isDisposed\]
+
+> `readonly` **\[DisposableLike\_isDisposed\]**: `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Inherited from
+
+[`PublisherLike`](PublisherLike.md).[`[DisposableLike_isDisposed]`](PublisherLike.md#disposablelike_isdisposed)
 
 ***
 
@@ -66,9 +80,19 @@
 
 ## Methods
 
-### \[SinkLike\_complete\]()
+### \[dispose\]()
 
-> **\[SinkLike\_complete\]**(): `void`
+> **\[dispose\]**(`error`?): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+##### error?
+
+`Error`
+
+An optional error that signals the resource is being disposed due to an error.
 
 #### Returns
 
@@ -76,7 +100,29 @@
 
 #### Inherited from
 
-[`PublisherLike`](PublisherLike.md).[`[SinkLike_complete]`](PublisherLike.md#sinklike_complete)
+[`PublisherLike`](PublisherLike.md).[`[dispose]`](PublisherLike.md#dispose)
+
+***
+
+### \[EventListenerLike\_notify\]()
+
+> **\[EventListenerLike\_notify\]**(`event`): `void`
+
+Notifies the EventSink of the next notification produced by the source.
+
+#### Parameters
+
+##### event
+
+`T`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`PublisherLike`](PublisherLike.md).[`[EventListenerLike_notify]`](PublisherLike.md#eventlistenerlike_notify)
 
 ***
 

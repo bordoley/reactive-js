@@ -22,7 +22,6 @@ import {
 import {
   Method,
   Optional,
-  call,
   error,
   isNone,
   isSome,
@@ -40,14 +39,9 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
-  SinkLike_complete,
-  SinkLike_isCompleted,
 } from "../../utils.js";
 
-type TPrototype<T> = Omit<
-  PublisherLike<T>,
-  keyof DisposableLike | typeof SinkLike_isCompleted
->;
+type TPrototype<T> = Omit<PublisherLike<T>, keyof DisposableLike>;
 
 type TOptions = Optional<{ readonly autoDispose?: boolean }>;
 
@@ -60,7 +54,6 @@ const PublisherMixin: <T>() => Mixin1<
   const Publisher_onSinkDisposed = Symbol("Publisher_onSinkDisposed");
 
   type TProperties = {
-    [SinkLike_isCompleted]: boolean;
     [Publisher_EventListeners]: Optional<
       Set<EventListenerLike<T>> | EventListenerLike<T>
     >;
@@ -68,13 +61,6 @@ const PublisherMixin: <T>() => Mixin1<
   };
 
   function onPublisherDisposed(this: TProperties, e: Optional<Error>) {
-    const isCompleted = this[SinkLike_isCompleted];
-    this[SinkLike_isCompleted] = true;
-
-    if (isCompleted) {
-      return;
-    }
-
     const maybeEventListeners = this[Publisher_EventListeners];
     const EventListeners =
       maybeEventListeners instanceof Set
@@ -131,7 +117,6 @@ const PublisherMixin: <T>() => Mixin1<
         return this;
       },
       props<TProperties>({
-        [SinkLike_isCompleted]: false,
         [Publisher_EventListeners]: none,
         [Publisher_onSinkDisposed]: none,
       }),
@@ -144,7 +129,7 @@ const PublisherMixin: <T>() => Mixin1<
           this: TProperties & PublisherLike<T>,
           next: T,
         ) {
-          if (this[SinkLike_isCompleted]) {
+          if (this[DisposableLike_isDisposed]) {
             return;
           }
 
@@ -166,10 +151,6 @@ const PublisherMixin: <T>() => Mixin1<
               eventListener[DisposableLike_dispose](error(e));
             }
           }
-        },
-
-        [SinkLike_complete](this: TProperties & PublisherLike<T>) {
-          call(onPublisherDisposed, this, none);
         },
 
         [SourceLike_subscribe](

@@ -4,7 +4,7 @@ import { expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectTrue,
 import * as Publisher from "../../computations/Publisher.js";
 import { SourceLike_subscribe } from "../../computations.js";
 import { ignore, newInstance, none, pipe, raiseError, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 testModule("Publisher", test("when disposed with an error", () => {
     const e = newInstance(Error);
@@ -53,7 +53,7 @@ testModule("Publisher", test("when disposed with an error", () => {
     const subscription3 = pipe(publisher, Broadcaster.addEventHandler(ignore));
     publisher[EventListenerLike_notify](1);
     publisher[EventListenerLike_notify](2);
-    publisher[SinkLike_complete]();
+    publisher[DisposableLike_dispose]();
     pipe(subscription1[DisposableLike_isDisposed], expectTrue());
     pipe(subscription2[DisposableLike_isDisposed], expectTrue());
     pipe(subscription3[DisposableLike_isDisposed], expectTrue());
@@ -71,7 +71,7 @@ testModule("Publisher", test("when disposed with an error", () => {
     const subscription1 = pipe(publisher, Broadcaster.addEventHandler(ignore));
     const error = newInstance(Error);
     publisher[EventListenerLike_notify](1);
-    publisher[SinkLike_complete]();
+    publisher[DisposableLike_dispose]();
     publisher[DisposableLike_dispose](error);
     pipe(subscription1[DisposableLike_isDisposed], expectTrue());
     pipe(subscription1[DisposableLike_error], expectIsNone);

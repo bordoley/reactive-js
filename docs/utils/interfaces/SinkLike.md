@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`PublisherLike`](../../computations/interfaces/PublisherLike.md)
 - [`ConsumerLike`](ConsumerLike.md)
 
 ## Type Parameters

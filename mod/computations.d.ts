@@ -93,7 +93,7 @@ export interface BroadcasterLike<out T = unknown> extends SourceLike<T>, Disposa
     readonly [ComputationLike_isPure]: Optional<true>;
     readonly [ComputationLike_isSynchronous]: false;
 }
-export interface PublisherLike<T = unknown> extends BroadcasterLike<T>, SinkLike<T> {
+export interface PublisherLike<T = unknown> extends BroadcasterLike<T>, EventListenerLike<T> {
 }
 export declare const StoreLike_value: unique symbol;
 export interface StoreLike<T = unknown> extends BroadcasterLike<T> {

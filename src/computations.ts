@@ -177,7 +177,7 @@ export interface BroadcasterLike<out T = unknown>
 
 export interface PublisherLike<T = unknown>
   extends BroadcasterLike<T>,
-    SinkLike<T> {}
+    EventListenerLike<T> {}
 
 export const StoreLike_value = Symbol("StoreLike_value");
 

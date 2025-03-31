@@ -9,4 +9,3 @@
 ## Functions
 
 - [create](functions/create.md)
-- [createAsync](functions/createAsync.md)

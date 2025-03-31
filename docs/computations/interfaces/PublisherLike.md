@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`BroadcasterLike`](BroadcasterLike.md)\<`T`\>.[`SinkLike`](../../utils/interfaces/SinkLike.md)\<`T`\>
+- [`BroadcasterLike`](BroadcasterLike.md)\<`T`\>.[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>
 
 ## Extended by
 
@@ -50,19 +50,43 @@
 
 ***
 
-### \[SinkLike\_isCompleted\]
+### \[DisposableLike\_error\]
 
-> `readonly` **\[SinkLike\_isCompleted\]**: `boolean`
+> `readonly` **\[DisposableLike\_error\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`Error`\>
+
+The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`SinkLike`](../../utils/interfaces/SinkLike.md).[`[SinkLike_isCompleted]`](../../utils/interfaces/SinkLike.md#sinklike_iscompleted)
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md).[`[DisposableLike_error]`](../../utils/interfaces/EventListenerLike.md#disposablelike_error)
+
+***
+
+### \[DisposableLike\_isDisposed\]
+
+> `readonly` **\[DisposableLike\_isDisposed\]**: `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Inherited from
+
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md).[`[DisposableLike_isDisposed]`](../../utils/interfaces/EventListenerLike.md#disposablelike_isdisposed)
 
 ## Methods
 
-### \[SinkLike\_complete\]()
+### \[dispose\]()
 
-> **\[SinkLike\_complete\]**(): `void`
+> **\[dispose\]**(`error`?): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+##### error?
+
+`Error`
+
+An optional error that signals the resource is being disposed due to an error.
 
 #### Returns
 
@@ -70,7 +94,29 @@
 
 #### Inherited from
 
-[`SinkLike`](../../utils/interfaces/SinkLike.md).[`[SinkLike_complete]`](../../utils/interfaces/SinkLike.md#sinklike_complete)
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md).[`[dispose]`](../../utils/interfaces/EventListenerLike.md#dispose)
+
+***
+
+### \[EventListenerLike\_notify\]()
+
+> **\[EventListenerLike\_notify\]**(`event`): `void`
+
+Notifies the EventSink of the next notification produced by the source.
+
+#### Parameters
+
+##### event
+
+`T`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md).[`[EventListenerLike_notify]`](../../utils/interfaces/EventListenerLike.md#eventlistenerlike_notify)
 
 ***
 
