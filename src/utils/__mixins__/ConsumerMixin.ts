@@ -22,7 +22,7 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
+  QueueLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -189,7 +189,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
           if (shouldNotify) {
             this[ConsumerMixinLike_notify](next);
           } else if (!isCompleted) {
-            this[FlowControllerQueueLike_enqueue](next);
+            this[QueueLike_enqueue](next);
           }
         },
 

@@ -24,8 +24,8 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
   ObserverLike,
+  QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_schedule,
@@ -215,7 +215,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
           if (shouldNotify) {
             this[ConsumerMixinLike_notify](next);
           } else if (!isCompleted) {
-            this[FlowControllerQueueLike_enqueue](next);
+            this[QueueLike_enqueue](next);
           }
         },
 

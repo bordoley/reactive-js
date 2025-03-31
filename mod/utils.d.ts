@@ -118,12 +118,10 @@ export interface FlowControllerEnumeratorLike<T = unknown> extends CollectionEnu
     readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
     [FlowControllerEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
 }
-export declare const FlowControllerQueueLike_enqueue: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface FlowControllerQueueLike<T = unknown> extends FlowControllerEnumeratorLike<T>, FlowControllerLike {
-    [FlowControllerQueueLike_enqueue](v: T): void;
+export interface FlowControllerQueueLike<T = unknown> extends QueueLike<T>, FlowControllerEnumeratorLike<T>, FlowControllerLike {
 }
 export declare const SchedulerLike_inContinuation: unique symbol;
 export declare const SchedulerLike_maxYieldInterval: unique symbol;

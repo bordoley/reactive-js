@@ -9,7 +9,7 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerQueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
     const MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
     const MergeAllConsumer_delegate = Symbol("MergeAllConsumer_delegate");
@@ -55,7 +55,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
                 this[MergeAllConsumer_delegate][SinkLike_isCompleted]);
         },
         [EventListenerLike_notify](next) {
-            this[FlowControllerQueueLike_enqueue](next);
+            this[QueueLike_enqueue](next);
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];

@@ -41,7 +41,6 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
   QueueLike,
   QueueLike_enqueue,
 } from "../../utils.js";
@@ -149,13 +148,13 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           return result;
         },
 
-        [FlowControllerQueueLike_enqueue](
+        [QueueLike_enqueue](
           this: TProperties & FlowControllerQueueLike<T> & QueueLike<T>,
           item: T,
         ) {
           const oldCount = this[CollectionEnumeratorLike_count];
 
-          this[QueueLike_enqueue](item);
+          super_(QueueMixin(), this, QueueLike_enqueue, item);
 
           const newCount = this[CollectionEnumeratorLike_count];
           const shouldNotify = oldCount < 1 && newCount >= 1;

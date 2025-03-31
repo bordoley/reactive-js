@@ -44,7 +44,6 @@ export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_pe
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol("FlowControllerEnumeratorLike_addOnDataAvailableListener");
 export const FlowControllerEnumeratorLike_isDataAvailable = Symbol("FlowControllerEnumeratorLike_isDataAvailable");
-export const FlowControllerQueueLike_enqueue = Symbol("FlowControllerQueueLike_enqueue");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");
 export const SchedulerLike_now = Symbol("SchedulerLike_now");

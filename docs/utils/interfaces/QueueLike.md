@@ -10,6 +10,10 @@
 
 - [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>.`BackPressureConfig`
 
+## Extended by
+
+- [`FlowControllerQueueLike`](FlowControllerQueueLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`

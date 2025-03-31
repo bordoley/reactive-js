@@ -204,17 +204,13 @@ export interface FlowControllerEnumeratorLike<T = unknown>
   ): DisposableLike;
 }
 
-export const FlowControllerQueueLike_enqueue = Symbol(
-  "FlowControllerQueueLike_enqueue",
-);
 /**
  * @noInheritDoc
  */
 export interface FlowControllerQueueLike<T = unknown>
-  extends FlowControllerEnumeratorLike<T>,
-    FlowControllerLike {
-  [FlowControllerQueueLike_enqueue](v: T): void;
-}
+  extends QueueLike<T>,
+    FlowControllerEnumeratorLike<T>,
+    FlowControllerLike {}
 
 export const SchedulerLike_inContinuation = Symbol(
   "SchedulerLike_inContinuation",

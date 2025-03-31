@@ -6,7 +6,7 @@ import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadca
 import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { alwaysNone, call, isEqualTo, none, pipe, returns, } from "../../functions.js";
-import { BackPressureConfig_capacity, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, QueueLike_enqueue, } from "../../utils.js";
+import { BackPressureConfig_capacity, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
@@ -51,9 +51,9 @@ const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
                 onReadySignal?.[EventListenerLike_notify]("ready");
             return result;
         },
-        [FlowControllerQueueLike_enqueue](item) {
+        [QueueLike_enqueue](item) {
             const oldCount = this[CollectionEnumeratorLike_count];
-            this[QueueLike_enqueue](item);
+            super_(QueueMixin(), this, QueueLike_enqueue, item);
             const newCount = this[CollectionEnumeratorLike_count];
             const shouldNotify = oldCount < 1 && newCount >= 1;
             shouldNotify &&

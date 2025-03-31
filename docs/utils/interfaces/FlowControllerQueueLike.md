@@ -8,24 +8,8 @@
 
 ## Extends
 
-- [`FlowControllerEnumeratorLike`](FlowControllerEnumeratorLike.md)\<`T`\>.[`FlowControllerLike`](FlowControllerLike.md)
+- [`QueueLike`](QueueLike.md)\<`T`\>.[`FlowControllerEnumeratorLike`](FlowControllerEnumeratorLike.md)\<`T`\>.[`FlowControllerLike`](FlowControllerLike.md)
 
 ## Type Parameters
 
 • **T** = `unknown`
-
-## Methods
-
-### \[FlowControllerQueueLike\_enqueue\]()
-
-> **\[FlowControllerQueueLike\_enqueue\]**(`v`): `void`
-
-#### Parameters
-
-##### v
-
-`T`
-
-#### Returns
-
-`void`

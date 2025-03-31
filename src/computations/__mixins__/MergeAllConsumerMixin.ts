@@ -24,7 +24,7 @@ import {
   EventListenerLike_notify,
   FlowControllerEnumeratorLike_addOnDataAvailableListener,
   FlowControllerQueueLike,
-  FlowControllerQueueLike_enqueue,
+  QueueLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -174,7 +174,7 @@ const MergeAllConsumerMixin: <
             FlowControllerQueueLike<TInnerSource>,
           next: TInnerSource,
         ) {
-          this[FlowControllerQueueLike_enqueue](next);
+          this[QueueLike_enqueue](next);
         },
 
         [SinkLike_complete](this: TProperties & ConsumerLike<TInnerSource>) {
