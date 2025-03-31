@@ -57,10 +57,15 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectTrue, tes
 import * as Streamable from "../../computations/Streamable.js";
 import * as SynchronousObservable from "../../computations/SynchronousObservable.js";
 import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, none, pipe, pipeSome, returns } from "../../functions.js";
+import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DropLatestBackpressureStrategy, EventListenerLike_notify, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
+import * as Computation from "../Computation.js";
+import * as Observable from "../Observable.js";
+import * as Source from "../Source.js";
+const ObservableModule = Computation.makeModule()(Observable);
 testModule("Streamable", describe("animation", test("integration", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
@@ -160,74 +165,54 @@ describe("stateStore", test("stateStore", () => {
     finally {
         __disposeResources(env_3);
     }
-})) /*
-describe(
-  "syncState",
-  test("without throttling", () => {
-    using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
-
-    const stream = pipe(
-      Streamable.stateStore(returns(-1)),
-      Streamable.syncState(
-        _ =>
-          pipe(
-            [9, 10, 50, 60, 70],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
-            Observable.map(x => (_: number) => x),
-            Observable.takeFirst({ count: 2 }),
-          ),
-        (_oldState, _newState) => Observable.empty(),
-      ),
-      invoke(StreamableLike_stream, vts),
-    );
-
-    pipe(
-      (x: number) => x + 2,
-      Observable.fromValue({ delay: 5 }),
-      Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-      Observable.subscribe(vts),
-    );
-
-    const result: number[] = [];
-    pipe(
-      stream,
-      Observable.forEach(bindMethod(result, Array_push)),
-      Observable.subscribe(vts),
-    );
-
-    vts[VirtualTimeSchedulerLike_run]();
-
-    pipe(result, expectArrayEquals([-1, 9, 10, 12]));
-  }),
-  test("with throttling", () => {
-    using vts = VirtualTimeScheduler.create();
-
-    let updateCnt = 0;
-
-    const stream = pipe(
-      Streamable.stateStore(returns(0)),
-      Streamable.syncState(
-        state => pipe((_: number) => state, Observable.fromValue()),
-        (_oldState, _newState) => {
-          updateCnt++;
-          return Observable.empty({ delay: 1 });
-        },
-        { throttleDuration: 20 },
-      ),
-      invoke(StreamableLike_stream, vts),
-    );
-
-    pipe(
-      increment,
-      Observable.fromValue({ delay: 1 }),
-      Observable.repeat(24),
-      Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-      Observable.subscribe(vts),
-    );
-
-    vts[VirtualTimeSchedulerLike_run]();
-
-    pipe(updateCnt, expectEquals(2));
-  }),
-),*/)();
+})), describe("syncState", test("without throttling", () => {
+    const env_4 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
+        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_ => pipe([9, 10, 50, 60, 70], Computation.fromReadonlyArray(ObservableModule)({
+            delay: 1,
+            delayStart: true,
+        }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (_oldState, _newState) => Computation.empty(ObservableModule)()), invoke(StreamableLike_stream, vts));
+        pipe([(x) => x + 2], Computation.fromReadonlyArray(ObservableModule)({
+            delay: 5,
+            delayStart: true,
+        }), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), Source.subscribe({ scheduler: vts }));
+        const result = [];
+        pipe(stream, Broadcaster.addEventHandler(bindMethod(result, Array_push)));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(result, expectArrayEquals([-1, 9, 10, 12]));
+    }
+    catch (e_4) {
+        env_4.error = e_4;
+        env_4.hasError = true;
+    }
+    finally {
+        __disposeResources(env_4);
+    }
+}), test("with throttling", () => {
+    const env_5 = { stack: [], error: void 0, hasError: false };
+    try {
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create({
+            maxMicroTaskTicks: 1,
+        }), false);
+        let updateCnt = 0;
+        const stream = pipe(Streamable.stateStore(returns(0)), Streamable.syncState(state => pipe([(_) => state], Computation.fromReadonlyArray(ObservableModule)()), (_oldState, _newState) => {
+            updateCnt++;
+            return SynchronousObservable.delay(1);
+        }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
+        pipe([increment], Computation.fromReadonlyArray(ObservableModule)({
+            delay: 1,
+            delayStart: true,
+        }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), Source.subscribe({ scheduler: vts }));
+        vts[VirtualTimeSchedulerLike_run]();
+        pipe(updateCnt, expectEquals(4));
+    }
+    catch (e_5) {
+        env_5.error = e_5;
+        env_5.hasError = true;
+    }
+    finally {
+        __disposeResources(env_5);
+    }
+})))();
 //((_: Streamable.Signature) => {})(Streamable);

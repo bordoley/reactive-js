@@ -247,25 +247,25 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     combineLatest<TA, TB>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>): ComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
     combineLatest<TA, TB, TC>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>, c: ComputationOf<TComputationType, TC>): ComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
     combineLatest<TA, TB, TC, TD>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>, c: ComputationOf<TComputationType, TC>, d: ComputationOf<TComputationType, TD>): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-    forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, ...tail: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>[]): PureComputationOf<TComputationType, TOut>;
+    forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>): PureComputationOperator<TComputationType, TIn, TOut>;
     forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, options: {
         readonly [ComputationLike_isPure]: Optional<true>;
-    }): PureComputationOf<TComputationType, TOut>;
+    }): PureComputationOperator<TComputationType, TIn, TOut>;
     forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, options: {
         readonly [ComputationLike_isPure]: false;
-    }): ComputationWithSideEffectsOf<TComputationType, TOut>;
+    }): ComputationOperatorWithSideEffects<TComputationType, TIn, TOut>;
     forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, c: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, options: {
         readonly [ComputationLike_isPure]: Optional<true>;
-    }): PureComputationOf<TComputationType, TOut>;
+    }): PureComputationOperator<TComputationType, TIn, TOut>;
     forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, c: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, options: {
         readonly [ComputationLike_isPure]: false;
-    }): ComputationWithSideEffectsOf<TComputationType, TOut>;
+    }): ComputationOperatorWithSideEffects<TComputationType, TIn, TOut>;
     forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, c: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, d: Function1<PureComputationOf<TComputationType, TIn>, PureComputationOf<TComputationType, TOut>>, options: {
         readonly [ComputationLike_isPure]: Optional<true>;
-    }): PureComputationOf<TComputationType, TOut>;
+    }): PureComputationOperator<TComputationType, TIn, TOut>;
     forkMerge<TIn, TOut>(a: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, b: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, c: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, d: Function1<PureComputationOf<TComputationType, TIn>, ComputationOf<TComputationType, TOut>>, options: {
         readonly [ComputationLike_isPure]: false;
-    }): ComputationWithSideEffectsOf<TComputationType, TOut>;
+    }): ComputationOperatorWithSideEffects<TComputationType, TIn, TOut>;
     merge<T>(...computations: readonly PureComputationOf<TComputationType, T>[]): PureComputationOf<TComputationType, T>;
     merge<T>(...computations: readonly ComputationOf<TComputationType, T>[]): ComputationWithSideEffectsOf<TComputationType, T>;
     takeUntil<T>(notifier: PureComputationOf<TComputationType, unknown>): PureComputationOperator<TComputationType, T, T>;

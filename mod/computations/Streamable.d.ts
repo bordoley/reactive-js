@@ -71,3 +71,4 @@ export declare const actionReducer: Signature["actionReducer"];
 export declare const animation: Signature["animation"];
 export declare const identity: Signature["identity"];
 export declare const stateStore: Signature["stateStore"];
+export declare const syncState: Signature["syncState"];

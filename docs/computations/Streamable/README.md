@@ -30,3 +30,4 @@
 - [create](functions/create.md)
 - [identity](functions/identity.md)
 - [stateStore](functions/stateStore.md)
+- [syncState](functions/syncState.md)

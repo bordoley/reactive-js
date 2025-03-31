@@ -11,7 +11,15 @@ import {
 import * as Streamable from "../../computations/Streamable.js";
 import * as SynchronousObservable from "../../computations/SynchronousObservable.js";
 import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, none, pipe, pipeSome, returns } from "../../functions.js";
+import {
+  bindMethod,
+  invoke,
+  none,
+  pipe,
+  pipeSome,
+  returns,
+} from "../../functions.js";
+import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DropLatestBackpressureStrategy,
@@ -23,6 +31,12 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
+import * as Computation from "../Computation.js";
+import * as Observable from "../Observable.js";
+import * as Source from "../Source.js";
+
+const ObservableModule =
+  Computation.makeModule<Observable.Computation>()(Observable);
 
 testModule(
   "Streamable",
@@ -133,11 +147,11 @@ testModule(
         expectTrue("expected stream to be completed"),
       );
     }),
-  ) /*
+  ),
   describe(
     "syncState",
     test("without throttling", () => {
-      using vts = VirtualTimeScheduler.create({ maxMicroTaskTicks: 1 });
+      using vts = VirtualTimeScheduler.create();
 
       const stream = pipe(
         Streamable.stateStore(returns(-1)),
@@ -145,45 +159,53 @@ testModule(
           _ =>
             pipe(
               [9, 10, 50, 60, 70],
-              Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+              Computation.fromReadonlyArray(ObservableModule)({
+                delay: 1,
+                delayStart: true,
+              }),
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),
-          (_oldState, _newState) => Observable.empty(),
+          (_oldState, _newState) => Computation.empty(ObservableModule)(),
         ),
         invoke(StreamableLike_stream, vts),
       );
 
       pipe(
-        (x: number) => x + 2,
-        Observable.fromValue({ delay: 5 }),
+        [(x: number) => x + 2],
+        Computation.fromReadonlyArray(ObservableModule)({
+          delay: 5,
+          delayStart: true,
+        }),
         Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-        Observable.subscribe(vts),
+        Source.subscribe({ scheduler: vts }),
       );
 
       const result: number[] = [];
-      pipe(
-        stream,
-        Observable.forEach(bindMethod(result, Array_push)),
-        Observable.subscribe(vts),
-      );
+      pipe(stream, Broadcaster.addEventHandler(bindMethod(result, Array_push)));
 
       vts[VirtualTimeSchedulerLike_run]();
 
       pipe(result, expectArrayEquals([-1, 9, 10, 12]));
     }),
     test("with throttling", () => {
-      using vts = VirtualTimeScheduler.create();
+      using vts = VirtualTimeScheduler.create({
+        maxMicroTaskTicks: 1,
+      });
 
       let updateCnt = 0;
 
       const stream = pipe(
         Streamable.stateStore(returns(0)),
         Streamable.syncState(
-          state => pipe((_: number) => state, Observable.fromValue()),
+          state =>
+            pipe(
+              [(_: number) => state],
+              Computation.fromReadonlyArray(ObservableModule)(),
+            ),
           (_oldState, _newState) => {
             updateCnt++;
-            return Observable.empty({ delay: 1 });
+            return SynchronousObservable.delay(1);
           },
           { throttleDuration: 20 },
         ),
@@ -191,18 +213,21 @@ testModule(
       );
 
       pipe(
-        increment,
-        Observable.fromValue({ delay: 1 }),
+        [increment],
+        Computation.fromReadonlyArray(ObservableModule)({
+          delay: 1,
+          delayStart: true,
+        }),
         Observable.repeat(24),
         Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-        Observable.subscribe(vts),
+        Source.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(updateCnt, expectEquals(2));
+      pipe(updateCnt, expectEquals(4));
     }),
-  ),*/,
+  ),
 )();
 
 //((_: Streamable.Signature) => {})(Streamable);

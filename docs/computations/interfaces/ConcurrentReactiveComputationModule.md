@@ -221,7 +221,7 @@
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -239,17 +239,13 @@
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>
 
-###### tail
-
-...[`Function1`](../../functions/type-aliases/Function1.md)\<[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TIn`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>\>[]
-
 ##### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -275,11 +271,11 @@
 
 ##### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -305,11 +301,11 @@
 
 ##### Returns
 
-[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+[`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -339,11 +335,11 @@
 
 ##### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -373,11 +369,11 @@
 
 ##### Returns
 
-[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+[`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -411,11 +407,11 @@
 
 ##### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `TOut`\>
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 #### Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ##### Type Parameters
 
@@ -449,7 +445,7 @@
 
 ##### Returns
 
-[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `TOut`\>
+[`ComputationOperatorWithSideEffects`](../type-aliases/ComputationOperatorWithSideEffects.md)\<`TComputationType`, `TIn`, `TOut`\>
 
 ***
 

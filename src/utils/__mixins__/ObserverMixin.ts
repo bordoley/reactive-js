@@ -5,6 +5,7 @@ import {
   mix,
   props,
   proto,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { Optional, bind, call, none, pipe, returns } from "../../functions.js";
 import {
@@ -53,7 +54,6 @@ type TPrototype<TConsumer extends ConsumerLike, T> = Omit<
   | keyof DisposableLike
   | keyof SchedulerLike
   | keyof FlowControllerLike
-  | typeof SinkLike_isCompleted
   | typeof ConsumerMixinLike_consumer
 >;
 
@@ -77,6 +77,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
 
     while (
       this[FlowControllerEnumeratorLike_isDataAvailable] &&
+      !consumer[SinkLike_isCompleted] &&
       !this[DisposableLike_isDisposed]
     ) {
       // Avoid dequeing values if the downstream consumer
@@ -115,16 +116,17 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
   }
 
   function onObserverDisposed(this: TProperties) {
-    this[SinkLike_isCompleted] = true;
+    this[ObserverMixin_isCompleted] = true;
   }
 
   const ObserverMixin_schedulerSubscription = Symbol(
     "ObserverMixin_schedulerSubscription",
   );
+  const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
 
   type TProperties = {
     [ConsumerMixinLike_consumer]: TConsumer;
-    [SinkLike_isCompleted]: boolean;
+    [ObserverMixin_isCompleted]: boolean;
     [ObserverMixin_schedulerSubscription]: DisposableLike;
   };
 
@@ -180,10 +182,18 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
       },
       props<TProperties>({
         [ConsumerMixinLike_consumer]: none,
-        [SinkLike_isCompleted]: false,
+        [ObserverMixin_isCompleted]: false,
         [ObserverMixin_schedulerSubscription]: Disposable.disposed,
       }),
       proto<TPrototype<TConsumer, T>>({
+        get [SinkLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return (
+            this[ObserverMixin_isCompleted] ||
+            this[ConsumerMixinLike_consumer][SinkLike_isCompleted]
+          );
+        },
+
         [EventListenerLike_notify](this: TThis, next: T) {
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const isCompleted = this[SinkLike_isCompleted];
@@ -211,7 +221,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
 
         [SinkLike_complete](this: TThis) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[SinkLike_isCompleted] = true;
+          this[ObserverMixin_isCompleted] = true;
 
           const inSchedulerContinuation = this[SchedulerLike_inContinuation];
           const hasQueuedEvents =

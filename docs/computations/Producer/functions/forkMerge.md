@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -26,17 +26,13 @@
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-#### tail
-
-...[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>[]
-
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -62,11 +58,11 @@
 
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -92,11 +88,11 @@
 
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -126,11 +122,11 @@
 
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -160,11 +156,11 @@
 
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -198,11 +194,11 @@
 
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -236,4 +232,4 @@
 
 ### Returns
 
-[`ProducerLike`](../../interfaces/ProducerLike.md)\<`TOut`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`ProducerComputation`](../interfaces/ProducerComputation.md), `TIn`, `TOut`\>

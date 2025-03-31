@@ -622,8 +622,7 @@ export interface ConcurrentReactiveComputationModule<
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
     b: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
-    ...tail:  Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>[]
-  ): PureComputationOf<TComputationType,TOut>;
+  ): PureComputationOperator<TComputationType,TIn, TOut>;
   // prettier-ignore
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
@@ -631,7 +630,7 @@ export interface ConcurrentReactiveComputationModule<
     options: {
       readonly [ComputationLike_isPure]: Optional<true>,
     }
-  ): PureComputationOf<TComputationType,TOut>;
+  ): PureComputationOperator<TComputationType,TIn, TOut>;
   // prettier-ignore
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
@@ -639,7 +638,7 @@ export interface ConcurrentReactiveComputationModule<
     options: {
       readonly [ComputationLike_isPure]: false,
     }
-  ): ComputationWithSideEffectsOf<TComputationType,TOut>;
+  ): ComputationOperatorWithSideEffects<TComputationType,TIn, TOut>;
   // prettier-ignore
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
@@ -648,7 +647,7 @@ export interface ConcurrentReactiveComputationModule<
     options: {
       readonly [ComputationLike_isPure]: Optional<true>,
     }
-  ): PureComputationOf<TComputationType,TOut>;
+  ): PureComputationOperator<TComputationType, TIn, TOut>;
   // prettier-ignore
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
@@ -657,7 +656,7 @@ export interface ConcurrentReactiveComputationModule<
     options: {
       readonly [ComputationLike_isPure]: false,
     }
-  ): ComputationWithSideEffectsOf<TComputationType,TOut>;
+  ): ComputationOperatorWithSideEffects<TComputationType, TIn, TOut>;
   // prettier-ignore
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  PureComputationOf<TComputationType,TOut>>,
@@ -667,7 +666,7 @@ export interface ConcurrentReactiveComputationModule<
     options: {
       readonly [ComputationLike_isPure]: Optional<true>,
     }
-  ): PureComputationOf<TComputationType,TOut>;
+  ): PureComputationOperator<TComputationType, TIn, TOut>;
   // prettier-ignore
   forkMerge<TIn, TOut>(
     a: Function1<PureComputationOf<TComputationType, TIn>,  ComputationOf<TComputationType,TOut>>,
@@ -677,7 +676,7 @@ export interface ConcurrentReactiveComputationModule<
     options: {
       readonly [ComputationLike_isPure]: false,
     }
-  ): ComputationWithSideEffectsOf<TComputationType,TOut>;
+  ): ComputationOperatorWithSideEffects<TComputationType,TIn, TOut>;
 
   merge<T>(
     ...computations: readonly PureComputationOf<TComputationType, T>[]

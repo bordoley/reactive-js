@@ -1,6 +1,6 @@
 /// <reference types="./ConsumerMixin.d.ts" />
 
-import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
+import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, call, none, pipe, returns } from "../../functions.js";
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
@@ -19,6 +19,7 @@ const ConsumerMixin = /*@__PURE__*/ (() => {
         }
         this[ConsumerMixin_isDraining] = true;
         while (this[FlowControllerEnumeratorLike_isDataAvailable] &&
+            !consumer[SinkLike_isCompleted] &&
             !this[DisposableLike_isDisposed]) {
             // Avoid dequeing values if the downstream consumer
             // is applying backpressure.
@@ -36,9 +37,10 @@ const ConsumerMixin = /*@__PURE__*/ (() => {
         this[ConsumerMixin_isDraining] = false;
     }
     function onConsumerDisposed() {
-        this[SinkLike_isCompleted] = true;
+        this[ConsumerMixin_isCompleted] = true;
     }
     const ConsumerMixin_isDraining = Symbol("ConsumerMixin_isDraining");
+    const ConsumerMixin_isCompleted = Symbol("ConsumerMixin_isCompleted");
     return returns(mix(include(FlowControllerQueueMixin()), function ConsumerMixin(consumer, options) {
         init(FlowControllerQueueMixin(), this, options);
         this[ConsumerMixinLike_consumer] = consumer;
@@ -46,10 +48,15 @@ const ConsumerMixin = /*@__PURE__*/ (() => {
         pipe(this, DisposableContainer.onDisposed(onConsumerDisposed), Disposable.add(consumer[FlowControllerLike_addOnReadyListener](bind(drainQueue, this))));
         return this;
     }, props({
+        [ConsumerMixin_isCompleted]: false,
         [ConsumerMixinLike_consumer]: none,
-        [SinkLike_isCompleted]: false,
         [ConsumerMixin_isDraining]: false,
     }), proto({
+        get [SinkLike_isCompleted]() {
+            unsafeCast(this);
+            return (this[ConsumerMixin_isCompleted] ||
+                this[ConsumerMixinLike_consumer][SinkLike_isCompleted]);
+        },
         [EventListenerLike_notify](next) {
             const isCompleted = this[SinkLike_isCompleted];
             // Make queueing decisions based upon whether the root non-lifted consumer
@@ -68,7 +75,7 @@ const ConsumerMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];
-            this[SinkLike_isCompleted] = true;
+            this[ConsumerMixin_isCompleted] = true;
             const hasQueuedEvents = this[FlowControllerEnumeratorLike_isDataAvailable];
             if (isCompleted) {
                 return;

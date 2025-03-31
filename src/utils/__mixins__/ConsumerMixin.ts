@@ -5,6 +5,7 @@ import {
   mix,
   props,
   proto,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { Optional, bind, call, none, pipe, returns } from "../../functions.js";
 import {
@@ -31,10 +32,12 @@ import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 
 export const ConsumerMixinLike_notify = Symbol("ConsumerMixinLike_notify");
 export const ConsumerMixinLike_complete = Symbol("ConsumerMixinLike_complete");
+
 export const ConsumerMixinLike_consumer = Symbol("ConsumerMixinLike_consumer");
 
 export interface ConsumerMixinLike<TConsumer extends ConsumerLike, T> {
   readonly [ConsumerMixinLike_consumer]: TConsumer;
+
   [ConsumerMixinLike_notify](next: T): void;
   [ConsumerMixinLike_complete](): void;
 }
@@ -49,7 +52,6 @@ type TPrototype<TConsumer extends ConsumerLike, T> = Omit<
   ConsumerLike<T> & ConsumerMixinLike<TConsumer, T>,
   | keyof DisposableLike
   | keyof FlowControllerLike
-  | typeof SinkLike_isCompleted
   | typeof ConsumerMixinLike_consumer
 >;
 
@@ -75,6 +77,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
 
     while (
       this[FlowControllerEnumeratorLike_isDataAvailable] &&
+      !consumer[SinkLike_isCompleted] &&
       !this[DisposableLike_isDisposed]
     ) {
       // Avoid dequeing values if the downstream consumer
@@ -97,14 +100,15 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
   }
 
   function onConsumerDisposed(this: TProperties) {
-    this[SinkLike_isCompleted] = true;
+    this[ConsumerMixin_isCompleted] = true;
   }
 
   const ConsumerMixin_isDraining = Symbol("ConsumerMixin_isDraining");
+  const ConsumerMixin_isCompleted = Symbol("ConsumerMixin_isCompleted");
 
   type TProperties = {
+    [ConsumerMixin_isCompleted]: boolean;
     [ConsumerMixinLike_consumer]: TConsumer;
-    [SinkLike_isCompleted]: boolean;
     [ConsumerMixin_isDraining]: boolean;
   };
 
@@ -155,11 +159,19 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
         return this;
       },
       props<TProperties>({
+        [ConsumerMixin_isCompleted]: false,
         [ConsumerMixinLike_consumer]: none,
-        [SinkLike_isCompleted]: false,
         [ConsumerMixin_isDraining]: false,
       }),
       proto<TPrototype<TConsumer, T>>({
+        get [SinkLike_isCompleted]() {
+          unsafeCast<TProperties>(this);
+          return (
+            this[ConsumerMixin_isCompleted] ||
+            this[ConsumerMixinLike_consumer][SinkLike_isCompleted]
+          );
+        },
+
         [EventListenerLike_notify](this: TThis, next: T) {
           const isCompleted = this[SinkLike_isCompleted];
 
@@ -183,7 +195,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
 
         [SinkLike_complete](this: TThis) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[SinkLike_isCompleted] = true;
+          this[ConsumerMixin_isCompleted] = true;
 
           const hasQueuedEvents =
             this[FlowControllerEnumeratorLike_isDataAvailable];

@@ -26,7 +26,7 @@ import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
 //import Streamable_spring from "./Streamable/__private__/Streamable.spring.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
-//import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
+import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
 
 export const AnimationLike_isRunning: typeof Animation_isRunning =
   Animation_isRunning;
@@ -143,4 +143,4 @@ export const animation: Signature["animation"] = Streamable_animation;
 export const identity: Signature["identity"] = Streamable_identity;
 //export const spring: Signature["spring"] = Streamable_spring;
 export const stateStore: Signature["stateStore"] = Streamable_stateStore;
-//export const syncState: Signature["syncState"] = Streamable_syncState;
+export const syncState: Signature["syncState"] = Streamable_syncState;

@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, ...`tail`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -26,17 +26,13 @@
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>
 
-#### tail
-
-...[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)\>[]
-
 ### Returns
 
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -62,11 +58,11 @@
 
 ### Returns
 
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): `never`
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -92,11 +88,11 @@
 
 ### Returns
 
-`never`
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -126,11 +122,11 @@
 
 ### Returns
 
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): `never`
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -160,11 +156,11 @@
 
 ### Returns
 
-`never`
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -198,11 +194,11 @@
 
 ### Returns
 
-[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TOut`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ## Call Signature
 
-> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): `never`
+> **forkMerge**\<`TIn`, `TOut`\>(`a`, `b`, `c`, `d`, `options`): [`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
 
 ### Type Parameters
 
@@ -236,4 +232,4 @@
 
 ### Returns
 
-`never`
+[`ComputationOperatorWithSideEffects`](../../type-aliases/ComputationOperatorWithSideEffects.md)\<[`BroadcasterComputation`](../interfaces/BroadcasterComputation.md), `TIn`, `TOut`\>
