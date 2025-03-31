@@ -5,7 +5,6 @@ import {
   mixInstanceFactory,
   props,
   proto,
-  unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
   BroadcasterLike,
@@ -19,14 +18,13 @@ import DelegatingEventListenerMixin, {
   DelegatingEventListenerLike,
   DelegatingEventListenerLike_delegate,
 } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
+import DisposeOnCompleteSinkMixin from "../../../utils/__mixins__/DisposeOnCompleteSinkMixin.js";
 import {
   BackPressureConfig_capacity,
   BackPressureConfig_strategy,
   BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
@@ -54,15 +52,26 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   };
 
   const createPauseableConsumer = mixInstanceFactory(
-    include(DelegatingDisposableMixin, DelegatingEventListenerMixin()),
+    include(
+      DelegatingDisposableMixin,
+      DelegatingEventListenerMixin(),
+      DisposeOnCompleteSinkMixin(),
+    ),
     function EventListenerToPauseableConsumer(
       this: TProperties &
-        Omit<ConsumerLike<T>, keyof DisposableLike | keyof SchedulerLike>,
+        Omit<
+          ConsumerLike<T>,
+          | keyof DisposableLike
+          | keyof SchedulerLike
+          | typeof SinkLike_complete
+          | typeof SinkLike_isCompleted
+        >,
       listener: EventListenerLike<T>,
       mode: BroadcasterLike<boolean> & DisposableLike,
     ): ConsumerLike<T> {
       init(DelegatingDisposableMixin, this, listener);
       init(DelegatingEventListenerMixin(), this, listener);
+      init(DisposeOnCompleteSinkMixin(), this);
 
       this[EventListernToPauseableConsumer_mode] = mode;
 
@@ -82,11 +91,6 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
       [FlowControllerLike_isReady]: false,
     }),
     proto({
-      get [SinkLike_isCompleted](): boolean {
-        unsafeCast<DisposableLike>(this);
-        return this[DisposableLike_isDisposed];
-      },
-
       [BackPressureConfig_strategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
 
@@ -120,11 +124,6 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
         }
 
         delegate[EventListenerLike_notify](next);
-      },
-      [SinkLike_complete](
-        this: TProperties & ConsumerLike<T> & DelegatingEventListenerLike<T>,
-      ) {
-        this[DisposableLike_dispose]();
       },
     }),
   );

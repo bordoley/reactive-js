@@ -14,7 +14,6 @@ import {
   CollectionEnumeratorLike,
   ConsumerLike,
   DisposableLike,
-  DisposableLike_dispose,
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
@@ -22,11 +21,10 @@ import {
   FlowControllerLike_isReady,
   QueueLike,
   QueueLike_enqueue,
-  SinkLike_complete,
-  SinkLike_isCompleted,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
+import DisposeOnCompleteSinkMixin from "./DisposeOnCompleteSinkMixin.js";
 import QueueMixin from "./QueueMixin.js";
 
 const TakeLastConsumerMixin: <T>() => Mixin1<
@@ -36,8 +34,6 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
   type TPrototype = Pick<
     ConsumerLike<T>,
     | typeof EventListenerLike_notify
-    | typeof SinkLike_complete
-    | typeof SinkLike_isCompleted
     | typeof FlowControllerLike_isReady
     | typeof BackPressureConfig_capacity
     | typeof FlowControllerLike_addOnReadyListener
@@ -45,7 +41,7 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
 
   return returns(
     mix(
-      include(DisposableMixin, QueueMixin()),
+      include(DisposableMixin, QueueMixin(), DisposeOnCompleteSinkMixin()),
       function TakeLastConsumerMixin(
         this: TPrototype,
         capacity: number,
@@ -55,6 +51,7 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
           backpressureStrategy: DropOldestBackpressureStrategy,
           capacity,
         });
+        init(DisposeOnCompleteSinkMixin(), this);
         return this;
       },
       props(),
@@ -68,19 +65,10 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
           return MAX_SAFE_INTEGER;
         },
 
-        get [SinkLike_isCompleted]() {
-          unsafeCast<DisposableLike>(this);
-          return this[DisposableLike_isDisposed];
-        },
-
         [EventListenerLike_notify](this: QueueLike<T>, item: T) {
           if (!this[DisposableLike_isDisposed]) {
             this[QueueLike_enqueue](item);
           }
-        },
-
-        [SinkLike_complete](this: DisposableLike) {
-          this[DisposableLike_dispose]();
         },
 
         [FlowControllerLike_addOnReadyListener](this: DisposableLike) {
