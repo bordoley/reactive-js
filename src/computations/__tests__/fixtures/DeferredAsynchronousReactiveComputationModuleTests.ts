@@ -9,10 +9,7 @@ const DeferredAsynchronousReactiveComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
 >(
   _m: ComputationModule<TComputationType> &
-    Pick<
-      DeferredAsynchronousReactiveComputationModule<TComputationType>,
-      "switchAll" | "withBackpressure"
-    >,
+    DeferredAsynchronousReactiveComputationModule<TComputationType>,
 ) =>
   describe(
     "ComputationModule",

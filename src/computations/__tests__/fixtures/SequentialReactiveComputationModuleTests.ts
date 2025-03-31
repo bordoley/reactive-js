@@ -7,7 +7,6 @@ import {
 import {
   ComputationModule,
   ComputationTypeLike,
-  PickComputationModule,
   SequentialReactiveComputationModule,
 } from "../../../computations.js";
 import {
@@ -23,10 +22,7 @@ const SequentialReactiveComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
 >(
   m: ComputationModule<TComputationType> &
-    PickComputationModule<
-      SequentialReactiveComputationModule<TComputationType>,
-      "buffer" | "decodeWithCharset" | "takeLast"
-    >,
+    SequentialReactiveComputationModule<TComputationType>,
 ) =>
   describe(
     "SequentialReactiveComputationModule",

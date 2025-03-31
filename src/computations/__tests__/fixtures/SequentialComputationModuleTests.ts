@@ -32,17 +32,7 @@ const SequentialComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
 >(
   m: ComputationModule<TComputationType> &
-    Pick<
-      SequentialComputationModule<TComputationType>,
-      | "scanDistinct"
-      | "catchError"
-      | "concat"
-      | "forEach"
-      | "gen"
-      | "repeat"
-      | "retry"
-      | "throwIfEmpty"
-    >,
+    SequentialComputationModule<TComputationType>,
 ) =>
   describe(
     "SequentialComputationModule",

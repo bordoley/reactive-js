@@ -7,7 +7,6 @@ import {
   ComputationModule,
   ComputationTypeLike,
   ConcurrentReactiveComputationModule,
-  PickComputationModule,
   SourceComputationModule,
 } from "../../../computations.js";
 import { pipeLazyAsync } from "../../../functions.js";
@@ -23,10 +22,7 @@ const ConcurrentReactiveComputationModuleTests = <
 >(
   m: ComputationModule<TComputationType> &
     SourceComputationModule<TComputationType> &
-    PickComputationModule<
-      ConcurrentReactiveComputationModule<TComputationType>,
-      "combineLatest" | "merge" | "takeUntil" | "withLatestFrom"
-    >,
+    ConcurrentReactiveComputationModule<TComputationType>,
 ) =>
   describe(
     "ConcurrentReactiveComputationModuleTests",

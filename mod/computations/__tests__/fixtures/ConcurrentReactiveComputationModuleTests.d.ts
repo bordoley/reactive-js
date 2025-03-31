@@ -1,3 +1,3 @@
-import { ComputationModule, ComputationTypeLike, ConcurrentReactiveComputationModule, PickComputationModule, SourceComputationModule } from "../../../computations.js";
-declare const ConcurrentReactiveComputationModuleTests: <TComputationType extends ComputationTypeLike>(m: ComputationModule<TComputationType> & SourceComputationModule<TComputationType> & PickComputationModule<ConcurrentReactiveComputationModule<TComputationType>, "combineLatest" | "merge" | "takeUntil" | "withLatestFrom">) => import("../../../__internal__/testing.js").Describe;
+import { ComputationModule, ComputationTypeLike, ConcurrentReactiveComputationModule, SourceComputationModule } from "../../../computations.js";
+declare const ConcurrentReactiveComputationModuleTests: <TComputationType extends ComputationTypeLike>(m: ComputationModule<TComputationType> & SourceComputationModule<TComputationType> & ConcurrentReactiveComputationModule<TComputationType>) => import("../../../__internal__/testing.js").Describe;
 export default ConcurrentReactiveComputationModuleTests;
