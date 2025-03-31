@@ -6,7 +6,7 @@
 
 # Function: fromObservable()
 
-> **fromObservable**\<`T`\>(`options`?): \<`TObservable`\>(`iterable`) => `TObservable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TObservable` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? `never` : `never`
+> **fromObservable**\<`T`\>(`options`?): \<`TObservable`\>(`iterable`) => `TObservable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) & [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md) : `TObservable` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) & [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md) : `never`
 
 ## Type Parameters
 
@@ -36,4 +36,4 @@
 
 ### Returns
 
-`TObservable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) : `TObservable` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? `never` : `never`
+`TObservable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) & [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md) : `TObservable` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md) & [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md) : `never`

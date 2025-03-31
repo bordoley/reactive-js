@@ -563,18 +563,24 @@ export interface SourceComputationModule<
   }): <TObservable extends ObservableLike<T>>(
     iterable: TObservable,
   ) => TObservable extends PureComputationLike ?
-         PureComputationOf<TComputationType, T> :
-       TObservable extends ComputationWithSideEffectsLike ?
-         ComputationWithSideEffectsOf<TComputationType, T> :
+         NewPureInstanceOf<TComputationType, T> :
+       TObservable extends ComputationWithSideEffectsLike ? (
+         NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike 
+           ? NewPureInstanceOf<TComputationType, T>
+           : NewInstanceWithSideEffectsOf<TComputationType, T> 
+         ):
        never;
 
   // prettier-ignore
   fromProducer<T>(): <TProducer extends ProducerLike<T>>(
     iterable: TProducer,
   ) => TProducer extends PureComputationLike ? 
-        PureComputationOf<TComputationType, T> : 
-      TProducer extends ComputationWithSideEffectsLike ? 
-        ComputationWithSideEffectsOf<TComputationType, T> : 
+        NewPureInstanceOf<TComputationType, T> : 
+      TProducer extends ComputationWithSideEffectsLike ? (
+        NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike 
+          ? NewPureInstanceOf<TComputationType, T>
+          : NewInstanceWithSideEffectsOf<TComputationType, T> 
+        ):
       never;
 }
 

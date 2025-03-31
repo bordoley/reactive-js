@@ -237,8 +237,8 @@ export interface SourceComputationModule<TComputationType extends ComputationTyp
     fromBroadcaster<T>(): Function1<BroadcasterLike<T>, PureComputationOf<TComputationType, T>>;
     fromObservable<T>(options?: {
         scheduler?: SchedulerLike;
-    }): <TObservable extends ObservableLike<T>>(iterable: TObservable) => TObservable extends PureComputationLike ? PureComputationOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? ComputationWithSideEffectsOf<TComputationType, T> : never;
-    fromProducer<T>(): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? PureComputationOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? ComputationWithSideEffectsOf<TComputationType, T> : never;
+    }): <TObservable extends ObservableLike<T>>(iterable: TObservable) => TObservable extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
+    fromProducer<T>(): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
 }
 export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     combineLatest<TA, TB>(a: PureComputationOf<TComputationType, TA>, b: PureComputationOf<TComputationType, TB>): PureComputationOf<TComputationType, Tuple2<TA, TB>>;
