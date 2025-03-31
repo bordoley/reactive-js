@@ -558,9 +558,9 @@
 
 ***
 
-### \_\_observer()
+### \_\_observe()
 
-> **\_\_observer**\<`T`\>(`src`): [`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
+> **\_\_observe**\<`T`\>(`src`): [`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
 
 #### Type Parameters
 

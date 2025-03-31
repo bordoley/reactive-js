@@ -120,7 +120,7 @@ export interface Signature {
     f: TF,
   ): T;
 
-  __observer<T>(src: SourceLike<T>): Optional<T>;
+  __observe<T>(src: SourceLike<T>): Optional<T>;
 
   __state<T>(
     initialState: () => T,
@@ -216,7 +216,7 @@ export const __constant: Signature["__constant"] = <T>(
   return ctx[ComputeContext_constant](value, ...args);
 };
 
-export const __observe: Signature["__observer"] = <T>(src: SourceLike<T>) => {
+export const __observe: Signature["__observe"] = <T>(src: SourceLike<T>) => {
   const ctx = assertCurrentContext();
 
   const observable = Computation.isDeferred(src)
