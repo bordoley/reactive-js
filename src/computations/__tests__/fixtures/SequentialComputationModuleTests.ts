@@ -42,7 +42,7 @@ const SequentialComputationModuleTests = <
         "when the source does not throw",
         pipeLazyAsync(
           [1, 2, 3, 4],
-          Computation.fromReadonlyArray(m)<number>(),
+          Computation.fromReadonlyArray(m),
           m.catchError<number>(ignore),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -91,10 +91,10 @@ const SequentialComputationModuleTests = <
         "when error handler returns a computation",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           Computation.concatWith(m)<number>(Computation.raise(m)()),
           m.catchError<number>(
-            pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)()),
+            pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)),
           ),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -109,7 +109,7 @@ const SequentialComputationModuleTests = <
 
         await pipeAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.forEach((x: number) => {
             result[Array_push](x + 10);
           }),
@@ -123,7 +123,7 @@ const SequentialComputationModuleTests = <
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.forEach<number>(_ => {
               throw err;
             }),
@@ -140,7 +140,7 @@ const SequentialComputationModuleTests = <
         "when repeating forever.",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.repeat<number>(),
           m.takeFirst<number>({ count: 8 }),
           m.toProducer(),
@@ -152,7 +152,7 @@ const SequentialComputationModuleTests = <
         "when repeating a finite amount of times.",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.repeat<number>(3),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -163,7 +163,7 @@ const SequentialComputationModuleTests = <
         "when repeating with a predicate",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.repeat<number>(lessThan(1)),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -175,7 +175,7 @@ const SequentialComputationModuleTests = <
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.repeat<number>(_ => {
               throw err;
             }),
@@ -192,7 +192,7 @@ const SequentialComputationModuleTests = <
         "retrys with the default predicate",
         pipeLazyAsync(
           m.concat<number>(
-            Computation.fromReadonlyArray(m)<number>()([1, 2, 3]),
+            Computation.fromReadonlyArray(m)([1, 2, 3]),
             Computation.raise(m)<number>(),
           ),
           m.retry<number>(),
@@ -219,7 +219,7 @@ const SequentialComputationModuleTests = <
         pipeLazyAsync(
           pipeLazyAsync(
             m.concat<number>(
-              Computation.fromReadonlyArray(m)<number>()([1, 2, 3]),
+              Computation.fromReadonlyArray(m)([1, 2, 3]),
               Computation.raise(m)(),
             ),
             m.retry<number>((count, _) => count < 2),
@@ -238,7 +238,7 @@ const SequentialComputationModuleTests = <
         "sums all the values in the array emitting intermediate values.",
         pipeLazyAsync(
           [1, 1, 1],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.scanDistinct<number, number>((a, b) => a + b, returns(0)),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -254,7 +254,7 @@ const SequentialComputationModuleTests = <
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.scanDistinct(scanner<number>, returns(0)),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
@@ -271,7 +271,7 @@ const SequentialComputationModuleTests = <
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.scanDistinct<number, number>((a, b) => a + b, initialValue),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
@@ -312,7 +312,7 @@ const SequentialComputationModuleTests = <
         "when source is not empty",
         pipeLazyAsync(
           [1],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.throwIfEmpty<number>(returns(none)),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),

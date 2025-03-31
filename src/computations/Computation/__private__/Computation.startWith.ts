@@ -11,7 +11,7 @@ const Computation_startWith: Computation.Signature["startWith"] =
       (computation: ComputationOfModule<typeof m, T>) =>
         pipe(
           values,
-          Computation_fromReadonlyArray(m)<T>(),
+          Computation_fromReadonlyArray(m),
           Computation_concatWith(m)<T>(computation),
         ),
   ) as Computation.Signature["startWith"];

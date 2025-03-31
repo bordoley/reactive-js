@@ -205,7 +205,7 @@ export const expectArrayEquals =
       valuesEquality: strictEquality,
     },
   ) =>
-  (a: readonly T[]) => {
+  <U extends T>(a: readonly U[]) => {
     const equals = arrayEquality(valuesEquality);
     if (!equals(a, b)) {
       raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);

@@ -122,13 +122,13 @@ export const subscribe = /*@__PURE__*/ (() => {
                 replace: true,
                 uri: state.uri,
             },
-        ], Computation.fromReadonlyArray(ObservableModule)())), Observable.map((returns))), (oldState, state) => {
+        ], Computation.fromReadonlyArray(ObservableModule))), Observable.map((returns))), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe([state], Computation.fromReadonlyArray(ObservableModule)(), replace
+            return pipe([state], Computation.fromReadonlyArray(ObservableModule), replace
                 ? Observable.forEach(bindMethod(replaceState, EventListenerLike_notify))
                 : push
                     ? Observable.forEach(bindMethod(pushState, EventListenerLike_notify))

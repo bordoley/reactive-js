@@ -18,7 +18,6 @@ import {
 } from "../computations.js";
 import {
   Factory,
-  Function1,
   raise as Functions_raise,
   Optional,
   error,
@@ -101,15 +100,13 @@ export interface Signature {
     >,
   >(
     m: TComputationModule,
-  ): <T>(
     options?: {
       readonly count?: number;
       readonly start?: number;
     } & Parameters<TComputationModule["genPure"]>[1],
-  ) => Function1<
-    ReadonlyArray<T>,
-    NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>
-  >;
+  ): <T>(
+    arr: ReadonlyArray<T>,
+  ) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   isDeferred<
     TComputationType extends

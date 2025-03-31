@@ -38,7 +38,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when source has duplicates in order",
         pipeLazyAsync(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.distinctUntilChanged<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -64,7 +64,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         await pipe(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.distinctUntilChanged<number>({ equality }),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
@@ -76,7 +76,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "with custom equality functions",
         pipeLazyAsync(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.distinctUntilChanged<number>({
             equality: () => true,
           }),
@@ -117,7 +117,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "keeps only values greater than 5",
         pipeLazyAsync(
           [4, 8, 10, 7],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.keep(greaterThan(5)),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -133,7 +133,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.keep<number>(predicate),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
@@ -148,7 +148,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "maps every value",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.map<number, number>(increment),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -164,7 +164,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         await pipeAsync(
           pipeLazy(
             [1, 2, 3],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.map(selector),
             m.toProducer(),
             Source.toReadonlyArrayAsync<boolean>(),
@@ -180,7 +180,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when there are more than one input value",
         pipeLazyAsync(
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.pairwise<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<Tuple2<number, number>>(),
@@ -204,7 +204,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when the input only provides 1 value",
         pipeLazyAsync(
           [0],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.pairwise<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<Tuple2<number, number>>(),
@@ -220,7 +220,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "sums all the values in the array emitting intermediate values.",
         pipeLazyAsync(
           [1, 1, 1],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.scan<number, number>((a, b) => a + b, returns(0)),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -236,7 +236,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.scan(scanner<number>, returns(0)),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
@@ -253,7 +253,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.scan<number, number>((a, b) => a + b, initialValue),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),
@@ -268,7 +268,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "with default count",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.skipFirst<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -279,7 +279,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when skipped source has additional elements",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.skipFirst<number>({ count: 2 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -290,7 +290,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when all elements are skipped",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.skipFirst<number>({ count: 4 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -304,7 +304,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "with default count",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeFirst<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -315,7 +315,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when taking fewer than the total number of elements in the source",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeFirst<number>({ count: 3 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -326,7 +326,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when taking more than all the items produced by the source",
         pipeLazyAsync(
           [1, 2],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeFirst<number>({ count: 3 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -337,7 +337,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "from iterable source",
         pipeLazyAsync(
           [1, 2, 3, 4],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeFirst<number>({ count: 2 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -358,7 +358,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "with default count",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeFirst<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -369,7 +369,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "when count is 0",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeFirst<number>({ count: 0 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -382,7 +382,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
       testAsync("exclusive", async () => {
         await pipeAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeWhile<number>(lessThan(4)),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -391,7 +391,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
 
         await pipeAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeWhile<number>(alwaysTrue),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -410,7 +410,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         "inclusive",
         pipeLazyAsync(
           [1, 2, 3, 4, 5, 6],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeWhile(lessThan(4), { inclusive: true }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -426,7 +426,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         await pipeAsync(
           pipeLazy(
             [1, 1],
-            Computation.fromReadonlyArray(m)(),
+            Computation.fromReadonlyArray(m),
             m.takeWhile<number>(predicate),
             m.toProducer(),
             Source.toReadonlyArrayAsync<number>(),

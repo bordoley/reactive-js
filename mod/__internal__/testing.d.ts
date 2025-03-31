@@ -38,7 +38,7 @@ export declare const expectToThrowErrorAsync: (error: unknown) => (f: Factory<Pr
 export declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => boolean) => (a: T) => T;
 export declare const expectArrayEquals: <T>(b: readonly T[], { valuesEquality, }?: {
     valuesEquality: Equality<T>;
-}) => (a: readonly T[]) => readonly T[];
+}) => <U extends T>(a: readonly U[]) => readonly U[];
 export declare const expectArrayNotEquals: <T>(b: readonly T[], { valuesEquality, }?: {
     valuesEquality: Equality<T>;
 }) => (a: readonly T[]) => readonly T[];

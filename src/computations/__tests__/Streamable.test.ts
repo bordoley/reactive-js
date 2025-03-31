@@ -159,7 +159,7 @@ testModule(
           _ =>
             pipe(
               [9, 10, 50, 60, 70],
-              Computation.fromReadonlyArray(ObservableModule)({
+              Computation.fromReadonlyArray(ObservableModule, {
                 delay: 1,
                 delayStart: true,
               }),
@@ -173,7 +173,7 @@ testModule(
 
       pipe(
         [(x: number) => x + 2],
-        Computation.fromReadonlyArray(ObservableModule)({
+        Computation.fromReadonlyArray(ObservableModule, {
           delay: 5,
           delayStart: true,
         }),
@@ -201,7 +201,7 @@ testModule(
           state =>
             pipe(
               [(_: number) => state],
-              Computation.fromReadonlyArray(ObservableModule)(),
+              Computation.fromReadonlyArray(ObservableModule),
             ),
           (_oldState, _newState) => {
             updateCnt++;
@@ -214,7 +214,7 @@ testModule(
 
       pipe(
         [increment],
-        Computation.fromReadonlyArray(ObservableModule)({
+        Computation.fromReadonlyArray(ObservableModule, {
           delay: 1,
           delayStart: true,
         }),

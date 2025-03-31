@@ -31,7 +31,7 @@ const InteractiveComputationModuleTests = <
         "The observable publishes all the values from the source",
         pipeLazyAsync(
           [0, 1, 2, 3, 4],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.toProducer<number>(),
           Source.toReadonlyArrayAsync<number>(),
           expectArrayEquals([0, 1, 2, 3, 4]),
@@ -44,9 +44,9 @@ const InteractiveComputationModuleTests = <
         "different length iterables",
         pipeLazyAsync(
           m.zip<number, number, number>(
-            Computation.fromReadonlyArray(m)<number>()([0, 1, 2, 3, 4]),
-            Computation.fromReadonlyArray(m)<number>()([0, 1, 2]),
-            Computation.fromReadonlyArray(m)<number>()([0, 1, 2, 3]),
+            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3, 4]),
+            Computation.fromReadonlyArray(m)<number>([0, 1, 2]),
+            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3]),
           ),
           m.toProducer(),
           Source.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
@@ -59,9 +59,9 @@ const InteractiveComputationModuleTests = <
         "with empty iterable",
         pipeLazyAsync(
           m.zip<number, number, number>(
-            Computation.fromReadonlyArray(m)<number>()([0, 1, 2, 3, 4]),
-            Computation.fromReadonlyArray(m)<number>()([]),
-            Computation.fromReadonlyArray(m)<number>()([0, 1, 2, 3]),
+            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3, 4]),
+            Computation.fromReadonlyArray(m)<number>([]),
+            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3]),
           ),
           m.toProducer(),
           Source.toReadonlyArrayAsync<Tuple3<number, number, number>>(),

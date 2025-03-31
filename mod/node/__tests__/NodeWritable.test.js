@@ -75,7 +75,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
         },
     });
     const consumer = pipe(writable, NodeWritable.toConsumer({ autoDispose: true }));
-    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule)(), Producer.encodeUtf8(), invoke(SourceLike_subscribe, consumer));
+    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(SourceLike_subscribe, consumer));
     await DisposableContainer.toPromise(consumer);
     pipe(writable.destroyed, expectFalse("expected writable not to be destroyed"));
     pipe(data, expectEquals("abcdefg"));
@@ -90,7 +90,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
         },
     });
     const consumer = pipe(writable, NodeWritable.toConsumer({ autoDispose: true }));
-    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule)(), Producer.encodeUtf8(), invoke(SourceLike_subscribe, consumer));
+    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(SourceLike_subscribe, consumer));
     await pipe(consumer, DisposableContainer.toPromise, expectPromiseToThrow);
     pipe(writable.destroyed, expectEquals(true));
 }), testAsync("writing to writable with pipeline", async () => {
@@ -108,7 +108,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
         });
         const compressionPipeline = pipeline(zlib.createGzip(), zlib.createGunzip(), writable, Disposable.toErrorHandler(scheduler));
         const consumer = pipe(compressionPipeline, NodeWritable.toConsumer({ autoDispose: true }));
-        pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule)(), Producer.encodeUtf8(), invoke(SourceLike_subscribe, consumer));
+        pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(SourceLike_subscribe, consumer));
         await DisposableContainer.toPromise(consumer);
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));

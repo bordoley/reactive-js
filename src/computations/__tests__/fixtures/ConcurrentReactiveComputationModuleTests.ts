@@ -32,7 +32,7 @@ const ConcurrentReactiveComputationModuleTests = <
         "publishes all the values produced by the observable",
         pipeLazyAsync(
           [1, 2, 3],
-          Computation.fromReadonlyArray(ObservableModule)(),
+          Computation.fromReadonlyArray(ObservableModule),
           m.fromObservable<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),

@@ -169,11 +169,11 @@ describe("stateStore", test("stateStore", () => {
     const env_4 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_4, VirtualTimeScheduler.create(), false);
-        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_ => pipe([9, 10, 50, 60, 70], Computation.fromReadonlyArray(ObservableModule)({
+        const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_ => pipe([9, 10, 50, 60, 70], Computation.fromReadonlyArray(ObservableModule, {
             delay: 1,
             delayStart: true,
         }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (_oldState, _newState) => Computation.empty(ObservableModule)()), invoke(StreamableLike_stream, vts));
-        pipe([(x) => x + 2], Computation.fromReadonlyArray(ObservableModule)({
+        pipe([(x) => x + 2], Computation.fromReadonlyArray(ObservableModule, {
             delay: 5,
             delayStart: true,
         }), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), Source.subscribe({ scheduler: vts }));
@@ -196,11 +196,11 @@ describe("stateStore", test("stateStore", () => {
             maxMicroTaskTicks: 1,
         }), false);
         let updateCnt = 0;
-        const stream = pipe(Streamable.stateStore(returns(0)), Streamable.syncState(state => pipe([(_) => state], Computation.fromReadonlyArray(ObservableModule)()), (_oldState, _newState) => {
+        const stream = pipe(Streamable.stateStore(returns(0)), Streamable.syncState(state => pipe([(_) => state], Computation.fromReadonlyArray(ObservableModule)), (_oldState, _newState) => {
             updateCnt++;
             return SynchronousObservable.delay(1);
         }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
-        pipe([increment], Computation.fromReadonlyArray(ObservableModule)({
+        pipe([increment], Computation.fromReadonlyArray(ObservableModule, {
             delay: 1,
             delayStart: true,
         }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), Source.subscribe({ scheduler: vts }));

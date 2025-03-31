@@ -43,7 +43,7 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Computation.fromReadonlyArray(ProducerModule)<string>(),
+        Computation.fromReadonlyArray(ProducerModule),
         Producer.encodeUtf8(),
         invoke(SourceLike_subscribe, consumer),
       );
@@ -75,7 +75,7 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Computation.fromReadonlyArray(ProducerModule)(),
+        Computation.fromReadonlyArray(ProducerModule),
         Producer.encodeUtf8(),
         invoke(SourceLike_subscribe, consumer),
       );
@@ -111,7 +111,7 @@ testModule(
 
       pipe(
         ["abc", "defg"],
-        Computation.fromReadonlyArray(ProducerModule)(),
+        Computation.fromReadonlyArray(ProducerModule),
         Producer.encodeUtf8(),
         invoke(SourceLike_subscribe, consumer),
       );

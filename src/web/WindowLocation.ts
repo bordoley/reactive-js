@@ -313,7 +313,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
                     uri: state.uri,
                   },
                 ],
-                Computation.fromReadonlyArray(ObservableModule)<TState>(),
+                Computation.fromReadonlyArray(ObservableModule),
               ),
             ),
             Observable.map(returns<TState>),
@@ -329,7 +329,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
 
           return pipe(
             [state],
-            Computation.fromReadonlyArray(ObservableModule)(),
+            Computation.fromReadonlyArray(ObservableModule),
             replace
               ? Observable.forEach(
                   bindMethod(replaceState, EventListenerLike_notify),

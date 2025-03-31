@@ -62,8 +62,8 @@ testModule(
       "combineLatest from two interspersing sources",
       pipeLazy(
         SynchronousObservable.combineLatest<number, number>(
-          pipe([3, 5, 7], Computation.fromReadonlyArray(m)({ delay: 2 })),
-          pipe([2, 4], Computation.fromReadonlyArray(m)({ delay: 3 })),
+          pipe([3, 5, 7], Computation.fromReadonlyArray(m, { delay: 2 })),
+          pipe([2, 4], Computation.fromReadonlyArray(m, { delay: 3 })),
         ),
         SynchronousObservable.toRunnable<Tuple2<number, number>>(),
         Runnable.toReadonlyArray(),
@@ -87,7 +87,7 @@ testModule(
               delay: number,
               value: number,
             ): PureSynchronousObservableLike<number> =>
-              pipe([value], Computation.fromReadonlyArray(m)({ delay })),
+              pipe([value], Computation.fromReadonlyArray(m, { delay })),
           );
           const obs1 = __memo(fromValueWithDelay, 10, 5);
           const result1 = __await<number>(obs1);
@@ -112,10 +112,10 @@ testModule(
         SynchronousObservable.compute(
           () => {
             const oneTwoThreeDelayed = __constant(
-              pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })),
+              pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })),
             );
             const createOneTwoThree = __constant((_: unknown) =>
-              pipe([1, 2, 3], Computation.fromReadonlyArray(m)()),
+              pipe([1, 2, 3], Computation.fromReadonlyArray(m)),
             );
 
             const v = __await(oneTwoThreeDelayed);
@@ -158,7 +158,7 @@ testModule(
             const src = __constant(
               pipe(
                 [0, 1, 2, 3, 4, 5],
-                Computation.fromReadonlyArray(m)({ delay: 5 }),
+                Computation.fromReadonlyArray(m, { delay: 5 }),
               ),
             );
             const src2 = __constant(
@@ -196,7 +196,7 @@ testModule(
           const src = __constant(
             pipe(
               [0, 1, 2, 3, 4, 5],
-              Computation.fromReadonlyArray(m)({ delay: 5 }),
+              Computation.fromReadonlyArray(m, { delay: 5 }),
             ),
           );
           const src2 = __constant(
@@ -215,7 +215,7 @@ testModule(
           const src3 = __constant(
             pipe(
               [1],
-              Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }),
+              Computation.fromReadonlyArray(m, { delay: 1, delayStart: true }),
               SynchronousObservable.repeat(40),
             ),
           );
@@ -264,7 +264,7 @@ testModule(
           [2, 5, 8],
           [3, 6, 9],
         ],
-        ReadonlyArray.map(Computation.fromReadonlyArray(m)({ delay: 3 })),
+        ReadonlyArray.map(Computation.fromReadonlyArray(m, { delay: 3 })),
       );
 
       pipe(
@@ -280,11 +280,11 @@ testModule(
         SynchronousObservable.merge<number>(
           pipe(
             [0, 2, 3, 5, 6],
-            Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }),
+            Computation.fromReadonlyArray(m, { delay: 1, delayStart: true }),
           ),
           pipe(
             [1, 4, 7],
-            Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }),
+            Computation.fromReadonlyArray(m, { delay: 2, delayStart: true }),
           ),
         ),
         SynchronousObservable.toRunnable(),
@@ -297,7 +297,7 @@ testModule(
 
       const subscription = pipe(
         SynchronousObservable.merge(
-          pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2 })),
+          pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })),
           SynchronousObservable.concat(
             SynchronousObservable.delay(5),
             Computation.raise(m)(),
@@ -317,24 +317,24 @@ testModule(
       pipe(
         SynchronousObservable.merge(
           SynchronousObservable.merge(
-            pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })),
+            pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })),
             SynchronousObservable.concat(
               SynchronousObservable.delay(3),
               Computation.empty(m)(),
-              pipe([4, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1 })),
+              pipe([4, 5, 6], Computation.fromReadonlyArray(m, { delay: 1 })),
             ),
             m.merge<number>(
               SynchronousObservable.concat(
                 SynchronousObservable.delay(6),
                 Computation.empty(m)(),
-                pipe([7, 8, 9], Computation.fromReadonlyArray(m)({ delay: 1 })),
+                pipe([7, 8, 9], Computation.fromReadonlyArray(m, { delay: 1 })),
               ),
               SynchronousObservable.concat(
                 SynchronousObservable.delay(9),
                 Computation.empty(m)(),
                 pipe(
                   [10, 11, 12],
-                  Computation.fromReadonlyArray(m)({ delay: 1 }),
+                  Computation.fromReadonlyArray(m, { delay: 1 }),
                 ),
               ),
             ),
@@ -352,14 +352,14 @@ testModule(
       "with queueing",
       pipeLazy(
         [
-          pipe([1, 3, 5], Computation.fromReadonlyArray(m)({ delay: 3 })),
-          pipe([2, 4, 6], Computation.fromReadonlyArray(m)({ delay: 3 })),
+          pipe([1, 3, 5], Computation.fromReadonlyArray(m, { delay: 3 })),
+          pipe([2, 4, 6], Computation.fromReadonlyArray(m, { delay: 3 })),
           pipe(
             [9, 10],
-            Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }),
+            Computation.fromReadonlyArray(m, { delay: 3, delayStart: true }),
           ),
         ],
-        Computation.fromReadonlyArray(m)(),
+        Computation.fromReadonlyArray(m),
         SynchronousObservable.mergeAll({
           concurrency: 2,
         }),
@@ -388,9 +388,9 @@ testModule(
       "without delay, merge all observables as they are produced",
       pipeLazy(
         [1, 2, 3],
-        Computation.fromReadonlyArray(m)(),
+        Computation.fromReadonlyArray(m),
         SynchronousObservable.map(x =>
-          pipe([x, x, x], Computation.fromReadonlyArray(m)()),
+          pipe([x, x, x], Computation.fromReadonlyArray(m)),
         ),
         SynchronousObservable.mergeAll({
           concurrency: 1,
@@ -419,11 +419,11 @@ testModule(
       "takes until the notifier notifies its first notification",
       pipeLazy(
         [10, 20, 30, 40, 50],
-        Computation.fromReadonlyArray(m)({ delay: 2 }),
+        Computation.fromReadonlyArray(m, { delay: 2 }),
         SynchronousObservable.takeUntil<number>(
           pipe(
             [1],
-            Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }),
+            Computation.fromReadonlyArray(m, { delay: 3, delayStart: true }),
           ),
         ),
         SynchronousObservable.toRunnable(),
@@ -513,9 +513,9 @@ testModule(
       "when source and latest are interlaced",
       pipeLazy(
         [0, 1, 2, 3],
-        Computation.fromReadonlyArray(m)({ delay: 1 }),
+        Computation.fromReadonlyArray(m, { delay: 1 }),
         SynchronousObservable.withLatestFrom<number, number>(
-          pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })),
+          pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 })),
         ),
         SynchronousObservable.toRunnable(),
         Runnable.toReadonlyArray<Tuple2<number, number>>(),
@@ -531,7 +531,7 @@ testModule(
       "when latest produces no values",
       pipeLazy(
         [0],
-        Computation.fromReadonlyArray(m)({ delay: 1 }),
+        Computation.fromReadonlyArray(m, { delay: 1 }),
         SynchronousObservable.withLatestFrom(
           Computation.empty(m)(),
 
@@ -548,7 +548,7 @@ testModule(
 
       const result = pipe(
         [0],
-        Computation.fromReadonlyArray(m)({ delay: 1 }),
+        Computation.fromReadonlyArray(m, { delay: 1 }),
         SynchronousObservable.withLatestFrom(
           Computation.raise(m)<number>({
             raise: returns(error),
@@ -569,9 +569,9 @@ testModule(
       "with selector",
       pipeLazy(
         [0, 1, 2, 3],
-        Computation.fromReadonlyArray(m)({ delay: 1 }),
+        Computation.fromReadonlyArray(m, { delay: 1 }),
         SynchronousObservable.withLatestFrom<number, number, number>(
-          pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })),
+          pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 })),
           (x, y) => x + y,
         ),
         SynchronousObservable.toRunnable(),
@@ -588,11 +588,11 @@ testModule(
         SynchronousObservable.zipLatest<number, number>(
           pipe(
             [1, 2, 3, 4, 5, 6, 7, 8],
-            Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }),
+            Computation.fromReadonlyArray(m, { delay: 1, delayStart: true }),
           ),
           pipe(
             [1, 2, 3, 4],
-            Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }),
+            Computation.fromReadonlyArray(m, { delay: 2, delayStart: true }),
           ),
         ),
         m.map<Tuple2<number, number>, number>(([a, b]) => a + b),

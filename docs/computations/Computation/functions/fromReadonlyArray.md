@@ -6,7 +6,7 @@
 
 # Function: fromReadonlyArray()
 
-> **fromReadonlyArray**\<`TComputationType`, `TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>\>
+> **fromReadonlyArray**\<`TComputationType`, `TComputationModule`\>(`m`, `options`?): \<`T`\>(`arr`) => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
 
 ## Type Parameters
 
@@ -20,6 +20,10 @@
 
 `TComputationModule`
 
+### options?
+
+`object` & `Parameters`\<`TComputationModule`\[`"genPure"`\]\>\[`1`\]
+
 ## Returns
 
 `Function`
@@ -30,10 +34,10 @@
 
 ### Parameters
 
-#### options?
+#### arr
 
-`object` & `Parameters`\<`TComputationModule`\[`"genPure"`\]\>\[`1`\]
+readonly `T`[]
 
 ### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>\>
+[`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>

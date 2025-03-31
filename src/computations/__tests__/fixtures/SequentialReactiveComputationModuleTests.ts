@@ -32,7 +32,7 @@ const SequentialReactiveComputationModuleTests = <
         "with multiple sub buffers",
         pipeLazyAsync(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.buffer<number>({ count: 3 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<readonly number[]>(),
@@ -50,7 +50,7 @@ const SequentialReactiveComputationModuleTests = <
         "last buffer is short",
         pipeLazyAsync(
           [1, 2, 3, 4, 5, 6, 7, 8],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.buffer<number>({ count: 3 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<readonly number[]>(),
@@ -68,7 +68,7 @@ const SequentialReactiveComputationModuleTests = <
         "buffers all values when no count is provided",
         pipeLazyAsync(
           [1, 2, 3, 4, 5, 6, 7, 8],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.buffer<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<readonly number[]>(),
@@ -85,7 +85,7 @@ const SequentialReactiveComputationModuleTests = <
 
         await pipeAsync(
           [str],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.encodeUtf8(),
           m.decodeWithCharset(),
           m.toProducer(),
@@ -99,7 +99,7 @@ const SequentialReactiveComputationModuleTests = <
 
         await pipeAsync(
           [str],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.encodeUtf8(),
           m.decodeWithCharset(),
           m.toProducer(),
@@ -112,7 +112,7 @@ const SequentialReactiveComputationModuleTests = <
         const str = String.fromCodePoint(8364);
         await pipeAsync(
           [str],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.encodeUtf8(),
           m.decodeWithCharset(),
           m.toProducer(),
@@ -125,7 +125,7 @@ const SequentialReactiveComputationModuleTests = <
         "multi-byte decoding divided between multiple buffers",
         pipeLazyAsync(
           [new Uint8Array([226, 153]), new Uint8Array([165])],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.decodeWithCharset(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<string>(),
@@ -137,7 +137,7 @@ const SequentialReactiveComputationModuleTests = <
         "multi-byte decoding with missing tail",
         pipeLazyAsync(
           [new Uint8Array([226])],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.decodeWithCharset(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<string>(),
@@ -152,7 +152,7 @@ const SequentialReactiveComputationModuleTests = <
         "with default count",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeLast<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -163,7 +163,7 @@ const SequentialReactiveComputationModuleTests = <
         "when count is 0",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           // Some implementations special case this
           m.takeLast<number>({ count: 0 }),
           m.toProducer(),
@@ -175,7 +175,7 @@ const SequentialReactiveComputationModuleTests = <
         "when count is less than the total number of elements",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeLast<number>({ count: 3 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -186,7 +186,7 @@ const SequentialReactiveComputationModuleTests = <
         "when count is greater than the total number of elements",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeLast<number>({ count: 10 }),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),
@@ -197,7 +197,7 @@ const SequentialReactiveComputationModuleTests = <
         "with default count",
         pipeLazyAsync(
           [1, 2, 3, 4, 5],
-          Computation.fromReadonlyArray(m)(),
+          Computation.fromReadonlyArray(m),
           m.takeLast<number>(),
           m.toProducer(),
           Source.toReadonlyArrayAsync<number>(),

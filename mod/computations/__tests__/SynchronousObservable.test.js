@@ -73,12 +73,12 @@ import SequentialComputationModuleTests from "./fixtures/SequentialComputationMo
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 const m = Computation.makeModule()(SynchronousObservable);
-testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), DeferredAsynchronousReactiveComputationModuleTests(m), describe("combineLatest", test("combineLatest from two interspersing sources", pipeLazy(SynchronousObservable.combineLatest(pipe([3, 5, 7], Computation.fromReadonlyArray(m)({ delay: 2 })), pipe([2, 4], Computation.fromReadonlyArray(m)({ delay: 3 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
+testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), DeferredAsynchronousReactiveComputationModuleTests(m), describe("combineLatest", test("combineLatest from two interspersing sources", pipeLazy(SynchronousObservable.combineLatest(pipe([3, 5, 7], Computation.fromReadonlyArray(m, { delay: 2 })), pipe([2, 4], Computation.fromReadonlyArray(m, { delay: 3 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
     valuesEquality: arrayEquality(),
 })))), describe("compute", test("batch mode", () => {
     const result = [];
     pipe(SynchronousObservable.compute(() => {
-        const fromValueWithDelay = __constant((delay, value) => pipe([value], Computation.fromReadonlyArray(m)({ delay })));
+        const fromValueWithDelay = __constant((delay, value) => pipe([value], Computation.fromReadonlyArray(m, { delay })));
         const obs1 = __memo(fromValueWithDelay, 10, 5);
         const result1 = __await(obs1);
         const obs2 = __memo(fromValueWithDelay, 20, 10);
@@ -91,8 +91,8 @@ testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputa
 }), test("combined-latest mode", () => {
     const result = [];
     pipe(SynchronousObservable.compute(() => {
-        const oneTwoThreeDelayed = __constant(pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })));
-        const createOneTwoThree = __constant((_) => pipe([1, 2, 3], Computation.fromReadonlyArray(m)()));
+        const oneTwoThreeDelayed = __constant(pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })));
+        const createOneTwoThree = __constant((_) => pipe([1, 2, 3], Computation.fromReadonlyArray(m)));
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
@@ -117,7 +117,7 @@ testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputa
         __disposeResources(env_1);
     }
 }), test("conditional hooks", pipeLazy(SynchronousObservable.compute(() => {
-    const src = __constant(pipe([0, 1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)({ delay: 5 })));
+    const src = __constant(pipe([0, 1, 2, 3, 4, 5], Computation.fromReadonlyArray(m, { delay: 5 })));
     const src2 = __constant(SynchronousObservable.genPure(function* () {
         let x = 100;
         while (true) {
@@ -132,7 +132,7 @@ testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputa
     }
     return v;
 }, { mode: "batched" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(SynchronousObservable.compute(() => {
-    const src = __constant(pipe([0, 1, 2, 3, 4, 5], Computation.fromReadonlyArray(m)({ delay: 5 })));
+    const src = __constant(pipe([0, 1, 2, 3, 4, 5], Computation.fromReadonlyArray(m, { delay: 5 })));
     const src2 = __constant(SynchronousObservable.genPure(function* () {
         let x = 100;
         while (true) {
@@ -140,7 +140,7 @@ testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputa
             yield x;
         }
     }, { delay: 2 }));
-    const src3 = __constant(pipe([1], Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true }), SynchronousObservable.repeat(40)));
+    const src3 = __constant(pipe([1], Computation.fromReadonlyArray(m, { delay: 1, delayStart: true }), SynchronousObservable.repeat(40)));
     const v = __await(src);
     if (v % 2 === 0) {
         __memo(increment, 1);
@@ -161,13 +161,13 @@ describe("merge", test("with sources that have the same delays", () => {
         [1, 4, 7],
         [2, 5, 8],
         [3, 6, 9],
-    ], ReadonlyArray.map(Computation.fromReadonlyArray(m)({ delay: 3 })));
+    ], ReadonlyArray.map(Computation.fromReadonlyArray(m, { delay: 3 })));
     pipe(SynchronousObservable.merge(ev1, ev2, ev3), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
-}), test("with sources that have the different delays", pipeLazy(SynchronousObservable.merge(pipe([0, 2, 3, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true })), pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", () => {
+}), test("with sources that have the different delays", pipeLazy(SynchronousObservable.merge(pipe([0, 2, 3, 5, 6], Computation.fromReadonlyArray(m, { delay: 1, delayStart: true })), pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2, delayStart: true }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", () => {
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
-        const subscription = pipe(SynchronousObservable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m)({ delay: 2 })), SynchronousObservable.concat(SynchronousObservable.delay(5), Computation.raise(m)())), Source.subscribe({ scheduler: vts }));
+        const subscription = pipe(SynchronousObservable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })), SynchronousObservable.concat(SynchronousObservable.delay(5), Computation.raise(m)())), Source.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(pipeLazy(subscription, Disposable.raiseIfDisposedWithError), expectToThrow);
     }
@@ -179,12 +179,12 @@ describe("merge", test("with sources that have the same delays", () => {
         __disposeResources(env_2);
     }
 }), test("merging merged sources", () => {
-    pipe(SynchronousObservable.merge(SynchronousObservable.merge(pipe([1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 })), SynchronousObservable.concat(SynchronousObservable.delay(3), Computation.empty(m)(), pipe([4, 5, 6], Computation.fromReadonlyArray(m)({ delay: 1 }))), m.merge(SynchronousObservable.concat(SynchronousObservable.delay(6), Computation.empty(m)(), pipe([7, 8, 9], Computation.fromReadonlyArray(m)({ delay: 1 }))), SynchronousObservable.concat(SynchronousObservable.delay(9), Computation.empty(m)(), pipe([10, 11, 12], Computation.fromReadonlyArray(m)({ delay: 1 })))))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
+    pipe(SynchronousObservable.merge(SynchronousObservable.merge(pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })), SynchronousObservable.concat(SynchronousObservable.delay(3), Computation.empty(m)(), pipe([4, 5, 6], Computation.fromReadonlyArray(m, { delay: 1 }))), m.merge(SynchronousObservable.concat(SynchronousObservable.delay(6), Computation.empty(m)(), pipe([7, 8, 9], Computation.fromReadonlyArray(m, { delay: 1 }))), SynchronousObservable.concat(SynchronousObservable.delay(9), Computation.empty(m)(), pipe([10, 11, 12], Computation.fromReadonlyArray(m, { delay: 1 })))))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
 })), describe("mergeAll", test("with queueing", pipeLazy([
-    pipe([1, 3, 5], Computation.fromReadonlyArray(m)({ delay: 3 })),
-    pipe([2, 4, 6], Computation.fromReadonlyArray(m)({ delay: 3 })),
-    pipe([9, 10], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true })),
-], Computation.fromReadonlyArray(m)(), SynchronousObservable.mergeAll({
+    pipe([1, 3, 5], Computation.fromReadonlyArray(m, { delay: 3 })),
+    pipe([2, 4, 6], Computation.fromReadonlyArray(m, { delay: 3 })),
+    pipe([9, 10], Computation.fromReadonlyArray(m, { delay: 3, delayStart: true })),
+], Computation.fromReadonlyArray(m), SynchronousObservable.mergeAll({
     concurrency: 2,
 }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), 
 /*
@@ -203,9 +203,9 @@ testAsync(
     );
   },
 ),*/
-test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Computation.fromReadonlyArray(m)(), SynchronousObservable.map(x => pipe([x, x, x], Computation.fromReadonlyArray(m)())), SynchronousObservable.mergeAll({
+test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Computation.fromReadonlyArray(m), SynchronousObservable.map(x => pipe([x, x, x], Computation.fromReadonlyArray(m))), SynchronousObservable.mergeAll({
     concurrency: 1,
-}), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("spring", testAsync("test with spring", pipeLazyAsync(SynchronousObservable.spring(), SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.last(), expectEquals(1)))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m)({ delay: 2 }), SynchronousObservable.takeUntil(pipe([1], Computation.fromReadonlyArray(m)({ delay: 3, delayStart: true }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([10, 20])))), describe("throttle", test("first", pipeLazy(SynchronousObservable.genPure(function* counter() {
+}), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("spring", testAsync("test with spring", pipeLazyAsync(SynchronousObservable.spring(), SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.last(), expectEquals(1)))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m, { delay: 2 }), SynchronousObservable.takeUntil(pipe([1], Computation.fromReadonlyArray(m, { delay: 3, delayStart: true }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([10, 20])))), describe("throttle", test("first", pipeLazy(SynchronousObservable.genPure(function* counter() {
     let x = 0;
     while (true) {
         yield x;
@@ -232,14 +232,14 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
 }, {
     delay: 1,
     delayStart: true,
-}), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(75, { mode: "interval" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
+}), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(75, { mode: "interval" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
     valuesEquality: arrayEquality(),
-}))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m)({ delay: 1 }), SynchronousObservable.withLatestFrom(Computation.empty(m)(), returns(1)), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
+}))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.empty(m)(), returns(1)), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const env_3 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const error = newInstance(Error);
-        const result = pipe([0], Computation.fromReadonlyArray(m)({ delay: 1 }), SynchronousObservable.withLatestFrom(Computation.raise(m)({
+        const result = pipe([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.raise(m)({
             raise: returns(error),
         }), returns(1)), Source.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
@@ -252,7 +252,7 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
     finally {
         __disposeResources(env_3);
     }
-}), test("with selector", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m)({ delay: 2 })), (x, y) => x + y), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 3, 4])))), describe("zipLatest", test("zip two delayed sources", pipeLazy(SynchronousObservable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Computation.fromReadonlyArray(m)({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Computation.fromReadonlyArray(m)({ delay: 2, delayStart: true }))), m.map(([a, b]) => a + b), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11])))))({
+}), test("with selector", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 })), (x, y) => x + y), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 3, 4])))), describe("zipLatest", test("zip two delayed sources", pipeLazy(SynchronousObservable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], Computation.fromReadonlyArray(m, { delay: 1, delayStart: true })), pipe([1, 2, 3, 4], Computation.fromReadonlyArray(m, { delay: 2, delayStart: true }))), m.map(([a, b]) => a + b), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11])))))({
     beforeEach() {
         const scheduler = HostScheduler.create();
         DefaultScheduler.set(scheduler);
