@@ -1,4 +1,8 @@
-import { Array, Array_length } from "../../__internal__/constants.js";
+import {
+  Array,
+  Array_length,
+  MAX_SAFE_INTEGER,
+} from "../../__internal__/constants.js";
 import {
   Mixin1,
   mix,
@@ -12,19 +16,28 @@ import {
   isSome,
   newInstance,
   none,
+  raiseError,
   returns,
 } from "../../functions.js";
-import { floor } from "../../math.js";
+import { clampPositiveInteger, floor } from "../../math.js";
 import {
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
+  BackPressureError,
+  BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
   DisposableLike,
   DisposableLike_isDisposed,
+  DropLatestBackpressureStrategy,
+  DropOldestBackpressureStrategy,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_moveNext,
+  OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_enqueue,
+  ThrowBackpressureStrategy,
 } from "../../utils.js";
 
 type TReturn<T> = Omit<QueueLike<T>, keyof DisposableLike>;
@@ -38,6 +51,8 @@ type TPrototype<T> = Omit<
 
 type TConfig<T> = Optional<{
   comparator?: Comparator<T>;
+  backpressureStrategy?: BackpressureStrategy;
+  capacity?: number;
 }>;
 
 const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
@@ -47,8 +62,16 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
     const QueueMixin_tail = Symbol("QueueMixin_tail");
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
+    const QueueMixin_backpressureStrategy = Symbol(
+      "QueueMixin_backpressureStrategy",
+    );
+    const QueueMixin_backpressureCapacity = Symbol(
+      "QueueMixin_backpressureCapacity",
+    );
 
     type TProperties = {
+      [QueueMixin_backpressureStrategy]: BackpressureStrategy;
+      [QueueMixin_backpressureCapacity]: number;
       [EnumeratorLike_current]: T;
       [EnumeratorLike_hasCurrent]: boolean;
       [CollectionEnumeratorLike_count]: number;
@@ -109,9 +132,17 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
           this[QueueMixin_comparator] = config?.comparator;
           this[QueueMixin_values] = none;
 
+          this[QueueMixin_backpressureStrategy] =
+            config?.backpressureStrategy ?? OverflowBackpressureStrategy;
+          this[QueueMixin_backpressureCapacity] = clampPositiveInteger(
+            config?.capacity ?? MAX_SAFE_INTEGER,
+          );
+
           return this;
         },
         props<TProperties>({
+          [QueueMixin_backpressureStrategy]: OverflowBackpressureStrategy,
+          [QueueMixin_backpressureCapacity]: MAX_SAFE_INTEGER,
           [EnumeratorLike_current]: none,
           [EnumeratorLike_hasCurrent]: false,
           [CollectionEnumeratorLike_count]: 0,
@@ -131,6 +162,16 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
             return head === tail ? none : values[index];
           },*/
+
+          get [BackPressureConfig_capacity]() {
+            unsafeCast<TProperties>(this);
+            return this[QueueMixin_backpressureCapacity];
+          },
+
+          get [BackPressureConfig_strategy]() {
+            unsafeCast<TProperties>(this);
+            return this[QueueMixin_backpressureStrategy];
+          },
 
           get [CollectionEnumeratorLike_peek](): Optional<T> {
             unsafeCast<TProperties>(this);
@@ -306,8 +347,35 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
           },
 
           [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
-            if (this[DisposableLike_isDisposed]) {
+            const isDisposed = this[DisposableLike_isDisposed];
+            const backpressureStrategy = this[QueueMixin_backpressureStrategy];
+            const capacity = this[QueueMixin_backpressureCapacity];
+            const applyBackpressure =
+              this[CollectionEnumeratorLike_count] >= capacity;
+
+            if (
+              (backpressureStrategy === DropLatestBackpressureStrategy &&
+                applyBackpressure) ||
+              // Special case the 0 capacity queue so that we don't fall through
+              // to pushing an item onto the queue
+              (backpressureStrategy === DropOldestBackpressureStrategy &&
+                capacity === 0) ||
+              isDisposed
+            ) {
               return;
+            } else if (
+              backpressureStrategy === DropOldestBackpressureStrategy &&
+              applyBackpressure
+            ) {
+              // We want to pop off the oldest value first, before enqueueing
+              // to avoid unintentionally growing the queue.
+
+              this[EnumeratorLike_moveNext]();
+            } else if (
+              backpressureStrategy === ThrowBackpressureStrategy &&
+              applyBackpressure
+            ) {
+              raiseError(newInstance(BackPressureError, this));
             }
 
             const newCount = ++this[CollectionEnumeratorLike_count];

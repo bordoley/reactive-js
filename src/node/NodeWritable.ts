@@ -25,6 +25,8 @@ import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import {
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
   BackPressureError,
   BackpressureStrategy,
   ConsumerLike,
@@ -33,8 +35,6 @@ import {
   EventListenerLike_notify,
   FlowControllerLike,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_backpressureStrategy,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -99,9 +99,9 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       [WritableConsumer_onReadyPublisher]: none,
     }),
     proto({
-      [FlowControllerLike_backpressureStrategy]:
+      [BackPressureConfig_strategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
-      [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+      [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
 
       get [FlowControllerLike_isReady]() {
         unsafeCast<TProperties>(this);

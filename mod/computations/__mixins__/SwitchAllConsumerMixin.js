@@ -7,7 +7,7 @@ import { bind, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, OverflowBackpressureStrategy, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
     const SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
     const SwitchAllConsumer_innerSubscription = Symbol("SwitchAllConsumer_innerSubscription");
@@ -35,8 +35,8 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
                 this[SwitchAllConsumer_delegate][SinkLike_isCompleted]);
         },
         [FlowControllerLike_isReady]: true,
-        [FlowControllerLike_backpressureStrategy]: OverflowBackpressureStrategy,
-        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
+        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
         [FlowControllerLike_addOnReadyListener]() {
             return Disposable.disposed;
         },

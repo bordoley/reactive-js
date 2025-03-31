@@ -10,6 +10,10 @@
 
 - `Error`
 
+## Implements
+
+- `BackPressureConfig`
+
 ## Constructors
 
 ### new BackPressureError()
@@ -20,7 +24,7 @@
 
 ##### consumer
 
-[`FlowControllerLike`](../interfaces/FlowControllerLike.md)
+`BackPressureConfig`
 
 #### Returns
 
@@ -32,18 +36,20 @@
 
 ## Properties
 
-### \[FlowControllerLike\_backpressureStrategy\]
+### \[BackPressureConfig\_capacity\]
 
-> `readonly` **\[FlowControllerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
+> `readonly` **\[BackPressureConfig\_capacity\]**: `number`
 
-***
+#### Implementation of
 
-### \[FlowControllerLike\_capacity\]
-
-> `readonly` **\[FlowControllerLike\_capacity\]**: `number`
+`BackPressureConfig.[BackPressureConfig_capacity]`
 
 ***
 
-### \[FlowControllerLike\_isReady\]
+### \[BackPressureConfig\_strategy\]
 
-> `readonly` **\[FlowControllerLike\_isReady\]**: `boolean`
+> `readonly` **\[BackPressureConfig\_strategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
+
+#### Implementation of
+
+`BackPressureConfig.[BackPressureConfig_strategy]`

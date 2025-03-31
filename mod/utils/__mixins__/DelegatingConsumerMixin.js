@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import { FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, } from "../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, } from "../../utils.js";
 import { DelegatingEventListenerLike_delegate } from "./DelegatingEventListenerMixin.js";
 import DelegatingSinkMixin from "./DelegatingSinkMixin.js";
 const DelegatingConsumerMixin = /*@__PURE__*/ (() => {
@@ -14,13 +14,13 @@ const DelegatingConsumerMixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[DelegatingEventListenerLike_delegate][FlowControllerLike_isReady];
         },
-        get [FlowControllerLike_backpressureStrategy]() {
+        get [BackPressureConfig_strategy]() {
             unsafeCast(this);
-            return this[DelegatingEventListenerLike_delegate][FlowControllerLike_backpressureStrategy];
+            return this[DelegatingEventListenerLike_delegate][BackPressureConfig_strategy];
         },
-        get [FlowControllerLike_capacity]() {
+        get [BackPressureConfig_capacity]() {
             unsafeCast(this);
-            return this[DelegatingEventListenerLike_delegate][FlowControllerLike_capacity];
+            return this[DelegatingEventListenerLike_delegate][BackPressureConfig_capacity];
         },
         [FlowControllerLike_addOnReadyListener](callback) {
             return this[DelegatingEventListenerLike_delegate][FlowControllerLike_addOnReadyListener](callback);

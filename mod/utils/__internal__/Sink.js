@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { LiftedSinkLike_subscription, } from "../../computations/__internal__/LiftedSource.js";
 import { none, pipe, returns, } from "../../functions.js";
-import { EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, OverflowBackpressureStrategy, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
@@ -39,8 +39,8 @@ export const toConsumer =
         return this;
     }, props(), proto({
         [FlowControllerLike_isReady]: true,
-        [FlowControllerLike_backpressureStrategy]: OverflowBackpressureStrategy,
-        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
+        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
         [FlowControllerLike_addOnReadyListener](_) {
             return Disposable.disposed;
         },

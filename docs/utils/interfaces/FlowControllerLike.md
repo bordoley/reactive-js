@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DisposableLike`](DisposableLike.md)
+- [`DisposableLike`](DisposableLike.md).`BackPressureConfig`
 
 ## Extended by
 
@@ -16,6 +16,30 @@
 - [`ConsumerLike`](ConsumerLike.md)
 
 ## Properties
+
+### \[BackPressureConfig\_capacity\]
+
+> `readonly` **\[BackPressureConfig\_capacity\]**: `number`
+
+The number of items the queue is capable of efficiently buffering.
+
+#### Inherited from
+
+`BackPressureConfig.[BackPressureConfig_capacity]`
+
+***
+
+### \[BackPressureConfig\_strategy\]
+
+> `readonly` **\[BackPressureConfig\_strategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
+
+The back pressure strategy utilized by the queue when it is at capacity.
+
+#### Inherited from
+
+`BackPressureConfig.[BackPressureConfig_strategy]`
+
+***
 
 ### \[DisposableLike\_error\]
 
@@ -38,22 +62,6 @@ The error the `Disposable` was disposed with if disposed.
 #### Inherited from
 
 [`DisposableLike`](DisposableLike.md).[`[DisposableLike_isDisposed]`](DisposableLike.md#disposablelike_isdisposed)
-
-***
-
-### \[FlowControllerLike\_backpressureStrategy\]
-
-> `readonly` **\[FlowControllerLike\_backpressureStrategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
-
-The back pressure strategy utilized by the queue when it is at capacity.
-
-***
-
-### \[FlowControllerLike\_capacity\]
-
-> `readonly` **\[FlowControllerLike\_capacity\]**: `number`
-
-The number of items the queue is capable of efficiently buffering.
 
 ***
 

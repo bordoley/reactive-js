@@ -9,13 +9,13 @@ import {
 } from "../../__internal__/mixins.js";
 import { SideEffect1, returns } from "../../functions.js";
 import {
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
   BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_backpressureStrategy,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -86,17 +86,17 @@ const DelegatingConsumerMixin: <
           ];
         },
 
-        get [FlowControllerLike_backpressureStrategy](): BackpressureStrategy {
+        get [BackPressureConfig_strategy](): BackpressureStrategy {
           unsafeCast<DelegatingConsumerLike<T, TOut, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
-            FlowControllerLike_backpressureStrategy
+            BackPressureConfig_strategy
           ];
         },
 
-        get [FlowControllerLike_capacity](): number {
+        get [BackPressureConfig_capacity](): number {
           unsafeCast<DelegatingConsumerLike<T, TOut, TDelegateConsumer>>(this);
           return this[DelegatingEventListenerLike_delegate][
-            FlowControllerLike_capacity
+            BackPressureConfig_capacity
           ];
         },
 

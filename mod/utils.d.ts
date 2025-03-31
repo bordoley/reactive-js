@@ -57,30 +57,31 @@ export declare const DropLatestBackpressureStrategy: BackpressureStrategy;
 export declare const DropOldestBackpressureStrategy: BackpressureStrategy;
 export declare const OverflowBackpressureStrategy: BackpressureStrategy;
 export declare const ThrowBackpressureStrategy: BackpressureStrategy;
-export declare const FlowControllerLike_backpressureStrategy: unique symbol;
-export declare const FlowControllerLike_capacity: unique symbol;
-export declare const FlowControllerLike_isReady: unique symbol;
-export declare const FlowControllerLike_addOnReadyListener: unique symbol;
-export interface FlowControllerLike extends DisposableLike {
-    readonly [FlowControllerLike_isReady]: boolean;
+export declare const BackPressureConfig_strategy: unique symbol;
+export declare const BackPressureConfig_capacity: unique symbol;
+type BackPressureConfig = {
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
-    readonly [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
+    readonly [BackPressureConfig_strategy]: BackpressureStrategy;
     /**
      * The number of items the queue is capable of efficiently buffering.
      */
-    readonly [FlowControllerLike_capacity]: number;
+    readonly [BackPressureConfig_capacity]: number;
+};
+export declare const FlowControllerLike_isReady: unique symbol;
+export declare const FlowControllerLike_addOnReadyListener: unique symbol;
+export interface FlowControllerLike extends DisposableLike, BackPressureConfig {
+    readonly [FlowControllerLike_isReady]: boolean;
     [FlowControllerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
 }
 /**
  * @noInheritDoc
  */
-export declare class BackPressureError extends Error {
-    readonly [FlowControllerLike_capacity]: number;
-    readonly [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
-    readonly [FlowControllerLike_isReady]: boolean;
-    constructor(consumer: FlowControllerLike);
+export declare class BackPressureError extends Error implements BackPressureConfig {
+    readonly [BackPressureConfig_capacity]: number;
+    readonly [BackPressureConfig_strategy]: BackpressureStrategy;
+    constructor(consumer: BackPressureConfig);
 }
 export declare const EnumeratorLike_moveNext: unique symbol;
 export declare const EnumeratorLike_current: unique symbol;
@@ -108,7 +109,7 @@ export declare const QueueLike_enqueue: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T>, BackPressureConfig {
     [QueueLike_enqueue](v: T): void;
 }
 export declare const FlowControllerEnumeratorLike_addOnDataAvailableListener: unique symbol;
@@ -250,3 +251,4 @@ export interface ConsumerLike<T = unknown> extends SinkLike<T>, FlowControllerLi
  */
 export interface ObserverLike<T = unknown> extends ConsumerLike<T>, SchedulerLike {
 }
+export {};

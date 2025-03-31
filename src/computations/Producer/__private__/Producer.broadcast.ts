@@ -20,6 +20,8 @@ import DelegatingEventListenerMixin, {
   DelegatingEventListenerLike_delegate,
 } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
   BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
@@ -28,8 +30,6 @@ import {
   EventListenerLike,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_backpressureStrategy,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   SchedulerLike,
   SinkLike_complete,
@@ -87,10 +87,10 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
         return this[DisposableLike_isDisposed];
       },
 
-      [FlowControllerLike_backpressureStrategy]:
+      [BackPressureConfig_strategy]:
         ThrowBackpressureStrategy as BackpressureStrategy,
 
-      [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+      [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
 
       [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike<T>,

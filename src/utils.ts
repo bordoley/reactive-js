@@ -91,29 +91,32 @@ export const DropOldestBackpressureStrategy: BackpressureStrategy =
 export const OverflowBackpressureStrategy: BackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy: BackpressureStrategy = "throw";
 
-export const FlowControllerLike_backpressureStrategy = Symbol(
-  "FlowControllerLike_backpressureStrategy",
+export const BackPressureConfig_strategy = Symbol(
+  "BackPressureConfig_strategy",
 );
-export const FlowControllerLike_capacity = Symbol(
-  "FlowControllerLike_capacity",
+export const BackPressureConfig_capacity = Symbol(
+  "BackPressureConfig_capacity",
 );
+
+type BackPressureConfig = {
+  /**
+   * The back pressure strategy utilized by the queue when it is at capacity.
+   */
+  readonly [BackPressureConfig_strategy]: BackpressureStrategy;
+
+  /**
+   * The number of items the queue is capable of efficiently buffering.
+   */
+  readonly [BackPressureConfig_capacity]: number;
+};
+
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol(
   "FlowControllerLike_addOnReadyListener",
 );
 
-export interface FlowControllerLike extends DisposableLike {
+export interface FlowControllerLike extends DisposableLike, BackPressureConfig {
   readonly [FlowControllerLike_isReady]: boolean;
-
-  /**
-   * The back pressure strategy utilized by the queue when it is at capacity.
-   */
-  readonly [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
-
-  /**
-   * The number of items the queue is capable of efficiently buffering.
-   */
-  readonly [FlowControllerLike_capacity]: number;
 
   [FlowControllerLike_addOnReadyListener](
     callback: SideEffect1<void>,
@@ -123,17 +126,14 @@ export interface FlowControllerLike extends DisposableLike {
 /**
  * @noInheritDoc
  */
-export class BackPressureError extends Error {
-  readonly [FlowControllerLike_capacity]: number;
-  readonly [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
-  readonly [FlowControllerLike_isReady]: boolean;
+export class BackPressureError extends Error implements BackPressureConfig {
+  readonly [BackPressureConfig_capacity]: number;
+  readonly [BackPressureConfig_strategy]: BackpressureStrategy;
 
-  constructor(consumer: FlowControllerLike) {
+  constructor(consumer: BackPressureConfig) {
     super();
-    this[FlowControllerLike_capacity] = consumer[FlowControllerLike_capacity];
-    this[FlowControllerLike_backpressureStrategy] =
-      consumer[FlowControllerLike_backpressureStrategy];
-    this[FlowControllerLike_isReady] = consumer[FlowControllerLike_isReady];
+    this[BackPressureConfig_capacity] = consumer[BackPressureConfig_capacity];
+    this[BackPressureConfig_strategy] = consumer[BackPressureConfig_strategy];
   }
 }
 
@@ -181,7 +181,9 @@ export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+export interface QueueLike<T = unknown>
+  extends CollectionEnumeratorLike<T>,
+    BackPressureConfig {
   [QueueLike_enqueue](v: T): void;
 }
 

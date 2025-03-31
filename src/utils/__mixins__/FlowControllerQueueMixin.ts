@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   Mixin1,
   include,
@@ -21,22 +20,18 @@ import {
   alwaysNone,
   call,
   isEqualTo,
-  newInstance,
   none,
   pipe,
-  raiseError,
   returns,
 } from "../../functions.js";
-import { clampPositiveInteger } from "../../math.js";
 import {
-  BackPressureError,
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
   DisposableLike,
   DisposableLike_isDisposed,
-  DropLatestBackpressureStrategy,
-  DropOldestBackpressureStrategy,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_moveNext,
@@ -44,15 +39,11 @@ import {
   FlowControllerEnumeratorLike_addOnDataAvailableListener,
   FlowControllerEnumeratorLike_isDataAvailable,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_backpressureStrategy,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
   FlowControllerQueueLike_enqueue,
-  OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_enqueue,
-  ThrowBackpressureStrategy,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
@@ -64,8 +55,8 @@ type TPrototype<T> = Omit<
   | typeof CollectionEnumeratorLike_count
   | typeof EnumeratorLike_current
   | typeof EnumeratorLike_hasCurrent
-  | typeof FlowControllerLike_capacity
-  | typeof FlowControllerLike_backpressureStrategy
+  | typeof BackPressureConfig_capacity
+  | typeof BackPressureConfig_strategy
   | typeof CollectionEnumeratorLike_peek
   | typeof Symbol.iterator
 >;
@@ -86,9 +77,6 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
   );
 
   type TProperties = {
-    [FlowControllerLike_capacity]: number;
-    [FlowControllerLike_backpressureStrategy]: BackpressureStrategy;
-    [FlowControllerLike_capacity]: number;
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;
     [CollectionEnumeratorLike_count]: number;
@@ -119,17 +107,9 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
       ): TReturn<T> {
         init(QueueMixin<T>(), this, config);
 
-        this[FlowControllerLike_backpressureStrategy] =
-          config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        this[FlowControllerLike_capacity] = clampPositiveInteger(
-          config?.capacity ?? MAX_SAFE_INTEGER,
-        );
-
         return this;
       },
       props<TProperties>({
-        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
-        [FlowControllerLike_backpressureStrategy]: OverflowBackpressureStrategy,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
         [CollectionEnumeratorLike_count]: 0,
@@ -139,7 +119,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
         get [FlowControllerLike_isReady]() {
           unsafeCast<TProperties & FlowControllerQueueLike<T>>(this);
           const count = this[CollectionEnumeratorLike_count];
-          const capacity = this[FlowControllerLike_capacity];
+          const capacity = this[BackPressureConfig_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
 
           return count < capacity && !isDisposed;
@@ -155,7 +135,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           this: TProperties & FlowControllerQueueLike<T>,
         ) {
           const count = this[CollectionEnumeratorLike_count];
-          const capacity = this[FlowControllerLike_capacity];
+          const capacity = this[BackPressureConfig_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
           const onReadySignal = this[FlowControllerQueueMixin_onReadyPublisher];
           const shouldNotifyReady =
@@ -173,38 +153,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           this: TProperties & FlowControllerQueueLike<T> & QueueLike<T>,
           item: T,
         ) {
-          const isDisposed = this[DisposableLike_isDisposed];
-          const backpressureStrategy =
-            this[FlowControllerLike_backpressureStrategy];
-          const capacity = this[FlowControllerLike_capacity];
-          const applyBackpressure =
-            this[CollectionEnumeratorLike_count] >= capacity;
           const oldCount = this[CollectionEnumeratorLike_count];
-
-          if (
-            (backpressureStrategy === DropLatestBackpressureStrategy &&
-              applyBackpressure) ||
-            // Special case the 0 capacity queue so that we don't fall through
-            // to pushing an item onto the queue
-            (backpressureStrategy === DropOldestBackpressureStrategy &&
-              capacity === 0) ||
-            isDisposed
-          ) {
-            return;
-          } else if (
-            backpressureStrategy === DropOldestBackpressureStrategy &&
-            applyBackpressure
-          ) {
-            // We want to pop off the oldest value first, before enqueueing
-            // to avoid unintentionally growing the queue.
-
-            this[EnumeratorLike_moveNext]();
-          } else if (
-            backpressureStrategy === ThrowBackpressureStrategy &&
-            applyBackpressure
-          ) {
-            raiseError(newInstance(BackPressureError, this));
-          }
 
           this[QueueLike_enqueue](item);
 

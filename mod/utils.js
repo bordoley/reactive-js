@@ -17,23 +17,20 @@ export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
-export const FlowControllerLike_backpressureStrategy = Symbol("FlowControllerLike_backpressureStrategy");
-export const FlowControllerLike_capacity = Symbol("FlowControllerLike_capacity");
+export const BackPressureConfig_strategy = Symbol("BackPressureConfig_strategy");
+export const BackPressureConfig_capacity = Symbol("BackPressureConfig_capacity");
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 /**
  * @noInheritDoc
  */
 export class BackPressureError extends Error {
-    [FlowControllerLike_capacity];
-    [FlowControllerLike_backpressureStrategy];
-    [FlowControllerLike_isReady];
+    [BackPressureConfig_capacity];
+    [BackPressureConfig_strategy];
     constructor(consumer) {
         super();
-        this[FlowControllerLike_capacity] = consumer[FlowControllerLike_capacity];
-        this[FlowControllerLike_backpressureStrategy] =
-            consumer[FlowControllerLike_backpressureStrategy];
-        this[FlowControllerLike_isReady] = consumer[FlowControllerLike_isReady];
+        this[BackPressureConfig_capacity] = consumer[BackPressureConfig_capacity];
+        this[BackPressureConfig_strategy] = consumer[BackPressureConfig_strategy];
     }
 }
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");

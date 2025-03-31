@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, FlowControllerLike_capacity, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { BackPressureConfig_capacity, DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, FlowControllerLike_isReady, FlowControllerQueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import FlowControllerQueueMixin from "../__mixins__/FlowControllerQueueMixin.js";
 const TakeLastConsumerMixin = /*@__PURE__*/ (() => {
@@ -20,7 +20,7 @@ const TakeLastConsumerMixin = /*@__PURE__*/ (() => {
             const isCompleted = this[SinkLike_isCompleted];
             return !isCompleted;
         },
-        get [FlowControllerLike_capacity]() {
+        get [BackPressureConfig_capacity]() {
             return MAX_SAFE_INTEGER;
         },
         get [SinkLike_isCompleted]() {

@@ -10,6 +10,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
 import {
+  BackPressureConfig_capacity,
   CollectionEnumeratorLike,
   ConsumerLike,
   DisposableLike,
@@ -17,7 +18,6 @@ import {
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   EventListenerLike_notify,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
   FlowControllerQueueLike_enqueue,
@@ -37,7 +37,7 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
     | typeof SinkLike_complete
     | typeof SinkLike_isCompleted
     | typeof FlowControllerLike_isReady
-    | typeof FlowControllerLike_capacity
+    | typeof BackPressureConfig_capacity
   >;
 
   return returns(
@@ -63,7 +63,7 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
           return !isCompleted;
         },
 
-        get [FlowControllerLike_capacity](): number {
+        get [BackPressureConfig_capacity](): number {
           return MAX_SAFE_INTEGER;
         },
 

@@ -4,7 +4,7 @@ import { include, init, mix, props, proto, unsafeCast, } from "../../__internal_
 import { returns } from "../../functions.js";
 import ConsumerMixin, { ConsumerMixinLike_complete, ConsumerMixinLike_notify, } from "../../utils/__mixins__/ConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, } from "../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, } from "../../utils.js";
 import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
 import { LiftedSinkToEventListenerLike_operator, } from "./LiftedSinkToEventListenerMixin.js";
 import LiftedSinkToSinkMixin from "./LiftedSinkToSinkMixin.js";
@@ -20,13 +20,13 @@ const LiftedSinkToConsumerMixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][FlowControllerLike_isReady];
         },
-        get [FlowControllerLike_backpressureStrategy]() {
+        get [BackPressureConfig_strategy]() {
             unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][FlowControllerLike_backpressureStrategy];
+            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][BackPressureConfig_strategy];
         },
-        get [FlowControllerLike_capacity]() {
+        get [BackPressureConfig_capacity]() {
             unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][FlowControllerLike_capacity];
+            return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][BackPressureConfig_capacity];
         },
         [FlowControllerLike_addOnReadyListener](callback) {
             return this[LiftedSinkToEventListenerLike_operator][LiftedSinkLike_subscription][FlowControllerLike_addOnReadyListener](callback);

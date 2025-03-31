@@ -8,7 +8,7 @@ import { bindMethod, newInstance, none, pipe, raise, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import { BackPressureError, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, BackPressureError, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 export const toConsumer = /*@__PURE__*/ (() => {
     const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
@@ -32,8 +32,8 @@ export const toConsumer = /*@__PURE__*/ (() => {
         [SinkLike_isCompleted]: false,
         [WritableConsumer_onReadyPublisher]: none,
     }), proto({
-        [FlowControllerLike_backpressureStrategy]: ThrowBackpressureStrategy,
-        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
+        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
         get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             const writable = this[WritableConsumer_writable];

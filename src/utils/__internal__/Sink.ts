@@ -20,12 +20,12 @@ import {
   returns,
 } from "../../functions.js";
 import {
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
   ConsumerLike,
   DisposableLike,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_backpressureStrategy,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   ObserverLike,
   OverflowBackpressureStrategy,
@@ -99,8 +99,8 @@ export const toConsumer: <T>() => Function1<SinkLike<T>, ConsumerLike<T>> =
   /*@__PURE__*/ (<T>() => {
     type TPrototype = {
       [FlowControllerLike_isReady]: true;
-      [FlowControllerLike_backpressureStrategy]: typeof OverflowBackpressureStrategy;
-      [FlowControllerLike_capacity]: number;
+      [BackPressureConfig_strategy]: typeof OverflowBackpressureStrategy;
+      [BackPressureConfig_capacity]: number;
       [FlowControllerLike_addOnReadyListener](
         callback: SideEffect1<void>,
       ): DisposableLike;
@@ -121,9 +121,8 @@ export const toConsumer: <T>() => Function1<SinkLike<T>, ConsumerLike<T>> =
         props(),
         proto({
           [FlowControllerLike_isReady]: true as const,
-          [FlowControllerLike_backpressureStrategy]:
-            OverflowBackpressureStrategy,
-          [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+          [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
+          [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
           [FlowControllerLike_addOnReadyListener](_: SideEffect1<void>) {
             return Disposable.disposed;
           },

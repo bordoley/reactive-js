@@ -7,7 +7,7 @@ import { none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_backpressureStrategy, FlowControllerLike_capacity, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_createPauseable from "../../Broadcaster/__private__/Broadcaster.createPauseable.js";
@@ -29,8 +29,8 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[DisposableLike_isDisposed];
         },
-        [FlowControllerLike_backpressureStrategy]: ThrowBackpressureStrategy,
-        [FlowControllerLike_capacity]: MAX_SAFE_INTEGER,
+        [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
+        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
         [FlowControllerLike_addOnReadyListener](callback) {
             return pipe(this[EventListernToPauseableConsumer_mode], Broadcaster_addEventHandler(isPaused => {
                 if (!isPaused) {

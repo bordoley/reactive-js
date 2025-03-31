@@ -25,6 +25,8 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
+  BackPressureConfig_capacity,
+  BackPressureConfig_strategy,
   BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
@@ -34,8 +36,6 @@ import {
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_backpressureStrategy,
-  FlowControllerLike_capacity,
   FlowControllerLike_isReady,
   ObserverLike,
   SinkLike_complete,
@@ -98,16 +98,14 @@ export const create: <T>(config?: {
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
-      get [FlowControllerLike_backpressureStrategy]() {
+      get [BackPressureConfig_strategy]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][
-          FlowControllerLike_backpressureStrategy
-        ];
+        return this[ConsumerObservable_delegate][BackPressureConfig_strategy];
       },
 
-      get [FlowControllerLike_capacity]() {
+      get [BackPressureConfig_capacity]() {
         unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][FlowControllerLike_capacity];
+        return this[ConsumerObservable_delegate][BackPressureConfig_capacity];
       },
 
       get [FlowControllerLike_isReady]() {
