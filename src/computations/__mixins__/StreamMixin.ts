@@ -10,6 +10,7 @@ import { clampPositiveInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingConsumerMixin from "../../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingPauseableMixin from "../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -38,6 +39,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
         DelegatingDisposableMixin,
         DelegatingConsumerMixin(),
         DelegatingBroadcasterMixin<T>(),
+        DelegatingPauseableMixin,
       ),
       function Stream(
         this: unknown,
@@ -71,6 +73,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
         init(DelegatingDisposableMixin, this, consumer);
         init(DelegatingConsumerMixin<TReq>(), this, consumer);
         init(DelegatingBroadcasterMixin<T>(), this, delegate);
+        init(DelegatingPauseableMixin, this, delegate);
 
         return this;
       },
