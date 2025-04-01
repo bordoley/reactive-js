@@ -17,7 +17,7 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   PublisherLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../computations.js";
 import {
   Method,
@@ -153,7 +153,7 @@ const PublisherMixin: <T>() => Mixin1<
           }
         },
 
-        [SourceLike_subscribe](
+        [ReactiveSourceLike_subscribe](
           this: TProperties & PublisherLike<T>,
           eventListener: EventListenerLike<T>,
         ) {

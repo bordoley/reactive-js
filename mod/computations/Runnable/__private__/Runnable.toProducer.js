@@ -2,9 +2,9 @@
 
 import { ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
 import { returns } from "../../../functions.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 const Runnable_toProducer = 
-/*@__PURE__*/ returns(runnable => DeferredSource.create(async (consumer) => {
+/*@__PURE__*/ returns(runnable => DeferredReactiveSource.create(async (consumer) => {
     await Promise.resolve();
     // Note: Generally speaking one should not convert a runnable
     // to a non synchronous source since it is evaluated synchronously

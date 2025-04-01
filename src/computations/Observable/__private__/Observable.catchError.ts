@@ -5,7 +5,7 @@ import {
 import { Function1, SideEffect1 } from "../../../functions.js";
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 
 const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   errorHandler: SideEffect1<Error> | Function1<Error, ObservableLike<T>>,
@@ -13,7 +13,7 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
     [ComputationLike_isPure]?: boolean;
   },
 ) =>
-  DeferredSource.catchError(
+  DeferredReactiveSource.catchError(
     Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing<T>,
     errorHandler,
     options,

@@ -124,7 +124,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 #### b
 
@@ -142,7 +142,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 ### Returns
 
@@ -178,7 +178,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 #### b
 
@@ -196,7 +196,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 #### c
 
@@ -214,7 +214,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 ### Returns
 
@@ -252,7 +252,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 #### b
 
@@ -270,7 +270,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 #### c
 
@@ -288,7 +288,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 #### d
 
@@ -306,7 +306,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 ### Returns
 

@@ -2,12 +2,12 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, } from "../../../computations.js";
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import { OverflowBackpressureStrategy, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import MergeAllConsumerMixin from "../../__mixins__/MergeAllConsumerMixin.js";
 export const createMergeAllObserver = 
 /*@__PURE__*/
@@ -16,9 +16,9 @@ export const createMergeAllObserver =
     init(DelegatingSchedulerMixin, this, delegate);
     return this;
 }))();
-export const Observable_mergeAll = ((options) => (obs) => DeferredSource.create((observer) => {
+export const Observable_mergeAll = ((options) => (obs) => DeferredReactiveSource.create((observer) => {
     const delegate = createMergeAllObserver(observer, options);
-    obs[SourceLike_subscribe](delegate);
+    obs[ReactiveSourceLike_subscribe](delegate);
 }, {
     [ComputationLike_isPure]: Computation.isPure(obs) && Computation.isPure(options ?? {}),
     [ComputationLike_isSynchronous]: Computation.isSynchronous(obs) &&

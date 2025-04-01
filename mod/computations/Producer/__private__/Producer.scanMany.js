@@ -1,22 +1,22 @@
 /// <reference types="./Producer.scanMany.d.ts" />
 
-import { ComputationLike_isPure, SourceLike_subscribe, } from "../../../computations.js";
+import { ComputationLike_isPure, ReactiveSourceLike_subscribe, } from "../../../computations.js";
 import { bindMethod, invoke, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { EventListenerLike_notify } from "../../../utils.js";
 import Broadcaster_toProducer from "../../Broadcaster/__private__/Broadcaster.toProducer.js";
 import Computation_isPure from "../../Computation/__private__/Computation.isPure.js";
 import * as Publisher from "../../Publisher.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import Producer_forEach from "./Producer.forEach.js";
 import Producer_switchAll from "./Producer.switchAll.js";
 import Producer_withLatestFrom from "./Producer.withLatestFrom.js";
-const Producer_scanMany = ((scanner, initialValue, innerType) => (source) => DeferredSource.create((consumer) => {
+const Producer_scanMany = ((scanner, initialValue, innerType) => (source) => DeferredReactiveSource.create((consumer) => {
     const accFeedbackPublisher = pipe(Publisher.create(), Disposable.addTo(consumer));
     const feedbackSource = pipe(accFeedbackPublisher, Broadcaster_toProducer());
     pipe(source, Producer_withLatestFrom(feedbackSource, (next, acc) => scanner(acc, next)), Producer_switchAll({
         [ComputationLike_isPure]: false,
-    }), Producer_forEach(bindMethod(accFeedbackPublisher, EventListenerLike_notify)), invoke(SourceLike_subscribe, consumer));
+    }), Producer_forEach(bindMethod(accFeedbackPublisher, EventListenerLike_notify)), invoke(ReactiveSourceLike_subscribe, consumer));
     accFeedbackPublisher[EventListenerLike_notify](initialValue());
 }, {
     [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType),

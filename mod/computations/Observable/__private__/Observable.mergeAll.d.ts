@@ -1,8 +1,8 @@
-import { SourceLike } from "../../../computations.js";
+import { ReactiveSourceLike } from "../../../computations.js";
 import { Optional } from "../../../functions.js";
 import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-export declare const createMergeAllObserver: <TInnerSource extends SourceLike<T, ObserverLike<T>>, T>(delegate: ObserverLike<T>, options: Optional<{
+export declare const createMergeAllObserver: <TInnerSource extends ReactiveSourceLike<T, ObserverLike<T>>, T>(delegate: ObserverLike<T>, options: Optional<{
     backpressureStrategy?: BackpressureStrategy;
     capacity?: number;
     concurrency?: number;

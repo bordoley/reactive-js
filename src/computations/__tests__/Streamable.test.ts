@@ -31,7 +31,7 @@ import {
 import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
-import * as Source from "../Source.js";
+import * as ReactiveSource from "../ReactiveSource.js";
 
 const ObservableModule =
   Computation.makeModule<Observable.Computation>()(Observable);
@@ -170,7 +170,7 @@ testModule(
           delayStart: true,
         }),
         Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-        Source.subscribe({ scheduler: vts }),
+        ReactiveSource.subscribe({ scheduler: vts }),
       );
 
       const result: number[] = [];
@@ -212,7 +212,7 @@ testModule(
         }),
         Observable.repeat(24),
         Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-        Source.subscribe({ scheduler: vts }),
+        ReactiveSource.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

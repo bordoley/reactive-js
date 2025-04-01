@@ -64,8 +64,8 @@ import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DisposableLike_error, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
+import * as ReactiveSource from "../ReactiveSource.js";
 import * as Runnable from "../Runnable.js";
-import * as Source from "../Source.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import DeferredAsynchronousReactiveComputationModuleTests from "./fixtures/DeferredAsynchronousReactiveComputationModuleTests.js";
@@ -105,7 +105,7 @@ testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputa
         const error = newInstance(Error);
         const subscription = pipe(SynchronousObservable.compute(() => {
             raise(error);
-        }), Source.subscribe({ scheduler: vts }));
+        }), ReactiveSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(subscription[DisposableLike_error], expectEquals(error));
     }
@@ -167,7 +167,7 @@ describe("merge", test("with sources that have the same delays", () => {
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
-        const subscription = pipe(SynchronousObservable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })), SynchronousObservable.concat(SynchronousObservable.delay(5), Computation.raise(m)())), Source.subscribe({ scheduler: vts }));
+        const subscription = pipe(SynchronousObservable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })), SynchronousObservable.concat(SynchronousObservable.delay(5), Computation.raise(m)())), ReactiveSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(pipeLazy(subscription, Disposable.raiseIfDisposedWithError), expectToThrow);
     }
@@ -241,7 +241,7 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
         const error = newInstance(Error);
         const result = pipe([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.raise(m)({
             raise: returns(error),
-        }), returns(1)), Source.subscribe({ scheduler: vts }));
+        }), returns(1)), ReactiveSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(pipeLazy(result, Disposable.raiseIfDisposedWithError), expectToThrowError(error));
     }

@@ -14,7 +14,7 @@
 - [`InteractiveComputationModule`](InteractiveComputationModule.md)
 - [`ConcurrentDeferredComputationModule`](ConcurrentDeferredComputationModule.md)
 - [`SequentialReactiveComputationModule`](SequentialReactiveComputationModule.md)
-- [`SourceComputationModule`](SourceComputationModule.md)
+- [`ReactiveComputationModule`](ReactiveComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 - [`DeferredAsynchronousReactiveComputationModule`](DeferredAsynchronousReactiveComputationModule.md)
 

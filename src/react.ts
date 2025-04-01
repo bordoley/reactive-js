@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  SourceLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
   StoreLike,
   StoreLike_value,
   StreamOf,
@@ -39,13 +39,13 @@ interface ReactModule {
   /**
    */
   useReactiveSource<T>(
-    observable: Optional<SourceLike<T>>,
+    observable: Optional<ReactiveSourceLike<T>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
     },
   ): Optional<T>;
   useReactiveSource<T>(
-    factory: Factory<Optional<SourceLike<T>>>,
+    factory: Factory<Optional<ReactiveSourceLike<T>>>,
     deps: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -101,7 +101,9 @@ export const useDisposable: Signature["useDisposable"] = <
 };
 
 export const useReactiveSource: Signature["useReactiveSource"] = <T>(
-  sourceOrFactory: Optional<SourceLike<T>> | Factory<Optional<SourceLike<T>>>,
+  sourceOrFactory:
+    | Optional<ReactiveSourceLike<T>>
+    | Factory<Optional<ReactiveSourceLike<T>>>,
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -133,7 +135,7 @@ export const useReactiveSource: Signature["useReactiveSource"] = <T>(
       DisposableContainer.onError(updateError),
     );
 
-    source?.[SourceLike_subscribe](observer);
+    source?.[ReactiveSourceLike_subscribe](observer);
     return observer;
   }, [source, updateState, updateError, priority]);
 

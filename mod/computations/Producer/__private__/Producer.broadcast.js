@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
-import { SourceLike_subscribe, } from "../../../computations.js";
+import { ReactiveSourceLike_subscribe, } from "../../../computations.js";
 import { none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -49,7 +49,7 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
     }));
     return (options) => (producer) => Broadcaster_createPauseable(mode => Broadcaster_create(listener => {
         const consumer = createPauseableConsumer(listener, mode);
-        producer[SourceLike_subscribe](consumer);
+        producer[ReactiveSourceLike_subscribe](consumer);
     }), options);
 })();
 export default Producer_broadcast;

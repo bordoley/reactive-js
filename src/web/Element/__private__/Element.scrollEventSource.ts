@@ -5,7 +5,7 @@ import * as Computation from "../../../computations/Computation.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
   BroadcasterLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { invoke, newInstance, pipe, returns } from "../../../functions.js";
 import { clamp } from "../../../math.js";
@@ -122,7 +122,7 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
 
               return prev;
             }),
-            invoke(SourceLike_subscribe, sink),
+            invoke(ReactiveSourceLike_subscribe, sink),
           );
 
           eventSourceCache.set(element, sink);

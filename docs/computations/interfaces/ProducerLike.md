@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DeferredSourceLike`](DeferredSourceLike.md)\<`T`, [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\>\>.[`ComputationLike`](ComputationLike.md)
+- [`DeferredReactiveSourceLike`](DeferredReactiveSourceLike.md)\<`T`, [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`T`\>\>.[`ComputationLike`](ComputationLike.md)
 
 ## Extended by
 
@@ -51,9 +51,9 @@
 
 ## Methods
 
-### \[SourceLike\_subscribe\]()
+### \[ReactiveSourceLike\_subscribe\]()
 
-> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -67,4 +67,4 @@
 
 #### Inherited from
 
-[`DeferredSourceLike`](DeferredSourceLike.md).[`[SourceLike_subscribe]`](DeferredSourceLike.md#sourcelike_subscribe)
+[`DeferredReactiveSourceLike`](DeferredReactiveSourceLike.md).[`[ReactiveSourceLike_subscribe]`](DeferredReactiveSourceLike.md#reactivesourcelike_subscribe)

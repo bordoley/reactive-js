@@ -11,7 +11,7 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import { DisposableLike_dispose } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
-import * as Source from "../Source.js";
+import * as ReactiveSource from "../ReactiveSource.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
@@ -32,7 +32,10 @@ testModule(
       let exited = false;
       const factory = async (options?: { signal?: AbortSignal }) => {
         while (!(options?.signal?.aborted ?? true)) {
-          await pipe(SynchronousObservable.delay(0), Source.lastAsync());
+          await pipe(
+            SynchronousObservable.delay(0),
+            ReactiveSource.lastAsync(),
+          );
         }
         exited = true;
       };
@@ -41,14 +44,14 @@ testModule(
         factory,
         AsyncIterable.fromAsyncFactory(),
         AsyncIterable.toObservable(),
-        Source.subscribe(),
+        ReactiveSource.subscribe(),
       );
 
       await Promise.resolve();
 
       subscription[DisposableLike_dispose](error("something went wrong"));
 
-      await pipe(SynchronousObservable.delay(0), Source.lastAsync());
+      await pipe(SynchronousObservable.delay(0), ReactiveSource.lastAsync());
 
       expectTrue("expect the factory to have exited")(exited);
     }),
@@ -60,7 +63,10 @@ testModule(
         let exited = false;
         const factory = async (options?: { signal?: AbortSignal }) => {
           while (!(options?.signal?.aborted ?? true)) {
-            await pipe(SynchronousObservable.delay(0), Source.lastAsync());
+            await pipe(
+              SynchronousObservable.delay(0),
+              ReactiveSource.lastAsync(),
+            );
           }
           exited = true;
         };
@@ -69,14 +75,14 @@ testModule(
           factory,
           AsyncIterable.fromAsyncFactory(),
           AsyncIterable.toObservable(),
-          Source.subscribe(),
+          ReactiveSource.subscribe(),
         );
 
         await Promise.resolve();
 
         subscription[DisposableLike_dispose]();
 
-        await pipe(SynchronousObservable.delay(0), Source.lastAsync());
+        await pipe(SynchronousObservable.delay(0), ReactiveSource.lastAsync());
 
         expectTrue("expect the factory to have exited")(exited);
       },
@@ -90,7 +96,7 @@ testModule(
         },
         AsyncIterable.fromAsyncFactory(),
         AsyncIterable.toObservable(),
-        Source.lastAsync<number>(),
+        ReactiveSource.lastAsync<number>(),
         expectEquals<Optional<number>>(10),
       ),
     ),

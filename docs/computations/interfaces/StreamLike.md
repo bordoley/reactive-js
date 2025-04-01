@@ -55,9 +55,9 @@ be consumed.
 
 ## Methods
 
-### \[SourceLike\_subscribe\]()
+### \[ReactiveSourceLike\_subscribe\]()
 
-> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -71,4 +71,4 @@ be consumed.
 
 #### Inherited from
 
-[`BroadcasterLike`](BroadcasterLike.md).[`[SourceLike_subscribe]`](BroadcasterLike.md#sourcelike_subscribe)
+[`BroadcasterLike`](BroadcasterLike.md).[`[ReactiveSourceLike_subscribe]`](BroadcasterLike.md#reactivesourcelike_subscribe)

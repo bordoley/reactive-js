@@ -1,8 +1,11 @@
-import { ProducerLike, SourceLike_subscribe } from "../../../computations.js";
+import {
+  ProducerLike,
+  ReactiveSourceLike_subscribe,
+} from "../../../computations.js";
 import { bindMethod, identity } from "../../../functions.js";
 import { BackpressureStrategy, ConsumerLike } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import { liftedSinkToConsumerWithBackPressure } from "./Producer.lift.js";
 
 const Producer_withBackpressure: Producer.Signature["withBackpressure"] = (<
@@ -12,7 +15,7 @@ const Producer_withBackpressure: Producer.Signature["withBackpressure"] = (<
     backpressureStrategy: BackpressureStrategy;
   }) =>
   (source: ProducerLike<T>) => {
-    const lifted = DeferredSource.createLifted(
+    const lifted = DeferredReactiveSource.createLifted(
       source,
       identity,
       liftedSinkToConsumerWithBackPressure(config),
@@ -20,8 +23,8 @@ const Producer_withBackpressure: Producer.Signature["withBackpressure"] = (<
     );
 
     // Ensures that upstream callers don't lift away the backpressure.
-    return DeferredSource.create<T, ConsumerLike<T>>(
-      bindMethod(lifted, SourceLike_subscribe),
+    return DeferredReactiveSource.create<T, ConsumerLike<T>>(
+      bindMethod(lifted, ReactiveSourceLike_subscribe),
       source,
     );
   }) as Producer.Signature["withBackpressure"];

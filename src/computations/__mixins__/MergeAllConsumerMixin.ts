@@ -8,7 +8,10 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { SourceLike, SourceLike_subscribe } from "../../computations.js";
+import {
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
+} from "../../computations.js";
 import { Function1, Optional, none, pipe, returns } from "../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -33,13 +36,13 @@ import {
 } from "../../utils.js";
 
 type TReturn<
-  TInnerSource extends SourceLike<T, TConsumer>,
+  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 > = ConsumerLike<TInnerSource>;
 
 const MergeAllConsumerMixin: <
-  TInnerSource extends SourceLike<T, TConsumer>,
+  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 >() => Mixin3<
@@ -52,7 +55,7 @@ const MergeAllConsumerMixin: <
   }>,
   Function1<TConsumer, TConsumer>
 > = /*@__PURE__*/ (<
-  TInnerSource extends SourceLike<T, TConsumer>,
+  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 >() => {
@@ -101,7 +104,7 @@ const MergeAllConsumerMixin: <
       }),
     );
 
-    source[SourceLike_subscribe](sourceDelegate);
+    source[ReactiveSourceLike_subscribe](sourceDelegate);
   };
 
   return returns(

@@ -4,7 +4,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../..
 import { error, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 const genOnSubscribe = (factory) => async (consumer) => {
     const enumerator = pipe(factory(), Disposable.addTo(consumer));
     let isActive = false;
@@ -61,11 +61,11 @@ const genOnSubscribe = (factory) => async (consumer) => {
     await Promise.resolve();
     continue_();
 };
-export const Producer_genAsyncEnumerator = (factory) => DeferredSource.create(genOnSubscribe(factory), {
+export const Producer_genAsyncEnumerator = (factory) => DeferredReactiveSource.create(genOnSubscribe(factory), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
 });
-export const Producer_genPureAsyncEnumerator = (factory) => DeferredSource.create(genOnSubscribe(factory), {
+export const Producer_genPureAsyncEnumerator = (factory) => DeferredReactiveSource.create(genOnSubscribe(factory), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: false,
 });

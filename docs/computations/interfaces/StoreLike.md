@@ -126,9 +126,9 @@ The teardown function to add.
 
 ***
 
-### \[SourceLike\_subscribe\]()
+### \[ReactiveSourceLike\_subscribe\]()
 
-> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -142,4 +142,4 @@ The teardown function to add.
 
 #### Inherited from
 
-[`BroadcasterLike`](BroadcasterLike.md).[`[SourceLike_subscribe]`](BroadcasterLike.md#sourcelike_subscribe)
+[`BroadcasterLike`](BroadcasterLike.md).[`[ReactiveSourceLike_subscribe]`](BroadcasterLike.md#reactivesourcelike_subscribe)

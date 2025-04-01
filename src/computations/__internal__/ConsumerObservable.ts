@@ -12,7 +12,7 @@ import {
   ComputationLike_isSynchronous,
   PublisherLike,
   PureObservableLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../computations.js";
 import {
   Optional,
@@ -99,7 +99,7 @@ export const create: <T>(config?: {
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
-      [SourceLike_subscribe](
+      [ReactiveSourceLike_subscribe](
         this: ConsumerObservableLike<T> &
           TProperties &
           Mutable<DelegatingConsumerLike<T>>,

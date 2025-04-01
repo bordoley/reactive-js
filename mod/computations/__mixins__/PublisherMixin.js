@@ -2,7 +2,7 @@
 
 import { Set_add, Set_delete, Set_has, Set_size, } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, } from "../../computations.js";
 import { error, isNone, isSome, newInstance, none, pipe, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
@@ -74,7 +74,7 @@ const PublisherMixin = /*@__PURE__*/ (() => {
                 }
             }
         },
-        [SourceLike_subscribe](eventListener) {
+        [ReactiveSourceLike_subscribe](eventListener) {
             const maybeEventListeners = this[Publisher_EventListeners];
             this[DisposableContainerLike_add](eventListener);
             if (this[DisposableLike_isDisposed] ||

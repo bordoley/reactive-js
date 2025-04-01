@@ -3,7 +3,7 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import * as Broadcaster from "../../../computations/Broadcaster.js";
 import * as WritableStore from "../../../computations/WritableStore.js";
 import {
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
   WritableStoreLike,
 } from "../../../computations.js";
 import {
@@ -110,7 +110,7 @@ const Element_measure: Element.Signature["measure"] = /*@__PURE__*/ (() => {
             ...scrollContainerEventSources,
           ),
           Broadcaster.map(pipeLazy(element, measureElement)),
-          invoke(SourceLike_subscribe, store),
+          invoke(ReactiveSourceLike_subscribe, store),
         );
 
         return store;

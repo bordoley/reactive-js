@@ -8,8 +8,8 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ProducerLike,
-  SourceLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { Optional } from "../../../functions.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
@@ -20,11 +20,11 @@ import {
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import MergeAllConsumerMixin from "../../__mixins__/MergeAllConsumerMixin.js";
 
 export const createMergeAllConsumer: <
-  TInnerSource extends SourceLike<T, ConsumerLike<T>>,
+  TInnerSource extends ReactiveSourceLike<T, ConsumerLike<T>>,
   T,
 >(
   delegate: ConsumerLike<T>,
@@ -35,7 +35,7 @@ export const createMergeAllConsumer: <
   }>,
 ) => ConsumerLike<TInnerSource> =
   /*@__PURE__*/
-  (<TInnerSource extends SourceLike<T, ConsumerLike<T>>, T>() =>
+  (<TInnerSource extends ReactiveSourceLike<T, ConsumerLike<T>>, T>() =>
     mixInstanceFactory(
       include(MergeAllConsumerMixin()),
       function MergeAllConsumer(
@@ -71,10 +71,10 @@ export const Producer_mergeAll: Producer.Signature["mergeAll"] = (<
       }>,
   ) =>
   (obs: ProducerLike<ProducerLike<T>>) =>
-    DeferredSource.create(
+    DeferredReactiveSource.create(
       (observer: ConsumerLike<T>) => {
         const delegate = createMergeAllConsumer(observer, options);
-        obs[SourceLike_subscribe](delegate);
+        obs[ReactiveSourceLike_subscribe](delegate);
       },
       {
         [ComputationLike_isPure]:

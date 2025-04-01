@@ -6,11 +6,11 @@ import {
 import { returns } from "../../../functions.js";
 import { ConsumerLike } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 
 const Runnable_toProducer: Runnable.Signature["toProducer"] =
   /*@__PURE__*/ returns(runnable =>
-    DeferredSource.create(
+    DeferredReactiveSource.create(
       async (consumer: ConsumerLike) => {
         await Promise.resolve();
 

@@ -1,8 +1,8 @@
-import { SourceLike, StreamLike, StreamOf, StreamableLike } from "../../computations.js";
+import { ReactiveSourceLike, StreamLike, StreamOf, StreamableLike } from "../../computations.js";
 import { Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../../functions.js";
 import { BackpressureStrategy, DisposableLike, SchedulerLike } from "../../utils.js";
 export interface Signature {
-    __await<T>(observable: SourceLike<T>): T;
+    __await<T>(observable: ReactiveSourceLike<T>): T;
     __constant<T>(value: T, ...args: unknown[]): T;
     __currentScheduler(): SchedulerLike;
     __do(fn: SideEffect): void;
@@ -19,7 +19,7 @@ export interface Signature {
     __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
     __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
     __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
-    __observe<T>(src: SourceLike<T>): Optional<T>;
+    __observe<T>(src: ReactiveSourceLike<T>): Optional<T>;
     __state<T>(initialState: () => T, options?: {
         readonly equality?: Optional<Equality<T>>;
         readonly scheduler?: SchedulerLike;

@@ -16,7 +16,7 @@
 
 ### src
 
-[`SourceLike`](../../../interfaces/SourceLike.md)\<`T`\>
+[`ReactiveSourceLike`](../../../interfaces/ReactiveSourceLike.md)\<`T`\>
 
 ## Returns
 

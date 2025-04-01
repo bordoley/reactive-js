@@ -5,7 +5,7 @@ import {
   Computation_T,
   Computation_baseOfT,
   ConcurrentReactiveComputationModule,
-  SourceComputationModule,
+  ReactiveComputationModule,
 } from "../computations.js";
 import { Function1, SideEffect1, identityLazy } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
@@ -49,8 +49,8 @@ export type Computation = BroadcasterComputation;
  */
 export interface BroadcasterModule
   extends ComputationModule<BroadcasterComputation>,
-    ConcurrentReactiveComputationModule<BroadcasterComputation>,
-    SourceComputationModule<BroadcasterComputation> {
+    ReactiveComputationModule<BroadcasterComputation>,
+    ConcurrentReactiveComputationModule<BroadcasterComputation> {
   addEventHandler<T>(
     onNotify: SideEffect1<T>,
   ): Function1<BroadcasterLike<T>, DisposableLike>;

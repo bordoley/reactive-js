@@ -100,24 +100,26 @@ export interface RunnableWithSideEffectsLike<T = unknown>
   readonly [ComputationLike_isPure]: false;
 }
 
-export const SourceLike_subscribe = Symbol("SourceLike_subscribe");
+export const ReactiveSourceLike_subscribe = Symbol(
+  "ReactiveSourceLike_subscribe",
+);
 
-export interface SourceLike<
+export interface ReactiveSourceLike<
   out T = unknown,
   TEventListener extends EventListenerLike<T> = EventListenerLike<T>,
 > extends ComputationLike {
-  [SourceLike_subscribe](EventListener: TEventListener): void;
+  [ReactiveSourceLike_subscribe](EventListener: TEventListener): void;
 }
 
-export interface DeferredSourceLike<
+export interface DeferredReactiveSourceLike<
   T = unknown,
   TConsumer extends ConsumerLike<T> = ConsumerLike<T>,
-> extends SourceLike<T, TConsumer> {
+> extends ReactiveSourceLike<T, TConsumer> {
   [ComputationLike_isDeferred]: true;
 }
 
 export interface ProducerLike<out T = unknown>
-  extends DeferredSourceLike<T, ConsumerLike<T>>,
+  extends DeferredReactiveSourceLike<T, ConsumerLike<T>>,
     ComputationLike {
   readonly [ComputationLike_isDeferred]: true;
   readonly [ComputationLike_isSynchronous]: false;
@@ -133,7 +135,7 @@ export interface ProducerWithSideEffectsLike<out T = unknown>
 }
 
 export interface ObservableLike<out T = unknown>
-  extends DeferredSourceLike<T, ObserverLike<T>>,
+  extends DeferredReactiveSourceLike<T, ObserverLike<T>>,
     ComputationLike {
   readonly [ComputationLike_isDeferred]: true;
 }
@@ -167,7 +169,7 @@ export interface SynchronousObservableWithSideEffectsLike<out T = unknown>
 }
 
 export interface BroadcasterLike<out T = unknown>
-  extends SourceLike<T>,
+  extends ReactiveSourceLike<T>,
     DisposableContainerLike,
     MulticastComputationLike {
   readonly [ComputationLike_isDeferred]: false;
@@ -549,42 +551,7 @@ export interface SequentialReactiveComputationModule<
   }): PureComputationOperator<TComputationType, T, T>;
 }
 
-export interface SourceComputationModule<
-  TComputationType extends ComputationTypeLike,
-> extends ComputationModuleLike<TComputationType> {
-  fromBroadcaster<T>(): Function1<
-    BroadcasterLike<T>,
-    PureComputationOf<TComputationType, T>
-  >;
-
-  // prettier-ignore
-  fromObservable<T>(options?: {
-    scheduler?: SchedulerLike;
-  }): <TObservable extends ObservableLike<T>>(
-    iterable: TObservable,
-  ) => TObservable extends PureComputationLike ?
-         NewPureInstanceOf<TComputationType, T> :
-       TObservable extends ComputationWithSideEffectsLike ? (
-         NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike 
-           ? NewPureInstanceOf<TComputationType, T>
-           : NewInstanceWithSideEffectsOf<TComputationType, T> 
-         ):
-       never;
-
-  // prettier-ignore
-  fromProducer<T>(): <TProducer extends ProducerLike<T>>(
-    iterable: TProducer,
-  ) => TProducer extends PureComputationLike ? 
-        NewPureInstanceOf<TComputationType, T> : 
-      TProducer extends ComputationWithSideEffectsLike ? (
-        NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike 
-          ? NewPureInstanceOf<TComputationType, T>
-          : NewInstanceWithSideEffectsOf<TComputationType, T> 
-        ):
-      never;
-}
-
-export interface ConcurrentReactiveComputationModule<
+export interface ReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
   combineLatest<TA, TB>(
@@ -737,6 +704,41 @@ export interface ConcurrentReactiveComputationModule<
     c: ComputationOf<TComputationType, TC>,
     d: ComputationOf<TComputationType, TD>,
   ): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
+}
+
+export interface ConcurrentReactiveComputationModule<
+  TComputationType extends ComputationTypeLike,
+> extends ComputationModuleLike<TComputationType> {
+  fromBroadcaster<T>(): Function1<
+    BroadcasterLike<T>,
+    PureComputationOf<TComputationType, T>
+  >;
+
+  // prettier-ignore
+  fromObservable<T>(options?: {
+    scheduler?: SchedulerLike;
+  }): <TObservable extends ObservableLike<T>>(
+    iterable: TObservable,
+  ) => TObservable extends PureComputationLike ?
+         NewPureInstanceOf<TComputationType, T> :
+       TObservable extends ComputationWithSideEffectsLike ? (
+         NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike 
+           ? NewPureInstanceOf<TComputationType, T>
+           : NewInstanceWithSideEffectsOf<TComputationType, T> 
+         ):
+       never;
+
+  // prettier-ignore
+  fromProducer<T>(): <TProducer extends ProducerLike<T>>(
+    iterable: TProducer,
+  ) => TProducer extends PureComputationLike ? 
+        NewPureInstanceOf<TComputationType, T> : 
+      TProducer extends ComputationWithSideEffectsLike ? (
+        NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike 
+          ? NewPureInstanceOf<TComputationType, T>
+          : NewInstanceWithSideEffectsOf<TComputationType, T> 
+        ):
+      never;
 }
 
 export interface DeferredAsynchronousReactiveComputationModule<

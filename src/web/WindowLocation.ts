@@ -16,7 +16,7 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
   StoreLike_value,
   StreamLike,
   StreamableLike_stream,
@@ -238,14 +238,14 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
         history.back();
       },
 
-      [SourceLike_subscribe](
+      [ReactiveSourceLike_subscribe](
         this: TProperties,
         eventListener: EventListenerLike<WindowLocationURI>,
       ): void {
         pipe(
           this[WindowLocation_delegate],
           Broadcaster.map((x: TState) => x.uri),
-          invoke(SourceLike_subscribe, eventListener),
+          invoke(ReactiveSourceLike_subscribe, eventListener),
         );
       },
     },

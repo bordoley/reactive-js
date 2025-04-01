@@ -3,10 +3,10 @@ import {
   ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  ConcurrentReactiveComputationModule,
   DeferredAsynchronousReactiveComputationModule,
   PureComputationOperator,
   PureSynchronousObservableLike,
+  ReactiveComputationModule,
   SequentialComputationModule,
   SequentialReactiveComputationModule,
   SynchronousComputationModule,
@@ -91,7 +91,7 @@ export interface SynchronousObservableModule
         };
       }
     >,
-    ConcurrentReactiveComputationModule<SynchronousObservableComputation>,
+    ReactiveComputationModule<SynchronousObservableComputation>,
     SequentialComputationModule<
       SynchronousObservableComputation,
       {

@@ -46,9 +46,9 @@
 
 ## Methods
 
-### \[SourceLike\_subscribe\]()
+### \[ReactiveSourceLike\_subscribe\]()
 
-> **\[SourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -62,4 +62,4 @@
 
 #### Inherited from
 
-[`PureObservableLike`](PureObservableLike.md).[`[SourceLike_subscribe]`](PureObservableLike.md#sourcelike_subscribe)
+[`PureObservableLike`](PureObservableLike.md).[`[ReactiveSourceLike_subscribe]`](PureObservableLike.md#reactivesourcelike_subscribe)

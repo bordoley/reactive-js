@@ -10,7 +10,7 @@ import {
 } from "../../../computations.js";
 import { Function1, Optional } from "../../../functions.js";
 import { BackpressureStrategy, ConsumerLike } from "../../../utils.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToConsumerMixin from "../../__mixins__/LiftedSinkToConsumerMixin.js";
 
@@ -54,9 +54,14 @@ const Producer_lift =
     >,
   ) =>
   (source: ProducerLike<TIn>): ProducerLike<TOut> =>
-    DeferredSource.createLifted(source, operator, liftedSinkToConsumer, {
-      [ComputationLike_isSynchronous]: false,
-      [ComputationLike_isPure]: config?.[ComputationLike_isPure],
-    });
+    DeferredReactiveSource.createLifted(
+      source,
+      operator,
+      liftedSinkToConsumer,
+      {
+        [ComputationLike_isSynchronous]: false,
+        [ComputationLike_isPure]: config?.[ComputationLike_isPure],
+      },
+    );
 
 export default Producer_lift;

@@ -1,9 +1,9 @@
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 
 const Observable_withEffect: Observable.Signature["withEffect"] =
-  DeferredSource.withEffect<
+  DeferredReactiveSource.withEffect<
     unknown,
     ObserverLike<unknown>
   > as Observable.Signature["withEffect"];

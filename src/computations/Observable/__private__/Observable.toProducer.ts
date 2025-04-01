@@ -2,7 +2,7 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ObservableLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { bindMethod, compose } from "../../../functions.js";
 import * as DefaultScheduler from "../../../utils/DefaultScheduler.js";
@@ -10,16 +10,16 @@ import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import { SchedulerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 
 const Observable_toProducer: Observable.Signature["toProducer"] = ((options?: {
     scheduler: SchedulerLike;
   }) =>
   (observable: ObservableLike) =>
-    DeferredSource.create(
+    DeferredReactiveSource.create(
       compose(
         Consumer.toObserver(options?.scheduler ?? DefaultScheduler.get()),
-        bindMethod(observable, SourceLike_subscribe),
+        bindMethod(observable, ReactiveSourceLike_subscribe),
       ),
       {
         [ComputationLike_isPure]: Computation.isPure(observable),

@@ -1,4 +1,4 @@
-import { BroadcasterLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentReactiveComputationModule, SourceComputationModule } from "../computations.js";
+import { BroadcasterLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentReactiveComputationModule, ReactiveComputationModule } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 /**
@@ -11,7 +11,7 @@ export type Computation = BroadcasterComputation;
 /**
  * @noInheritDoc
  */
-export interface BroadcasterModule extends ComputationModule<BroadcasterComputation>, ConcurrentReactiveComputationModule<BroadcasterComputation>, SourceComputationModule<BroadcasterComputation> {
+export interface BroadcasterModule extends ComputationModule<BroadcasterComputation>, ReactiveComputationModule<BroadcasterComputation>, ConcurrentReactiveComputationModule<BroadcasterComputation> {
     addEventHandler<T>(onNotify: SideEffect1<T>): Function1<BroadcasterLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;

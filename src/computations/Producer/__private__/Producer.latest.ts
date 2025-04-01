@@ -7,7 +7,7 @@ import { ProducerLike } from "../../../computations.js";
 import DelegatingConsumerMixin from "../../../utils/__mixins__/DelegatingConsumerMixin.js";
 import { ConsumerLike } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import LatestEventListenerMixin, {
   LatestEventListenerContextLike,
   LatestEventListenerLike,
@@ -36,7 +36,7 @@ const createLatestConsumer: (
 export const Producer_combineLatest: Producer.Signature["combineLatest"] = ((
   ...producers: readonly ProducerLike<any>[]
 ) =>
-  DeferredSource.latest(
+  DeferredReactiveSource.latest(
     producers,
     "combine-latest",
     createLatestConsumer,
@@ -45,7 +45,7 @@ export const Producer_combineLatest: Producer.Signature["combineLatest"] = ((
 export const Producer_zipLatest: Producer.Signature["zipLatest"] = ((
   ...Producers: readonly ProducerLike<any>[]
 ) =>
-  DeferredSource.latest(
+  DeferredReactiveSource.latest(
     Producers,
     "zip-latest",
     createLatestConsumer,

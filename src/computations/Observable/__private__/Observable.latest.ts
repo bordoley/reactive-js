@@ -8,7 +8,7 @@ import DelegatingConsumerMixin from "../../../utils/__mixins__/DelegatingConsume
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import LatestEventListenerMixin, {
   LatestEventListenerContextLike,
   LatestEventListenerLike,
@@ -41,7 +41,7 @@ const createLatestObserver: (
 
 export const Observable_combineLatest: Observable.Signature["combineLatest"] =
   ((...observables: readonly ObservableLike<any>[]) =>
-    DeferredSource.latest(
+    DeferredReactiveSource.latest(
       observables,
       "combine-latest",
       createLatestObserver,
@@ -50,7 +50,7 @@ export const Observable_combineLatest: Observable.Signature["combineLatest"] =
 export const Observable_zipLatest: Observable.Signature["zipLatest"] = ((
   ...observables: readonly ObservableLike<any>[]
 ) =>
-  DeferredSource.latest(
+  DeferredReactiveSource.latest(
     observables,
     "zip-latest",
     createLatestObserver,

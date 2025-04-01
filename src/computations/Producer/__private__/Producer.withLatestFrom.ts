@@ -10,13 +10,13 @@ import {
 import { ConsumerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Producer from "../../Producer.js";
-import * as Source from "../../Source.js";
+import * as ReactiveSource from "../../ReactiveSource.js";
 import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Producer_forEach from "./Producer.forEach.js";
 import Producer_lift from "./Producer.lift.js";
 
 const addEventListener = <T>(_: ConsumerLike, effect: SideEffect1<T>) =>
-  compose(Producer_forEach(effect), Source.subscribe());
+  compose(Producer_forEach(effect), ReactiveSource.subscribe());
 
 const Producer_withLatestFrom: Producer.Signature["withLatestFrom"] = (<
   TA,

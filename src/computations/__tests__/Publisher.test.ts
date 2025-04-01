@@ -8,7 +8,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { SourceLike_subscribe } from "../../computations.js";
+import { ReactiveSourceLike_subscribe } from "../../computations.js";
 import {
   Optional,
   ignore,
@@ -81,8 +81,8 @@ testModule(
     const publisher = Publisher.create<number>({ autoDispose: true });
     const EventListener = Publisher.create<number>({ autoDispose: true });
 
-    publisher[SourceLike_subscribe](EventListener);
-    publisher[SourceLike_subscribe](EventListener);
+    publisher[ReactiveSourceLike_subscribe](EventListener);
+    publisher[ReactiveSourceLike_subscribe](EventListener);
 
     EventListener[DisposableLike_dispose]();
 

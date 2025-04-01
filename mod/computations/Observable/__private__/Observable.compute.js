@@ -7,8 +7,8 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SchedulerLike_schedule, SinkLike_complete, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
-import * as Source from "../../Source.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as ReactiveSource from "../../ReactiveSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 export const BatchedComputeMode = "batched";
@@ -146,7 +146,7 @@ class ComputeContext {
                             ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
-            }), Source.subscribe({ scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
+            }), ReactiveSource.subscribe({ scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }
@@ -192,7 +192,7 @@ export const assertCurrentContext = () => {
     }
     return currentCtx;
 };
-const Observable_compute = ((computation, config, { mode = BatchedComputeMode } = {}) => DeferredSource.create((observer) => {
+const Observable_compute = ((computation, config, { mode = BatchedComputeMode } = {}) => DeferredReactiveSource.create((observer) => {
     const runComputation = () => {
         let result = none;
         let err = none;

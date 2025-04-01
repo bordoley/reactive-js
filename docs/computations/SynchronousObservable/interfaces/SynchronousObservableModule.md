@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
 
 ## Properties
 
@@ -164,7 +164,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`combineLatest`](../../interfaces/ReactiveComputationModule.md#combinelatest)
 
 #### Call Signature
 
@@ -198,7 +198,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`combineLatest`](../../interfaces/ReactiveComputationModule.md#combinelatest)
 
 #### Call Signature
 
@@ -238,7 +238,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`combineLatest`](../../interfaces/ReactiveComputationModule.md#combinelatest)
 
 #### Call Signature
 
@@ -266,7 +266,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`combineLatest`](../../interfaces/ReactiveComputationModule.md#combinelatest)
 
 #### Call Signature
 
@@ -300,7 +300,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`combineLatest`](../../interfaces/ReactiveComputationModule.md#combinelatest)
 
 #### Call Signature
 
@@ -340,7 +340,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`combineLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#combinelatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`combineLatest`](../../interfaces/ReactiveComputationModule.md#combinelatest)
 
 ***
 
@@ -624,7 +624,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 #### Call Signature
 
@@ -658,7 +658,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 #### Call Signature
 
@@ -692,7 +692,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 #### Call Signature
 
@@ -730,7 +730,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 #### Call Signature
 
@@ -768,7 +768,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 #### Call Signature
 
@@ -810,7 +810,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 #### Call Signature
 
@@ -852,7 +852,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`forkMerge`](../../interfaces/ConcurrentReactiveComputationModule.md#forkmerge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`forkMerge`](../../interfaces/ReactiveComputationModule.md#forkmerge)
 
 ***
 
@@ -1018,7 +1018,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`merge`](../../interfaces/ReactiveComputationModule.md#merge)
 
 #### Call Signature
 
@@ -1040,7 +1040,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`merge`](../../interfaces/ConcurrentReactiveComputationModule.md#merge)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`merge`](../../interfaces/ReactiveComputationModule.md#merge)
 
 ***
 
@@ -1618,7 +1618,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`takeUntil`](../../interfaces/ConcurrentReactiveComputationModule.md#takeuntil)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`takeUntil`](../../interfaces/ReactiveComputationModule.md#takeuntil)
 
 #### Call Signature
 
@@ -1640,7 +1640,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`takeUntil`](../../interfaces/ConcurrentReactiveComputationModule.md#takeuntil)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`takeUntil`](../../interfaces/ReactiveComputationModule.md#takeuntil)
 
 ***
 
@@ -1908,7 +1908,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ReactiveComputationModule.md#withlatestfrom)
 
 #### Call Signature
 
@@ -1938,7 +1938,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ReactiveComputationModule.md#withlatestfrom)
 
 #### Call Signature
 
@@ -1962,7 +1962,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ReactiveComputationModule.md#withlatestfrom)
 
 #### Call Signature
 
@@ -1992,7 +1992,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ConcurrentReactiveComputationModule.md#withlatestfrom)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`withLatestFrom`](../../interfaces/ReactiveComputationModule.md#withlatestfrom)
 
 ***
 
@@ -2024,7 +2024,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`zipLatest`](../../interfaces/ReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
@@ -2058,7 +2058,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`zipLatest`](../../interfaces/ReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
@@ -2098,7 +2098,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`zipLatest`](../../interfaces/ReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
@@ -2126,7 +2126,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`zipLatest`](../../interfaces/ReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
@@ -2160,7 +2160,7 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`zipLatest`](../../interfaces/ReactiveComputationModule.md#ziplatest)
 
 #### Call Signature
 
@@ -2200,4 +2200,4 @@
 
 ##### Inherited from
 
-[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md).[`zipLatest`](../../interfaces/ConcurrentReactiveComputationModule.md#ziplatest)
+[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md).[`zipLatest`](../../interfaces/ReactiveComputationModule.md#ziplatest)

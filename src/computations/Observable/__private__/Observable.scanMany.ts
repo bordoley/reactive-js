@@ -1,7 +1,7 @@
 import {
   ComputationLike_isPure,
   ObservableLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import {
   Factory,
@@ -16,7 +16,7 @@ import Broadcaster_toProducer from "../../Broadcaster/__private__/Broadcaster.to
 import Computation_isPure from "../../Computation/__private__/Computation.isPure.js";
 import type * as Observable from "../../Observable.js";
 import * as Publisher from "../../Publisher.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_switchAll from "./Observable.switchAll.js";
 import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
@@ -29,7 +29,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
     },
   ) =>
   (source: ObservableLike<T>) =>
-    DeferredSource.create(
+    DeferredReactiveSource.create(
       (observer: ObserverLike<TAcc>) => {
         const accFeedbackPublisher = pipe(
           Publisher.create<TAcc>(),
@@ -52,7 +52,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           Observable_forEach(
             bindMethod(accFeedbackPublisher, EventListenerLike_notify),
           ),
-          invoke(SourceLike_subscribe, observer),
+          invoke(ReactiveSourceLike_subscribe, observer),
         );
 
         accFeedbackPublisher[EventListenerLike_notify](initialValue());

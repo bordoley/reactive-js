@@ -38,9 +38,9 @@ import {
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
-import * as Source from "../../Source.js";
+import * as ReactiveSource from "../../ReactiveSource.js";
 import type * as SynchronousObservable from "../../SynchronousObservable.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 
@@ -312,7 +312,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Source.subscribe({ scheduler: observer }),
+        ReactiveSource.subscribe({ scheduler: observer }),
         Disposable.addTo(observer),
         DisposableContainer.onComplete(this[ComputeContext_cleanup]),
       );
@@ -423,114 +423,119 @@ const Observable_compute: Signature["compute"] = (<T>(
   >,
   { mode = BatchedComputeMode }: { readonly mode?: ComputeMode } = {},
 ) =>
-  DeferredSource.create<T, ObserverLike<T>>((observer: ObserverLike<T>) => {
-    const runComputation = () => {
-      let result: Optional<T> = none;
-      let err: Optional<Error> = none;
-      let isAwaiting = false;
+  DeferredReactiveSource.create<T, ObserverLike<T>>(
+    (observer: ObserverLike<T>) => {
+      const runComputation = () => {
+        let result: Optional<T> = none;
+        let err: Optional<Error> = none;
+        let isAwaiting = false;
 
-      currentCtx = ctx;
-      try {
-        // Explicitly reset the count before running the computation
-        // for the combine-latest case where runComputation can
-        // be invoked recursively on itself.
-        ctx[ComputeContext_index] = 0;
-        result = computation();
-      } catch (e) {
-        isAwaiting = e === awaiting;
-        if (!isAwaiting) {
-          err = error(e);
-        }
-      }
-
-      const effects = ctx[ComputeContext_effects];
-
-      if (effects[Array_length] > ctx[ComputeContext_index]) {
-        const effectsLength = effects[Array_length];
-
-        for (let i = ctx[ComputeContext_index]; i < effectsLength; i++) {
-          const effect = ctx[ComputeContext_effects][i];
-
-          if (
-            effect[ComputeEffect_type] === Await ||
-            effect[ComputeEffect_type] === Observe
-          ) {
-            effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
+        currentCtx = ctx;
+        try {
+          // Explicitly reset the count before running the computation
+          // for the combine-latest case where runComputation can
+          // be invoked recursively on itself.
+          ctx[ComputeContext_index] = 0;
+          result = computation();
+        } catch (e) {
+          isAwaiting = e === awaiting;
+          if (!isAwaiting) {
+            err = error(e);
           }
         }
-      }
-      ctx[ComputeContext_effects][Array_length] = ctx[ComputeContext_index];
-      currentCtx = none;
-      ctx[ComputeContext_index] = 0;
 
-      const effectsLength = effects[Array_length];
+        const effects = ctx[ComputeContext_effects];
 
-      // Inline this for perf
-      let allObserveEffectsHaveValues = true;
-      let hasOutstandingEffects = false;
-      for (let i = 0; i < effectsLength; i++) {
-        const effect = effects[i];
-        const type = effect[ComputeEffect_type];
+        if (effects[Array_length] > ctx[ComputeContext_index]) {
+          const effectsLength = effects[Array_length];
 
-        if (
-          (type === Await || type === Observe) &&
-          !(effect as AwaitOrObserveEffect)[AwaitOrObserveEffect_hasValue]
-        ) {
-          allObserveEffectsHaveValues = false;
+          for (let i = ctx[ComputeContext_index]; i < effectsLength; i++) {
+            const effect = ctx[ComputeContext_effects][i];
+
+            if (
+              effect[ComputeEffect_type] === Await ||
+              effect[ComputeEffect_type] === Observe
+            ) {
+              effect[AwaitOrObserveEffect_subscription][
+                DisposableLike_dispose
+              ]();
+            }
+          }
+        }
+        ctx[ComputeContext_effects][Array_length] = ctx[ComputeContext_index];
+        currentCtx = none;
+        ctx[ComputeContext_index] = 0;
+
+        const effectsLength = effects[Array_length];
+
+        // Inline this for perf
+        let allObserveEffectsHaveValues = true;
+        let hasOutstandingEffects = false;
+        for (let i = 0; i < effectsLength; i++) {
+          const effect = effects[i];
+          const type = effect[ComputeEffect_type];
+
+          if (
+            (type === Await || type === Observe) &&
+            !(effect as AwaitOrObserveEffect)[AwaitOrObserveEffect_hasValue]
+          ) {
+            allObserveEffectsHaveValues = false;
+          }
+
+          if (
+            (type === Await || type === Observe) &&
+            !(effect as ObserveEffect)[AwaitOrObserveEffect_subscription][
+              DisposableLike_isDisposed
+            ]
+          ) {
+            hasOutstandingEffects = true;
+          }
+
+          if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
+            break;
+          }
         }
 
-        if (
-          (type === Await || type === Observe) &&
-          !(effect as ObserveEffect)[AwaitOrObserveEffect_subscription][
-            DisposableLike_isDisposed
-          ]
-        ) {
-          hasOutstandingEffects = true;
+        const combineLatestModeShouldNotify =
+          mode === CombineLatestComputeMode && allObserveEffectsHaveValues;
+
+        const hasError = isSome(err);
+
+        const shouldNotify =
+          !hasError &&
+          !isAwaiting &&
+          (combineLatestModeShouldNotify || mode === BatchedComputeMode);
+
+        const shouldComplete = !hasOutstandingEffects;
+
+        if (hasError) {
+          observer[DisposableLike_dispose](err);
+          return;
         }
 
-        if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
-          break;
+        if (shouldNotify) {
+          observer[EventListenerLike_notify](result as T);
         }
-      }
 
-      const combineLatestModeShouldNotify =
-        mode === CombineLatestComputeMode && allObserveEffectsHaveValues;
+        if (shouldComplete) {
+          observer[SinkLike_complete]();
+        }
+      };
 
-      const hasError = isSome(err);
-
-      const shouldNotify =
-        !hasError &&
-        !isAwaiting &&
-        (combineLatestModeShouldNotify || mode === BatchedComputeMode);
-
-      const shouldComplete = !hasOutstandingEffects;
-
-      if (hasError) {
-        observer[DisposableLike_dispose](err);
-        return;
-      }
-
-      if (shouldNotify) {
-        observer[EventListenerLike_notify](result as T);
-      }
-
-      if (shouldComplete) {
-        observer[SinkLike_complete]();
-      }
-    };
-
-    const ctx = newInstance(
-      ComputeContext,
-      observer,
-      runComputation,
-      mode,
-      config,
-    );
-    pipe(
-      observer[SchedulerLike_schedule](runComputation),
-      Disposable.addTo(observer),
-    );
-  }, config)) as Signature["compute"];
+      const ctx = newInstance(
+        ComputeContext,
+        observer,
+        runComputation,
+        mode,
+        config,
+      );
+      pipe(
+        observer[SchedulerLike_schedule](runComputation),
+        Disposable.addTo(observer),
+      );
+    },
+    config,
+  )) as Signature["compute"];
 
 export const Observable_computeDeferred: Observable.Signature["compute"] = <T>(
   computation: Factory<T>,

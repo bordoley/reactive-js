@@ -4,8 +4,8 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  SourceLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
 } from "../../computations.js";
 import { Function2, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -22,11 +22,11 @@ import {
 const LatestSourceMixin: <
   T,
   TEventListener extends EventListenerLike<ReadonlyArray<T>>,
-  TSource extends SourceLike<T, TSourceEventListener>,
+  TSource extends ReactiveSourceLike<T, TSourceEventListener>,
   TSourceEventListener extends EventListenerLike<T> &
     LatestEventListenerLike<T>,
 >() => Mixin3<
-  SourceLike<ReadonlyArray<T>, TEventListener>,
+  ReactiveSourceLike<ReadonlyArray<T>, TEventListener>,
   ReadonlyArray<TSource>,
   LatestEventListenerMode,
   Function2<
@@ -37,7 +37,7 @@ const LatestSourceMixin: <
 > = /*@__PURE__*/ (<
   T,
   TEventListener extends EventListenerLike<ReadonlyArray<T>>,
-  TSource extends SourceLike<T, TSourceEventListener>,
+  TSource extends ReactiveSourceLike<T, TSourceEventListener>,
   TSourceEventListener extends EventListenerLike<T> &
     LatestEventListenerLike<T>,
 >() => {
@@ -58,7 +58,8 @@ const LatestSourceMixin: <
   return returns(
     mix(
       function LastestSource(
-        this: SourceLike<ReadonlyArray<T>, TEventListener> & TProperties,
+        this: ReactiveSourceLike<ReadonlyArray<T>, TEventListener> &
+          TProperties,
         sources: readonly TSource[],
         mode: LatestEventListenerMode,
         createLatestEventListener: Function2<
@@ -66,7 +67,7 @@ const LatestSourceMixin: <
           LatestEventListenerContextLike,
           TSourceEventListener
         >,
-      ): SourceLike<ReadonlyArray<T>, TEventListener> {
+      ): ReactiveSourceLike<ReadonlyArray<T>, TEventListener> {
         this[LatestSource_sources] = sources;
         this[LatestSource_mode] = mode;
         this[LatestSource_createLatestEventListener] =
@@ -84,7 +85,7 @@ const LatestSourceMixin: <
         [ComputationLike_isPure]: false as const,
         [ComputationLike_isSynchronous]: false as const,
 
-        [SourceLike_subscribe](
+        [ReactiveSourceLike_subscribe](
           this: TProperties,
           eventListener: TEventListener,
         ) {
@@ -104,7 +105,7 @@ const LatestSourceMixin: <
             );
 
             ctx[LatestEventListenerContextLike_values][Array_push](innerSink);
-            source[SourceLike_subscribe](innerSink);
+            source[ReactiveSourceLike_subscribe](innerSink);
           }
         },
       }),

@@ -2,7 +2,7 @@
 
 import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, } from "../../../computations.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -39,7 +39,7 @@ const Broadcaster_merge = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [ComputationLike_isPure]: true,
-        [SourceLike_subscribe](listener) {
+        [ReactiveSourceLike_subscribe](listener) {
             const broadcasters = this[MergeBroadcaster_broadcasters];
             const count = broadcasters[Array_length];
             let completed = 0;

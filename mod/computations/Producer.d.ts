@@ -1,4 +1,4 @@
-import { BroadcasterLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, SequentialComputationModule, SequentialReactiveComputationModule, SourceComputationModule } from "../computations.js";
+import { BroadcasterLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
 /**
@@ -8,7 +8,7 @@ export interface ProducerComputation extends ComputationTypeLike {
     readonly [Computation_baseOfT]?: ProducerLike<this[typeof Computation_T]>;
 }
 export type Computation = ProducerComputation;
-export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredAsynchronousReactiveComputationModule<ProducerComputation>, SourceComputationModule<ProducerComputation> {
+export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredAsynchronousReactiveComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation> {
     broadcast<T>(options?: {
         autoDispose?: boolean;
     }): Function1<ProducerLike<T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;

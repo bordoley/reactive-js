@@ -1,13 +1,13 @@
 /// <reference types="./effects.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, StreamableLike_stream, } from "../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, StreamableLike_stream, } from "../../computations.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { EventListenerLike_notify, SchedulerLike_schedule, SinkLike_complete, } from "../../utils.js";
 import * as Computation from "../Computation.js";
-import * as Source from "../Source.js";
+import * as ReactiveSource from "../ReactiveSource.js";
 import * as Streamable from "../Streamable.js";
-import * as DeferredSource from "../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../__internal__/DeferredReactiveSource.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.compute.js";
 export const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
@@ -17,7 +17,7 @@ export const __await = (src) => {
     const ctx = assertCurrentContext();
     const observable = Computation.isDeferred(src)
         ? src
-        : DeferredSource.create(bindMethod(src, SourceLike_subscribe), {
+        : DeferredReactiveSource.create(bindMethod(src, ReactiveSourceLike_subscribe), {
             [ComputationLike_isPure]: src[ComputationLike_isPure],
             [ComputationLike_isSynchronous]: false,
         });
@@ -31,17 +31,17 @@ export const __observe = (src) => {
     const ctx = assertCurrentContext();
     const observable = Computation.isDeferred(src)
         ? src
-        : DeferredSource.create(bindMethod(src, SourceLike_subscribe), {
+        : DeferredReactiveSource.create(bindMethod(src, ReactiveSourceLike_subscribe), {
             [ComputationLike_isPure]: src[ComputationLike_isPure],
             [ComputationLike_isSynchronous]: false,
         });
     return ctx[ComputeContext_awaitOrObserve](observable, false);
 };
-const createSynchronousObservableWithSideEffects = (f) => DeferredSource.create(f, {
+const createSynchronousObservableWithSideEffects = (f) => DeferredReactiveSource.create(f, {
     [ComputationLike_isSynchronous]: true,
     [ComputationLike_isPure]: false,
 });
-const createDeferredbservableWithSideEffects = (f) => DeferredSource.create(f, {
+const createDeferredbservableWithSideEffects = (f) => DeferredReactiveSource.create(f, {
     [ComputationLike_isSynchronous]: false,
     [ComputationLike_isPure]: false,
 });
@@ -62,7 +62,7 @@ export const __do = /*@__PURE__*/ (() => {
             ? createSynchronousObservableWithSideEffects
             : createDeferredbservableWithSideEffects, f, ...args);
         const schedulerOption = __constant({ scheduler }, scheduler);
-        const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, Source.subscribe, schedulerOption);
+        const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, ReactiveSource.subscribe, schedulerOption);
         ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
     };
 })();

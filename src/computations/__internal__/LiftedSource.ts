@@ -1,4 +1,7 @@
-import { SourceLike, SourceLike_subscribe } from "../../computations.js";
+import {
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
+} from "../../computations.js";
 import { Function1 } from "../../functions.js";
 import { SinkLike } from "../../utils.js";
 
@@ -16,20 +19,24 @@ export type LiftOperator<TSubscription extends SinkLike, TA, TB> = Function1<
   LiftedSinkLike<TSubscription, TA>
 >;
 
-export const LiftedSourceLike_sink = Symbol("LiftedSourceLike_sink");
-export const LiftedSourceLike_source = Symbol("LiftedSourceLike_source");
+export const LiftedReactiveSourceLike_sink = Symbol(
+  "LiftedReactiveSourceLike_sink",
+);
+export const LiftedReactiveSourceLike_source = Symbol(
+  "LiftedReactiveSourceLike_source",
+);
 
-export interface LiftedSourceLike<
+export interface LiftedReactiveSourceLike<
   TIn,
   TOut,
   TEventListenerIn extends SinkLike<TIn>,
   TEventListenerOut extends SinkLike<TOut>,
-  TSource extends SourceLike<TIn, TEventListenerIn>,
-> extends SourceLike<TOut, TEventListenerOut> {
-  readonly [LiftedSourceLike_source]: TSource;
-  readonly [LiftedSourceLike_sink]: ReadonlyArray<
+  TSource extends ReactiveSourceLike<TIn, TEventListenerIn>,
+> extends ReactiveSourceLike<TOut, TEventListenerOut> {
+  readonly [LiftedReactiveSourceLike_source]: TSource;
+  readonly [LiftedReactiveSourceLike_sink]: ReadonlyArray<
     LiftOperator<TEventListenerOut, unknown, unknown>
   >;
 
-  [SourceLike_subscribe](listener: TEventListenerOut): void;
+  [ReactiveSourceLike_subscribe](listener: TEventListenerOut): void;
 }

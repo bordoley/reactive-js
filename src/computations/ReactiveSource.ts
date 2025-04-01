@@ -1,4 +1,7 @@
-import { SourceLike, SourceLike_subscribe } from "../computations.js";
+import {
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
+} from "../computations.js";
 import { Function1, Optional } from "../functions.js";
 import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -12,24 +15,24 @@ import {
 export interface Signature {
   lastAsync<T>(options?: {
     scheduler: SchedulerLike;
-  }): Function1<SourceLike<T>, Promise<Optional<T>>>;
+  }): Function1<ReactiveSourceLike<T>, Promise<Optional<T>>>;
 
   subscribe<T>(options?: {
     scheduler: SchedulerLike;
-  }): Function1<SourceLike<T>, DisposableLike>;
+  }): Function1<ReactiveSourceLike<T>, DisposableLike>;
 
   toReadonlyArrayAsync<T>(options?: {
     scheduler: SchedulerLike;
-  }): Function1<SourceLike<T>, Promise<ReadonlyArray<T>>>;
+  }): Function1<ReactiveSourceLike<T>, Promise<ReadonlyArray<T>>>;
 }
 
 export const lastAsync: Signature["lastAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
-  async (src: SourceLike<T>) => {
+  async (src: ReactiveSourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const observer = Observer.takeLast<T>(1, scheduler);
 
-    src[SourceLike_subscribe](observer);
+    src[ReactiveSourceLike_subscribe](observer);
     await DisposableContainer.toPromise(observer);
 
     return observer[CollectionEnumeratorLike_peek];
@@ -37,21 +40,21 @@ export const lastAsync: Signature["lastAsync"] =
 
 export const subscribe: Signature["subscribe"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
-  (src: SourceLike<T>) => {
+  (src: ReactiveSourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const observer = Observer.takeLast(0, scheduler);
-    src[SourceLike_subscribe](observer);
+    src[ReactiveSourceLike_subscribe](observer);
 
     return observer;
   };
 
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
-  async (src: SourceLike<T>) => {
+  async (src: ReactiveSourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const buffer: T[] = [];
     const observer = Observer.collect<T>(buffer, scheduler);
-    src[SourceLike_subscribe](observer);
+    src[ReactiveSourceLike_subscribe](observer);
     await DisposableContainer.toPromise(observer);
 
     return buffer;

@@ -1,6 +1,6 @@
 /// <reference types="./SynchronousObservable.toRunnable.d.ts" />
 
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, SourceLike_subscribe, } from "../../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, RunnableLike_eval, } from "../../../computations.js";
 import { newInstance, pipe } from "../../../functions.js";
 import * as VirtualTimeScheduler from "../../../utils/VirtualTimeScheduler.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
@@ -19,7 +19,7 @@ class SynchronousObservableRunnable {
     [RunnableLike_eval](sink) {
         const scheduler = VirtualTimeScheduler.create(this.o);
         const observer = pipe(sink, Sink.toObserver(scheduler));
-        this.s[SourceLike_subscribe](observer);
+        this.s[ReactiveSourceLike_subscribe](observer);
         scheduler[VirtualTimeSchedulerLike_run]();
     }
 }

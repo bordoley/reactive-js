@@ -8,7 +8,10 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { SourceLike, SourceLike_subscribe } from "../../computations.js";
+import {
+  ReactiveSourceLike,
+  ReactiveSourceLike_subscribe,
+} from "../../computations.js";
 import { Function1, bind, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -33,13 +36,13 @@ import {
 } from "../../utils.js";
 
 type TReturn<
-  TInnerSource extends SourceLike<T, TConsumer>,
+  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 > = ConsumerLike<TInnerSource>;
 
 const SwitchAllConsumerMixin: <
-  TInnerSource extends SourceLike<T, TConsumer>,
+  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 >() => Mixin2<
@@ -47,7 +50,7 @@ const SwitchAllConsumerMixin: <
   ConsumerLike<T>,
   Function1<TConsumer, TConsumer>
 > = /*@__PURE__*/ (<
-  TInnerSource extends SourceLike<T, TConsumer>,
+  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 >() => {
@@ -149,7 +152,7 @@ const SwitchAllConsumerMixin: <
             Disposable.addTo(this),
           );
 
-          next[SourceLike_subscribe](
+          next[ReactiveSourceLike_subscribe](
             delegatingNotifyOnlyNonCompletingNonDisposing,
           );
 

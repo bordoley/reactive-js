@@ -9,9 +9,9 @@ import {
   ObservableLike,
   ObservableWithSideEffectsLike,
   PureComputationOperator,
+  ReactiveComputationModule,
   SequentialComputationModule,
   SequentialReactiveComputationModule,
-  SourceComputationModule,
 } from "../computations.js";
 import { Factory, Function2, identityLazy } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
@@ -91,7 +91,7 @@ export interface ObservableModule
       }
     >,
     ConcurrentDeferredComputationModule<ObservableComputation>,
-    ConcurrentReactiveComputationModule<ObservableComputation>,
+    ReactiveComputationModule<ObservableComputation>,
     SequentialComputationModule<
       ObservableComputation,
       {
@@ -103,7 +103,7 @@ export interface ObservableModule
     >,
     SequentialReactiveComputationModule<ObservableComputation>,
     DeferredAsynchronousReactiveComputationModule<ObservableComputation>,
-    SourceComputationModule<ObservableComputation> {
+    ConcurrentReactiveComputationModule<ObservableComputation> {
   compute<T>(
     computation: Factory<T>,
     options?: {

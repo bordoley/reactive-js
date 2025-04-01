@@ -50,7 +50,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [SourceLike_subscribe]
+##### [ReactiveSourceLike_subscribe]
 
 ### Returns
 

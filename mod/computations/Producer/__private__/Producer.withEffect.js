@@ -1,5 +1,5 @@
 /// <reference types="./Producer.withEffect.d.ts" />
 
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
-const Producer_withEffect = (DeferredSource.withEffect);
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+const Producer_withEffect = (DeferredReactiveSource.withEffect);
 export default Producer_withEffect;

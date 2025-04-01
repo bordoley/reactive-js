@@ -18,7 +18,7 @@
 
 #### observable
 
-[`Optional`](../../functions/type-aliases/Optional.md)\<[`SourceLike`](../../computations/interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>\>\>
+[`Optional`](../../functions/type-aliases/Optional.md)\<[`ReactiveSourceLike`](../../computations/interfaces/ReactiveSourceLike.md)\<`T`, [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>\>\>
 
 #### options?
 
@@ -42,7 +42,7 @@
 
 #### factory
 
-[`Factory`](../../functions/type-aliases/Factory.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<[`SourceLike`](../../computations/interfaces/SourceLike.md)\<`T`, [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>\>\>\>
+[`Factory`](../../functions/type-aliases/Factory.md)\<[`Optional`](../../functions/type-aliases/Optional.md)\<[`ReactiveSourceLike`](../../computations/interfaces/ReactiveSourceLike.md)\<`T`, [`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)\<`T`\>\>\>\>
 
 #### deps
 

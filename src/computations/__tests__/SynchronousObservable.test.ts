@@ -36,8 +36,8 @@ import {
 } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
+import * as ReactiveSource from "../ReactiveSource.js";
 import * as Runnable from "../Runnable.js";
-import * as Source from "../Source.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import DeferredAsynchronousReactiveComputationModuleTests from "./fixtures/DeferredAsynchronousReactiveComputationModuleTests.js";
@@ -140,7 +140,7 @@ testModule(
         SynchronousObservable.compute(() => {
           raise(error);
         }),
-        Source.subscribe({ scheduler: vts }),
+        ReactiveSource.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -303,7 +303,7 @@ testModule(
             Computation.raise(m)(),
           ),
         ),
-        Source.subscribe({ scheduler: vts }),
+        ReactiveSource.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();
@@ -555,7 +555,7 @@ testModule(
           }),
           returns(1),
         ),
-        Source.subscribe({ scheduler: vts }),
+        ReactiveSource.subscribe({ scheduler: vts }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

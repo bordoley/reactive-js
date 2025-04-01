@@ -1,4 +1,4 @@
-import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationTypeLike, ComputationTypeOfModule, ConcurrentReactiveComputationModule, NewPureInstanceOf, PickComputationModule, PureComputationLike, PureComputationOf, PureComputationOperator, SequentialComputationModule } from "../computations.js";
+import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationTypeLike, ComputationTypeOfModule, NewPureInstanceOf, PickComputationModule, PureComputationLike, PureComputationOf, PureComputationOperator, ReactiveComputationModule, SequentialComputationModule } from "../computations.js";
 import { Factory, Optional } from "../functions.js";
 export interface ConcatWithOperator<TComputationType extends ComputationTypeLike> {
     <T>(snd: PureComputationOf<TComputationType, T>, ...tail: readonly PureComputationOf<TComputationType, T>[]): PureComputationOperator<TComputationType, T, T>;
@@ -34,7 +34,7 @@ export interface Signature {
     }>(o: TModule) => TModule & {
         [ComputationModuleLike_computationType]?: TComputationType;
     };
-    mergeWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ConcurrentReactiveComputationModule<TComputationType>, "merge">>(m: TComputationModule): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
+    mergeWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">>(m: TComputationModule): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
     raise<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule): <T>(options?: {
         readonly raise?: Factory<unknown>;
     }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;

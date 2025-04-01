@@ -1,7 +1,7 @@
 import {
   ComputationLike_isPure,
   ObservableLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../computations.js";
@@ -55,7 +55,7 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
           { [ComputationLike_isPure]: false },
         ),
         Observable.toProducer({ scheduler }),
-        invoke(SourceLike_subscribe, stream),
+        invoke(ReactiveSourceLike_subscribe, stream),
       );
 
       return stream;

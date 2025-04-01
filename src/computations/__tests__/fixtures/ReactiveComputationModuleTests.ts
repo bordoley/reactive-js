@@ -7,25 +7,25 @@ import {
   ComputationModule,
   ComputationTypeLike,
   ConcurrentReactiveComputationModule,
-  SourceComputationModule,
+  ReactiveComputationModule,
 } from "../../../computations.js";
 import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
 import * as Observable from "../../Observable.js";
-import * as Source from "../../Source.js";
+import * as ReactiveSource from "../../ReactiveSource.js";
 
 const ObservableModule =
   Computation.makeModule<Observable.Computation>()(Observable);
 
-const ConcurrentReactiveComputationModuleTests = <
+const ReactiveComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
 >(
   m: ComputationModule<TComputationType> &
-    SourceComputationModule<TComputationType> &
-    ConcurrentReactiveComputationModule<TComputationType>,
+    ConcurrentReactiveComputationModule<TComputationType> &
+    ReactiveComputationModule<TComputationType>,
 ) =>
   describe(
-    "ConcurrentReactiveComputationModuleTests",
+    "ReactiveComputationModuleTests",
     describe(
       "fromObservable",
       testAsync(
@@ -35,11 +35,11 @@ const ConcurrentReactiveComputationModuleTests = <
           Computation.fromReadonlyArray(ObservableModule),
           m.fromObservable<number>(),
           m.toProducer(),
-          Source.toReadonlyArrayAsync<number>(),
+          ReactiveSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),
     ),
   );
 
-export default ConcurrentReactiveComputationModuleTests;
+export default ReactiveComputationModuleTests;

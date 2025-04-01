@@ -1,6 +1,6 @@
 import {
   PureProducerLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import {
   Equality,
@@ -13,7 +13,7 @@ import { ObserverLike } from "../../../utils.js";
 import Computation_startWith from "../../Computation/__private__/Computation.startWith.js";
 import * as Computation from "../../Computation.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 import Producer_concat from "./Producer.concat.js";
 import Producer_distinctUntilChanged from "./Producer.distinctUntilChanged.js";
 import { Producer_genPure } from "./Producer.gen.js";
@@ -30,7 +30,7 @@ const Producer_scanDistinct: Producer.Signature["scanDistinct"] = (<T, TAcc>(
     options?: { readonly equality?: Equality<TAcc> },
   ) =>
   (source: PureProducerLike<T>) =>
-    DeferredSource.create(
+    DeferredReactiveSource.create(
       (observer: ObserverLike<TAcc>) => {
         const acc: TAcc = initialState();
 
@@ -42,7 +42,7 @@ const Producer_scanDistinct: Producer.Signature["scanDistinct"] = (<T, TAcc>(
           Producer_distinctUntilChanged<TAcc>(options),
         );
 
-        lifted[SourceLike_subscribe](observer);
+        lifted[ReactiveSourceLike_subscribe](observer);
       },
 
       source,

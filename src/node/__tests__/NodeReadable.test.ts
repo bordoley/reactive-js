@@ -8,7 +8,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as Producer from "../../computations/Producer.js";
-import * as Source from "../../computations/Source.js";
+import * as ReactiveSource from "../../computations/ReactiveSource.js";
 import {
   Optional,
   newInstance,
@@ -40,7 +40,7 @@ testModule(
         NodeReadable.create,
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        Source.lastAsync<string>(),
+        ReactiveSource.lastAsync<string>(),
         expectEquals<Optional<string>>("abcdefg"),
       );
 
@@ -56,7 +56,7 @@ testModule(
         NodeReadable.create(() => Readable.from(generate())),
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        Source.lastAsync(),
+        ReactiveSource.lastAsync(),
         expectEquals<Optional<string>>("abcdefg"),
       );
     }),
@@ -70,7 +70,7 @@ testModule(
 
       await pipe(
         NodeReadable.create(() => Readable.from(generate())),
-        Source.lastAsync<Uint8Array>(),
+        ReactiveSource.lastAsync<Uint8Array>(),
         expectPromiseToThrow,
       );
     }),

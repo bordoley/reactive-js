@@ -1,16 +1,16 @@
 import {
   BroadcasterLike,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { returns } from "../../../functions.js";
 import { ConsumerLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 
 const Broadcaster_toProducer: Broadcaster.Signature["toProducer"] =
   /*@__PURE__*/ returns((src: BroadcasterLike) =>
-    DeferredSource.create((consumer: ConsumerLike) => {
-      src[SourceLike_subscribe](consumer);
+    DeferredReactiveSource.create((consumer: ConsumerLike) => {
+      src[ReactiveSourceLike_subscribe](consumer);
     }),
   ) as Broadcaster.Signature["toProducer"];
 

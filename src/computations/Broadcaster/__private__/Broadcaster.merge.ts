@@ -10,7 +10,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  SourceLike_subscribe,
+  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { bindMethod, isSome, none, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -87,7 +87,7 @@ const Broadcaster_merge: Broadcaster.Signature["merge"] = /*@__PURE__*/ (<
       [ComputationLike_isSynchronous]: false as const,
       [ComputationLike_isPure]: true as const,
 
-      [SourceLike_subscribe](
+      [ReactiveSourceLike_subscribe](
         this: TProperties,
         listener: EventListenerLike<T>,
       ): void {

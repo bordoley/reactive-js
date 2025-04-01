@@ -2,7 +2,7 @@
 
 import { Array_push } from "../../__internal__/constants.js";
 import { mix, props, proto } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, } from "../../computations.js";
 import { none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { LatestEventListenerContextLike_completedCount, LatestEventListenerContextLike_mode, LatestEventListenerContextLike_values, } from "./LatestEventListenerMixin.js";
@@ -24,7 +24,7 @@ const LatestSourceMixin = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isPure]: false,
         [ComputationLike_isSynchronous]: false,
-        [SourceLike_subscribe](eventListener) {
+        [ReactiveSourceLike_subscribe](eventListener) {
             const mode = this[LatestSource_mode];
             const sources = this[LatestSource_sources];
             const ctx = {
@@ -35,7 +35,7 @@ const LatestSourceMixin = /*@__PURE__*/ (() => {
             for (const source of sources) {
                 const innerSink = pipe(this[LatestSource_createLatestEventListener](eventListener, ctx), Disposable.addTo(eventListener));
                 ctx[LatestEventListenerContextLike_values][Array_push](innerSink);
-                source[SourceLike_subscribe](innerSink);
+                source[ReactiveSourceLike_subscribe](innerSink);
             }
         },
     })));

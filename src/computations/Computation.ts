@@ -8,12 +8,12 @@ import {
   ComputationOperatorWithSideEffects,
   ComputationTypeLike,
   ComputationTypeOfModule,
-  ConcurrentReactiveComputationModule,
   NewPureInstanceOf,
   PickComputationModule,
   PureComputationLike,
   PureComputationOf,
   PureComputationOperator,
+  ReactiveComputationModule,
   SequentialComputationModule,
 } from "../computations.js";
 import {
@@ -159,7 +159,7 @@ export interface Signature {
   mergeWith<
     TComputationType extends ComputationTypeLike,
     TComputationModule extends PickComputationModule<
-      ConcurrentReactiveComputationModule<TComputationType>,
+      ReactiveComputationModule<TComputationType>,
       "merge"
     >,
   >(
@@ -211,7 +211,7 @@ export const makeModule: Signature["makeModule"] =
 export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ (<
   TComputationType extends ComputationTypeLike,
   TComputationModule extends Pick<
-    ConcurrentReactiveComputationModule<TComputationType>,
+    ReactiveComputationModule<TComputationType>,
     "merge"
   >,
 >() =>

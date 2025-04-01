@@ -74,11 +74,11 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### options
 
@@ -138,15 +138,15 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### c
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### options
 
@@ -210,19 +210,19 @@
 
 #### a
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### b
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### c
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### d
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[SourceLike_subscribe]`: `void`; \}\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`TIn`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md), \{ `[ComputationLike_isDeferred]`: `false`; `[ComputationLike_isPure]`: [`Optional`](../../../functions/type-aliases/Optional.md)\<`true`\>; `[ComputationLike_isSynchronous]`: `false`; `[DisposableContainerLike_add]`: `void`; `[ReactiveSourceLike_subscribe]`: `void`; \}\>
 
 #### options
 

@@ -4,8 +4,8 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import ConcurrentReactiveComputationModuleTests from "./fixtures/ConcurrentReactiveComputationModuleTests.js";
 import DeferredAsynchronousReactiveComputationModuleTests from "./fixtures/DeferredAsynchronousReactiveComputationModuleTests.js";
+import ReactiveComputationModuleTests from "./fixtures/ReactiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 
@@ -16,7 +16,7 @@ testModule(
   ComputationModuleTests(m),
   SequentialComputationModuleTests(m),
   SequentialReactiveComputationModuleTests(m),
-  ConcurrentReactiveComputationModuleTests(m),
+  ReactiveComputationModuleTests(m),
   DeferredAsynchronousReactiveComputationModuleTests(m),
 )({
   beforeEach() {

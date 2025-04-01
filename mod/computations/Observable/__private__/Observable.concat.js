@@ -1,7 +1,7 @@
 /// <reference types="./Observable.concat.d.ts" />
 
 import * as Observer from "../../../utils/__internal__/Observer.js";
-import * as DeferredSource from "../../__internal__/DeferredSource.js";
+import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
 const Observable_concat = 
-/*@__PURE__*/ DeferredSource.concat(Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing);
+/*@__PURE__*/ DeferredReactiveSource.concat(Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing);
 export default Observable_concat;

@@ -1,6 +1,6 @@
 /// <reference types="./LiftedSource.d.ts" />
 
-import { SourceLike_subscribe } from "../../computations.js";
+import { ReactiveSourceLike_subscribe, } from "../../computations.js";
 export const LiftedSinkLike_subscription = Symbol("LiftedSinkLike_subscription");
-export const LiftedSourceLike_sink = Symbol("LiftedSourceLike_sink");
-export const LiftedSourceLike_source = Symbol("LiftedSourceLike_source");
+export const LiftedReactiveSourceLike_sink = Symbol("LiftedReactiveSourceLike_sink");
+export const LiftedReactiveSourceLike_source = Symbol("LiftedReactiveSourceLike_source");

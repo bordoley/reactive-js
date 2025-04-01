@@ -8,7 +8,7 @@ import * as Computation from "../computations/Computation.js";
 import * as Observable from "../computations/Observable.js";
 import * as Streamable from "../computations/Streamable.js";
 import * as WritableStore from "../computations/WritableStore.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, SourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "../computations.js";
 import { alwaysFalse, bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -92,8 +92,8 @@ export const subscribe = /*@__PURE__*/ (() => {
         [WindowLocationLike_goBack]() {
             history.back();
         },
-        [SourceLike_subscribe](eventListener) {
-            pipe(this[WindowLocation_delegate], Broadcaster.map((x) => x.uri), invoke(SourceLike_subscribe, eventListener));
+        [ReactiveSourceLike_subscribe](eventListener) {
+            pipe(this[WindowLocation_delegate], Broadcaster.map((x) => x.uri), invoke(ReactiveSourceLike_subscribe, eventListener));
         },
     });
     let currentWindowLocationObservable = none;
