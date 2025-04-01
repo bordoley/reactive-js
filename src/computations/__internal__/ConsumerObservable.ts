@@ -1,4 +1,5 @@
 import {
+  Mutable,
   include,
   init,
   mixInstanceFactory,
@@ -23,6 +24,10 @@ import {
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
+import DelegatingConsumerMixin, {
+  DelegatingConsumerLike,
+} from "../../utils/__mixins__/DelegatingConsumerMixin.js";
+import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   BackpressureStrategy,
@@ -34,7 +39,6 @@ import {
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_isReady,
   ObserverLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -51,20 +55,20 @@ export const create: <T>(config?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
 }) => ConsumerObservableLike<T> = (<T>() => {
-  const ConsumerObservable_delegate = Symbol("ConsumerObservable_delegate");
   const ConsumerObservable_onReadyPublisher = Symbol(
     "ConsumerObservable_onReadyPublisher",
   );
 
   type TProperties = {
-    [ConsumerObservable_delegate]: ConsumerLike<T>;
     [ConsumerObservable_onReadyPublisher]: PublisherLike<void>;
   };
 
+  type TPrototype = Pick<ConsumerObservableLike<T>, keyof PureObservableLike>;
+
   return mixInstanceFactory(
-    include(DisposableMixin),
+    include(DisposableMixin, DelegatingConsumerMixin()),
     function ConsumerObservable(
-      this: Omit<ConsumerObservableLike<T>, keyof DisposableLike> & TProperties,
+      this: TPrototype & TProperties,
       config: Optional<{
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
@@ -72,10 +76,10 @@ export const create: <T>(config?: {
     ): ConsumerObservableLike<T> {
       init(DisposableMixin, this);
 
-      const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
       const queue = pipe(Consumer.create(config), Disposable.addTo(this));
+      init(DelegatingConsumerMixin<T>(), this, queue);
 
-      this[ConsumerObservable_delegate] = queue;
+      const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
       this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
 
       pipe(
@@ -88,7 +92,6 @@ export const create: <T>(config?: {
       return this;
     },
     props<TProperties>({
-      [ConsumerObservable_delegate]: none,
       [ConsumerObservable_onReadyPublisher]: none,
     }),
     {
@@ -96,22 +99,14 @@ export const create: <T>(config?: {
       [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
-      get [FlowControllerLike_isReady]() {
-        unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][FlowControllerLike_isReady];
-      },
-
-      get [SinkLike_isCompleted]() {
-        unsafeCast<TProperties>(this);
-        return this[ConsumerObservable_delegate][SinkLike_isCompleted];
-      },
-
       [SourceLike_subscribe](
-        this: ConsumerObservableLike<T> & TProperties,
+        this: ConsumerObservableLike<T> &
+          TProperties &
+          Mutable<DelegatingConsumerLike<T>>,
         observer: ObserverLike<T>,
       ) {
-        const oldDelegate = this[ConsumerObservable_delegate];
-        this[ConsumerObservable_delegate] = observer;
+        const oldDelegate = this[DelegatingEventListenerLike_delegate];
+        this[DelegatingEventListenerLike_delegate] = observer;
         pipe(this, Disposable.bindTo(observer));
 
         pipe(
@@ -138,14 +133,6 @@ export const create: <T>(config?: {
         }
 
         oldDelegate[DisposableLike_dispose]();
-      },
-
-      [SinkLike_complete](this: TProperties & DisposableLike) {
-        this[ConsumerObservable_delegate][SinkLike_complete]();
-      },
-
-      [EventListenerLike_notify](this: TProperties, v: T): void {
-        this[ConsumerObservable_delegate][EventListenerLike_notify](v);
       },
 
       [FlowControllerLike_addOnReadyListener](
