@@ -27,7 +27,7 @@ export const lastAsync: Signature["lastAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
   async (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
-    const observer = Observer.takeLast<T>(scheduler, 1);
+    const observer = Observer.takeLast<T>(1, scheduler);
 
     src[SourceLike_subscribe](observer);
     await DisposableContainer.toPromise(observer);
@@ -39,7 +39,7 @@ export const subscribe: Signature["subscribe"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
   (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
-    const observer = Observer.takeLast(scheduler, 0);
+    const observer = Observer.takeLast(0, scheduler);
     src[SourceLike_subscribe](observer);
 
     return observer;
@@ -50,7 +50,7 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   async (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const buffer: T[] = [];
-    const observer = Observer.collect<T>(scheduler, buffer);
+    const observer = Observer.collect<T>(buffer, scheduler);
     src[SourceLike_subscribe](observer);
     await DisposableContainer.toPromise(observer);
 

@@ -266,7 +266,7 @@ export const retry = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsum
 }, src));
 export const takeLast = (genPure, takeLast, options) => (obs) => create(consumer => {
     const count = options?.count ?? 1;
-    const takeLastSink = pipe(takeLast(consumer, count), Disposable.addTo(consumer), DisposableContainer.onComplete(() => genPure(bindMethod(takeLastSink, Symbol.iterator))[SourceLike_subscribe](consumer)));
+    const takeLastSink = pipe(takeLast(count, consumer), Disposable.addTo(consumer), DisposableContainer.onComplete(() => genPure(bindMethod(takeLastSink, Symbol.iterator))[SourceLike_subscribe](consumer)));
     pipe(obs, invoke(SourceLike_subscribe, takeLastSink));
 }, obs);
 export const withEffect = (effect => source => create(consumer => {

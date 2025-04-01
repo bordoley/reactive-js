@@ -337,7 +337,7 @@ interface Signature {
     genPure: (
       factory: Factory<Iterator<T>>,
     ) => DeferredSourceLike<T, TConsumer>,
-    takeLast: (consumer: TConsumer, count: number) => TConsumer & Iterable<T>,
+    takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>,
     options?: { readonly count?: number },
   ): Function1<
     DeferredSourceLike<T, TConsumer>,
@@ -936,7 +936,7 @@ export const takeLast: Signature["takeLast"] =
     genPure: (
       factory: Factory<Iterator<T>>,
     ) => DeferredSourceLike<T, TConsumer>,
-    takeLast: (consumer: TConsumer, count: number) => TConsumer & Iterable<T>,
+    takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>,
     options?: { readonly count?: number },
   ) =>
   (obs: DeferredSourceLike<T, TConsumer>) =>
@@ -944,7 +944,7 @@ export const takeLast: Signature["takeLast"] =
       const count = options?.count ?? 1;
 
       const takeLastSink = pipe(
-        takeLast(consumer, count),
+        takeLast(count, consumer),
         Disposable.addTo(consumer),
         DisposableContainer.onComplete(() =>
           genPure(bindMethod(takeLastSink, Symbol.iterator))[

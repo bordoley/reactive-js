@@ -9,7 +9,7 @@ const Producer_takeLast: Producer.Signature["takeLast"] = (<T>(options?: {
 }) =>
   DeferredSource.takeLast<ConsumerLike<T>, T>(
     Producer_genPure,
-    (_, n) => Consumer.takeLast(n),
+    Consumer.takeLast,
     options,
   )) as Producer.Signature["takeLast"];
 

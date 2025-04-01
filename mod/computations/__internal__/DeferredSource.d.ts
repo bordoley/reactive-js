@@ -85,7 +85,7 @@ interface Signature {
     merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredSourceLike<T, TConsumer>[]) => DeferredSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
-    takeLast<TConsumer extends ConsumerLike<T>, T>(genPure: (factory: Factory<Iterator<T>>) => DeferredSourceLike<T, TConsumer>, takeLast: (consumer: TConsumer, count: number) => TConsumer & Iterable<T>, options?: {
+    takeLast<TConsumer extends ConsumerLike<T>, T>(genPure: (factory: Factory<Iterator<T>>) => DeferredSourceLike<T, TConsumer>, takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>, options?: {
         readonly count?: number;
     }): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer>>;
     withEffect<T, TConsumer extends ConsumerLike<T>>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): Function1<DeferredSourceLike<T, TConsumer>, DeferredSourceLike<T, TConsumer> & {
