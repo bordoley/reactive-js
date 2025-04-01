@@ -4,11 +4,16 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
 import { BackPressureConfig_capacity, BackPressureConfig_strategy, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 import { Sink_toLiftedSink } from "./Sink/__private__/Sink.toLiftedSink.js";
+export const collect = /*@__PURE__*/ (() => mixInstanceFactory(include(CollectorSinkMixin()), function CollectorSink(buffer) {
+    init(CollectorSinkMixin(), this, buffer);
+    return this;
+}))();
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/ (() => createInstanceFactory(DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin()))();
 export const toLiftedSink = Sink_toLiftedSink;
 export const toObserver = /*@__PURE__*/ (() => {

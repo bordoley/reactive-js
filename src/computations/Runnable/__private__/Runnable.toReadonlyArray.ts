@@ -1,16 +1,18 @@
 import { RunnableLike, RunnableLike_eval } from "../../../computations.js";
 import { returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as Consumer from "../../../utils/__internal__/Consumer.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import type * as Runnable from "../../Runnable.js";
 
 const Runnable_toReadonlyArray: Runnable.Signature["toReadonlyArray"] = returns(
   (src: RunnableLike) => {
-    const consumer = Consumer.create();
-    src[RunnableLike_eval](consumer);
-    Disposable.raiseIfDisposedWithError(consumer);
+    const buffer: unknown[] = [];
+    const sink = Sink.collect(buffer);
 
-    return Array.from(consumer);
+    src[RunnableLike_eval](sink);
+    Disposable.raiseIfDisposedWithError(sink);
+
+    return buffer;
   },
 ) as Runnable.Signature["toReadonlyArray"];
 

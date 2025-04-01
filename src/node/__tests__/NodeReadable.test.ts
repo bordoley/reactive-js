@@ -9,20 +9,15 @@ import {
 } from "../../__internal__/testing.js";
 import * as Producer from "../../computations/Producer.js";
 import * as Source from "../../computations/Source.js";
-import { SourceLike_subscribe } from "../../computations.js";
 import {
   Optional,
-  invoke,
   newInstance,
   pipe,
   pipeAsync,
   returns,
 } from "../../functions.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
-import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
-import * as Consumer from "../../utils/__internal__/Consumer.js";
-import { CollectionEnumeratorLike_peek } from "../../utils.js";
 import * as NodeReadable from "../NodeReadable.js";
 
 testModule(
@@ -57,18 +52,11 @@ testModule(
         yield Buffer.from("defg", "utf8");
       }
 
-      const queue = Consumer.takeLast<string>(1);
-      pipe(
+      await pipeAsync(
         NodeReadable.create(() => Readable.from(generate())),
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        invoke(SourceLike_subscribe, queue),
-      );
-
-      await DisposableContainer.toPromise(queue);
-
-      pipe(
-        queue[CollectionEnumeratorLike_peek],
+        Source.lastAsync(),
         expectEquals<Optional<string>>("abcdefg"),
       );
     }),

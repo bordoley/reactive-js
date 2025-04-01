@@ -18,7 +18,6 @@ import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueue
 import {
   BackpressureStrategy,
   ConsumerLike,
-  DisposableLike,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
@@ -73,24 +72,28 @@ const MergeAllConsumerMixin: <
 
   const subscribeToInner = (
     mergeAllConsumer: TProperties &
-      DisposableLike &
-      FlowControllerQueueLike<TInnerSource>,
+      FlowControllerQueueLike<TInnerSource> &
+      ConsumerLike,
     source: TInnerSource,
   ) => {
+    const delegate = mergeAllConsumer[MergeAllConsumer_delegate];
     mergeAllConsumer[MergeAllConsumer_activeCount]++;
 
     const sourceDelegate = pipe(
-      mergeAllConsumer[MergeAllConsumer_delegate],
+      delegate,
       mergeAllConsumer[
         MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing
       ],
       Disposable.addTo(mergeAllConsumer),
       DisposableContainer.onComplete(() => {
         mergeAllConsumer[MergeAllConsumer_activeCount]--;
+        const activeCount = mergeAllConsumer[MergeAllConsumer_activeCount];
 
         if (mergeAllConsumer[EnumeratorLike_moveNext]()) {
           const next = mergeAllConsumer[EnumeratorLike_current];
           subscribeToInner(mergeAllConsumer, next);
+        } else if (activeCount <= 0 && mergeAllConsumer[SinkLike_isCompleted]) {
+          delegate[SinkLike_complete]();
         }
       }),
     );

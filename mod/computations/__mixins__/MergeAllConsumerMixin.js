@@ -16,12 +16,17 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
     const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
     const MergeAllConsumer_isCompleted = Symbol("MergeAllConsumer_isCompleted");
     const subscribeToInner = (mergeAllConsumer, source) => {
+        const delegate = mergeAllConsumer[MergeAllConsumer_delegate];
         mergeAllConsumer[MergeAllConsumer_activeCount]++;
-        const sourceDelegate = pipe(mergeAllConsumer[MergeAllConsumer_delegate], mergeAllConsumer[MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing], Disposable.addTo(mergeAllConsumer), DisposableContainer.onComplete(() => {
+        const sourceDelegate = pipe(delegate, mergeAllConsumer[MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing], Disposable.addTo(mergeAllConsumer), DisposableContainer.onComplete(() => {
             mergeAllConsumer[MergeAllConsumer_activeCount]--;
+            const activeCount = mergeAllConsumer[MergeAllConsumer_activeCount];
             if (mergeAllConsumer[EnumeratorLike_moveNext]()) {
                 const next = mergeAllConsumer[EnumeratorLike_current];
                 subscribeToInner(mergeAllConsumer, next);
+            }
+            else if (activeCount <= 0 && mergeAllConsumer[SinkLike_isCompleted]) {
+                delegate[SinkLike_complete]();
             }
         }));
         source[SourceLike_subscribe](sourceDelegate);

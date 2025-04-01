@@ -21,11 +21,22 @@ import {
   SinkLike,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 import { Sink_toLiftedSink } from "./Sink/__private__/Sink.toLiftedSink.js";
+
+export const collect: <T>(buffer: T[]) => SinkLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(CollectorSinkMixin()),
+    function CollectorSink(this: unknown, buffer: T[]): SinkLike<T> {
+      init(CollectorSinkMixin(), this, buffer);
+
+      return this;
+    },
+  ))();
 
 export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   o: SinkLike<T>,
