@@ -7,7 +7,7 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import { DisposableLike_dispose } from "../../utils.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as Computation from "../Computation.js";
-import * as ReactiveSource from "../ReactiveSource.js";
+import * as EventSource from "../EventSource.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
@@ -19,14 +19,14 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable), SequentialCom
     let exited = false;
     const factory = async (options) => {
         while (!(options?.signal?.aborted ?? true)) {
-            await pipe(SynchronousObservable.delay(0), ReactiveSource.lastAsync());
+            await pipe(SynchronousObservable.delay(0), EventSource.lastAsync());
         }
         exited = true;
     };
-    const subscription = pipe(factory, AsyncIterable.fromAsyncFactory(), AsyncIterable.toObservable(), ReactiveSource.subscribe());
+    const subscription = pipe(factory, AsyncIterable.fromAsyncFactory(), AsyncIterable.toObservable(), EventSource.subscribe());
     await Promise.resolve();
     subscription[DisposableLike_dispose](error("something went wrong"));
-    await pipe(SynchronousObservable.delay(0), ReactiveSource.lastAsync());
+    await pipe(SynchronousObservable.delay(0), EventSource.lastAsync());
     expectTrue("expect the factory to have exited")(exited);
 }), testAsync("disposing cancels a promise that has not yet resolve", async () => {
     // Note, we use the Observable scheduler to jump to the macrotask
@@ -34,19 +34,19 @@ testModule("AsyncIterable", ComputationModuleTests(AsyncIterable), SequentialCom
     let exited = false;
     const factory = async (options) => {
         while (!(options?.signal?.aborted ?? true)) {
-            await pipe(SynchronousObservable.delay(0), ReactiveSource.lastAsync());
+            await pipe(SynchronousObservable.delay(0), EventSource.lastAsync());
         }
         exited = true;
     };
-    const subscription = pipe(factory, AsyncIterable.fromAsyncFactory(), AsyncIterable.toObservable(), ReactiveSource.subscribe());
+    const subscription = pipe(factory, AsyncIterable.fromAsyncFactory(), AsyncIterable.toObservable(), EventSource.subscribe());
     await Promise.resolve();
     subscription[DisposableLike_dispose]();
-    await pipe(SynchronousObservable.delay(0), ReactiveSource.lastAsync());
+    await pipe(SynchronousObservable.delay(0), EventSource.lastAsync());
     expectTrue("expect the factory to have exited")(exited);
 }), testAsync("Produces a value ", pipeLazyAsync(async () => {
     await Promise.resolve();
     return 10;
-}, AsyncIterable.fromAsyncFactory(), AsyncIterable.toObservable(), ReactiveSource.lastAsync(), expectEquals(10)))))({
+}, AsyncIterable.fromAsyncFactory(), AsyncIterable.toObservable(), EventSource.lastAsync(), expectEquals(10)))))({
     beforeEach() {
         const scheduler = HostScheduler.create();
         DefaultScheduler.set(scheduler);

@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.syncState.d.ts" />
 
-import { ComputationLike_isPure, ReactiveSourceLike_subscribe, StreamableLike_stream, } from "../../../computations.js";
+import { ComputationLike_isPure, EventSourceLike_subscribe, StreamableLike_stream, } from "../../../computations.js";
 import { compose, identity, invoke, pipe, } from "../../../functions.js";
 import * as Observable from "../../Observable.js";
 const Streamable_syncState = (onInit, onChange, syncStateOptions) => (streamable) => ({
@@ -13,7 +13,7 @@ const Streamable_syncState = (onInit, onChange, syncStateOptions) => (streamable
             ? Observable.throttle(throttleDuration)
             : identity, Observable.pairwise(), Observable.map(([oldValue, newValue]) => onChange(oldValue, newValue)), Observable.concatAll({
             [ComputationLike_isPure]: false,
-        })), { [ComputationLike_isPure]: false }), Observable.toProducer({ scheduler }), invoke(ReactiveSourceLike_subscribe, stream));
+        })), { [ComputationLike_isPure]: false }), Observable.toProducer({ scheduler }), invoke(EventSourceLike_subscribe, stream));
         return stream;
     },
 });

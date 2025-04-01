@@ -1,5 +1,5 @@
 /// <reference types="./Observble.withEffect.d.ts" />
 
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
-const Observable_withEffect = (DeferredReactiveSource.withEffect);
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
+const Observable_withEffect = (DeferredEventSource.withEffect);
 export default Observable_withEffect;

@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { ReactiveSourceLike_subscribe, } from "../../computations.js";
+import { EventSourceLike_subscribe, } from "../../computations.js";
 import { none, pipe, returns } from "../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -29,7 +29,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
                 delegate[SinkLike_complete]();
             }
         }));
-        source[ReactiveSourceLike_subscribe](sourceDelegate);
+        source[EventSourceLike_subscribe](sourceDelegate);
     };
     return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerQueueMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
         init(DelegatingDisposableMixin, this, delegate);

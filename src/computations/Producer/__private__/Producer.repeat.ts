@@ -1,12 +1,12 @@
 import { Optional, Predicate } from "../../../functions.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const Producer_repeat: Producer.Signature["repeat"] = ((
   shouldRepeat?: Optional<Predicate<number> | number>,
 ) =>
-  DeferredReactiveSource.repeat(
+  DeferredEventSource.repeat(
     Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
     shouldRepeat,
   )) as Producer.Signature["repeat"];

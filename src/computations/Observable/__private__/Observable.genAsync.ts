@@ -28,7 +28,7 @@ import {
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genFactory =
   <T>(factory: Factory<AsyncIterator<T>>) =>
@@ -141,14 +141,14 @@ const genFactory =
   };
 
 export const Observable_genAsync: Observable.Signature["genAsync"] = (factory =>
-  DeferredReactiveSource.create(genFactory(factory), {
+  DeferredEventSource.create(genFactory(factory), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   })) as Observable.Signature["genAsync"];
 
 export const Observable_genPureAsync: Observable.Signature["genPureAsync"] =
   (factory =>
-    DeferredReactiveSource.create(genFactory(factory), {
+    DeferredEventSource.create(genFactory(factory), {
       [ComputationLike_isPure]: true,
       [ComputationLike_isSynchronous]: true,
     })) as Observable.Signature["genPureAsync"];

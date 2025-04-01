@@ -9,8 +9,8 @@ import {
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
-  ReactiveSourceLike,
-  ReactiveSourceLike_subscribe,
+  EventSourceLike,
+  EventSourceLike_subscribe,
 } from "../../computations.js";
 import { Function1, Optional, none, pipe, returns } from "../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../math.js";
@@ -36,13 +36,13 @@ import {
 } from "../../utils.js";
 
 type TReturn<
-  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
+  TInnerSource extends EventSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 > = ConsumerLike<TInnerSource>;
 
 const MergeAllConsumerMixin: <
-  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
+  TInnerSource extends EventSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 >() => Mixin3<
@@ -55,7 +55,7 @@ const MergeAllConsumerMixin: <
   }>,
   Function1<TConsumer, TConsumer>
 > = /*@__PURE__*/ (<
-  TInnerSource extends ReactiveSourceLike<T, TConsumer>,
+  TInnerSource extends EventSourceLike<T, TConsumer>,
   TConsumer extends ConsumerLike<T>,
   T,
 >() => {
@@ -104,7 +104,7 @@ const MergeAllConsumerMixin: <
       }),
     );
 
-    source[ReactiveSourceLike_subscribe](sourceDelegate);
+    source[EventSourceLike_subscribe](sourceDelegate);
   };
 
   return returns(

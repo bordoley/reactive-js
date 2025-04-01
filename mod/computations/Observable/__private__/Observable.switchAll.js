@@ -1,11 +1,11 @@
 /// <reference types="./Observable.switchAll.d.ts" />
 
 import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins.js";
-import { ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, } from "../../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../../computations.js";
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import * as Computation from "../../Computation.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import SwitchAllConsumerMixin from "../../__mixins__/SwitchAllConsumerMixin.js";
 export const createSwitchAllObserver = 
 /*@__PURE__*/
@@ -14,9 +14,9 @@ export const createSwitchAllObserver =
     init(DelegatingSchedulerMixin, this, delegate);
     return this;
 }))();
-const Observable_switchAll = ((innerType) => (obs) => DeferredReactiveSource.create((observer) => {
+const Observable_switchAll = ((innerType) => (obs) => DeferredEventSource.create((observer) => {
     const delegate = createSwitchAllObserver(observer);
-    obs[ReactiveSourceLike_subscribe](delegate);
+    obs[EventSourceLike_subscribe](delegate);
 }, {
     [ComputationLike_isPure]: Computation.isPure(obs) && Computation.isPure(innerType ?? {}),
     [ComputationLike_isSynchronous]: Computation.isSynchronous(obs) &&

@@ -9,5 +9,5 @@
 ## Functions
 
 - [useDisposable](functions/useDisposable.md)
-- [useReactiveSource](functions/useReactiveSource.md)
+- [useEventSource](functions/useEventSource.md)
 - [useStreamable](functions/useStreamable.md)

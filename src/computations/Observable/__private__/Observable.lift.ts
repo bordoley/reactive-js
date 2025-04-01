@@ -10,7 +10,7 @@ import {
 } from "../../../computations.js";
 import { Function1, Optional } from "../../../functions.js";
 import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import { LiftedSinkLike } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToObserverMixin from "../../__mixins__/LiftedSinkToObserverMixin.js";
 
@@ -57,7 +57,7 @@ const Observable_lift =
     >,
   ) =>
   (source: ObservableLike<TIn>): ObservableLike<TOut> =>
-    DeferredReactiveSource.createLifted(
+    DeferredEventSource.createLifted(
       source,
       operator,
       liftedSinkToObserver,

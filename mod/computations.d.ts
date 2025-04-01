@@ -51,14 +51,14 @@ export interface PureRunnableLike<T = unknown> extends RunnableLike<T> {
 export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export declare const ReactiveSourceLike_subscribe: unique symbol;
-export interface ReactiveSourceLike<out T = unknown, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends ComputationLike {
-    [ReactiveSourceLike_subscribe](EventListener: TEventListener): void;
+export declare const EventSourceLike_subscribe: unique symbol;
+export interface EventSourceLike<out T = unknown, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends ComputationLike {
+    [EventSourceLike_subscribe](EventListener: TEventListener): void;
 }
-export interface DeferredReactiveSourceLike<T = unknown, TConsumer extends ConsumerLike<T> = ConsumerLike<T>> extends ReactiveSourceLike<T, TConsumer> {
+export interface DeferredEventSourceLike<T = unknown, TConsumer extends ConsumerLike<T> = ConsumerLike<T>> extends EventSourceLike<T, TConsumer> {
     [ComputationLike_isDeferred]: true;
 }
-export interface ProducerLike<out T = unknown> extends DeferredReactiveSourceLike<T, ConsumerLike<T>>, ComputationLike {
+export interface ProducerLike<out T = unknown> extends DeferredEventSourceLike<T, ConsumerLike<T>>, ComputationLike {
     readonly [ComputationLike_isDeferred]: true;
     readonly [ComputationLike_isSynchronous]: false;
 }
@@ -68,7 +68,7 @@ export interface PureProducerLike<out T = unknown> extends ProducerLike<T> {
 export interface ProducerWithSideEffectsLike<out T = unknown> extends ProducerLike<T> {
     readonly [ComputationLike_isPure]: false;
 }
-export interface ObservableLike<out T = unknown> extends DeferredReactiveSourceLike<T, ObserverLike<T>>, ComputationLike {
+export interface ObservableLike<out T = unknown> extends DeferredEventSourceLike<T, ObserverLike<T>>, ComputationLike {
     readonly [ComputationLike_isDeferred]: true;
 }
 export interface PureObservableLike<out T = unknown> extends ObservableLike<T> {
@@ -88,7 +88,7 @@ export interface SynchronousObservableWithSideEffectsLike<out T = unknown> exten
     readonly [ComputationLike_isSynchronous]: Optional<true>;
     readonly [ComputationLike_isPure]: false;
 }
-export interface BroadcasterLike<out T = unknown> extends ReactiveSourceLike<T>, DisposableContainerLike, MulticastComputationLike {
+export interface BroadcasterLike<out T = unknown> extends EventSourceLike<T>, DisposableContainerLike, MulticastComputationLike {
     readonly [ComputationLike_isDeferred]: false;
     readonly [ComputationLike_isPure]: Optional<true>;
     readonly [ComputationLike_isSynchronous]: false;

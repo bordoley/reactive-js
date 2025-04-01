@@ -46,9 +46,9 @@
 
 ## Methods
 
-### \[ReactiveSourceLike\_subscribe\]()
+### \[EventSourceLike\_subscribe\]()
 
-> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -62,4 +62,4 @@
 
 #### Inherited from
 
-[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[ReactiveSourceLike_subscribe]`](ObservableWithSideEffectsLike.md#reactivesourcelike_subscribe)
+[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[EventSourceLike_subscribe]`](ObservableWithSideEffectsLike.md#eventsourcelike_subscribe)

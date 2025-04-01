@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { ReactiveSourceLike_subscribe, } from "../../computations.js";
+import { EventSourceLike_subscribe, } from "../../computations.js";
 import { bind, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -46,7 +46,7 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
             this[SwitchAllConsumer_innerSubscription][DisposableLike_dispose]();
             const delegate = this[DelegatingEventListenerLike_delegate];
             const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(this[SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing](delegate), DisposableContainer.onComplete(bind(onSwitchAllConsumerInnerSourceComplete, this)), Disposable.addTo(this));
-            next[ReactiveSourceLike_subscribe](delegatingNotifyOnlyNonCompletingNonDisposing);
+            next[EventSourceLike_subscribe](delegatingNotifyOnlyNonCompletingNonDisposing);
             this[SwitchAllConsumer_innerSubscription] =
                 delegatingNotifyOnlyNonCompletingNonDisposing;
         },

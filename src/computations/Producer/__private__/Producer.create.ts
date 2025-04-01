@@ -5,12 +5,12 @@ import {
 import { SideEffect1 } from "../../../functions.js";
 import { ConsumerLike } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const Producer_create: Producer.Signature["create"] = <T>(
   f: SideEffect1<ConsumerLike<T>>,
 ) =>
-  DeferredReactiveSource.create(f, {
+  DeferredEventSource.create(f, {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
   });

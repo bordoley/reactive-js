@@ -10,7 +10,7 @@ import {
 } from "../../__internal__/testing.js";
 import * as Computation from "../../computations/Computation.js";
 import * as Producer from "../../computations/Producer.js";
-import { ReactiveSourceLike_subscribe } from "../../computations.js";
+import { EventSourceLike_subscribe } from "../../computations.js";
 import { invoke, newInstance, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -45,7 +45,7 @@ testModule(
         ["abc", "defg"],
         Computation.fromReadonlyArray(ProducerModule),
         Producer.encodeUtf8(),
-        invoke(ReactiveSourceLike_subscribe, consumer),
+        invoke(EventSourceLike_subscribe, consumer),
       );
 
       await DisposableContainer.toPromise(consumer);
@@ -77,7 +77,7 @@ testModule(
         ["abc", "defg"],
         Computation.fromReadonlyArray(ProducerModule),
         Producer.encodeUtf8(),
-        invoke(ReactiveSourceLike_subscribe, consumer),
+        invoke(EventSourceLike_subscribe, consumer),
       );
 
       await pipe(consumer, DisposableContainer.toPromise, expectPromiseToThrow);
@@ -113,7 +113,7 @@ testModule(
         ["abc", "defg"],
         Computation.fromReadonlyArray(ProducerModule),
         Producer.encodeUtf8(),
-        invoke(ReactiveSourceLike_subscribe, consumer),
+        invoke(EventSourceLike_subscribe, consumer),
       );
 
       await DisposableContainer.toPromise(consumer);

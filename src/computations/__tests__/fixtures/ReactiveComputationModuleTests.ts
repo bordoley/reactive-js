@@ -11,8 +11,8 @@ import {
 } from "../../../computations.js";
 import { pipeLazyAsync } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
+import * as EventSource from "../../EventSource.js";
 import * as Observable from "../../Observable.js";
-import * as ReactiveSource from "../../ReactiveSource.js";
 
 const ObservableModule =
   Computation.makeModule<Observable.Computation>()(Observable);
@@ -35,7 +35,7 @@ const ReactiveComputationModuleTests = <
           Computation.fromReadonlyArray(ObservableModule),
           m.fromObservable<number>(),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),

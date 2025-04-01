@@ -46,9 +46,9 @@
 
 ## Methods
 
-### \[ReactiveSourceLike\_subscribe\]()
+### \[EventSourceLike\_subscribe\]()
 
-> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -62,4 +62,4 @@
 
 #### Inherited from
 
-[`ProducerLike`](ProducerLike.md).[`[ReactiveSourceLike_subscribe]`](ProducerLike.md#reactivesourcelike_subscribe)
+[`ProducerLike`](ProducerLike.md).[`[EventSourceLike_subscribe]`](ProducerLike.md#eventsourcelike_subscribe)

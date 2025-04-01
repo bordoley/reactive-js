@@ -3,7 +3,7 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   ComputationOf,
-  ReactiveSourceLike_subscribe,
+  EventSourceLike_subscribe,
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
@@ -31,7 +31,7 @@ class SynchronousObservableRunnable<T> implements RunnableLike<T> {
     const scheduler = VirtualTimeScheduler.create(this.o);
     const observer = pipe(sink, Sink.toObserver(scheduler));
 
-    this.s[ReactiveSourceLike_subscribe](observer);
+    this.s[EventSourceLike_subscribe](observer);
 
     scheduler[VirtualTimeSchedulerLike_run]();
   }

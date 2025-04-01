@@ -4,7 +4,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ReactiveSourceLike_subscribe,
+  EventSourceLike_subscribe,
 } from "../../computations.js";
 import { none, returns } from "../../functions.js";
 import { DisposableContainerLike, SinkLike } from "../../utils.js";
@@ -43,10 +43,10 @@ const DelegatingBroadcasterMixin: <T>() => Mixin1<
         [ComputationLike_isPure]: true as const,
         [ComputationLike_isSynchronous]: false as const,
 
-        [ReactiveSourceLike_subscribe](this: TProperties, sink: SinkLike<T>) {
-          this[DelegatingBroadcasterMixin_delegate][
-            ReactiveSourceLike_subscribe
-          ](sink);
+        [EventSourceLike_subscribe](this: TProperties, sink: SinkLike<T>) {
+          this[DelegatingBroadcasterMixin_delegate][EventSourceLike_subscribe](
+            sink,
+          );
         },
       }),
     ),

@@ -16,7 +16,7 @@
 
 ### src
 
-[`ReactiveSourceLike`](../../../interfaces/ReactiveSourceLike.md)\<`T`\>
+[`EventSourceLike`](../../../interfaces/EventSourceLike.md)\<`T`\>
 
 ## Returns
 

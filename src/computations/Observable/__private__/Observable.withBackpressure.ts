@@ -1,11 +1,11 @@
 import {
+  EventSourceLike_subscribe,
   ObservableLike,
-  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { bindMethod, identity } from "../../../functions.js";
 import { BackpressureStrategy } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import { liftedSinkToObserverWithBackPressure } from "./Observable.lift.js";
 
 const Observable_withBackpressure: Observable.Signature["withBackpressure"] = (<
@@ -15,7 +15,7 @@ const Observable_withBackpressure: Observable.Signature["withBackpressure"] = (<
     backpressureStrategy: BackpressureStrategy;
   }) =>
   (source: ObservableLike<T>): ObservableLike<T> => {
-    const lifted = DeferredReactiveSource.createLifted(
+    const lifted = DeferredEventSource.createLifted(
       source,
       identity,
       liftedSinkToObserverWithBackPressure(config),
@@ -23,8 +23,8 @@ const Observable_withBackpressure: Observable.Signature["withBackpressure"] = (<
     );
 
     // Ensures that upstream callers don't lift away the backpressure.
-    return DeferredReactiveSource.create(
-      bindMethod(lifted, ReactiveSourceLike_subscribe),
+    return DeferredEventSource.create(
+      bindMethod(lifted, EventSourceLike_subscribe),
       source,
     );
   }) as Observable.Signature["withBackpressure"];

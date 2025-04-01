@@ -1,6 +1,6 @@
 import {
+  EventSourceLike_subscribe,
   PureObservableLike,
-  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import {
   Equality,
@@ -13,7 +13,7 @@ import { ObserverLike } from "../../../utils.js";
 import Computation_startWith from "../../Computation/__private__/Computation.startWith.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.js";
 import { Observable_genPure } from "./Observable.gen.js";
@@ -33,7 +33,7 @@ const Observable_scanDistinct: Observable.Signature["scanDistinct"] = (<
     options?: { readonly equality?: Equality<TAcc> },
   ) =>
   (source: PureObservableLike<T>) =>
-    DeferredReactiveSource.create(
+    DeferredEventSource.create(
       (observer: ObserverLike<TAcc>) => {
         const acc: TAcc = initialState();
 
@@ -45,7 +45,7 @@ const Observable_scanDistinct: Observable.Signature["scanDistinct"] = (<
           Observable_distinctUntilChanged<TAcc>(options),
         );
 
-        lifted[ReactiveSourceLike_subscribe](observer);
+        lifted[EventSourceLike_subscribe](observer);
       },
 
       source,

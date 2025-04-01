@@ -1,4 +1,4 @@
-import { ReactiveSourceLike, StreamOf, StreamableLike } from "./computations.js";
+import { EventSourceLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Optional } from "./functions.js";
 import { BackpressureStrategy, DisposableLike } from "./utils.js";
 interface ReactModule {
@@ -7,10 +7,10 @@ interface ReactModule {
     useDisposable<TDisposable extends DisposableLike>(factory: () => Optional<TDisposable>, deps: readonly unknown[]): Optional<TDisposable>;
     /**
      */
-    useReactiveSource<T>(observable: Optional<ReactiveSourceLike<T>>, options?: {
+    useEventSource<T>(observable: Optional<EventSourceLike<T>>, options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
     }): Optional<T>;
-    useReactiveSource<T>(factory: Factory<Optional<ReactiveSourceLike<T>>>, deps: readonly unknown[], options?: {
+    useEventSource<T>(factory: Factory<Optional<EventSourceLike<T>>>, deps: readonly unknown[], options?: {
         readonly priority?: 1 | 2 | 3 | 4 | 5;
     }): Optional<T>;
     /**
@@ -28,6 +28,6 @@ interface ReactModule {
 }
 type Signature = ReactModule;
 export declare const useDisposable: Signature["useDisposable"];
-export declare const useReactiveSource: Signature["useReactiveSource"];
+export declare const useEventSource: Signature["useEventSource"];
 export declare const useStreamable: Signature["useStreamable"];
 export {};

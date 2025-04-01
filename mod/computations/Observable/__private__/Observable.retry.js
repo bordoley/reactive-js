@@ -1,6 +1,6 @@
 /// <reference types="./Observable.retry.d.ts" />
 
 import * as Observer from "../../../utils/__internal__/Observer.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
-const Observable_retry = ((shouldRetry) => DeferredReactiveSource.retry(Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing, shouldRetry));
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
+const Observable_retry = ((shouldRetry) => DeferredEventSource.retry(Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing, shouldRetry));
 export default Observable_retry;

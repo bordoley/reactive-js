@@ -5,7 +5,7 @@ import { bindMethod, error, none, pipe, pipeLazy, } from "../../../functions.js"
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import { ContinuationContextLike_yield, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 const genFactory = (factory, options) => (observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(observer));
@@ -54,11 +54,11 @@ const genFactory = (factory, options) => (observer) => {
     observer[FlowControllerLike_addOnReadyListener](pipeLazy(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer)));
     pipe(observer[SchedulerLike_schedule](continue_, delayStart ? options : none), Disposable.addTo(observer));
 };
-export const Observable_gen = ((factory, options) => DeferredReactiveSource.create(genFactory(factory, options), {
+export const Observable_gen = ((factory, options) => DeferredEventSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
 }));
-export const Observable_genPure = ((factory, options) => DeferredReactiveSource.create(genFactory(factory, options), {
+export const Observable_genPure = ((factory, options) => DeferredEventSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 }));

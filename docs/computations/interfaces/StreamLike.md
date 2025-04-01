@@ -67,6 +67,26 @@ Boolean flag indicating if the PauseableLike is currently paused or not.
 
 ## Methods
 
+### \[EventSourceLike\_subscribe\]()
+
+> **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`
+
+#### Parameters
+
+##### EventListener
+
+[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`BroadcasterLike`](BroadcasterLike.md).[`[EventSourceLike_subscribe]`](BroadcasterLike.md#eventsourcelike_subscribe)
+
+***
+
 ### \[PauseableLike\_pause\]()
 
 > **\[PauseableLike\_pause\]**(): `void`
@@ -96,23 +116,3 @@ Imperatively resume the source.
 #### Inherited from
 
 [`PauseableLike`](../../utils/interfaces/PauseableLike.md).[`[PauseableLike_resume]`](../../utils/interfaces/PauseableLike.md#pauseablelike_resume)
-
-***
-
-### \[ReactiveSourceLike\_subscribe\]()
-
-> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
-
-#### Parameters
-
-##### EventListener
-
-[`EventListenerLike`](../../utils/interfaces/EventListenerLike.md)
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`BroadcasterLike`](BroadcasterLike.md).[`[ReactiveSourceLike_subscribe]`](BroadcasterLike.md#reactivesourcelike_subscribe)

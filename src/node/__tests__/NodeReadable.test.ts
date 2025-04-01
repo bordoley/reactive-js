@@ -7,8 +7,8 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as EventSource from "../../computations/EventSource.js";
 import * as Producer from "../../computations/Producer.js";
-import * as ReactiveSource from "../../computations/ReactiveSource.js";
 import {
   Optional,
   newInstance,
@@ -40,7 +40,7 @@ testModule(
         NodeReadable.create,
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        ReactiveSource.lastAsync<string>(),
+        EventSource.lastAsync<string>(),
         expectEquals<Optional<string>>("abcdefg"),
       );
 
@@ -56,7 +56,7 @@ testModule(
         NodeReadable.create(() => Readable.from(generate())),
         Producer.decodeWithCharset(),
         Producer.scan((acc: string, next: string) => acc + next, returns("")),
-        ReactiveSource.lastAsync(),
+        EventSource.lastAsync(),
         expectEquals<Optional<string>>("abcdefg"),
       );
     }),
@@ -70,7 +70,7 @@ testModule(
 
       await pipe(
         NodeReadable.create(() => Readable.from(generate())),
-        ReactiveSource.lastAsync<Uint8Array>(),
+        EventSource.lastAsync<Uint8Array>(),
         expectPromiseToThrow,
       );
     }),

@@ -57,7 +57,7 @@ import zlib from "node:zlib";
 import { describe, expectEquals, expectFalse, expectPromiseToThrow, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Computation from "../../computations/Computation.js";
 import * as Producer from "../../computations/Producer.js";
-import { ReactiveSourceLike_subscribe } from "../../computations.js";
+import { EventSourceLike_subscribe } from "../../computations.js";
 import { invoke, newInstance, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
@@ -75,7 +75,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
         },
     });
     const consumer = pipe(writable, NodeWritable.toConsumer({ autoDispose: true }));
-    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(ReactiveSourceLike_subscribe, consumer));
+    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(EventSourceLike_subscribe, consumer));
     await DisposableContainer.toPromise(consumer);
     pipe(writable.destroyed, expectFalse("expected writable not to be destroyed"));
     pipe(data, expectEquals("abcdefg"));
@@ -90,7 +90,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
         },
     });
     const consumer = pipe(writable, NodeWritable.toConsumer({ autoDispose: true }));
-    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(ReactiveSourceLike_subscribe, consumer));
+    pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(EventSourceLike_subscribe, consumer));
     await pipe(consumer, DisposableContainer.toPromise, expectPromiseToThrow);
     pipe(writable.destroyed, expectEquals(true));
 }), testAsync("writing to writable with pipeline", async () => {
@@ -108,7 +108,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
         });
         const compressionPipeline = pipeline(zlib.createGzip(), zlib.createGunzip(), writable, Disposable.toErrorHandler(scheduler));
         const consumer = pipe(compressionPipeline, NodeWritable.toConsumer({ autoDispose: true }));
-        pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(ReactiveSourceLike_subscribe, consumer));
+        pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(EventSourceLike_subscribe, consumer));
         await DisposableContainer.toPromise(consumer);
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));

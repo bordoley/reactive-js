@@ -120,9 +120,9 @@ Notifies the EventSink of the next notification produced by the source.
 
 ***
 
-### \[ReactiveSourceLike\_subscribe\]()
+### \[EventSourceLike\_subscribe\]()
 
-> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -136,4 +136,4 @@ Notifies the EventSink of the next notification produced by the source.
 
 #### Inherited from
 
-[`BroadcasterLike`](BroadcasterLike.md).[`[ReactiveSourceLike_subscribe]`](BroadcasterLike.md#reactivesourcelike_subscribe)
+[`BroadcasterLike`](BroadcasterLike.md).[`[EventSourceLike_subscribe]`](BroadcasterLike.md#eventsourcelike_subscribe)

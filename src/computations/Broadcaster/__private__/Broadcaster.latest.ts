@@ -10,7 +10,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ReactiveSourceLike,
+  EventSourceLike,
 } from "../../../computations.js";
 import DelegatingEventListenerMixin from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike } from "../../../utils.js";
@@ -55,7 +55,7 @@ const latest = /*@__PURE__*/ (() => {
       this: TPrototype,
       broadcasters: readonly BroadcasterLike[],
       mode: LatestEventListenerMode,
-    ): ReactiveSourceLike<ReadonlyArray<unknown>> {
+    ): EventSourceLike<ReadonlyArray<unknown>> {
       init(
         LatestSourceMixin(),
         this,

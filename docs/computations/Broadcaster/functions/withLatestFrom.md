@@ -80,7 +80,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [ReactiveSourceLike_subscribe]
+##### [EventSourceLike_subscribe]
 
 ### Returns
 
@@ -116,7 +116,7 @@
 
 ##### [DisposableContainerLike_add]
 
-##### [ReactiveSourceLike_subscribe]
+##### [EventSourceLike_subscribe]
 
 #### selector
 

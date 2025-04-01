@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ReactiveSourceLike`](ReactiveSourceLike.md)\<`T`\>.[`DisposableContainerLike`](../../utils/interfaces/DisposableContainerLike.md).[`MulticastComputationLike`](MulticastComputationLike.md)
+- [`EventSourceLike`](EventSourceLike.md)\<`T`\>.[`DisposableContainerLike`](../../utils/interfaces/DisposableContainerLike.md).[`MulticastComputationLike`](MulticastComputationLike.md)
 
 ## Extended by
 
@@ -123,9 +123,9 @@ The teardown function to add.
 
 ***
 
-### \[ReactiveSourceLike\_subscribe\]()
+### \[EventSourceLike\_subscribe\]()
 
-> **\[ReactiveSourceLike\_subscribe\]**(`EventListener`): `void`
+> **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`
 
 #### Parameters
 
@@ -139,4 +139,4 @@ The teardown function to add.
 
 #### Inherited from
 
-[`ReactiveSourceLike`](ReactiveSourceLike.md).[`[ReactiveSourceLike_subscribe]`](ReactiveSourceLike.md#reactivesourcelike_subscribe)
+[`EventSourceLike`](EventSourceLike.md).[`[EventSourceLike_subscribe]`](EventSourceLike.md#eventsourcelike_subscribe)

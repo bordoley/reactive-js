@@ -1,7 +1,7 @@
 import {
   BroadcasterLike,
   ComputationLike_isPure,
-  DeferredReactiveSourceLike,
+  DeferredEventSourceLike,
   ProducerLike,
 } from "../../../computations.js";
 import { Function1 } from "../../../functions.js";
@@ -9,14 +9,14 @@ import { ConsumerLike } from "../../../utils.js";
 import Broadcaster_toProducer from "../../Broadcaster/__private__/Broadcaster.toProducer.js";
 import Producer_broadcast from "../../Producer/__private__/Producer.broadcast.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import Producer_merge from "./Producer.merge.js";
 
 const toBroadcaster = <T>(
   _consumer: ConsumerLike,
-): Function1<DeferredReactiveSourceLike<T>, BroadcasterLike<T>> =>
+): Function1<DeferredEventSourceLike<T>, BroadcasterLike<T>> =>
   Producer_broadcast<T>() as Function1<
-    DeferredReactiveSourceLike<T>,
+    DeferredEventSourceLike<T>,
     BroadcasterLike<T>
   >;
 
@@ -28,7 +28,7 @@ const Producer_forkMerge: Producer.Signature["forkMerge"] = (<TIn, TOut>(
     },
   ]
 ) =>
-  DeferredReactiveSource.forkMerge<
+  DeferredEventSource.forkMerge<
     TIn,
     ConsumerLike<TIn>,
     TOut,
@@ -37,12 +37,12 @@ const Producer_forkMerge: Producer.Signature["forkMerge"] = (<TIn, TOut>(
     toBroadcaster<TIn>,
     Broadcaster_toProducer,
     Producer_merge as (
-      ...sources: readonly DeferredReactiveSourceLike<TOut>[]
-    ) => DeferredReactiveSourceLike<TOut>,
+      ...sources: readonly DeferredEventSourceLike<TOut>[]
+    ) => DeferredEventSourceLike<TOut>,
     ops as readonly [
       ...Function1<
-        DeferredReactiveSourceLike<TIn>,
-        DeferredReactiveSourceLike<TOut>
+        DeferredEventSourceLike<TIn>,
+        DeferredEventSourceLike<TOut>
       >[],
       {
         [ComputationLike_isPure]?: boolean;

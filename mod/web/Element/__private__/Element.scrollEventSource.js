@@ -5,7 +5,7 @@ import { MAX_VALUE, MIN_VALUE } from "../../../__internal__/constants.js";
 import * as Broadcaster from "../../../computations/Broadcaster.js";
 import * as Computation from "../../../computations/Computation.js";
 import * as Publisher from "../../../computations/Publisher.js";
-import { ReactiveSourceLike_subscribe, } from "../../../computations.js";
+import { EventSourceLike_subscribe, } from "../../../computations.js";
 import { invoke, newInstance, pipe, returns } from "../../../functions.js";
 import { clamp } from "../../../math.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
@@ -79,7 +79,7 @@ const Element_scrollEventSource =
                 };
                 prev = { x, y, time: now, done: ev.type === "scrollend" };
                 return prev;
-            }), invoke(ReactiveSourceLike_subscribe, sink));
+            }), invoke(EventSourceLike_subscribe, sink));
             eventSourceCache.set(element, sink);
             return sink;
         })());

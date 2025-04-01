@@ -10,7 +10,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ReactiveSourceLike_subscribe,
+  EventSourceLike_subscribe,
 } from "../../../computations.js";
 import { Function1, none, pipeUnsafe } from "../../../functions.js";
 import * as EventListener from "../../../utils/__internal__/EventListener.js";
@@ -23,15 +23,15 @@ import {
   SinkLike,
 } from "../../../utils.js";
 import {
-  LiftedReactiveSourceLike,
-  LiftedReactiveSourceLike_sink,
-  LiftedReactiveSourceLike_source,
+  LiftedEventSourceLike,
+  LiftedEventSourceLike_sink,
+  LiftedEventSourceLike_source,
   LiftedSinkLike,
 } from "../../__internal__/LiftedSource.js";
 import LiftedSinkToEventListenerMixin from "../../__mixins__/LiftedSinkToEventListenerMixin.js";
 
 interface LiftedBroadcasterLike<TIn, TOut>
-  extends LiftedReactiveSourceLike<
+  extends LiftedEventSourceLike<
       TIn,
       TOut,
       SinkLike<TIn>,
@@ -43,12 +43,12 @@ interface LiftedBroadcasterLike<TIn, TOut>
   readonly [ComputationLike_isPure]: true;
   readonly [ComputationLike_isSynchronous]: false;
 
-  readonly [LiftedReactiveSourceLike_source]: BroadcasterLike<TIn>;
-  readonly [LiftedReactiveSourceLike_sink]: ReadonlyArray<
+  readonly [LiftedEventSourceLike_source]: BroadcasterLike<TIn>;
+  readonly [LiftedEventSourceLike_sink]: ReadonlyArray<
     Function1<LiftedSinkLike<SinkLike, any>, LiftedSinkLike<SinkLike, any>>
   >;
 
-  [ReactiveSourceLike_subscribe](listener: EventListenerLike<TOut>): void;
+  [EventSourceLike_subscribe](listener: EventListenerLike<TOut>): void;
 }
 
 const sinkToEventListener: <T>(
@@ -72,8 +72,8 @@ const createLiftedBroadcaster: <TIn, TOut>(
   op: Function1<LiftedSinkLike<SinkLike, TOut>, LiftedSinkLike<SinkLike, TIn>>,
 ) => BroadcasterLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
-    [LiftedReactiveSourceLike_source]: BroadcasterLike<TIn>;
-    [LiftedReactiveSourceLike_sink]: ReadonlyArray<
+    [LiftedEventSourceLike_source]: BroadcasterLike<TIn>;
+    [LiftedEventSourceLike_sink]: ReadonlyArray<
       Function1<LiftedSinkLike<SinkLike, any>, LiftedSinkLike<SinkLike, any>>
     >;
   };
@@ -81,8 +81,8 @@ const createLiftedBroadcaster: <TIn, TOut>(
   type TPrototype = Omit<
     LiftedBroadcasterLike<TIn, TOut>,
     | keyof DisposableContainerLike
-    | typeof LiftedReactiveSourceLike_source
-    | typeof LiftedReactiveSourceLike_sink
+    | typeof LiftedEventSourceLike_source
+    | typeof LiftedEventSourceLike_sink
   >;
 
   return mixInstanceFactory(
@@ -97,39 +97,36 @@ const createLiftedBroadcaster: <TIn, TOut>(
     ): BroadcasterLike<TOut> {
       init(DelegatingDisposableContainerMixin(), this, source);
       const liftedSource: BroadcasterLike<TIn> =
-        (source as any)[LiftedReactiveSourceLike_source] ?? source;
-      const ops = [
-        op,
-        ...((source as any)[LiftedReactiveSourceLike_sink] ?? []),
-      ];
+        (source as any)[LiftedEventSourceLike_source] ?? source;
+      const ops = [op, ...((source as any)[LiftedEventSourceLike_sink] ?? [])];
 
-      this[LiftedReactiveSourceLike_source] = liftedSource;
-      this[LiftedReactiveSourceLike_sink] = ops;
+      this[LiftedEventSourceLike_source] = liftedSource;
+      this[LiftedEventSourceLike_sink] = ops;
 
       return this;
     },
     props<TProperties>({
-      [LiftedReactiveSourceLike_source]: none,
-      [LiftedReactiveSourceLike_sink]: none,
+      [LiftedEventSourceLike_source]: none,
+      [LiftedEventSourceLike_sink]: none,
     }),
     proto<TPrototype>({
       [ComputationLike_isPure]: true as const,
       [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
 
-      [ReactiveSourceLike_subscribe](
+      [EventSourceLike_subscribe](
         this: TProperties,
         listener: EventListenerLike<TOut>,
       ) {
-        const source = this[LiftedReactiveSourceLike_source];
+        const source = this[LiftedEventSourceLike_source];
         const destinationOp: EventListenerLike<TIn> = pipeUnsafe(
           listener,
           EventListener.toSink(),
           Sink_toLiftedSink(),
-          ...this[LiftedReactiveSourceLike_sink],
+          ...this[LiftedEventSourceLike_sink],
           sinkToEventListener,
         );
-        source[ReactiveSourceLike_subscribe](destinationOp);
+        source[EventSourceLike_subscribe](destinationOp);
       },
     }),
   );

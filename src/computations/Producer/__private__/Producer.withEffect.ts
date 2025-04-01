@@ -1,9 +1,9 @@
 import { ConsumerLike } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const Producer_withEffect: Producer.Signature["withEffect"] =
-  DeferredReactiveSource.withEffect<
+  DeferredEventSource.withEffect<
     unknown,
     ConsumerLike
   > as Producer.Signature["withEffect"];

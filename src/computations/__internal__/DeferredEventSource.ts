@@ -13,8 +13,8 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  DeferredReactiveSourceLike,
-  ReactiveSourceLike_subscribe,
+  DeferredEventSourceLike,
+  EventSourceLike_subscribe,
 } from "../../computations.js";
 import {
   Factory,
@@ -59,8 +59,8 @@ import {
 } from "../__mixins__/LatestEventListenerMixin.js";
 import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import {
-  LiftedReactiveSourceLike_sink,
-  LiftedReactiveSourceLike_source,
+  LiftedEventSourceLike_sink,
+  LiftedEventSourceLike_source,
   LiftedSinkLike,
 } from "./LiftedSource.js";
 
@@ -69,7 +69,7 @@ const CreateSource_effect = Symbol("CreateSource_effect");
 interface Signature {
   catchError<
     T,
-    TSource extends DeferredReactiveSourceLike<T, TConsumer>,
+    TSource extends DeferredEventSourceLike<T, TConsumer>,
     TConsumer extends ConsumerLike<T>,
   >(
     createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
@@ -80,7 +80,7 @@ interface Signature {
     options?: {
       [ComputationLike_isPure]?: boolean;
     },
-  ): Function1<TSource, DeferredReactiveSourceLike<T, TConsumer>>;
+  ): Function1<TSource, DeferredEventSourceLike<T, TConsumer>>;
 
   concat<TConsumer extends ConsumerLike>(
     createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
@@ -88,12 +88,12 @@ interface Signature {
       TConsumer
     >,
   ): <T>(
-    ...sources: readonly DeferredReactiveSourceLike<T, TConsumer>[]
-  ) => DeferredReactiveSourceLike<T, TConsumer>;
+    ...sources: readonly DeferredEventSourceLike<T, TConsumer>[]
+  ) => DeferredEventSourceLike<T, TConsumer>;
 
   create<T, TConsumer extends ConsumerLike<T>>(
     effect: SideEffect1<TConsumer>,
-  ): DeferredReactiveSourceLike<T, TConsumer> & {
+  ): DeferredEventSourceLike<T, TConsumer> & {
     readonly [ComputationLike_isPure]?: true;
     readonly [ComputationLike_isSynchronous]?: true;
   };
@@ -103,7 +103,7 @@ interface Signature {
       readonly [ComputationLike_isPure]?: true;
       readonly [ComputationLike_isSynchronous]?: true;
     },
-  ): DeferredReactiveSourceLike<T, TConsumer> & {
+  ): DeferredEventSourceLike<T, TConsumer> & {
     readonly [ComputationLike_isPure]?: true;
     readonly [ComputationLike_isSynchronous]?: true;
   };
@@ -113,7 +113,7 @@ interface Signature {
       readonly [ComputationLike_isPure]: false;
       readonly [ComputationLike_isSynchronous]?: true;
     },
-  ): DeferredReactiveSourceLike<T, TConsumer> & {
+  ): DeferredEventSourceLike<T, TConsumer> & {
     readonly [ComputationLike_isPure]: false;
     readonly [ComputationLike_isSynchronous]?: true;
   };
@@ -123,7 +123,7 @@ interface Signature {
       readonly [ComputationLike_isPure]?: true;
       readonly [ComputationLike_isSynchronous]: false;
     },
-  ): DeferredReactiveSourceLike<T, TConsumer> & {
+  ): DeferredEventSourceLike<T, TConsumer> & {
     readonly [ComputationLike_isPure]?: true;
     readonly [ComputationLike_isSynchronous]: false;
   };
@@ -133,7 +133,7 @@ interface Signature {
       readonly [ComputationLike_isPure]: false;
       readonly [ComputationLike_isSynchronous]: false;
     },
-  ): DeferredReactiveSourceLike<T, TConsumer> & {
+  ): DeferredEventSourceLike<T, TConsumer> & {
     readonly [ComputationLike_isPure]: false;
     readonly [ComputationLike_isSynchronous]: false;
   };
@@ -143,7 +143,7 @@ interface Signature {
       readonly [ComputationLike_isPure]?: boolean;
       readonly [ComputationLike_isSynchronous]?: boolean;
     },
-  ): DeferredReactiveSourceLike<T, TConsumer>;
+  ): DeferredEventSourceLike<T, TConsumer>;
 
   createLifted<
     TIn,
@@ -151,7 +151,7 @@ interface Signature {
     TConsumerIn extends ConsumerLike<TIn>,
     TConsumerOut extends ConsumerLike<TOut>,
   >(
-    src: DeferredReactiveSourceLike<TIn, TConsumerIn>,
+    src: DeferredEventSourceLike<TIn, TConsumerIn>,
     op: Function1<
       LiftedSinkLike<TConsumerOut, TOut>,
       LiftedSinkLike<TConsumerOut, TIn>
@@ -164,7 +164,7 @@ interface Signature {
       [ComputationLike_isPure]?: true;
       [ComputationLike_isSynchronous]?: true;
     },
-  ): DeferredReactiveSourceLike<TOut, TConsumerOut> & {
+  ): DeferredEventSourceLike<TOut, TConsumerOut> & {
     [ComputationLike_isPure]?: true;
     [ComputationLike_isSynchronous]?: true;
   };
@@ -174,7 +174,7 @@ interface Signature {
     TConsumerIn extends ConsumerLike<TIn>,
     TConsumerOut extends ConsumerLike<TOut>,
   >(
-    src: DeferredReactiveSourceLike<TIn, TConsumerIn>,
+    src: DeferredEventSourceLike<TIn, TConsumerIn>,
     op: Function1<
       LiftedSinkLike<TConsumerOut, TOut>,
       LiftedSinkLike<TConsumerOut, TIn>
@@ -187,7 +187,7 @@ interface Signature {
       [ComputationLike_isPure]?: true;
       [ComputationLike_isSynchronous]: false;
     },
-  ): DeferredReactiveSourceLike<TOut, TConsumerOut> & {
+  ): DeferredEventSourceLike<TOut, TConsumerOut> & {
     [ComputationLike_isPure]?: true;
     [ComputationLike_isSynchronous]: false;
   };
@@ -197,7 +197,7 @@ interface Signature {
     TConsumerIn extends ConsumerLike<TIn>,
     TConsumerOut extends ConsumerLike<TOut>,
   >(
-    src: DeferredReactiveSourceLike<TIn, TConsumerIn>,
+    src: DeferredEventSourceLike<TIn, TConsumerIn>,
     op: Function1<
       LiftedSinkLike<TConsumerOut, TOut>,
       LiftedSinkLike<TConsumerOut, TIn>
@@ -210,7 +210,7 @@ interface Signature {
       [ComputationLike_isPure]: false;
       [ComputationLike_isSynchronous]?: true;
     },
-  ): DeferredReactiveSourceLike<TOut, TConsumerOut> & {
+  ): DeferredEventSourceLike<TOut, TConsumerOut> & {
     [ComputationLike_isPure]: false;
     [ComputationLike_isSynchronous]?: true;
   };
@@ -220,7 +220,7 @@ interface Signature {
     TConsumerIn extends ConsumerLike<TIn>,
     TConsumerOut extends ConsumerLike<TOut>,
   >(
-    src: DeferredReactiveSourceLike<TIn, TConsumerIn>,
+    src: DeferredEventSourceLike<TIn, TConsumerIn>,
     op: Function1<
       LiftedSinkLike<TConsumerOut, TOut>,
       LiftedSinkLike<TConsumerOut, TIn>
@@ -233,7 +233,7 @@ interface Signature {
       [ComputationLike_isPure]?: boolean;
       [ComputationLike_isSynchronous]: false;
     },
-  ): DeferredReactiveSourceLike<TOut, TConsumerOut> & {
+  ): DeferredEventSourceLike<TOut, TConsumerOut> & {
     [ComputationLike_isSynchronous]: false;
   };
   createLifted<
@@ -242,7 +242,7 @@ interface Signature {
     TConsumerIn extends ConsumerLike<TIn>,
     TConsumerOut extends ConsumerLike<TOut>,
   >(
-    src: DeferredReactiveSourceLike<TIn, TConsumerIn>,
+    src: DeferredEventSourceLike<TIn, TConsumerIn>,
     op: Function1<
       LiftedSinkLike<TConsumerOut, TOut>,
       LiftedSinkLike<TConsumerOut, TIn>
@@ -255,7 +255,7 @@ interface Signature {
       [ComputationLike_isPure]?: boolean;
       [ComputationLike_isSynchronous]?: boolean;
     },
-  ): DeferredReactiveSourceLike<TOut, TConsumerOut>;
+  ): DeferredEventSourceLike<TOut, TConsumerOut>;
 
   forkMerge<
     TIn,
@@ -266,33 +266,33 @@ interface Signature {
     toBroadcaster: (
       consumer: TOutConsumer,
     ) => Function1<
-      DeferredReactiveSourceLike<TIn, TConsumer>,
+      DeferredEventSourceLike<TIn, TConsumer>,
       BroadcasterLike<TIn>
     >,
     fromBroadcaster: () => Function1<
       BroadcasterLike<TIn>,
-      DeferredReactiveSourceLike<TIn, TConsumer>
+      DeferredEventSourceLike<TIn, TConsumer>
     >,
     merge: (
-      ...sources: readonly DeferredReactiveSourceLike<TOut, TOutConsumer>[]
-    ) => DeferredReactiveSourceLike<TOut, TOutConsumer>,
+      ...sources: readonly DeferredEventSourceLike<TOut, TOutConsumer>[]
+    ) => DeferredEventSourceLike<TOut, TOutConsumer>,
     ops: readonly [
       ...Function1<
-        DeferredReactiveSourceLike<TIn, TConsumer>,
-        DeferredReactiveSourceLike<TOut, TOutConsumer>
+        DeferredEventSourceLike<TIn, TConsumer>,
+        DeferredEventSourceLike<TOut, TOutConsumer>
       >[],
       {
         [ComputationLike_isPure]?: boolean;
       },
     ],
   ): Function1<
-    DeferredReactiveSourceLike<TIn, TConsumer>,
-    DeferredReactiveSourceLike<TOut, TOutConsumer>
+    DeferredEventSourceLike<TIn, TConsumer>,
+    DeferredEventSourceLike<TOut, TOutConsumer>
   >;
 
   latest<
     TConsumer extends ConsumerLike<ReadonlyArray<unknown>>,
-    TSource extends DeferredReactiveSourceLike<unknown, TSourceConsumer>,
+    TSource extends DeferredEventSourceLike<unknown, TSourceConsumer>,
     TSourceConsumer extends ConsumerLike<unknown> &
       LatestEventListenerLike<unknown>,
   >(
@@ -303,7 +303,7 @@ interface Signature {
       LatestEventListenerContextLike,
       TSourceConsumer
     >,
-  ): DeferredReactiveSourceLike<ReadonlyArray<unknown>, TConsumer>;
+  ): DeferredEventSourceLike<ReadonlyArray<unknown>, TConsumer>;
 
   merge<TConsumer extends ConsumerLike>(
     createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
@@ -311,8 +311,8 @@ interface Signature {
       TConsumer
     >,
   ): <T>(
-    ...sources: readonly DeferredReactiveSourceLike<T, TConsumer>[]
-  ) => DeferredReactiveSourceLike<T, TConsumer>;
+    ...sources: readonly DeferredEventSourceLike<T, TConsumer>[]
+  ) => DeferredEventSourceLike<T, TConsumer>;
 
   repeat<TConsumer extends ConsumerLike<T>, T>(
     createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
@@ -321,8 +321,8 @@ interface Signature {
     >,
     predicate: Optional<Predicate<number> | number>,
   ): Function1<
-    DeferredReactiveSourceLike<T, TConsumer>,
-    DeferredReactiveSourceLike<T, TConsumer>
+    DeferredEventSourceLike<T, TConsumer>,
+    DeferredEventSourceLike<T, TConsumer>
   >;
 
   retry<TConsumer extends ConsumerLike<T>, T>(
@@ -332,26 +332,26 @@ interface Signature {
     >,
     shouldRetry?: (count: number, error: Error) => boolean,
   ): Function1<
-    DeferredReactiveSourceLike<T, TConsumer>,
-    DeferredReactiveSourceLike<T, TConsumer>
+    DeferredEventSourceLike<T, TConsumer>,
+    DeferredEventSourceLike<T, TConsumer>
   >;
 
   takeLast<TConsumer extends ConsumerLike<T>, T>(
     genPure: (
       factory: Factory<Iterator<T>>,
-    ) => DeferredReactiveSourceLike<T, TConsumer>,
+    ) => DeferredEventSourceLike<T, TConsumer>,
     takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>,
     options?: { readonly count?: number },
   ): Function1<
-    DeferredReactiveSourceLike<T, TConsumer>,
-    DeferredReactiveSourceLike<T, TConsumer>
+    DeferredEventSourceLike<T, TConsumer>,
+    DeferredEventSourceLike<T, TConsumer>
   >;
 
   withEffect<T, TConsumer extends ConsumerLike<T>>(
     effect: () => void | DisposableLike | SideEffect1<Optional<Error>>,
   ): Function1<
-    DeferredReactiveSourceLike<T, TConsumer>,
-    DeferredReactiveSourceLike<T, TConsumer> & {
+    DeferredEventSourceLike<T, TConsumer>,
+    DeferredEventSourceLike<T, TConsumer> & {
       [ComputationLike_isPure]: false;
     }
   >;
@@ -360,7 +360,7 @@ interface Signature {
 export const catchError: Signature["catchError"] =
   <
     T,
-    TSource extends DeferredReactiveSourceLike<T, TConsumer>,
+    TSource extends DeferredEventSourceLike<T, TConsumer>,
     TConsumer extends ConsumerLike<T>,
   >(
     createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
@@ -372,7 +372,7 @@ export const catchError: Signature["catchError"] =
       [ComputationLike_isPure]?: boolean;
     },
   ) =>
-  (source: TSource): DeferredReactiveSourceLike<T, TConsumer> =>
+  (source: TSource): DeferredEventSourceLike<T, TConsumer> =>
     create<T, TConsumer>(
       consumer => {
         const onErrorSink = pipe(
@@ -390,14 +390,14 @@ export const catchError: Signature["catchError"] =
             }
 
             if (isSome(action)) {
-              action[ReactiveSourceLike_subscribe](consumer);
+              action[EventSourceLike_subscribe](consumer);
             } else {
               consumer[SinkLike_complete]();
             }
           }),
         );
 
-        source[ReactiveSourceLike_subscribe](onErrorSink);
+        source[EventSourceLike_subscribe](onErrorSink);
       },
       {
         [ComputationLike_isPure]: options?.[ComputationLike_isPure],
@@ -416,7 +416,7 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
 
   type ConcatSinkCtx = {
     readonly [ConcatSinkCtx_delegate]: TConsumer;
-    readonly [ConcatSinkCtx_sources]: readonly DeferredReactiveSourceLike<
+    readonly [ConcatSinkCtx_sources]: readonly DeferredEventSourceLike<
       unknown,
       TConsumer
     >[];
@@ -430,7 +430,7 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
     if (next < sources[Array_length]) {
       this[ConcatSinkCtx_nextIndex]++;
       const concatSink = createConcatSink(this);
-      sources[next][ReactiveSourceLike_subscribe](concatSink);
+      sources[next][EventSourceLike_subscribe](concatSink);
     } else {
       delegate[SinkLike_complete]();
     }
@@ -450,20 +450,20 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
   type TProperties = {
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
-    [ConcatSource_sources]: readonly DeferredReactiveSourceLike<
+    [ConcatSource_sources]: readonly DeferredEventSourceLike<
       unknown,
       TConsumer
     >[];
   };
 
   const isConcatSource = (
-    observable: DeferredReactiveSourceLike<unknown, TConsumer>,
-  ): observable is DeferredReactiveSourceLike<unknown, TConsumer> &
-    TProperties => isSome((observable as any)[ConcatSource_sources]);
+    observable: DeferredEventSourceLike<unknown, TConsumer>,
+  ): observable is DeferredEventSourceLike<unknown, TConsumer> & TProperties =>
+    isSome((observable as any)[ConcatSource_sources]);
 
   const flattenSources = (
-    sources: readonly DeferredReactiveSourceLike<unknown, TConsumer>[],
-  ): readonly DeferredReactiveSourceLike<unknown, TConsumer>[] =>
+    sources: readonly DeferredEventSourceLike<unknown, TConsumer>[],
+  ): readonly DeferredEventSourceLike<unknown, TConsumer>[] =>
     sources.some(isConcatSource)
       ? sources.flatMap(observable =>
           isConcatSource(observable)
@@ -474,9 +474,9 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
 
   const createConcatSource = mixInstanceFactory(
     function ConcatSource(
-      this: TProperties & DeferredReactiveSourceLike<unknown, TConsumer>,
-      sources: readonly DeferredReactiveSourceLike<unknown, TConsumer>[],
-    ): DeferredReactiveSourceLike<unknown, TConsumer> {
+      this: TProperties & DeferredEventSourceLike<unknown, TConsumer>,
+      sources: readonly DeferredEventSourceLike<unknown, TConsumer>[],
+    ): DeferredEventSourceLike<unknown, TConsumer> {
       this[ComputationLike_isPure] = Computation_areAllPure(sources);
       this[ComputationLike_isSynchronous] =
         Computation_areAllSynchronous(sources);
@@ -492,7 +492,7 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
     {
       [ComputationLike_isDeferred]: true as const,
 
-      [ReactiveSourceLike_subscribe](
+      [EventSourceLike_subscribe](
         this: TProperties,
         consumer: TConsumer,
       ): void {
@@ -504,21 +504,21 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
           [ConcatSinkCtx_nextIndex]: 1,
         });
 
-        sources[0][ReactiveSourceLike_subscribe](concatSink);
+        sources[0][EventSourceLike_subscribe](concatSink);
       },
     },
   );
 
   return <T>(
-    ...sources: readonly DeferredReactiveSourceLike<T, TConsumer>[]
-  ): DeferredReactiveSourceLike<T, TConsumer> => {
+    ...sources: readonly DeferredEventSourceLike<T, TConsumer>[]
+  ): DeferredEventSourceLike<T, TConsumer> => {
     const length = sources[Array_length];
     return length === 1 ? sources[0] : createConcatSource(sources);
   };
 };
 
 class CreateSource<T, TConsumer extends ConsumerLike<T>>
-  implements DeferredReactiveSourceLike<T, TConsumer>
+  implements DeferredEventSourceLike<T, TConsumer>
 {
   readonly [ComputationLike_isDeferred]: true = true as const;
   readonly [ComputationLike_isPure]: Optional<boolean>;
@@ -535,7 +535,7 @@ class CreateSource<T, TConsumer extends ConsumerLike<T>>
       config?.[ComputationLike_isSynchronous];
   }
 
-  [ReactiveSourceLike_subscribe](listener: TConsumer): void {
+  [EventSourceLike_subscribe](listener: TConsumer): void {
     try {
       this[CreateSource_effect](listener);
     } catch (e) {
@@ -551,7 +551,7 @@ export const create: Signature["create"] = (<
 >(
   effect: SideEffect1<TConsumer>,
   options?: TComputation,
-): DeferredReactiveSourceLike<T, TConsumer> =>
+): DeferredEventSourceLike<T, TConsumer> =>
   newInstance(
     CreateSource<T, TConsumer>,
     effect,
@@ -575,11 +575,8 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
     >;
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
-    [LiftedReactiveSourceLike_source]: DeferredReactiveSourceLike<
-      TIn,
-      TConsumerIn
-    >;
-    [LiftedReactiveSourceLike_sink]: ReadonlyArray<
+    [LiftedEventSourceLike_source]: DeferredEventSourceLike<TIn, TConsumerIn>;
+    [LiftedEventSourceLike_sink]: ReadonlyArray<
       Function1<
         LiftedSinkLike<TConsumerOut, unknown>,
         LiftedSinkLike<TConsumerOut, unknown>
@@ -589,13 +586,13 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
 
   type TPrototype = {
     [ComputationLike_isDeferred]: true;
-    [ReactiveSourceLike_subscribe](observer: TConsumerOut): void;
+    [EventSourceLike_subscribe](observer: TConsumerOut): void;
   };
 
   return mixInstanceFactory(
     function LiftedObservable(
       this: TProperties & TPrototype,
-      source: DeferredReactiveSourceLike<TIn, TConsumerIn>,
+      source: DeferredEventSourceLike<TIn, TConsumerIn>,
       op: Function1<
         LiftedSinkLike<TConsumerOut, TOut>,
         LiftedSinkLike<TConsumerOut, TIn>
@@ -608,17 +605,14 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
       },
-    ): DeferredReactiveSourceLike<TOut, TConsumerOut> {
-      const liftedSource: DeferredReactiveSourceLike<TIn, TConsumerIn> =
-        (source as any)[LiftedReactiveSourceLike_source] ?? source;
+    ): DeferredEventSourceLike<TOut, TConsumerOut> {
+      const liftedSource: DeferredEventSourceLike<TIn, TConsumerIn> =
+        (source as any)[LiftedEventSourceLike_source] ?? source;
 
-      const ops = [
-        op,
-        ...((source as any)[LiftedReactiveSourceLike_sink] ?? []),
-      ];
+      const ops = [op, ...((source as any)[LiftedEventSourceLike_sink] ?? [])];
 
-      this[LiftedReactiveSourceLike_source] = liftedSource;
-      this[LiftedReactiveSourceLike_sink] = ops;
+      this[LiftedEventSourceLike_source] = liftedSource;
+      this[LiftedEventSourceLike_sink] = ops;
       this[LiftedSource_liftedSinkToConsumer] = liftedSinkToConsumer;
       this[ComputationLike_isSynchronous] =
         Computation_isSynchronous(source) &&
@@ -630,26 +624,23 @@ export const createLifted: Signature["createLifted"] = /*@__PURE__*/ (<
     },
     props<TProperties>({
       [LiftedSource_liftedSinkToConsumer]: none,
-      [LiftedReactiveSourceLike_source]: none,
-      [LiftedReactiveSourceLike_sink]: none,
+      [LiftedEventSourceLike_source]: none,
+      [LiftedEventSourceLike_sink]: none,
       [ComputationLike_isPure]: false,
       [ComputationLike_isSynchronous]: false,
     }),
     proto<TPrototype>({
       [ComputationLike_isDeferred]: true as const,
 
-      [ReactiveSourceLike_subscribe](
-        this: TProperties,
-        observer: TConsumerOut,
-      ) {
-        const source = this[LiftedReactiveSourceLike_source];
+      [EventSourceLike_subscribe](this: TProperties, observer: TConsumerOut) {
+        const source = this[LiftedEventSourceLike_source];
         const destinationOp: TConsumerIn = pipeUnsafe(
           observer,
           Sink.toLiftedSink(),
-          ...this[LiftedReactiveSourceLike_sink],
+          ...this[LiftedEventSourceLike_sink],
           this[LiftedSource_liftedSinkToConsumer],
         );
-        source[ReactiveSourceLike_subscribe](destinationOp);
+        source[EventSourceLike_subscribe](destinationOp);
       },
     }),
   );
@@ -664,27 +655,27 @@ export const forkMerge: Signature["forkMerge"] = (<
     toBroadcaster: (
       consumer: TOutConsumer,
     ) => Function1<
-      DeferredReactiveSourceLike<TIn, TConsumer>,
+      DeferredEventSourceLike<TIn, TConsumer>,
       BroadcasterLike<TIn>
     >,
     fromBroadcaster: () => Function1<
       BroadcasterLike<TIn>,
-      DeferredReactiveSourceLike<TIn, TConsumer>
+      DeferredEventSourceLike<TIn, TConsumer>
     >,
     merge: (
-      ...sources: readonly DeferredReactiveSourceLike<TOut, TOutConsumer>[]
-    ) => DeferredReactiveSourceLike<TOut, TOutConsumer>,
+      ...sources: readonly DeferredEventSourceLike<TOut, TOutConsumer>[]
+    ) => DeferredEventSourceLike<TOut, TOutConsumer>,
     args: readonly [
       ...Function1<
-        DeferredReactiveSourceLike<TIn, TConsumer>,
-        DeferredReactiveSourceLike<TOut, TOutConsumer>
+        DeferredEventSourceLike<TIn, TConsumer>,
+        DeferredEventSourceLike<TOut, TOutConsumer>
       >[],
       {
         [ComputationLike_isPure]?: boolean;
       },
     ],
   ) =>
-  (source: DeferredReactiveSourceLike<TIn, TConsumer>) => {
+  (source: DeferredEventSourceLike<TIn, TConsumer>) => {
     const argsLength = args[Array_length];
     const lastArg = args[argsLength - 1];
     const maybeConfig: Optional<{ [ComputationLike_isPure]?: boolean }> =
@@ -693,8 +684,8 @@ export const forkMerge: Signature["forkMerge"] = (<
       isSome(maybeConfig) ? args.slice(0, argsLength - 1) : args
     ) as ReadonlyArray<
       Function1<
-        DeferredReactiveSourceLike<TIn, TConsumer>,
-        DeferredReactiveSourceLike<TOut, TOutConsumer>
+        DeferredEventSourceLike<TIn, TConsumer>,
+        DeferredEventSourceLike<TOut, TOutConsumer>
       >
     >;
     const innerType = maybeConfig ?? {};
@@ -713,7 +704,7 @@ export const forkMerge: Signature["forkMerge"] = (<
           ReadonlyArray.map(op => op(broadcastedDeferredSource)),
           broadcasters => merge(...broadcasters),
         );
-        merged[ReactiveSourceLike_subscribe](consumer);
+        merged[EventSourceLike_subscribe](consumer);
       },
       {
         [ComputationLike_isSynchronous]: false,
@@ -725,7 +716,7 @@ export const forkMerge: Signature["forkMerge"] = (<
 export const latest: Signature["latest"] = /*@__PURE__*/ (<
   T,
   TConsumer extends ConsumerLike<ReadonlyArray<T>>,
-  TSource extends DeferredReactiveSourceLike<T, TSourceConsumer>,
+  TSource extends DeferredEventSourceLike<T, TSourceConsumer>,
   TSourceConsumer extends ConsumerLike<T> & LatestEventListenerLike<T>,
 >() => {
   type TProperties = {
@@ -748,7 +739,7 @@ export const latest: Signature["latest"] = /*@__PURE__*/ (<
         LatestEventListenerContextLike,
         TSourceConsumer
       >,
-    ): DeferredReactiveSourceLike<ReadonlyArray<T>, TConsumer> {
+    ): DeferredEventSourceLike<ReadonlyArray<T>, TConsumer> {
       init(
         LatestSourceMixin<T, TConsumer, TSource, TSourceConsumer>(),
         this,
@@ -783,20 +774,20 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
   type TProperties = {
     [ComputationLike_isPure]: boolean;
     [ComputationLike_isSynchronous]: boolean;
-    [MergeSource_sources]: readonly DeferredReactiveSourceLike<
+    [MergeSource_sources]: readonly DeferredEventSourceLike<
       unknown,
       TConsumer
     >[];
   };
 
   const isMergeSource = (
-    observable: DeferredReactiveSourceLike<unknown, TConsumer>,
-  ): observable is DeferredReactiveSourceLike<unknown, TConsumer> &
-    TProperties => isSome((observable as any)[MergeSource_sources]);
+    observable: DeferredEventSourceLike<unknown, TConsumer>,
+  ): observable is DeferredEventSourceLike<unknown, TConsumer> & TProperties =>
+    isSome((observable as any)[MergeSource_sources]);
 
   const flattenSources = (
-    sources: readonly DeferredReactiveSourceLike<unknown, TConsumer>[],
-  ): readonly DeferredReactiveSourceLike<unknown, TConsumer>[] =>
+    sources: readonly DeferredEventSourceLike<unknown, TConsumer>[],
+  ): readonly DeferredEventSourceLike<unknown, TConsumer>[] =>
     sources.some(isMergeSource)
       ? sources.flatMap(observable =>
           isMergeSource(observable)
@@ -807,9 +798,9 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
 
   const createMergeSource = mixInstanceFactory(
     function ConcatSource(
-      this: TProperties & DeferredReactiveSourceLike<unknown, TConsumer>,
-      sources: readonly DeferredReactiveSourceLike<unknown, TConsumer>[],
-    ): DeferredReactiveSourceLike<unknown, TConsumer> {
+      this: TProperties & DeferredEventSourceLike<unknown, TConsumer>,
+      sources: readonly DeferredEventSourceLike<unknown, TConsumer>[],
+    ): DeferredEventSourceLike<unknown, TConsumer> {
       this[ComputationLike_isPure] = Computation_areAllPure(sources);
       this[ComputationLike_isSynchronous] =
         Computation_areAllSynchronous(sources);
@@ -825,7 +816,7 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
     {
       [ComputationLike_isDeferred]: true as const,
 
-      [ReactiveSourceLike_subscribe](
+      [EventSourceLike_subscribe](
         this: TProperties,
         consumer: TConsumer,
       ): void {
@@ -843,7 +834,7 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
                 consumer[SinkLike_complete]();
               }
             }),
-            bindMethod(source, ReactiveSourceLike_subscribe),
+            bindMethod(source, EventSourceLike_subscribe),
           );
         }
       },
@@ -851,8 +842,8 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
   );
 
   return <T>(
-    ...sources: readonly DeferredReactiveSourceLike<T, TConsumer>[]
-  ): DeferredReactiveSourceLike<T, TConsumer> => {
+    ...sources: readonly DeferredEventSourceLike<T, TConsumer>[]
+  ): DeferredEventSourceLike<T, TConsumer> => {
     const length = sources[Array_length];
     return length === 1 ? sources[0] : createMergeSource(sources);
   };
@@ -868,7 +859,7 @@ export const repeat: Signature["repeat"] = (<
     >,
     shouldRepeat: Optional<Predicate<number> | number>,
   ) =>
-  (src: DeferredReactiveSourceLike<T, TConsumer>) =>
+  (src: DeferredEventSourceLike<T, TConsumer>) =>
     create<T, TConsumer>((consumer: TConsumer) => {
       const repeatPredicate = isFunction(shouldRepeat)
         ? shouldRepeat
@@ -890,7 +881,7 @@ export const repeat: Signature["repeat"] = (<
           const shouldRepeat = repeatPredicate(count);
 
           if (shouldRepeat) {
-            src[ReactiveSourceLike_subscribe](createDelegateConsumer());
+            src[EventSourceLike_subscribe](createDelegateConsumer());
           } else {
             consumer[SinkLike_complete]();
           }
@@ -906,7 +897,7 @@ export const repeat: Signature["repeat"] = (<
           DisposableContainer.onComplete(onDelegateConsumerCompleted),
           Disposable.addTo(consumer),
         );
-      src[ReactiveSourceLike_subscribe](createDelegateConsumer());
+      src[EventSourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["repeat"];
 
 export const retry: Signature["retry"] = (<
@@ -919,7 +910,7 @@ export const retry: Signature["retry"] = (<
     >,
     shouldRetry?: (count: number, error: Error) => boolean,
   ) =>
-  (src: DeferredReactiveSourceLike<T, TConsumer>) =>
+  (src: DeferredEventSourceLike<T, TConsumer>) =>
     create<T, TConsumer>((consumer: TConsumer) => {
       const retryFunction = shouldRetry ?? alwaysTrue;
 
@@ -937,7 +928,7 @@ export const retry: Signature["retry"] = (<
           const shouldRetry = retryFunction(count, e);
 
           if (shouldRetry) {
-            src[ReactiveSourceLike_subscribe](createDelegateConsumer());
+            src[EventSourceLike_subscribe](createDelegateConsumer());
           } else {
             consumer[DisposableLike_dispose](e);
           }
@@ -955,18 +946,18 @@ export const retry: Signature["retry"] = (<
             bindMethod(consumer, SinkLike_complete),
           ),
         );
-      src[ReactiveSourceLike_subscribe](createDelegateConsumer());
+      src[EventSourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["retry"];
 
 export const takeLast: Signature["takeLast"] =
   <TConsumer extends ConsumerLike<T>, T>(
     genPure: (
       factory: Factory<Iterator<T>>,
-    ) => DeferredReactiveSourceLike<T, TConsumer>,
+    ) => DeferredEventSourceLike<T, TConsumer>,
     takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>,
     options?: { readonly count?: number },
   ) =>
-  (obs: DeferredReactiveSourceLike<T, TConsumer>) =>
+  (obs: DeferredEventSourceLike<T, TConsumer>) =>
     create<T, TConsumer>(consumer => {
       const count = options?.count ?? 1;
 
@@ -975,12 +966,12 @@ export const takeLast: Signature["takeLast"] =
         Disposable.addTo(consumer),
         DisposableContainer.onComplete(() =>
           genPure(bindMethod(takeLastSink, Symbol.iterator))[
-            ReactiveSourceLike_subscribe
+            EventSourceLike_subscribe
           ](consumer),
         ),
       );
 
-      pipe(obs, invoke(ReactiveSourceLike_subscribe, takeLastSink));
+      pipe(obs, invoke(EventSourceLike_subscribe, takeLastSink));
     }, obs);
 
 export const withEffect: Signature["withEffect"] = (effect => source =>
@@ -992,7 +983,7 @@ export const withEffect: Signature["withEffect"] = (effect => source =>
       } else if (isSome(cleanup)) {
         pipe(consumer, Disposable.add(cleanup as DisposableLike));
       }
-      source[ReactiveSourceLike_subscribe](consumer);
+      source[EventSourceLike_subscribe](consumer);
     },
     {
       [ComputationLike_isPure]: false,

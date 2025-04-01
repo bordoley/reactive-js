@@ -18,7 +18,7 @@ import {
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genOnSubscribe =
   <T>(factory: Factory<AsyncEnumeratorLike<T>>) =>
@@ -94,7 +94,7 @@ const genOnSubscribe =
 export const Producer_genAsyncEnumerator = <T>(
   factory: Factory<AsyncEnumeratorLike<T>>,
 ): ProducerWithSideEffectsLike<T> =>
-  DeferredReactiveSource.create(genOnSubscribe(factory), {
+  DeferredEventSource.create(genOnSubscribe(factory), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
   });
@@ -102,7 +102,7 @@ export const Producer_genAsyncEnumerator = <T>(
 export const Producer_genPureAsyncEnumerator = <T>(
   factory: Factory<AsyncEnumeratorLike<T>>,
 ): PureProducerLike<T> =>
-  DeferredReactiveSource.create(genOnSubscribe(factory), {
+  DeferredEventSource.create(genOnSubscribe(factory), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: false,
   });

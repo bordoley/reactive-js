@@ -13,14 +13,14 @@ import {
 } from "../../../functions.js";
 import { ObserverLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
+import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
-import * as ReactiveSource from "../../ReactiveSource.js";
 import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 
 const addEventListener = <T>(scheduler: ObserverLike, effect: SideEffect1<T>) =>
-  compose(Observable_forEach(effect), ReactiveSource.subscribe({ scheduler }));
+  compose(Observable_forEach(effect), EventSource.subscribe({ scheduler }));
 
 const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   TA,

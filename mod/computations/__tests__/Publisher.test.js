@@ -2,7 +2,7 @@
 
 import { expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Publisher from "../../computations/Publisher.js";
-import { ReactiveSourceLike_subscribe } from "../../computations.js";
+import { EventSourceLike_subscribe } from "../../computations.js";
 import { ignore, newInstance, none, pipe, raiseError, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
@@ -42,8 +42,8 @@ testModule("Publisher", test("when disposed with an error", () => {
 }), test("add the same publisher as a EventListener multiple times", () => {
     const publisher = Publisher.create({ autoDispose: true });
     const EventListener = Publisher.create({ autoDispose: true });
-    publisher[ReactiveSourceLike_subscribe](EventListener);
-    publisher[ReactiveSourceLike_subscribe](EventListener);
+    publisher[EventSourceLike_subscribe](EventListener);
+    publisher[EventSourceLike_subscribe](EventListener);
     EventListener[DisposableLike_dispose]();
     pipe(publisher[DisposableLike_isDisposed], expectTrue());
 }), test("completeing the publisher, disposes subscriptions", () => {

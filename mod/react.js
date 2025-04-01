@@ -1,7 +1,7 @@
 /// <reference types="./react.d.ts" />
 
 import { useEffect, useMemo, useState } from "react";
-import { ReactiveSourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "./computations.js";
+import { EventSourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "./computations.js";
 import { bindMethod, isFunction, isNone, isSome, none, pipe, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
@@ -21,7 +21,7 @@ export const useDisposable = (factory, deps) => {
     }, [...deps, setDisposable]);
     return isSome(error) ? raiseError(error) : disposable;
 };
-export const useReactiveSource = (sourceOrFactory, optionsOrDeps, optionsOrNone) => {
+export const useEventSource = (sourceOrFactory, optionsOrDeps, optionsOrNone) => {
     const [state, updateState] = useState(none);
     const [error, updateError] = useState(none);
     const source = isFunction(sourceOrFactory)
@@ -34,7 +34,7 @@ export const useReactiveSource = (sourceOrFactory, optionsOrDeps, optionsOrNone)
         const scheduler = ReactScheduler.get(priority);
         const onNext = (v) => updateState(_ => v);
         const observer = pipe(Observer.create(onNext, scheduler), DisposableContainer.onError(updateError));
-        source?.[ReactiveSourceLike_subscribe](observer);
+        source?.[EventSourceLike_subscribe](observer);
         return observer;
     }, [source, updateState, updateError, priority]);
     // Special case for StoreLikes to return the current value always if defined.

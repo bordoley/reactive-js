@@ -13,7 +13,7 @@
 - [`IterableLike`](IterableLike.md)
 - [`AsyncIterableLike`](AsyncIterableLike.md)
 - [`RunnableLike`](RunnableLike.md)
-- [`ReactiveSourceLike`](ReactiveSourceLike.md)
+- [`EventSourceLike`](EventSourceLike.md)
 - [`ProducerLike`](ProducerLike.md)
 - [`ObservableLike`](ObservableLike.md)
 

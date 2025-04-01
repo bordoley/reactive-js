@@ -8,8 +8,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   BroadcasterLike,
+  EventSourceLike_subscribe,
   ProducerLike,
-  ReactiveSourceLike_subscribe,
 } from "../../../computations.js";
 import { SideEffect1, none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -134,7 +134,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
         mode =>
           Broadcaster_create<T>(listener => {
             const consumer = createPauseableConsumer(listener, mode);
-            producer[ReactiveSourceLike_subscribe](consumer);
+            producer[EventSourceLike_subscribe](consumer);
           }),
         options,
       );

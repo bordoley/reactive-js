@@ -15,7 +15,7 @@ import {
   tuple,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
-import * as ReactiveSource from "../../ReactiveSource.js";
+import * as EventSource from "../../EventSource.js";
 
 const InteractiveComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
@@ -33,7 +33,7 @@ const InteractiveComputationModuleTests = <
           [0, 1, 2, 3, 4],
           Computation.fromReadonlyArray(m),
           m.toProducer<number>(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([0, 1, 2, 3, 4]),
         ),
       ),
@@ -49,7 +49,7 @@ const InteractiveComputationModuleTests = <
             Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3]),
           ),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
+          EventSource.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
           expectArrayEquals([tuple(0, 0, 0), tuple(1, 1, 1), tuple(2, 2, 2)], {
             valuesEquality: arrayEquality(),
           }),
@@ -64,7 +64,7 @@ const InteractiveComputationModuleTests = <
             Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3]),
           ),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
+          EventSource.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
           expectArrayEquals([], {
             valuesEquality: arrayEquality(),
           }),

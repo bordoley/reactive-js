@@ -7,7 +7,7 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
-import * as ReactiveSource from "../../ReactiveSource.js";
+import * as EventSource from "../../EventSource.js";
 import SynchronousObservable_delay from "../../SynchronousObservable/__private__/SynchronousObservable.delay.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
@@ -35,7 +35,7 @@ const createThrottleSink = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (thiz, next) => {
         const scheduler = thiz[LiftedSinkLike_subscription];
         thiz[ThrottleSink_durationSubscription][SerialDisposableLike_current] =
-            pipe(thiz[ThrottleSink_durationFunction](next), ReactiveSource.subscribe({ scheduler }), 
+            pipe(thiz[ThrottleSink_durationFunction](next), EventSource.subscribe({ scheduler }), 
             // This works because dispose is called in a scheduler
             // continuation immediately after the sink is completed.
             DisposableContainer.onComplete(bind(notifyThrottleObserverDelegate, thiz)), Disposable.addTo(thiz));

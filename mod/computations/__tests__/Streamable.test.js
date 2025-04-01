@@ -63,8 +63,8 @@ import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DropLatestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
+import * as EventSource from "../EventSource.js";
 import * as Observable from "../Observable.js";
-import * as ReactiveSource from "../ReactiveSource.js";
 const ObservableModule = Computation.makeModule()(Observable);
 testModule("Streamable", describe("animation", test("integration", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
@@ -174,7 +174,7 @@ describe("stateStore", test("stateStore", () => {
         pipe([(x) => x + 2], Computation.fromReadonlyArray(ObservableModule, {
             delay: 5,
             delayStart: true,
-        }), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), ReactiveSource.subscribe({ scheduler: vts }));
+        }), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), EventSource.subscribe({ scheduler: vts }));
         const result = [];
         pipe(stream, Broadcaster.addEventHandler(bindMethod(result, Array_push)));
         vts[VirtualTimeSchedulerLike_run]();
@@ -201,7 +201,7 @@ describe("stateStore", test("stateStore", () => {
         pipe([increment], Computation.fromReadonlyArray(ObservableModule, {
             delay: 1,
             delayStart: true,
-        }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), ReactiveSource.subscribe({ scheduler: vts }));
+        }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), EventSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(updateCnt, expectEquals(4));
     }

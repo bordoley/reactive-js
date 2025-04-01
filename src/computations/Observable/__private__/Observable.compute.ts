@@ -37,10 +37,10 @@ import {
   SinkLike_complete,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
+import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
-import * as ReactiveSource from "../../ReactiveSource.js";
 import type * as SynchronousObservable from "../../SynchronousObservable.js";
-import * as DeferredReactiveSource from "../../__internal__/DeferredReactiveSource.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 
@@ -312,7 +312,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        ReactiveSource.subscribe({ scheduler: observer }),
+        EventSource.subscribe({ scheduler: observer }),
         Disposable.addTo(observer),
         DisposableContainer.onComplete(this[ComputeContext_cleanup]),
       );
@@ -423,7 +423,7 @@ const Observable_compute: Signature["compute"] = (<T>(
   >,
   { mode = BatchedComputeMode }: { readonly mode?: ComputeMode } = {},
 ) =>
-  DeferredReactiveSource.create<T, ObserverLike<T>>(
+  DeferredEventSource.create<T, ObserverLike<T>>(
     (observer: ObserverLike<T>) => {
       const runComputation = () => {
         let result: Optional<T> = none;

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  ReactiveSourceLike,
-  ReactiveSourceLike_subscribe,
+  EventSourceLike,
+  EventSourceLike_subscribe,
   StoreLike,
   StoreLike_value,
   StreamOf,
@@ -38,14 +38,14 @@ interface ReactModule {
 
   /**
    */
-  useReactiveSource<T>(
-    observable: Optional<ReactiveSourceLike<T>>,
+  useEventSource<T>(
+    observable: Optional<EventSourceLike<T>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
     },
   ): Optional<T>;
-  useReactiveSource<T>(
-    factory: Factory<Optional<ReactiveSourceLike<T>>>,
+  useEventSource<T>(
+    factory: Factory<Optional<EventSourceLike<T>>>,
     deps: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -100,10 +100,10 @@ export const useDisposable: Signature["useDisposable"] = <
   return isSome(error) ? raiseError(error) : disposable;
 };
 
-export const useReactiveSource: Signature["useReactiveSource"] = <T>(
+export const useEventSource: Signature["useEventSource"] = <T>(
   sourceOrFactory:
-    | Optional<ReactiveSourceLike<T>>
-    | Factory<Optional<ReactiveSourceLike<T>>>,
+    | Optional<EventSourceLike<T>>
+    | Factory<Optional<EventSourceLike<T>>>,
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -135,7 +135,7 @@ export const useReactiveSource: Signature["useReactiveSource"] = <T>(
       DisposableContainer.onError(updateError),
     );
 
-    source?.[ReactiveSourceLike_subscribe](observer);
+    source?.[EventSourceLike_subscribe](observer);
     return observer;
   }, [source, updateState, updateError, priority]);
 

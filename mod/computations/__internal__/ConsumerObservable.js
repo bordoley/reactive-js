@@ -1,7 +1,7 @@
 /// <reference types="./ConsumerObservable.d.ts" />
 
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ReactiveSourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../computations.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
@@ -27,7 +27,7 @@ export const create = (() => {
         [ComputationLike_isPure]: true,
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
-        [ReactiveSourceLike_subscribe](observer) {
+        [EventSourceLike_subscribe](observer) {
             const oldDelegate = this[DelegatingEventListenerLike_delegate];
             this[DelegatingEventListenerLike_delegate] = observer;
             pipe(this, Disposable.bindTo(observer));

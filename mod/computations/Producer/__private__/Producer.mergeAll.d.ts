@@ -1,8 +1,8 @@
-import { ReactiveSourceLike } from "../../../computations.js";
+import { EventSourceLike } from "../../../computations.js";
 import { Optional } from "../../../functions.js";
 import { BackpressureStrategy, ConsumerLike } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
-export declare const createMergeAllConsumer: <TInnerSource extends ReactiveSourceLike<T, ConsumerLike<T>>, T>(delegate: ConsumerLike<T>, options: Optional<{
+export declare const createMergeAllConsumer: <TInnerSource extends EventSourceLike<T, ConsumerLike<T>>, T>(delegate: ConsumerLike<T>, options: Optional<{
     backpressureStrategy?: BackpressureStrategy;
     capacity?: number;
     concurrency?: number;

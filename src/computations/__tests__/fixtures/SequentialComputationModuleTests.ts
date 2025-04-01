@@ -26,7 +26,7 @@ import {
   returns,
 } from "../../../functions.js";
 import * as Computation from "../../Computation.js";
-import * as ReactiveSource from "../../ReactiveSource.js";
+import * as EventSource from "../../EventSource.js";
 
 const SequentialComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
@@ -45,7 +45,7 @@ const SequentialComputationModuleTests = <
           Computation.fromReadonlyArray(m),
           m.catchError<number>(ignore),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 4]),
         ),
       ),
@@ -58,7 +58,7 @@ const SequentialComputationModuleTests = <
             result = e.message;
           }),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
         );
 
         pipe(result, expectEquals<Optional<string>>(e1));
@@ -78,7 +78,7 @@ const SequentialComputationModuleTests = <
             result = e.cause;
           }),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
         );
 
         pipe(
@@ -97,7 +97,7 @@ const SequentialComputationModuleTests = <
             pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)),
           ),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 4, 5, 6]),
         ),
       ),
@@ -114,7 +114,7 @@ const SequentialComputationModuleTests = <
             result[Array_push](x + 10);
           }),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
         ),
           pipe(result, expectArrayEquals([11, 12, 13]));
       }),
@@ -128,7 +128,7 @@ const SequentialComputationModuleTests = <
               throw err;
             }),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(err),
         );
@@ -144,7 +144,7 @@ const SequentialComputationModuleTests = <
           m.repeat<number>(),
           m.takeFirst<number>({ count: 8 }),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]),
         ),
       ),
@@ -155,7 +155,7 @@ const SequentialComputationModuleTests = <
           Computation.fromReadonlyArray(m),
           m.repeat<number>(3),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -166,7 +166,7 @@ const SequentialComputationModuleTests = <
           Computation.fromReadonlyArray(m),
           m.repeat<number>(lessThan(1)),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3]),
         ),
       ),
@@ -180,7 +180,7 @@ const SequentialComputationModuleTests = <
               throw err;
             }),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(err),
         );
@@ -198,7 +198,7 @@ const SequentialComputationModuleTests = <
           m.retry<number>(),
           m.takeFirst<number>({ count: 6 }),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -209,7 +209,7 @@ const SequentialComputationModuleTests = <
             Computation.raise(m)<number>(),
             m.retry<number>(() => raise("")),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync(),
+            EventSource.toReadonlyArrayAsync(),
           ),
           expectToThrowAsync,
         ),
@@ -225,7 +225,7 @@ const SequentialComputationModuleTests = <
             m.retry<number>((count, _) => count < 2),
             m.takeFirst<number>({ count: 10 }),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
             expectArrayEquals([1, 2, 3, 1, 2, 3]),
           ),
           expectToThrowAsync,
@@ -241,7 +241,7 @@ const SequentialComputationModuleTests = <
           Computation.fromReadonlyArray(m),
           m.scanDistinct<number, number>((a, b) => a + b, returns(0)),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([0, 1, 2, 3]),
         ),
       ),
@@ -257,7 +257,7 @@ const SequentialComputationModuleTests = <
             Computation.fromReadonlyArray(m),
             m.scanDistinct(scanner<number>, returns(0)),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(err),
         );
@@ -274,7 +274,7 @@ const SequentialComputationModuleTests = <
             Computation.fromReadonlyArray(m),
             m.scanDistinct<number, number>((a, b) => a + b, initialValue),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(err),
         );
@@ -289,7 +289,7 @@ const SequentialComputationModuleTests = <
             Computation.empty(m)<number>(),
             m.throwIfEmpty<number>(() => error),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(error),
         );
@@ -303,7 +303,7 @@ const SequentialComputationModuleTests = <
               throw error;
             }),
             m.toProducer(),
-            ReactiveSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync<number>(),
           ),
           expectToThrowErrorAsync(error),
         );
@@ -315,7 +315,7 @@ const SequentialComputationModuleTests = <
           Computation.fromReadonlyArray(m),
           m.throwIfEmpty<number>(returns(none)),
           m.toProducer(),
-          ReactiveSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync<number>(),
           expectArrayEquals([1]),
         ),
       ),
