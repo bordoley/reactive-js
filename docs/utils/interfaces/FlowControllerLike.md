@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`DisposableLike`](DisposableLike.md).[`BackPressureConfig`](../type-aliases/BackPressureConfig.md)
+- [`DisposableLike`](DisposableLike.md)
 
 ## Extended by
 
@@ -16,30 +16,6 @@
 - [`ConsumerLike`](ConsumerLike.md)
 
 ## Properties
-
-### \[BackPressureConfig\_capacity\]
-
-> `readonly` **\[BackPressureConfig\_capacity\]**: `number`
-
-The number of items the queue is capable of efficiently buffering.
-
-#### Inherited from
-
-`BackPressureConfig.[BackPressureConfig_capacity]`
-
-***
-
-### \[BackPressureConfig\_strategy\]
-
-> `readonly` **\[BackPressureConfig\_strategy\]**: [`BackpressureStrategy`](../type-aliases/BackpressureStrategy.md)
-
-The back pressure strategy utilized by the queue when it is at capacity.
-
-#### Inherited from
-
-`BackPressureConfig.[BackPressureConfig_strategy]`
-
-***
 
 ### \[DisposableLike\_error\]
 

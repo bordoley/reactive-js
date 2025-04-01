@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   Mixin1,
   include,
@@ -10,7 +9,6 @@ import {
 } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
 import {
-  BackPressureConfig_capacity,
   CollectionEnumeratorLike,
   ConsumerLike,
   DisposableLike,
@@ -35,7 +33,6 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
     ConsumerLike<T>,
     | typeof EventListenerLike_notify
     | typeof FlowControllerLike_isReady
-    | typeof BackPressureConfig_capacity
     | typeof FlowControllerLike_addOnReadyListener
   >;
 
@@ -59,10 +56,6 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
         get [FlowControllerLike_isReady](): boolean {
           unsafeCast<ConsumerLike<T>>(this);
           return !this[DisposableLike_isDisposed];
-        },
-
-        get [BackPressureConfig_capacity](): number {
-          return MAX_SAFE_INTEGER;
         },
 
         [EventListenerLike_notify](this: QueueLike<T>, item: T) {

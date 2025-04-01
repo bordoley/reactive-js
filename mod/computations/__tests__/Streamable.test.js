@@ -60,7 +60,7 @@ import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, DropLatestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DropLatestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 import * as Observable from "../Observable.js";
@@ -128,8 +128,6 @@ describe("stateStore", test("stateStore", () => {
             capacity: 20,
             backpressureStrategy: DropLatestBackpressureStrategy,
         });
-        pipe(stateStream[BackPressureConfig_capacity], expectEquals(20));
-        pipe(stateStream[BackPressureConfig_strategy], expectEquals(DropLatestBackpressureStrategy));
         stateStream[EventListenerLike_notify](returns(2));
         stateStream[EventListenerLike_notify](returns(3));
         stateStream[SinkLike_complete]();

@@ -1,8 +1,7 @@
 /// <reference types="./Observer.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, } from "../../utils.js";
+import { FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
 import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
@@ -15,8 +14,6 @@ export const collect = /*@__PURE__*/ (() => {
         return this;
     }, props(), proto({
         [FlowControllerLike_isReady]: true,
-        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
-        [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
         [FlowControllerLike_addOnReadyListener]() {
             return Disposable.disposed;
         },

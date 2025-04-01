@@ -71,7 +71,7 @@ export type BackPressureConfig = {
 };
 export declare const FlowControllerLike_isReady: unique symbol;
 export declare const FlowControllerLike_addOnReadyListener: unique symbol;
-export interface FlowControllerLike extends DisposableLike, BackPressureConfig {
+export interface FlowControllerLike extends DisposableLike {
     readonly [FlowControllerLike_isReady]: boolean;
     [FlowControllerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
 }

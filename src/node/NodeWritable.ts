@@ -143,11 +143,18 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
         this: TProperties & FlowControllerLike,
         data: Uint8Array,
       ) {
+        const writable = this[WritableConsumer_writable];
         if (this[FlowControllerLike_isReady]) {
-          const writable = this[WritableConsumer_writable];
           writable.write(Buffer.from(data));
         } else {
-          raise(newInstance(BackPressureError, this));
+          raise(
+            newInstance(BackPressureError, {
+              [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
+              // FIXME: Not strictly correct, because bytes doesn't necessarily
+              // map to event counts
+              [BackPressureConfig_capacity]: writable.writableHighWaterMark,
+            }),
+          );
         }
       },
 

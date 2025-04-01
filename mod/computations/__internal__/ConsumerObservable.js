@@ -6,7 +6,7 @@ import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Consumer from "../../utils/__internal__/Consumer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 import * as Publisher from "../Publisher.js";
 export const create = (() => {
@@ -27,14 +27,6 @@ export const create = (() => {
         [ComputationLike_isPure]: true,
         [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
-        get [BackPressureConfig_strategy]() {
-            unsafeCast(this);
-            return this[ConsumerObservable_delegate][BackPressureConfig_strategy];
-        },
-        get [BackPressureConfig_capacity]() {
-            unsafeCast(this);
-            return this[ConsumerObservable_delegate][BackPressureConfig_capacity];
-        },
         get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             return this[ConsumerObservable_delegate][FlowControllerLike_isReady];

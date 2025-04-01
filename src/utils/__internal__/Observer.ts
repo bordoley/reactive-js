@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   include,
   init,
@@ -7,13 +6,10 @@ import {
   proto,
 } from "../../__internal__/mixins.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
   CollectionEnumeratorLike,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
-  OverflowBackpressureStrategy,
   SchedulerLike,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
@@ -30,8 +26,6 @@ export const collect: <T>(
     ObserverLike<T>,
     | typeof FlowControllerLike_isReady
     | typeof FlowControllerLike_addOnReadyListener
-    | typeof BackPressureConfig_capacity
-    | typeof BackPressureConfig_strategy
   >;
 
   return mixInstanceFactory(
@@ -49,8 +43,6 @@ export const collect: <T>(
     props(),
     proto<TPrototype>({
       [FlowControllerLike_isReady]: true as const,
-      [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
-      [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
       [FlowControllerLike_addOnReadyListener]() {
         return Disposable.disposed;
       },

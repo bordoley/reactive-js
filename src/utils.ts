@@ -115,7 +115,7 @@ export const FlowControllerLike_addOnReadyListener = Symbol(
   "FlowControllerLike_addOnReadyListener",
 );
 
-export interface FlowControllerLike extends DisposableLike, BackPressureConfig {
+export interface FlowControllerLike extends DisposableLike {
   readonly [FlowControllerLike_isReady]: boolean;
 
   [FlowControllerLike_addOnReadyListener](

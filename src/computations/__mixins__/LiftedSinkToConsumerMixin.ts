@@ -14,8 +14,6 @@ import ConsumerMixin, {
 } from "../../utils/__mixins__/ConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
   BackpressureStrategy,
   ConsumerLike,
   EventListenerLike_notify,
@@ -47,8 +45,6 @@ type TReturn<TSubscription extends ConsumerLike, T> = LiftedSinkToConsumerLike<
 type TPrototype<TSubscription extends ConsumerLike, T> = Pick<
   LiftedSinkToConsumerLike<TSubscription, T>,
   | typeof FlowControllerLike_isReady
-  | typeof BackPressureConfig_strategy
-  | typeof BackPressureConfig_capacity
   | typeof FlowControllerLike_addOnReadyListener
 >;
 
@@ -93,20 +89,6 @@ const LiftedSinkToConsumerMixin: <
           return this[LiftedSinkToEventListenerLike_liftedSink][
             LiftedSinkLike_subscription
           ][FlowControllerLike_isReady];
-        },
-
-        get [BackPressureConfig_strategy](): BackpressureStrategy {
-          unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
-          return this[LiftedSinkToEventListenerLike_liftedSink][
-            LiftedSinkLike_subscription
-          ][BackPressureConfig_strategy];
-        },
-
-        get [BackPressureConfig_capacity](): number {
-          unsafeCast<LiftedSinkToConsumerLike<TSubscription, T>>(this);
-          return this[LiftedSinkToEventListenerLike_liftedSink][
-            LiftedSinkLike_subscription
-          ][BackPressureConfig_capacity];
         },
 
         [FlowControllerLike_addOnReadyListener](

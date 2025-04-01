@@ -4,7 +4,7 @@ import { include, init, mix, props, proto, unsafeCast, } from "../../__internal_
 import { returns } from "../../functions.js";
 import ConsumerMixin, { ConsumerMixinLike_complete, ConsumerMixinLike_notify, } from "../../utils/__mixins__/ConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, } from "../../utils.js";
+import { EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, } from "../../utils.js";
 import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
 import { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
 import LiftedSinkToSinkMixin from "./LiftedSinkToSinkMixin.js";
@@ -19,14 +19,6 @@ const LiftedSinkToConsumerMixin = /*@__PURE__*/ (() => {
         get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][FlowControllerLike_isReady];
-        },
-        get [BackPressureConfig_strategy]() {
-            unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][BackPressureConfig_strategy];
-        },
-        get [BackPressureConfig_capacity]() {
-            unsafeCast(this);
-            return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][BackPressureConfig_capacity];
         },
         [FlowControllerLike_addOnReadyListener](callback) {
             return this[LiftedSinkToEventListenerLike_liftedSink][LiftedSinkLike_subscription][FlowControllerLike_addOnReadyListener](callback);
