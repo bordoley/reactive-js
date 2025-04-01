@@ -3,7 +3,7 @@ import {
   ComputationTypeLike,
   Computation_T,
   Computation_baseOfT,
-  DeferredAsynchronousReactiveComputationModule,
+  DeferredReactiveComputationModule,
   PureComputationOperator,
   PureSynchronousObservableLike,
   ReactiveComputationModule,
@@ -110,7 +110,7 @@ export interface SynchronousObservableModule
         };
       }
     >,
-    DeferredAsynchronousReactiveComputationModule<SynchronousObservableComputation> {
+    DeferredReactiveComputationModule<SynchronousObservableComputation> {
   compute<T>(
     computation: Factory<T>,
     options?: {

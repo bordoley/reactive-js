@@ -18,7 +18,7 @@
 - [ComputationWithSideEffectsLike](interfaces/ComputationWithSideEffectsLike.md)
 - [ConcurrentDeferredComputationModule](interfaces/ConcurrentDeferredComputationModule.md)
 - [ConcurrentReactiveComputationModule](interfaces/ConcurrentReactiveComputationModule.md)
-- [DeferredAsynchronousReactiveComputationModule](interfaces/DeferredAsynchronousReactiveComputationModule.md)
+- [DeferredReactiveComputationModule](interfaces/DeferredReactiveComputationModule.md)
 - [DeferredReactiveSourceLike](interfaces/DeferredReactiveSourceLike.md)
 - [InteractiveComputationModule](interfaces/InteractiveComputationModule.md)
 - [IterableLike](interfaces/IterableLike.md)

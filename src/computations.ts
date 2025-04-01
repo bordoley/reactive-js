@@ -741,7 +741,7 @@ export interface ConcurrentReactiveComputationModule<
       never;
 }
 
-export interface DeferredAsynchronousReactiveComputationModule<
+export interface DeferredReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
   // prettier-ignore

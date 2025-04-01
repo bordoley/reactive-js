@@ -5,7 +5,7 @@ import {
   Computation_baseOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
-  DeferredAsynchronousReactiveComputationModule,
+  DeferredReactiveComputationModule,
   ObservableLike,
   ObservableWithSideEffectsLike,
   PureComputationOperator,
@@ -102,7 +102,7 @@ export interface ObservableModule
       }
     >,
     SequentialReactiveComputationModule<ObservableComputation>,
-    DeferredAsynchronousReactiveComputationModule<ObservableComputation>,
+    DeferredReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation> {
   compute<T>(
     computation: Factory<T>,

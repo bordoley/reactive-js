@@ -2,17 +2,17 @@ import { describe } from "../../../__internal__/testing.js";
 import {
   ComputationModule,
   ComputationTypeLike,
-  DeferredAsynchronousReactiveComputationModule,
+  DeferredReactiveComputationModule,
 } from "../../../computations.js";
 
-const DeferredAsynchronousReactiveComputationModuleTests = <
+const DeferredReactiveComputationModuleTests = <
   TComputationType extends ComputationTypeLike,
 >(
   _m: ComputationModule<TComputationType> &
-    DeferredAsynchronousReactiveComputationModule<TComputationType>,
+    DeferredReactiveComputationModule<TComputationType>,
 ) =>
   describe(
-    "ComputationModule",
+    "DeferredReactiveComputationModule",
     /*
     describe(
       "switchAll",
@@ -146,4 +146,4 @@ const DeferredAsynchronousReactiveComputationModuleTests = <
     ),*/
   );
 
-export default DeferredAsynchronousReactiveComputationModuleTests;
+export default DeferredReactiveComputationModuleTests;

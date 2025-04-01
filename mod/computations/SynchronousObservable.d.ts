@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, DeferredAsynchronousReactiveComputationModule, PureComputationOperator, PureSynchronousObservableLike, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, DeferredReactiveComputationModule, PureComputationOperator, PureSynchronousObservableLike, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
 import { Factory, Function1, Function2 } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 /**
@@ -27,7 +27,7 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
     toRunnable: {
         readonly maxMicroTaskTicks?: number;
     };
-}>, DeferredAsynchronousReactiveComputationModule<SynchronousObservableComputation> {
+}>, DeferredReactiveComputationModule<SynchronousObservableComputation> {
     compute<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
     }): SynchronousObservableWithSideEffectsLike<T>;

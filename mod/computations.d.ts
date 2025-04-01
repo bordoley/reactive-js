@@ -281,7 +281,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     }): <TObservable extends ObservableLike<T>>(iterable: TObservable) => TObservable extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
     fromProducer<T>(): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
 }
-export interface DeferredAsynchronousReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
+export interface DeferredReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     mergeAll<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
 
 ## Properties
 
@@ -18,7 +18,7 @@
 
 #### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#computationmodulelike_computationtype)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/DeferredReactiveComputationModule.md#computationmodulelike_computationtype)
 
 ***
 
@@ -1076,7 +1076,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#mergeall)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredReactiveComputationModule.md#mergeall)
 
 #### Call Signature
 
@@ -1112,7 +1112,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#mergeall)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredReactiveComputationModule.md#mergeall)
 
 #### Call Signature
 
@@ -1148,7 +1148,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#mergeall)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`mergeAll`](../../interfaces/DeferredReactiveComputationModule.md#mergeall)
 
 ***
 
@@ -1352,7 +1352,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#scanmany)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredReactiveComputationModule.md#scanmany)
 
 #### Call Signature
 
@@ -1386,7 +1386,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#scanmany)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredReactiveComputationModule.md#scanmany)
 
 #### Call Signature
 
@@ -1420,7 +1420,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#scanmany)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`scanMany`](../../interfaces/DeferredReactiveComputationModule.md#scanmany)
 
 ***
 
@@ -1492,7 +1492,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#switchall)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredReactiveComputationModule.md#switchall)
 
 #### Call Signature
 
@@ -1516,7 +1516,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#switchall)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredReactiveComputationModule.md#switchall)
 
 #### Call Signature
 
@@ -1540,7 +1540,7 @@
 
 ##### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#switchall)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`switchAll`](../../interfaces/DeferredReactiveComputationModule.md#switchall)
 
 ***
 
@@ -1834,7 +1834,7 @@
 
 #### Inherited from
 
-[`DeferredAsynchronousReactiveComputationModule`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md).[`withBackpressure`](../../interfaces/DeferredAsynchronousReactiveComputationModule.md#withbackpressure)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`withBackpressure`](../../interfaces/DeferredReactiveComputationModule.md#withbackpressure)
 
 ***
 

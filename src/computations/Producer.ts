@@ -6,7 +6,7 @@ import {
   Computation_baseOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
-  DeferredAsynchronousReactiveComputationModule,
+  DeferredReactiveComputationModule,
   ProducerLike,
   ProducerWithSideEffectsLike,
   ReactiveComputationModule,
@@ -78,7 +78,7 @@ export interface ProducerModule
     ReactiveComputationModule<ProducerComputation>,
     SequentialComputationModule<ProducerComputation>,
     SequentialReactiveComputationModule<ProducerComputation>,
-    DeferredAsynchronousReactiveComputationModule<ProducerComputation>,
+    DeferredReactiveComputationModule<ProducerComputation>,
     ConcurrentReactiveComputationModule<ProducerComputation> {
   broadcast<T>(options?: {
     autoDispose?: boolean;

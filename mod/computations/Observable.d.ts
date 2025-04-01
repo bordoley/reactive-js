@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredAsynchronousReactiveComputationModule, ObservableLike, ObservableWithSideEffectsLike, PureComputationOperator, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ObservableLike, ObservableWithSideEffectsLike, PureComputationOperator, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
 import { Factory, Function2 } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 /**
@@ -23,7 +23,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delay?: number;
         readonly delayStart?: boolean;
     };
-}>, SequentialReactiveComputationModule<ObservableComputation>, DeferredAsynchronousReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation> {
+}>, SequentialReactiveComputationModule<ObservableComputation>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation> {
     compute<T>(computation: Factory<T>, options?: {
         readonly mode?: ComputeMode;
     }): ObservableWithSideEffectsLike<T>;

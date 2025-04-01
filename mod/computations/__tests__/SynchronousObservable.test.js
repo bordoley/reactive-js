@@ -68,12 +68,12 @@ import * as ReactiveSource from "../ReactiveSource.js";
 import * as Runnable from "../Runnable.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import DeferredAsynchronousReactiveComputationModuleTests from "./fixtures/DeferredAsynchronousReactiveComputationModuleTests.js";
+import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 const m = Computation.makeModule()(SynchronousObservable);
-testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), DeferredAsynchronousReactiveComputationModuleTests(m), describe("combineLatest", test("combineLatest from two interspersing sources", pipeLazy(SynchronousObservable.combineLatest(pipe([3, 5, 7], Computation.fromReadonlyArray(m, { delay: 2 })), pipe([2, 4], Computation.fromReadonlyArray(m, { delay: 3 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
+testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), SynchronousComputationModuleTests(m), DeferredReactiveComputationModuleTests(m), describe("combineLatest", test("combineLatest from two interspersing sources", pipeLazy(SynchronousObservable.combineLatest(pipe([3, 5, 7], Computation.fromReadonlyArray(m, { delay: 2 })), pipe([2, 4], Computation.fromReadonlyArray(m, { delay: 3 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)], {
     valuesEquality: arrayEquality(),
 })))), describe("compute", test("batch mode", () => {
     const result = [];

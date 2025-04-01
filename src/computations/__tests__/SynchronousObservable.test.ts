@@ -40,7 +40,7 @@ import * as ReactiveSource from "../ReactiveSource.js";
 import * as Runnable from "../Runnable.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
-import DeferredAsynchronousReactiveComputationModuleTests from "./fixtures/DeferredAsynchronousReactiveComputationModuleTests.js";
+import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
@@ -55,7 +55,7 @@ testModule(
   SequentialComputationModuleTests(m),
   SequentialReactiveComputationModuleTests(m),
   SynchronousComputationModuleTests(m),
-  DeferredAsynchronousReactiveComputationModuleTests(m),
+  DeferredReactiveComputationModuleTests(m),
   describe(
     "combineLatest",
     test(
