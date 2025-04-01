@@ -49,9 +49,10 @@ export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
   async (src: SourceLike<T>) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
-    const observer = Observer.create<T>(scheduler);
+    const buffer: T[] = [];
+    const observer = Observer.collect<T>(scheduler, buffer);
     src[SourceLike_subscribe](observer);
     await DisposableContainer.toPromise(observer);
 
-    return Array.from(observer);
+    return buffer;
   };

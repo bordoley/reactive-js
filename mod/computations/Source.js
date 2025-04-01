@@ -20,8 +20,9 @@ export const subscribe = (options) => (src) => {
 };
 export const toReadonlyArrayAsync = (options) => async (src) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
-    const observer = Observer.create(scheduler);
+    const buffer = [];
+    const observer = Observer.collect(scheduler, buffer);
     src[SourceLike_subscribe](observer);
     await DisposableContainer.toPromise(observer);
-    return Array.from(observer);
+    return buffer;
 };
