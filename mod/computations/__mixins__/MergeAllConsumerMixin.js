@@ -8,15 +8,15 @@ import { clampPositiveNonZeroInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
 import { EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
     const MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
-    const MergeAllConsumer_delegate = Symbol("MergeAllConsumer_delegate");
     const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
     const MergeAllConsumer_isCompleted = Symbol("MergeAllConsumer_isCompleted");
     const subscribeToInner = (mergeAllConsumer, source) => {
-        const delegate = mergeAllConsumer[MergeAllConsumer_delegate];
+        const delegate = mergeAllConsumer[DelegatingEventListenerLike_delegate];
         mergeAllConsumer[MergeAllConsumer_activeCount]++;
         const sourceDelegate = pipe(delegate, mergeAllConsumer[MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing], Disposable.addTo(mergeAllConsumer), DisposableContainer.onComplete(() => {
             mergeAllConsumer[MergeAllConsumer_activeCount]--;
@@ -31,9 +31,10 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
         }));
         source[SourceLike_subscribe](sourceDelegate);
     };
-    return returns(mix(include(DelegatingDisposableMixin, FlowControllerQueueMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
+    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerQueueMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
         init(DelegatingDisposableMixin, this, delegate);
         init(FlowControllerQueueMixin(), this, config);
+        init(DelegatingEventListenerMixin(), this, delegate);
         const maxConcurrency = clampPositiveNonZeroInteger(config?.concurrency ?? MAX_SAFE_INTEGER);
         pipe(this, Disposable.add(this[FlowControllerEnumeratorLike_addOnDataAvailableListener](() => {
             const activeCount = this[MergeAllConsumer_activeCount];
@@ -46,18 +47,16 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
             }
         })));
         this[MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing] = createDelegatingNotifyOnlyNonCompletingNonDisposing;
-        this[MergeAllConsumer_delegate] = delegate;
         return this;
     }, props({
         [MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: none,
-        [MergeAllConsumer_delegate]: none,
         [MergeAllConsumer_isCompleted]: false,
         [MergeAllConsumer_activeCount]: 0,
     }), proto({
         get [SinkLike_isCompleted]() {
             unsafeCast(this);
             return (this[MergeAllConsumer_isCompleted] ||
-                this[MergeAllConsumer_delegate][SinkLike_isCompleted]);
+                this[DelegatingEventListenerLike_delegate][SinkLike_isCompleted]);
         },
         [EventListenerLike_notify](next) {
             this[QueueLike_enqueue](next);
@@ -69,7 +68,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
             if (isCompleted || activeCount > 0) {
                 return;
             }
-            this[MergeAllConsumer_delegate][SinkLike_complete]();
+            this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
         },
     })));
 })();
