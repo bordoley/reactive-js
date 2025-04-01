@@ -6,6 +6,7 @@ import Computation_areAllPure from "./Computation/__private__/Computation.areAll
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
 import Computation_empty from "./Computation/__private__/Computation.empty.js";
+import Computation_endWith from "./Computation/__private__/Computation.endWith.js";
 import Computation_fromReadonlyArray from "./Computation/__private__/Computation.fromReadonlyArray.js";
 import Computation_isDeferred from "./Computation/__private__/Computation.isDeferred.js";
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
@@ -15,6 +16,7 @@ export const areAllPure = Computation_areAllPure;
 export const areAllSynchronous = Computation_areAllSynchronous;
 export const concatWith = Computation_concatWith;
 export const empty = Computation_empty;
+export const endWith = Computation_endWith;
 export const fromReadonlyArray = Computation_fromReadonlyArray;
 export const isDeferred = Computation_isDeferred;
 export const isPure = Computation_isPure;

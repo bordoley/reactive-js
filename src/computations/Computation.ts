@@ -29,6 +29,7 @@ import Computation_areAllPure from "./Computation/__private__/Computation.areAll
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
 import Computation_empty from "./Computation/__private__/Computation.empty.js";
+import Computation_endWith from "./Computation/__private__/Computation.endWith.js";
 import Computation_fromReadonlyArray from "./Computation/__private__/Computation.fromReadonlyArray.js";
 import Computation_isDeferred from "./Computation/__private__/Computation.isDeferred.js";
 import Computation_isPure from "./Computation/__private__/Computation.isPure.js";
@@ -91,6 +92,20 @@ export interface Signature {
   >(
     m: TComputationModule,
   ): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+
+  endWith<
+    T,
+    TComputationType extends ComputationTypeLike,
+    TComputationModule extends PickComputationModule<
+      SequentialComputationModule<TComputationType> &
+        ComputationModule<TComputationType>,
+      "concat" | "genPure"
+    >,
+  >(
+    m: TComputationModule,
+    value: T,
+    ...values: readonly T[]
+  ): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
 
   fromReadonlyArray<
     TComputationType extends ComputationTypeLike,
@@ -181,19 +196,15 @@ export interface Signature {
 export const areAllPure: Signature["areAllPure"] = Computation_areAllPure;
 export const areAllSynchronous: Signature["areAllSynchronous"] =
   Computation_areAllSynchronous;
-
 export const concatWith: Signature["concatWith"] = Computation_concatWith;
-
 export const empty: Signature["empty"] = Computation_empty;
-
+export const endWith: Signature["endWith"] = Computation_endWith;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Computation_fromReadonlyArray;
-
 export const isDeferred: Signature["isDeferred"] = Computation_isDeferred;
 export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =
   Computation_isSynchronous;
-
 export const makeModule: Signature["makeModule"] =
   identityLazy as Signature["makeModule"];
 

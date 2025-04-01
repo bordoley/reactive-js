@@ -15,6 +15,7 @@ export interface Signature {
     })[];
     concatWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType>, "concat">>(m: TComputationModule): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
     empty<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    endWith<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule, value: T, ...values: readonly T[]): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
     fromReadonlyArray<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
         readonly count?: number;
         readonly start?: number;
@@ -43,6 +44,7 @@ export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
 export declare const concatWith: Signature["concatWith"];
 export declare const empty: Signature["empty"];
+export declare const endWith: Signature["endWith"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const isDeferred: Signature["isDeferred"];
 export declare const isPure: Signature["isPure"];
