@@ -2,8 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const TakeWhileMixin_inclusive = Symbol("TakeWhileMixin_inclusive");
     const TakeWhileMixin_predicate = Symbol("TakeWhileMixin_predicate");
@@ -20,7 +21,7 @@ export const create = /*@__PURE__*/ (() => {
             const satisfiesPredicate = this[TakeWhileMixin_predicate](next);
             const isInclusive = this[TakeWhileMixin_inclusive];
             if (satisfiesPredicate || isInclusive) {
-                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
+                this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](next);
             }
             if (!satisfiesPredicate) {
                 this[SinkLike_complete]();

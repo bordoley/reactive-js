@@ -2,8 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ForEachSink_effect = Symbol("ForEachSink_effect");
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ForEachSink(delegate, effect) {
@@ -15,7 +16,7 @@ export const create = /*@__PURE__*/ (() => {
     }), proto({
         [EventListenerLike_notify](next) {
             this[ForEachSink_effect](next);
-            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
+            this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](next);
         },
     }));
 })();

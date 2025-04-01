@@ -6,10 +6,10 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Factory, Optional, error, none, raise } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
@@ -56,7 +56,9 @@ export const create: <TSubscription extends SinkLike, T>(
       ) {
         this[ThrowIfEmptySink_isEmpty] = false;
 
-        this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
+        this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](
+          next,
+        );
       },
 
       [DelegatingLiftedSinkLike_onCompleted](

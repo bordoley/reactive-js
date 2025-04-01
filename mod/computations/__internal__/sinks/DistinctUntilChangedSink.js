@@ -2,8 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, strictEquality, } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSink_equality = Symbol("DistinctUntilChangedSink_equality");
     const DistinctUntilChangedSink_prev = Symbol("DistinctUntilChangedSink_prev");
@@ -24,7 +25,7 @@ export const create = /*@__PURE__*/ (() => {
             if (shouldEmit) {
                 this[DistinctUntilChangedSink_prev] = next;
                 this[DistinctUntilChangedSink_hasValue] = true;
-                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
+                this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](next);
             }
         },
     }));

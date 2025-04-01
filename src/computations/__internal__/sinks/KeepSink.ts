@@ -6,10 +6,10 @@ import {
   proto,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
@@ -53,7 +53,7 @@ export const create: <TSubscription extends SinkLike, T>(
         const shouldNotify = this[KeepSink_predicate](next);
 
         if (shouldNotify) {
-          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+          this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](
             next,
           );
         }

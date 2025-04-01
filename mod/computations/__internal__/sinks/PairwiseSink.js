@@ -2,8 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none, tuple } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const PairwiseSink_hasPrev = Symbol("PairwiseSink_hasPrev");
     const PairwiseSink_prev = Symbol("PairwiseSink_prev");
@@ -21,7 +22,7 @@ export const create = /*@__PURE__*/ (() => {
             this[PairwiseSink_prev] = next;
             if (hasPrev) {
                 const pair = tuple(prev, next);
-                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](pair);
+                this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](pair);
             }
         },
     }));

@@ -5,11 +5,12 @@ import { bind, call, isSome, none, partial, pipe, returns, } from "../../../func
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Source from "../../Source.js";
 import SynchronousObservable_delay from "../../SynchronousObservable/__private__/SynchronousObservable.delay.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_lift from "./Observable.lift.js";
 const ThrottleFirstMode = "first";
 const ThrottleLastMode = "last";
@@ -21,7 +22,7 @@ const createThrottleSink = /*@__PURE__*/ (() => {
     const ThrottleSink_durationFunction = Symbol("ThrottleSink_durationFunction");
     const ThrottleSink_mode = Symbol("ThrottleSink_mode");
     function notifyThrottleObserverDelegate(_) {
-        const delegate = this[DelegatingLiftedSinkLike_delegate];
+        const delegate = this[DelegatingEventListenerLike_delegate];
         const delegateIsCompleted = delegate[SinkLike_isCompleted];
         if (this[ThrottleSink_hasValue] && !delegateIsCompleted) {
             const value = this[ThrottleSink_value];
@@ -65,7 +66,7 @@ const createThrottleSink = /*@__PURE__*/ (() => {
             }
         },
         [DelegatingLiftedSinkLike_onCompleted]() {
-            const delegate = this[DelegatingLiftedSinkLike_delegate];
+            const delegate = this[DelegatingEventListenerLike_delegate];
             const delegateIsComplete = delegate[SinkLike_isCompleted];
             if (this[ThrottleSink_mode] !== ThrottleFirstMode &&
                 this[ThrottleSink_hasValue] &&

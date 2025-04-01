@@ -3,8 +3,9 @@
 import { Array_length } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { newInstance, none } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const DecodeWithCharsetSink_textDecoder = Symbol("DecodeWithCharsetSink_textDecoder");
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function DecodeWithCharsetSink(delegate, options) {
@@ -21,14 +22,14 @@ export const create = /*@__PURE__*/ (() => {
             });
             const shouldEmit = data[Array_length] > 0;
             if (shouldEmit) {
-                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](data);
+                this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](data);
             }
         },
         [DelegatingLiftedSinkLike_onCompleted]() {
             const data = this[DecodeWithCharsetSink_textDecoder].decode(newInstance(Uint8Array, []), {
                 stream: false,
             });
-            const delegate = this[DelegatingLiftedSinkLike_delegate];
+            const delegate = this[DelegatingEventListenerLike_delegate];
             if (data[Array_length] > 0) {
                 delegate[EventListenerLike_notify](data);
             }

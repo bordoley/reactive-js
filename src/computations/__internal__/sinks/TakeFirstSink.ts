@@ -7,6 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional } from "../../../functions.js";
 import { clampPositiveInteger } from "../../../math.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
   EventListenerLike_notify,
   SinkLike,
@@ -14,7 +15,6 @@ import {
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
 
@@ -62,7 +62,7 @@ export const create: <TSubscription extends SinkLike, T>(
       ) {
         this[TakeFirstSink_count]--;
 
-        const delegate = this[DelegatingLiftedSinkLike_delegate];
+        const delegate = this[DelegatingEventListenerLike_delegate];
         delegate[EventListenerLike_notify](next);
 
         if (this[TakeFirstSink_count] <= 0) {

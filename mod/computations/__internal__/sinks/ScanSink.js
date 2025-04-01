@@ -2,8 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ScanSink_acc = Symbol("ScanSink_acc");
     const ScanSink_reducer = Symbol("ScanSink_reducer");
@@ -25,7 +26,7 @@ export const create = /*@__PURE__*/ (() => {
             const oldAcc = this[ScanSink_acc];
             const nextAcc = this[ScanSink_reducer](oldAcc, next);
             this[ScanSink_acc] = nextAcc;
-            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](nextAcc);
+            this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](nextAcc);
         },
     }));
 })();

@@ -20,6 +20,7 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
   DisposableLike_isDisposed,
   EventListenerLike_notify,
@@ -37,7 +38,6 @@ import {
 } from "../../__internal__/LiftedSource.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_lift from "./Observable.lift.js";
@@ -71,7 +71,7 @@ const createThrottleSink: <T>(
     this: DelegatingLiftedSinkLike<ObserverLike, T> & TProperties,
     _?: unknown,
   ) {
-    const delegate = this[DelegatingLiftedSinkLike_delegate];
+    const delegate = this[DelegatingEventListenerLike_delegate];
     const delegateIsCompleted = delegate[SinkLike_isCompleted];
 
     if (this[ThrottleSink_hasValue] && !delegateIsCompleted) {
@@ -161,7 +161,7 @@ const createThrottleSink: <T>(
       [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties & DelegatingLiftedSinkLike<ObserverLike, T>,
       ) {
-        const delegate = this[DelegatingLiftedSinkLike_delegate];
+        const delegate = this[DelegatingEventListenerLike_delegate];
         const delegateIsComplete = delegate[SinkLike_isCompleted];
         if (
           this[ThrottleSink_mode] !== ThrottleFirstMode &&

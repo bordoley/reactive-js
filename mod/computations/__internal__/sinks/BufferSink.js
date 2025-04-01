@@ -4,8 +4,9 @@ import { Array_length, Array_push, MAX_SAFE_INTEGER, } from "../../../__internal
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const BufferSink_buffer = Symbol("BufferSink_buffer");
     const BufferSink_count = Symbol("BufferSink_count");
@@ -25,11 +26,11 @@ export const create = /*@__PURE__*/ (() => {
             const shouldEmit = buffer[Array_length] === count;
             if (shouldEmit) {
                 this[BufferSink_buffer] = [];
-                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](buffer);
+                this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](buffer);
             }
         },
         [DelegatingLiftedSinkLike_onCompleted]() {
-            const delegate = this[DelegatingLiftedSinkLike_delegate];
+            const delegate = this[DelegatingEventListenerLike_delegate];
             const buffer = this[BufferSink_buffer];
             this[BufferSink_buffer] = [];
             if (buffer[Array_length] > 0) {

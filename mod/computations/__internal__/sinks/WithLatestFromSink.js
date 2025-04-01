@@ -4,8 +4,9 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { bind, none, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_dispose, EventListenerLike_notify, SinkLike_complete, } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike_subscription, } from "../LiftedSource.js";
 export const create = /*@__PURE__*/ (() => {
     const WithLatestFromSink_selector = Symbol("WithLatestFromSink_selector");
@@ -40,7 +41,7 @@ export const create = /*@__PURE__*/ (() => {
             const shouldEmit = this[WithLatestFromSink_hasLatest];
             if (shouldEmit) {
                 const v = this[WithLatestFromSink_selector](next, this[WithLatestFromSink_otherLatest]);
-                this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](v);
+                this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](v);
             }
         },
     }));

@@ -12,10 +12,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Optional, none } from "../../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../../math.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify, SinkLike } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import { LiftedSinkLike } from "../LiftedSource.js";
@@ -82,7 +82,7 @@ export const create: <TSubscription extends SinkLike, T>(
 
         if (shouldEmit) {
           this[BufferSink_buffer] = [];
-          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](
+          this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](
             buffer,
           );
         }
@@ -91,7 +91,7 @@ export const create: <TSubscription extends SinkLike, T>(
         this: TProperties &
           DelegatingLiftedSinkLike<TSubscription, T, ReadonlyArray<T>>,
       ) {
-        const delegate = this[DelegatingLiftedSinkLike_delegate];
+        const delegate = this[DelegatingEventListenerLike_delegate];
         const buffer = this[BufferSink_buffer];
         this[BufferSink_buffer] = [];
 

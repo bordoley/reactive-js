@@ -16,6 +16,7 @@ import {
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -25,7 +26,6 @@ import {
 } from "../../../utils.js";
 import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike,
-  DelegatingLiftedSinkLike_delegate,
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import {
@@ -134,7 +134,9 @@ export const create: <TSubscription extends SinkLike, TOther, TA, TB, T>(
             next,
             this[WithLatestFromSink_otherLatest] as TB,
           );
-          this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](v);
+          this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](
+            v,
+          );
         }
       },
     }),

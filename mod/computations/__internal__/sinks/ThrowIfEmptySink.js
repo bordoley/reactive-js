@@ -2,8 +2,9 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { error, none, raise } from "../../../functions.js";
+import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { EventListenerLike_notify } from "../../../utils.js";
-import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_delegate, DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
+import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 export const create = /*@__PURE__*/ (() => {
     const ThrowIfEmptySink_isEmpty = Symbol("ThrowIfEmptySink_isEmpty");
     const ThrowIfEmptySink_factory = Symbol("ThrowIfEmptySink_factory");
@@ -17,7 +18,7 @@ export const create = /*@__PURE__*/ (() => {
     }), proto({
         [EventListenerLike_notify](next) {
             this[ThrowIfEmptySink_isEmpty] = false;
-            this[DelegatingLiftedSinkLike_delegate][EventListenerLike_notify](next);
+            this[DelegatingEventListenerLike_delegate][EventListenerLike_notify](next);
         },
         [DelegatingLiftedSinkLike_onCompleted]() {
             const factory = this[ThrowIfEmptySink_factory];
