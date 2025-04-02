@@ -23,7 +23,6 @@ import Observable_pairwise from "./Observable/__private__/Observable.pairwise.js
 import Observable_repeat from "./Observable/__private__/Observable.repeat.js";
 import Observable_retry from "./Observable/__private__/Observable.retry.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
-import Observable_scanDistinct from "./Observable/__private__/Observable.scanDistinct.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
@@ -66,7 +65,6 @@ export const pairwise = Observable_pairwise;
 export const repeat = Observable_repeat;
 export const retry = Observable_retry;
 export const scan = Observable_scan;
-export const scanDistinct = Observable_scanDistinct;
 export const scanMany = Observable_scanMany;
 export const skipFirst = Observable_skipFirst;
 export const subscribeOn = Observable_subscribeOn;

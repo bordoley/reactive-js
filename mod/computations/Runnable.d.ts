@@ -36,7 +36,6 @@ export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
-export declare const scanDistinct: Signature["scanDistinct"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];

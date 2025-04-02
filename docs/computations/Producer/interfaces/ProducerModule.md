@@ -1386,42 +1386,6 @@
 
 ***
 
-### scanDistinct()
-
-> **scanDistinct**\<`T`, `TAcc`\>(`reducer`, `initialState`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
-
-#### Type Parameters
-
-• **T**
-
-• **TAcc**
-
-#### Parameters
-
-##### reducer
-
-[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
-
-##### initialState
-
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
-
-##### options?
-
-###### equality?
-
-[`Equality`](../../../functions/type-aliases/Equality.md)\<`TAcc`\>
-
-#### Returns
-
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ProducerComputation`](ProducerComputation.md), `T`, `TAcc`\>
-
-#### Inherited from
-
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`scanDistinct`](../../interfaces/SequentialComputationModule.md#scandistinct)
-
-***
-
 ### scanMany()
 
 #### Call Signature

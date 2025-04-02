@@ -42,7 +42,6 @@ export declare const pairwise: Signature["pairwise"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
-export declare const scanDistinct: Signature["scanDistinct"];
 export declare const scanMany: Signature["scanMany"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const switchAll: Signature["switchAll"];

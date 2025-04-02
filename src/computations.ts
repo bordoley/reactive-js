@@ -451,12 +451,6 @@ export interface SequentialComputationModule<
     shouldRetry?: (count: number, error: Error) => boolean,
   ): PureComputationOperator<TComputationType, T, T>;
 
-  scanDistinct<T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialState: Factory<TAcc>,
-    options?: { readonly equality?: Equality<TAcc> },
-  ): PureComputationOperator<TComputationType, T, TAcc>;
-
   throwIfEmpty<T>(
     factory: Factory<unknown>,
     options?: undefined,

@@ -199,9 +199,6 @@ export interface SequentialComputationModule<TComputationType extends Computatio
     repeat<T>(count: number): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(): PureComputationOperator<TComputationType, T, T>;
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureComputationOperator<TComputationType, T, T>;
-    scanDistinct<T, TAcc>(reducer: Reducer<T, TAcc>, initialState: Factory<TAcc>, options?: {
-        readonly equality?: Equality<TAcc>;
-    }): PureComputationOperator<TComputationType, T, TAcc>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
     withEffect<T>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 }

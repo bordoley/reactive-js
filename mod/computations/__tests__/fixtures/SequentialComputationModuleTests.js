@@ -39,19 +39,7 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
     await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m), m.repeat(_ => {
         throw err;
     }), m.toProducer(), EventSource.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-})), describe("retry", testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(Computation.ofValues(m, 1, 2, 3), Computation.raise(m)), m.retry(), m.takeFirst({ count: 6 }), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(Computation.raise(m), m.retry(() => raise("")), m.toProducer(), EventSource.toReadonlyArrayAsync()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(pipeLazyAsync(m.concat(Computation.ofValues(m, 1, 2, 3), Computation.raise(m)), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])), expectToThrowAsync))), describe("scanDistinct", testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync([1, 1, 1], Computation.fromReadonlyArray(m), m.scanDistinct((a, b) => a + b, returns(0)), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([0, 1, 2, 3]))), testAsync("throws when the reduce function throws", async () => {
-    const err = new Error();
-    const scanner = (_acc, _next) => {
-        throw err;
-    };
-    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m), m.scanDistinct((scanner), returns(0)), m.toProducer(), EventSource.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-}), testAsync("throws when the initial value function throws", async () => {
-    const err = new Error();
-    const initialValue = () => {
-        throw err;
-    };
-    await pipeAsync(pipeLazy([1, 1], Computation.fromReadonlyArray(m), m.scanDistinct((a, b) => a + b, initialValue), m.toProducer(), EventSource.toReadonlyArrayAsync()), expectToThrowErrorAsync(err));
-})), describe("throwIfEmpty", testAsync("when source is empty", async () => {
+})), describe("retry", testAsync("retrys with the default predicate", pipeLazyAsync(m.concat(Computation.ofValues(m, 1, 2, 3), Computation.raise(m)), m.retry(), m.takeFirst({ count: 6 }), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), testAsync("when source and the retry predicate throw", pipeLazyAsync(pipeLazyAsync(Computation.raise(m), m.retry(() => raise("")), m.toProducer(), EventSource.toReadonlyArrayAsync()), expectToThrowAsync)), testAsync("retrys only twice", pipeLazyAsync(pipeLazyAsync(m.concat(Computation.ofValues(m, 1, 2, 3), Computation.raise(m)), m.retry((count, _) => count < 2), m.takeFirst({ count: 10 }), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])), expectToThrowAsync))), describe("throwIfEmpty", testAsync("when source is empty", async () => {
     const error = new Error();
     await pipe(pipeLazy(Computation.empty(m), m.throwIfEmpty(() => error), m.toProducer(), EventSource.toReadonlyArrayAsync()), expectToThrowErrorAsync(error));
 }), testAsync("when factory throw", async () => {
