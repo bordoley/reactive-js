@@ -6,20 +6,18 @@
 
 # Function: mergeWith()
 
-> **mergeWith**\<`TComputationType`, `TComputationModule`\>(`m`): [`MergeWithOperator`](../interfaces/MergeWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
+> **mergeWith**\<`TComputationType`\>(`m`): [`MergeWithOperator`](../interfaces/MergeWithOperator.md)\<`TComputationType`\>
 
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
-• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<`TComputationType`\>, `"merge"`\>
-
 ## Parameters
 
 ### m
 
-`TComputationModule`
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<`TComputationType`\>, `"merge"`\>
 
 ## Returns
 
-[`MergeWithOperator`](../interfaces/MergeWithOperator.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>\>
+[`MergeWithOperator`](../interfaces/MergeWithOperator.md)\<`TComputationType`\>

@@ -6,21 +6,19 @@
 
 # Function: empty()
 
-> **empty**\<`T`, `TComputationType`, `TComputationModule`\>(`m`, `type`?): [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
+> **empty**\<`TComputationType`, `T`\>(`m`, `type`?): [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 ## Type Parameters
 
-• **T**
-
 • **TComputationType** *extends* [`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
-• **TComputationModule** *extends* [`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"genPure"`\>
+• **T**
 
 ## Parameters
 
 ### m
 
-`TComputationModule`
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"genPure"`\>
 
 ### type?
 
@@ -28,4 +26,4 @@
 
 ## Returns
 
-[`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
+[`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>

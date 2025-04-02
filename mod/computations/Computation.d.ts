@@ -13,9 +13,9 @@ export interface Signature {
     areAllSynchronous<TComputationType extends Partial<ComputationLike>>(computations: readonly TComputationType[]): computations is readonly (TComputationType & {
         [ComputationLike_isSynchronous]: Optional<true>;
     })[];
-    concatWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType>, "concat">>(m: TComputationModule): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
-    empty<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, type?: T): NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
-    endWith<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule, value: T, ...values: readonly T[]): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
+    concatWith<TComputationType extends ComputationTypeLike>(m: PickComputationModule<SequentialComputationModule<TComputationType>, "concat">): ConcatWithOperator<TComputationType>;
+    empty<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "genPure">, type?: T): NewPureInstanceOf<TComputationType, T>;
+    endWith<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">, value: T, ...values: readonly T[]): PureComputationOperator<TComputationType, T, T>;
     fromReadonlyArray<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
         readonly count?: number;
         readonly start?: number;
@@ -30,11 +30,11 @@ export interface Signature {
     makeModule<TComputationModule extends ComputationModuleLike, TKey extends keyof NonNullable<TComputationModule> = keyof NonNullable<TComputationModule>>(o: Pick<TComputationModule, TKey>): typeof o & {
         [ComputationModuleLike_computationType]?: ComputationTypeOfModule<TComputationModule>;
     };
-    mergeWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">>(m: TComputationModule): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
-    raise<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
+    mergeWith<TComputationType extends ComputationTypeLike>(m: PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">): MergeWithOperator<TComputationType>;
+    raise<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "genPure">, options?: {
         readonly raise?: Factory<unknown>;
-    }, type?: T): NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
-    startWith<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule, value: T, ...values: readonly T[]): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
+    }, type?: T): NewPureInstanceOf<TComputationType, T>;
+    startWith<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">, value: T, ...values: readonly T[]): PureComputationOperator<TComputationType, T, T>;
 }
 export declare const areAllPure: Signature["areAllPure"];
 export declare const areAllSynchronous: Signature["areAllSynchronous"];
