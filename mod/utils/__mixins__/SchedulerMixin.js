@@ -3,11 +3,13 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { error, isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
+import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, clampPositiveInteger, floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, ContinuationContextLike_yield, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
+import * as Iterator from "../__internal__/Iterator.js";
+import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 import DisposableMixin from "./DisposableMixin.js";
 import QueueMixin from "./QueueMixin.js";
 export const SchedulerContinuationLike_run = Symbol("SchedulerContinuationLike_run");
@@ -34,13 +36,7 @@ const SchedulerMixin =
     const SchedulerMixinLike_startTime = Symbol("SchedulerMixinLike_startTime");
     const SchedulerMixinLike_yieldRequested = Symbol("SchedulerMixinLike_yieldRequested");
     const createQueueContinuation = (() => {
-        class ContinuationYieldError {
-            delay;
-            constructor(delay) {
-                this.delay = delay;
-            }
-        }
-        const QueueContinuation_effect = Symbol("QueueContinuation_effect");
+        const QueueContinuation_delegate = Symbol("QueueContinuation_delegate");
         const QueueContinuation_scheduler = Symbol("QueueContinuation_scheduler");
         const findNearestNonDisposedParent = (continuation) => {
             let parent = continuation[QueueSchedulerContinuationLike_parent];
@@ -89,23 +85,22 @@ const SchedulerMixin =
             this[QueueSchedulerContinuationLike_parent] = none;
             this[QueueContinuation_scheduler] =
                 none;
-            this[QueueContinuation_effect] =
-                none;
         }
-        return mixInstanceFactory(include(DisposableMixin, QueueMixin()), function QueueContinuation(scheduler, effect, dueTime) {
-            init(DisposableMixin, this);
+        return mixInstanceFactory(include(DelegatingDisposableMixin, QueueMixin()), function QueueContinuation(scheduler, delegate, dueTime) {
+            const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
+            init(DelegatingDisposableMixin, this, delegateEnumerator);
             init(QueueMixin(), this, none);
+            this[QueueContinuation_delegate] = delegateEnumerator;
             this[SchedulerContinuationLike_dueTime] = dueTime;
             this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
             this[QueueContinuation_scheduler] = scheduler;
-            this[QueueContinuation_effect] = effect;
             pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
             return this;
         }, props({
             [QueueSchedulerContinuationLike_parent]: none,
             [QueueSchedulerContinuationLike_isReschedulingChildren]: false,
             [QueueContinuation_scheduler]: none,
-            [QueueContinuation_effect]: none,
+            [QueueContinuation_delegate]: none,
             [SchedulerContinuationLike_dueTime]: 0,
             [SchedulerContinuationLike_id]: 0,
         }), proto({
@@ -126,8 +121,6 @@ const SchedulerMixin =
                         scheduler[SchedulerLike_now];
                     scheduler[SchedulerMixinLike_yieldRequested] = false;
                 }
-                // Flag whether the continuation has been rescheduled
-                let rescheduled = false;
                 // Run any inner continuations first.
                 while (this[EnumeratorLike_moveNext]()) {
                     const head = this[EnumeratorLike_current];
@@ -137,28 +130,17 @@ const SchedulerMixin =
                     if (scheduler[SchedulerLike_shouldYield] &&
                         !this[DisposableLike_isDisposed]) {
                         rescheduleContinuation(this);
-                        rescheduled = true;
-                        break;
+                        return;
                     }
                 }
-                let err = none;
-                let yieldError = none;
-                if (!rescheduled && !this[DisposableLike_isDisposed]) {
-                    try {
-                        this[QueueContinuation_effect](this);
+                const effect = this[QueueContinuation_delegate];
+                while (effect[EnumeratorLike_moveNext]()) {
+                    const delay = effect[EnumeratorLike_current] ?? 0;
+                    const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
+                    if (!shouldYield) {
+                        continue;
                     }
-                    catch (e) {
-                        if (e instanceof ContinuationYieldError) {
-                            yieldError = e;
-                        }
-                        else {
-                            err = error(e);
-                        }
-                    }
-                }
-                // Reschedule the continuation if yielded
-                if (isSome(yieldError)) {
-                    const { delay } = yieldError;
+                    // Reschedule the continuation if yielded
                     if (delay > 0) {
                         // Bump the taskID so that the yielded with delay continuation is run
                         // at a lower relative priority to other previously scheduled continuations
@@ -172,24 +154,10 @@ const SchedulerMixin =
                     else {
                         rescheduleContinuation(this);
                     }
-                    rescheduled = true;
-                }
-                if (!rescheduled) {
-                    this[DisposableLike_dispose](err);
+                    break;
                 }
                 scheduler[SchedulerMixinLike_currentContinuation] =
                     oldCurrentContinuation;
-            },
-            [ContinuationContextLike_yield](delay = 0) {
-                const scheduler = this[QueueContinuation_scheduler];
-                if (__DEV__) {
-                    const currentContinuation = scheduler[SchedulerMixinLike_currentContinuation];
-                    raiseIf(currentContinuation !== this, "Attempted to invoke yield outside of a continuation's run context");
-                }
-                const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
-                if (shouldYield) {
-                    throw newInstance(ContinuationYieldError, delay);
-                }
             },
         }));
     })();
@@ -256,7 +224,7 @@ const SchedulerMixin =
                 return Disposable.disposed;
             }
             const dueTime = this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
-            const continuation = pipe(createQueueContinuation(this, effect, dueTime), Disposable.addToContainer(this));
+            const continuation = pipe(createQueueContinuation(this, effect(), dueTime), Disposable.addToContainer(this));
             this[SchedulerMixinLike_schedule](continuation);
             return continuation;
         },

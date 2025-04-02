@@ -13,8 +13,6 @@ import { Optional, bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import {
   CollectionEnumeratorLike_peek,
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_isDisposed,
@@ -137,15 +135,18 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     ](bind(hostSchedulerContinuation, instance), { delay });
   };
 
-  function hostSchedulerContinuation(
+  function* hostSchedulerContinuation(
     this: SchedulerMixinHostLike &
       SchedulerLike &
       TProperties &
       QueueLike<SchedulerContinuationLike> &
       DisposableLike,
-    ctx: ContinuationContextLike,
   ) {
-    while (!this[DisposableLike_isDisposed]) {
+    const isPausedStore = this[PauseableLike_isPaused];
+    while (
+      !this[DisposableLike_isDisposed] &&
+      !isPausedStore[StoreLike_value]
+    ) {
       const nextContinuationToRun = peek(this);
 
       if (isNone(nextContinuationToRun)) {
@@ -167,7 +168,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         this[PauseableScheduler_activeContinuation] = none;
       }
 
-      ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
+      yield clampPositiveInteger(delay);
     }
   }
 

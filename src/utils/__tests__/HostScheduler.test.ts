@@ -3,7 +3,7 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import { ignore, pipe } from "../../functions.js";
+import { pipe } from "../../functions.js";
 import { SchedulerLike_now, SchedulerLike_schedule } from "../../utils.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -15,7 +15,7 @@ testModule(
     const start = scheduler[SchedulerLike_now];
 
     await pipe(
-      scheduler[SchedulerLike_schedule](ignore, { delay: 20 }),
+      scheduler[SchedulerLike_schedule](function* () {}, { delay: 20 }),
       DisposableContainer.toPromise,
     );
 

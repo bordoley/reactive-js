@@ -2,32 +2,41 @@
 
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, call, none, pipe, returns } from "../../functions.js";
-import { ContinuationContextLike_yield, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import { ConsumerMixinLike_complete, ConsumerMixinLike_consumer, ConsumerMixinLike_notify, } from "./ConsumerMixin.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
-    function observerSchedulerContinuation(ctx) {
+    function* observerSchedulerContinuation() {
         // This is the ultimate downstream consumer of events.
         const consumer = this[ConsumerMixinLike_consumer];
-        while (this[FlowControllerEnumeratorLike_isDataAvailable] &&
-            !consumer[SinkLike_isCompleted] &&
-            !this[DisposableLike_isDisposed]) {
-            // Avoid dequeing values if the downstream consumer
-            // is applying backpressure.
-            if (!consumer[FlowControllerLike_isReady]) {
-                break;
-            }
+        let isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
+        let isDisposed = this[DisposableLike_isDisposed];
+        let consumerIsCompleted = consumer[SinkLike_isCompleted];
+        let consumerIsReady = consumer[FlowControllerLike_isReady];
+        while (consumerIsReady &&
+            isDataAvailable &&
+            !consumerIsCompleted &&
+            !isDisposed) {
             this[EnumeratorLike_moveNext]();
             const next = this[EnumeratorLike_current];
             this[ConsumerMixinLike_notify](next);
-            if (this[FlowControllerEnumeratorLike_isDataAvailable]) {
-                ctx[ContinuationContextLike_yield]();
+            const shouldYield = this[SchedulerLike_shouldYield];
+            isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
+            if (shouldYield && isDataAvailable) {
+                yield;
             }
+            // Need to reassign after the yield if the caller rescheduled
+            isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
+            isDisposed = this[DisposableLike_isDisposed];
+            consumerIsCompleted = consumer[SinkLike_isCompleted];
+            consumerIsReady = consumer[FlowControllerLike_isReady];
         }
-        if (this[SinkLike_isCompleted]) {
+        // Only complete when we've exhausted our data. Prevents
+        // completing if the loop was exited due to backpressure.
+        if (!isDataAvailable && this[SinkLike_isCompleted]) {
             this[ConsumerMixinLike_complete]();
         }
     }

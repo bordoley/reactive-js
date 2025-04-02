@@ -95,7 +95,8 @@ testModule("SynchronousObservable", ComputationModuleTests(m), SequentialComputa
         const createOneTwoThree = __constant((_) => pipe([1, 2, 3], Computation.fromReadonlyArray(m)));
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
-        return __await(next);
+        const result = __await(next);
+        return result;
     }, { mode: "combine-latest" }), SynchronousObservable.keep(isSome), SynchronousObservable.forEach(bindMethod(result, Array_push)), SynchronousObservable.toRunnable(), Runnable.last());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("when compute function throws", () => {

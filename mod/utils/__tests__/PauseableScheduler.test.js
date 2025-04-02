@@ -64,14 +64,14 @@ testModule("PauseableScheduler", test("pausing the scheduler from a continuation
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
         const pauseableScheduler = __addDisposableResource(env_1, PauseableScheduler.create(vts), false);
         let result = [];
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](0);
         });
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](1);
             pauseableScheduler[PauseableLike_pause]();
         });
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](2);
         });
         pauseableScheduler[PauseableLike_resume]();
@@ -91,16 +91,16 @@ testModule("PauseableScheduler", test("pausing the scheduler from a continuation
         const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
         const pauseableScheduler = __addDisposableResource(env_2, PauseableScheduler.create(vts), false);
         let result = [];
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](0);
         });
-        const s1 = pauseableScheduler[SchedulerLike_schedule](() => {
+        const s1 = pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](1);
         });
-        const s2 = pauseableScheduler[SchedulerLike_schedule](() => {
+        const s2 = pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](2);
         });
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](3);
         });
         pauseableScheduler[PauseableLike_resume]();
@@ -122,10 +122,10 @@ testModule("PauseableScheduler", test("pausing the scheduler from a continuation
         const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const pauseableScheduler = __addDisposableResource(env_3, PauseableScheduler.create(vts), false);
         let result = [];
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](pauseableScheduler[SchedulerLike_now]);
         }, { delay: 3 });
-        pauseableScheduler[SchedulerLike_schedule](() => {
+        pauseableScheduler[SchedulerLike_schedule](function* () {
             result[Array_push](pauseableScheduler[SchedulerLike_now]);
         }, { delay: 5 });
         pauseableScheduler[PauseableLike_resume]();

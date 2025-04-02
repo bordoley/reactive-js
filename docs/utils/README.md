@@ -15,7 +15,6 @@
 - [AsyncEnumeratorLike](interfaces/AsyncEnumeratorLike.md)
 - [CollectionEnumeratorLike](interfaces/CollectionEnumeratorLike.md)
 - [ConsumerLike](interfaces/ConsumerLike.md)
-- [ContinuationContextLike](interfaces/ContinuationContextLike.md)
 - [DisposableContainerLike](interfaces/DisposableContainerLike.md)
 - [DisposableLike](interfaces/DisposableLike.md)
 - [EnumeratorLike](interfaces/EnumeratorLike.md)
@@ -36,6 +35,7 @@
 
 - [BackPressureConfig](type-aliases/BackPressureConfig.md)
 - [BackpressureStrategy](type-aliases/BackpressureStrategy.md)
+- [SchedulerContinuation](type-aliases/SchedulerContinuation.md)
 
 ## Variables
 
@@ -46,7 +46,6 @@
 - [BackPressureConfig\_strategy](variables/BackPressureConfig_strategy.md)
 - [CollectionEnumeratorLike\_count](variables/CollectionEnumeratorLike_count.md)
 - [CollectionEnumeratorLike\_peek](variables/CollectionEnumeratorLike_peek.md)
-- [ContinuationContextLike\_yield](variables/ContinuationContextLike_yield.md)
 - [DisposableContainerLike\_add](variables/DisposableContainerLike_add.md)
 - [DisposableLike\_dispose](variables/DisposableLike_dispose.md)
 - [DisposableLike\_error](variables/DisposableLike_error.md)

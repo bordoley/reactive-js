@@ -24,16 +24,16 @@ testModule(
 
     let result: number[] = [];
 
-    pauseableScheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](0);
     });
 
-    pauseableScheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](1);
       pauseableScheduler[PauseableLike_pause]();
     });
 
-    pauseableScheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](2);
     });
 
@@ -49,19 +49,19 @@ testModule(
 
     let result: number[] = [];
 
-    pauseableScheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](0);
     });
 
-    const s1 = pauseableScheduler[SchedulerLike_schedule](() => {
+    const s1 = pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](1);
     });
 
-    const s2 = pauseableScheduler[SchedulerLike_schedule](() => {
+    const s2 = pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](2);
     });
 
-    pauseableScheduler[SchedulerLike_schedule](() => {
+    pauseableScheduler[SchedulerLike_schedule](function* () {
       result[Array_push](3);
     });
 
@@ -80,14 +80,14 @@ testModule(
     let result: number[] = [];
 
     pauseableScheduler[SchedulerLike_schedule](
-      () => {
+      function* () {
         result[Array_push](pauseableScheduler[SchedulerLike_now]);
       },
       { delay: 3 },
     );
 
     pauseableScheduler[SchedulerLike_schedule](
-      () => {
+      function* () {
         result[Array_push](pauseableScheduler[SchedulerLike_now]);
       },
       { delay: 5 },

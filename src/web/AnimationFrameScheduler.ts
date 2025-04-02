@@ -6,15 +6,7 @@ import {
   mixInstanceFactory,
   props,
 } from "../__internal__/mixins.js";
-import {
-  Optional,
-  invoke,
-  isNone,
-  none,
-  pipe,
-  pipeLazy,
-  raiseIfNone,
-} from "../functions.js";
+import { Optional, isNone, none, pipe, raiseIfNone } from "../functions.js";
 import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
@@ -142,18 +134,16 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         // The frame time is 16 ms at 60 fps so just ignore the delay
         // if its not more than a frame.
         if (delay > 16) {
-          pipe(
-            DefaultScheduler.get(),
-            invoke(
-              SchedulerLike_schedule,
-              pipeLazy(
-                this,
-                invoke(SchedulerMixinHostLike_schedule, continuation),
-              ),
-              { delay },
-            ),
-            Disposable.addTo(continuation),
+          // eslint-disable-next-line @typescript-eslint/no-this-alias
+          const self = this;
+          const subscription = DefaultScheduler.get()[SchedulerLike_schedule](
+            function* () {
+              self[SchedulerMixinHostLike_schedule](continuation);
+            },
+            { delay },
           );
+
+          pipe(subscription, Disposable.addTo(continuation));
         } else {
           this[AnimationFrameScheduler_rafQueue][QueueLike_enqueue](
             continuation,

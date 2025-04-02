@@ -54,21 +54,21 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 });
 import { Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
-import { ignore, pipe, raise } from "../../functions.js";
-import { ContinuationContextLike_yield, DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_requestYield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { pipe, raise } from "../../functions.js";
+import { DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_requestYield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_1, VirtualTimeScheduler.create(), false);
         const result = [];
-        vts[SchedulerLike_schedule](() => {
+        vts[SchedulerLike_schedule](function* () {
             result[Array_push](0);
         });
-        vts[SchedulerLike_schedule](() => {
+        vts[SchedulerLike_schedule](function* () {
             result[Array_push](1);
         });
-        vts[SchedulerLike_schedule](() => {
+        vts[SchedulerLike_schedule](function* () {
             result[Array_push](2);
         });
         vts[VirtualTimeSchedulerLike_run]();
@@ -88,12 +88,10 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 1,
         }), false);
         const result = [];
-        let i = 0;
-        vts[SchedulerLike_schedule](ctx => {
-            while (i < 10) {
+        vts[SchedulerLike_schedule](function* () {
+            for (let i = 0; i < 10; i++) {
                 result[Array_push](i);
-                i++;
-                ctx[ContinuationContextLike_yield]();
+                yield;
             }
         });
         vts[VirtualTimeSchedulerLike_run]();
@@ -113,20 +111,16 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 1,
         }), false);
         const result = [];
-        let i = 0;
-        vts[SchedulerLike_schedule]((ctx) => {
-            let j = 100;
-            while (i <= 4) {
+        vts[SchedulerLike_schedule](function* () {
+            for (let i = 0; i <= 4; i++) {
                 result[Array_push](i);
-                i++;
-                vts[SchedulerLike_schedule]((ctx) => {
-                    while (j < 102) {
+                vts[SchedulerLike_schedule](function* () {
+                    for (let j = 100; j < 102; j++) {
                         result[Array_push](j);
-                        j++;
-                        ctx[ContinuationContextLike_yield]();
+                        yield;
                     }
                 });
-                ctx[ContinuationContextLike_yield]();
+                yield;
             }
         });
         vts[VirtualTimeSchedulerLike_run]();
@@ -148,13 +142,11 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 1,
         }), false);
         const result = [];
-        vts[SchedulerLike_schedule](() => {
-            let j = 0;
-            vts[SchedulerLike_schedule]((ctx) => {
-                while (j < 4) {
+        vts[SchedulerLike_schedule](function* () {
+            vts[SchedulerLike_schedule](function* () {
+                for (let j = 0; j < 4; j++) {
                     result[Array_push](j);
-                    j++;
-                    ctx[ContinuationContextLike_yield]();
+                    yield;
                 }
             });
         });
@@ -175,20 +167,16 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 1,
         }), false);
         const result = [];
-        let i = 0;
-        vts[SchedulerLike_schedule]((ctx) => {
-            let j = 100;
-            while (i < 4) {
+        vts[SchedulerLike_schedule](function* () {
+            for (let i = 0; i < 4; i++) {
                 result[Array_push](i);
-                i++;
-                vts[SchedulerLike_schedule]((ctx) => {
-                    while (j < 102) {
+                vts[SchedulerLike_schedule](function* () {
+                    for (let j = 100; j < 102; j++) {
                         result[Array_push](j);
-                        j++;
-                        ctx[ContinuationContextLike_yield]();
+                        yield;
                     }
                 });
-                ctx[ContinuationContextLike_yield]();
+                yield;
             }
         });
         vts[VirtualTimeSchedulerLike_run]();
@@ -207,7 +195,7 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
         const vts = __addDisposableResource(env_6, VirtualTimeScheduler.create({
             maxMicroTaskTicks: 1,
         }), false);
-        const disposable = vts[SchedulerLike_schedule](() => {
+        const disposable = vts[SchedulerLike_schedule](function* () {
             raise("throwing");
         });
         vts[VirtualTimeSchedulerLike_run]();
@@ -228,7 +216,7 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 1,
         }), false);
         vts[VirtualTimeSchedulerLike_run]();
-        const disposable = vts[SchedulerLike_schedule](ignore);
+        const disposable = vts[SchedulerLike_schedule](function* () { });
         pipe(disposable[DisposableLike_isDisposed], expectTrue("scheduled continuation should be immediately disposed"));
         pipe(disposable[DisposableLike_error], expectIsNone);
     }
@@ -246,11 +234,11 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 100,
         }), false);
         let runCount = 0;
-        vts[SchedulerLike_schedule]((ctx) => {
+        vts[SchedulerLike_schedule](function* () {
             vts[SchedulerLike_requestYield]();
             if (runCount < 1) {
                 runCount++;
-                ctx[ContinuationContextLike_yield]();
+                yield;
             }
         });
         vts[VirtualTimeSchedulerLike_run]();
@@ -270,10 +258,10 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
             maxMicroTaskTicks: 1,
         }), false);
         let count = 0;
-        vts[SchedulerLike_schedule](() => {
+        vts[SchedulerLike_schedule](function* () {
             count++;
         }, { delay: 1 });
-        vts[SchedulerLike_schedule](() => {
+        vts[SchedulerLike_schedule](function* () {
             count++;
         }, { delay: 1 });
         vts[VirtualTimeSchedulerLike_run]();

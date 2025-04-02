@@ -1,7 +1,7 @@
 /// <reference types="./Observable.genAsync.d.ts" />
 
 import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { bindMethod, error, none, pipe, pipeLazy, } from "../../../functions.js";
+import { error, none, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
 import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
@@ -73,12 +73,18 @@ const genFactory = (factory) => (observer) => {
             // We still have more data to produce, but want to
             // reschedule onto the macro task scheduler to avoid
             // starving the microtask queue.
-            pipe(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer));
+            pipe(observer[SchedulerLike_schedule](function* () {
+                continue_();
+            }), Disposable.addTo(observer));
         }
         isActive = false;
     };
-    observer[FlowControllerLike_addOnReadyListener](pipeLazy(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer)));
-    pipe(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer));
+    observer[FlowControllerLike_addOnReadyListener](pipeLazy(observer[SchedulerLike_schedule](function* () {
+        continue_();
+    }), Disposable.addTo(observer)));
+    pipe(observer[SchedulerLike_schedule](function* () {
+        continue_();
+    }), Disposable.addTo(observer));
 };
 export const Observable_genAsync = (factory => DeferredEventSource.create(genFactory(factory), {
     [ComputationLike_isPure]: false,

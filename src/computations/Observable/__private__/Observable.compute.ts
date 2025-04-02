@@ -306,7 +306,9 @@ class ComputeContext {
             this[ComputeContext_scheduledComputationSubscription] =
               scheduledComputationSubscription[DisposableLike_isDisposed]
                 ? pipe(
-                    observer[SchedulerLike_schedule](runComputation),
+                    observer[SchedulerLike_schedule](function* () {
+                      runComputation();
+                    }),
                     Disposable.addTo(observer),
                   )
                 : scheduledComputationSubscription;
@@ -530,7 +532,9 @@ const Observable_compute: Signature["compute"] = (<T>(
         config,
       );
       pipe(
-        observer[SchedulerLike_schedule](runComputation),
+        observer[SchedulerLike_schedule](function* () {
+          runComputation();
+        }),
         Disposable.addTo(observer),
       );
     },

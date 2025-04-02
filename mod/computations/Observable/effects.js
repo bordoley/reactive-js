@@ -47,7 +47,7 @@ const createDeferredbservableWithSideEffects = (f) => DeferredEventSource.create
 });
 export const __do = /*@__PURE__*/ (() => {
     const deferSideEffect = (create, f, ...args) => create(observer => {
-        const callback = () => {
+        const callback = function* () {
             f(...args);
             observer[EventListenerLike_notify](none);
             observer[SinkLike_complete]();

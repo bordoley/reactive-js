@@ -120,7 +120,8 @@ testModule(
 
             const v = __await(oneTwoThreeDelayed);
             const next = __memo(createOneTwoThree, v);
-            return __await(next);
+            const result = __await(next);
+            return result;
           },
           { mode: "combine-latest" },
         ),

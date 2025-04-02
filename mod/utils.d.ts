@@ -1,6 +1,6 @@
 import { Error } from "./__internal__/constants.js";
 import type { StoreLike } from "./computations.js";
-import { Method1, Optional, SideEffect1 } from "./functions.js";
+import { Factory, Method1, Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
 export interface DisposableContainerLike {
     /**
@@ -129,10 +129,7 @@ export declare const SchedulerLike_now: unique symbol;
 export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_schedule: unique symbol;
 export declare const SchedulerLike_shouldYield: unique symbol;
-export declare const ContinuationContextLike_yield: unique symbol;
-export interface ContinuationContextLike {
-    [ContinuationContextLike_yield](delay?: number): void;
-}
+export type SchedulerContinuation = Factory<Iterator<Optional<number>>>;
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
@@ -168,7 +165,7 @@ export interface SchedulerLike extends DisposableContainerLike {
      * @param continuation - The continuation to run on the scheduler.
      * @param options
      */
-    [SchedulerLike_schedule](continuation: SideEffect1<ContinuationContextLike>, options?: {
+    [SchedulerLike_schedule](continuation: SchedulerContinuation, options?: {
         /**
          * The amount of time in ms to delay execution of the continuation.
          */

@@ -5,11 +5,13 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Method1, SideEffect1, bind, none, pipe } from "../../functions.js";
+import { bind, none, pipe } from "../../functions.js";
 import {
-  ContinuationContextLike,
   DisposableContainerLike,
   DisposableLike,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
+  SchedulerContinuation,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -19,6 +21,7 @@ import {
   SchedulerLike_shouldYield,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as Iterator from "../__internal__/Iterator.js";
 
 type TReturn = Omit<SchedulerLike, keyof DisposableContainerLike>;
 type TPrototype = Omit<
@@ -40,10 +43,7 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
     type TProperties = {
       [DelegatingSchedulerMixin_delegate]: SchedulerLike;
       [DelegatingSchedulerMixin_scheduler]: SchedulerLike;
-      [DelegatingSchedulerMixin_scheduleCallback]: Method1<
-        SideEffect1<ContinuationContextLike>,
-        ContinuationContextLike
-      >;
+      [DelegatingSchedulerMixin_scheduleCallback]: SchedulerContinuation;
       [SchedulerLike_inContinuation]: boolean;
     };
 
@@ -62,13 +62,28 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[DelegatingSchedulerMixin_scheduleCallback] =
-          function ObserverMixinSchedulerCallback(
-            this: SideEffect1<ContinuationContextLike>,
-            ctx: ContinuationContextLike,
+          function* DelegatingSchedulerMixinSchedulerCallback(
+            this: SchedulerContinuation,
           ) {
+            const enumerator = pipe(this(), Iterator.toEnumerator());
             instance[SchedulerLike_inContinuation] = true;
-            this(ctx);
+            while (enumerator[EnumeratorLike_moveNext]()) {
+              const delay = enumerator[EnumeratorLike_current] ?? 0;
+
+              const shouldYield =
+                delay > 0 || instance[SchedulerLike_shouldYield];
+
+              if (!shouldYield) {
+                continue;
+              }
+
+              instance[SchedulerLike_inContinuation] = false;
+              yield delay;
+              instance[SchedulerLike_inContinuation] = true;
+            }
             instance[SchedulerLike_inContinuation] = false;
+
+            Disposable.raiseIfDisposedWithError(enumerator);
           };
 
         return this;
@@ -107,7 +122,7 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
 
         [SchedulerLike_schedule](
           this: TProperties & SchedulerLike & DisposableLike,
-          continuation: SideEffect1<ContinuationContextLike>,
+          continuation: SchedulerContinuation,
           options?: {
             readonly delay?: number;
           },

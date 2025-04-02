@@ -257,7 +257,7 @@ export const __do: Signature["__do"] = /*@__PURE__*/ (() => {
     ...args: unknown[]
   ) =>
     create(observer => {
-      const callback = () => {
+      const callback = function* () {
         f(...args);
         observer[EventListenerLike_notify](none);
         observer[SinkLike_complete]();

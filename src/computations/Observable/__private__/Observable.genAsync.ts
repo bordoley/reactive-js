@@ -5,7 +5,6 @@ import {
 import {
   Factory,
   Optional,
-  bindMethod,
   error,
   none,
   pipe,
@@ -116,8 +115,9 @@ const genFactory =
         // reschedule onto the macro task scheduler to avoid
         // starving the microtask queue.
         pipe(
-          continue_,
-          bindMethod(observer, SchedulerLike_schedule),
+          observer[SchedulerLike_schedule](function* () {
+            continue_();
+          }),
           Disposable.addTo(observer),
         );
       }
@@ -127,15 +127,17 @@ const genFactory =
 
     observer[FlowControllerLike_addOnReadyListener](
       pipeLazy(
-        continue_,
-        bindMethod(observer, SchedulerLike_schedule),
+        observer[SchedulerLike_schedule](function* () {
+          continue_();
+        }),
         Disposable.addTo(observer),
       ),
     );
 
     pipe(
-      continue_,
-      bindMethod(observer, SchedulerLike_schedule),
+      observer[SchedulerLike_schedule](function* () {
+        continue_();
+      }),
       Disposable.addTo(observer),
     );
   };

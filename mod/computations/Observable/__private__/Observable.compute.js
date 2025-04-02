@@ -143,7 +143,9 @@ class ComputeContext {
                     const scheduledComputationSubscription = this[ComputeContext_scheduledComputationSubscription];
                     this[ComputeContext_scheduledComputationSubscription] =
                         scheduledComputationSubscription[DisposableLike_isDisposed]
-                            ? pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer))
+                            ? pipe(observer[SchedulerLike_schedule](function* () {
+                                runComputation();
+                            }), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
             }), EventSource.subscribe({ scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ComputeContext_cleanup]));
@@ -262,7 +264,9 @@ const Observable_compute = ((computation, config, { mode = BatchedComputeMode } 
         }
     };
     const ctx = newInstance(ComputeContext, observer, runComputation, mode, config);
-    pipe(observer[SchedulerLike_schedule](runComputation), Disposable.addTo(observer));
+    pipe(observer[SchedulerLike_schedule](function* () {
+        runComputation();
+    }), Disposable.addTo(observer));
 }, config));
 export const Observable_computeDeferred = (computation, options = {}) => Observable_compute(computation, {
     [ComputationLike_isPure]: false,

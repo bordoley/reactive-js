@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../__intern
 import { error, isSome, none, pipe, returns, } from "../../functions.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_hasCurrent, AsyncEnumeratorLike_moveNext, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, } from "../../utils.js";
+import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_hasCurrent, AsyncEnumeratorLike_moveNext, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, } from "../../utils.js";
 export const toAsyncEnumerator = 
 /*@__PURE__*/ (() => {
     const IteratorAsyncEnumerator_iterator = Symbol("IteratorAsyncEnumerator_iterator");
@@ -85,6 +85,9 @@ export const toEnumerator = /*@__PURE__*/ (() => {
         [EnumeratorLike_hasCurrent]: false,
     }), proto({
         [EnumeratorLike_moveNext]() {
+            if (this[DisposableLike_isDisposed]) {
+                return false;
+            }
             this[EnumeratorLike_current] = none;
             this[EnumeratorLike_hasCurrent] = false;
             const iterator = this[IteratorEnumerator_iterator];

@@ -22,6 +22,7 @@ import {
   AsyncEnumeratorLike_hasCurrent,
   AsyncEnumeratorLike_moveNext,
   DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -179,6 +180,10 @@ export const toEnumerator: Signature["toEnumerator"] = /*@__PURE__*/ (<T>() => {
         [EnumeratorLike_moveNext](
           this: TProperties & EnumeratorLike<T>,
         ): boolean {
+          if (this[DisposableLike_isDisposed]) {
+            return false;
+          }
+
           this[EnumeratorLike_current] = none as T;
           this[EnumeratorLike_hasCurrent] = false;
 

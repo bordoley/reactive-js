@@ -13,11 +13,8 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   Optional,
-  SideEffect1,
-  error,
   isNone,
   isSome,
-  newInstance,
   none,
   pipe,
   raiseIf,
@@ -25,17 +22,16 @@ import {
 import { abs, clampPositiveInteger, floor } from "../../math.js";
 import {
   CollectionEnumeratorLike_count,
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   DisposableContainerLike,
   DisposableLike,
-  DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   QueueLike,
   QueueLike_enqueue,
+  SchedulerContinuation as SchedulerContinuationGenerator,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -46,6 +42,8 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
+import * as Iterator from "../__internal__/Iterator.js";
+import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 import DisposableMixin from "./DisposableMixin.js";
 import QueueMixin from "./QueueMixin.js";
 
@@ -149,14 +147,10 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
 
     const createQueueContinuation: (
       scheduler: SchedulerMixinLike,
-      effect: SideEffect1<ContinuationContextLike>,
+      effect: Iterator<Optional<number>>,
       dueTime: number,
     ) => QueueSchedulerContinuationLike = (() => {
-      class ContinuationYieldError {
-        constructor(readonly delay: number) {}
-      }
-
-      const QueueContinuation_effect = Symbol("QueueContinuation_effect");
+      const QueueContinuation_delegate = Symbol("QueueContinuation_delegate");
 
       const QueueContinuation_scheduler = Symbol("QueueContinuation_scheduler");
 
@@ -164,7 +158,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         [QueueSchedulerContinuationLike_parent]: Optional<QueueSchedulerContinuationLike>;
         [QueueSchedulerContinuationLike_isReschedulingChildren]: boolean;
         [QueueContinuation_scheduler]: SchedulerMixinLike;
-        [QueueContinuation_effect]: SideEffect1<ContinuationContextLike>;
+        [QueueContinuation_delegate]: EnumeratorLike<Optional<number>>;
         [SchedulerContinuationLike_dueTime]: number;
         [SchedulerContinuationLike_id]: number;
       };
@@ -228,27 +222,29 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         this[QueueSchedulerContinuationLike_parent] = none;
         this[QueueContinuation_scheduler] =
           none as unknown as SchedulerMixinLike;
-        this[QueueContinuation_effect] =
-          none as unknown as SideEffect1<ContinuationContextLike>;
       }
 
       return mixInstanceFactory(
-        include(DisposableMixin, QueueMixin<QueueSchedulerContinuationLike>()),
+        include(
+          DelegatingDisposableMixin,
+          QueueMixin<QueueSchedulerContinuationLike>(),
+        ),
         function QueueContinuation(
           this: Pick<
             QueueSchedulerContinuationLike,
             typeof SchedulerContinuationLike_run
           > &
-            ContinuationContextLike &
             Mutable<TProperties>,
           scheduler: SchedulerMixinLike,
-          effect: SideEffect1<ContinuationContextLike>,
+          delegate: Iterator<Optional<number>>,
           dueTime: number,
-        ): QueueSchedulerContinuationLike & ContinuationContextLike {
-          init(DisposableMixin, this);
+        ): QueueSchedulerContinuationLike {
+          const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
 
+          init(DelegatingDisposableMixin, this, delegateEnumerator);
           init(QueueMixin<QueueSchedulerContinuationLike>(), this, none);
 
+          this[QueueContinuation_delegate] = delegateEnumerator;
           this[SchedulerContinuationLike_dueTime] = dueTime;
 
           this[SchedulerContinuationLike_id] = ++scheduler[
@@ -256,7 +252,6 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           ];
 
           this[QueueContinuation_scheduler] = scheduler;
-          this[QueueContinuation_effect] = effect;
 
           pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
 
@@ -266,7 +261,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           [QueueSchedulerContinuationLike_parent]: none,
           [QueueSchedulerContinuationLike_isReschedulingChildren]: false,
           [QueueContinuation_scheduler]: none,
-          [QueueContinuation_effect]: none,
+          [QueueContinuation_delegate]: none,
           [SchedulerContinuationLike_dueTime]: 0,
           [SchedulerContinuationLike_id]: 0,
         }),
@@ -274,7 +269,6 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           [SchedulerContinuationLike_run](
             this: QueueSchedulerContinuationLike &
               QueueLike<QueueSchedulerContinuationLike> &
-              ContinuationContextLike &
               TProperties &
               SchedulerLike,
           ): void {
@@ -300,9 +294,6 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
               scheduler[SchedulerMixinLike_yieldRequested] = false;
             }
 
-            // Flag whether the continuation has been rescheduled
-            let rescheduled = false;
-
             // Run any inner continuations first.
             while (this[EnumeratorLike_moveNext]()) {
               const head = this[EnumeratorLike_current];
@@ -315,29 +306,22 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
                 !this[DisposableLike_isDisposed]
               ) {
                 rescheduleContinuation(this);
-                rescheduled = true;
-                break;
+                return;
               }
             }
 
-            let err: Optional<Error> = none;
-            let yieldError: Optional<ContinuationYieldError> = none;
-            if (!rescheduled && !this[DisposableLike_isDisposed]) {
-              try {
-                this[QueueContinuation_effect](this);
-              } catch (e) {
-                if (e instanceof ContinuationYieldError) {
-                  yieldError = e;
-                } else {
-                  err = error(e);
-                }
+            const effect = this[QueueContinuation_delegate];
+            while (effect[EnumeratorLike_moveNext]()) {
+              const delay = effect[EnumeratorLike_current] ?? 0;
+
+              const shouldYield =
+                delay > 0 || scheduler[SchedulerLike_shouldYield];
+
+              if (!shouldYield) {
+                continue;
               }
-            }
 
-            // Reschedule the continuation if yielded
-            if (isSome(yieldError)) {
-              const { delay } = yieldError;
-
+              // Reschedule the continuation if yielded
               if (delay > 0) {
                 // Bump the taskID so that the yielded with delay continuation is run
                 // at a lower relative priority to other previously scheduled continuations
@@ -355,39 +339,12 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
               } else {
                 rescheduleContinuation(this);
               }
-              rescheduled = true;
-            }
 
-            if (!rescheduled) {
-              this[DisposableLike_dispose](err);
+              break;
             }
 
             scheduler[SchedulerMixinLike_currentContinuation] =
               oldCurrentContinuation;
-          },
-
-          [ContinuationContextLike_yield](
-            this: QueueSchedulerContinuationLike & TProperties,
-            delay = 0,
-          ): void {
-            const scheduler = this[QueueContinuation_scheduler];
-
-            if (__DEV__) {
-              const currentContinuation =
-                scheduler[SchedulerMixinLike_currentContinuation];
-
-              raiseIf(
-                currentContinuation !== this,
-                "Attempted to invoke yield outside of a continuation's run context",
-              );
-            }
-
-            const shouldYield =
-              delay > 0 || scheduler[SchedulerLike_shouldYield];
-
-            if (shouldYield) {
-              throw newInstance(ContinuationYieldError, delay);
-            }
           },
         }),
       );
@@ -497,7 +454,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
 
         [SchedulerLike_schedule](
           this: SchedulerMixinLike & DisposableLike,
-          effect: SideEffect1<ContinuationContextLike>,
+          effect: SchedulerContinuationGenerator,
           options?: { readonly delay?: number },
         ): DisposableLike {
           if (this[DisposableLike_isDisposed]) {
@@ -508,7 +465,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
 
           const continuation = pipe(
-            createQueueContinuation(this, effect, dueTime),
+            createQueueContinuation(this, effect(), dueTime),
             Disposable.addToContainer(this),
           );
 

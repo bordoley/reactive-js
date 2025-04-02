@@ -13,8 +13,6 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   DisposableLike_dispose,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
@@ -47,14 +45,13 @@ const genFactory =
     );
 
     let isActive = false;
-    const continue_ = (ctx: ContinuationContextLike) => {
+    function* continue_() {
       if (isActive) {
         return;
       }
 
       isActive = true;
 
-      let shouldYield = false;
       let isReady = observer[FlowControllerLike_isReady];
       let isCompleted = observer[SinkLike_isCompleted];
 
@@ -62,7 +59,6 @@ const genFactory =
         while (
           isReady &&
           !isCompleted &&
-          !shouldYield &&
           enumerator[EnumeratorLike_moveNext]()
         ) {
           const value = enumerator[EnumeratorLike_current];
@@ -74,13 +70,17 @@ const genFactory =
           // Only request a yield if the observer is ready
           // to accept more notifications, but the scheduler
           // has requested a yield or we want to intentionally delay
-          shouldYield =
+          const shouldYield =
             (delay > 0 || observer[SchedulerLike_shouldYield]) &&
             isReady &&
             !isCompleted;
+
+          if (shouldYield) {
+            yield delay;
+          }
         }
 
-        if (!shouldYield && isReady && !isCompleted) {
+        if (isReady && !isCompleted) {
           observer[SinkLike_complete]();
         }
       } catch (e) {
@@ -89,13 +89,8 @@ const genFactory =
       }
 
       isActive = false;
-      if (shouldYield) {
-        ctx[ContinuationContextLike_yield](delay);
-        // Will throw a yield exception and we'll exit the continuation
-      }
-      // Otherwise return and let the onReadySink reschedule
-      // the continuations
-    };
+      // let the onReadySink reschedule the continuations
+    }
 
     observer[FlowControllerLike_addOnReadyListener](
       pipeLazy(

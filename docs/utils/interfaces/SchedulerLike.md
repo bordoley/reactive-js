@@ -78,7 +78,7 @@ Schedule a continuation on the Scheduler.
 
 ##### continuation
 
-[`SideEffect1`](../../functions/type-aliases/SideEffect1.md)\<[`ContinuationContextLike`](ContinuationContextLike.md)\>
+[`SchedulerContinuation`](../type-aliases/SchedulerContinuation.md)
 
 The continuation to run on the scheduler.
 

@@ -8,10 +8,8 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { ignore, pipe, raise } from "../../functions.js";
+import { pipe, raise } from "../../functions.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   DisposableLike_error,
   DisposableLike_isDisposed,
   SchedulerLike_requestYield,
@@ -27,15 +25,15 @@ testModule(
 
     const result: number[] = [];
 
-    vts[SchedulerLike_schedule](() => {
+    vts[SchedulerLike_schedule](function* () {
       result[Array_push](0);
     });
 
-    vts[SchedulerLike_schedule](() => {
+    vts[SchedulerLike_schedule](function* () {
       result[Array_push](1);
     });
 
-    vts[SchedulerLike_schedule](() => {
+    vts[SchedulerLike_schedule](function* () {
       result[Array_push](2);
     });
 
@@ -50,12 +48,10 @@ testModule(
 
     const result: number[] = [];
 
-    let i = 0;
-    vts[SchedulerLike_schedule](ctx => {
-      while (i < 10) {
+    vts[SchedulerLike_schedule](function* () {
+      for (let i = 0; i < 10; i++) {
         result[Array_push](i);
-        i++;
-        ctx[ContinuationContextLike_yield]();
+        yield;
       }
     });
 
@@ -70,23 +66,18 @@ testModule(
 
     const result: number[] = [];
 
-    let i = 0;
-    vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
-      let j = 100;
-
-      while (i <= 4) {
+    vts[SchedulerLike_schedule](function* () {
+      for (let i = 0; i <= 4; i++) {
         result[Array_push](i);
-        i++;
 
-        vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
-          while (j < 102) {
+        vts[SchedulerLike_schedule](function* () {
+          for (let j = 100; j < 102; j++) {
             result[Array_push](j);
-            j++;
-            ctx[ContinuationContextLike_yield]();
+            yield;
           }
         });
 
-        ctx[ContinuationContextLike_yield]();
+        yield;
       }
     });
 
@@ -106,13 +97,11 @@ testModule(
 
     const result: number[] = [];
 
-    vts[SchedulerLike_schedule](() => {
-      let j = 0;
-      vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
-        while (j < 4) {
+    vts[SchedulerLike_schedule](function* () {
+      vts[SchedulerLike_schedule](function* () {
+        for (let j = 0; j < 4; j++) {
           result[Array_push](j);
-          j++;
-          ctx[ContinuationContextLike_yield]();
+          yield;
         }
       });
     });
@@ -128,23 +117,18 @@ testModule(
 
     const result: number[] = [];
 
-    let i = 0;
-    vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
-      let j = 100;
-
-      while (i < 4) {
+    vts[SchedulerLike_schedule](function* () {
+      for (let i = 0; i < 4; i++) {
         result[Array_push](i);
-        i++;
 
-        vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
-          while (j < 102) {
+        vts[SchedulerLike_schedule](function* () {
+          for (let j = 100; j < 102; j++) {
             result[Array_push](j);
-            j++;
-            ctx[ContinuationContextLike_yield]();
+            yield;
           }
         });
 
-        ctx[ContinuationContextLike_yield]();
+        yield;
       }
     });
 
@@ -160,7 +144,7 @@ testModule(
       maxMicroTaskTicks: 1,
     });
 
-    const disposable = vts[SchedulerLike_schedule](() => {
+    const disposable = vts[SchedulerLike_schedule](function* () {
       raise("throwing");
     });
 
@@ -177,7 +161,7 @@ testModule(
 
     vts[VirtualTimeSchedulerLike_run]();
 
-    const disposable = vts[SchedulerLike_schedule](ignore);
+    const disposable = vts[SchedulerLike_schedule](function* () {});
 
     pipe(
       disposable[DisposableLike_isDisposed],
@@ -192,11 +176,11 @@ testModule(
     });
 
     let runCount = 0;
-    vts[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
+    vts[SchedulerLike_schedule](function* () {
       vts[SchedulerLike_requestYield]();
       if (runCount < 1) {
         runCount++;
-        ctx[ContinuationContextLike_yield]();
+        yield;
       }
     });
 
@@ -212,14 +196,14 @@ testModule(
 
     let count = 0;
     vts[SchedulerLike_schedule](
-      () => {
+      function* () {
         count++;
       },
       { delay: 1 },
     );
 
     vts[SchedulerLike_schedule](
-      () => {
+      function* () {
         count++;
       },
       { delay: 1 },

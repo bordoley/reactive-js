@@ -2,8 +2,9 @@
 
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, none, pipe } from "../../functions.js";
-import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { EnumeratorLike_current, EnumeratorLike_moveNext, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as Iterator from "../__internal__/Iterator.js";
 const DelegatingSchedulerMixin = 
 /*@__PURE__*/ (() => {
     const DelegatingSchedulerMixin_delegate = Symbol("DelegatingSchedulerMixin_delegate");
@@ -16,10 +17,21 @@ const DelegatingSchedulerMixin =
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[DelegatingSchedulerMixin_scheduleCallback] =
-            function ObserverMixinSchedulerCallback(ctx) {
+            function* DelegatingSchedulerMixinSchedulerCallback() {
+                const enumerator = pipe(this(), Iterator.toEnumerator());
                 instance[SchedulerLike_inContinuation] = true;
-                this(ctx);
+                while (enumerator[EnumeratorLike_moveNext]()) {
+                    const delay = enumerator[EnumeratorLike_current] ?? 0;
+                    const shouldYield = delay > 0 || instance[SchedulerLike_shouldYield];
+                    if (!shouldYield) {
+                        continue;
+                    }
+                    instance[SchedulerLike_inContinuation] = false;
+                    yield delay;
+                    instance[SchedulerLike_inContinuation] = true;
+                }
                 instance[SchedulerLike_inContinuation] = false;
+                Disposable.raiseIfDisposedWithError(enumerator);
             };
         return this;
     }, props({

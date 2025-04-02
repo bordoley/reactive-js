@@ -11,8 +11,6 @@ import { Optional, bind, call, none, pipe, returns } from "../../functions.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   DisposableLike,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
@@ -29,6 +27,7 @@ import {
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -68,34 +67,41 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
   TPrototype<TConsumer, T>,
   DisposableLike
 > = /*@__PURE__*/ (<TConsumer extends ConsumerLike, T>() => {
-  function observerSchedulerContinuation(
-    this: TThis,
-    ctx: ContinuationContextLike,
-  ) {
+  function* observerSchedulerContinuation(this: TThis) {
     // This is the ultimate downstream consumer of events.
     const consumer = this[ConsumerMixinLike_consumer];
 
-    while (
-      this[FlowControllerEnumeratorLike_isDataAvailable] &&
-      !consumer[SinkLike_isCompleted] &&
-      !this[DisposableLike_isDisposed]
-    ) {
-      // Avoid dequeing values if the downstream consumer
-      // is applying backpressure.
-      if (!consumer[FlowControllerLike_isReady]) {
-        break;
-      }
+    let isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
+    let isDisposed = this[DisposableLike_isDisposed];
+    let consumerIsCompleted = consumer[SinkLike_isCompleted];
+    let consumerIsReady = consumer[FlowControllerLike_isReady];
 
+    while (
+      consumerIsReady &&
+      isDataAvailable &&
+      !consumerIsCompleted &&
+      !isDisposed
+    ) {
       this[EnumeratorLike_moveNext]();
       const next = this[EnumeratorLike_current] as T;
       this[ConsumerMixinLike_notify](next);
 
-      if (this[FlowControllerEnumeratorLike_isDataAvailable]) {
-        ctx[ContinuationContextLike_yield]();
+      const shouldYield = this[SchedulerLike_shouldYield];
+      isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
+      if (shouldYield && isDataAvailable) {
+        yield;
       }
+
+      // Need to reassign after the yield if the caller rescheduled
+      isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
+      isDisposed = this[DisposableLike_isDisposed];
+      consumerIsCompleted = consumer[SinkLike_isCompleted];
+      consumerIsReady = consumer[FlowControllerLike_isReady];
     }
 
-    if (this[SinkLike_isCompleted]) {
+    // Only complete when we've exhausted our data. Prevents
+    // completing if the loop was exited due to backpressure.
+    if (!isDataAvailable && this[SinkLike_isCompleted]) {
       this[ConsumerMixinLike_complete]();
     }
   }

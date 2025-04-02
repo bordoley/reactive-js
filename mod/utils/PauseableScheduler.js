@@ -6,7 +6,7 @@ import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { CollectionEnumeratorLike_peek, ContinuationContextLike_yield, DisposableContainerLike_add, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
+import { CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -50,8 +50,10 @@ export const create = /*@PURE__*/ (() => {
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](bind(hostSchedulerContinuation, instance), { delay });
     };
-    function hostSchedulerContinuation(ctx) {
-        while (!this[DisposableLike_isDisposed]) {
+    function* hostSchedulerContinuation() {
+        const isPausedStore = this[PauseableLike_isPaused];
+        while (!this[DisposableLike_isDisposed] &&
+            !isPausedStore[StoreLike_value]) {
             const nextContinuationToRun = peek(this);
             if (isNone(nextContinuationToRun)) {
                 break;
@@ -69,7 +71,7 @@ export const create = /*@PURE__*/ (() => {
                 continuation?.[SchedulerContinuationLike_run]();
                 this[PauseableScheduler_activeContinuation] = none;
             }
-            ctx[ContinuationContextLike_yield](clampPositiveInteger(delay));
+            yield clampPositiveInteger(delay);
         }
     }
     return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(host) {
