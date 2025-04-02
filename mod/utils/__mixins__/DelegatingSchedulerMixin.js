@@ -22,10 +22,6 @@ const DelegatingSchedulerMixin =
                 instance[SchedulerLike_inContinuation] = true;
                 while (enumerator[EnumeratorLike_moveNext]()) {
                     const delay = enumerator[EnumeratorLike_current] ?? 0;
-                    const shouldYield = delay > 0 || instance[SchedulerLike_shouldYield];
-                    if (!shouldYield) {
-                        continue;
-                    }
                     instance[SchedulerLike_inContinuation] = false;
                     yield delay;
                     instance[SchedulerLike_inContinuation] = true;
