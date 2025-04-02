@@ -310,9 +310,9 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
               }
             }
 
-            const effect = this[QueueContinuation_delegate];
-            if (effect[EnumeratorLike_moveNext]()) {
-              const delay = effect[EnumeratorLike_current] ?? 0;
+            const delegate = this[QueueContinuation_delegate];
+            if (delegate[EnumeratorLike_moveNext]()) {
+              const delay = delegate[EnumeratorLike_current] ?? 0;
 
               // Reschedule the continuation if yielded
               if (delay > 0) {
