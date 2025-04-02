@@ -1,7 +1,7 @@
 /// <reference types="./Computation.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModuleLike_computationType, } from "../computations.js";
-import { raise as Functions_raise, error, identity, pipe, } from "../functions.js";
+import { raise as Functions_raise, bindMethod, error, identity, pipe, } from "../functions.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
@@ -23,6 +23,7 @@ export const isPure = Computation_isPure;
 export const isSynchronous = Computation_isSynchronous;
 export const makeModule = identity;
 export const mergeWith = (m, ...tail) => (fst) => m.merge(fst, ...tail);
+export const ofValues = (m, ...values) => m.genPure(bindMethod(values, Symbol.iterator));
 export const raise = (m, options, _type) => m.genPure(function* RaiseComputation() {
     const { raise: factory = Functions_raise } = options ?? {};
     pipe(factory(), error, Functions_raise);

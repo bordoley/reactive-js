@@ -25,6 +25,7 @@ export interface Signature {
     };
     mergeWith<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">, snd: PureComputationOf<TComputationType, T>, ...tail: readonly PureComputationOf<TComputationType, T>[]): PureComputationOperator<TComputationType, T, T>;
     mergeWith<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">, snd: ComputationOf<TComputationType, T>, ...tail: readonly ComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+    ofValues<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "genPure">, value: T, ...values: T[]): NewPureInstanceOf<TComputationType, T>;
     raise<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "genPure">, options?: {
         readonly raise?: Factory<unknown>;
     }, type?: T): NewPureInstanceOf<TComputationType, T>;
@@ -41,5 +42,6 @@ export declare const isPure: Signature["isPure"];
 export declare const isSynchronous: Signature["isSynchronous"];
 export declare const makeModule: Signature["makeModule"];
 export declare const mergeWith: Signature["mergeWith"];
+export declare const ofValues: Signature["ofValues"];
 export declare const raise: Signature["raise"];
 export declare const startWith: Signature["startWith"];

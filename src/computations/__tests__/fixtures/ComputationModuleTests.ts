@@ -203,8 +203,7 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
       testAsync(
         "when the input only provides 1 value",
         pipeLazyAsync(
-          [0],
-          Computation.fromReadonlyArray(m),
+          Computation.ofValues(m, 0),
           m.pairwise<number>(),
           m.toProducer(),
           EventSource.toReadonlyArrayAsync<Tuple2<number, number>>(),

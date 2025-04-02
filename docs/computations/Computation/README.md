@@ -23,5 +23,6 @@
 - [isSynchronous](functions/isSynchronous.md)
 - [makeModule](functions/makeModule.md)
 - [mergeWith](functions/mergeWith.md)
+- [ofValues](functions/ofValues.md)
 - [raise](functions/raise.md)
 - [startWith](functions/startWith.md)

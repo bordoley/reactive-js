@@ -116,19 +116,17 @@ export const subscribe = /*@__PURE__*/ (() => {
                 title,
             });
             return { counter, replace: true, uri };
-        }), Observable.fromBroadcaster(), Computation.mergeWith(ObservableModule, pipe([
-            {
-                counter: 0,
-                replace: true,
-                uri: state.uri,
-            },
-        ], Computation.fromReadonlyArray(ObservableModule))), Observable.map((returns))), (oldState, state) => {
+        }), Observable.fromBroadcaster(), Computation.mergeWith(ObservableModule, Computation.ofValues(ObservableModule, {
+            counter: 0,
+            replace: true,
+            uri: state.uri,
+        })), Observable.map((returns))), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe([state], Computation.fromReadonlyArray(ObservableModule), replace
+            return pipe(Computation.ofValues(ObservableModule, state), replace
                 ? Observable.forEach(bindMethod(replaceState, EventListenerLike_notify))
                 : push
                     ? Observable.forEach(bindMethod(pushState, EventListenerLike_notify))

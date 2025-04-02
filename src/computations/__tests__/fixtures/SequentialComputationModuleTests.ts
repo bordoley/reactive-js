@@ -196,7 +196,7 @@ const SequentialComputationModuleTests = <
         "retrys with the default predicate",
         pipeLazyAsync(
           m.concat<number>(
-            Computation.fromReadonlyArray(m)([1, 2, 3]),
+            Computation.ofValues(m, 1, 2, 3),
             Computation.raise(m),
           ),
           m.retry<number>(),
@@ -223,7 +223,7 @@ const SequentialComputationModuleTests = <
         pipeLazyAsync(
           pipeLazyAsync(
             m.concat<number>(
-              Computation.fromReadonlyArray(m)([1, 2, 3]),
+              Computation.ofValues(m, 1, 2, 3),
               Computation.raise(m),
             ),
             m.retry<number>((count, _) => count < 2),

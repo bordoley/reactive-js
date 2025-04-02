@@ -37,7 +37,7 @@ const ComputationModuleTests = (m) => describe("ComputationModule", describe("di
     tuple(6, 7),
     tuple(7, 8),
     tuple(8, 9),
-], { valuesEquality: arrayEquality() }))), testAsync("when the input only provides 1 value", pipeLazyAsync([0], Computation.fromReadonlyArray(m), m.pairwise(), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([], {
+], { valuesEquality: arrayEquality() }))), testAsync("when the input only provides 1 value", pipeLazyAsync(Computation.ofValues(m, 0), m.pairwise(), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([], {
     valuesEquality: arrayEquality(),
 })))), describe("scan", testAsync("sums all the values in the array emitting intermediate values.", pipeLazyAsync([1, 1, 1], Computation.fromReadonlyArray(m), m.scan((a, b) => a + b, returns(0)), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]))), testAsync("throws when the scan function throws", async () => {
     const err = new Error();

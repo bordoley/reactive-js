@@ -21,6 +21,7 @@ import {
   Factory,
   raise as Functions_raise,
   Optional,
+  bindMethod,
   error,
   identity,
   pipe,
@@ -147,6 +148,12 @@ export interface Signature {
     ...tail: readonly ComputationOf<TComputationType, T>[]
   ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
+  ofValues<TComputationType extends ComputationTypeLike, T>(
+    m: PickComputationModule<ComputationModule<TComputationType>, "genPure">,
+    value: T,
+    ...values: T[]
+  ): NewPureInstanceOf<TComputationType, T>;
+
   raise<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<ComputationModule<TComputationType>, "genPure">,
     options?: {
@@ -191,6 +198,14 @@ export const mergeWith: Signature["mergeWith"] =
   ) =>
   (fst: ComputationOf<TComputationType, T>) =>
     m.merge(fst, ...tail);
+
+export const ofValues: Signature["ofValues"] = <
+  TComputationType extends ComputationTypeLike,
+  T,
+>(
+  m: PickComputationModule<ComputationModule<TComputationType>, "genPure">,
+  ...values: T[]
+) => m.genPure(bindMethod(values, Symbol.iterator));
 
 export const raise: Signature["raise"] = (
   m,

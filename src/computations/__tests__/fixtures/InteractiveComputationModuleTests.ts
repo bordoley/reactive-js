@@ -44,9 +44,9 @@ const InteractiveComputationModuleTests = <
         "different length iterables",
         pipeLazyAsync(
           m.zip<number, number, number>(
-            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3, 4]),
-            Computation.fromReadonlyArray(m)<number>([0, 1, 2]),
-            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3]),
+            Computation.ofValues(m, 0, 1, 2, 3, 4),
+            Computation.ofValues(m, 0, 1, 2),
+            Computation.ofValues(m, 0, 1, 2, 3),
           ),
           m.toProducer(),
           EventSource.toReadonlyArrayAsync<Tuple3<number, number, number>>(),
@@ -59,9 +59,9 @@ const InteractiveComputationModuleTests = <
         "with empty iterable",
         pipeLazyAsync(
           m.zip<number, number, number>(
-            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3, 4]),
-            Computation.fromReadonlyArray(m)<number>([]),
-            Computation.fromReadonlyArray(m)<number>([0, 1, 2, 3]),
+            Computation.ofValues(m, 0, 1, 2, 3, 4),
+            Computation.empty(m),
+            Computation.ofValues(m, 0, 1, 2, 3),
           ),
           m.toProducer(),
           EventSource.toReadonlyArrayAsync<Tuple3<number, number, number>>(),

@@ -309,16 +309,11 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
             Observable.fromBroadcaster(),
             Computation.mergeWith(
               ObservableModule,
-              pipe(
-                [
-                  {
-                    counter: 0,
-                    replace: true,
-                    uri: state.uri,
-                  },
-                ],
-                Computation.fromReadonlyArray(ObservableModule),
-              ),
+              Computation.ofValues(ObservableModule, {
+                counter: 0,
+                replace: true,
+                uri: state.uri,
+              }),
             ),
             Observable.map(returns<TState>),
           ),
@@ -332,8 +327,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           replace = replace || (titleChanged && !locationChanged);
 
           return pipe(
-            [state],
-            Computation.fromReadonlyArray(ObservableModule),
+            Computation.ofValues(ObservableModule, state),
             replace
               ? Observable.forEach(
                   bindMethod(replaceState, EventListenerLike_notify),
