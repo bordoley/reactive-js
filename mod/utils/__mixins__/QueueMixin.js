@@ -12,8 +12,6 @@ const QueueMixin =
     const QueueMixin_tail = Symbol("QueueMixin_tail");
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
-    const QueueMixin_backpressureStrategy = Symbol("QueueMixin_backpressureStrategy");
-    const QueueMixin_backpressureCapacity = Symbol("QueueMixin_backpressureCapacity");
     const computeIndex = (values, count, head, index) => {
         const valuesLength = values[Array_length];
         const headOffsetIndex = index + head;
@@ -41,13 +39,13 @@ const QueueMixin =
     return returns(mix(function QueueMixin(config) {
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[QueueMixin_backpressureStrategy] =
+        this[BackPressureConfig_strategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        this[QueueMixin_backpressureCapacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
+        this[BackPressureConfig_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
         return this;
     }, props({
-        [QueueMixin_backpressureStrategy]: OverflowBackpressureStrategy,
-        [QueueMixin_backpressureCapacity]: MAX_SAFE_INTEGER,
+        [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
+        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
         [CollectionEnumeratorLike_count]: 0,
@@ -66,14 +64,6 @@ const QueueMixin =
 
           return head === tail ? none : values[index];
         },*/
-        get [BackPressureConfig_capacity]() {
-            unsafeCast(this);
-            return this[QueueMixin_backpressureCapacity];
-        },
-        get [BackPressureConfig_strategy]() {
-            unsafeCast(this);
-            return this[QueueMixin_backpressureStrategy];
-        },
         get [CollectionEnumeratorLike_peek]() {
             unsafeCast(this);
             const head = this[QueueMixin_head];
@@ -207,8 +197,8 @@ const QueueMixin =
         },
         [QueueLike_enqueue](item) {
             const isDisposed = this[DisposableLike_isDisposed];
-            const backpressureStrategy = this[QueueMixin_backpressureStrategy];
-            const capacity = this[QueueMixin_backpressureCapacity];
+            const backpressureStrategy = this[BackPressureConfig_strategy];
+            const capacity = this[BackPressureConfig_capacity];
             const applyBackpressure = this[CollectionEnumeratorLike_count] >= capacity;
             if ((backpressureStrategy === DropLatestBackpressureStrategy &&
                 applyBackpressure) ||

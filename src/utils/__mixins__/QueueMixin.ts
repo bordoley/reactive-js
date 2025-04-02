@@ -47,6 +47,8 @@ type TPrototype<T> = Omit<
   | typeof CollectionEnumeratorLike_count
   | typeof EnumeratorLike_current
   | typeof EnumeratorLike_hasCurrent
+  | typeof BackPressureConfig_strategy
+  | typeof BackPressureConfig_capacity
 >;
 
 type TConfig<T> = Optional<{
@@ -62,16 +64,10 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
     const QueueMixin_tail = Symbol("QueueMixin_tail");
     const QueueMixin_values = Symbol("QueueMixin_values");
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
-    const QueueMixin_backpressureStrategy = Symbol(
-      "QueueMixin_backpressureStrategy",
-    );
-    const QueueMixin_backpressureCapacity = Symbol(
-      "QueueMixin_backpressureCapacity",
-    );
 
     type TProperties = {
-      [QueueMixin_backpressureStrategy]: BackpressureStrategy;
-      [QueueMixin_backpressureCapacity]: number;
+      [BackPressureConfig_strategy]: BackpressureStrategy;
+      [BackPressureConfig_capacity]: number;
       [EnumeratorLike_current]: T;
       [EnumeratorLike_hasCurrent]: boolean;
       [CollectionEnumeratorLike_count]: number;
@@ -132,17 +128,17 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
           this[QueueMixin_comparator] = config?.comparator;
           this[QueueMixin_values] = none;
 
-          this[QueueMixin_backpressureStrategy] =
+          this[BackPressureConfig_strategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-          this[QueueMixin_backpressureCapacity] = clampPositiveInteger(
+          this[BackPressureConfig_capacity] = clampPositiveInteger(
             config?.capacity ?? MAX_SAFE_INTEGER,
           );
 
           return this;
         },
         props<TProperties>({
-          [QueueMixin_backpressureStrategy]: OverflowBackpressureStrategy,
-          [QueueMixin_backpressureCapacity]: MAX_SAFE_INTEGER,
+          [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
+          [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
           [EnumeratorLike_current]: none,
           [EnumeratorLike_hasCurrent]: false,
           [CollectionEnumeratorLike_count]: 0,
@@ -162,16 +158,6 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
             return head === tail ? none : values[index];
           },*/
-
-          get [BackPressureConfig_capacity]() {
-            unsafeCast<TProperties>(this);
-            return this[QueueMixin_backpressureCapacity];
-          },
-
-          get [BackPressureConfig_strategy]() {
-            unsafeCast<TProperties>(this);
-            return this[QueueMixin_backpressureStrategy];
-          },
 
           get [CollectionEnumeratorLike_peek](): Optional<T> {
             unsafeCast<TProperties>(this);
@@ -348,8 +334,8 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
           [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
             const isDisposed = this[DisposableLike_isDisposed];
-            const backpressureStrategy = this[QueueMixin_backpressureStrategy];
-            const capacity = this[QueueMixin_backpressureCapacity];
+            const backpressureStrategy = this[BackPressureConfig_strategy];
+            const capacity = this[BackPressureConfig_capacity];
             const applyBackpressure =
               this[CollectionEnumeratorLike_count] >= capacity;
 
