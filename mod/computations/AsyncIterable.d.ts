@@ -1,19 +1,21 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, DeferredComputationModule, InteractiveComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 export interface AsyncIterableComputation extends ComputationTypeLike {
     readonly [ComputationTypeLike_baseOfT]?: AsyncIterableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = AsyncIterableComputation;
-export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
+export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, DeferredComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
     fromAsyncFactory<T>(): Function1<(options?: {
         signal?: AbortSignal;
     }) => Promise<T>, AsyncIterableWithSideEffectsLike<T>>;
     of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
 }
 export type Signature = AsyncIterableModule;
+export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
+export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
@@ -31,6 +33,7 @@ export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
+export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toObservable: Signature["toObservable"];

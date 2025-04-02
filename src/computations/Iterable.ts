@@ -1,8 +1,10 @@
 import {
+  Array_length,
   Array_map,
   Iterator_done,
   Iterator_next,
   Iterator_value,
+  MAX_SAFE_INTEGER,
 } from "../__internal__/constants.js";
 import {
   ComputationLike_isDeferred,
@@ -12,13 +14,13 @@ import {
   ComputationTypeLike,
   ComputationTypeLike_T,
   ComputationTypeLike_baseOfT,
+  DeferredComputationModule,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
   PureIterableLike,
   RunnableLike,
   RunnableLike_eval,
-  SequentialComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import {
@@ -46,12 +48,17 @@ import {
   strictEquality,
   tuple,
 } from "../functions.js";
-import { clampPositiveInteger } from "../math.js";
+import { clampPositiveInteger, clampPositiveNonZeroInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as Queue from "../utils/Queue.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
+  DropOldestBackpressureStrategy,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  QueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -79,7 +86,7 @@ export type Computation = IterableComputation;
 
 export interface IterableModule
   extends ComputationModule<IterableComputation>,
-    SequentialComputationModule<IterableComputation>,
+    DeferredComputationModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
     InteractiveComputationModule<
       IterableComputation,
@@ -94,6 +101,45 @@ export interface IterableModule
 }
 
 export type Signature = IterableModule;
+
+class BufferIterable<T> implements IterableLike<ReadonlyArray<T>> {
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
+
+  constructor(
+    private readonly s: IterableLike<T>,
+    private readonly c: number,
+  ) {
+    this[ComputationLike_isPure] = ComputationM.isPure(s);
+  }
+
+  *[Symbol.iterator]() {
+    const { s: src, c: count } = this;
+    let buffer: T[] = [];
+    for (const v of src) {
+      buffer.push(v);
+
+      if (buffer.length === count) {
+        const result = buffer;
+        buffer = [];
+        yield result;
+      }
+    }
+
+    if (buffer.length > 0) {
+      yield buffer;
+    }
+  }
+}
+
+export const buffer: Signature["buffer"] = (<T>(options?: { count?: number }) =>
+  (iter: IterableLike<T>) =>
+    newInstance(
+      BufferIterable<T>,
+      iter,
+      clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER),
+    )) as Signature["buffer"];
 
 class CatchErrorIterable<T> {
   public readonly [ComputationLike_isPure]: Optional<boolean>;
@@ -180,8 +226,68 @@ export const concat: Signature["concat"] = (<T>(
   );
 }) as Signature["concat"];
 
+class DecodeWithCharsetIterable implements IterableLike<string> {
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
+
+  constructor(
+    private readonly s: IterableLike<ArrayBuffer>,
+    private readonly o: Optional<{
+      charset?: string;
+      fatal?: boolean;
+      ignoreBOM?: boolean;
+    }>,
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  *[Symbol.iterator]() {
+    const { s: src, o: options } = this;
+    const textDecoder = newInstance(
+      TextDecoder,
+      options?.charset ?? "utf-8",
+      options,
+    );
+
+    for (const next of src) {
+      const data = textDecoder.decode(next, {
+        stream: true,
+      });
+
+      const shouldEmit = data[Array_length] > 0;
+
+      if (shouldEmit) {
+        yield data;
+      }
+    }
+
+    const data = textDecoder.decode(newInstance(Uint8Array, []), {
+      stream: false,
+    });
+
+    const shouldEmit = data[Array_length] > 0;
+
+    if (shouldEmit) {
+      yield data;
+    }
+  }
+}
+
+export const decodeWithCharset: Signature["decodeWithCharset"] = ((options?: {
+    readonly charset?: string;
+    readonly fatal?: boolean;
+    readonly ignoreBOM?: boolean;
+  }) =>
+  (iter: IterableLike<ArrayBuffer>) =>
+    newInstance(
+      DecodeWithCharsetIterable,
+      iter,
+      options,
+    )) as Signature["decodeWithCharset"];
+
 class DistinctUntilChangedIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -389,7 +495,7 @@ export const pairwise: Signature["pairwise"] = (<T>() =>
     newInstance(PairwiseIterable<T>, iterable)) as Signature["pairwise"];
 
 class RepeatIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -431,7 +537,7 @@ export const repeat: Signature["repeat"] = (<T>(
 }) as Signature["repeat"];
 
 class RetryIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -473,7 +579,7 @@ export const retry: Signature["retry"] = (<T>(
     )) as Signature["retry"];
 
 class ScanIterable<T, TAcc> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -509,7 +615,7 @@ export const scan: Signature["scan"] = (<T, TAcc>(
     )) as Signature["scan"];
 
 class SkipFirstIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -544,7 +650,7 @@ export const skipFirst: Signature["skipFirst"] = (<T>(options?: {
     )) as Signature["skipFirst"];
 
 class TakeFirstIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -580,8 +686,48 @@ export const takeFirst: Signature["takeFirst"] = (<T>(options?: {
       clampPositiveInteger(options?.count ?? 1),
     )) as Signature["takeFirst"];
 
+class TakeLastIterable<T> {
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: true = true as const;
+
+  constructor(
+    private s: IterableLike<T>,
+    private c: number,
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  *[Symbol.iterator]() {
+    const { s: src, c: capacity } = this;
+
+    const queue = Queue.create({
+      backpressureStrategy: DropOldestBackpressureStrategy,
+      capacity,
+    });
+
+    for (const v of src) {
+      queue[QueueLike_enqueue](v);
+    }
+
+    while (queue[EnumeratorLike_moveNext]()) {
+      yield queue[EnumeratorLike_current];
+    }
+  }
+}
+
+export const takeLast: Signature["takeLast"] = (<T>(options?: {
+    readonly count?: number;
+  }) =>
+  (iterable: IterableLike<T>) =>
+    newInstance(
+      TakeLastIterable,
+      iterable,
+      clampPositiveInteger(options?.count ?? 1),
+    )) as Signature["takeLast"];
+
 class TakeWhileIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -626,7 +772,7 @@ export const takeWhile: Signature["takeWhile"] = (<T>(
     )) as Signature["takeWhile"];
 
 class ThrowIfEmptyIterable<T> {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 
@@ -763,7 +909,7 @@ export const withEffect: Signature["withEffect"] = (<T>(
     )) as Signature["withEffect"];
 
 class ZipIterable {
-  public readonly [ComputationLike_isPure]?: boolean;
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: true = true as const;
 

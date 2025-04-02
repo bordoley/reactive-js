@@ -1,8 +1,10 @@
 import {
+  Array_length,
   Array_map,
   Iterator_done,
   Iterator_next,
   Iterator_value,
+  MAX_SAFE_INTEGER,
 } from "../__internal__/constants.js";
 import {
   AsyncIterableLike,
@@ -15,9 +17,9 @@ import {
   ComputationTypeLike_T,
   ComputationTypeLike_baseOfT,
   ConcurrentDeferredComputationModule,
+  DeferredComputationModule,
   InteractiveComputationModule,
   PureAsyncIterableLike,
-  SequentialComputationModule,
 } from "../computations.js";
 import {
   Equality,
@@ -44,14 +46,17 @@ import {
   strictEquality,
   tuple,
 } from "../functions.js";
-import { clampPositiveInteger } from "../math.js";
+import { clampPositiveInteger, clampPositiveNonZeroInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as Queue from "../utils/Queue.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
+  DropOldestBackpressureStrategy,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
+  QueueLike_enqueue,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
@@ -72,7 +77,7 @@ export type Computation = AsyncIterableComputation;
 
 export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
-    SequentialComputationModule<AsyncIterableComputation>,
+    DeferredComputationModule<AsyncIterableComputation>,
     InteractiveComputationModule<AsyncIterableComputation>,
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
   fromAsyncFactory<T>(): Function1<
@@ -84,6 +89,45 @@ export interface AsyncIterableModule
 }
 
 export type Signature = AsyncIterableModule;
+
+class BufferAsyncIterable<T> implements AsyncIterableLike<ReadonlyArray<T>> {
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+
+  constructor(
+    private readonly s: AsyncIterableLike<T>,
+    private readonly c: number,
+  ) {
+    this[ComputationLike_isPure] = ComputationM.isPure(s);
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const { s: src, c: count } = this;
+    let buffer: T[] = [];
+    for await (const v of src) {
+      buffer.push(v);
+
+      if (buffer.length === count) {
+        const result = buffer;
+        buffer = [];
+        yield result;
+      }
+    }
+
+    if (buffer.length > 0) {
+      yield buffer;
+    }
+  }
+}
+
+export const buffer: Signature["buffer"] = (<T>(options?: { count?: number }) =>
+  (iter: AsyncIterableLike<T>) =>
+    newInstance(
+      BufferAsyncIterable<T>,
+      iter,
+      clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER),
+    )) as Signature["buffer"];
 
 class CatchErrorAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]: Optional<boolean>;
@@ -182,6 +226,66 @@ export const concat: Signature["concat"] = (<T>(
     ConcatAsyncIterable,
     iterables,
   )) as unknown as Signature["concat"];
+
+class DecodeWithCharsetAsyncIterable implements AsyncIterableLike<string> {
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+
+  constructor(
+    private readonly s: AsyncIterableLike<ArrayBuffer>,
+    private readonly o: Optional<{
+      charset?: string;
+      fatal?: boolean;
+      ignoreBOM?: boolean;
+    }>,
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const { s: src, o: options } = this;
+    const textDecoder = newInstance(
+      TextDecoder,
+      options?.charset ?? "utf-8",
+      options,
+    );
+
+    for await (const next of src) {
+      const data = textDecoder.decode(next, {
+        stream: true,
+      });
+
+      const shouldEmit = data[Array_length] > 0;
+
+      if (shouldEmit) {
+        yield data;
+      }
+    }
+
+    const data = textDecoder.decode(newInstance(Uint8Array, []), {
+      stream: false,
+    });
+
+    const shouldEmit = data[Array_length] > 0;
+
+    if (shouldEmit) {
+      yield data;
+    }
+  }
+}
+
+export const decodeWithCharset: Signature["decodeWithCharset"] = ((options?: {
+    readonly charset?: string;
+    readonly fatal?: boolean;
+    readonly ignoreBOM?: boolean;
+  }) =>
+  (iter: AsyncIterableLike<ArrayBuffer>) =>
+    newInstance(
+      DecodeWithCharsetAsyncIterable,
+      iter,
+      options,
+    )) as Signature["decodeWithCharset"];
 
 class DistinctUntilChangedAsyncIterable<T> {
   public readonly [ComputationLike_isSynchronous]: false = false as const;
@@ -697,6 +801,46 @@ export const takeFirst: Signature["takeFirst"] = (<T>(options?: {
       iterable,
       clampPositiveInteger(options?.count ?? 1),
     )) as Signature["takeFirst"];
+
+class TakeLasAsyncIterable<T> implements AsyncIterableLike<T> {
+  public readonly [ComputationLike_isPure]: Optional<boolean>;
+  public readonly [ComputationLike_isDeferred]: true = true as const;
+  public readonly [ComputationLike_isSynchronous]: false = false as const;
+
+  constructor(
+    private s: AsyncIterableLike<T>,
+    private c: number,
+  ) {
+    this[ComputationLike_isPure] = s[ComputationLike_isPure];
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const { s: src, c: capacity } = this;
+
+    const queue = Queue.create<T>({
+      backpressureStrategy: DropOldestBackpressureStrategy,
+      capacity,
+    });
+
+    for await (const v of src) {
+      queue[QueueLike_enqueue](v);
+    }
+
+    while (queue[EnumeratorLike_moveNext]()) {
+      yield queue[EnumeratorLike_current];
+    }
+  }
+}
+
+export const takeLast: Signature["takeLast"] = (<T>(options?: {
+    readonly count?: number;
+  }) =>
+  (iterable: AsyncIterableLike<T>) =>
+    newInstance(
+      TakeLasAsyncIterable,
+      iterable,
+      clampPositiveInteger(options?.count ?? 1),
+    )) as Signature["takeLast"];
 
 class TakeWhileAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]: Optional<boolean>;

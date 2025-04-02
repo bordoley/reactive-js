@@ -3,12 +3,11 @@ import {
   ComputationTypeLike,
   ComputationTypeLike_T,
   ComputationTypeLike_baseOfT,
+  DeferredComputationModule,
   DeferredReactiveComputationModule,
   PureComputationOperator,
   PureSynchronousObservableLike,
   ReactiveComputationModule,
-  SequentialComputationModule,
-  SequentialReactiveComputationModule,
   SynchronousComputationModule,
   SynchronousObservableLike,
   SynchronousObservableWithSideEffectsLike,
@@ -91,7 +90,7 @@ export interface SynchronousObservableModule
       }
     >,
     ReactiveComputationModule<SynchronousObservableComputation>,
-    SequentialComputationModule<
+    DeferredComputationModule<
       SynchronousObservableComputation,
       {
         gen: {
@@ -100,7 +99,6 @@ export interface SynchronousObservableModule
         };
       }
     >,
-    SequentialReactiveComputationModule<SynchronousObservableComputation>,
     SynchronousComputationModule<
       SynchronousObservableComputation,
       {

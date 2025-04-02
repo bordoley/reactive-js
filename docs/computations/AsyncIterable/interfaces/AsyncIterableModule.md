@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
 
 ## Properties
 
@@ -21,6 +21,32 @@
 [`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/ConcurrentDeferredComputationModule.md#computationmodulelike_computationtype)
 
 ## Methods
+
+### buffer()
+
+> **buffer**\<`T`\>(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, readonly `T`[]\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`buffer`](../../interfaces/DeferredComputationModule.md#buffer)
+
+***
 
 ### catchError()
 
@@ -44,7 +70,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 #### Call Signature
 
@@ -72,7 +98,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 #### Call Signature
 
@@ -100,7 +126,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 ***
 
@@ -126,7 +152,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 #### Call Signature
 
@@ -148,7 +174,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 ***
 
@@ -168,7 +194,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 #### Call Signature
 
@@ -192,7 +218,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 #### Call Signature
 
@@ -216,7 +242,37 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
+
+***
+
+### decodeWithCharset()
+
+> **decodeWithCharset**(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+##### options?
+
+###### charset?
+
+`string`
+
+###### fatal?
+
+`boolean`
+
+###### ignoreBOM?
+
+`boolean`
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `ArrayBuffer`, `string`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`decodeWithCharset`](../../interfaces/DeferredComputationModule.md#decodewithcharset)
 
 ***
 
@@ -280,7 +336,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`forEach`](../../interfaces/SequentialComputationModule.md#foreach)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`forEach`](../../interfaces/DeferredComputationModule.md#foreach)
 
 ***
 
@@ -322,7 +378,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`gen`](../../interfaces/SequentialComputationModule.md#gen)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`gen`](../../interfaces/DeferredComputationModule.md#gen)
 
 ***
 
@@ -506,7 +562,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`repeat`](../../interfaces/SequentialComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -528,7 +584,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`repeat`](../../interfaces/SequentialComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -544,7 +600,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`repeat`](../../interfaces/SequentialComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 ***
 
@@ -568,7 +624,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`retry`](../../interfaces/SequentialComputationModule.md#retry)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`retry`](../../interfaces/DeferredComputationModule.md#retry)
 
 ***
 
@@ -654,6 +710,32 @@
 
 ***
 
+### takeLast()
+
+> **takeLast**\<`T`\>(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+###### count?
+
+`number`
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeLast`](../../interfaces/DeferredComputationModule.md#takelast)
+
+***
+
 ### takeWhile()
 
 > **takeWhile**\<`T`\>(`predicate`, `options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`, `T`\>
@@ -708,7 +790,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`throwIfEmpty`](../../interfaces/SequentialComputationModule.md#throwifempty)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throwIfEmpty`](../../interfaces/DeferredComputationModule.md#throwifempty)
 
 ***
 
@@ -808,7 +890,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`withEffect`](../../interfaces/SequentialComputationModule.md#witheffect)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`withEffect`](../../interfaces/DeferredComputationModule.md#witheffect)
 
 ***
 

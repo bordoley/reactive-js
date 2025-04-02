@@ -1,15 +1,44 @@
 /// <reference types="./AsyncIterable.d.ts" />
 
-import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
+import { Array_length, Array_map, Iterator_done, Iterator_next, Iterator_value, MAX_SAFE_INTEGER, } from "../__internal__/constants.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationTypeLike_baseOfT, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pick, pipe, raiseError, returns, strictEquality, tuple, } from "../functions.js";
-import { clampPositiveInteger } from "../math.js";
+import { clampPositiveInteger, clampPositiveNonZeroInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
+import * as Queue from "../utils/Queue.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, } from "../utils.js";
+import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
+class BufferAsyncIterable {
+    s;
+    c;
+    [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = false;
+    constructor(s, c) {
+        this.s = s;
+        this.c = c;
+        this[ComputationLike_isPure] = ComputationM.isPure(s);
+    }
+    async *[Symbol.asyncIterator]() {
+        const { s: src, c: count } = this;
+        let buffer = [];
+        for await (const v of src) {
+            buffer.push(v);
+            if (buffer.length === count) {
+                const result = buffer;
+                buffer = [];
+                yield result;
+            }
+        }
+        if (buffer.length > 0) {
+            yield buffer;
+        }
+    }
+}
+export const buffer = ((options) => (iter) => newInstance((BufferAsyncIterable), iter, clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER)));
 class CatchErrorAsyncIterable {
     s;
     onError;
@@ -71,6 +100,39 @@ class ConcatAsyncIterable {
     }
 }
 export const concat = ((...iterables) => newInstance(ConcatAsyncIterable, iterables));
+class DecodeWithCharsetAsyncIterable {
+    s;
+    o;
+    [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = false;
+    constructor(s, o) {
+        this.s = s;
+        this.o = o;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    async *[Symbol.asyncIterator]() {
+        const { s: src, o: options } = this;
+        const textDecoder = newInstance(TextDecoder, options?.charset ?? "utf-8", options);
+        for await (const next of src) {
+            const data = textDecoder.decode(next, {
+                stream: true,
+            });
+            const shouldEmit = data[Array_length] > 0;
+            if (shouldEmit) {
+                yield data;
+            }
+        }
+        const data = textDecoder.decode(newInstance(Uint8Array, []), {
+            stream: false,
+        });
+        const shouldEmit = data[Array_length] > 0;
+        if (shouldEmit) {
+            yield data;
+        }
+    }
+}
+export const decodeWithCharset = ((options) => (iter) => newInstance(DecodeWithCharsetAsyncIterable, iter, options));
 class DistinctUntilChangedAsyncIterable {
     s;
     eq;
@@ -459,6 +521,32 @@ class TakeFirstAsyncIterable {
     }
 }
 export const takeFirst = ((options) => (iterable) => newInstance(TakeFirstAsyncIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
+class TakeLasAsyncIterable {
+    s;
+    c;
+    [ComputationLike_isPure];
+    [ComputationLike_isDeferred] = true;
+    [ComputationLike_isSynchronous] = false;
+    constructor(s, c) {
+        this.s = s;
+        this.c = c;
+        this[ComputationLike_isPure] = s[ComputationLike_isPure];
+    }
+    async *[Symbol.asyncIterator]() {
+        const { s: src, c: capacity } = this;
+        const queue = Queue.create({
+            backpressureStrategy: DropOldestBackpressureStrategy,
+            capacity,
+        });
+        for await (const v of src) {
+            queue[QueueLike_enqueue](v);
+        }
+        while (queue[EnumeratorLike_moveNext]()) {
+            yield queue[EnumeratorLike_current];
+        }
+    }
+}
+export const takeLast = ((options) => (iterable) => newInstance(TakeLasAsyncIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
 class TakeWhileAsyncIterable {
     s;
     p;

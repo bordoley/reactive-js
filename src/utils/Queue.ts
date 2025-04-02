@@ -1,10 +1,12 @@
 import { include, init, mixInstanceFactory } from "../__internal__/mixins.js";
 import { Comparator, Optional } from "../functions.js";
-import { QueueLike } from "../utils.js";
+import { BackpressureStrategy, QueueLike } from "../utils.js";
 import DisposableMixin from "./__mixins__/DisposableMixin.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 
 const createInternal: <T>(options?: {
+  backpressureStrategy?: BackpressureStrategy;
+  capacity?: number;
   comparator?: Comparator<T>;
 }) => QueueLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
@@ -12,6 +14,8 @@ const createInternal: <T>(options?: {
     function Queue(
       this: unknown,
       options: Optional<{
+        backpressureStrategy?: BackpressureStrategy;
+        capacity?: number;
         comparator?: Comparator<T>;
       }>,
     ): QueueLike<T> {
@@ -22,7 +26,14 @@ const createInternal: <T>(options?: {
     },
   ))();
 
-export const create = <T>(): QueueLike<T> => createInternal();
+export const create = <T>(options?: {
+  backpressureStrategy?: BackpressureStrategy;
+  capacity?: number;
+}): QueueLike<T> =>
+  createInternal({
+    backpressureStrategy: options?.backpressureStrategy,
+    capacity: options?.capacity,
+  });
 
 export const createSorted = <T>(comparator: Comparator<T>): QueueLike<T> =>
   createInternal({

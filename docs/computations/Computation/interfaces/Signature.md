@@ -64,7 +64,7 @@ readonly `TComputationType`[]
 
 ###### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
 
 ###### snd
 
@@ -92,7 +92,7 @@ readonly `TComputationType`[]
 
 ###### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
 
 ###### snd
 
@@ -148,7 +148,7 @@ readonly `TComputationType`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`, \{\}\> & [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"` \| `"genPure"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`, \{\}\> & [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"` \| `"genPure"`\>
 
 ##### value
 
@@ -422,7 +422,7 @@ readonly `T`[]
 
 ##### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`, \{\}\> & [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"` \| `"genPure"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`, \{\}\> & [`ComputationModule`](../../interfaces/ComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"` \| `"genPure"`\>
 
 ##### value
 

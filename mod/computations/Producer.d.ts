@@ -1,4 +1,4 @@
-import { BroadcasterLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule } from "../computations.js";
+import { BroadcasterLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, ReactiveComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
 /**
@@ -8,7 +8,7 @@ export interface ProducerComputation extends ComputationTypeLike {
     readonly [ComputationTypeLike_baseOfT]?: ProducerLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = ProducerComputation;
-export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ReactiveComputationModule<ProducerComputation>, SequentialComputationModule<ProducerComputation>, SequentialReactiveComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation> {
+export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ReactiveComputationModule<ProducerComputation>, DeferredComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation> {
     broadcast<T>(options?: {
         autoDispose?: boolean;
     }): Function1<ProducerLike<T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;

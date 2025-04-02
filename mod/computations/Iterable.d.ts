@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, InteractiveComputationModule, IterableLike, PureIterableLike, SequentialComputationModule, SynchronousComputationModule } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, DeferredComputationModule, InteractiveComputationModule, IterableLike, PureIterableLike, SynchronousComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 /**
  * @noInheritDoc
@@ -7,7 +7,7 @@ export interface IterableComputation extends ComputationTypeLike {
     readonly [ComputationTypeLike_baseOfT]?: IterableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = IterableComputation;
-export interface IterableModule extends ComputationModule<IterableComputation>, SequentialComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation, {
+export interface IterableModule extends ComputationModule<IterableComputation>, DeferredComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation, {
     toObservable: {
         delay?: number;
         delayStart?: boolean;
@@ -16,9 +16,11 @@ export interface IterableModule extends ComputationModule<IterableComputation>, 
     of<T>(): Function1<Iterable<T>, PureIterableLike<T>>;
 }
 export type Signature = IterableModule;
+export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concat: Signature["concat"];
+export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const forEach: Signature["forEach"];
@@ -33,6 +35,7 @@ export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
+export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toObservable: Signature["toObservable"];

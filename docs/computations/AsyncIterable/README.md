@@ -18,9 +18,11 @@
 
 ## Functions
 
+- [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
+- [decodeWithCharset](functions/decodeWithCharset.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
 - [forEach](functions/forEach.md)
@@ -38,6 +40,7 @@
 - [scan](functions/scan.md)
 - [skipFirst](functions/skipFirst.md)
 - [takeFirst](functions/takeFirst.md)
+- [takeLast](functions/takeLast.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toObservable](functions/toObservable.md)

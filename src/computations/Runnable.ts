@@ -3,10 +3,9 @@ import {
   ComputationTypeLike,
   ComputationTypeLike_T,
   ComputationTypeLike_baseOfT,
+  DeferredComputationModule,
   PureRunnableLike,
   RunnableLike,
-  SequentialComputationModule,
-  SequentialReactiveComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
 import {
@@ -60,8 +59,7 @@ export type Computation = RunnableComputation;
 
 export interface RunnableModule
   extends ComputationModule<RunnableComputation>,
-    SequentialComputationModule<RunnableComputation>,
-    SequentialReactiveComputationModule<RunnableComputation>,
+    DeferredComputationModule<RunnableComputation>,
     SynchronousComputationModule<RunnableComputation> {
   fromReadonlyArray<T>(options?: {
     count?: number;

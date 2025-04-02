@@ -6,12 +6,11 @@ import {
   ComputationTypeLike_baseOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
+  DeferredComputationModule,
   DeferredReactiveComputationModule,
   ProducerLike,
   ProducerWithSideEffectsLike,
   ReactiveComputationModule,
-  SequentialComputationModule,
-  SequentialReactiveComputationModule,
 } from "../computations.js";
 import { Function1, identity, identityLazy, returns } from "../functions.js";
 import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
@@ -77,8 +76,7 @@ export interface ProducerModule
   extends ComputationModule<ProducerComputation>,
     ConcurrentDeferredComputationModule<ProducerComputation>,
     ReactiveComputationModule<ProducerComputation>,
-    SequentialComputationModule<ProducerComputation>,
-    SequentialReactiveComputationModule<ProducerComputation>,
+    DeferredComputationModule<ProducerComputation>,
     DeferredReactiveComputationModule<ProducerComputation>,
     ConcurrentReactiveComputationModule<ProducerComputation> {
   broadcast<T>(options?: {

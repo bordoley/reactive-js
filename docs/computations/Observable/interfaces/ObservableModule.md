@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`ObservableComputation`](ObservableComputation.md)\>
 
 ## Properties
 
@@ -44,7 +44,7 @@
 
 #### Inherited from
 
-[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md).[`buffer`](../../interfaces/SequentialReactiveComputationModule.md#buffer)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`buffer`](../../interfaces/DeferredComputationModule.md#buffer)
 
 ***
 
@@ -70,7 +70,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 #### Call Signature
 
@@ -98,7 +98,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 #### Call Signature
 
@@ -126,7 +126,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`catchError`](../../interfaces/SequentialComputationModule.md#catcherror)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`catchError`](../../interfaces/DeferredComputationModule.md#catcherror)
 
 ***
 
@@ -386,7 +386,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 #### Call Signature
 
@@ -408,7 +408,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concat`](../../interfaces/SequentialComputationModule.md#concat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concat`](../../interfaces/DeferredComputationModule.md#concat)
 
 ***
 
@@ -428,7 +428,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 #### Call Signature
 
@@ -452,7 +452,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 #### Call Signature
 
@@ -476,7 +476,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`concatAll`](../../interfaces/SequentialComputationModule.md#concatall)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`concatAll`](../../interfaces/DeferredComputationModule.md#concatall)
 
 ***
 
@@ -506,7 +506,7 @@
 
 #### Inherited from
 
-[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md).[`decodeWithCharset`](../../interfaces/SequentialReactiveComputationModule.md#decodewithcharset)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`decodeWithCharset`](../../interfaces/DeferredComputationModule.md#decodewithcharset)
 
 ***
 
@@ -570,7 +570,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`forEach`](../../interfaces/SequentialComputationModule.md#foreach)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`forEach`](../../interfaces/DeferredComputationModule.md#foreach)
 
 ***
 
@@ -954,7 +954,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`gen`](../../interfaces/SequentialComputationModule.md#gen)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`gen`](../../interfaces/DeferredComputationModule.md#gen)
 
 ***
 
@@ -1286,7 +1286,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`repeat`](../../interfaces/SequentialComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -1308,7 +1308,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`repeat`](../../interfaces/SequentialComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 #### Call Signature
 
@@ -1324,7 +1324,7 @@
 
 ##### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`repeat`](../../interfaces/SequentialComputationModule.md#repeat)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
 
 ***
 
@@ -1348,7 +1348,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`retry`](../../interfaces/SequentialComputationModule.md#retry)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`retry`](../../interfaces/DeferredComputationModule.md#retry)
 
 ***
 
@@ -1644,7 +1644,7 @@
 
 #### Inherited from
 
-[`SequentialReactiveComputationModule`](../../interfaces/SequentialReactiveComputationModule.md).[`takeLast`](../../interfaces/SequentialReactiveComputationModule.md#takelast)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`takeLast`](../../interfaces/DeferredComputationModule.md#takelast)
 
 ***
 
@@ -1776,7 +1776,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`throwIfEmpty`](../../interfaces/SequentialComputationModule.md#throwifempty)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`throwIfEmpty`](../../interfaces/DeferredComputationModule.md#throwifempty)
 
 ***
 
@@ -1892,7 +1892,7 @@
 
 #### Inherited from
 
-[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md).[`withEffect`](../../interfaces/SequentialComputationModule.md#witheffect)
+[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`withEffect`](../../interfaces/DeferredComputationModule.md#witheffect)
 
 ***
 

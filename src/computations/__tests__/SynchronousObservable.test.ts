@@ -40,9 +40,8 @@ import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveComputationModuleTests.js";
-import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
-import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 const m = Computation.makeModule<SynchronousObservable.Signature>(
@@ -52,8 +51,7 @@ const m = Computation.makeModule<SynchronousObservable.Signature>(
 testModule(
   "SynchronousObservable",
   ComputationModuleTests(m),
-  SequentialComputationModuleTests(m),
-  SequentialReactiveComputationModuleTests(m),
+  DeferredComputationModuleTests(m),
   SynchronousComputationModuleTests(m),
   DeferredReactiveComputationModuleTests(m),
   describe(

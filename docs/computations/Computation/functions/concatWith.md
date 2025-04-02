@@ -20,7 +20,7 @@
 
 #### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
 
 #### snd
 
@@ -48,7 +48,7 @@
 
 #### m
 
-[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`SequentialComputationModule`](../../interfaces/SequentialComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
+[`PickComputationModule`](../../type-aliases/PickComputationModule.md)\<[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<`TComputationType`, \{\}\>, `"concat"`\>
 
 #### snd
 

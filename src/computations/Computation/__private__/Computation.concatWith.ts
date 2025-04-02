@@ -1,15 +1,15 @@
 import {
   ComputationOf,
   ComputationTypeLike,
+  DeferredComputationModule,
   PickComputationModule,
-  SequentialComputationModule,
 } from "../../../computations.js";
 import type * as Computation from "../../Computation.js";
 
 const Computation_concatWith: Computation.Signature["concatWith"] =
   <TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
-      SequentialComputationModule<TComputationType>,
+      DeferredComputationModule<TComputationType>,
       "concat"
     >,
     ...tail: ComputationOf<TComputationType, T>[]

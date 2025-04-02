@@ -5,13 +5,12 @@ import {
   ComputationTypeLike_baseOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
+  DeferredComputationModule,
   DeferredReactiveComputationModule,
   ObservableLike,
   ObservableWithSideEffectsLike,
   PureComputationOperator,
   ReactiveComputationModule,
-  SequentialComputationModule,
-  SequentialReactiveComputationModule,
 } from "../computations.js";
 import { Factory, Function2, identityLazy } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
@@ -93,7 +92,7 @@ export interface ObservableModule
     >,
     ConcurrentDeferredComputationModule<ObservableComputation>,
     ReactiveComputationModule<ObservableComputation>,
-    SequentialComputationModule<
+    DeferredComputationModule<
       ObservableComputation,
       {
         gen: {
@@ -102,7 +101,6 @@ export interface ObservableModule
         };
       }
     >,
-    SequentialReactiveComputationModule<ObservableComputation>,
     DeferredReactiveComputationModule<ObservableComputation>,
     ConcurrentReactiveComputationModule<ObservableComputation> {
   compute<T>(

@@ -2,8 +2,8 @@ import {
   ComputationModule,
   ComputationOfModule,
   ComputationTypeLike,
+  DeferredComputationModule,
   PickComputationModule,
-  SequentialComputationModule,
 } from "../../../computations.js";
 import { pipe } from "../../../functions.js";
 import type * as Computation from "../../Computation.js";
@@ -14,7 +14,7 @@ const Computation_startWith: Computation.Signature["startWith"] = (<
     T,
     TComputationType extends ComputationTypeLike,
     TComputationModule extends PickComputationModule<
-      SequentialComputationModule<TComputationType> &
+      DeferredComputationModule<TComputationType> &
         ComputationModule<TComputationType>,
       "concat" | "genPure"
     >,

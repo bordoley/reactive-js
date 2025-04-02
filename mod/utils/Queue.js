@@ -8,7 +8,10 @@ const createInternal = /*@__PURE__*/ (() => mixInstanceFactory(include(Disposabl
     init(QueueMixin(), this, options);
     return this;
 }))();
-export const create = () => createInternal();
+export const create = (options) => createInternal({
+    backpressureStrategy: options?.backpressureStrategy,
+    capacity: options?.capacity,
+});
 export const createSorted = (comparator) => createInternal({
     comparator,
 });

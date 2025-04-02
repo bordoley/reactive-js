@@ -14,15 +14,15 @@ import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
-import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 
 const m = Computation.makeModule<AsyncIterable.Signature>(AsyncIterable);
 
 testModule(
   "AsyncIterable",
   ComputationModuleTests(AsyncIterable),
-  SequentialComputationModuleTests(m),
+  DeferredComputationModuleTests(m),
   InteractiveComputationModuleTests(m),
   describe(
     "fromAsyncFactory",

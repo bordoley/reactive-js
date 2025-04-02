@@ -4,8 +4,8 @@ import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Computation from "../Computation.js";
 import * as Iterable from "../Iterable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
+import DeferredComputationModuleTests from "./fixtures/DeferredComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
-import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
 const m = Computation.makeModule<Iterable.Signature>(Iterable);
@@ -13,7 +13,7 @@ const m = Computation.makeModule<Iterable.Signature>(Iterable);
 testModule(
   "Iterable",
   ComputationModuleTests(m),
-  SequentialComputationModuleTests(m),
+  DeferredComputationModuleTests(m),
   SynchronousComputationModuleTests(m),
   InteractiveComputationModuleTests(m),
 )({

@@ -9,11 +9,10 @@
 ## Extended by
 
 - [`ComputationModule`](ComputationModule.md)
-- [`SequentialComputationModule`](SequentialComputationModule.md)
+- [`DeferredComputationModule`](DeferredComputationModule.md)
+- [`ConcurrentDeferredComputationModule`](ConcurrentDeferredComputationModule.md)
 - [`SynchronousComputationModule`](SynchronousComputationModule.md)
 - [`InteractiveComputationModule`](InteractiveComputationModule.md)
-- [`ConcurrentDeferredComputationModule`](ConcurrentDeferredComputationModule.md)
-- [`SequentialReactiveComputationModule`](SequentialReactiveComputationModule.md)
 - [`ReactiveComputationModule`](ReactiveComputationModule.md)
 - [`ConcurrentReactiveComputationModule`](ConcurrentReactiveComputationModule.md)
 - [`DeferredReactiveComputationModule`](DeferredReactiveComputationModule.md)

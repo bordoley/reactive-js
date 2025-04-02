@@ -9,13 +9,13 @@ import {
   ComputationOperatorWithSideEffects,
   ComputationTypeLike,
   ComputationTypeOfModule,
+  DeferredComputationModule,
   NewPureInstanceOf,
   PickComputationModule,
   PureComputationLike,
   PureComputationOf,
   PureComputationOperator,
   ReactiveComputationModule,
-  SequentialComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -50,7 +50,7 @@ export interface Signature {
 
   concatWith<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
-      SequentialComputationModule<TComputationType>,
+      DeferredComputationModule<TComputationType>,
       "concat"
     >,
     snd: PureComputationOf<TComputationType, T>,
@@ -58,7 +58,7 @@ export interface Signature {
   ): PureComputationOperator<TComputationType, T, T>;
   concatWith<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
-      SequentialComputationModule<TComputationType>,
+      DeferredComputationModule<TComputationType>,
       "concat"
     >,
     snd: ComputationOf<TComputationType, T>,
@@ -72,7 +72,7 @@ export interface Signature {
 
   endWith<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
-      SequentialComputationModule<TComputationType> &
+      DeferredComputationModule<TComputationType> &
         ComputationModule<TComputationType>,
       "concat" | "genPure"
     >,
@@ -164,7 +164,7 @@ export interface Signature {
 
   startWith<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
-      SequentialComputationModule<TComputationType> &
+      DeferredComputationModule<TComputationType> &
         ComputationModule<TComputationType>,
       "concat" | "genPure"
     >,

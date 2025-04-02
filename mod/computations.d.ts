@@ -174,9 +174,12 @@ export interface ComputationModule<TComputationType extends ComputationTypeLike,
     }): PureComputationOperator<TComputationType, T, T>;
     toProducer<T>(options?: TCreationOptions["toProducer"]): <TComputationOf extends ComputationOf<TComputationType, T>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputationType, T> ? PureProducerLike<T> : TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ? ProducerWithSideEffectsLike<T> : never;
 }
-export interface SequentialComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
+export interface DeferredComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
     gen?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
+    buffer<T>(options?: {
+        count?: number;
+    }): PureComputationOperator<TComputationType, T, readonly T[]>;
     catchError<T>(onError: SideEffect1<Error>): PureComputationOperator<TComputationType, T, T>;
     catchError<T>(onError: Function1<Error, PureComputationOf<TComputationType, T>>, options: {
         readonly [ComputationLike_isPure]: Optional<true>;
@@ -193,14 +196,26 @@ export interface SequentialComputationModule<TComputationType extends Computatio
     concatAll<T>(options: {
         readonly [ComputationLike_isPure]: false;
     }): Function1<ComputationOf<TComputationType, ComputationOf<TComputationType, T>>, ComputationWithSideEffectsOf<TComputationType, T>>;
+    decodeWithCharset(options?: {
+        readonly charset?: string;
+        readonly fatal?: boolean;
+        readonly ignoreBOM?: boolean;
+    }): PureComputationOperator<TComputationType, ArrayBuffer, string>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
     gen<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["gen"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
     repeat<T>(predicate: Predicate<number>): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(count: number): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(): PureComputationOperator<TComputationType, T, T>;
     retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureComputationOperator<TComputationType, T, T>;
+    takeLast<T>(options?: {
+        readonly count?: number;
+    }): PureComputationOperator<TComputationType, T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
     withEffect<T>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
+}
+export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
+    genAsync<T>(factory: Factory<AsyncIterator<T>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    genPureAsync<T>(factory: Factory<AsyncIterator<T>>): NewPureInstanceOf<TComputationType, T>;
 }
 export interface SynchronousComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
     toRunnable?: Record<string, any>;
@@ -217,23 +232,6 @@ export interface InteractiveComputationModule<TComputationType extends Computati
     zip<TA, TB>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>): ComputationWithSideEffectsOf<TComputationType, Tuple2<TA, TB>>;
     zip<TA, TB, TC>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>, c: ComputationOf<TComputationType, TC>): ComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
     zip<TA, TB, TC, TD>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>, c: ComputationOf<TComputationType, TC>, d: ComputationOf<TComputationType, TD>): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
-}
-export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
-    genAsync<T>(factory: Factory<AsyncIterator<T>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
-    genPureAsync<T>(factory: Factory<AsyncIterator<T>>): NewPureInstanceOf<TComputationType, T>;
-}
-export interface SequentialReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
-    buffer<T>(options?: {
-        count?: number;
-    }): PureComputationOperator<TComputationType, T, readonly T[]>;
-    decodeWithCharset(options?: {
-        readonly charset?: string;
-        readonly fatal?: boolean;
-        readonly ignoreBOM?: boolean;
-    }): PureComputationOperator<TComputationType, ArrayBuffer, string>;
-    takeLast<T>(options?: {
-        readonly count?: number;
-    }): PureComputationOperator<TComputationType, T, T>;
 }
 export interface ReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     combineLatest<TA, TB>(a: PureComputationOf<TComputationType, TA>, b: PureComputationOf<TComputationType, TB>): PureComputationOf<TComputationType, Tuple2<TA, TB>>;
