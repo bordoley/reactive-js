@@ -24,7 +24,7 @@ import Observable_withLatestFrom from "./Observable.withLatestFrom.js";
 const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
     scanner: Function2<TAcc, T, ObservableLike<TAcc>>,
     initialValue: Factory<TAcc>,
-    innerType: {
+    innerType?: {
       [ComputationLike_isPure]: boolean;
     },
   ) =>
@@ -59,7 +59,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
       },
       {
         [ComputationLike_isPure]:
-          Computation_isPure(source) && Computation_isPure(innerType),
+          Computation_isPure(source) && Computation_isPure(innerType ?? {}),
       },
     )) as Observable.Signature["scanMany"];
 

@@ -19,6 +19,6 @@ const Observable_scanMany = ((scanner, initialValue, innerType) => (source) => D
     }), Observable_forEach(bindMethod(accFeedbackPublisher, EventListenerLike_notify)), invoke(EventSourceLike_subscribe, observer));
     accFeedbackPublisher[EventListenerLike_notify](initialValue());
 }, {
-    [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType),
+    [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType ?? {}),
 }));
 export default Observable_scanMany;

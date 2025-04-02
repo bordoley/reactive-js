@@ -24,7 +24,7 @@ import Producer_withLatestFrom from "./Producer.withLatestFrom.js";
 const Producer_scanMany: Producer.Signature["scanMany"] = (<T, TAcc>(
     scanner: Function2<TAcc, T, ProducerLike<TAcc>>,
     initialValue: Factory<TAcc>,
-    innerType: {
+    innerType?: {
       [ComputationLike_isPure]: boolean;
     },
   ) =>
@@ -59,7 +59,7 @@ const Producer_scanMany: Producer.Signature["scanMany"] = (<T, TAcc>(
       },
       {
         [ComputationLike_isPure]:
-          Computation_isPure(source) && Computation_isPure(innerType),
+          Computation_isPure(source) && Computation_isPure(innerType ?? {}),
       },
     )) as Producer.Signature["scanMany"];
 

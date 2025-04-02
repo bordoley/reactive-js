@@ -19,6 +19,6 @@ const Producer_scanMany = ((scanner, initialValue, innerType) => (source) => Def
     }), Producer_forEach(bindMethod(accFeedbackPublisher, EventListenerLike_notify)), invoke(EventSourceLike_subscribe, consumer));
     accFeedbackPublisher[EventListenerLike_notify](initialValue());
 }, {
-    [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType),
+    [ComputationLike_isPure]: Computation_isPure(source) && Computation_isPure(innerType ?? {}),
 }));
 export default Producer_scanMany;
