@@ -2,7 +2,7 @@
 
 import { Array_push } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
-import { StreamableLike_stream, } from "../../../computations.js";
+import { StoreLike_value, StreamableLike_stream, } from "../../../computations.js";
 import { bindMethod, compose, identity, isFunction, isNumber, isReadonlyArray, none, pipe, returns, tuple, } from "../../../functions.js";
 import { scale } from "../../../math.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -46,8 +46,13 @@ const Streamable_spring = /*@__PURE__*/ (() => {
                 }
                 return animations;
             }, () => []));
-            return pipe(Observable.concat(...sources), Observable.forEach(bindMethod(accFeedbackStream, EventListenerLike_notify)));
-        }), Observable.switchAll());
+            return pipe(Observable.concat(...sources), Observable.withEffect(() => {
+                animationIsRunning[StoreLike_value] = true;
+                return () => {
+                    animationIsRunning[StoreLike_value] = false;
+                };
+            }));
+        }), Observable.switchAll(), Observable.forEach(bindMethod(accFeedbackStream, EventListenerLike_notify)));
         init(StreamMixin(), this, operator, scheduler, options);
         pipe(animationIsRunning, Disposable.addTo(this));
         return this;

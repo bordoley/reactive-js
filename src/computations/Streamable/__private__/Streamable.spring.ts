@@ -8,6 +8,7 @@ import {
 import {
   ObservableLike,
   PureSynchronousObservableLike,
+  StoreLike_value,
   StreamableLike,
   StreamableLike_stream,
   WritableStoreLike,
@@ -126,13 +127,19 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
 
             return pipe(
               Observable.concat(...sources),
-              Observable.forEach(
-                bindMethod(accFeedbackStream, EventListenerLike_notify),
-              ),
+              Observable.withEffect(() => {
+                animationIsRunning[StoreLike_value] = true;
+                return () => {
+                  animationIsRunning[StoreLike_value] = false;
+                };
+              }),
             );
           },
         ),
         Observable.switchAll<number>(),
+        Observable.forEach(
+          bindMethod(accFeedbackStream, EventListenerLike_notify),
+        ),
       );
 
       init(
