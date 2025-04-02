@@ -33,6 +33,7 @@
 - [node/NodeWritable](node/NodeWritable/README.md)
 - [react](react/README.md)
 - [react/Scheduler](react/Scheduler/README.md)
+- [react/web](react/web/README.md)
 - [utils](utils/README.md)
 - [utils/DefaultScheduler](utils/DefaultScheduler/README.md)
 - [utils/Disposable](utils/Disposable/README.md)

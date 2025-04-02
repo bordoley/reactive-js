@@ -26,6 +26,7 @@ import {
   BackpressureStrategy,
   DisposableLike,
   DisposableLike_dispose,
+  SchedulerLike,
 } from "./utils.js";
 
 interface ReactModule {
@@ -57,6 +58,7 @@ interface ReactModule {
   useStreamable<TStreamable extends StreamableLike>(
     streamable: TStreamable,
     options?: {
+      readonly scheduler?: SchedulerLike;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
@@ -66,6 +68,7 @@ interface ReactModule {
     factory: Factory<TStreamable>,
     dep: readonly unknown[],
     options?: {
+      readonly scheduler?: SchedulerLike;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: BackpressureStrategy;
       readonly capacity?: number;
@@ -153,12 +156,14 @@ export const useStreamable: Signature["useStreamable"] = <
   streamableOrFactory: TStreamable | Factory<TStreamable>,
   optionsOrDeps:
     | Optional<{
+        readonly scheduler?: SchedulerLike;
         readonly priority?: 1 | 2 | 3 | 4 | 5;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
       }>
     | readonly unknown[],
   optionsOrNone?: {
+    readonly scheduler?: SchedulerLike;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -168,23 +173,23 @@ export const useStreamable: Signature["useStreamable"] = <
     ? useMemo(streamableOrFactory, optionsOrDeps as readonly unknown[])
     : streamableOrFactory;
 
-  const { backpressureStrategy, capacity, priority } =
+  const { scheduler, backpressureStrategy, capacity, priority } =
     (isFunction(streamableOrFactory)
       ? optionsOrNone
       : (optionsOrDeps as Optional<{
+          readonly scheduler?: SchedulerLike;
           readonly priority?: 1 | 2 | 3 | 4 | 5;
           readonly backpressureStrategy?: BackpressureStrategy;
           readonly capacity?: number;
         }>)) ?? {};
 
-  const stream = useDisposable(
-    () =>
-      streamable[StreamableLike_stream](ReactScheduler.get(priority), {
-        backpressureStrategy,
-        capacity,
-      }),
-    [streamable, priority, backpressureStrategy, capacity],
-  );
+  const stream = useDisposable(() => {
+    const streamScheduler = scheduler ?? ReactScheduler.get(priority);
+    return streamable[StreamableLike_stream](streamScheduler, {
+      backpressureStrategy,
+      capacity,
+    });
+  }, [streamable, scheduler, priority, backpressureStrategy, capacity]);
 
   return stream;
 };

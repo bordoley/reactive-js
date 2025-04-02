@@ -34,6 +34,10 @@
 
 `2` \| `1` \| `3` \| `4` \| `5`
 
+##### scheduler?
+
+[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+
 ### Returns
 
 [`Optional`](../../functions/type-aliases/Optional.md)\<[`StreamOf`](../../computations/type-aliases/StreamOf.md)\<`TStreamable`\>\>
@@ -69,6 +73,10 @@ readonly `unknown`[]
 ##### priority?
 
 `2` \| `1` \| `3` \| `4` \| `5`
+
+##### scheduler?
+
+[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
 
 ### Returns
 

@@ -1,6 +1,6 @@
 import { EventSourceLike, StreamOf, StreamableLike } from "./computations.js";
 import { Factory, Optional } from "./functions.js";
-import { BackpressureStrategy, DisposableLike } from "./utils.js";
+import { BackpressureStrategy, DisposableLike, SchedulerLike } from "./utils.js";
 interface ReactModule {
     /**
      */
@@ -16,11 +16,13 @@ interface ReactModule {
     /**
      */
     useStreamable<TStreamable extends StreamableLike>(streamable: TStreamable, options?: {
+        readonly scheduler?: SchedulerLike;
         readonly priority?: 1 | 2 | 3 | 4 | 5;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
     }): Optional<StreamOf<TStreamable>>;
     useStreamable<TStreamable extends StreamableLike>(factory: Factory<TStreamable>, dep: readonly unknown[], options?: {
+        readonly scheduler?: SchedulerLike;
         readonly priority?: 1 | 2 | 3 | 4 | 5;
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;

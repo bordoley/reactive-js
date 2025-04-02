@@ -45,12 +45,15 @@ export const useStreamable = (streamableOrFactory, optionsOrDeps, optionsOrNone)
     const streamable = isFunction(streamableOrFactory)
         ? useMemo(streamableOrFactory, optionsOrDeps)
         : streamableOrFactory;
-    const { backpressureStrategy, capacity, priority } = (isFunction(streamableOrFactory)
+    const { scheduler, backpressureStrategy, capacity, priority } = (isFunction(streamableOrFactory)
         ? optionsOrNone
         : optionsOrDeps) ?? {};
-    const stream = useDisposable(() => streamable[StreamableLike_stream](ReactScheduler.get(priority), {
-        backpressureStrategy,
-        capacity,
-    }), [streamable, priority, backpressureStrategy, capacity]);
+    const stream = useDisposable(() => {
+        const streamScheduler = scheduler ?? ReactScheduler.get(priority);
+        return streamable[StreamableLike_stream](streamScheduler, {
+            backpressureStrategy,
+            capacity,
+        });
+    }, [streamable, scheduler, priority, backpressureStrategy, capacity]);
     return stream;
 };
