@@ -19,14 +19,14 @@ import DelegatingEventListenerMixin, {
   DelegatingEventListenerLike,
   DelegatingEventListenerLike_delegate,
 } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
+import FlowControllerWithoutBackpressureMixin from "../../utils/__mixins__/FlowControllerWithoutBackpressureMixin.js";
 import {
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
-  FlowControllerLike_addOnReadyListener,
-  FlowControllerLike_isReady,
+  FlowControllerLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -80,9 +80,16 @@ const SwitchAllConsumerMixin: <
 
   return returns(
     mix(
-      include(DelegatingDisposableMixin, DelegatingEventListenerMixin()),
+      include(
+        DelegatingDisposableMixin,
+        DelegatingEventListenerMixin(),
+        FlowControllerWithoutBackpressureMixin,
+      ),
       function SwitchAllConsumerMixin(
-        this: Omit<TReturn<TInnerSource, TConsumer, T>, keyof DisposableLike> &
+        this: Omit<
+          TReturn<TInnerSource, TConsumer, T>,
+          keyof FlowControllerLike
+        > &
           TProperties,
         delegate: TConsumer,
         createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
@@ -92,6 +99,7 @@ const SwitchAllConsumerMixin: <
       ): TReturn<TInnerSource, TConsumer, T> {
         init(DelegatingDisposableMixin, this, delegate);
         init(DelegatingEventListenerMixin(), this, delegate);
+        init(FlowControllerWithoutBackpressureMixin, this);
 
         this[
           SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing
@@ -115,12 +123,6 @@ const SwitchAllConsumerMixin: <
             this[SwitchAllConsumer_isCompleted] ||
             this[DelegatingEventListenerLike_delegate][SinkLike_isCompleted]
           );
-        },
-
-        [FlowControllerLike_isReady]: true as const,
-
-        [FlowControllerLike_addOnReadyListener]() {
-          return Disposable.disposed;
         },
 
         [EventListenerLike_notify](

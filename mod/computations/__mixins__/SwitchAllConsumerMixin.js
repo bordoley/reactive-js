@@ -7,7 +7,8 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import FlowControllerWithoutBackpressureMixin from "../../utils/__mixins__/FlowControllerWithoutBackpressureMixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
     const SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
     const SwitchAllConsumer_innerSubscription = Symbol("SwitchAllConsumer_innerSubscription");
@@ -17,9 +18,10 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
             this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
         }
     }
-    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin()), function SwitchAllConsumerMixin(delegate, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
+    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerWithoutBackpressureMixin), function SwitchAllConsumerMixin(delegate, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
         init(DelegatingDisposableMixin, this, delegate);
         init(DelegatingEventListenerMixin(), this, delegate);
+        init(FlowControllerWithoutBackpressureMixin, this);
         this[SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing] = createDelegatingNotifyOnlyNonCompletingNonDisposing;
         return this;
     }, props({
@@ -31,10 +33,6 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return (this[SwitchAllConsumer_isCompleted] ||
                 this[DelegatingEventListenerLike_delegate][SinkLike_isCompleted]);
-        },
-        [FlowControllerLike_isReady]: true,
-        [FlowControllerLike_addOnReadyListener]() {
-            return Disposable.disposed;
         },
         [EventListenerLike_notify](next) {
             if (this[SinkLike_isCompleted]) {
