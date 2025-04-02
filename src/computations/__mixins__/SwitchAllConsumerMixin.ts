@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   Mixin2,
   include,
@@ -21,8 +20,6 @@ import DelegatingEventListenerMixin, {
   DelegatingEventListenerLike_delegate,
 } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
@@ -30,7 +27,6 @@ import {
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
-  OverflowBackpressureStrategy,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -122,9 +118,6 @@ const SwitchAllConsumerMixin: <
         },
 
         [FlowControllerLike_isReady]: true as const,
-        [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
-
-        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
 
         [FlowControllerLike_addOnReadyListener]() {
           return Disposable.disposed;

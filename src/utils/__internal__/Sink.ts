@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -10,13 +9,10 @@ import {
 import { LiftedSinkLike } from "../../computations/__internal__/LiftedSource.js";
 import { Function1, Reducer, SideEffect1 } from "../../functions.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
   DisposableLike,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
-  OverflowBackpressureStrategy,
   SchedulerLike,
   SinkLike,
 } from "../../utils.js";
@@ -62,8 +58,6 @@ export const toObserver: <T>(
 ) => Function1<SinkLike<T>, ObserverLike<T>> = /*@__PURE__*/ (<T>() => {
   type TPrototype = {
     [FlowControllerLike_isReady]: true;
-    [BackPressureConfig_strategy]: typeof OverflowBackpressureStrategy;
-    [BackPressureConfig_capacity]: number;
     [FlowControllerLike_addOnReadyListener](
       callback: SideEffect1<void>,
     ): DisposableLike;
@@ -89,8 +83,6 @@ export const toObserver: <T>(
     props(),
     proto({
       [FlowControllerLike_isReady]: true as const,
-      [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
-      [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
       [FlowControllerLike_addOnReadyListener](_: SideEffect1<void>) {
         return Disposable.disposed;
       },
