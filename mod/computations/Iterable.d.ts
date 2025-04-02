@@ -1,4 +1,4 @@
-import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, InteractiveComputationModule, IterableLike, PureComputationLike, PureIterableLike, PureSynchronousObservableLike, SequentialComputationModule, SynchronousComputationModule, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, InteractiveComputationModule, IterableLike, PureIterableLike, SequentialComputationModule, SynchronousComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 /**
  * @noInheritDoc
@@ -7,12 +7,13 @@ export interface IterableComputation extends ComputationTypeLike {
     readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
 }
 export type Computation = IterableComputation;
-export interface IterableModule extends ComputationModule<IterableComputation>, SequentialComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
+export interface IterableModule extends ComputationModule<IterableComputation>, SequentialComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation, {
+    toObservable: {
+        delay?: number;
+        delayStart?: boolean;
+    };
+}> {
     of<T>(): Function1<Iterable<T>, PureIterableLike<T>>;
-    toObservable<T>(options?: {
-        delay: number;
-        delayStart: boolean;
-    }): <TIterable extends IterableLike<T>>(iter: TIterable) => TIterable extends PureComputationLike ? PureSynchronousObservableLike<T> : SynchronousObservableWithSideEffectsLike<T>;
 }
 export type Signature = IterableModule;
 export declare const catchError: Signature["catchError"];

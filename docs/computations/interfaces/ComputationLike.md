@@ -10,6 +10,7 @@
 
 - [`PureComputationLike`](PureComputationLike.md)
 - [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+- [`SynchronousComputationLike`](SynchronousComputationLike.md)
 - [`IterableLike`](IterableLike.md)
 - [`AsyncIterableLike`](AsyncIterableLike.md)
 - [`RunnableLike`](RunnableLike.md)

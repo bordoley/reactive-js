@@ -750,7 +750,7 @@
 
 ### toObservable()
 
-> **toObservable**\<`T`\>(`options`?): \<`TAsyncIterable`\>(`iter`) => `TAsyncIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
+> **toObservable**\<`T`\>(`options`?): \<`TComputationOf`\>(`iter`) => `TComputationOf` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) & [`SynchronousComputationLike`](../../interfaces/SynchronousComputationLike.md) ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) & [`SynchronousComputationLike`](../../interfaces/SynchronousComputationLike.md) ? [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\> : `never`
 
 #### Type Parameters
 
@@ -760,13 +760,7 @@
 
 ##### options?
 
-###### delay
-
-`number`
-
-###### delayStart
-
-`boolean`
+`unknown`
 
 #### Returns
 
@@ -774,17 +768,21 @@
 
 ##### Type Parameters
 
-• **TAsyncIterable** *extends* [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\>
+• **TComputationOf** *extends* [`ComputationOf`](../../type-aliases/ComputationOf.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), `T`\>
 
 ##### Parameters
 
 ###### iter
 
-`TAsyncIterable`
+`TComputationOf`
 
 ##### Returns
 
-`TAsyncIterable` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
+`TComputationOf` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) & [`SynchronousComputationLike`](../../interfaces/SynchronousComputationLike.md) ? [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`PureComputationLike`](../../interfaces/PureComputationLike.md) ? [`PureObservableLike`](../../interfaces/PureObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) & [`SynchronousComputationLike`](../../interfaces/SynchronousComputationLike.md) ? [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md) ? [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\> : `never`
+
+#### Inherited from
+
+[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md).[`toObservable`](../../interfaces/InteractiveComputationModule.md#toobservable)
 
 ***
 

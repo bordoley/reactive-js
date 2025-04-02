@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / InteractiveComputationModule
 
-# Interface: InteractiveComputationModule\<TComputationType\>
+# Interface: InteractiveComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -19,6 +19,8 @@
 
 • **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
+• **TCreationOptions** *extends* `object` = \{\}
+
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -30,6 +32,40 @@
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
 ## Methods
+
+### toObservable()
+
+> **toObservable**\<`T`\>(`options`?): \<`TComputationOf`\>(`iter`) => `TComputationOf` *extends* [`PureComputationLike`](PureComputationLike.md) & [`SynchronousComputationLike`](SynchronousComputationLike.md) ? [`PureSynchronousObservableLike`](PureSynchronousObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`PureObservableLike`](PureObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) & [`SynchronousComputationLike`](SynchronousComputationLike.md) ? [`SynchronousObservableWithSideEffectsLike`](SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\> : `never`
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toObservable"`\]
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationLike`](ComputationLike.md) & [`PureComputationLike`](PureComputationLike.md) \| [`ComputationLike`](ComputationLike.md) & [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+
+##### Parameters
+
+###### iter
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`PureComputationLike`](PureComputationLike.md) & [`SynchronousComputationLike`](SynchronousComputationLike.md) ? [`PureSynchronousObservableLike`](PureSynchronousObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`PureObservableLike`](PureObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) & [`SynchronousComputationLike`](SynchronousComputationLike.md) ? [`SynchronousObservableWithSideEffectsLike`](SynchronousObservableWithSideEffectsLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\> : `never`
+
+***
 
 ### zip()
 

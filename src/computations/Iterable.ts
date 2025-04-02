@@ -15,14 +15,11 @@ import {
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
-  PureComputationLike,
   PureIterableLike,
-  PureSynchronousObservableLike,
   RunnableLike,
   RunnableLike_eval,
   SequentialComputationModule,
   SynchronousComputationModule,
-  SynchronousObservableWithSideEffectsLike,
 } from "../computations.js";
 import {
   Equality,
@@ -82,17 +79,16 @@ export interface IterableModule
   extends ComputationModule<IterableComputation>,
     SequentialComputationModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
-    InteractiveComputationModule<IterableComputation> {
+    InteractiveComputationModule<
+      IterableComputation,
+      {
+        toObservable: {
+          delay?: number;
+          delayStart?: boolean;
+        };
+      }
+    > {
   of<T>(): Function1<Iterable<T>, PureIterableLike<T>>;
-
-  toObservable<T>(options?: {
-    delay: number;
-    delayStart: boolean;
-  }): <TIterable extends IterableLike<T>>(
-    iter: TIterable,
-  ) => TIterable extends PureComputationLike
-    ? PureSynchronousObservableLike<T>
-    : SynchronousObservableWithSideEffectsLike<T>;
 }
 
 export type Signature = IterableModule;

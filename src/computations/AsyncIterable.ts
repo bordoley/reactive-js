@@ -16,10 +16,7 @@ import {
   Computation_baseOfT,
   ConcurrentDeferredComputationModule,
   InteractiveComputationModule,
-  ObservableWithSideEffectsLike,
   PureAsyncIterableLike,
-  PureComputationLike,
-  PureObservableLike,
   SequentialComputationModule,
 } from "../computations.js";
 import {
@@ -84,15 +81,6 @@ export interface AsyncIterableModule
   >;
 
   of<T>(): Function1<AsyncIterable<T>, AsyncIterableWithSideEffectsLike<T>>;
-
-  toObservable<T>(options?: {
-    delay: number;
-    delayStart: boolean;
-  }): <TAsyncIterable extends AsyncIterableLike<T>>(
-    iter: TAsyncIterable,
-  ) => TAsyncIterable extends PureComputationLike
-    ? PureObservableLike<T>
-    : ObservableWithSideEffectsLike<T>;
 }
 
 export type Signature = AsyncIterableModule;

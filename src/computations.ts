@@ -43,6 +43,10 @@ export interface ComputationWithSideEffectsLike extends ComputationLike {
   readonly [ComputationLike_isPure]: false;
 }
 
+export interface SynchronousComputationLike extends ComputationLike {
+  readonly [ComputationLike_isSynchronous]: Optional<true>;
+}
+
 export interface MulticastComputationLike extends DisposableContainerLike {
   readonly [ComputationLike_isPure]: Optional<true>;
   readonly [ComputationLike_isSynchronous]: false;
@@ -485,7 +489,25 @@ export interface SynchronousComputationModule<
 
 export interface InteractiveComputationModule<
   TComputationType extends ComputationTypeLike,
+  TCreationOptions extends {
+    toObservable?: Record<string, any>;
+  } = {},
 > extends ComputationModuleLike<TComputationType> {
+  // prettier-ignore
+  toObservable<T>(
+    options?: TCreationOptions["toObservable"]
+  ): <TComputationOf extends ComputationOf<TComputationType, T>>(
+    iter: TComputationOf,
+  ) =>  TComputationOf extends (PureComputationLike & SynchronousComputationLike) ? 
+          PureSynchronousObservableLike<T> :
+        TComputationOf extends PureComputationLike ?
+          PureObservableLike<T> :
+        TComputationOf extends (ComputationWithSideEffectsLike & SynchronousComputationLike) ?
+          SynchronousObservableWithSideEffectsLike<T> :
+        TComputationOf extends ComputationWithSideEffectsLike ?
+          ObservableWithSideEffectsLike<T> :
+        never;
+
   zip<TA, TB>(
     a: PureComputationOf<TComputationType, TA>,
     b: PureComputationOf<TComputationType, TB>,

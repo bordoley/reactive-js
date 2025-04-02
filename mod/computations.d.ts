@@ -14,6 +14,9 @@ export interface PureComputationLike extends ComputationLike {
 export interface ComputationWithSideEffectsLike extends ComputationLike {
     readonly [ComputationLike_isPure]: false;
 }
+export interface SynchronousComputationLike extends ComputationLike {
+    readonly [ComputationLike_isSynchronous]: Optional<true>;
+}
 export interface MulticastComputationLike extends DisposableContainerLike {
     readonly [ComputationLike_isPure]: Optional<true>;
     readonly [ComputationLike_isSynchronous]: false;
@@ -207,7 +210,10 @@ export interface SynchronousComputationModule<TComputationType extends Computati
 } = {}> extends ComputationModuleLike<TComputationType> {
     toRunnable<T>(options?: TCreationOptions["toRunnable"]): <TComputationOf extends ComputationOf<TComputationType, T>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputationType, T> ? PureRunnableLike<T> : TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ? RunnableWithSideEffectsLike<T> : never;
 }
-export interface InteractiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
+export interface InteractiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
+    toObservable?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    toObservable<T>(options?: TCreationOptions["toObservable"]): <TComputationOf extends ComputationOf<TComputationType, T>>(iter: TComputationOf) => TComputationOf extends (PureComputationLike & SynchronousComputationLike) ? PureSynchronousObservableLike<T> : TComputationOf extends PureComputationLike ? PureObservableLike<T> : TComputationOf extends (ComputationWithSideEffectsLike & SynchronousComputationLike) ? SynchronousObservableWithSideEffectsLike<T> : TComputationOf extends ComputationWithSideEffectsLike ? ObservableWithSideEffectsLike<T> : never;
     zip<TA, TB>(a: PureComputationOf<TComputationType, TA>, b: PureComputationOf<TComputationType, TB>): PureComputationOf<TComputationType, Tuple2<TA, TB>>;
     zip<TA, TB, TC>(a: PureComputationOf<TComputationType, TA>, b: PureComputationOf<TComputationType, TB>, c: PureComputationOf<TComputationType, TC>): PureComputationOf<TComputationType, Tuple3<TA, TB, TC>>;
     zip<TA, TB, TC, TD>(a: PureComputationOf<TComputationType, TA>, b: PureComputationOf<TComputationType, TB>, c: PureComputationOf<TComputationType, TC>, d: PureComputationOf<TComputationType, TD>): PureComputationOf<TComputationType, Tuple4<TA, TB, TC, TD>>;

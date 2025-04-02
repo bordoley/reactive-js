@@ -45,6 +45,7 @@
 - [StoreLike](interfaces/StoreLike.md)
 - [StreamableLike](interfaces/StreamableLike.md)
 - [StreamLike](interfaces/StreamLike.md)
+- [SynchronousComputationLike](interfaces/SynchronousComputationLike.md)
 - [SynchronousComputationModule](interfaces/SynchronousComputationModule.md)
 - [SynchronousObservableLike](interfaces/SynchronousObservableLike.md)
 - [SynchronousObservableWithSideEffectsLike](interfaces/SynchronousObservableWithSideEffectsLike.md)
