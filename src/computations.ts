@@ -406,7 +406,6 @@ export interface SequentialComputationModule<
     },
   ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
-  // prettier-ignore
   concat<T>(
     ...computations: readonly PureComputationOf<TComputationType, T>[]
   ): PureComputationOf<TComputationType, T>;
@@ -414,21 +413,18 @@ export interface SequentialComputationModule<
     ...computations: readonly ComputationOf<TComputationType, T>[]
   ): ComputationWithSideEffectsOf<TComputationType, T>;
 
-  // prettier-ignore
   concatAll<T>(): Function1<
     PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
     PureComputationOf<TComputationType, T>
-  >
-  // prettier-ignore
+  >;
   concatAll<T>(options: {
-    readonly [ComputationLike_isPure]: Optional<true>,
+    readonly [ComputationLike_isPure]: Optional<true>;
   }): Function1<
     PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
     PureComputationOf<TComputationType, T>
-  >
-  // prettier-ignore
+  >;
   concatAll<T>(options: {
-    readonly [ComputationLike_isPure]: false,
+    readonly [ComputationLike_isPure]: false;
   }): Function1<
     ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
     ComputationWithSideEffectsOf<TComputationType, T>
@@ -764,7 +760,6 @@ export interface ConcurrentReactiveComputationModule<
 export interface DeferredReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
-  // prettier-ignore
   mergeAll<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -772,20 +767,18 @@ export interface DeferredReactiveComputationModule<
   }): Function1<
     PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
     PureComputationOf<TComputationType, T>
-  >
-  // prettier-ignore
+  >;
   mergeAll<T>(options: {
-    readonly [ComputationLike_isPure]: Optional<true>,
+    readonly [ComputationLike_isPure]: Optional<true>;
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly concurrency?: number;
   }): Function1<
     PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
     PureComputationOf<TComputationType, T>
-  >
-  // prettier-ignore
+  >;
   mergeAll<T>(options: {
-    readonly [ComputationLike_isPure]: false,
+    readonly [ComputationLike_isPure]: false;
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
     readonly concurrency?: number;
@@ -794,7 +787,6 @@ export interface DeferredReactiveComputationModule<
     ComputationWithSideEffectsOf<TComputationType, T>
   >;
 
-  // prettier-ignore
   scanMany<T, TAcc>(
     scanner: Function2<TAcc, T, PureComputationOf<TComputationType, TAcc>>,
     initialValue: Factory<TAcc>,
@@ -814,21 +806,18 @@ export interface DeferredReactiveComputationModule<
     },
   ): ComputationOperatorWithSideEffects<TComputationType, T, TAcc>;
 
-  // prettier-ignore
   switchAll<T>(): Function1<
     PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
     PureComputationOf<TComputationType, T>
-  >
-  // prettier-ignore
+  >;
   switchAll<T>(options: {
-    readonly [ComputationLike_isPure]: Optional<true>,
+    readonly [ComputationLike_isPure]: Optional<true>;
   }): Function1<
     PureComputationOf<TComputationType, PureComputationOf<TComputationType, T>>,
     PureComputationOf<TComputationType, T>
-  >
-  // prettier-ignore
+  >;
   switchAll<T>(options: {
-    readonly [ComputationLike_isPure]: false,
+    readonly [ComputationLike_isPure]: false;
   }): Function1<
     ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
     ComputationWithSideEffectsOf<TComputationType, T>
