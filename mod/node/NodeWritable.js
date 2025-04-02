@@ -1,6 +1,5 @@
 /// <reference types="./NodeWritable.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Publisher from "../computations/Publisher.js";
@@ -32,8 +31,6 @@ export const toConsumer = /*@__PURE__*/ (() => {
         [SinkLike_isCompleted]: false,
         [WritableConsumer_onReadyPublisher]: none,
     }), proto({
-        [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
-        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
         get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             const writable = this[WritableConsumer_writable];

@@ -1,5 +1,4 @@
 import { Writable } from "stream";
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import {
   include,
   init,
@@ -28,7 +27,6 @@ import {
   BackPressureConfig_capacity,
   BackPressureConfig_strategy,
   BackPressureError,
-  BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
@@ -99,10 +97,6 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       [WritableConsumer_onReadyPublisher]: none,
     }),
     proto({
-      [BackPressureConfig_strategy]:
-        ThrowBackpressureStrategy as BackpressureStrategy,
-      [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
-
       get [FlowControllerLike_isReady]() {
         unsafeCast<TProperties>(this);
         const writable = this[WritableConsumer_writable];

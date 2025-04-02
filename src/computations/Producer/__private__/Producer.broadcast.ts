@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   include,
   init,
@@ -20,9 +19,6 @@ import DelegatingEventListenerMixin, {
 } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DisposeOnCompleteSinkMixin from "../../../utils/__mixins__/DisposeOnCompleteSinkMixin.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
-  BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
   EventListenerLike,
@@ -32,7 +28,6 @@ import {
   SchedulerLike,
   SinkLike_complete,
   SinkLike_isCompleted,
-  ThrowBackpressureStrategy,
 } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
@@ -91,11 +86,6 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
       [FlowControllerLike_isReady]: false,
     }),
     proto({
-      [BackPressureConfig_strategy]:
-        ThrowBackpressureStrategy as BackpressureStrategy,
-
-      [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
-
       [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike<T>,
         callback: SideEffect1<void>,
