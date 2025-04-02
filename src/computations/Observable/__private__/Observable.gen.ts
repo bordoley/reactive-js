@@ -78,6 +78,9 @@ const genFactory =
           if (shouldYield) {
             yield delay;
           }
+
+          isReady = observer[FlowControllerLike_isReady];
+          isCompleted = observer[SinkLike_isCompleted];
         }
 
         if (isReady && !isCompleted) {
