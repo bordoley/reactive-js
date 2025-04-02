@@ -57,7 +57,13 @@ export type SpringCommand =
 
 export type SpringEvent = SpringCommand | Function1<number, SpringCommand>;
 
-export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {}
+export interface SpringStreamLike
+  extends AnimationLike<SpringEvent, number>,
+    StateStoreStreamLike<SpringEvent, number> {}
+
+export interface StateStoreStreamLike<TAction, T>
+  extends StreamLike<TAction, T>,
+    StoreLike<T> {}
 
 /**
  * @noInheritDoc
@@ -67,7 +73,7 @@ export interface StreamableModule {
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
-  ): StreamableLike<TAction, T>;
+  ): StreamableLike<TAction, T, StateStoreStreamLike<TAction, T>>;
 
   animation<T>(
     animation: PureSynchronousObservableLike<T>,
@@ -119,7 +125,7 @@ export interface StreamableModule {
   stateStore<T>(
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
-  ): StreamableLike<Updater<T>, T>;
+  ): StreamableLike<Updater<T>, T, StateStoreStreamLike<Updater<T>, T>>;
 
   syncState<T>(
     onInit: Function1<T, ObservableLike<Updater<T>>>,

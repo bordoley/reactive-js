@@ -11,6 +11,7 @@
 - [AnimationGroupLike](interfaces/AnimationGroupLike.md)
 - [AnimationLike](interfaces/AnimationLike.md)
 - [SpringStreamLike](interfaces/SpringStreamLike.md)
+- [StateStoreStreamLike](interfaces/StateStoreStreamLike.md)
 - [StreamableModule](interfaces/StreamableModule.md)
 
 ## Type Aliases

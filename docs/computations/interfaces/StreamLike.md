@@ -16,6 +16,7 @@ be consumed.
 ## Extended by
 
 - [`AnimationLike`](../Streamable/interfaces/AnimationLike.md)
+- [`StateStoreStreamLike`](../Streamable/interfaces/StateStoreStreamLike.md)
 
 ## Type Parameters
 

@@ -36,7 +36,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
   type TProperties = {
     [AnimationLike_isRunning]: WritableStoreLike<boolean>;
   };
-  const AnimationStream_create = mixInstanceFactory(
+  const createAnimationStream = mixInstanceFactory(
     include(StreamMixin()),
     function AnimationStream(
       this: TProperties,
@@ -87,7 +87,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
       | PureSynchronousObservableLike<T>,
   ): StreamableLike<TEvent, T, Streamable.AnimationLike<TEvent, T>> => ({
     [StreamableLike_stream]: (scheduler, options) =>
-      AnimationStream_create(animation, scheduler, options),
+      createAnimationStream(animation, scheduler, options),
   });
 })();
 

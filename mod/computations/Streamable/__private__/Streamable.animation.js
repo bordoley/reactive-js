@@ -9,7 +9,7 @@ import * as WritableStore from "../../WritableStore.js";
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 export const AnimationLike_isRunning = Symbol("AnimationLike_isRunning");
 const Streamable_animation = /*@__PURE__*/ (() => {
-    const AnimationStream_create = mixInstanceFactory(include(StreamMixin()), function AnimationStream(animation, scheduler, options) {
+    const createAnimationStream = mixInstanceFactory(include(StreamMixin()), function AnimationStream(animation, scheduler, options) {
         const animationIsRunning = WritableStore.create(false);
         this[AnimationLike_isRunning] = animationIsRunning;
         const operator = compose(Observable.map((event) => pipe(isFunction(animation) ? animation(event) : animation, Observable.withEffect(() => {
@@ -27,7 +27,7 @@ const Streamable_animation = /*@__PURE__*/ (() => {
         [AnimationLike_isRunning]: none,
     }));
     return (animation) => ({
-        [StreamableLike_stream]: (scheduler, options) => AnimationStream_create(animation, scheduler, options),
+        [StreamableLike_stream]: (scheduler, options) => createAnimationStream(animation, scheduler, options),
     });
 })();
 export default Streamable_animation;

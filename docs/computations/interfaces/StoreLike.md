@@ -12,6 +12,7 @@
 
 ## Extended by
 
+- [`StateStoreStreamLike`](../Streamable/interfaces/StateStoreStreamLike.md)
 - [`WritableStoreLike`](WritableStoreLike.md)
 
 ## Type Parameters

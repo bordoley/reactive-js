@@ -23,7 +23,9 @@ export type SpringCommand = number | ReadonlyArray<number> | {
     readonly precision?: number;
 };
 export type SpringEvent = SpringCommand | Function1<number, SpringCommand>;
-export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {
+export interface SpringStreamLike extends AnimationLike<SpringEvent, number>, StateStoreStreamLike<SpringEvent, number> {
+}
+export interface StateStoreStreamLike<TAction, T> extends StreamLike<TAction, T>, StoreLike<T> {
 }
 /**
  * @noInheritDoc
@@ -31,7 +33,7 @@ export interface SpringStreamLike extends AnimationLike<SpringEvent, number> {
 export interface StreamableModule {
     actionReducer<TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
-    }): StreamableLike<TAction, T>;
+    }): StreamableLike<TAction, T, StateStoreStreamLike<TAction, T>>;
     animation<T>(animation: PureSynchronousObservableLike<T>): StreamableLike<void, T, AnimationLike<void, T>>;
     animation<T, TEvent>(animation: Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>): StreamableLike<TEvent, T, AnimationLike<TEvent, T>>;
     animationGroup<T, TKey extends string = string>(animationGroup: ReadonlyObjectMapLike<TKey, PureSynchronousObservableLike<T>>, options?: {
@@ -59,7 +61,7 @@ export interface StreamableModule {
      */
     stateStore<T>(initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
-    }): StreamableLike<Updater<T>, T>;
+    }): StreamableLike<Updater<T>, T, StateStoreStreamLike<Updater<T>, T>>;
     syncState<T>(onInit: Function1<T, ObservableLike<Updater<T>>>, onChange: Function2<T, T, ObservableLike<Updater<T>>>, options?: {
         readonly throttleDuration?: number;
     }): Function1<StreamableLike<Updater<T>, T>, StreamableLike<Updater<T>, T>>;
