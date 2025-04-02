@@ -6,7 +6,7 @@
 
 # Function: toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<readonly `T`[]\>\>
+> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, readonly `T`[]\>
 
 ## Type Parameters
 
@@ -22,4 +22,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<readonly `T`[]\>\>
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, readonly `T`[]\>

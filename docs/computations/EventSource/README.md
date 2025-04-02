@@ -13,5 +13,6 @@
 ## Functions
 
 - [lastAsync](functions/lastAsync.md)
+- [reduceAsync](functions/reduceAsync.md)
 - [subscribe](functions/subscribe.md)
 - [toReadonlyArrayAsync](functions/toReadonlyArrayAsync.md)

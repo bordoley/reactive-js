@@ -12,6 +12,14 @@ export const lastAsync = (options) => async (src) => {
     await DisposableContainer.toPromise(observer);
     return observer[CollectionEnumeratorLike_peek];
 };
+export const reduceAsync = (reducer, initialValue, options) => async (src) => {
+    const scheduler = options?.scheduler ?? DefaultScheduler.get();
+    const ref = [initialValue()];
+    const observer = Observer.reducer(reducer, ref, scheduler);
+    src[EventSourceLike_subscribe](observer);
+    await DisposableContainer.toPromise(observer);
+    return ref[0];
+};
 export const subscribe = (options) => (src) => {
     const scheduler = options?.scheduler ?? DefaultScheduler.get();
     const observer = Observer.takeLast(0, scheduler);

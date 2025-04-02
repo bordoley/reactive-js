@@ -5,7 +5,7 @@ import {
   props,
   proto,
 } from "../../__internal__/mixins.js";
-import { none } from "../../functions.js";
+import { Reducer, none } from "../../functions.js";
 import {
   CollectionEnumeratorLike,
   EventListenerLike_notify,
@@ -20,6 +20,7 @@ import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "../__mixins__/DisposeOnCompleteSinkMixin.js";
+import { ReducerSinkMixin } from "../__mixins__/ReducerSinkMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
 
 export const collect: <T>(
@@ -121,6 +122,40 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
       return this;
     },
   ))();
+
+export const reducer: <T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  ref: [TAcc],
+  scheduler: SchedulerLike,
+) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
+  type TPrototype = Pick<
+    ObserverLike<T>,
+    | typeof FlowControllerLike_isReady
+    | typeof FlowControllerLike_addOnReadyListener
+  >;
+
+  return mixInstanceFactory(
+    include(ReducerSinkMixin(), DelegatingSchedulerMixin),
+    function CollectObserver(
+      this: TPrototype,
+      reducer: Reducer<T, TAcc>,
+      ref: [TAcc],
+      scheduler: SchedulerLike,
+    ): ObserverLike<T> {
+      init(ReducerSinkMixin<T, TAcc>(), this, reducer, ref);
+      init(DelegatingSchedulerMixin, this, scheduler);
+
+      return this;
+    },
+    props(),
+    proto<TPrototype>({
+      [FlowControllerLike_isReady]: true as const,
+      [FlowControllerLike_addOnReadyListener]() {
+        return Disposable.disposed;
+      },
+    }),
+  );
+})();
 
 export const takeLast: <T>(
   capacity: number,

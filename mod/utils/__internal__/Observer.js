@@ -9,6 +9,7 @@ import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "../__mixins__/DisposeOnCompleteSinkMixin.js";
+import { ReducerSinkMixin } from "../__mixins__/ReducerSinkMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
 export const collect = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(CollectorSinkMixin(), DelegatingSchedulerMixin), function CollectObserver(buffer, scheduler) {
@@ -43,6 +44,18 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/
     init(DelegatingSchedulerMixin, this, delegate);
     return this;
 }))();
+export const reducer = /*@__PURE__*/ (() => {
+    return mixInstanceFactory(include(ReducerSinkMixin(), DelegatingSchedulerMixin), function CollectObserver(reducer, ref, scheduler) {
+        init(ReducerSinkMixin(), this, reducer, ref);
+        init(DelegatingSchedulerMixin, this, scheduler);
+        return this;
+    }, props(), proto({
+        [FlowControllerLike_isReady]: true,
+        [FlowControllerLike_addOnReadyListener]() {
+            return Disposable.disposed;
+        },
+    }));
+})();
 export const takeLast = /*@__PURE__*/ (() => mixInstanceFactory(include(TakeLastConsumerMixin(), DelegatingSchedulerMixin), function TakeLastObserver(capacity, scheduler) {
     init(TakeLastConsumerMixin(), this, capacity);
     init(DelegatingSchedulerMixin, this, scheduler);

@@ -10,7 +10,7 @@
 
 ### lastAsync()
 
-> **lastAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+> **lastAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -26,7 +26,39 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<[`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>\>
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<`T`\>\>
+
+***
+
+### reduceAsync()
+
+> **reduceAsync**\<`T`, `TAcc`\>(`reducer`, `initialValue`, `options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `TAcc`\>
+
+#### Type Parameters
+
+• **T**
+
+• **TAcc**
+
+#### Parameters
+
+##### reducer
+
+[`Reducer`](../../../functions/type-aliases/Reducer.md)\<`T`, `TAcc`\>
+
+##### initialValue
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`TAcc`\>
+
+##### options?
+
+###### scheduler
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+#### Returns
+
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `TAcc`\>
 
 ***
 
@@ -54,7 +86,7 @@
 
 ### toReadonlyArrayAsync()
 
-> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<readonly `T`[]\>\>
+> **toReadonlyArrayAsync**\<`T`\>(`options`?): [`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, readonly `T`[]\>
 
 #### Type Parameters
 
@@ -70,4 +102,4 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, `Promise`\<readonly `T`[]\>\>
+[`AsyncFunction1`](../../../functions/type-aliases/AsyncFunction1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, readonly `T`[]\>
