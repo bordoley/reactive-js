@@ -23,7 +23,7 @@ const SequentialComputationModuleTests = (m) => describe("SequentialComputationM
         result = e.cause;
     }), m.toProducer(), EventSource.toReadonlyArrayAsync());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-}), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m), Computation.concatWith(m)(Computation.raise(m)), m.catchError(pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m))), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("forEach", testAsync("invokes the effect for each notified value", async () => {
+}), testAsync("when error handler returns a computation", pipeLazyAsync([1, 2, 3], Computation.fromReadonlyArray(m), Computation.concatWith(m, Computation.raise(m, none, 0)), m.catchError(pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m))), m.toProducer(), EventSource.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("forEach", testAsync("invokes the effect for each notified value", async () => {
     const result = [];
     await pipeAsync([1, 2, 3], Computation.fromReadonlyArray(m), m.forEach((x) => {
         result[Array_push](x + 10);

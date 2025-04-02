@@ -307,7 +307,8 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
               return { counter, replace: true, uri };
             }),
             Observable.fromBroadcaster(),
-            Computation.mergeWith(ObservableModule)(
+            Computation.mergeWith(
+              ObservableModule,
               pipe(
                 [
                   {

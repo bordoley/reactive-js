@@ -8,8 +8,6 @@
 
 ## Interfaces
 
-- [ConcatWithOperator](interfaces/ConcatWithOperator.md)
-- [MergeWithOperator](interfaces/MergeWithOperator.md)
 - [Signature](interfaces/Signature.md)
 
 ## Functions

@@ -72,7 +72,8 @@ const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
             Element_eventSource<HTMLElement, "scroll">("scroll", {
               autoDispose: true,
             }),
-            Computation.mergeWith(BroadcasterModule)(
+            Computation.mergeWith(
+              BroadcasterModule,
               Element_windowResizeEventSource(),
               pipe(
                 element,

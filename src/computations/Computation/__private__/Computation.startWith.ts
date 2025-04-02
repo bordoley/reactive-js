@@ -26,7 +26,7 @@ const Computation_startWith: Computation.Signature["startWith"] = (<
     pipe(
       values,
       Computation_fromReadonlyArray(m),
-      Computation_concatWith(m)<T>(computation),
+      Computation_concatWith(m, computation),
     )) as Computation.Signature["startWith"];
 
 export default Computation_startWith;

@@ -11,6 +11,7 @@ import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   ComputationModule,
   ComputationTypeLike,
+  ComputationTypeOfModule,
   SequentialComputationModule,
 } from "../../../computations.js";
 import {
@@ -92,7 +93,10 @@ const SequentialComputationModuleTests = <
         pipeLazyAsync(
           [1, 2, 3],
           Computation.fromReadonlyArray(m),
-          Computation.concatWith(m)<number>(Computation.raise(m)),
+          Computation.concatWith<ComputationTypeOfModule<typeof m>, number>(
+            m,
+            Computation.raise(m, none, 0),
+          ),
           m.catchError<number>(
             pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)),
           ),

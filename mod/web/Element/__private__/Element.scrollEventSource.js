@@ -49,7 +49,7 @@ const Element_scrollEventSource =
             }));
             pipe(element, Element_eventSource("scroll", {
                 autoDispose: true,
-            }), Computation.mergeWith(BroadcasterModule)(Element_windowResizeEventSource(), pipe(element, Element_eventSource("scrollend", {
+            }), Computation.mergeWith(BroadcasterModule, Element_windowResizeEventSource(), pipe(element, Element_eventSource("scrollend", {
                 autoDispose: true,
             }))), Broadcaster.map(ev => {
                 const { x: prevX, y: prevY, time: prevTime, } = ev.type === "resize" ? createInitialScrollValue() : prev;

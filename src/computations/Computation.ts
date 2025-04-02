@@ -23,7 +23,6 @@ import {
   Optional,
   error,
   identity,
-  memoize,
   pipe,
 } from "../functions.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
@@ -37,32 +36,6 @@ import Computation_isPure from "./Computation/__private__/Computation.isPure.js"
 import Computation_isSynchronous from "./Computation/__private__/Computation.isSynchronous.js";
 import Computation_startWith from "./Computation/__private__/Computation.startWith.js";
 
-export interface ConcatWithOperator<
-  TComputationType extends ComputationTypeLike,
-> {
-  <T>(
-    snd: PureComputationOf<TComputationType, T>,
-    ...tail: readonly PureComputationOf<TComputationType, T>[]
-  ): PureComputationOperator<TComputationType, T, T>;
-  <T>(
-    snd: ComputationOf<TComputationType, T>,
-    ...tail: readonly ComputationOf<TComputationType, T>[]
-  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
-}
-
-export interface MergeWithOperator<
-  TComputationType extends ComputationTypeLike,
-> {
-  <T>(
-    snd: PureComputationOf<TComputationType, T>,
-    ...tail: readonly PureComputationOf<TComputationType, T>[]
-  ): PureComputationOperator<TComputationType, T, T>;
-  <T>(
-    snd: ComputationOf<TComputationType, T>,
-    ...tail: readonly ComputationOf<TComputationType, T>[]
-  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
-}
-
 export interface Signature {
   areAllPure<TComputationType extends Partial<ComputationLike>>(
     computations: readonly TComputationType[],
@@ -74,12 +47,22 @@ export interface Signature {
     [ComputationLike_isSynchronous]: Optional<true>;
   })[];
 
-  concatWith<TComputationType extends ComputationTypeLike>(
+  concatWith<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
       SequentialComputationModule<TComputationType>,
       "concat"
     >,
-  ): ConcatWithOperator<TComputationType>;
+    snd: PureComputationOf<TComputationType, T>,
+    ...tail: readonly PureComputationOf<TComputationType, T>[]
+  ): PureComputationOperator<TComputationType, T, T>;
+  concatWith<TComputationType extends ComputationTypeLike, T>(
+    m: PickComputationModule<
+      SequentialComputationModule<TComputationType>,
+      "concat"
+    >,
+    snd: ComputationOf<TComputationType, T>,
+    ...tail: readonly ComputationOf<TComputationType, T>[]
+  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
   empty<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<ComputationModule<TComputationType>, "genPure">,
@@ -147,12 +130,22 @@ export interface Signature {
     [ComputationModuleLike_computationType]?: ComputationTypeOfModule<TComputationModule>;
   };
 
-  mergeWith<TComputationType extends ComputationTypeLike>(
+  mergeWith<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<
       ReactiveComputationModule<TComputationType>,
       "merge"
     >,
-  ): MergeWithOperator<TComputationType>;
+    snd: PureComputationOf<TComputationType, T>,
+    ...tail: readonly PureComputationOf<TComputationType, T>[]
+  ): PureComputationOperator<TComputationType, T, T>;
+  mergeWith<TComputationType extends ComputationTypeLike, T>(
+    m: PickComputationModule<
+      ReactiveComputationModule<TComputationType>,
+      "merge"
+    >,
+    snd: ComputationOf<TComputationType, T>,
+    ...tail: readonly ComputationOf<TComputationType, T>[]
+  ): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 
   raise<TComputationType extends ComputationTypeLike, T>(
     m: PickComputationModule<ComputationModule<TComputationType>, "genPure">,
@@ -188,19 +181,16 @@ export const isSynchronous: Signature["isSynchronous"] =
 export const makeModule: Signature["makeModule"] =
   identity as Signature["makeModule"];
 
-export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ (<
-  TComputationType extends ComputationTypeLike,
-  TComputationModule extends Pick<
-    ReactiveComputationModule<TComputationType>,
-    "merge"
-  >,
->() =>
-  memoize(
-    (m: TComputationModule) =>
-      <T>(...tail: ComputationOf<TComputationType, T>[]) =>
-      (fst: ComputationOf<TComputationType, T>) =>
-        m.merge<T>(fst, ...tail),
-  ))() as Signature["mergeWith"];
+export const mergeWith: Signature["mergeWith"] =
+  <TComputationType extends ComputationTypeLike, T>(
+    m: PickComputationModule<
+      ReactiveComputationModule<TComputationType>,
+      "merge"
+    >,
+    ...tail: ComputationOf<TComputationType, T>[]
+  ) =>
+  (fst: ComputationOf<TComputationType, T>) =>
+    m.merge(fst, ...tail);
 
 export const raise: Signature["raise"] = (
   m,

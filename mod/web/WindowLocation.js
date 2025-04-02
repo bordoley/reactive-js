@@ -116,7 +116,7 @@ export const subscribe = /*@__PURE__*/ (() => {
                 title,
             });
             return { counter, replace: true, uri };
-        }), Observable.fromBroadcaster(), Computation.mergeWith(ObservableModule)(pipe([
+        }), Observable.fromBroadcaster(), Computation.mergeWith(ObservableModule, pipe([
             {
                 counter: 0,
                 replace: true,
