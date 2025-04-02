@@ -306,6 +306,8 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
                 !this[DisposableLike_isDisposed]
               ) {
                 rescheduleContinuation(this);
+                scheduler[SchedulerMixinLike_currentContinuation] =
+                  oldCurrentContinuation;
                 return;
               }
             }

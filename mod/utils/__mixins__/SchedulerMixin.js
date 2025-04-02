@@ -130,6 +130,8 @@ const SchedulerMixin =
                     if (scheduler[SchedulerLike_shouldYield] &&
                         !this[DisposableLike_isDisposed]) {
                         rescheduleContinuation(this);
+                        scheduler[SchedulerMixinLike_currentContinuation] =
+                            oldCurrentContinuation;
                         return;
                     }
                 }
