@@ -14,7 +14,7 @@ export interface Signature {
         [ComputationLike_isSynchronous]: Optional<true>;
     })[];
     concatWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType>, "concat">>(m: TComputationModule): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
-    empty<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    empty<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, type?: T): NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     endWith<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule, value: T, ...values: readonly T[]): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
     fromReadonlyArray<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
         readonly count?: number;
@@ -31,9 +31,9 @@ export interface Signature {
         [ComputationModuleLike_computationType]?: ComputationTypeOfModule<TComputationModule>;
     };
     mergeWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">>(m: TComputationModule): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
-    raise<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule): <T>(options?: {
+    raise<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
         readonly raise?: Factory<unknown>;
-    }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    }, type?: T): NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     startWith<T, TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<SequentialComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">>(m: TComputationModule, value: T, ...values: readonly T[]): PureComputationOperator<ComputationTypeOfModule<TComputationModule>, T, T>;
 }
 export declare const areAllPure: Signature["areAllPure"];

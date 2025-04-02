@@ -174,7 +174,7 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
         : type === Await || type === Observe
           ? {
               [ComputeEffect_type]: type,
-              [AwaitOrObserveEffect_observable]: Computation.empty(m)(),
+              [AwaitOrObserveEffect_observable]: Computation.empty(m),
               [AwaitOrObserveEffect_subscription]: Disposable.disposed,
               [AwaitOrObserveEffect_value]: none,
               [AwaitOrObserveEffect_hasValue]: false,

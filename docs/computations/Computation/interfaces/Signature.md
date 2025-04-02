@@ -72,9 +72,11 @@ readonly `TComputationType`[]
 
 ### empty()
 
-> **empty**\<`TComputationType`, `TComputationModule`\>(`m`): \<`T`\>() => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
+> **empty**\<`T`, `TComputationType`, `TComputationModule`\>(`m`, `type`?): [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
 
 #### Type Parameters
+
+• **T**
 
 • **TComputationType** *extends* [`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
@@ -86,15 +88,11 @@ readonly `TComputationType`[]
 
 `TComputationModule`
 
+##### type?
+
+`T`
+
 #### Returns
-
-`Function`
-
-##### Type Parameters
-
-• **T**
-
-##### Returns
 
 [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
 
@@ -278,9 +276,11 @@ readonly `T`[]
 
 ### raise()
 
-> **raise**\<`TComputationType`, `TComputationModule`\>(`m`): \<`T`\>(`options`?) => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
+> **raise**\<`T`, `TComputationType`, `TComputationModule`\>(`m`, `options`?, `type`?): [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
 
 #### Type Parameters
+
+• **T**
 
 • **TComputationType** *extends* [`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
@@ -292,23 +292,17 @@ readonly `T`[]
 
 `TComputationModule`
 
-#### Returns
-
-`Function`
-
-##### Type Parameters
-
-• **T**
-
-##### Parameters
-
-###### options?
+##### options?
 
 ###### raise?
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`unknown`\>
 
-##### Returns
+##### type?
+
+`T`
+
+#### Returns
 
 [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
 

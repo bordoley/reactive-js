@@ -168,7 +168,7 @@ describe("merge", test("with sources that have the same delays", () => {
     const env_2 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_2, VirtualTimeScheduler.create(), false);
-        const subscription = pipe(SynchronousObservable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })), SynchronousObservable.concat(SynchronousObservable.delay(5), Computation.raise(m)())), EventSource.subscribe({ scheduler: vts }));
+        const subscription = pipe(SynchronousObservable.merge(pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })), SynchronousObservable.concat(SynchronousObservable.delay(5), Computation.raise(m))), EventSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(pipeLazy(subscription, Disposable.raiseIfDisposedWithError), expectToThrow);
     }
@@ -180,7 +180,7 @@ describe("merge", test("with sources that have the same delays", () => {
         __disposeResources(env_2);
     }
 }), test("merging merged sources", () => {
-    pipe(SynchronousObservable.merge(SynchronousObservable.merge(pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })), SynchronousObservable.concat(SynchronousObservable.delay(3), Computation.empty(m)(), pipe([4, 5, 6], Computation.fromReadonlyArray(m, { delay: 1 }))), m.merge(SynchronousObservable.concat(SynchronousObservable.delay(6), Computation.empty(m)(), pipe([7, 8, 9], Computation.fromReadonlyArray(m, { delay: 1 }))), SynchronousObservable.concat(SynchronousObservable.delay(9), Computation.empty(m)(), pipe([10, 11, 12], Computation.fromReadonlyArray(m, { delay: 1 })))))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
+    pipe(SynchronousObservable.merge(SynchronousObservable.merge(pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })), SynchronousObservable.concat(SynchronousObservable.delay(3), Computation.empty(m), pipe([4, 5, 6], Computation.fromReadonlyArray(m, { delay: 1 }))), m.merge(SynchronousObservable.concat(SynchronousObservable.delay(6), Computation.empty(m), pipe([7, 8, 9], Computation.fromReadonlyArray(m, { delay: 1 }))), SynchronousObservable.concat(SynchronousObservable.delay(9), Computation.empty(m), pipe([10, 11, 12], Computation.fromReadonlyArray(m, { delay: 1 })))))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
 })), describe("mergeAll", test("with queueing", pipeLazy([
     pipe([1, 3, 5], Computation.fromReadonlyArray(m, { delay: 3 })),
     pipe([2, 4, 6], Computation.fromReadonlyArray(m, { delay: 3 })),
@@ -235,12 +235,12 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
     delayStart: true,
 }), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(75, { mode: "interval" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
     valuesEquality: arrayEquality(),
-}))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.empty(m)(), returns(1)), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
+}))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.empty(m), returns(1)), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const env_3 = { stack: [], error: void 0, hasError: false };
     try {
         const vts = __addDisposableResource(env_3, VirtualTimeScheduler.create(), false);
         const error = newInstance(Error);
-        const result = pipe([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.raise(m)({
+        const result = pipe([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.raise(m, {
             raise: returns(error),
         }), returns(1)), EventSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();

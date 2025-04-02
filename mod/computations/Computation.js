@@ -23,8 +23,8 @@ export const isPure = Computation_isPure;
 export const isSynchronous = Computation_isSynchronous;
 export const makeModule = identity;
 export const mergeWith = /*@__PURE__*/ (() => memoize((m) => (...tail) => (fst) => m.merge(fst, ...tail)))();
-export const raise = /*@__PURE__*/ memoize(m => (options) => m.genPure(function* RaiseComputation() {
+export const raise = (m, options, _type) => m.genPure(function* RaiseComputation() {
     const { raise: factory = Functions_raise } = options ?? {};
     pipe(factory(), error, Functions_raise);
-}));
+});
 export const startWith = Computation_startWith;

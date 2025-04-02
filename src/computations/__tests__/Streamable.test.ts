@@ -13,6 +13,7 @@ import * as SynchronousObservable from "../../computations/SynchronousObservable
 import { StreamableLike_stream } from "../../computations.js";
 import {
   bindMethod,
+  identity,
   invoke,
   none,
   pipe,
@@ -158,7 +159,8 @@ testModule(
               Observable.map(x => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),
-          (_oldState, _newState) => Computation.empty(ObservableModule)(),
+          (_oldState, _newState) =>
+            Computation.empty(ObservableModule, identity<number>),
         ),
         invoke(StreamableLike_stream, vts),
       );

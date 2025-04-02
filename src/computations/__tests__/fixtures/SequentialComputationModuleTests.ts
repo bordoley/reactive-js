@@ -53,12 +53,12 @@ const SequentialComputationModuleTests = <
         const e1 = "e1";
         let result: Optional<string> = none;
         await pipeAsync(
-          Computation.raise(m)<number>({ raise: () => e1 }),
-          m.catchError<number>((e: Error) => {
+          Computation.raise(m, { raise: () => e1 }),
+          m.catchError((e: Error) => {
             result = e.message;
           }),
           m.toProducer(),
-          EventSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync(),
         );
 
         pipe(result, expectEquals<Optional<string>>(e1));
@@ -70,15 +70,15 @@ const SequentialComputationModuleTests = <
         let result: Optional<unknown> = none;
 
         await pipeAsync(
-          Computation.raise(m)<number>({ raise: () => e1 }),
-          m.catchError<number>(_ => {
+          Computation.raise(m, { raise: () => e1 }),
+          m.catchError(_ => {
             throw e2;
           }),
-          m.catchError<number>(e => {
+          m.catchError(e => {
             result = e.cause;
           }),
           m.toProducer(),
-          EventSource.toReadonlyArrayAsync<number>(),
+          EventSource.toReadonlyArrayAsync(),
         );
 
         pipe(
@@ -92,7 +92,7 @@ const SequentialComputationModuleTests = <
         pipeLazyAsync(
           [1, 2, 3],
           Computation.fromReadonlyArray(m),
-          Computation.concatWith(m)<number>(Computation.raise(m)()),
+          Computation.concatWith(m)<number>(Computation.raise(m)),
           m.catchError<number>(
             pipeLazy([4, 5, 6], Computation.fromReadonlyArray(m)),
           ),
@@ -193,7 +193,7 @@ const SequentialComputationModuleTests = <
         pipeLazyAsync(
           m.concat<number>(
             Computation.fromReadonlyArray(m)([1, 2, 3]),
-            Computation.raise(m)<number>(),
+            Computation.raise(m),
           ),
           m.retry<number>(),
           m.takeFirst<number>({ count: 6 }),
@@ -206,8 +206,8 @@ const SequentialComputationModuleTests = <
         "when source and the retry predicate throw",
         pipeLazyAsync(
           pipeLazyAsync(
-            Computation.raise(m)<number>(),
-            m.retry<number>(() => raise("")),
+            Computation.raise(m),
+            m.retry(() => raise("")),
             m.toProducer(),
             EventSource.toReadonlyArrayAsync(),
           ),
@@ -220,7 +220,7 @@ const SequentialComputationModuleTests = <
           pipeLazyAsync(
             m.concat<number>(
               Computation.fromReadonlyArray(m)([1, 2, 3]),
-              Computation.raise(m)(),
+              Computation.raise(m),
             ),
             m.retry<number>((count, _) => count < 2),
             m.takeFirst<number>({ count: 10 }),
@@ -286,10 +286,10 @@ const SequentialComputationModuleTests = <
         const error = new Error();
         await pipe(
           pipeLazy(
-            Computation.empty(m)<number>(),
-            m.throwIfEmpty<number>(() => error),
+            Computation.empty(m),
+            m.throwIfEmpty(() => error),
             m.toProducer(),
-            EventSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync(),
           ),
           expectToThrowErrorAsync(error),
         );
@@ -298,12 +298,12 @@ const SequentialComputationModuleTests = <
         const error = new Error();
         await pipe(
           pipeLazy(
-            Computation.empty(m)<number>(),
-            m.throwIfEmpty<number>(() => {
+            Computation.empty(m),
+            m.throwIfEmpty(() => {
               throw error;
             }),
             m.toProducer(),
-            EventSource.toReadonlyArrayAsync<number>(),
+            EventSource.toReadonlyArrayAsync(),
           ),
           expectToThrowErrorAsync(error),
         );

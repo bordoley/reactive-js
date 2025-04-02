@@ -48,11 +48,11 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
       testAsync(
         "when source is empty",
         pipeLazyAsync(
-          Computation.empty(m)<number>(),
-          m.distinctUntilChanged<number>(),
+          Computation.empty(m),
+          m.distinctUntilChanged(),
           m.toProducer(),
-          EventSource.toReadonlyArrayAsync<number>(),
-          expectArrayEquals<number>([]),
+          EventSource.toReadonlyArrayAsync(),
+          expectArrayEquals<unknown>([]),
         ),
       ),
       testAsync("when equality operator throws", async () => {
@@ -347,11 +347,11 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
       testAsync(
         "when source is empty",
         pipeLazyAsync(
-          Computation.empty(m)<number>(),
-          m.takeFirst<number>({ count: 3 }),
+          Computation.empty(m),
+          m.takeFirst({ count: 3 }),
           m.toProducer(),
-          EventSource.toReadonlyArrayAsync<number>(),
-          expectArrayEquals<number>([]),
+          EventSource.toReadonlyArrayAsync(),
+          expectArrayEquals<unknown>([]),
         ),
       ),
       testAsync(
@@ -399,11 +399,11 @@ const ComputationModuleTests = <TComputationType extends ComputationTypeLike>(
         );
 
         await pipeAsync(
-          Computation.empty(m)<number>(),
-          m.takeWhile<number>(alwaysTrue),
+          Computation.empty(m),
+          m.takeWhile(alwaysTrue),
           m.toProducer(),
-          EventSource.toReadonlyArrayAsync<number>(),
-          expectArrayEquals([] as number[]),
+          EventSource.toReadonlyArrayAsync(),
+          expectArrayEquals<unknown>([]),
         );
       }),
       testAsync(

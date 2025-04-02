@@ -85,6 +85,7 @@ export interface Signature {
   ): ConcatWithOperator<ComputationTypeOfModule<TComputationModule>>;
 
   empty<
+    T,
     TComputationType extends ComputationTypeLike,
     TComputationModule extends PickComputationModule<
       ComputationModule<TComputationType>,
@@ -92,7 +93,8 @@ export interface Signature {
     >,
   >(
     m: TComputationModule,
-  ): <T>() => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    type?: T,
+  ): NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   endWith<
     T,
@@ -170,6 +172,7 @@ export interface Signature {
   ): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
 
   raise<
+    T,
     TComputationType extends ComputationTypeLike,
     TComputationModule extends PickComputationModule<
       ComputationModule<TComputationType>,
@@ -177,9 +180,11 @@ export interface Signature {
     >,
   >(
     m: TComputationModule,
-  ): <T>(options?: {
-    readonly raise?: Factory<unknown>;
-  }) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    options?: {
+      readonly raise?: Factory<unknown>;
+    },
+    type?: T,
+  ): NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
 
   startWith<
     T,
@@ -225,17 +230,16 @@ export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ (<
         m.merge<T>(fst, ...tail),
   ))() as Signature["mergeWith"];
 
-export const raise: Signature["raise"] = /*@__PURE__*/ memoize(
-  m =>
-    <T>(
-      options?: {
-        readonly raise?: Factory<unknown>;
-      } & Parameters<typeof m.genPure>[1],
-    ) =>
-      m.genPure<T>(function* RaiseComputation() {
-        const { raise: factory = Functions_raise } = options ?? {};
-        pipe(factory(), error, Functions_raise);
-      }),
-) as Signature["raise"];
+export const raise: Signature["raise"] = (
+  m,
+  options?: {
+    readonly raise?: Factory<unknown>;
+  } & Parameters<typeof m.genPure>[1],
+  _type?,
+) =>
+  m.genPure(function* RaiseComputation() {
+    const { raise: factory = Functions_raise } = options ?? {};
+    pipe(factory(), error, Functions_raise);
+  });
 
 export const startWith: Signature["startWith"] = Computation_startWith;

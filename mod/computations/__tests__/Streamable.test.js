@@ -57,7 +57,7 @@ import { describe, expectArrayEquals, expectEquals, expectFalse, expectTrue, tes
 import * as Streamable from "../../computations/Streamable.js";
 import * as SynchronousObservable from "../../computations/SynchronousObservable.js";
 import { StreamableLike_stream } from "../../computations.js";
-import { bindMethod, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
+import { bindMethod, identity, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import { DropLatestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
@@ -170,7 +170,7 @@ describe("stateStore", test("stateStore", () => {
         const stream = pipe(Streamable.stateStore(returns(-1)), Streamable.syncState(_ => pipe([9, 10, 50, 60, 70], Computation.fromReadonlyArray(ObservableModule, {
             delay: 1,
             delayStart: true,
-        }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (_oldState, _newState) => Computation.empty(ObservableModule)()), invoke(StreamableLike_stream, vts));
+        }), Observable.map(x => (_) => x), Observable.takeFirst({ count: 2 })), (_oldState, _newState) => Computation.empty(ObservableModule, (identity))), invoke(StreamableLike_stream, vts));
         pipe([(x) => x + 2], Computation.fromReadonlyArray(ObservableModule, {
             delay: 5,
             delayStart: true,

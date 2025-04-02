@@ -301,7 +301,7 @@ testModule(
           pipe([1, 4, 7], Computation.fromReadonlyArray(m, { delay: 2 })),
           SynchronousObservable.concat(
             SynchronousObservable.delay(5),
-            Computation.raise(m)(),
+            Computation.raise(m),
           ),
         ),
         EventSource.subscribe({ scheduler: vts }),
@@ -321,18 +321,18 @@ testModule(
             pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })),
             SynchronousObservable.concat(
               SynchronousObservable.delay(3),
-              Computation.empty(m)(),
+              Computation.empty(m),
               pipe([4, 5, 6], Computation.fromReadonlyArray(m, { delay: 1 })),
             ),
             m.merge<number>(
               SynchronousObservable.concat(
                 SynchronousObservable.delay(6),
-                Computation.empty(m)(),
+                Computation.empty(m),
                 pipe([7, 8, 9], Computation.fromReadonlyArray(m, { delay: 1 })),
               ),
               SynchronousObservable.concat(
                 SynchronousObservable.delay(9),
-                Computation.empty(m)(),
+                Computation.empty(m),
                 pipe(
                   [10, 11, 12],
                   Computation.fromReadonlyArray(m, { delay: 1 }),
@@ -534,7 +534,7 @@ testModule(
         [0],
         Computation.fromReadonlyArray(m, { delay: 1 }),
         SynchronousObservable.withLatestFrom(
-          Computation.empty(m)(),
+          Computation.empty(m),
 
           returns(1),
         ),
@@ -551,7 +551,7 @@ testModule(
         [0],
         Computation.fromReadonlyArray(m, { delay: 1 }),
         SynchronousObservable.withLatestFrom(
-          Computation.raise(m)<number>({
+          Computation.raise(m, {
             raise: returns(error),
           }),
           returns(1),

@@ -6,9 +6,11 @@
 
 # Function: empty()
 
-> **empty**\<`TComputationType`, `TComputationModule`\>(`m`): \<`T`\>() => [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
+> **empty**\<`T`, `TComputationType`, `TComputationModule`\>(`m`, `type`?): [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
 
 ## Type Parameters
+
+• **T**
 
 • **TComputationType** *extends* [`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>
 
@@ -20,14 +22,10 @@
 
 `TComputationModule`
 
+### type?
+
+`T`
+
 ## Returns
-
-`Function`
-
-### Type Parameters
-
-• **T**
-
-### Returns
 
 [`NewPureInstanceOf`](../../type-aliases/NewPureInstanceOf.md)\<[`ComputationTypeOfModule`](../../type-aliases/ComputationTypeOfModule.md)\<`TComputationModule`\>, `T`\>
