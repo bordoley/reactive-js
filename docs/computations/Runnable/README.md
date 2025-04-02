@@ -33,6 +33,7 @@
 - [last](functions/last.md)
 - [map](functions/map.md)
 - [pairwise](functions/pairwise.md)
+- [reduce](functions/reduce.md)
 - [repeat](functions/repeat.md)
 - [retry](functions/retry.md)
 - [scan](functions/scan.md)

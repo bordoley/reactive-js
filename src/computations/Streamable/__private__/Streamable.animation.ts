@@ -2,6 +2,7 @@ import {
   include,
   init,
   mixInstanceFactory,
+  props,
 } from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isPure,
@@ -16,17 +17,11 @@ import {
   Optional,
   compose,
   isFunction,
+  none,
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
-import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
-import {
-  BackpressureStrategy,
-  DisposableLike,
-  PauseableLike_resume,
-  SchedulerLike,
-} from "../../../utils.js";
+import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import * as WritableStore from "../../WritableStore.js";
@@ -42,7 +37,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
     [AnimationLike_isRunning]: WritableStoreLike<boolean>;
   };
   const AnimationStream_create = mixInstanceFactory(
-    include(StreamMixin(), DelegatingPauseableMixin),
+    include(StreamMixin()),
     function AnimationStream(
       this: TProperties,
       animation:
@@ -54,8 +49,7 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
       }>,
-    ): Streamable.AnimationLike<TEvent, T> & DisposableLike {
-      const pauseableScheduler = PauseableScheduler.create(scheduler);
+    ): Streamable.AnimationLike<TEvent, T> {
       const animationIsRunning = WritableStore.create(false);
       this[AnimationLike_isRunning] = animationIsRunning;
 
@@ -74,18 +68,17 @@ const Streamable_animation: Streamable.Signature["animation"] = /*@__PURE__*/ (<
         Observable.switchAll({
           [ComputationLike_isPure]: false,
         }),
-        Observable.subscribeOn(pauseableScheduler),
       );
 
       init(StreamMixin<TEvent, T>(), this, operator, scheduler, options);
-      init(DelegatingPauseableMixin, this, pauseableScheduler);
 
       pipe(animationIsRunning, Disposable.addTo(this));
 
-      this[PauseableLike_resume]();
-
       return this;
     },
+    props<TProperties>({
+      [AnimationLike_isRunning]: none,
+    }),
   );
 
   return (

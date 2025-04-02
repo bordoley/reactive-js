@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.d.ts" />
 
 import { Computation_baseOfT, } from "../computations.js";
-import { identity, returns } from "../functions.js";
+import { identity, returns, } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -16,6 +16,7 @@ import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
+import Runnable_reduce from "./Runnable/__private__/Runnable.reduce.js";
 import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
@@ -43,6 +44,7 @@ export const keep = Runnable_keep;
 export const map = Runnable_map;
 export const last = Runnable_last;
 export const pairwise = Runnable_pairwise;
+export const reduce = Runnable_reduce;
 export const repeat = Runnable_repeat;
 export const retry = Runnable_retry;
 export const scan = Runnable_scan;

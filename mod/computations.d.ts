@@ -203,7 +203,6 @@ export interface SequentialComputationModule<TComputationType extends Computatio
     withEffect<T>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 }
 export interface SynchronousComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
-    toObservable?: Record<string, any>;
     toRunnable?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     toRunnable<T>(options?: TCreationOptions["toRunnable"]): <TComputationOf extends ComputationOf<TComputationType, T>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputationType, T> ? PureRunnableLike<T> : TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ? RunnableWithSideEffectsLike<T> : never;

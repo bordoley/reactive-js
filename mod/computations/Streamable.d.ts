@@ -1,13 +1,13 @@
 import { DictionaryLike, ReadonlyObjectMapLike } from "../collections.js";
 import { BroadcasterLike, ObservableLike, PureObservableLike, PureSynchronousObservableLike, StoreLike, StreamLike, StreamableLike } from "../computations.js";
 import { Equality, Factory, Function1, Function2, Reducer, Updater } from "../functions.js";
-import { PauseableLike, SchedulerLike } from "../utils.js";
+import { SchedulerLike } from "../utils.js";
 import { AnimationLike_isRunning as Animation_isRunning } from "./Streamable/__private__/Streamable.animation.js";
 export declare const AnimationLike_isRunning: typeof Animation_isRunning;
 /**
  * @noInheritDoc
  */
-export interface AnimationLike<TEvent, out T> extends StreamLike<TEvent, T>, PauseableLike {
+export interface AnimationLike<TEvent, out T> extends StreamLike<TEvent, T> {
     readonly [AnimationLike_isRunning]: StoreLike<boolean>;
 }
 /**
@@ -43,7 +43,6 @@ export interface StreamableModule {
     create<TReq, T>(op: Function1<PureObservableLike<TReq>, ObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
     spring(options?: {
-        readonly animationScheduler?: SchedulerLike;
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
@@ -70,5 +69,6 @@ export declare const create: Signature["create"];
 export declare const actionReducer: Signature["actionReducer"];
 export declare const animation: Signature["animation"];
 export declare const identity: Signature["identity"];
+export declare const spring: Signature["spring"];
 export declare const stateStore: Signature["stateStore"];
 export declare const syncState: Signature["syncState"];

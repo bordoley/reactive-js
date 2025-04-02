@@ -468,7 +468,6 @@ export interface SequentialComputationModule<
 export interface SynchronousComputationModule<
   TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
-    toObservable?: Record<string, any>;
     toRunnable?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {

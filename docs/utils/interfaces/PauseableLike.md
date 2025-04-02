@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`AnimationLike`](../../computations/Streamable/interfaces/AnimationLike.md)
 - [`StreamLike`](../../computations/interfaces/StreamLike.md)
 - [`PauseableSchedulerLike`](PauseableSchedulerLike.md)
 

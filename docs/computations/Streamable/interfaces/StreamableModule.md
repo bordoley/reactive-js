@@ -184,10 +184,6 @@
 
 ##### options?
 
-###### animationScheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
 ###### damping?
 
 `number`

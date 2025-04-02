@@ -9,7 +9,14 @@ import {
   SequentialReactiveComputationModule,
   SynchronousComputationModule,
 } from "../computations.js";
-import { Function1, Optional, identity, returns } from "../functions.js";
+import {
+  Factory,
+  Function1,
+  Optional,
+  Reducer,
+  identity,
+  returns,
+} from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";
 import Runnable_concat from "./Runnable/__private__/Runnable.concat.js";
@@ -27,6 +34,7 @@ import Runnable_keep from "./Runnable/__private__/Runnable.keep.js";
 import Runnable_last from "./Runnable/__private__/Runnable.last.js";
 import Runnable_map from "./Runnable/__private__/Runnable.map.js";
 import Runnable_pairwise from "./Runnable/__private__/Runnable.pairwise.js";
+import Runnable_reduce from "./Runnable/__private__/Runnable.reduce.js";
 import Runnable_repeat from "./Runnable/__private__/Runnable.repeat.js";
 import Runnable_retry from "./Runnable/__private__/Runnable.retry.js";
 import Runnable_scan from "./Runnable/__private__/Runnable.scan.js";
@@ -61,6 +69,11 @@ export interface RunnableModule
 
   last<T>(): Function1<RunnableLike<T>, Optional<T>>;
 
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<RunnableLike<T>, TAcc>;
+
   toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
 }
 
@@ -84,6 +97,7 @@ export const keep: Signature["keep"] = Runnable_keep;
 export const map: Signature["map"] = Runnable_map;
 export const last: Signature["last"] = Runnable_last;
 export const pairwise: Signature["pairwise"] = Runnable_pairwise;
+export const reduce: Signature["reduce"] = Runnable_reduce;
 export const repeat: Signature["repeat"] = Runnable_repeat;
 export const retry: Signature["retry"] = Runnable_retry;
 export const scan: Signature["scan"] = Runnable_scan;

@@ -8,7 +8,7 @@ import {
   proto,
 } from "../../__internal__/mixins.js";
 import { LiftedSinkLike } from "../../computations/__internal__/LiftedSource.js";
-import { Function1, SideEffect1 } from "../../functions.js";
+import { Function1, Reducer, SideEffect1 } from "../../functions.js";
 import {
   BackPressureConfig_capacity,
   BackPressureConfig_strategy,
@@ -26,6 +26,7 @@ import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.j
 import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
+import { ReducerSinkMixin } from "../__mixins__/ReducerSinkMixin.js";
 import { Sink_toLiftedSink } from "./Sink/__private__/Sink.toLiftedSink.js";
 
 export const collect: <T>(buffer: T[]) => SinkLike<T> = /*@__PURE__*/ (<T>() =>
@@ -44,6 +45,12 @@ export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
   createInstanceFactory(
     DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin(),
   ))();
+
+export const reducer: <T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  ref: [TAcc],
+) => SinkLike<T> = /*@__PURE__*/ (<T, TAcc>() =>
+  createInstanceFactory(ReducerSinkMixin<T, TAcc>()))();
 
 export const toLiftedSink: <T>() => Function1<
   SinkLike<T>,
