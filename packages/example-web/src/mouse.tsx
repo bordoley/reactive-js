@@ -8,6 +8,7 @@ import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
 import * as WebElement from "@reactive-js/core/web/Element";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Producer from "@reactive-js/core/computations/Producer";
+import * as DefaultScheduler from "@reactive-js/core/utils/DefaultScheduler";
 
 type Point = { x: number; y: number };
 
@@ -19,6 +20,7 @@ const Root = () => {
       Broadcaster.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
       Observable.fromBroadcaster(),
       Observable.throttle(300, { mode: "interval" }),
+      Observable.subscribeOn(DefaultScheduler.get()),
       Observable.scanMany(
         (prev: Point, next: Point) =>
           pipe(
