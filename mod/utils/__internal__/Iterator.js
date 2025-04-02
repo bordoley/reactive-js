@@ -85,17 +85,22 @@ export const toEnumerator = /*@__PURE__*/ (() => {
         [EnumeratorLike_hasCurrent]: false,
     }), proto({
         [EnumeratorLike_moveNext]() {
-            if (this[DisposableLike_isDisposed]) {
-                return false;
-            }
-            this[EnumeratorLike_current] = none;
-            this[EnumeratorLike_hasCurrent] = false;
             const iterator = this[IteratorEnumerator_iterator];
             let hasCurrent = false;
+            let isDisposed = this[DisposableLike_isDisposed];
+            this[EnumeratorLike_current] = none;
+            this[EnumeratorLike_hasCurrent] = false;
+            if (isDisposed) {
+                return false;
+            }
             try {
                 const result = iterator.next();
-                hasCurrent = !result.done;
-                this[EnumeratorLike_current] = result.value;
+                // It's possible that a non-pure iterator could
+                // have access to the enumerator's subscription
+                // and dispose it during the call to
+                isDisposed = this[DisposableLike_isDisposed];
+                hasCurrent = !result.done && !isDisposed;
+                this[EnumeratorLike_current] = hasCurrent ? result.value : none;
                 this[EnumeratorLike_hasCurrent] = hasCurrent;
             }
             catch (e) {

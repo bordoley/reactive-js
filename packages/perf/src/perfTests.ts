@@ -8,11 +8,13 @@ import {
   none,
   Optional,
 } from "@reactive-js/core/functions";
-import * as SynchronousObservable from  "@reactive-js/core/computations/SynchronousObservable"
+import * as SynchronousObservable from "@reactive-js/core/computations/SynchronousObservable";
 import * as Computation from "@reactive-js/core/computations/Computation";
 import * as Runnable from "@reactive-js/core/computations/Runnable";
 
-const m = Computation.makeModule<SynchronousObservable.Computation>()(SynchronousObservable);
+const m = Computation.makeModule<SynchronousObservable.Computation>()(
+  SynchronousObservable,
+);
 
 /**
  * A function that returns the result of summing
@@ -243,7 +245,7 @@ export const scanReduce = (n: number) =>
         Computation.fromReadonlyArray(m),
         SynchronousObservable.scan(sum, returns(0)),
         SynchronousObservable.toRunnable(),
-        Runnable.last()
+        Runnable.last(),
       );
     }),
     benchmarkTest("Runnable", async (src: readonly number[]) => {
