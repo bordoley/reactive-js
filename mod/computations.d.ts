@@ -318,3 +318,22 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
         backpressureStrategy: BackpressureStrategy;
     }): PureComputationOperator<TComputationType, T, T>;
 }
+export interface ScheduledReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
+    compute<T>(computation: Factory<T>, options?: {
+        readonly mode?: "batched" | "combine-latest";
+    }): ComputationWithSideEffectsOf<TComputationType, T>;
+    currentTime: PureComputationOf<TComputationType, number>;
+    delay(duration: number): PureComputationOf<TComputationType, unknown>;
+    keyFrame(duration: number, options?: {
+        readonly easing?: Function1<number, number>;
+    }): PureComputationOf<TComputationType, number>;
+    spring(options?: {
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
+    }): PureComputationOf<TComputationType, number>;
+    throttle<T>(duration: number, options?: {
+        readonly mode?: "first" | "last" | "interval";
+    }): PureComputationOperator<TComputationType, T, T>;
+    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<TComputationType, TA, TB>;
+}

@@ -8,18 +8,20 @@ import {
   DeferredComputationModule,
   DeferredReactiveComputationModule,
   ObservableLike,
-  ObservableWithSideEffectsLike,
   PureComputationOperator,
   ReactiveComputationModule,
+  ScheduledReactiveComputationModule,
 } from "../computations.js";
-import { Factory, Function2, identityLazy } from "../functions.js";
+import { identityLazy } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import { Observable_computeDeferred } from "./Observable/__private__/Observable.compute.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
+import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
+import Observable_delay from "./Observable/__private__/Observable.delay.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
@@ -33,6 +35,7 @@ import {
   Observable_genPureAsync,
 } from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
+import Observable_keyFrame from "./Observable/__private__/Observable.keyFrame.js";
 import {
   Observable_combineLatest,
   Observable_zipLatest,
@@ -49,6 +52,7 @@ import Observable_retry from "./Observable/__private__/Observable.retry.js";
 import Observable_scan from "./Observable/__private__/Observable.scan.js";
 import Observable_scanMany from "./Observable/__private__/Observable.scanMany.js";
 import Observable_skipFirst from "./Observable/__private__/Observable.skipFirst.js";
+import Observable_spring from "./Observable/__private__/Observable.spring.js";
 import Observable_subscribeOn from "./Observable/__private__/Observable.subscribeOn.js";
 import Observable_switchAll from "./Observable/__private__/Observable.switchAll.js";
 import Observable_takeFirst from "./Observable/__private__/Observable.takeFirst.js";
@@ -102,26 +106,11 @@ export interface ObservableModule
       }
     >,
     DeferredReactiveComputationModule<ObservableComputation>,
-    ConcurrentReactiveComputationModule<ObservableComputation> {
-  compute<T>(
-    computation: Factory<T>,
-    options?: {
-      readonly mode?: ComputeMode;
-    },
-  ): ObservableWithSideEffectsLike<T>;
-
+    ConcurrentReactiveComputationModule<ObservableComputation>,
+    ScheduledReactiveComputationModule<ObservableComputation> {
   subscribeOn<T>(
     scheduler: SchedulerLike,
   ): PureComputationOperator<ObservableComputation, T, T>;
-
-  throttle<T>(
-    duration: number,
-    options?: { readonly mode?: ThrottleMode },
-  ): PureComputationOperator<ObservableComputation, T, T>;
-
-  withCurrentTime<TA, TB>(
-    selector: Function2<number, TA, TB>,
-  ): PureComputationOperator<ObservableComputation, TA, TB>;
 }
 
 export type Signature = ObservableModule;
@@ -133,8 +122,10 @@ export const combineLatest: Signature["combineLatest"] =
 export const compute: Signature["compute"] = Observable_computeDeferred;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = Observable_concatAll;
+export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
+export const delay: Signature["delay"] = Observable_delay;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
@@ -151,6 +142,7 @@ export const genAsync: Signature["genAsync"] = Observable_genAsync;
 export const genPure: Signature["genPure"] = Observable_genPure;
 export const genPureAsync: Signature["genPureAsync"] = Observable_genPureAsync;
 export const keep: Signature["keep"] = Observable_keep;
+export const keyFrame: Signature["keyFrame"] = Observable_keyFrame;
 export const map: Signature["map"] = Observable_map;
 export const merge: Signature["merge"] = Observable_merge;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
@@ -160,6 +152,7 @@ export const retry: Signature["retry"] = Observable_retry;
 export const scan: Signature["scan"] = Observable_scan;
 export const scanMany: Signature["scanMany"] = Observable_scanMany;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
+export const spring: Signature["spring"] = Observable_spring;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const switchAll: Signature["switchAll"] = Observable_switchAll;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;

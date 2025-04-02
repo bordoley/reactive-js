@@ -6,7 +6,7 @@
 
 # Function: compute()
 
-> **compute**\<`T`\>(`computation`, `options`?): [`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
+> **compute**\<`T`\>(`computation`, `options`?): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ## Type Parameters
 
@@ -22,8 +22,8 @@
 
 #### mode?
 
-[`ComputeMode`](../type-aliases/ComputeMode.md)
+`"batched"` \| `"combine-latest"`
 
 ## Returns
 
-[`ObservableWithSideEffectsLike`](../../interfaces/ObservableWithSideEffectsLike.md)\<`T`\>
+[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)

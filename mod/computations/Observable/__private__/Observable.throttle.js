@@ -8,7 +8,7 @@ import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
-import SynchronousObservable_delay from "../../SynchronousObservable/__private__/SynchronousObservable.delay.js";
+import Observable_delay from "../../Observable/__private__/Observable.delay.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
 import DelegatingLiftedSinkMixin, { DelegatingLiftedSinkLike_onCompleted, } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_lift from "./Observable.lift.js";
@@ -82,7 +82,7 @@ const createThrottleSink = /*@__PURE__*/ (() => {
 })();
 const Observable_throttle = ((duration, options = {}) => {
     const { mode = ThrottleIntervalMode } = options;
-    const durationObservable = returns(SynchronousObservable_delay(duration));
+    const durationObservable = returns(Observable_delay(duration));
     return pipe((createThrottleSink), partial(durationObservable, mode), Observable_lift());
 });
 export default Observable_throttle;

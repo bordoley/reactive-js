@@ -30,8 +30,8 @@ import {
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
+import Observable_delay from "../../Observable/__private__/Observable.delay.js";
 import type * as Observable from "../../Observable.js";
-import SynchronousObservable_delay from "../../SynchronousObservable/__private__/SynchronousObservable.delay.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -185,7 +185,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (<T>(
 ) => {
   const { mode = ThrottleIntervalMode } = options;
 
-  const durationObservable = returns(SynchronousObservable_delay(duration));
+  const durationObservable = returns(Observable_delay(duration));
 
   return pipe(
     createThrottleSink<T>,

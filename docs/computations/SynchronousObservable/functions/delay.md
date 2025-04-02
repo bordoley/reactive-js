@@ -6,7 +6,7 @@
 
 # Function: delay()
 
-> **delay**(`duration`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
+> **delay**(`duration`): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)

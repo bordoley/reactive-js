@@ -1,11 +1,11 @@
 import { EventSourceLike_subscribe } from "../../../computations.js";
 import { invoke, pipe } from "../../../functions.js";
 import { ObserverLike, SchedulerLike_now } from "../../../utils.js";
-import { Observable_genPure } from "../../Observable/__private__/Observable.gen.js";
-import type * as SynchronousObservable from "../../SynchronousObservable.js";
+import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
+import { Observable_genPure } from "./Observable.gen.js";
 
-const SynchronousObservable_currentTime: SynchronousObservable.Signature["currentTime"] =
+const Observable_currentTime: Observable.Signature["currentTime"] =
   /*@__PURE__*/ DeferredEventSource.create<number, ObserverLike<number>>(
     (observer: ObserverLike<number>) =>
       pipe(
@@ -18,4 +18,4 @@ const SynchronousObservable_currentTime: SynchronousObservable.Signature["curren
       ),
   );
 
-export default SynchronousObservable_currentTime;
+export default Observable_currentTime;

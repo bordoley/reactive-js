@@ -1,5 +1,4 @@
-import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, DeferredComputationModule, DeferredReactiveComputationModule, PureComputationOperator, PureSynchronousObservableLike, ReactiveComputationModule, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
-import { Factory, Function1, Function2 } from "../functions.js";
+import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, DeferredComputationModule, DeferredReactiveComputationModule, ReactiveComputationModule, ScheduledReactiveComputationModule, SynchronousComputationModule, SynchronousObservableLike } from "../computations.js";
 import { SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
@@ -27,24 +26,7 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
     toRunnable: {
         readonly maxMicroTaskTicks?: number;
     };
-}>, DeferredReactiveComputationModule<SynchronousObservableComputation> {
-    compute<T>(computation: Factory<T>, options?: {
-        readonly mode?: ComputeMode;
-    }): SynchronousObservableWithSideEffectsLike<T>;
-    currentTime: PureSynchronousObservableLike<number>;
-    delay(duration: number): PureSynchronousObservableLike;
-    keyFrame(duration: number, options?: {
-        readonly easing?: Function1<number, number>;
-    }): PureSynchronousObservableLike<number>;
-    spring(options?: {
-        readonly stiffness?: number;
-        readonly damping?: number;
-        readonly precision?: number;
-    }): PureSynchronousObservableLike<number>;
-    throttle<T>(duration: number, options?: {
-        readonly mode?: ThrottleMode;
-    }): PureComputationOperator<SynchronousObservableComputation, T, T>;
-    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<SynchronousObservableComputation, TA, TB>;
+}>, DeferredReactiveComputationModule<SynchronousObservableComputation>, ScheduledReactiveComputationModule<SynchronousObservableComputation> {
 }
 export type Signature = SynchronousObservableModule;
 export declare const buffer: Signature["buffer"];

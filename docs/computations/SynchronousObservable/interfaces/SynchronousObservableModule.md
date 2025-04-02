@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
 
 ## Properties
 
@@ -18,13 +18,17 @@
 
 #### Inherited from
 
-[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/DeferredReactiveComputationModule.md#computationmodulelike_computationtype)
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`[ComputationModuleLike_computationType]`](../../interfaces/ScheduledReactiveComputationModule.md#computationmodulelike_computationtype)
 
 ***
 
 ### currentTime
 
-> **currentTime**: [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+> **currentTime**: [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`number`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`currentTime`](../../interfaces/ScheduledReactiveComputationModule.md#currenttime)
 
 ## Methods
 
@@ -346,7 +350,7 @@
 
 ### compute()
 
-> **compute**\<`T`\>(`computation`, `options`?): [`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
+> **compute**\<`T`\>(`computation`, `options`?): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -362,11 +366,15 @@
 
 ###### mode?
 
-[`ComputeMode`](../type-aliases/ComputeMode.md)
+`"batched"` \| `"combine-latest"`
 
 #### Returns
 
-[`SynchronousObservableWithSideEffectsLike`](../../interfaces/SynchronousObservableWithSideEffectsLike.md)\<`T`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`compute`](../../interfaces/ScheduledReactiveComputationModule.md#compute)
 
 ***
 
@@ -518,7 +526,7 @@
 
 ### delay()
 
-> **delay**(`duration`): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
+> **delay**(`duration`): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Parameters
 
@@ -528,7 +536,11 @@
 
 #### Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`delay`](../../interfaces/ScheduledReactiveComputationModule.md#delay)
 
 ***
 
@@ -950,7 +962,7 @@
 
 ### keyFrame()
 
-> **keyFrame**(`duration`, `options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+> **keyFrame**(`duration`, `options`?): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`number`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Parameters
 
@@ -966,7 +978,11 @@
 
 #### Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`number`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`keyFrame`](../../interfaces/ScheduledReactiveComputationModule.md#keyframe)
 
 ***
 
@@ -1416,7 +1432,7 @@
 
 ### spring()
 
-> **spring**(`options`?): [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+> **spring**(`options`?): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`number`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Parameters
 
@@ -1436,7 +1452,11 @@
 
 #### Returns
 
-[`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`number`\>
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`number`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`spring`](../../interfaces/ScheduledReactiveComputationModule.md#spring)
 
 ***
 
@@ -1656,11 +1676,15 @@
 
 ###### mode?
 
-[`ThrottleMode`](../type-aliases/ThrottleMode.md)
+`"interval"` \| `"first"` \| `"last"`
 
 #### Returns
 
 [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`throttle`](../../interfaces/ScheduledReactiveComputationModule.md#throttle)
 
 ***
 
@@ -1821,6 +1845,10 @@
 #### Returns
 
 [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`withCurrentTime`](../../interfaces/ScheduledReactiveComputationModule.md#withcurrenttime)
 
 ***
 

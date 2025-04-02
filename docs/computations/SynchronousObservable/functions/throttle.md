@@ -22,7 +22,7 @@
 
 #### mode?
 
-[`ThrottleMode`](../type-aliases/ThrottleMode.md)
+`"interval"` \| `"first"` \| `"last"`
 
 ## Returns
 

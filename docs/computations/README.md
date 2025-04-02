@@ -41,6 +41,7 @@
 - [ReactiveComputationModule](interfaces/ReactiveComputationModule.md)
 - [RunnableLike](interfaces/RunnableLike.md)
 - [RunnableWithSideEffectsLike](interfaces/RunnableWithSideEffectsLike.md)
+- [ScheduledReactiveComputationModule](interfaces/ScheduledReactiveComputationModule.md)
 - [StoreLike](interfaces/StoreLike.md)
 - [StreamableLike](interfaces/StreamableLike.md)
 - [StreamLike](interfaces/StreamLike.md)

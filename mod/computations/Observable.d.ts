@@ -1,5 +1,4 @@
-import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredReactiveComputationModule, ObservableLike, ObservableWithSideEffectsLike, PureComputationOperator, ReactiveComputationModule } from "../computations.js";
-import { Factory, Function2 } from "../functions.js";
+import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredReactiveComputationModule, ObservableLike, PureComputationOperator, ReactiveComputationModule, ScheduledReactiveComputationModule } from "../computations.js";
 import { SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
@@ -23,15 +22,8 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delay?: number;
         readonly delayStart?: boolean;
     };
-}>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation> {
-    compute<T>(computation: Factory<T>, options?: {
-        readonly mode?: ComputeMode;
-    }): ObservableWithSideEffectsLike<T>;
+}>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation>, ScheduledReactiveComputationModule<ObservableComputation> {
     subscribeOn<T>(scheduler: SchedulerLike): PureComputationOperator<ObservableComputation, T, T>;
-    throttle<T>(duration: number, options?: {
-        readonly mode?: ThrottleMode;
-    }): PureComputationOperator<ObservableComputation, T, T>;
-    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<ObservableComputation, TA, TB>;
 }
 export type Signature = ObservableModule;
 export declare const buffer: Signature["buffer"];
@@ -40,7 +32,9 @@ export declare const combineLatest: Signature["combineLatest"];
 export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
+export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
+export declare const delay: Signature["delay"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const forEach: Signature["forEach"];
@@ -53,6 +47,7 @@ export declare const genAsync: Signature["genAsync"];
 export declare const genPure: Signature["genPure"];
 export declare const genPureAsync: Signature["genPureAsync"];
 export declare const keep: Signature["keep"];
+export declare const keyFrame: Signature["keyFrame"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const mergeAll: Signature["mergeAll"];
@@ -62,6 +57,7 @@ export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const scanMany: Signature["scanMany"];
 export declare const skipFirst: Signature["skipFirst"];
+export declare const spring: Signature["spring"];
 export declare const subscribeOn: Signature["subscribeOn"];
 export declare const switchAll: Signature["switchAll"];
 export declare const takeFirst: Signature["takeFirst"];
