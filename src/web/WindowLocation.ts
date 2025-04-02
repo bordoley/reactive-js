@@ -72,7 +72,10 @@ type Signature = WebWindowLocationModule;
 
 const { history, location } = window;
 
-const ObservableModule = Computation.makeModule<Observable.Computation>()({
+const ObservableModule = Computation.makeModule<
+  Observable.Signature,
+  "forEach" | "genPure" | "keep" | "map" | "merge"
+>({
   forEach: Observable.forEach,
   genPure: Observable.genPure,
   keep: Observable.keep,

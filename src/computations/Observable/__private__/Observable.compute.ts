@@ -47,7 +47,7 @@ import { Observable_genPure } from "./Observable.gen.js";
 export const BatchedComputeMode = "batched";
 export const CombineLatestComputeMode = "combine-latest";
 
-const m = Computation.makeModule<Observable.Computation>()({
+const m = Computation.makeModule<Observable.Signature, "genPure">({
   genPure: Observable_genPure,
 });
 

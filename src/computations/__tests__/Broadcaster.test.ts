@@ -6,7 +6,7 @@ import * as Computation from "../Computation.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ReactiveComputationModuleTests from "./fixtures/ReactiveComputationModuleTests.js";
 
-const m = Computation.makeModule<Broadcaster.Computation>()(Broadcaster);
+const m = Computation.makeModule<Broadcaster.Signature>(Broadcaster);
 
 testModule(
   "Broadcaster",

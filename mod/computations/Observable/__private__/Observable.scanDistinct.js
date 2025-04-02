@@ -9,7 +9,7 @@ import Observable_concat from "./Observable.concat.js";
 import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.js";
 import { Observable_genPure } from "./Observable.gen.js";
 import Observable_scan from "./Observable.scan.js";
-const m = Computation.makeModule()({
+const m = Computation.makeModule({
     concat: Observable_concat,
     genPure: Observable_genPure,
 });

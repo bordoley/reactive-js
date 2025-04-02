@@ -8,7 +8,7 @@ import InteractiveComputationModuleTests from "./fixtures/InteractiveComputation
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
-const m = Computation.makeModule<Iterable.Computation>()(Iterable);
+const m = Computation.makeModule<Iterable.Signature>(Iterable);
 
 testModule(
   "Iterable",

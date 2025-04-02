@@ -19,7 +19,7 @@ import Producer_distinctUntilChanged from "./Producer.distinctUntilChanged.js";
 import { Producer_genPure } from "./Producer.gen.js";
 import Producer_scan from "./Producer.scan.js";
 
-const m = Computation.makeModule<Producer.Computation>()({
+const m = Computation.makeModule<Producer.Signature, "concat" | "genPure">({
   concat: Producer_concat,
   genPure: Producer_genPure,
 });

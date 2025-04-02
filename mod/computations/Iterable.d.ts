@@ -1,10 +1,10 @@
-import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, InteractiveComputationModule, IterableLike, PureIterableLike, SequentialComputationModule, SynchronousComputationModule } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, InteractiveComputationModule, IterableLike, PureIterableLike, SequentialComputationModule, SynchronousComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 /**
  * @noInheritDoc
  */
 export interface IterableComputation extends ComputationTypeLike {
-    readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
+    readonly [ComputationTypeLike_baseOfT]?: IterableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = IterableComputation;
 export interface IterableModule extends ComputationModule<IterableComputation>, SequentialComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation, {

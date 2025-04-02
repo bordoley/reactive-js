@@ -65,7 +65,7 @@ import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as Observable from "../Observable.js";
-const ObservableModule = Computation.makeModule()(Observable);
+const ObservableModule = Computation.makeModule(Observable);
 testModule("Streamable", describe("animation", test("integration", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
     try {

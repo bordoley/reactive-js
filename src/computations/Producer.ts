@@ -2,8 +2,8 @@ import {
   BroadcasterLike,
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredReactiveComputationModule,
@@ -67,7 +67,9 @@ import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestF
  * @noInheritDoc
  */
 export interface ProducerComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: ProducerLike<this[typeof Computation_T]>;
+  readonly [ComputationTypeLike_baseOfT]?: ProducerLike<
+    this[typeof ComputationTypeLike_T]
+  >;
 }
 
 export type Computation = ProducerComputation;

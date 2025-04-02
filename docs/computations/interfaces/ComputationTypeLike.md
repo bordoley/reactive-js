@@ -22,12 +22,12 @@
 
 ## Properties
 
-### \[Computation\_baseOfT\]?
+### \[ComputationTypeLike\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_baseOfT\]**: `TComputationBaseOfT`
+> `readonly` `optional` **\[ComputationTypeLike\_baseOfT\]**: `TComputationBaseOfT`
 
 ***
 
-### \[Computation\_T\]?
+### \[ComputationTypeLike\_T\]?
 
-> `readonly` `optional` **\[Computation\_T\]**: `unknown`
+> `readonly` `optional` **\[ComputationTypeLike\_T\]**: `unknown`

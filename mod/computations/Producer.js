@@ -1,6 +1,6 @@
 /// <reference types="./Producer.d.ts" />
 
-import { Computation_baseOfT, } from "../computations.js";
+import { ComputationTypeLike_baseOfT, } from "../computations.js";
 import { identity, identityLazy, returns } from "../functions.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";

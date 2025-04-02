@@ -1,7 +1,7 @@
 /// <reference types="./Iterable.d.ts" />
 
 import { Array_map, Iterator_done, Iterator_next, Iterator_value, } from "../__internal__/constants.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, Computation_baseOfT, RunnableLike_eval, } from "../computations.js";
+import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, ComputationTypeLike_baseOfT, RunnableLike_eval, } from "../computations.js";
 import { alwaysTrue, bindMethod, error, identityLazy, invoke, isFunction, isNone, isSome, newInstance, none, pick, raise as raiseError, returns, strictEquality, tuple, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";

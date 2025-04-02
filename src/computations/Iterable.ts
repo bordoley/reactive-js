@@ -10,8 +10,8 @@ import {
   ComputationLike_isSynchronous,
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   InteractiveComputationModule,
   IterableLike,
   IterableWithSideEffectsLike,
@@ -70,7 +70,9 @@ import {
  * @noInheritDoc
  */
 export interface IterableComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: IterableLike<this[typeof Computation_T]>;
+  readonly [ComputationTypeLike_baseOfT]?: IterableLike<
+    this[typeof ComputationTypeLike_T]
+  >;
 }
 
 export type Computation = IterableComputation;

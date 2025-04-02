@@ -1,6 +1,6 @@
 /// <reference types="./Broadcaster.d.ts" />
 
-import { Computation_baseOfT, } from "../computations.js";
+import { ComputationTypeLike_baseOfT, } from "../computations.js";
 import { identityLazy } from "../functions.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";

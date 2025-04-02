@@ -10,7 +10,7 @@ import DeferredReactiveComputationModuleTests from "./fixtures/DeferredReactiveC
 import ReactiveComputationModuleTests from "./fixtures/ReactiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
-const m = Computation.makeModule()(Producer);
+const m = Computation.makeModule(Producer);
 testModule("Producer", ComputationModuleTests(m), SequentialComputationModuleTests(m), SequentialReactiveComputationModuleTests(m), ReactiveComputationModuleTests(m), DeferredReactiveComputationModuleTests(m))({
     beforeEach() {
         const scheduler = HostScheduler.create();

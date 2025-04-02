@@ -1,7 +1,7 @@
 /// <reference types="./Computation.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModuleLike_computationType, } from "../computations.js";
-import { raise as Functions_raise, error, identityLazy, memoize, pipe, } from "../functions.js";
+import { raise as Functions_raise, error, identity, memoize, pipe, } from "../functions.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
@@ -21,7 +21,7 @@ export const fromReadonlyArray = Computation_fromReadonlyArray;
 export const isDeferred = Computation_isDeferred;
 export const isPure = Computation_isPure;
 export const isSynchronous = Computation_isSynchronous;
-export const makeModule = identityLazy;
+export const makeModule = identity;
 export const mergeWith = /*@__PURE__*/ (() => memoize((m) => (...tail) => (fst) => m.merge(fst, ...tail)))();
 export const raise = /*@__PURE__*/ memoize(m => (options) => m.genPure(function* RaiseComputation() {
     const { raise: factory = Functions_raise } = options ?? {};

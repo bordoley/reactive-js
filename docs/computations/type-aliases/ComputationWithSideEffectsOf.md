@@ -6,7 +6,7 @@
 
 # Type Alias: ComputationWithSideEffectsOf\<TComputationType, T\>
 
-> **ComputationWithSideEffectsOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_baseOfT`](../variables/Computation_baseOfT.md)\]\> & [`ComputationWithSideEffectsLike`](../interfaces/ComputationWithSideEffectsLike.md) : `object`
+> **ComputationWithSideEffectsOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`ComputationTypeLike_baseOfT`](../variables/ComputationTypeLike_baseOfT.md)\]\> & [`ComputationWithSideEffectsLike`](../interfaces/ComputationWithSideEffectsLike.md) : `object`
 
 ## Type Parameters
 

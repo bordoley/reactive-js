@@ -17,7 +17,7 @@ import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 
-const m = Computation.makeModule<AsyncIterable.Computation>()(AsyncIterable);
+const m = Computation.makeModule<AsyncIterable.Signature>(AsyncIterable);
 
 testModule(
   "AsyncIterable",

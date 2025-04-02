@@ -1,8 +1,8 @@
 import {
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   DeferredReactiveComputationModule,
   PureComputationOperator,
   PureSynchronousObservableLike,
@@ -68,8 +68,8 @@ import SynchronousObservable_toRunnable from "./SynchronousObservable/__private_
  * @noInheritDoc
  */
 export interface SynchronousObservableComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: SynchronousObservableLike<
-    this[typeof Computation_T]
+  readonly [ComputationTypeLike_baseOfT]?: SynchronousObservableLike<
+    this[typeof ComputationTypeLike_T]
   >;
 }
 

@@ -39,11 +39,12 @@ const createInitialScrollValue = (): ScrollValue => ({
 
 const Element_scrollEventSource: Element.Signature["scrollEventSource"] =
   /*@__PURE__*/ (() => {
-    const BroadcasterModule = Computation.makeModule<Broadcaster.Computation>()(
-      {
-        merge: Broadcaster.merge,
-      },
-    );
+    const BroadcasterModule = Computation.makeModule<
+      Broadcaster.Signature,
+      "merge"
+    >({
+      merge: Broadcaster.merge,
+    });
 
     const eventSourceCache =
       newInstance<WeakMap<HTMLElement, BroadcasterLike<ScrollValue>>>(WeakMap);

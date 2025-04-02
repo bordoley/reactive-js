@@ -1,11 +1,11 @@
-import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, DeferredReactiveComputationModule, PureComputationOperator, PureSynchronousObservableLike, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, DeferredReactiveComputationModule, PureComputationOperator, PureSynchronousObservableLike, ReactiveComputationModule, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule, SynchronousObservableLike, SynchronousObservableWithSideEffectsLike } from "../computations.js";
 import { Factory, Function1, Function2 } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
 export interface SynchronousObservableComputation extends ComputationTypeLike {
-    readonly [Computation_baseOfT]?: SynchronousObservableLike<this[typeof Computation_T]>;
+    readonly [ComputationTypeLike_baseOfT]?: SynchronousObservableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = SynchronousObservableComputation;
 export type ThrottleMode = "first" | "last" | "interval";

@@ -45,7 +45,7 @@ import SequentialComputationModuleTests from "./fixtures/SequentialComputationMo
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
-const m = Computation.makeModule<SynchronousObservable.Computation>()(
+const m = Computation.makeModule<SynchronousObservable.Signature>(
   SynchronousObservable,
 );
 

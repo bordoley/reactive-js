@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.d.ts" />
 
-import { Computation_baseOfT, } from "../computations.js";
+import { ComputationTypeLike_baseOfT, } from "../computations.js";
 import { identity, returns, } from "../functions.js";
 import Runnable_buffer from "./Runnable/__private__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__private__/Runnable.catchError.js";

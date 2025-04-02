@@ -12,7 +12,7 @@ import * as SynchronousObservable from "../SynchronousObservable.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
-const m = Computation.makeModule()(AsyncIterable);
+const m = Computation.makeModule(AsyncIterable);
 testModule("AsyncIterable", ComputationModuleTests(AsyncIterable), SequentialComputationModuleTests(m), InteractiveComputationModuleTests(m), describe("fromAsyncFactory", testAsync("when disposed by an error", async () => {
     // Note, we use the Observable scheduler to jump to the macrotask
     // queue to avoid starving the microtask queue through rescheduling.

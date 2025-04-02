@@ -3,6 +3,7 @@ import {
   ComputationLike_isDeferred,
   ComputationLike_isSynchronous,
   ComputationModule,
+  ComputationModuleLike,
   ComputationModuleLike_computationType,
   ComputationOf,
   ComputationOperatorWithSideEffects,
@@ -21,7 +22,7 @@ import {
   raise as Functions_raise,
   Optional,
   error,
-  identityLazy,
+  identity,
   memoize,
   pipe,
 } from "../functions.js";
@@ -148,12 +149,14 @@ export interface Signature {
     [ComputationLike_isSynchronous]: Optional<true>;
   };
 
-  makeModule<TComputationType>(): <
-    TModule extends { [key: string]: any } = { [key: string]: any },
+  makeModule<
+    TComputationModule extends ComputationModuleLike,
+    TKey extends
+      keyof NonNullable<TComputationModule> = keyof NonNullable<TComputationModule>,
   >(
-    o: TModule,
-  ) => TModule & {
-    [ComputationModuleLike_computationType]?: TComputationType;
+    o: Pick<TComputationModule, TKey>,
+  ): typeof o & {
+    [ComputationModuleLike_computationType]?: ComputationTypeOfModule<TComputationModule>;
   };
 
   mergeWith<
@@ -206,7 +209,7 @@ export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =
   Computation_isSynchronous;
 export const makeModule: Signature["makeModule"] =
-  identityLazy as Signature["makeModule"];
+  identity as Signature["makeModule"];
 
 export const mergeWith: Signature["mergeWith"] = /*@__PURE__*/ (<
   TComputationType extends ComputationTypeLike,

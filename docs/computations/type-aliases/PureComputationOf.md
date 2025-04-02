@@ -6,7 +6,7 @@
 
 # Type Alias: PureComputationOf\<TComputationType, T\>
 
-> **PureComputationOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`Computation_baseOfT`](../variables/Computation_baseOfT.md)\]\> & [`PureComputationLike`](../interfaces/PureComputationLike.md) : `object`
+> **PureComputationOf**\<`TComputationType`, `T`\>: `TComputationType` *extends* `object` ? `NonNullable`\<`TComputationType` & `object`\[*typeof* [`ComputationTypeLike_baseOfT`](../variables/ComputationTypeLike_baseOfT.md)\]\> & [`PureComputationLike`](../interfaces/PureComputationLike.md) : `object`
 
 ## Type Parameters
 

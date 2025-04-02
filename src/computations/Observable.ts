@@ -1,8 +1,8 @@
 import {
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   ConcurrentDeferredComputationModule,
   ConcurrentReactiveComputationModule,
   DeferredReactiveComputationModule,
@@ -69,7 +69,9 @@ import Observable_withEffect from "./Observable/__private__/Observble.withEffect
  * @noInheritDoc
  */
 export interface ObservableComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: ObservableLike<this[typeof Computation_T]>;
+  readonly [ComputationTypeLike_baseOfT]?: ObservableLike<
+    this[typeof ComputationTypeLike_T]
+  >;
 }
 
 export type Computation = ObservableComputation;

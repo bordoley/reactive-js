@@ -1,10 +1,10 @@
-import { ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, PureRunnableLike, RunnableLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule } from "../computations.js";
+import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, PureRunnableLike, RunnableLike, SequentialComputationModule, SequentialReactiveComputationModule, SynchronousComputationModule } from "../computations.js";
 import { Factory, Function1, Optional, Reducer } from "../functions.js";
 /**
  * @noInheritDoc
  */
 export interface RunnableComputation extends ComputationTypeLike {
-    readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
+    readonly [ComputationTypeLike_baseOfT]?: RunnableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = RunnableComputation;
 export interface RunnableModule extends ComputationModule<RunnableComputation>, SequentialComputationModule<RunnableComputation>, SequentialReactiveComputationModule<RunnableComputation>, SynchronousComputationModule<RunnableComputation> {

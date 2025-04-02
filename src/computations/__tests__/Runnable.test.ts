@@ -15,7 +15,7 @@ import SequentialComputationModuleTests from "./fixtures/SequentialComputationMo
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
 
-const m = Computation.makeModule<Runnable.Computation>()(Runnable);
+const m = Computation.makeModule<Runnable.Signature>(Runnable);
 
 testModule(
   "Runnable",

@@ -9,7 +9,7 @@ import Producer_concat from "./Producer.concat.js";
 import Producer_distinctUntilChanged from "./Producer.distinctUntilChanged.js";
 import { Producer_genPure } from "./Producer.gen.js";
 import Producer_scan from "./Producer.scan.js";
-const m = Computation.makeModule()({
+const m = Computation.makeModule({
     concat: Producer_concat,
     genPure: Producer_genPure,
 });

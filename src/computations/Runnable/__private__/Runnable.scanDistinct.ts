@@ -26,7 +26,7 @@ import Runnable_distinctUntilChanged from "./Runnable.distinctUntilChanged.js";
 import { Runnable_genPure } from "./Runnable.gen.js";
 import Runnable_scan from "./Runnable.scan.js";
 
-const m = Computation.makeModule<Runnable.Computation>()({
+const m = Computation.makeModule<Runnable.Signature, "concat" | "genPure">({
   concat: Runnable_concat,
   genPure: Runnable_genPure,
 });

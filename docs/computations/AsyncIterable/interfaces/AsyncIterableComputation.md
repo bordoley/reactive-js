@@ -12,20 +12,20 @@
 
 ## Properties
 
-### \[Computation\_baseOfT\]?
+### \[ComputationTypeLike\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_baseOfT\]**: [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`unknown`\>
+> `readonly` `optional` **\[ComputationTypeLike\_baseOfT\]**: [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`unknown`\>
 
 #### Overrides
 
-[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[Computation_baseOfT]`](../../interfaces/ComputationTypeLike.md#computation_baseoft)
+[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[ComputationTypeLike_baseOfT]`](../../interfaces/ComputationTypeLike.md#computationtypelike_baseoft)
 
 ***
 
-### \[Computation\_T\]?
+### \[ComputationTypeLike\_T\]?
 
-> `readonly` `optional` **\[Computation\_T\]**: `unknown`
+> `readonly` `optional` **\[ComputationTypeLike\_T\]**: `unknown`
 
 #### Inherited from
 
-[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[Computation_T]`](../../interfaces/ComputationTypeLike.md#computation_t)
+[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[ComputationTypeLike_T]`](../../interfaces/ComputationTypeLike.md#computationtypelike_t)

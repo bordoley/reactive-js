@@ -19,7 +19,7 @@ import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.j
 import { Observable_genPure } from "./Observable.gen.js";
 import Observable_scan from "./Observable.scan.js";
 
-const m = Computation.makeModule<Observable.Computation>()({
+const m = Computation.makeModule<Observable.Signature, "concat" | "genPure">({
   concat: Observable_concat,
   genPure: Observable_genPure,
 });

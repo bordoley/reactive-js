@@ -1,11 +1,11 @@
-import { BroadcasterLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentReactiveComputationModule, ReactiveComputationModule } from "../computations.js";
+import { BroadcasterLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentReactiveComputationModule, ReactiveComputationModule } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
 export interface BroadcasterComputation extends ComputationTypeLike {
-    readonly [Computation_baseOfT]?: BroadcasterLike<this[typeof Computation_T]>;
+    readonly [ComputationTypeLike_baseOfT]?: BroadcasterLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = BroadcasterComputation;
 /**

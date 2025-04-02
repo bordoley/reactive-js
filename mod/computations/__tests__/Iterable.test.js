@@ -9,7 +9,7 @@ import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import InteractiveComputationModuleTests from "./fixtures/InteractiveComputationModuleTests.js";
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SynchronousComputationModuleTests from "./fixtures/SynchronousComputationModuleTests.js";
-const m = Computation.makeModule()(Iterable);
+const m = Computation.makeModule(Iterable);
 testModule("Iterable", ComputationModuleTests(m), SequentialComputationModuleTests(m), SynchronousComputationModuleTests(m), InteractiveComputationModuleTests(m))({
     beforeEach() {
         const scheduler = HostScheduler.create();

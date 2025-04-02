@@ -17,7 +17,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as NodeWritable from "../NodeWritable.js";
 
-const ProducerModule = Computation.makeModule<Producer.Computation>()(Producer);
+const ProducerModule = Computation.makeModule<Producer.Signature>(Producer);
 
 testModule(
   "NodeWritable",

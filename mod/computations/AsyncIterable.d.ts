@@ -1,7 +1,7 @@
-import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationTypeLike, Computation_T, Computation_baseOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, SequentialComputationModule } from "../computations.js";
+import { AsyncIterableLike, AsyncIterableWithSideEffectsLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, InteractiveComputationModule, SequentialComputationModule } from "../computations.js";
 import { Function1 } from "../functions.js";
 export interface AsyncIterableComputation extends ComputationTypeLike {
-    readonly [Computation_baseOfT]?: AsyncIterableLike<this[typeof Computation_T]>;
+    readonly [ComputationTypeLike_baseOfT]?: AsyncIterableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, SequentialComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {

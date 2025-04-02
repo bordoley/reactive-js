@@ -67,12 +67,12 @@
 
 ## Variables
 
-- [Computation\_baseOfT](variables/Computation_baseOfT.md)
-- [Computation\_T](variables/Computation_T.md)
 - [ComputationLike\_isDeferred](variables/ComputationLike_isDeferred.md)
 - [ComputationLike\_isPure](variables/ComputationLike_isPure.md)
 - [ComputationLike\_isSynchronous](variables/ComputationLike_isSynchronous.md)
 - [ComputationModuleLike\_computationType](variables/ComputationModuleLike_computationType.md)
+- [ComputationTypeLike\_baseOfT](variables/ComputationTypeLike_baseOfT.md)
+- [ComputationTypeLike\_T](variables/ComputationTypeLike_T.md)
 - [EventSourceLike\_subscribe](variables/EventSourceLike_subscribe.md)
 - [RunnableLike\_eval](variables/RunnableLike_eval.md)
 - [StoreLike\_value](variables/StoreLike_value.md)

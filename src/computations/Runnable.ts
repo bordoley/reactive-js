@@ -1,8 +1,8 @@
 import {
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   PureRunnableLike,
   RunnableLike,
   SequentialComputationModule,
@@ -52,7 +52,9 @@ import Runnable_withEffect from "./Runnable/__private__/Runnable.withEffect.js";
  * @noInheritDoc
  */
 export interface RunnableComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: RunnableLike<this[typeof Computation_T]>;
+  readonly [ComputationTypeLike_baseOfT]?: RunnableLike<
+    this[typeof ComputationTypeLike_T]
+  >;
 }
 
 export type Computation = RunnableComputation;

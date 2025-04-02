@@ -13,7 +13,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 export const BatchedComputeMode = "batched";
 export const CombineLatestComputeMode = "combine-latest";
-const m = Computation.makeModule()({
+const m = Computation.makeModule({
     genPure: Observable_genPure,
 });
 const Memo = 1;

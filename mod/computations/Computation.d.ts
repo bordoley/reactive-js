@@ -1,4 +1,4 @@
-import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationTypeLike, ComputationTypeOfModule, NewPureInstanceOf, PickComputationModule, PureComputationLike, PureComputationOf, PureComputationOperator, ReactiveComputationModule, SequentialComputationModule } from "../computations.js";
+import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationTypeLike, ComputationTypeOfModule, NewPureInstanceOf, PickComputationModule, PureComputationLike, PureComputationOf, PureComputationOperator, ReactiveComputationModule, SequentialComputationModule } from "../computations.js";
 import { Factory, Optional } from "../functions.js";
 export interface ConcatWithOperator<TComputationType extends ComputationTypeLike> {
     <T>(snd: PureComputationOf<TComputationType, T>, ...tail: readonly PureComputationOf<TComputationType, T>[]): PureComputationOperator<TComputationType, T, T>;
@@ -27,12 +27,8 @@ export interface Signature {
     isSynchronous<TComputationType extends Partial<ComputationLike> = Partial<ComputationLike>>(computation: TComputationType): computation is TComputationType & {
         [ComputationLike_isSynchronous]: Optional<true>;
     };
-    makeModule<TComputationType>(): <TModule extends {
-        [key: string]: any;
-    } = {
-        [key: string]: any;
-    }>(o: TModule) => TModule & {
-        [ComputationModuleLike_computationType]?: TComputationType;
+    makeModule<TComputationModule extends ComputationModuleLike, TKey extends keyof NonNullable<TComputationModule> = keyof NonNullable<TComputationModule>>(o: Pick<TComputationModule, TKey>): typeof o & {
+        [ComputationModuleLike_computationType]?: ComputationTypeOfModule<TComputationModule>;
     };
     mergeWith<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ReactiveComputationModule<TComputationType>, "merge">>(m: TComputationModule): MergeWithOperator<ComputationTypeOfModule<TComputationModule>>;
     raise<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule): <T>(options?: {

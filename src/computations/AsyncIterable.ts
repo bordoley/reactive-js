@@ -12,8 +12,8 @@ import {
   ComputationLike_isSynchronous,
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   ConcurrentDeferredComputationModule,
   InteractiveComputationModule,
   PureAsyncIterableLike,
@@ -64,8 +64,8 @@ import {
 } from "./Producer/__private__/Producer.genAsync.js";
 
 export interface AsyncIterableComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: AsyncIterableLike<
-    this[typeof Computation_T]
+  readonly [ComputationTypeLike_baseOfT]?: AsyncIterableLike<
+    this[typeof ComputationTypeLike_T]
   >;
 }
 export type Computation = AsyncIterableComputation;

@@ -12,10 +12,10 @@
 
 ## Properties
 
-### \[Computation\_baseOfT\]?
+### \[ComputationTypeLike\_baseOfT\]?
 
-> `readonly` `optional` **\[Computation\_baseOfT\]**: [`ProducerLike`](../../interfaces/ProducerLike.md)\<`unknown`\>
+> `readonly` `optional` **\[ComputationTypeLike\_baseOfT\]**: [`ProducerLike`](../../interfaces/ProducerLike.md)\<`unknown`\>
 
 #### Overrides
 
-[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[Computation_baseOfT]`](../../interfaces/ComputationTypeLike.md#computation_baseoft)
+[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md).[`[ComputationTypeLike_baseOfT]`](../../interfaces/ComputationTypeLike.md#computationtypelike_baseoft)

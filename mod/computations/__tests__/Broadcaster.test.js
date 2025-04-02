@@ -7,7 +7,7 @@ import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 import ComputationModuleTests from "./fixtures/ComputationModuleTests.js";
 import ReactiveComputationModuleTests from "./fixtures/ReactiveComputationModuleTests.js";
-const m = Computation.makeModule()(Broadcaster);
+const m = Computation.makeModule(Broadcaster);
 testModule("Broadcaster", ComputationModuleTests(m), ReactiveComputationModuleTests(m))({
     beforeEach() {
         const scheduler = HostScheduler.create();

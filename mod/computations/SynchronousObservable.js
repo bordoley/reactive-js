@@ -1,6 +1,6 @@
 /// <reference types="./SynchronousObservable.d.ts" />
 
-import { Computation_baseOfT, } from "../computations.js";
+import { ComputationTypeLike_baseOfT, } from "../computations.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import { Observable_computeSynchronous } from "./Observable/__private__/Observable.compute.js";

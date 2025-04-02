@@ -16,7 +16,7 @@ import { DisposableContainerLike_add, DropOldestBackpressureStrategy, EventListe
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
-const ObservableModule = Computation.makeModule()({
+const ObservableModule = Computation.makeModule({
     forEach: Observable.forEach,
     genPure: Observable.genPure,
     keep: Observable.keep,

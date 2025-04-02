@@ -9,7 +9,7 @@ import ReactiveComputationModuleTests from "./fixtures/ReactiveComputationModule
 import SequentialComputationModuleTests from "./fixtures/SequentialComputationModuleTests.js";
 import SequentialReactiveComputationModuleTests from "./fixtures/SequentialReactiveComputationModuleTests.js";
 
-const m = Computation.makeModule<Observable.Computation>()(Observable);
+const m = Computation.makeModule<Observable.Signature>(Observable);
 
 testModule(
   "Observable",

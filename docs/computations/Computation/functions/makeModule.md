@@ -6,26 +6,20 @@
 
 # Function: makeModule()
 
-> **makeModule**\<`TComputationType`\>(): \<`TModule`\>(`o`) => `TModule` & `object`
+> **makeModule**\<`TComputationModule`, `TKey`\>(`o`): `Pick`\<`TComputationModule`, `TKey`\> & `object`
 
 ## Type Parameters
 
-• **TComputationType**
+• **TComputationModule** *extends* [`ComputationModuleLike`](../../interfaces/ComputationModuleLike.md)\<[`ComputationTypeLike`](../../interfaces/ComputationTypeLike.md)\<[`ComputationLike`](../../interfaces/ComputationLike.md)\>\>
+
+• **TKey** *extends* `string` \| `number` \| `symbol` = keyof `NonNullable`\<`TComputationModule`\>
+
+## Parameters
+
+### o
+
+`Pick`\<`TComputationModule`, `TKey`\>
 
 ## Returns
 
-`Function`
-
-### Type Parameters
-
-• **TModule** *extends* `object` = \{\}
-
-### Parameters
-
-#### o
-
-`TModule`
-
-### Returns
-
-`TModule` & `object`
+`Pick`\<`TComputationModule`, `TKey`\> & `object`

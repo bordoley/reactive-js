@@ -15,7 +15,7 @@ import * as EventSource from "../../EventSource.js";
 import * as Observable from "../../Observable.js";
 
 const ObservableModule =
-  Computation.makeModule<Observable.Computation>()(Observable);
+  Computation.makeModule<Observable.Signature>(Observable);
 
 const ReactiveComputationModuleTests = <
   TComputationType extends ComputationTypeLike,

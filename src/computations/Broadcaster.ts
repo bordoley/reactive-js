@@ -2,8 +2,8 @@ import {
   BroadcasterLike,
   ComputationModule,
   ComputationTypeLike,
-  Computation_T,
-  Computation_baseOfT,
+  ComputationTypeLike_T,
+  ComputationTypeLike_baseOfT,
   ConcurrentReactiveComputationModule,
   ReactiveComputationModule,
 } from "../computations.js";
@@ -39,7 +39,9 @@ import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
  * @noInheritDoc
  */
 export interface BroadcasterComputation extends ComputationTypeLike {
-  readonly [Computation_baseOfT]?: BroadcasterLike<this[typeof Computation_T]>;
+  readonly [ComputationTypeLike_baseOfT]?: BroadcasterLike<
+    this[typeof ComputationTypeLike_T]
+  >;
 }
 
 export type Computation = BroadcasterComputation;

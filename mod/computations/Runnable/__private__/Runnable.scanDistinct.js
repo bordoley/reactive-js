@@ -9,7 +9,7 @@ import Runnable_concat from "./Runnable.concat.js";
 import Runnable_distinctUntilChanged from "./Runnable.distinctUntilChanged.js";
 import { Runnable_genPure } from "./Runnable.gen.js";
 import Runnable_scan from "./Runnable.scan.js";
-const m = Computation.makeModule()({
+const m = Computation.makeModule({
     concat: Runnable_concat,
     genPure: Runnable_genPure,
 });

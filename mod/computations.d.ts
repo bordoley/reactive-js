@@ -116,25 +116,25 @@ export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends
     }): TStream & DisposableLike;
 }
 export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;
-export declare const Computation_T: unique symbol;
-export declare const Computation_baseOfT: unique symbol;
+export declare const ComputationTypeLike_T: unique symbol;
+export declare const ComputationTypeLike_baseOfT: unique symbol;
 export interface ComputationTypeLike<TComputationBaseOfT extends ComputationLike = ComputationLike> {
-    readonly [Computation_T]?: unknown;
-    readonly [Computation_baseOfT]?: TComputationBaseOfT;
+    readonly [ComputationTypeLike_T]?: unknown;
+    readonly [ComputationTypeLike_baseOfT]?: TComputationBaseOfT;
 }
 export type PureComputationOf<TComputationType extends ComputationTypeLike, T = unknown> = TComputationType extends {
-    readonly [Computation_baseOfT]?: unknown;
+    readonly [ComputationTypeLike_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
-    readonly [Computation_T]: T;
-})[typeof Computation_baseOfT]> & PureComputationLike : {
+    readonly [ComputationTypeLike_T]: T;
+})[typeof ComputationTypeLike_baseOfT]> & PureComputationLike : {
     readonly _C: TComputationType;
     readonly _T: () => T;
 };
 export type ComputationWithSideEffectsOf<TComputationType extends ComputationTypeLike, T = unknown> = TComputationType extends {
-    readonly [Computation_baseOfT]?: unknown;
+    readonly [ComputationTypeLike_baseOfT]?: unknown;
 } ? NonNullable<(TComputationType & {
-    readonly [Computation_T]: T;
-})[typeof Computation_baseOfT]> & ComputationWithSideEffectsLike : {
+    readonly [ComputationTypeLike_T]: T;
+})[typeof ComputationTypeLike_baseOfT]> & ComputationWithSideEffectsLike : {
     readonly _C: TComputationType;
     readonly _T: () => T;
 };
