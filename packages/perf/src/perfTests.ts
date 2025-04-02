@@ -8,6 +8,11 @@ import {
   none,
   Optional,
 } from "@reactive-js/core/functions";
+import * as SynchronousObservable from  "@reactive-js/core/computations/SynchronousObservable"
+import * as Computation from "@reactive-js/core/computations/Computation";
+import * as Runnable from "@reactive-js/core/computations/Runnable";
+
+const m = Computation.makeModule<SynchronousObservable.Computation>()(SynchronousObservable);
 
 /**
  * A function that returns the result of summing
@@ -36,31 +41,20 @@ export const map = (n: number) =>
     `map ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
-      const Observable = await import(
-        "@reactive-js/core/computations/Observable"
-      );
-
       return pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.map(increment),
-        Observable.reduce(
-          (_, x) => x,
-          () => 0,
-        ),
+        Computation.fromReadonlyArray(m),
+        SynchronousObservable.map(increment),
+        SynchronousObservable.toRunnable(),
+        Runnable.last(),
       );
     }),
     benchmarkTest("Runnable", async (src: readonly number[]) => {
-      const Runnable = await import("@reactive-js/core/computations/Runnable");
-
       return pipeLazy(
         src,
         Runnable.fromReadonlyArray(),
         Runnable.map(increment),
-        Runnable.reduce(
-          (_, x) => x,
-          () => 0,
-        ),
+        Runnable.last(),
       );
     }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {
@@ -101,24 +95,19 @@ export const filterMapFusion = (n: number) =>
     `filter -> map -> fusion with ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
-      const Observable = await import(
-        "@reactive-js/core/computations/Observable"
-      );
-
       return pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.map(increment),
-        Observable.keep(isOdd),
-        Observable.map(increment),
-        Observable.map(increment),
-        Observable.keep(isEven),
-        Observable.reduce(sum, () => 0),
+        Computation.fromReadonlyArray(m),
+        SynchronousObservable.map(increment),
+        SynchronousObservable.keep(isOdd),
+        SynchronousObservable.map(increment),
+        SynchronousObservable.map(increment),
+        SynchronousObservable.keep(isEven),
+        SynchronousObservable.toRunnable(),
+        Runnable.last(),
       );
     }),
     benchmarkTest("Runnable", async (src: readonly number[]) => {
-      const Runnable = await import("@reactive-js/core/computations/Runnable");
-
       return pipeLazy(
         src,
         Runnable.fromReadonlyArray(),
@@ -127,7 +116,7 @@ export const filterMapFusion = (n: number) =>
         Runnable.map(increment),
         Runnable.map(increment),
         Runnable.keep(isEven),
-        Runnable.reduce(sum, () => 0),
+        Runnable.last(),
       );
     }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {
@@ -185,25 +174,22 @@ export const filterMapReduce = (n: number) =>
     `filter -> map -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
-      const Observable = await import(
-        "@reactive-js/core/computations/Observable"
-      );
       return pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.keep(isEven),
-        Observable.map(increment),
-        Observable.reduce(sum, () => 0),
+        Computation.fromReadonlyArray(m),
+        SynchronousObservable.keep(isEven),
+        SynchronousObservable.map(increment),
+        SynchronousObservable.toRunnable(),
+        Runnable.last(),
       );
     }),
     benchmarkTest("Runnable", async (src: readonly number[]) => {
-      const Runnable = await import("@reactive-js/core/computations/Runnable");
       return pipeLazy(
         src,
         Runnable.fromReadonlyArray(),
         Runnable.keep(isEven),
         Runnable.map(increment),
-        Runnable.reduce(sum, () => 0),
+        Runnable.last(),
       );
     }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {
@@ -252,23 +238,20 @@ export const scanReduce = (n: number) =>
     `scan -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     benchmarkTest("Observable", async (src: readonly number[]) => {
-      const Observable = await import(
-        "@reactive-js/core/computations/Observable"
-      );
       return pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.scan(sum, returns(0)),
-        Observable.reduce(passthrough, () => 0),
+        Computation.fromReadonlyArray(m),
+        SynchronousObservable.scan(sum, returns(0)),
+        SynchronousObservable.toRunnable(),
+        Runnable.last()
       );
     }),
     benchmarkTest("Runnable", async (src: readonly number[]) => {
-      const Runnable = await import("@reactive-js/core/computations/Runnable");
       return pipeLazy(
         src,
         Runnable.fromReadonlyArray(),
         Runnable.scan(sum, returns(0)),
-        Runnable.reduce(passthrough, () => 0),
+        Runnable.last(),
       );
     }),
     benchmarkTest("rx-js Observable", async (src: readonly number[]) => {

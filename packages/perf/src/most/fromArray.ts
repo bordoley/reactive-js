@@ -1,5 +1,4 @@
 import {
-  ContinuationContextLike_yield,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "@reactive-js/core/utils";
@@ -21,14 +20,15 @@ class FromArrayTask<T> {
     const scheduler = VirtualTimeScheduler.create();
 
     let i = 0;
-    scheduler[SchedulerLike_schedule](ctx => {
-      while (i < length && this.active) {
-        this.sink.event(t, this.array[i]);
+    const self = this;
+    scheduler[SchedulerLike_schedule](function* () {
+      while (i < length && self.active) {
+        self.sink.event(t, self.array[i]);
         i++;
-        ctx[ContinuationContextLike_yield]();
+        yield;
       }
 
-      this.active && this.sink.end(t);
+      self.active && self.sink.end(t);
     });
 
     scheduler[VirtualTimeSchedulerLike_run]();
