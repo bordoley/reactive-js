@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "./collections.js";
-import { BroadcasterLike, StoreLike } from "./computations.js";
+import { StoreLike } from "./computations.js";
 import { SideEffect1, Updater } from "./functions.js";
 /**
  * @noInheritDoc
@@ -17,7 +17,7 @@ export declare const WindowLocationLike_replace: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface WindowLocationLike extends BroadcasterLike<WindowLocationURI> {
+export interface WindowLocationLike extends StoreLike<WindowLocationURI> {
     readonly [WindowLocationLike_canGoBack]: StoreLike<boolean>;
     [WindowLocationLike_goBack](): void;
     [WindowLocationLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;

@@ -127,13 +127,16 @@ export interface StreamableModule {
     options?: { readonly equality?: Equality<T> },
   ): StreamableLike<Updater<T>, T, StateStoreStreamLike<Updater<T>, T>>;
 
-  syncState<T>(
+  syncState<T, TStream extends StreamLike<Updater<T>, T>>(
     onInit: Function1<T, ObservableLike<Updater<T>>>,
     onChange: Function2<T, T, ObservableLike<Updater<T>>>,
     options?: {
       readonly throttleDuration?: number;
     },
-  ): Function1<StreamableLike<Updater<T>, T>, StreamableLike<Updater<T>, T>>;
+  ): Function1<
+    StreamableLike<Updater<T>, T, TStream>,
+    StreamableLike<Updater<T>, T, TStream>
+  >;
 }
 
 export type Signature = StreamableModule;

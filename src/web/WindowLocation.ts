@@ -5,11 +5,14 @@ import {
   init,
   mixInstanceFactory,
   props,
+  proto,
+  unsafeCast,
 } from "../__internal__/mixins.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Computation from "../computations/Computation.js";
 import * as Observable from "../computations/Observable.js";
 import * as Streamable from "../computations/Streamable.js";
+import { StateStoreStreamLike } from "../computations/Streamable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import {
   ComputationLike_isDeferred,
@@ -18,7 +21,6 @@ import {
   EventSourceLike_subscribe,
   ObservableLike,
   StoreLike_value,
-  StreamLike,
   StreamableLike_stream,
   WritableStoreLike,
 } from "../computations.js";
@@ -163,17 +165,17 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const WindowLocation_delegate = Symbol("WindowLocation_delegate");
 
   type TProperties = {
-    [WindowLocation_delegate]: StreamLike<Updater<TState>, TState> &
+    [WindowLocation_delegate]: StateStoreStreamLike<Updater<TState>, TState> &
       DisposableLike;
     [WindowLocationLike_canGoBack]: WritableStoreLike<boolean>;
   };
 
-  const createWindowLocationObservable = mixInstanceFactory(
+  const createWindowLocation = mixInstanceFactory(
     include(DelegatingDisposableMixin),
     function WindowLocationStream(
       this: Omit<WindowLocationLike, keyof DisposableContainerLike> &
         TProperties,
-      delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
+      delegate: StateStoreStreamLike<Updater<TState>, TState>,
     ): WindowLocationLike & DisposableLike {
       init(DelegatingDisposableMixin, this, delegate);
 
@@ -198,10 +200,16 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       [WindowLocation_delegate]: none,
       [WindowLocationLike_canGoBack]: none,
     }),
-    {
+    proto({
       [ComputationLike_isDeferred]: false as const,
       [ComputationLike_isSynchronous]: false as const,
       [ComputationLike_isPure]: true as const,
+
+      get [StoreLike_value]() {
+        unsafeCast<TProperties>(this);
+        const state = this[WindowLocation_delegate][StoreLike_value];
+        return state.uri;
+      },
 
       [WindowLocationLike_push](
         this: TProperties,
@@ -251,18 +259,14 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           invoke(EventSourceLike_subscribe, eventListener),
         );
       },
-    },
+    }),
   );
 
-  let currentWindowLocationObservable: Optional<
-    WindowLocationLike & DisposableLike
-  > = none;
+  let currentWindowLocation: Optional<WindowLocationLike & DisposableLike> =
+    none;
 
   return (scheduler: SchedulerLike): WindowLocationLike & DisposableLike => {
-    raiseIf(
-      isSome(currentWindowLocationObservable),
-      "Cannot stream more than once",
-    );
+    raiseIf(isSome(currentWindowLocation), "Cannot stream more than once");
 
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),
@@ -347,14 +351,14 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
       }),
     );
 
-    currentWindowLocationObservable = pipe(
-      createWindowLocationObservable(locationStream),
+    currentWindowLocation = pipe(
+      createWindowLocation(locationStream),
       Disposable.add(pushState),
       Disposable.add(replaceState),
     );
 
-    scheduler[DisposableContainerLike_add](currentWindowLocationObservable);
+    scheduler[DisposableContainerLike_add](currentWindowLocation);
 
-    return currentWindowLocationObservable;
+    return currentWindowLocation;
   };
 })();

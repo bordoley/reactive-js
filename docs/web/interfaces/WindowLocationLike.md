@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`BroadcasterLike`](../../computations/interfaces/BroadcasterLike.md)\<[`WindowLocationURI`](WindowLocationURI.md)\>
+- [`StoreLike`](../../computations/interfaces/StoreLike.md)\<[`WindowLocationURI`](WindowLocationURI.md)\>
 
 ## Properties
 

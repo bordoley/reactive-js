@@ -14,6 +14,7 @@
 
 - [`StateStoreStreamLike`](../Streamable/interfaces/StateStoreStreamLike.md)
 - [`WritableStoreLike`](WritableStoreLike.md)
+- [`WindowLocationLike`](../../web/interfaces/WindowLocationLike.md)
 
 ## Type Parameters
 

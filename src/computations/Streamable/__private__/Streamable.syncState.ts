@@ -2,6 +2,7 @@ import {
   ComputationLike_isPure,
   EventSourceLike_subscribe,
   ObservableLike,
+  StreamLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../computations.js";
@@ -17,14 +18,14 @@ import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 
 const Streamable_syncState: Streamable.Signature["syncState"] =
-  <T>(
+  <T, TStream extends StreamLike<Updater<T>, T>>(
     onInit: (initialValue: T) => ObservableLike<Updater<T>>,
     onChange: (oldValue: T, newValue: T) => ObservableLike<Updater<T>>,
     syncStateOptions?: {
       readonly throttleDuration?: number;
     },
   ) =>
-  (streamable: StreamableLike<Updater<T>, T>) => ({
+  (streamable: StreamableLike<Updater<T>, T, TStream>) => ({
     [StreamableLike_stream](scheduler, options) {
       const throttleDuration = syncStateOptions?.throttleDuration ?? 0;
       const stream = streamable[StreamableLike_stream](scheduler, options);

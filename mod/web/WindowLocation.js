@@ -2,7 +2,7 @@
 
 import * as Obj from "../__internal__/Object.js";
 import { Array_length, String } from "../__internal__/constants.js";
-import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Computation from "../computations/Computation.js";
 import * as Observable from "../computations/Observable.js";
@@ -58,7 +58,7 @@ const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(c
 })))[StreamableLike_stream](scheduler, options);
 export const subscribe = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
-    const createWindowLocationObservable = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(delegate) {
+    const createWindowLocation = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(delegate) {
         init(DelegatingDisposableMixin, this, delegate);
         this[WindowLocation_delegate] = delegate;
         this[WindowLocationLike_canGoBack] = pipe(WritableStore.create(false), Disposable.addTo(this));
@@ -69,10 +69,15 @@ export const subscribe = /*@__PURE__*/ (() => {
     }, props({
         [WindowLocation_delegate]: none,
         [WindowLocationLike_canGoBack]: none,
-    }), {
+    }), proto({
         [ComputationLike_isDeferred]: false,
         [ComputationLike_isSynchronous]: false,
         [ComputationLike_isPure]: true,
+        get [StoreLike_value]() {
+            unsafeCast(this);
+            const state = this[WindowLocation_delegate][StoreLike_value];
+            return state.uri;
+        },
         [WindowLocationLike_push](stateOrUpdater) {
             this[WindowLocation_delegate][EventListenerLike_notify]((prevState) => {
                 const uri = createSerializableWindowLocationURI(isFunction(stateOrUpdater)
@@ -95,10 +100,10 @@ export const subscribe = /*@__PURE__*/ (() => {
         [EventSourceLike_subscribe](eventListener) {
             pipe(this[WindowLocation_delegate], Broadcaster.map((x) => x.uri), invoke(EventSourceLike_subscribe, eventListener));
         },
-    });
-    let currentWindowLocationObservable = none;
+    }));
+    let currentWindowLocation = none;
     return (scheduler) => {
-        raiseIf(isSome(currentWindowLocationObservable), "Cannot stream more than once");
+        raiseIf(isSome(currentWindowLocation), "Cannot stream more than once");
         const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
         const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
         const locationStream = pipe(Streamable.stateStore(() => ({
@@ -135,8 +140,8 @@ export const subscribe = /*@__PURE__*/ (() => {
             capacity: 1,
             backpressureStrategy: DropOldestBackpressureStrategy,
         }));
-        currentWindowLocationObservable = pipe(createWindowLocationObservable(locationStream), Disposable.add(pushState), Disposable.add(replaceState));
-        scheduler[DisposableContainerLike_add](currentWindowLocationObservable);
-        return currentWindowLocationObservable;
+        currentWindowLocation = pipe(createWindowLocation(locationStream), Disposable.add(pushState), Disposable.add(replaceState));
+        scheduler[DisposableContainerLike_add](currentWindowLocation);
+        return currentWindowLocation;
     };
 })();

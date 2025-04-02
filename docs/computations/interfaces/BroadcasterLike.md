@@ -15,7 +15,6 @@
 - [`PublisherLike`](PublisherLike.md)
 - [`StoreLike`](StoreLike.md)
 - [`StreamLike`](StreamLike.md)
-- [`WindowLocationLike`](../../web/interfaces/WindowLocationLike.md)
 
 ## Type Parameters
 
