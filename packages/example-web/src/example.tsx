@@ -1,41 +1,18 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/computations/Observable";
+import { useDisposable, useEventSource } from "@reactive-js/core/react";
 import {
-  CacheProvider,
-  createComponent,
-  useSink,
-  usePauseable,
-  useObserve,
-  useDisposable,
-} from "@reactive-js/core/react";
-import {
-  useAnimate,
-  useAnimationGroup,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/react/web";
-import { WindowLocationLike, WindowLocationURI } from "@reactive-js/core/web";
+import { WindowLocationURI } from "@reactive-js/core/web";
 import {
-  bindMethod,
   isNone,
   isSome,
-  none,
   Optional,
-  pipe,
   pipeLazy,
-  pipeSome,
-  returns,
-  Tuple2,
 } from "@reactive-js/core/functions";
-import * as Dictionary from "@reactive-js/core/collections/Dictionary";
-import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 import {
   __await,
   __constant,
@@ -43,38 +20,23 @@ import {
   __memo,
   __observe,
 } from "@reactive-js/core/computations/Observable/effects";
-import { __animate, __animation } from "@reactive-js/core/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
 import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
-import {
-  BroadcasterLike,
-  ObservableLike,
-} from "@reactive-js/core/computations";
-import {
-  EventSourceLike,
-  StoreLike_value,
-} from "@reactive-js/core/computations";
+import { StoreLike_value } from "@reactive-js/core/computations";
 import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
-  EventListenerLike_notify,
 } from "@reactive-js/core/utils";
-import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
-import * as Cache from "@reactive-js/core/computations/Cache";
-import { increment, scale } from "@reactive-js/core/math";
-import * as Computation from "@reactive-js/core/computations/Computation";
+import * as Producer from "@reactive-js/core/computations/Producer";
 
-const ObservableModule = {
-  gen: Observable.gen,
-};
-
+/*
 const AnimatedBox = ({
   animation,
 }: {
-  animation?: EventSourceLike<number>;
+  animation?: BroadcasterLike<number>;
 }) => {
   const ref: React.Ref<HTMLDivElement> = useAnimate(
     animation,
@@ -99,8 +61,9 @@ const AnimatedBox = ({
       }}
     />
   );
-};
+};*/
 
+/*
 const AnimationGroup = () => {
   const animation = useAnimationGroup<number>({
     a: pipe(
@@ -148,11 +111,13 @@ const AnimationGroup = () => {
       </div>
     </div>
   );
-};
+};*/
 
+/*
 const inMemoryCacheContext =
-  /*@__PURE__*/ createContext<Optional<Cache.CacheLike<string>>>(none);
+createContext<Optional<Cache.CacheLike<string>>>(none);*/
 
+/*
 const CacheComponent = () => {
   const cache = useContext(inMemoryCacheContext);
 
@@ -173,7 +138,7 @@ const CacheComponent = () => {
       <span>{value}</span>
     </div>
   );
-};
+};*/
 
 const Counter = () => {
   const history = useWindowLocation();
@@ -191,33 +156,38 @@ const Counter = () => {
 
   const counter = useDisposable(
     pipeLazy(
-      Computation.generate<Observable.Computation>(ObservableModule)(
-        increment,
-        returns(counterInitialValue ?? -1),
-      ),
+      Observable.gen(function* () {
+        let i = counterInitialValue ?? 0;
+        while (true) {
+          yield i;
+          i++;
+        }
+      }),
       Observable.forEach<number>(value =>
         history.replace((uri: WindowLocationURI) => ({
           ...uri,
           query: `v=${value}`,
         })),
       ),
-      Observable.toPauseableObservable(ReactScheduler.get()),
+      Observable.toProducer({ scheduler: ReactScheduler.get() }),
+      Producer.broadcast<number>(),
     ),
     [history.replace, counterInitialValue],
   );
-  const counterController = usePauseable(counter);
-  const counterValue = useObserve(counter) ?? counterInitialValue;
+  const counterValue = useEventSource(counter) ?? counterInitialValue;
 
   return (
     <div>
       <button
-        onClick={
-          counterController.isPaused
-            ? counterController.resume
-            : counterController.pause
+        onClick={() =>
+          (counter?.[PauseableLike_isPaused]?.[StoreLike_value] ?? true)
+            ? counter?.[PauseableLike_resume]?.()
+            : counter?.[PauseableLike_pause]?.()
         }
       >
-        {counterController.isPaused ? "Resume Counter" : "Pause Counter"}
+        {(counter?.[PauseableLike_isPaused]?.[StoreLike_value] ?? true)
+          ? "Resume Counter"
+          : "Pause Counter"}
       </button>
       <span>{counterValue}</span>
     </div>
@@ -254,8 +224,7 @@ const History = () => {
   );
 };
 
-const animationScheduler = AnimationFrameScheduler.get();
-
+/*
 const RxComponent = createComponent(
   (
     props: BroadcasterLike<{
@@ -335,12 +304,13 @@ const RxComponent = createComponent(
         </div>
       );
     }),
-);
+);*/
 
 // Subscribe to the window location using react's normal priority scheduler.
 const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
+/*
 ReactDOMClient.createRoot(rootElement as any).render(
   <CacheProvider cacheContext={inMemoryCacheContext}>
     <WindowLocationProvider windowLocation={windowLocation}>
@@ -353,4 +323,13 @@ ReactDOMClient.createRoot(rootElement as any).render(
       <Measure />
     </WindowLocationProvider>
   </CacheProvider>,
+);*/
+
+ReactDOMClient.createRoot(rootElement as any).render(
+  <WindowLocationProvider windowLocation={windowLocation}>
+    <History />
+    <Counter />
+    <Wordle />
+    <Measure />
+  </WindowLocationProvider>,
 );

@@ -55,6 +55,7 @@ const Streamable_spring = /*@__PURE__*/ (() => {
         }), Observable.switchAll(), Observable.forEach(bindMethod(accFeedbackStream, EventListenerLike_notify)));
         init(StreamMixin(), this, operator, scheduler, options);
         pipe(animationIsRunning, Disposable.addTo(this));
+        accFeedbackStream[EventListenerLike_notify](0);
         return this;
     }, props({
         [AnimationLike_isRunning]: none,

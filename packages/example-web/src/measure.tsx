@@ -1,9 +1,10 @@
 import { pipeSomeLazy } from "@reactive-js/core/functions";
 import React, { useEffect, useState } from "react";
 import * as Observable from "@reactive-js/core/computations/Observable";
-import { useObserve } from "@reactive-js/core/react";
+import { useEventSource } from "@reactive-js/core/react";
 import { useAnimate, useMeasure, useSpring } from "@reactive-js/core/react/web";
 import { EventListenerLike_notify } from "@reactive-js/core/utils";
+import { AnimationLike_isRunning } from "@reactive-js/core/computations/Streamable";
 
 const Measure = () => {
   const spring = useSpring();
@@ -11,18 +12,19 @@ const Measure = () => {
   const boxWidth = rect?.width ?? 0;
 
   const [state, updateState] = useState(false);
-  const springIsAnimating = useObserve(spring) ?? false;
+  const springIsAnimating =
+    useEventSource(spring?.[AnimationLike_isRunning]) ?? false;
 
   useEffect(() => {
     spring?.[EventListenerLike_notify](state ? boxWidth : 0);
   }, [boxWidth, state]);
 
   const width =
-    useObserve(
+    useEventSource(
       pipeSomeLazy(
         spring,
-        Observable.fromEventSource(),
-        Observable.throttle<number>(50, { mode: "last" }),
+        Observable.fromBroadcaster(),
+        Observable.throttle<number>(50, { mode: "interval" }),
       ),
       [spring],
     ) ?? 0;

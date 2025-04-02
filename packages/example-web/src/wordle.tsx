@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAnimate, useSpring } from "@reactive-js/core/react/web";
 import { Property } from "csstype";
-import { useSink, useObserve } from "@reactive-js/core/react";
+import { useEventSource } from "@reactive-js/core/react";
 import { Optional } from "@reactive-js/core/functions";
-import { EventSourceLike } from "@reactive-js/core/computations";
+import { BroadcasterLike } from "@reactive-js/core/computations";
 import { clamp } from "@reactive-js/core/math";
+import { AnimationLike_isRunning } from "@reactive-js/core/computations/Streamable";
+import { EventListenerLike_notify } from "@reactive-js/core/utils";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -42,7 +44,7 @@ const AnimatedBox = ({
   direction,
 }: {
   label: string;
-  animation: Optional<EventSourceLike<number>>;
+  animation: Optional<BroadcasterLike<number>>;
   index: number;
   direction: boolean;
 }) => {
@@ -107,13 +109,12 @@ export const Wordle = () => {
     precision: 0.1,
   });
 
-  const springController = useSink(spring);
-
   useEffect(() => {
-    springController.notify({ from: 0, to: 180 * items.length });
-  }, [springController, state]);
+    spring?.[EventListenerLike_notify]({ from: 0, to: 180 * items.length });
+  }, [spring, state]);
 
-  const isAnimationRunning = useObserve(spring) ?? false;
+  const isAnimationRunning =
+    useEventSource(spring?.[AnimationLike_isRunning]) ?? false;
 
   return (
     <div

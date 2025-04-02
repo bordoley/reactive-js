@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/computations/Observable";
+import * as SynchronousObservable from "@reactive-js/core/computations/SynchronousObservable";
 import { useAnimate } from "@reactive-js/core/react/web";
 import { pipe, pipeLazy, returns } from "@reactive-js/core/functions";
-import { __animate } from "@reactive-js/core/web/effects";
-import * as EventSource from "@reactive-js/core/computations/EventSource";
+import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
 import * as WebElement from "@reactive-js/core/web/Element";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
+import * as Producer from "@reactive-js/core/computations/Producer";
 
 type Point = { x: number; y: number };
 
@@ -15,13 +16,13 @@ const Root = () => {
     pipeLazy(
       window,
       WebElement.eventSource<Window, "mousemove">("mousemove"),
-      EventSource.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
-      Observable.fromEventSource(),
+      Broadcaster.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
+      Observable.fromBroadcaster(),
       Observable.throttle(300, { mode: "interval" }),
       Observable.scanMany(
         (prev: Point, next: Point) =>
           pipe(
-            Observable.spring({
+            SynchronousObservable.spring({
               stiffness: 0.01,
               damping: 0.1,
               precision: 0.001,
@@ -33,7 +34,8 @@ const Root = () => {
           ),
         returns({ x: 0, y: 0 }),
       ),
-      Observable.toEventSource(AnimationFrameScheduler.get()),
+      Observable.toProducer({ scheduler: AnimationFrameScheduler.get() }),
+      Producer.broadcast(),
     ),
     [],
   );

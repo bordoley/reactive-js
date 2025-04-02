@@ -152,6 +152,8 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
 
       pipe(animationIsRunning, Disposable.addTo(this));
 
+      accFeedbackStream[EventListenerLike_notify](0);
+
       return this;
     },
 

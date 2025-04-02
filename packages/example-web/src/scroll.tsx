@@ -4,8 +4,8 @@ import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
 import { useDisposable } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
 import { Optional } from "@reactive-js/core/functions";
-import * as EventSource from "@reactive-js/core/computations/EventSource";
-import { EventSourceLike } from "@reactive-js/core/computations";
+import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
+import { BroadcasterLike } from "@reactive-js/core/computations";
 import * as Publisher from "@reactive-js/core/computations/Publisher";
 import {
   EventListenerLike_notify,
@@ -16,7 +16,7 @@ import {
 const AnimatedCircle = ({
   animation,
 }: {
-  animation: Optional<EventSourceLike<number>>;
+  animation: Optional<BroadcasterLike<number>>;
 }) => {
   const circleRef: React.Ref<HTMLDivElement> = useAnimate(
     animation,
@@ -44,7 +44,7 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const spring = useSpring({ precision: 0.1, priority: 1 });
+  const spring = useSpring({ precision: 0.1 });
 
   const publishedAnimation = useDisposable(Publisher.create, []);
 
@@ -80,7 +80,7 @@ const ScrollApp = () => {
     () =>
       spring &&
       publishedAnimation &&
-      EventSource.merge<number>(spring, publishedAnimation),
+      Broadcaster.merge<number>(spring, publishedAnimation),
     [spring, publishedAnimation],
   );
 

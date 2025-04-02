@@ -27,8 +27,9 @@ export default [
       resolve(),
       replace({
         preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
+        // "process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      /*
       terser({
         compress: {
           ecma: 2015,
@@ -37,7 +38,7 @@ export default [
           unsafe_arrows: true,
           unsafe_symbols: true,
         },
-      }),
+      }),*/
     ],
   },
 
@@ -60,8 +61,9 @@ export default [
       resolve(),
       replace({
         preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
+        //"process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      /*
       terser({
         compress: {
           ecma: 2015,
@@ -70,7 +72,7 @@ export default [
           unsafe_arrows: true,
           unsafe_symbols: true,
         },
-      }),
+      }),*/
     ],
   },
 
@@ -93,8 +95,9 @@ export default [
       resolve(),
       replace({
         preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
+        //"process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      /*
       terser({
         compress: {
           ecma: 2015,
@@ -103,7 +106,7 @@ export default [
           unsafe_arrows: true,
           unsafe_symbols: true,
         },
-      }),
+      }),*/
     ],
   },
   {
@@ -125,8 +128,9 @@ export default [
       resolve(),
       replace({
         preventAssignment: true,
-        "process.env.NODE_ENV": JSON.stringify("production"),
+        // "process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      /*
       terser({
         compress: {
           ecma: 2015,
@@ -135,7 +139,7 @@ export default [
           unsafe_arrows: true,
           unsafe_symbols: true,
         },
-      }),
+      }),*/
     ],
   },
 ];
