@@ -1,14 +1,18 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
-import { useDisposable, useEventSource } from "@reactive-js/core/react";
+import { useEventSource } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
 import { Optional, pipe, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { BroadcasterLike } from "@reactive-js/core/computations";
-import * as Publisher from "@reactive-js/core/computations/Publisher";
 import { EventListenerLike_notify } from "@reactive-js/core/utils";
+import * as Computation from "@reactive-js/core/computations/Computation";
+
+const m = Computation.makeModule<Broadcaster.BroadcasterModule, "merge">({
+  merge: Broadcaster.merge,
+});
 
 const AnimatedCircle = ({
   animation,
@@ -43,21 +47,11 @@ const AnimatedCircle = ({
 const ScrollApp = () => {
   const spring = useSpring({ precision: 0.1 });
 
-  const publishedScrollValues = useDisposable(
-    Publisher.create<ScrollValue>,
-    [],
-  );
-
-  const containerRef = useScroll<HTMLDivElement>(
-    (v: ScrollValue) => {
-      publishedScrollValues?.[EventListenerLike_notify](v);
-    },
-    [publishedScrollValues],
-  );
+  const [containerRef, scrollValues] = useScroll<HTMLDivElement>();
 
   useEventSource(
     pipeSomeLazy(
-      publishedScrollValues,
+      scrollValues,
       Observable.fromBroadcaster(),
       Observable.debounce<ScrollValue>(50),
       Observable.forEach(({ y, done }) => {
@@ -77,19 +71,17 @@ const ScrollApp = () => {
         }
       }),
     ),
-    [publishedScrollValues],
+    [scrollValues],
   );
 
   const circleAnimtation = useMemo(
     () =>
       spring &&
-      publishedScrollValues &&
-      Broadcaster.merge<number>(
-        spring,
-        pipe(
-          publishedScrollValues,
-          Broadcaster.map(({ y }: ScrollValue) => y.progress),
-        ),
+      scrollValues &&
+      pipe(
+        scrollValues,
+        Broadcaster.map(({ y }: ScrollValue) => y.progress),
+        Computation.mergeWith(m, spring),
       ),
     [spring],
   );

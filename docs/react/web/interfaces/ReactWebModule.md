@@ -148,25 +148,15 @@ readonly `unknown`[]
 
 ### useScroll()
 
-> **useScroll**\<`TElement`\>(`callback`, `deps`): `Ref`\<`TElement`\>
+> **useScroll**\<`TElement`\>(): [`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`Ref`\<`TElement`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<[`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<[`ScrollValue`](../../../web/interfaces/ScrollValue.md)\>\>\>
 
 #### Type Parameters
 
 • **TElement** *extends* `HTMLElement`
 
-#### Parameters
-
-##### callback
-
-[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<[`ScrollValue`](../../../web/interfaces/ScrollValue.md)\>
-
-##### deps
-
-readonly `unknown`[]
-
 #### Returns
 
-`Ref`\<`TElement`\>
+[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`Ref`\<`TElement`\>, [`Optional`](../../../functions/type-aliases/Optional.md)\<[`BroadcasterLike`](../../../computations/interfaces/BroadcasterLike.md)\<[`ScrollValue`](../../../web/interfaces/ScrollValue.md)\>\>\>
 
 ***
 

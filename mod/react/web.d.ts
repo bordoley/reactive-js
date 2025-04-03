@@ -18,7 +18,7 @@ export interface ReactWebModule {
     useAnimationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>>): Optional<AnimationGroupLike<TEvent, TKey, T>>;
     /**
      */
-    useScroll<TElement extends HTMLElement>(callback: SideEffect1<ScrollValue>, deps: readonly unknown[]): React.Ref<TElement>;
+    useScroll<TElement extends HTMLElement>(): Tuple2<React.Ref<TElement>, Optional<BroadcasterLike<ScrollValue>>>;
     useSpring(options?: {
         readonly stiffness?: number;
         readonly damping?: number;

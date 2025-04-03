@@ -4,10 +4,12 @@ import { createContext, createElement, useCallback, useContext, useEffect, useRe
 import { nullObject } from "../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
+import * as Publisher from "../computations/Publisher.js";
 import * as Streamable from "../computations/Streamable.js";
 import { StoreLike_value, } from "../computations.js";
-import { isFunction, isNull, none, pipe, pipeSome, pipeSomeLazy, } from "../functions.js";
+import { isFunction, isNull, none, pipe, pipeSome, pipeSomeLazy, tuple, } from "../functions.js";
 import { useDisposable, useEventSource, useStreamable } from "../react.js";
+import { EventListenerLike_notify } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
@@ -58,11 +60,13 @@ export const useMeasure = () => {
     const rect = useEventSource(pipeSome(container ?? none, WebElement.measure()));
     return [setContainer, rect];
 };
-export const useScroll = (callback, deps) => {
+export const useScroll = () => {
     const [element, setElement] = useState(null);
-    const memoizedCallback = useCallback(callback, deps);
-    useDisposable(pipeSomeLazy(element ?? none, WebElement.addScrollHandler(memoizedCallback)), [element, memoizedCallback]);
-    return setElement;
+    const publisher = useDisposable((Publisher.create), []);
+    useDisposable(pipeSomeLazy(element ?? none, WebElement.addScrollHandler(ev => {
+        publisher?.[EventListenerLike_notify](ev);
+    })), [element, publisher]);
+    return tuple(setElement, publisher);
 };
 export const useSpring = (options) => {
     const scheduler = AnimationFrameScheduler.get();

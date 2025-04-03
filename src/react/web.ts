@@ -11,6 +11,7 @@ import { nullObject } from "../__internal__/constants.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../collections.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
+import * as Publisher from "../computations/Publisher.js";
 import {
   AnimationGroupLike,
   AnimationLike,
@@ -34,9 +35,10 @@ import {
   pipe,
   pipeSome,
   pipeSomeLazy,
+  tuple,
 } from "../functions.js";
 import { useDisposable, useEventSource, useStreamable } from "../react.js";
-import { SchedulerLike } from "../utils.js";
+import { EventListenerLike_notify, SchedulerLike } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import {
@@ -93,10 +95,10 @@ export interface ReactWebModule {
 
   /**
    */
-  useScroll<TElement extends HTMLElement>(
-    callback: SideEffect1<ScrollValue>,
-    deps: readonly unknown[],
-  ): React.Ref<TElement>;
+  useScroll<TElement extends HTMLElement>(): Tuple2<
+    React.Ref<TElement>,
+    Optional<BroadcasterLike<ScrollValue>>
+  >;
 
   useSpring(options?: {
     readonly stiffness?: number;
@@ -220,23 +222,24 @@ export const useMeasure = (): Tuple2<
   return [setContainer, rect];
 };
 
-export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(
-  callback: SideEffect1<ScrollValue>,
-  deps: readonly unknown[],
-) => {
+export const useScroll: Signature["useScroll"] = <
+  TElement extends HTMLElement,
+>() => {
   const [element, setElement] = useState<TElement | null>(null);
 
-  const memoizedCallback = useCallback(callback, deps);
+  const publisher = useDisposable(Publisher.create<ScrollValue>, []);
 
   useDisposable(
     pipeSomeLazy(
       element ?? none,
-      WebElement.addScrollHandler(memoizedCallback),
+      WebElement.addScrollHandler(ev => {
+        publisher?.[EventListenerLike_notify](ev);
+      }),
     ),
-    [element, memoizedCallback],
+    [element, publisher],
   );
 
-  return setElement as React.Ref<TElement>;
+  return tuple(setElement as React.Ref<TElement>, publisher);
 };
 
 export const useSpring: Signature["useSpring"] = (options?: {

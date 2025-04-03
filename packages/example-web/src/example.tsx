@@ -18,7 +18,7 @@ import {
   __constant,
   __currentScheduler,
   __memo,
-  __observe,
+  __subscribe,
 } from "@reactive-js/core/computations/Observable/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
