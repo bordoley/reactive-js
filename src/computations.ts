@@ -833,6 +833,10 @@ export interface ScheduledReactiveComputationModule<
 
   currentTime: PureComputationOf<TComputationType, number>;
 
+  debounce<T>(
+    duration: number,
+  ): PureComputationOperator<TComputationType, T, T>;
+
   delay(duration: number): PureComputationOf<TComputationType, unknown>;
 
   keyFrame(

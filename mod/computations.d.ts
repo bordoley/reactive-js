@@ -323,6 +323,7 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
         readonly mode?: "batched" | "combine-latest";
     }): ComputationWithSideEffectsOf<TComputationType, T>;
     currentTime: PureComputationOf<TComputationType, number>;
+    debounce<T>(duration: number): PureComputationOperator<TComputationType, T, T>;
     delay(duration: number): PureComputationOf<TComputationType, unknown>;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;

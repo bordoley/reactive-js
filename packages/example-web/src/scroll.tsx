@@ -1,17 +1,14 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
-import { useDisposable } from "@reactive-js/core/react";
+import { useDisposable, useEventSource } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
-import { Optional } from "@reactive-js/core/functions";
+import { Optional, pipe, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
+import * as Observable from "@reactive-js/core/computations/Observable";
 import { BroadcasterLike } from "@reactive-js/core/computations";
 import * as Publisher from "@reactive-js/core/computations/Publisher";
-import {
-  EventListenerLike_notify,
-  PauseableLike_pause,
-  PauseableLike_resume,
-} from "@reactive-js/core/utils";
+import { EventListenerLike_notify } from "@reactive-js/core/utils";
 
 const AnimatedCircle = ({
   animation,
@@ -46,42 +43,57 @@ const AnimatedCircle = ({
 const ScrollApp = () => {
   const spring = useSpring({ precision: 0.1 });
 
-  const publishedAnimation = useDisposable(Publisher.create, []);
+  const publishedScrollValues = useDisposable(
+    Publisher.create<ScrollValue>,
+    [],
+  );
 
   const containerRef = useScroll<HTMLDivElement>(
-    ({ y, done }: ScrollValue) => {
-      const pos = y.progress;
-      const { velocity } = y;
-
-      spring?.[PauseableLike_pause]();
-
-      if (!done && velocity > 0) {
-        spring?.[EventListenerLike_notify]({
-          from: pos,
-          to: [pos + 0.05, pos],
-        });
-      } else if (!done && velocity < 0) {
-        spring?.[EventListenerLike_notify]({
-          from: pos,
-          to: [pos - 0.01, pos],
-        });
-      }
-
-      if (!done) {
-        publishedAnimation?.[EventListenerLike_notify](pos);
-      } else {
-        spring?.[PauseableLike_resume]();
-      }
+    (v: ScrollValue) => {
+      publishedScrollValues?.[EventListenerLike_notify](v);
     },
-    [publishedAnimation],
+    [publishedScrollValues],
+  );
+
+  useEventSource(
+    pipeSomeLazy(
+      publishedScrollValues,
+      Observable.fromBroadcaster(),
+      Observable.debounce<ScrollValue>(50),
+      Observable.forEach(({ y, done }) => {
+        const pos = y.progress;
+        const { velocity } = y;
+
+        if (!done && velocity > 0) {
+          spring?.[EventListenerLike_notify]({
+            from: pos,
+            to: [pos + 0.05, pos],
+          });
+        } else if (!done && velocity < 0) {
+          spring?.[EventListenerLike_notify]({
+            from: pos,
+            to: [pos - 0.025, pos],
+          });
+        }
+      }),
+    ),
+    [publishedScrollValues],
   );
 
   const circleAnimtation = useMemo(
     () =>
       spring &&
-      publishedAnimation &&
-      Broadcaster.merge<number>(spring, publishedAnimation),
-    [spring, publishedAnimation],
+      publishedScrollValues &&
+      Broadcaster.merge<number>(
+        spring, 
+        pipe(
+          publishedScrollValues,
+          Broadcaster.map(
+            ({ y }: ScrollValue) => y.progress,
+          ),
+        )
+      ),
+    [spring],
   );
 
   return (

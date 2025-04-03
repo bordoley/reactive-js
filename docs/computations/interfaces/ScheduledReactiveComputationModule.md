@@ -63,6 +63,26 @@
 
 ***
 
+### debounce()
+
+> **debounce**\<`T`\>(`duration`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### duration
+
+`number`
+
+#### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+***
+
 ### delay()
 
 > **delay**(`duration`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `unknown`\>

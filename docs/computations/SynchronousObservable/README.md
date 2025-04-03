@@ -30,6 +30,7 @@
 - [compute](functions/compute.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
+- [debounce](functions/debounce.md)
 - [decodeWithCharset](functions/decodeWithCharset.md)
 - [delay](functions/delay.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)

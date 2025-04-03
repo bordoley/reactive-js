@@ -494,6 +494,30 @@
 
 ***
 
+### debounce()
+
+> **debounce**\<`T`\>(`duration`): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### duration
+
+`number`
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`debounce`](../../interfaces/ScheduledReactiveComputationModule.md#debounce)
+
+***
+
 ### decodeWithCharset()
 
 > **decodeWithCharset**(`options`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), `ArrayBuffer`, `string`\>

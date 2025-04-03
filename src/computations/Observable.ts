@@ -20,6 +20,7 @@ import Observable_catchError from "./Observable/__private__/Observable.catchErro
 import { Observable_computeDeferred } from "./Observable/__private__/Observable.compute.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
+import Observable_debounce from "./Observable/__private__/Observable.debounce.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_delay from "./Observable/__private__/Observable.delay.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
@@ -123,6 +124,7 @@ export const compute: Signature["compute"] = Observable_computeDeferred;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = Observable_concatAll;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
+export const debounce: Signature["debounce"] = Observable_debounce;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const delay: Signature["delay"] = Observable_delay;

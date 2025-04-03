@@ -6,6 +6,7 @@ import Observable_catchError from "./Observable/__private__/Observable.catchErro
 import { Observable_computeSynchronous } from "./Observable/__private__/Observable.compute.js";
 import Observable_concat from "./Observable/__private__/Observable.concat.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
+import Observable_debounce from "./Observable/__private__/Observable.debounce.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_delay from "./Observable/__private__/Observable.delay.js";
 import Observable_distinctUntilChanged from "./Observable/__private__/Observable.distinctUntilChanged.js";
@@ -46,6 +47,7 @@ export const compute = Observable_computeSynchronous;
 export const concat = Observable_concat;
 export const concatAll = Observable_concatAll;
 export const currentTime = Observable_currentTime;
+export const debounce = Observable_debounce;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const delay = Observable_delay;
 export const distinctUntilChanged = Observable_distinctUntilChanged;

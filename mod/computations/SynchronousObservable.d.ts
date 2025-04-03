@@ -36,6 +36,7 @@ export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const currentTime: Signature["currentTime"];
+export declare const debounce: Signature["debounce"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const delay: Signature["delay"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
