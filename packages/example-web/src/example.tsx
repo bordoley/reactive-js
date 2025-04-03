@@ -99,6 +99,9 @@ const AnimationGroup = () => {
     ),
   });
 
+  const isAnimationPaused =
+    useEventSource(animation?.[PauseableLike_isPaused]) ?? true;
+
   const isAnimationRunning =
     useEventSource(animation?.[AnimationLike_isRunning]) ?? false;
 
@@ -116,10 +119,21 @@ const AnimationGroup = () => {
       </div>
       <div>
         <button
-          onClick={() => animation?.[EventListenerLike_notify](none)}
-          disabled={isAnimationRunning}
+          onClick={() => {
+            if (isAnimationRunning && isAnimationPaused) {
+              animation?.[PauseableLike_resume]();
+            } else if (isAnimationRunning) {
+              animation?.[PauseableLike_pause]();
+            } else {
+              animation?.[EventListenerLike_notify](none);
+            }
+          }}
         >
-          Run Animation
+          {!isAnimationRunning
+            ? "Run Animation"
+            : isAnimationPaused
+              ? "Resume"
+              : "Pause"}
         </button>
       </div>
     </div>
