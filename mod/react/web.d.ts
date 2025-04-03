@@ -38,6 +38,7 @@ export type Signature = ReactWebModule;
 export declare const WindowLocationProvider: Signature["WindowLocationProvider"];
 export declare const useAnimate: Signature["useAnimate"];
 export declare const useAnimation: Signature["useAnimation"];
+export declare const useAnimationGroup: Signature["useAnimationGroup"];
 export declare const useMeasure: () => Tuple2<React.Ref<HTMLDivElement>, Optional<Rect>>;
 export declare const useScroll: Signature["useScroll"];
 export declare const useSpring: Signature["useSpring"];

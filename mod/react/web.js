@@ -32,29 +32,18 @@ export const useAnimate = (animation, selector, deps) => {
     })), [animation, memoizedSelector]);
     return ref;
 };
-export const useAnimation = (animation, options) => {
-    const scheduler = options?.animationScheduler ?? AnimationFrameScheduler.get();
+export const useAnimation = (animation) => {
+    const scheduler = AnimationFrameScheduler.get();
     return useStreamable(() => Streamable.animation(animation), [], {
         scheduler,
     });
 };
-/*
-export const useAnimationGroup: Signature["useAnimationGroup"] = <
-  T,
-  TKey extends string = string,
-  TEvent = unknown,
->(
-  animationGroup: ReadonlyObjectMapLike<
-    TKey,
-    | Function1<TEvent, PureSynchronousObservableLike<T>>
-    | PureSynchronousObservableLike<T>
-  >,
-) => {
-  const scheduler = AnimationFrameScheduler.get();
-  return useStreamable(() => Streamable.animationGroup(animationGroup), [], {
-    scheduler,
-  });
-};*/
+export const useAnimationGroup = (animationGroup) => {
+    const scheduler = AnimationFrameScheduler.get();
+    return useStreamable(() => Streamable.animationGroup(animationGroup), [], {
+        scheduler,
+    });
+};
 export const useMeasure = () => {
     const [container, setContainer] = useState(null);
     const rect = useEventSource(pipeSome(container ?? none, WebElement.measure()));

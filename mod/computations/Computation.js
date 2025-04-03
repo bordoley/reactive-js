@@ -1,7 +1,7 @@
 /// <reference types="./Computation.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModuleLike_computationType, } from "../computations.js";
-import { raise as Functions_raise, bindMethod, error, identity, pipe, } from "../functions.js";
+import { raise as Functions_raise, alwaysFalse, bindMethod, error, identity, pipe, } from "../functions.js";
 import Computation_areAllPure from "./Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "./Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_concatWith from "./Computation/__private__/Computation.concatWith.js";
@@ -18,6 +18,7 @@ export const concatWith = Computation_concatWith;
 export const empty = Computation_empty;
 export const endWith = Computation_endWith;
 export const fromReadonlyArray = Computation_fromReadonlyArray;
+export const ignoreElements = ((m, _type) => m.keep(alwaysFalse));
 export const isDeferred = Computation_isDeferred;
 export const isPure = Computation_isPure;
 export const isSynchronous = Computation_isSynchronous;

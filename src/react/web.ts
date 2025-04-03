@@ -38,7 +38,7 @@ import {
   tuple,
 } from "../functions.js";
 import { useDisposable, useEventSource, useStreamable } from "../react.js";
-import { EventListenerLike_notify, SchedulerLike } from "../utils.js";
+import { EventListenerLike_notify } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import {
@@ -179,19 +179,14 @@ export const useAnimation: Signature["useAnimation"] = <T, TEvent = unknown>(
   animation:
     | Function1<TEvent, PureSynchronousObservableLike<T>>
     | PureSynchronousObservableLike<T>,
-  options?: {
-    readonly animationScheduler?: SchedulerLike;
-  },
 ) => {
-  const scheduler =
-    options?.animationScheduler ?? AnimationFrameScheduler.get();
+  const scheduler = AnimationFrameScheduler.get();
 
   return useStreamable(() => Streamable.animation(animation), [], {
     scheduler,
   });
 };
 
-/*
 export const useAnimationGroup: Signature["useAnimationGroup"] = <
   T,
   TKey extends string = string,
@@ -204,10 +199,11 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
   >,
 ) => {
   const scheduler = AnimationFrameScheduler.get();
+
   return useStreamable(() => Streamable.animationGroup(animationGroup), [], {
     scheduler,
   });
-};*/
+};
 
 export const useMeasure = (): Tuple2<
   React.Ref<HTMLDivElement>,

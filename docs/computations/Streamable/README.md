@@ -28,6 +28,7 @@
 
 - [actionReducer](functions/actionReducer.md)
 - [animation](functions/animation.md)
+- [animationGroup](functions/animationGroup.md)
 - [create](functions/create.md)
 - [identity](functions/identity.md)
 - [spring](functions/spring.md)

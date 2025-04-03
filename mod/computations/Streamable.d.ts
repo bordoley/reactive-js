@@ -70,6 +70,7 @@ export type Signature = StreamableModule;
 export declare const create: Signature["create"];
 export declare const actionReducer: Signature["actionReducer"];
 export declare const animation: Signature["animation"];
+export declare const animationGroup: Signature["animationGroup"];
 export declare const identity: Signature["identity"];
 export declare const spring: Signature["spring"];
 export declare const stateStore: Signature["stateStore"];

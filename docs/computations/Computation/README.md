@@ -18,6 +18,7 @@
 - [empty](functions/empty.md)
 - [endWith](functions/endWith.md)
 - [fromReadonlyArray](functions/fromReadonlyArray.md)
+- [ignoreElements](functions/ignoreElements.md)
 - [isDeferred](functions/isDeferred.md)
 - [isPure](functions/isPure.md)
 - [isSynchronous](functions/isSynchronous.md)

@@ -13,6 +13,7 @@ export interface Signature {
         readonly count?: number;
         readonly start?: number;
     } & Parameters<TComputationModule["genPure"]>[1]): <T>(arr: ReadonlyArray<T>) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    ignoreElements<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "keep">, type?: T): PureComputationOperator<TComputationType, any, T>;
     isDeferred<TComputationType extends Partial<ComputationLike> = Partial<ComputationLike>>(computation: TComputationType): computation is TComputationType & {
         [ComputationLike_isDeferred]: Optional<true>;
     };
@@ -37,6 +38,7 @@ export declare const concatWith: Signature["concatWith"];
 export declare const empty: Signature["empty"];
 export declare const endWith: Signature["endWith"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
+export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferred: Signature["isDeferred"];
 export declare const isPure: Signature["isPure"];
 export declare const isSynchronous: Signature["isSynchronous"];

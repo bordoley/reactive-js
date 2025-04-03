@@ -21,7 +21,7 @@ import Streamable_actionReducer from "./Streamable/__private__/Streamable.action
 import Streamable_animation, {
   AnimationLike_isRunning as Animation_isRunning,
 } from "./Streamable/__private__/Streamable.animation.js";
-//import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
+import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
 import Streamable_spring from "./Streamable/__private__/Streamable.spring.js";
@@ -145,7 +145,8 @@ export const create: Signature["create"] = Streamable_create;
 export const actionReducer: Signature["actionReducer"] =
   Streamable_actionReducer;
 export const animation: Signature["animation"] = Streamable_animation;
-//export const animationGroup: Signature["animationGroup"] = Streamable_animationGroup;
+export const animationGroup: Signature["animationGroup"] =
+  Streamable_animationGroup;
 export const identity: Signature["identity"] = Streamable_identity;
 export const spring: Signature["spring"] = Streamable_spring;
 export const stateStore: Signature["stateStore"] = Streamable_stateStore;

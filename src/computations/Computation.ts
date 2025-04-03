@@ -21,6 +21,7 @@ import {
   Factory,
   raise as Functions_raise,
   Optional,
+  alwaysFalse,
   bindMethod,
   error,
   identity,
@@ -95,6 +96,11 @@ export interface Signature {
   ): <T>(
     arr: ReadonlyArray<T>,
   ) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+
+  ignoreElements<TComputationType extends ComputationTypeLike, T>(
+    m: PickComputationModule<ComputationModule<TComputationType>, "keep">,
+    type?: T,
+  ): PureComputationOperator<TComputationType, any, T>;
 
   isDeferred<
     TComputationType extends
@@ -181,6 +187,15 @@ export const empty: Signature["empty"] = Computation_empty;
 export const endWith: Signature["endWith"] = Computation_endWith;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Computation_fromReadonlyArray;
+
+export const ignoreElements: Signature["ignoreElements"] = (<
+  TComputationType extends ComputationTypeLike,
+  T,
+>(
+  m: PickComputationModule<ComputationModule<TComputationType>, "keep">,
+  _type?: T,
+) => m.keep(alwaysFalse)) as Signature["ignoreElements"];
+
 export const isDeferred: Signature["isDeferred"] = Computation_isDeferred;
 export const isPure: Signature["isPure"] = Computation_isPure;
 export const isSynchronous: Signature["isSynchronous"] =

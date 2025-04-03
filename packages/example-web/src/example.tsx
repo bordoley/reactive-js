@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/computations/Observable";
+import * as SynchronousObservable from "@reactive-js/core/computations/SynchronousObservable";
 import { useDisposable, useEventSource } from "@reactive-js/core/react";
 import {
+  useAnimate,
+  useAnimationGroup,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/react/web";
@@ -10,8 +13,11 @@ import { WindowLocationURI } from "@reactive-js/core/web";
 import {
   isNone,
   isSome,
+  none,
   Optional,
+  pipe,
   pipeLazy,
+  pipeSome,
 } from "@reactive-js/core/functions";
 import {
   __await,
@@ -24,15 +30,22 @@ import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
 import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
-import { StoreLike_value } from "@reactive-js/core/computations";
+import {
+  BroadcasterLike,
+  StoreLike_value,
+} from "@reactive-js/core/computations";
 import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
+  EventListenerLike_notify,
 } from "@reactive-js/core/utils";
 import * as Producer from "@reactive-js/core/computations/Producer";
+import { scale } from "@reactive-js/core/math";
+import { AnimationLike_isRunning } from "@reactive-js/core/computations/Streamable";
+import * as Dictionary from "@reactive-js/core/collections/Dictionary";
+import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 
-/*
 const AnimatedBox = ({
   animation,
 }: {
@@ -61,31 +74,33 @@ const AnimatedBox = ({
       }}
     />
   );
-};*/
+};
 
-/*
 const AnimationGroup = () => {
   const animation = useAnimationGroup<number>({
     a: pipe(
-      Observable.concat(
-        Observable.keyFrame(500),
-        Observable.empty({ delay: 250 }),
-        pipe(Observable.keyFrame(500), Observable.map(scale(1, 0))),
+      SynchronousObservable.concat(
+        SynchronousObservable.keyFrame(500),
+        SynchronousObservable.delay(250),
+        pipe(
+          SynchronousObservable.keyFrame(500),
+          SynchronousObservable.map(scale(1, 0)),
+        ),
       ),
-      Observable.repeat(2),
+      SynchronousObservable.repeat(2),
     ),
-    b: Observable.concat(
-      Observable.keyFrame(500),
-      Observable.empty({ delay: 250 }),
+    b: SynchronousObservable.concat(
+      SynchronousObservable.keyFrame(500),
+      SynchronousObservable.delay(250),
       pipe(
-        Observable.spring({ stiffness: 0.01, damping: 0.01 }),
-        Observable.map(scale(1, 0)),
+        SynchronousObservable.spring({ stiffness: 0.01, damping: 0.01 }),
+        SynchronousObservable.map(scale(1, 0)),
       ),
     ),
   });
 
-  const animationController = useSink(animation);
-  const isAnimationRunning = useObserve(animation) ?? false;
+  const isAnimationRunning =
+    useEventSource(animation?.[AnimationLike_isRunning]) ?? false;
 
   return (
     <div>
@@ -94,16 +109,14 @@ const AnimationGroup = () => {
           animation,
           Dictionary.entries(),
           ReadonlyArray.fromIterable(),
-          ReadonlyArray.map(
-            ([key, animation]: Tuple2<string, EventSourceLike<number>>) => (
-              <AnimatedBox key={key} animation={animation} />
-            ),
-          ),
+          ReadonlyArray.map(([key, animation]) => (
+            <AnimatedBox key={key} animation={animation} />
+          )),
         )}
       </div>
       <div>
         <button
-          onClick={animationController.notify}
+          onClick={() => animation?.[EventListenerLike_notify](none)}
           disabled={isAnimationRunning}
         >
           Run Animation
@@ -111,7 +124,7 @@ const AnimationGroup = () => {
       </div>
     </div>
   );
-};*/
+};
 
 /*
 const inMemoryCacheContext =
@@ -329,6 +342,7 @@ ReactDOMClient.createRoot(rootElement as any).render(
   <WindowLocationProvider windowLocation={windowLocation}>
     <History />
     <Counter />
+    <AnimationGroup />
     <Wordle />
     <Measure />
   </WindowLocationProvider>,

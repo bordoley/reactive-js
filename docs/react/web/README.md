@@ -18,6 +18,7 @@
 
 - [useAnimate](functions/useAnimate.md)
 - [useAnimation](functions/useAnimation.md)
+- [useAnimationGroup](functions/useAnimationGroup.md)
 - [useMeasure](functions/useMeasure.md)
 - [useScroll](functions/useScroll.md)
 - [useSpring](functions/useSpring.md)
