@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import * as SynchronousObservable from "@reactive-js/core/computations/SynchronousObservable";
@@ -9,11 +9,12 @@ import * as WebElement from "@reactive-js/core/web/Element";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as Producer from "@reactive-js/core/computations/Producer";
 import * as DefaultScheduler from "@reactive-js/core/utils/DefaultScheduler";
+import { useDisposable } from "@reactive-js/core/react";
 
 type Point = { x: number; y: number };
 
 const Root = () => {
-  const spring = useMemo(
+  const spring = useDisposable(
     pipeLazy(
       window,
       WebElement.eventSource<Window, "mousemove">("mousemove"),

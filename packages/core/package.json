@@ -64,6 +64,7 @@
     "./computations/Observable": "./computations/Observable.js",
     "./computations/Observable/effects": "./computations/Observable/effects.js",
     "./computations/Producer": "./computations/Producer.js",
+    "./computations/Producer/effects": "./computations/Producer/effects.js",
     "./computations/Publisher": "./computations/Publisher.js",
     "./computations/Runnable": "./computations/Runnable.js",
     "./computations/Streamable": "./computations/Streamable.js",
