@@ -1,41 +1,61 @@
-import { Mixin1, include, init, mix } from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, proto } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import DelegatingSinkMixin from "../../utils/__mixins__/DelegatingSinkMixin.js";
-import { DisposableLike, SinkLike } from "../../utils.js";
+import {
+  SinkMixinLike,
+  SinkMixinLike_doComplete,
+  SinkMixinLike_doNotify,
+} from "../../utils/__mixins__/SinkMixin.js";
+import {
+  EventListenerLike_notify,
+  SinkLike,
+  SinkLike_complete,
+} from "../../utils.js";
 import { LiftedSinkLike } from "../__internal__/LiftedSource.js";
-import LiftedSinkToEventListenerMixin, {
+import {
   LiftedSinkToEventListenerLike,
+  LiftedSinkToEventListenerLike_liftedSink,
 } from "./LiftedSinkToEventListenerMixin.js";
 
-export interface LiftedSinkToSinkLike<TSubscription extends SinkLike, T>
-  extends LiftedSinkToEventListenerLike<TSubscription, T>,
-    SinkLike<T> {}
-
-type TReturn<TSubscription extends SinkLike, T> = Omit<
-  LiftedSinkToSinkLike<TSubscription, T>,
-  keyof DisposableLike
+type TReturn<TSubscription extends SinkLike, T> = Pick<
+  SinkMixinLike<TSubscription, T>,
+  typeof SinkMixinLike_doNotify | typeof SinkMixinLike_doComplete
 >;
 
 const LiftedSinkToSinkMixin: <TSubscription extends SinkLike, T>() => Mixin1<
   TReturn<TSubscription, T>,
-  LiftedSinkLike<TSubscription, T>
-> = /*@__PURE__*/ (<TSubscription extends SinkLike, T>() => {
+  LiftedSinkLike<TSubscription, T>,
+  {},
+  LiftedSinkToEventListenerLike<TSubscription, T>
+> = /*@__PURE__*/ (<TSubscription extends SinkLike<T>, T>() => {
   return returns(
-    mix(
-      include(DelegatingSinkMixin(), LiftedSinkToEventListenerMixin()),
+    mix<
+      TReturn<TSubscription, T>,
+      unknown,
+      TReturn<TSubscription, T>,
+      LiftedSinkToEventListenerLike<TSubscription, T>
+    >(
       function LiftedSinkToSinkMixin(
-        this: unknown,
-        liftedSink: LiftedSinkLike<TSubscription, T>,
+        this: TReturn<TSubscription, T>,
       ): TReturn<TSubscription, T> {
-        init(DelegatingSinkMixin(), this, liftedSink);
-        init(
-          LiftedSinkToEventListenerMixin<TSubscription, T>(),
-          this,
-          liftedSink,
-        );
-
         return this;
       },
+      props(),
+      proto({
+        [SinkMixinLike_doNotify](
+          this: LiftedSinkToEventListenerLike<TSubscription, T>,
+          next: T,
+        ) {
+          this[LiftedSinkToEventListenerLike_liftedSink][
+            EventListenerLike_notify
+          ](next);
+        },
+
+        [SinkMixinLike_doComplete](
+          this: LiftedSinkToEventListenerLike<TSubscription, T>,
+        ) {
+          this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
+        },
+      }),
     ),
   );
 })();

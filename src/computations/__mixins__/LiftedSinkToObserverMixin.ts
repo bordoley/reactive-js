@@ -1,34 +1,17 @@
-import {
-  Mixin2,
-  include,
-  init,
-  mix,
-  props,
-  proto,
-} from "../../__internal__/mixins.js";
+import { Mixin2, include, init, mix } from "../../__internal__/mixins.js";
 import { Optional, returns } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import ObserverMixin from "../../utils/__mixins__/ObserverMixin.js";
-import {
-  SinkMixinLike_doComplete,
-  SinkMixinLike_doNotify,
-} from "../../utils/__mixins__/SinkMixin.js";
-import {
-  BackpressureStrategy,
-  EventListenerLike_notify,
-  ObserverLike,
-  SinkLike_complete,
-} from "../../utils.js";
+
+import { BackpressureStrategy, ObserverLike } from "../../utils.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
 } from "../__internal__/LiftedSource.js";
 import { LiftedSinkToConsumerLike } from "./LiftedSinkToConsumerMixin.js";
-import LiftedSinkToEventListenerMixin, {
-  LiftedSinkToEventListenerLike,
-  LiftedSinkToEventListenerLike_liftedSink,
-} from "./LiftedSinkToEventListenerMixin.js";
+import LiftedSinkToEventListenerMixin from "./LiftedSinkToEventListenerMixin.js";
+import LiftedSinkToSinkMixin from "./LiftedSinkToSinkMixin.js";
 
 export interface LiftedSinkToObserverLike<TSubscription extends ObserverLike, T>
   extends LiftedSinkToConsumerLike<TSubscription, T>,
@@ -57,6 +40,7 @@ const LiftedSinkToObserverMixin: <
         DelegatingSchedulerMixin,
         LiftedSinkToEventListenerMixin(),
         ObserverMixin(),
+        LiftedSinkToSinkMixin(),
       ),
       function LiftedSinkToObserverMixin(
         this: unknown,
@@ -81,26 +65,10 @@ const LiftedSinkToObserverMixin: <
           subscription,
           backPressure,
         );
+        init(LiftedSinkToSinkMixin<TSubscription, T>(), this, delegate);
 
         return this;
       },
-      props(),
-      proto({
-        [SinkMixinLike_doNotify](
-          this: LiftedSinkToEventListenerLike<TSubscription, T>,
-          next: T,
-        ) {
-          this[LiftedSinkToEventListenerLike_liftedSink][
-            EventListenerLike_notify
-          ](next);
-        },
-
-        [SinkMixinLike_doComplete](
-          this: LiftedSinkToEventListenerLike<TSubscription, T>,
-        ) {
-          this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
-        },
-      }),
     ),
   );
 })();
