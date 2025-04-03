@@ -11,7 +11,7 @@ export interface ConsumerMixinLike<TConsumer extends ConsumerLike, T> {
 }
 type TReturn<TConsumer extends ConsumerLike, T> = ConsumerMixinLike<TConsumer, T> & Omit<ConsumerLike<T>, keyof DisposableLike>;
 type TPrototype<TConsumer extends ConsumerLike, T> = Omit<ConsumerLike<T> & ConsumerMixinLike<TConsumer, T>, keyof DisposableLike | keyof FlowControllerLike | typeof ConsumerMixinLike_consumer>;
-declare const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<TReturn<TConsumer, T>, TConsumer, Optional<{
+declare const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<TReturn<TConsumer, T>, TConsumer, Optional<{
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
 }>, TPrototype<TConsumer, T>, DisposableLike>;

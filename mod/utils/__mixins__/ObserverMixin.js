@@ -106,8 +106,12 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 call(scheduleDrainQueue, this);
             }
         },
-        [ConsumerMixinLike_notify](_next) { },
-        [ConsumerMixinLike_complete]() { },
+        [ConsumerMixinLike_notify](next) {
+            this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
+        },
+        [ConsumerMixinLike_complete]() {
+            this[ConsumerMixinLike_consumer][SinkLike_complete]();
+        },
     })));
 })();
 export default ObserverMixin;

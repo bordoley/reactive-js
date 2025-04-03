@@ -3,25 +3,16 @@ import {
   include,
   init,
   mixInstanceFactory,
-  props,
-  proto,
 } from "../../__internal__/mixins.js";
 import { Function1, none } from "../../functions.js";
 import {
   BackpressureStrategy,
   CollectionEnumeratorLike,
   ConsumerLike,
-  EventListenerLike_notify,
   ObserverLike,
   SchedulerLike,
-  SinkLike_complete,
 } from "../../utils.js";
-import {
-  ConsumerMixinLike,
-  ConsumerMixinLike_complete,
-  ConsumerMixinLike_consumer,
-  ConsumerMixinLike_notify,
-} from "../__mixins__/ConsumerMixin.js";
+
 import { ConsumerQueueMixin } from "../__mixins__/ConsumerQueueMixin.js";
 import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
@@ -71,21 +62,6 @@ export const toObserver: <T>(
 
       return this;
     },
-    props(),
-    proto({
-      [ConsumerMixinLike_notify](
-        this: ConsumerMixinLike<ConsumerLike<T>, T>,
-        next: T,
-      ) {
-        this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
-      },
-
-      [ConsumerMixinLike_complete](
-        this: ConsumerMixinLike<ConsumerLike<T>, T>,
-      ) {
-        this[ConsumerMixinLike_consumer][SinkLike_complete]();
-      },
-    }),
   );
 
   return (scheduler: SchedulerLike) => (consumer: ConsumerLike<T>) =>

@@ -55,7 +55,7 @@ type TPrototype<TConsumer extends ConsumerLike, T> = Omit<
   | typeof ConsumerMixinLike_consumer
 >;
 
-const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
+const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
   TReturn<TConsumer, T>,
   TConsumer,
   Optional<{
@@ -64,7 +64,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
   }>,
   TPrototype<TConsumer, T>,
   DisposableLike
-> = /*@__PURE__*/ (<TConsumer extends ConsumerLike, T>() => {
+> = /*@__PURE__*/ (<TConsumer extends ConsumerLike<T>, T>() => {
   async function drainQueue(this: TThis) {
     const consumer = this[ConsumerMixinLike_consumer];
     const isConsumerReady = consumer[FlowControllerLike_isReady];
@@ -211,9 +211,13 @@ const ConsumerMixin: <TConsumer extends ConsumerLike, T>() => Mixin2<
           }
         },
 
-        [ConsumerMixinLike_notify](_next: T) {},
+        [ConsumerMixinLike_notify](this: TThis, next: T) {
+          this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
+        },
 
-        [ConsumerMixinLike_complete]() {},
+        [ConsumerMixinLike_complete](this: TThis) {
+          this[ConsumerMixinLike_consumer][SinkLike_complete]();
+        },
       }),
     ),
   );

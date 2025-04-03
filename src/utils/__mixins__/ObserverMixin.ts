@@ -168,6 +168,7 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
       ): TReturn<TConsumer, T> {
         init(FlowControllerQueueMixin<T>(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
+
         this[ConsumerMixinLike_consumer] = consumer;
 
         this[FlowControllerEnumeratorLike_addOnDataAvailableListener](
@@ -244,9 +245,13 @@ const ObserverMixin: <TConsumer extends ConsumerLike, T>() => Mixin3<
           }
         },
 
-        [ConsumerMixinLike_notify](_next: T) {},
+        [ConsumerMixinLike_notify](this: TThis, next: T) {
+          this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
+        },
 
-        [ConsumerMixinLike_complete]() {},
+        [ConsumerMixinLike_complete](this: TThis) {
+          this[ConsumerMixinLike_consumer][SinkLike_complete]();
+        },
       }),
     ),
   );
