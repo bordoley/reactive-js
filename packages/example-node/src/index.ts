@@ -1,7 +1,7 @@
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { pipe } from "@reactive-js/core/functions";
 import * as HostScheduler from "@reactive-js/core/utils/HostScheduler";
-import * as Source from "@reactive-js/core/computations/Source";
+import * as EventSource from "@reactive-js/core/computations/EventSource";
 
 using scheduler = HostScheduler.create();
 
@@ -32,5 +32,5 @@ await pipe(
       },
     ),
   ),
-  Source.lastAsync({ scheduler }),
+  EventSource.lastAsync({ scheduler }),
 );
