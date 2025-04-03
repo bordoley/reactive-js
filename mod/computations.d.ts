@@ -328,6 +328,7 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureComputationOf<TComputationType, number>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean | number): PureComputationOperator<TComputationType, T, T>;
     spring(options?: {
         readonly stiffness?: number;
         readonly damping?: number;

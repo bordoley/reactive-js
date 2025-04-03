@@ -84,7 +84,6 @@ interface Signature {
     latest<TConsumer extends ConsumerLike<ReadonlyArray<unknown>>, TSource extends DeferredEventSourceLike<unknown, TSourceConsumer>, TSourceConsumer extends ConsumerLike<unknown> & LatestEventListenerLike<unknown>>(sources: readonly TSource[], mode: LatestEventListenerMode, createLatestEventListener: Function2<TConsumer, LatestEventListenerContextLike, TSourceConsumer>): DeferredEventSourceLike<ReadonlyArray<unknown>, TConsumer>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredEventSourceLike<T, TConsumer>[]) => DeferredEventSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
-    retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
     takeLast<TConsumer extends ConsumerLike<T>, T>(genPure: (factory: Factory<Iterator<T>>) => DeferredEventSourceLike<T, TConsumer>, takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>, options?: {
         readonly count?: number;
     }): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
@@ -100,7 +99,6 @@ export declare const forkMerge: Signature["forkMerge"];
 export declare const latest: Signature["latest"];
 export declare const merge: Signature["merge"];
 export declare const repeat: Signature["repeat"];
-export declare const retry: Signature["retry"];
 export declare const takeLast: Signature["takeLast"];
 export declare const withEffect: Signature["withEffect"];
 export {};

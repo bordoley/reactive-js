@@ -6,6 +6,7 @@ import {
   ComputationTypeLike_baseOfT,
   ConcurrentReactiveComputationModule,
   ReactiveComputationModule,
+  StoreLike,
 } from "../computations.js";
 import { Function1, SideEffect1, identityLazy } from "../functions.js";
 import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
@@ -65,10 +66,7 @@ export interface BroadcasterModule
   ): BroadcasterLike<T> & DisposableLike;
 
   createPauseable<T>(
-    op: Function1<
-      BroadcasterLike<boolean> & DisposableLike,
-      BroadcasterLike<T>
-    >,
+    op: Function1<StoreLike<boolean> & DisposableLike, BroadcasterLike<T>>,
     options?: {
       readonly autoDispose?: boolean;
     },

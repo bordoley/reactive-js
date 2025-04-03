@@ -31,6 +31,7 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
         readonly mode?: "batched" | "combine-latest";
     };
 }>, ScheduledReactiveComputationModule<SynchronousObservableComputation> {
+    retry: ScheduledReactiveComputationModule<SynchronousObservableComputation>["retry"];
 }
 export type Signature = SynchronousObservableModule;
 export declare const buffer: Signature["buffer"];

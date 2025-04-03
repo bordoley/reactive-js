@@ -27,6 +27,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly mode?: "batched" | "combine-latest";
     };
 }>, ConcurrentReactiveComputationModule<ObservableComputation>, ScheduledReactiveComputationModule<ObservableComputation> {
+    retry: ScheduledReactiveComputationModule<ObservableComputation>["retry"];
     subscribeOn<T>(scheduler: SchedulerLike): PureComputationOperator<ObservableComputation, T, T>;
 }
 export type Signature = ObservableModule;

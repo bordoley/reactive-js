@@ -313,14 +313,6 @@ interface Signature {
     DeferredEventSourceLike<T, TConsumer>
   >;
 
-  retry<TConsumer extends ConsumerLike<T>, T>(
-    createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>,
-    shouldRetry?: (count: number, error: Error) => boolean,
-  ): Function1<
-    DeferredEventSourceLike<T, TConsumer>,
-    DeferredEventSourceLike<T, TConsumer>
-  >;
-
   takeLast<TConsumer extends ConsumerLike<T>, T>(
     genPure: (
       factory: Factory<Iterator<T>>,
@@ -865,49 +857,6 @@ export const repeat: Signature["repeat"] = (<
         );
       src[EventSourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["repeat"];
-
-export const retry: Signature["retry"] = (<
-    TConsumer extends ConsumerLike<T>,
-    T,
-  >(
-    createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>,
-    shouldRetry?: (count: number, error: Error) => boolean,
-  ) =>
-  (src: DeferredEventSourceLike<T, TConsumer>) =>
-    create<T, TConsumer>((consumer: TConsumer) => {
-      const retryFunction = shouldRetry ?? alwaysTrue;
-
-      let count = 0;
-
-      const onDelegateConsumerError = (e: Error) => {
-        const consumerIsCompleted = consumer[SinkLike_isCompleted];
-        if (consumerIsCompleted) {
-          return;
-        }
-
-        count++;
-
-        try {
-          const shouldRetry = retryFunction(count, e);
-
-          if (shouldRetry) {
-            src[EventSourceLike_subscribe](createDelegateConsumer());
-          } else {
-            consumer[DisposableLike_dispose](e);
-          }
-        } catch (eRetry) {
-          consumer[DisposableLike_dispose](error([e, eRetry]));
-        }
-      };
-
-      const createDelegateConsumer = () =>
-        pipe(
-          consumer,
-          createDelegatingCatchErrorConsumer,
-          DisposableContainer.onError(onDelegateConsumerError),
-        );
-      src[EventSourceLike_subscribe](createDelegateConsumer());
-    }, src)) as Signature["retry"];
 
 export const takeLast: Signature["takeLast"] =
   <TConsumer extends ConsumerLike<T>, T>(

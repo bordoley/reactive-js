@@ -113,7 +113,9 @@ export interface SynchronousObservableModule
         };
       }
     >,
-    ScheduledReactiveComputationModule<SynchronousObservableComputation> {}
+    ScheduledReactiveComputationModule<SynchronousObservableComputation> {
+  retry: ScheduledReactiveComputationModule<SynchronousObservableComputation>["retry"];
+}
 
 export type Signature = SynchronousObservableModule;
 

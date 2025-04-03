@@ -239,31 +239,6 @@ export const repeat = ((createDelegatingNonCompletingConsumer, shouldRepeat) => 
     const createDelegateConsumer = () => pipe(consumer, createDelegatingNonCompletingConsumer, DisposableContainer.onComplete(onDelegateConsumerCompleted));
     src[EventSourceLike_subscribe](createDelegateConsumer());
 }, src));
-export const retry = ((createDelegatingCatchErrorConsumer, shouldRetry) => (src) => create((consumer) => {
-    const retryFunction = shouldRetry ?? alwaysTrue;
-    let count = 0;
-    const onDelegateConsumerError = (e) => {
-        const consumerIsCompleted = consumer[SinkLike_isCompleted];
-        if (consumerIsCompleted) {
-            return;
-        }
-        count++;
-        try {
-            const shouldRetry = retryFunction(count, e);
-            if (shouldRetry) {
-                src[EventSourceLike_subscribe](createDelegateConsumer());
-            }
-            else {
-                consumer[DisposableLike_dispose](e);
-            }
-        }
-        catch (eRetry) {
-            consumer[DisposableLike_dispose](error([e, eRetry]));
-        }
-    };
-    const createDelegateConsumer = () => pipe(consumer, createDelegatingCatchErrorConsumer, DisposableContainer.onError(onDelegateConsumerError));
-    src[EventSourceLike_subscribe](createDelegateConsumer());
-}, src));
 export const takeLast = (genPure, takeLast, options) => (obs) => create(consumer => {
     const count = options?.count ?? 1;
     const takeLastSink = pipe(takeLast(count, consumer), Disposable.addTo(consumer), DisposableContainer.onComplete(() => genPure(bindMethod(takeLastSink, Symbol.iterator))[EventSourceLike_subscribe](consumer)));

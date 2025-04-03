@@ -95,6 +95,26 @@
 
 ***
 
+### retry()
+
+> **retry**\<`T`\>(`shouldRetry`?): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### shouldRetry?
+
+(`count`, `error`) => `number` \| `boolean`
+
+#### Returns
+
+[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
+
+***
+
 ### spring()
 
 > **spring**(`options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `number`\>

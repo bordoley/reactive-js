@@ -116,6 +116,8 @@ export interface ObservableModule
     >,
     ConcurrentReactiveComputationModule<ObservableComputation>,
     ScheduledReactiveComputationModule<ObservableComputation> {
+  retry: ScheduledReactiveComputationModule<ObservableComputation>["retry"];
+
   subscribeOn<T>(
     scheduler: SchedulerLike,
   ): PureComputationOperator<ObservableComputation, T, T>;

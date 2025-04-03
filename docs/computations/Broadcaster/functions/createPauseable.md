@@ -16,7 +16,7 @@
 
 ### op
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`boolean`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`StoreLike`](../../interfaces/StoreLike.md)\<`boolean`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
 
 ### options?
 

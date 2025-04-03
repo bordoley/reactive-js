@@ -16,7 +16,7 @@
 
 ### shouldRetry?
 
-(`count`, `error`) => `boolean`
+(`count`, `error`) => `number` \| `boolean`
 
 ## Returns
 

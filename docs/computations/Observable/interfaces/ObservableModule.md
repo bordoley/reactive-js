@@ -30,6 +30,30 @@
 
 [`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`currentTime`](../../interfaces/ScheduledReactiveComputationModule.md#currenttime)
 
+***
+
+### retry()
+
+> **retry**: \<`T`\>(`shouldRetry`?) => [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### shouldRetry?
+
+(`count`, `error`) => `number` \| `boolean`
+
+#### Returns
+
+[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
+
+#### Overrides
+
+[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`retry`](../../interfaces/ScheduledReactiveComputationModule.md#retry)
+
 ## Methods
 
 ### buffer()
@@ -1409,30 +1433,6 @@
 ##### Inherited from
 
 [`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`repeat`](../../interfaces/DeferredComputationModule.md#repeat)
-
-***
-
-### retry()
-
-> **retry**\<`T`\>(`shouldRetry`?): [`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### shouldRetry?
-
-(`count`, `error`) => `boolean`
-
-#### Returns
-
-[`PureComputationOperator`](../../type-aliases/PureComputationOperator.md)\<[`ObservableComputation`](ObservableComputation.md), `T`, `T`\>
-
-#### Inherited from
-
-[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md).[`retry`](../../interfaces/DeferredComputationModule.md#retry)
 
 ***
 
