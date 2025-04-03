@@ -8,7 +8,7 @@ const Observable_repeat: Observable.Signature["repeat"] = (<T>(
   shouldRepeat?: Optional<Predicate<number> | number>,
 ) =>
   DeferredEventSource.repeat<ObserverLike<T>, T>(
-    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    Observer.createDelegatingNonCompleting,
     shouldRepeat,
   )) as Observable.Signature["repeat"];
 

@@ -2,8 +2,9 @@
 
 import { createInstanceFactory, include, init, mixInstanceFactory, } from "../../__internal__/mixins.js";
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
+import DelegatingCatchErrorSinkMixin from "../__mixins__/DelegatingCatchErrorSinkMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
+import DelegatingNonCompletingSinkMixin from "../__mixins__/DelegatingNonCompletingSinkMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../__mixins__/FlowControllerWithoutBackpressureMixin.js";
@@ -13,7 +14,10 @@ export const collect = /*@__PURE__*/ (() => mixInstanceFactory(include(Collector
     init(CollectorSinkMixin(), this, buffer);
     return this;
 }))();
-export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/ (() => createInstanceFactory(DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin()))();
+export const createDelegatingCatchError = 
+/*@__PURE__*/ (() => createInstanceFactory(DelegatingCatchErrorSinkMixin()))();
+export const createDelegatingNonCompleting = 
+/*@__PURE__*/ (() => createInstanceFactory(DelegatingNonCompletingSinkMixin()))();
 export const reducer = /*@__PURE__*/ (() => createInstanceFactory(ReducerSinkMixin()))();
 export const toLiftedSink = Sink_toLiftedSink;
 export const toObserver = /*@__PURE__*/ (() => {

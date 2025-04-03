@@ -9,7 +9,7 @@ import SwitchAllConsumerMixin from "../../__mixins__/SwitchAllConsumerMixin.js";
 export const createSwitchAllConsumer = 
 /*@__PURE__*/
 (() => mixInstanceFactory(include(SwitchAllConsumerMixin()), function SwitchAllConsumer(delegate) {
-    init(SwitchAllConsumerMixin(), this, delegate, Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing);
+    init(SwitchAllConsumerMixin(), this, delegate, Consumer.createDelegatingNonCompleting);
     return this;
 }))();
 const Producer_switchAll = ((innerType) => (obs) => DeferredEventSource.create((Consumer) => {

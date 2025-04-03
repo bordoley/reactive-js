@@ -16,8 +16,8 @@ import Computation_isSynchronous from "../Computation/__private__/Computation.is
 import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import { LiftedEventSourceLike_sink, LiftedEventSourceLike_source, } from "./LiftedSource.js";
 const CreateSource_effect = Symbol("CreateSource_effect");
-export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, errorHandler, options) => (source) => create(consumer => {
-    const onErrorSink = pipe(createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer), Disposable.addToContainer(consumer), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)), DisposableContainer.onError(err => {
+export const catchError = (createDelegatingCatchErrorConsumer, errorHandler, options) => (source) => create(consumer => {
+    const onErrorSink = pipe(createDelegatingCatchErrorConsumer(consumer), DisposableContainer.onError(err => {
         let action = none;
         try {
             action = errorHandler(err);
@@ -36,7 +36,7 @@ export const catchError = (createDelegatingNotifyOnlyNonCompletingNonDisposing, 
 }, {
     [ComputationLike_isPure]: options?.[ComputationLike_isPure],
 });
-export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {
+export const concat = (createDelegatingNonCompletingConsumer) => {
     const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");
     const ConcatSinkCtx_sources = Symbol("ConcatSinkCtx_sources");
     const ConcatSinkCtx_nextIndex = Symbol("ConcatSinkCtx_nextIndex");
@@ -55,7 +55,7 @@ export const concat = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) 
     }
     const createConcatSink = (ctx) => {
         const delegate = ctx[ConcatSinkCtx_delegate];
-        return pipe(createDelegatingNotifyOnlyNonCompletingNonDisposingSink(delegate), Disposable.addTo(delegate), DisposableContainer.onComplete(bind(onConcatSinkComplete, ctx)));
+        return pipe(createDelegatingNonCompletingConsumer(delegate), DisposableContainer.onComplete(bind(onConcatSinkComplete, ctx)));
     };
     const ConcatSource_sources = Symbol("ConcatSource_sources");
     const isConcatSource = (observable) => isSome(observable[ConcatSource_sources]);
@@ -171,7 +171,7 @@ export const latest = /*@__PURE__*/ (() => {
         [ComputationLike_isDeferred]: true,
     }));
 })();
-export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) => {
+export const merge = (createDelegatingNonCompletingConsumer) => {
     const MergeSource_sources = Symbol("MergeSource_sources");
     const isMergeSource = (observable) => isSome(observable[MergeSource_sources]);
     const flattenSources = (sources) => sources.some(isMergeSource)
@@ -196,7 +196,7 @@ export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) =
             const count = sources[Array_length];
             let completed = 0;
             for (const source of sources) {
-                pipe(createDelegatingNotifyOnlyNonCompletingNonDisposingSink(consumer), Disposable.addTo(consumer), DisposableContainer.onComplete(() => {
+                pipe(createDelegatingNonCompletingConsumer(consumer), DisposableContainer.onComplete(() => {
                     completed++;
                     if (completed >= count) {
                         consumer[SinkLike_complete]();
@@ -210,7 +210,7 @@ export const merge = (createDelegatingNotifyOnlyNonCompletingNonDisposingSink) =
         return length === 1 ? sources[0] : createMergeSource(sources);
     };
 };
-export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, shouldRepeat) => (src) => create((consumer) => {
+export const repeat = ((createDelegatingNonCompletingConsumer, shouldRepeat) => (src) => create((consumer) => {
     const repeatPredicate = isFunction(shouldRepeat)
         ? shouldRepeat
         : isNone(shouldRepeat)
@@ -236,10 +236,10 @@ export const repeat = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsu
             consumer[DisposableLike_dispose](error(e));
         }
     };
-    const createDelegateConsumer = () => pipe(consumer, createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, DisposableContainer.onComplete(onDelegateConsumerCompleted), Disposable.addTo(consumer));
+    const createDelegateConsumer = () => pipe(consumer, createDelegatingNonCompletingConsumer, DisposableContainer.onComplete(onDelegateConsumerCompleted));
     src[EventSourceLike_subscribe](createDelegateConsumer());
 }, src));
-export const retry = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, shouldRetry) => (src) => create((consumer) => {
+export const retry = ((createDelegatingCatchErrorConsumer, shouldRetry) => (src) => create((consumer) => {
     const retryFunction = shouldRetry ?? alwaysTrue;
     let count = 0;
     const onDelegateConsumerError = (e) => {
@@ -261,7 +261,7 @@ export const retry = ((createDelegatingNotifyOnlyNonCompletingNonDisposingConsum
             consumer[DisposableLike_dispose](error([e, eRetry]));
         }
     };
-    const createDelegateConsumer = () => pipe(consumer, createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer, DisposableContainer.onError(onDelegateConsumerError), DisposableContainer.onComplete(bindMethod(consumer, SinkLike_complete)));
+    const createDelegateConsumer = () => pipe(consumer, createDelegatingCatchErrorConsumer, DisposableContainer.onError(onDelegateConsumerError));
     src[EventSourceLike_subscribe](createDelegateConsumer());
 }, src));
 export const takeLast = (genPure, takeLast, options) => (obs) => create(consumer => {

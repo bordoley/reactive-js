@@ -36,7 +36,7 @@ export const createSwitchAllObserver: <
           SwitchAllConsumerMixin<TInnerSource, ObserverLike<T>, T>(),
           this,
           delegate,
-          Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+          Observer.createDelegatingNonCompleting,
         );
         init(DelegatingSchedulerMixin, this, delegate);
 

@@ -4,7 +4,7 @@ import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js"
 
 const Producer_merge: Producer.Signature["merge"] =
   /*@__PURE__*/ DeferredEventSource.merge(
-    Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    Consumer.createDelegatingNonCompleting,
   ) as Producer.Signature["merge"];
 
 export default Producer_merge;

@@ -5,8 +5,7 @@ import {
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { Optional, newInstance, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { Optional, newInstance } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
   DisposableLike_dispose,
@@ -28,10 +27,7 @@ class ConcatRunnable<T> implements RunnableLike<T> {
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
     for (const src of this.s) {
-      const delegatingSink = pipe(
-        Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
-        Disposable.addTo(sink),
-      );
+      const delegatingSink = Sink.createDelegatingNonCompleting(sink);
       src[RunnableLike_eval](delegatingSink);
       delegatingSink[DisposableLike_dispose]();
 

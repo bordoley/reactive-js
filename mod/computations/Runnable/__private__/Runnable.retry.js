@@ -22,7 +22,7 @@ class RetryRunnable {
         let cnt = 0;
         while (true) {
             try {
-                const delegatingSink = Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink);
+                const delegatingSink = Sink.createDelegatingCatchError(sink);
                 source[RunnableLike_eval](delegatingSink);
                 Disposable.raiseIfDisposedWithError(delegatingSink);
                 break;

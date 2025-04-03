@@ -7,7 +7,7 @@ const Producer_repeat: Producer.Signature["repeat"] = ((
   shouldRepeat?: Optional<Predicate<number> | number>,
 ) =>
   DeferredEventSource.repeat(
-    Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    Consumer.createDelegatingNonCompleting,
     shouldRepeat,
   )) as Producer.Signature["repeat"];
 

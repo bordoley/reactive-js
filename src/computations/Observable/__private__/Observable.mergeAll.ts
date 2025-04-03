@@ -53,7 +53,7 @@ export const createMergeAllObserver: <
           this,
           delegate,
           options,
-          Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+          Observer.createDelegatingNonCompleting,
         );
         init(DelegatingSchedulerMixin, this, delegate);
 

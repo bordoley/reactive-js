@@ -12,13 +12,13 @@ import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } f
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
 import { EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
-    const MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
+    const MergeAllConsumer_createDelegatingNonCompleting = Symbol("MergeAllConsumer_createDelegatingNonCompleting");
     const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
     const MergeAllConsumer_isCompleted = Symbol("MergeAllConsumer_isCompleted");
     const subscribeToInner = (mergeAllConsumer, source) => {
         const delegate = mergeAllConsumer[DelegatingEventListenerLike_delegate];
         mergeAllConsumer[MergeAllConsumer_activeCount]++;
-        const sourceDelegate = pipe(delegate, mergeAllConsumer[MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing], Disposable.addTo(mergeAllConsumer), DisposableContainer.onComplete(() => {
+        const sourceDelegate = pipe(delegate, mergeAllConsumer[MergeAllConsumer_createDelegatingNonCompleting], Disposable.addTo(mergeAllConsumer), DisposableContainer.onComplete(() => {
             mergeAllConsumer[MergeAllConsumer_activeCount]--;
             const activeCount = mergeAllConsumer[MergeAllConsumer_activeCount];
             if (mergeAllConsumer[EnumeratorLike_moveNext]()) {
@@ -31,7 +31,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
         }));
         source[EventSourceLike_subscribe](sourceDelegate);
     };
-    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerQueueMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
+    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerQueueMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNonCompleting) {
         init(DelegatingDisposableMixin, this, delegate);
         init(FlowControllerQueueMixin(), this, config);
         init(DelegatingEventListenerMixin(), this, delegate);
@@ -46,10 +46,11 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
                 subscribeToInner(this, next);
             }
         })));
-        this[MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing] = createDelegatingNotifyOnlyNonCompletingNonDisposing;
+        this[MergeAllConsumer_createDelegatingNonCompleting] =
+            createDelegatingNonCompleting;
         return this;
     }, props({
-        [MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: none,
+        [MergeAllConsumer_createDelegatingNonCompleting]: none,
         [MergeAllConsumer_isCompleted]: false,
         [MergeAllConsumer_activeCount]: 0,
     }), proto({

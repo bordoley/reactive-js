@@ -12,7 +12,7 @@ import MergeAllConsumerMixin from "../../__mixins__/MergeAllConsumerMixin.js";
 export const createMergeAllObserver = 
 /*@__PURE__*/
 (() => mixInstanceFactory(include(MergeAllConsumerMixin(), DelegatingSchedulerMixin), function MergeAllObserver(delegate, options) {
-    init(MergeAllConsumerMixin(), this, delegate, options, Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing);
+    init(MergeAllConsumerMixin(), this, delegate, options, Observer.createDelegatingNonCompleting);
     init(DelegatingSchedulerMixin, this, delegate);
     return this;
 }))();

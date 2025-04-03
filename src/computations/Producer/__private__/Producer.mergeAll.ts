@@ -52,7 +52,7 @@ export const createMergeAllConsumer: <
           this,
           delegate,
           options,
-          Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+          Consumer.createDelegatingNonCompleting,
         );
 
         return this;

@@ -17,7 +17,7 @@ class CatchErrorRunnable {
         this[ComputationLike_isPure] = Computation.isPure(s) && isPure;
     }
     [RunnableLike_eval](sink) {
-        const delegatingSink = Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink);
+        const delegatingSink = Sink.createDelegatingCatchError(sink);
         this.s[RunnableLike_eval](delegatingSink);
         const err = delegatingSink[DisposableLike_error];
         if (isNone(err)) {

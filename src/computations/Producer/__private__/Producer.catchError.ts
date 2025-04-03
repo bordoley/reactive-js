@@ -11,7 +11,7 @@ const Producer_catchError: Producer.Signature["catchError"] = (<T>(
   },
 ) =>
   DeferredEventSource.catchError(
-    Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing<T>,
+    Consumer.createDelegatingCatchError<T>,
     errorHandler,
     options,
   )) as Producer.Signature["catchError"];

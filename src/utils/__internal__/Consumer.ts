@@ -23,8 +23,9 @@ import {
   ConsumerMixinLike_notify,
 } from "../__mixins__/ConsumerMixin.js";
 import { ConsumerQueueMixin } from "../__mixins__/ConsumerQueueMixin.js";
+import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
+import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
 import ObserverMixin from "../__mixins__/ObserverMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
 
@@ -34,12 +35,15 @@ export const create: <T>(options?: {
 }) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (() =>
   createInstanceFactory(ConsumerQueueMixin()))();
 
-export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
+export const createDelegatingCatchError: <T>(
   o: ConsumerLike<T>,
 ) => ConsumerLike<T> = /*@__PURE__*/ (() =>
-  createInstanceFactory(
-    DelegatingNotifyOnlyNonCompletingNonDisposingConsumer(),
-  ))();
+  createInstanceFactory(DelegatingCatchErrorConsumerMixin()))();
+
+export const createDelegatingNonCompleting: <T>(
+  o: ConsumerLike<T>,
+) => ConsumerLike<T> = /*@__PURE__*/ (() =>
+  createInstanceFactory(DelegatingNonCompletingConsumerMixin()))();
 
 export const takeLast: <T>(
   capacity: number,

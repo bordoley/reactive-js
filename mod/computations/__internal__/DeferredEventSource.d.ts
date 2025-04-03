@@ -4,10 +4,10 @@ import { ConsumerLike, DisposableLike } from "../../utils.js";
 import { LatestEventListenerContextLike, LatestEventListenerLike, LatestEventListenerMode } from "../__mixins__/LatestEventListenerMixin.js";
 import { LiftedSinkLike } from "./LiftedSource.js";
 interface Signature {
-    catchError<T, TSource extends DeferredEventSourceLike<T, TConsumer>, TConsumer extends ConsumerLike<T>>(createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<TConsumer, TConsumer>, errorHandler: SideEffect1<Error> | Function1<Error, TSource>, options?: {
+    catchError<T, TSource extends DeferredEventSourceLike<T, TConsumer>, TConsumer extends ConsumerLike<T>>(createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>, errorHandler: SideEffect1<Error> | Function1<Error, TSource>, options?: {
         [ComputationLike_isPure]?: boolean;
     }): Function1<TSource, DeferredEventSourceLike<T, TConsumer>>;
-    concat<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredEventSourceLike<T, TConsumer>[]) => DeferredEventSourceLike<T, TConsumer>;
+    concat<TConsumer extends ConsumerLike>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredEventSourceLike<T, TConsumer>[]) => DeferredEventSourceLike<T, TConsumer>;
     create<T, TConsumer extends ConsumerLike<T>>(effect: SideEffect1<TConsumer>): DeferredEventSourceLike<T, TConsumer> & {
         readonly [ComputationLike_isPure]?: true;
         readonly [ComputationLike_isSynchronous]?: true;
@@ -82,9 +82,9 @@ interface Signature {
         }
     ]): Function1<DeferredEventSourceLike<TIn, TConsumer>, DeferredEventSourceLike<TOut, TOutConsumer>>;
     latest<TConsumer extends ConsumerLike<ReadonlyArray<unknown>>, TSource extends DeferredEventSourceLike<unknown, TSourceConsumer>, TSourceConsumer extends ConsumerLike<unknown> & LatestEventListenerLike<unknown>>(sources: readonly TSource[], mode: LatestEventListenerMode, createLatestEventListener: Function2<TConsumer, LatestEventListenerContextLike, TSourceConsumer>): DeferredEventSourceLike<ReadonlyArray<unknown>, TConsumer>;
-    merge<TConsumer extends ConsumerLike>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredEventSourceLike<T, TConsumer>[]) => DeferredEventSourceLike<T, TConsumer>;
-    repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
-    retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
+    merge<TConsumer extends ConsumerLike>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredEventSourceLike<T, TConsumer>[]) => DeferredEventSourceLike<T, TConsumer>;
+    repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
+    retry<TConsumer extends ConsumerLike<T>, T>(createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>, shouldRetry?: (count: number, error: Error) => boolean): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
     takeLast<TConsumer extends ConsumerLike<T>, T>(genPure: (factory: Factory<Iterator<T>>) => DeferredEventSourceLike<T, TConsumer>, takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>, options?: {
         readonly count?: number;
     }): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;

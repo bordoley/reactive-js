@@ -14,7 +14,7 @@ const Observable_catchError: Observable.Signature["catchError"] = (<T>(
   },
 ) =>
   DeferredEventSource.catchError(
-    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing<T>,
+    Observer.createDelegatingCatchError<T>,
     errorHandler,
     options,
   )) as Observable.Signature["catchError"];

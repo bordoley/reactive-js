@@ -1,8 +1,7 @@
 /// <reference types="./Runnable.concat.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
-import { newInstance, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { newInstance } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
@@ -17,7 +16,7 @@ class ConcatRunnable {
     }
     [RunnableLike_eval](sink) {
         for (const src of this.s) {
-            const delegatingSink = pipe(Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addTo(sink));
+            const delegatingSink = Sink.createDelegatingNonCompleting(sink);
             src[RunnableLike_eval](delegatingSink);
             delegatingSink[DisposableLike_dispose]();
             if (sink[SinkLike_isCompleted]) {

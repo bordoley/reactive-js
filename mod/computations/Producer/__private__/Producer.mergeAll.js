@@ -11,7 +11,7 @@ import MergeAllConsumerMixin from "../../__mixins__/MergeAllConsumerMixin.js";
 export const createMergeAllConsumer = 
 /*@__PURE__*/
 (() => mixInstanceFactory(include(MergeAllConsumerMixin()), function MergeAllConsumer(delegate, options) {
-    init(MergeAllConsumerMixin(), this, delegate, options, Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing);
+    init(MergeAllConsumerMixin(), this, delegate, options, Consumer.createDelegatingNonCompleting);
     return this;
 }))();
 export const Producer_mergeAll = ((options) => (obs) => DeferredEventSource.create((observer) => {

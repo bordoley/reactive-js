@@ -12,7 +12,8 @@ import {
   SchedulerLike,
 } from "../../utils.js";
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
-import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
+import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
+import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "../__mixins__/DisposeOnCompleteSinkMixin.js";
@@ -79,23 +80,32 @@ export const create: <T>(
   );
 })();
 
-export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
+export const createDelegatingCatchError: <T>(
   o: ObserverLike<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(
-      DelegatingNotifyOnlyNonCompletingNonDisposingConsumer(),
-      DelegatingSchedulerMixin,
-    ),
-    function NonDisposingDelegatingObserver(
+    include(DelegatingCatchErrorConsumerMixin(), DelegatingSchedulerMixin),
+    function DelegatingCatchErrorObserver(
       this: unknown,
       delegate: ObserverLike<T>,
     ): ObserverLike<T> {
-      init(
-        DelegatingNotifyOnlyNonCompletingNonDisposingConsumer(),
-        this,
-        delegate,
-      );
+      init(DelegatingCatchErrorConsumerMixin(), this, delegate);
+      init(DelegatingSchedulerMixin, this, delegate);
+
+      return this;
+    },
+  ))();
+
+export const createDelegatingNonCompleting: <T>(
+  o: ObserverLike<T>,
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
+  mixInstanceFactory(
+    include(DelegatingNonCompletingConsumerMixin(), DelegatingSchedulerMixin),
+    function DelegatingNonCompletingObserver(
+      this: unknown,
+      delegate: ObserverLike<T>,
+    ): ObserverLike<T> {
+      init(DelegatingNonCompletingConsumerMixin(), this, delegate);
       init(DelegatingSchedulerMixin, this, delegate);
 
       return this;

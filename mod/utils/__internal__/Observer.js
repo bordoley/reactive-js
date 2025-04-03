@@ -4,7 +4,8 @@ import { include, init, mixInstanceFactory, props, } from "../../__internal__/mi
 import { none } from "../../functions.js";
 import { EventListenerLike_notify, } from "../../utils.js";
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
-import DelegatingNotifyOnlyNonCompletingNonDisposingConsumer from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingConsumer.js";
+import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
+import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "../__mixins__/DisposeOnCompleteSinkMixin.js";
@@ -31,8 +32,13 @@ export const create = /*@__PURE__*/ (() => {
         [EventListenerLike_notify]: none,
     }));
 })();
-export const createDelegatingNotifyOnlyNonCompletingNonDisposing = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingNotifyOnlyNonCompletingNonDisposingConsumer(), DelegatingSchedulerMixin), function NonDisposingDelegatingObserver(delegate) {
-    init(DelegatingNotifyOnlyNonCompletingNonDisposingConsumer(), this, delegate);
+export const createDelegatingCatchError = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingCatchErrorConsumerMixin(), DelegatingSchedulerMixin), function DelegatingCatchErrorObserver(delegate) {
+    init(DelegatingCatchErrorConsumerMixin(), this, delegate);
+    init(DelegatingSchedulerMixin, this, delegate);
+    return this;
+}))();
+export const createDelegatingNonCompleting = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingNonCompletingConsumerMixin(), DelegatingSchedulerMixin), function DelegatingNonCompletingObserver(delegate) {
+    init(DelegatingNonCompletingConsumerMixin(), this, delegate);
     init(DelegatingSchedulerMixin, this, delegate);
     return this;
 }))();

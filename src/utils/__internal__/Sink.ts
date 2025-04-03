@@ -8,8 +8,9 @@ import { LiftedSinkLike } from "../../computations/__internal__/LiftedSource.js"
 import { Function1, Reducer } from "../../functions.js";
 import { ObserverLike, SchedulerLike, SinkLike } from "../../utils.js";
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
+import DelegatingCatchErrorSinkMixin from "../__mixins__/DelegatingCatchErrorSinkMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
-import DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin from "../__mixins__/DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin.js";
+import DelegatingNonCompletingSinkMixin from "../__mixins__/DelegatingNonCompletingSinkMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../__mixins__/FlowControllerWithoutBackpressureMixin.js";
@@ -26,12 +27,13 @@ export const collect: <T>(buffer: T[]) => SinkLike<T> = /*@__PURE__*/ (<T>() =>
     },
   ))();
 
-export const createDelegatingNotifyOnlyNonCompletingNonDisposing: <T>(
-  o: SinkLike<T>,
-) => SinkLike<T> = /*@__PURE__*/ (() =>
-  createInstanceFactory(
-    DelegatingNotifyOnlyNonCompletingNonDisposingSinkMixin(),
-  ))();
+export const createDelegatingCatchError: <T>(o: SinkLike<T>) => SinkLike<T> =
+  /*@__PURE__*/ (() =>
+    createInstanceFactory(DelegatingCatchErrorSinkMixin()))();
+
+export const createDelegatingNonCompleting: <T>(o: SinkLike<T>) => SinkLike<T> =
+  /*@__PURE__*/ (() =>
+    createInstanceFactory(DelegatingNonCompletingSinkMixin()))();
 
 export const reducer: <T, TAcc>(
   reducer: Reducer<T, TAcc>,

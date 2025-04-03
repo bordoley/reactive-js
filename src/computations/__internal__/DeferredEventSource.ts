@@ -72,10 +72,7 @@ interface Signature {
     TSource extends DeferredEventSourceLike<T, TConsumer>,
     TConsumer extends ConsumerLike<T>,
   >(
-    createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>,
     errorHandler: SideEffect1<Error> | Function1<Error, TSource>,
     options?: {
       [ComputationLike_isPure]?: boolean;
@@ -83,10 +80,7 @@ interface Signature {
   ): Function1<TSource, DeferredEventSourceLike<T, TConsumer>>;
 
   concat<TConsumer extends ConsumerLike>(
-    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>,
   ): <T>(
     ...sources: readonly DeferredEventSourceLike<T, TConsumer>[]
   ) => DeferredEventSourceLike<T, TConsumer>;
@@ -306,19 +300,13 @@ interface Signature {
   ): DeferredEventSourceLike<ReadonlyArray<unknown>, TConsumer>;
 
   merge<TConsumer extends ConsumerLike>(
-    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>,
   ): <T>(
     ...sources: readonly DeferredEventSourceLike<T, TConsumer>[]
   ) => DeferredEventSourceLike<T, TConsumer>;
 
   repeat<TConsumer extends ConsumerLike<T>, T>(
-    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>,
     predicate: Optional<Predicate<number> | number>,
   ): Function1<
     DeferredEventSourceLike<T, TConsumer>,
@@ -326,10 +314,7 @@ interface Signature {
   >;
 
   retry<TConsumer extends ConsumerLike<T>, T>(
-    createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>,
     shouldRetry?: (count: number, error: Error) => boolean,
   ): Function1<
     DeferredEventSourceLike<T, TConsumer>,
@@ -363,10 +348,7 @@ export const catchError: Signature["catchError"] =
     TSource extends DeferredEventSourceLike<T, TConsumer>,
     TConsumer extends ConsumerLike<T>,
   >(
-    createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>,
     errorHandler: SideEffect1<Error> | Function1<Error, TSource>,
     options?: {
       [ComputationLike_isPure]?: boolean;
@@ -376,11 +358,7 @@ export const catchError: Signature["catchError"] =
     create<T, TConsumer>(
       consumer => {
         const onErrorSink = pipe(
-          createDelegatingNotifyOnlyNonCompletingNonDisposing(consumer),
-          Disposable.addToContainer(consumer),
-          DisposableContainer.onComplete(
-            bindMethod(consumer, SinkLike_complete),
-          ),
+          createDelegatingCatchErrorConsumer(consumer),
           DisposableContainer.onError(err => {
             let action: Optional<TSource> = none;
             try {
@@ -405,10 +383,7 @@ export const catchError: Signature["catchError"] =
     );
 
 export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
-  createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
-    TConsumer,
-    TConsumer
-  >,
+  createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>,
 ) => {
   const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");
   const ConcatSinkCtx_sources = Symbol("ConcatSinkCtx_sources");
@@ -439,8 +414,7 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
   const createConcatSink = (ctx: ConcatSinkCtx) => {
     const delegate = ctx[ConcatSinkCtx_delegate];
     return pipe(
-      createDelegatingNotifyOnlyNonCompletingNonDisposingSink(delegate),
-      Disposable.addTo(delegate),
+      createDelegatingNonCompletingConsumer(delegate),
       DisposableContainer.onComplete(bind(onConcatSinkComplete, ctx)),
     );
   };
@@ -764,10 +738,7 @@ export const latest: Signature["latest"] = /*@__PURE__*/ (<
 })();
 
 export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
-  createDelegatingNotifyOnlyNonCompletingNonDisposingSink: Function1<
-    TConsumer,
-    TConsumer
-  >,
+  createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>,
 ) => {
   const MergeSource_sources = Symbol("MergeSource_sources");
 
@@ -826,8 +797,7 @@ export const merge: Signature["merge"] = <TConsumer extends ConsumerLike>(
 
         for (const source of sources) {
           pipe(
-            createDelegatingNotifyOnlyNonCompletingNonDisposingSink(consumer),
-            Disposable.addTo(consumer),
+            createDelegatingNonCompletingConsumer(consumer),
             DisposableContainer.onComplete(() => {
               completed++;
               if (completed >= count) {
@@ -853,10 +823,7 @@ export const repeat: Signature["repeat"] = (<
     TConsumer extends ConsumerLike<T>,
     T,
   >(
-    createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>,
     shouldRepeat: Optional<Predicate<number> | number>,
   ) =>
   (src: DeferredEventSourceLike<T, TConsumer>) =>
@@ -893,9 +860,8 @@ export const repeat: Signature["repeat"] = (<
       const createDelegateConsumer = () =>
         pipe(
           consumer,
-          createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer,
+          createDelegatingNonCompletingConsumer,
           DisposableContainer.onComplete(onDelegateConsumerCompleted),
-          Disposable.addTo(consumer),
         );
       src[EventSourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["repeat"];
@@ -904,10 +870,7 @@ export const retry: Signature["retry"] = (<
     TConsumer extends ConsumerLike<T>,
     T,
   >(
-    createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer: Function1<
-      TConsumer,
-      TConsumer
-    >,
+    createDelegatingCatchErrorConsumer: Function1<TConsumer, TConsumer>,
     shouldRetry?: (count: number, error: Error) => boolean,
   ) =>
   (src: DeferredEventSourceLike<T, TConsumer>) =>
@@ -940,11 +903,8 @@ export const retry: Signature["retry"] = (<
       const createDelegateConsumer = () =>
         pipe(
           consumer,
-          createDelegatingNotifyOnlyNonCompletingNonDisposingConsumer,
+          createDelegatingCatchErrorConsumer,
           DisposableContainer.onError(onDelegateConsumerError),
-          DisposableContainer.onComplete(
-            bindMethod(consumer, SinkLike_complete),
-          ),
         );
       src[EventSourceLike_subscribe](createDelegateConsumer());
     }, src)) as Signature["retry"];

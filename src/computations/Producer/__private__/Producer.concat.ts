@@ -4,7 +4,7 @@ import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js"
 
 const Producer_concat: Producer.Signature["concat"] =
   /*@__PURE__*/ DeferredEventSource.concat(
-    Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    Consumer.createDelegatingNonCompleting,
   ) as Producer.Signature["concat"];
 
 export default Producer_concat;

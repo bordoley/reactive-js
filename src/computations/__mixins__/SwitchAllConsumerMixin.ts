@@ -50,17 +50,16 @@ const SwitchAllConsumerMixin: <
   TConsumer extends ConsumerLike<T>,
   T,
 >() => {
-  const SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing =
-    Symbol(
-      "SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing",
-    );
+  const SwitchAllConsumer_createDelegatingNonCompleting = Symbol(
+    "SwitchAllConsumer_createDelegatingNonCompleting",
+  );
   const SwitchAllConsumer_innerSubscription = Symbol(
     "SwitchAllConsumer_innerSubscription",
   );
   const SwitchAllConsumer_isCompleted = Symbol("SwitchAllConsumer_isCompleted");
 
   type TProperties = {
-    [SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: Function1<
+    [SwitchAllConsumer_createDelegatingNonCompleting]: Function1<
       TConsumer,
       TConsumer
     >;
@@ -92,24 +91,19 @@ const SwitchAllConsumerMixin: <
         > &
           TProperties,
         delegate: TConsumer,
-        createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
-          TConsumer,
-          TConsumer
-        >,
+        createDelegatingNonCompleting: Function1<TConsumer, TConsumer>,
       ): TReturn<TInnerSource, TConsumer, T> {
         init(DelegatingDisposableMixin, this, delegate);
         init(DelegatingEventListenerMixin(), this, delegate);
         init(FlowControllerWithoutBackpressureMixin, this);
 
-        this[
-          SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing
-        ] = createDelegatingNotifyOnlyNonCompletingNonDisposing;
+        this[SwitchAllConsumer_createDelegatingNonCompleting] =
+          createDelegatingNonCompleting;
 
         return this;
       },
       props<TProperties>({
-        [SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]:
-          none,
+        [SwitchAllConsumer_createDelegatingNonCompleting]: none,
         [SwitchAllConsumer_innerSubscription]: Disposable.disposed,
         [SwitchAllConsumer_isCompleted]: false,
       }),
@@ -138,13 +132,10 @@ const SwitchAllConsumerMixin: <
 
           const delegate = this[DelegatingEventListenerLike_delegate];
           const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(
-            this[
-              SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing
-            ](delegate),
+            this[SwitchAllConsumer_createDelegatingNonCompleting](delegate),
             DisposableContainer.onComplete(
               bind(onSwitchAllConsumerInnerSourceComplete, this),
             ),
-            Disposable.addTo(this),
           );
 
           next[EventSourceLike_subscribe](

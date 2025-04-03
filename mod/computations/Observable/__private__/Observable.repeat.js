@@ -2,5 +2,5 @@
 
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-const Observable_repeat = ((shouldRepeat) => DeferredEventSource.repeat(Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing, shouldRepeat));
+const Observable_repeat = ((shouldRepeat) => DeferredEventSource.repeat(Observer.createDelegatingNonCompleting, shouldRepeat));
 export default Observable_repeat;

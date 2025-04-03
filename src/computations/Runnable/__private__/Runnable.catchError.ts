@@ -42,8 +42,7 @@ class CatchErrorRunnable<T> implements RunnableLike<T> {
   }
 
   [RunnableLike_eval](sink: SinkLike<T>): void {
-    const delegatingSink =
-      Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink);
+    const delegatingSink = Sink.createDelegatingCatchError(sink);
 
     this.s[RunnableLike_eval](delegatingSink);
 

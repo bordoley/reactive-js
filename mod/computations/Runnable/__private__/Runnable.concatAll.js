@@ -2,8 +2,7 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
-import { newInstance, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { newInstance } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
@@ -18,7 +17,7 @@ const createConcatAllSink = (() => {
     }, props(), proto({
         [EventListenerLike_notify](next) {
             const sink = this[DelegatingEventListenerLike_delegate];
-            const delegatingSink = pipe(Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addTo(sink));
+            const delegatingSink = Sink.createDelegatingNonCompleting(sink);
             next[RunnableLike_eval](sink);
             delegatingSink[DisposableLike_dispose]();
         },

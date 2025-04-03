@@ -35,7 +35,7 @@ export const createSwitchAllConsumer: <
           SwitchAllConsumerMixin<TInnerSource, ConsumerLike<T>, T>(),
           this,
           delegate,
-          Consumer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+          Consumer.createDelegatingNonCompleting,
         );
 
         return this;

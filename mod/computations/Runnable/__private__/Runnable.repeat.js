@@ -1,8 +1,7 @@
 /// <reference types="./Runnable.repeat.d.ts" />
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, RunnableLike_eval, } from "../../../computations.js";
-import { alwaysTrue, error, isFunction, isNone, newInstance, pipe, } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { alwaysTrue, error, isFunction, isNone, newInstance, } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import { DisposableLike_dispose, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 class RepeatRunnable {
@@ -21,7 +20,7 @@ class RepeatRunnable {
         const predicate = this.p;
         let cnt = 0;
         while (true) {
-            const delegatingSink = pipe(Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink), Disposable.addTo(sink));
+            const delegatingSink = Sink.createDelegatingNonCompleting(sink);
             source[RunnableLike_eval](delegatingSink);
             cnt++;
             try {

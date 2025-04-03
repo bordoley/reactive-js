@@ -10,7 +10,7 @@ import SwitchAllConsumerMixin from "../../__mixins__/SwitchAllConsumerMixin.js";
 export const createSwitchAllObserver = 
 /*@__PURE__*/
 (() => mixInstanceFactory(include(SwitchAllConsumerMixin(), DelegatingSchedulerMixin), function SwitchAllObserver(delegate) {
-    init(SwitchAllConsumerMixin(), this, delegate, Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing);
+    init(SwitchAllConsumerMixin(), this, delegate, Observer.createDelegatingNonCompleting);
     init(DelegatingSchedulerMixin, this, delegate);
     return this;
 }))();

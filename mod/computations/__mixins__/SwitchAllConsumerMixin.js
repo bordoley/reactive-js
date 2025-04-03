@@ -10,7 +10,7 @@ import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } f
 import FlowControllerWithoutBackpressureMixin from "../../utils/__mixins__/FlowControllerWithoutBackpressureMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
-    const SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing = Symbol("SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing");
+    const SwitchAllConsumer_createDelegatingNonCompleting = Symbol("SwitchAllConsumer_createDelegatingNonCompleting");
     const SwitchAllConsumer_innerSubscription = Symbol("SwitchAllConsumer_innerSubscription");
     const SwitchAllConsumer_isCompleted = Symbol("SwitchAllConsumer_isCompleted");
     function onSwitchAllConsumerInnerSourceComplete() {
@@ -18,14 +18,15 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
             this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
         }
     }
-    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerWithoutBackpressureMixin), function SwitchAllConsumerMixin(delegate, createDelegatingNotifyOnlyNonCompletingNonDisposing) {
+    return returns(mix(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), FlowControllerWithoutBackpressureMixin), function SwitchAllConsumerMixin(delegate, createDelegatingNonCompleting) {
         init(DelegatingDisposableMixin, this, delegate);
         init(DelegatingEventListenerMixin(), this, delegate);
         init(FlowControllerWithoutBackpressureMixin, this);
-        this[SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing] = createDelegatingNotifyOnlyNonCompletingNonDisposing;
+        this[SwitchAllConsumer_createDelegatingNonCompleting] =
+            createDelegatingNonCompleting;
         return this;
     }, props({
-        [SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: none,
+        [SwitchAllConsumer_createDelegatingNonCompleting]: none,
         [SwitchAllConsumer_innerSubscription]: Disposable.disposed,
         [SwitchAllConsumer_isCompleted]: false,
     }), proto({
@@ -40,7 +41,7 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
             }
             this[SwitchAllConsumer_innerSubscription][DisposableLike_dispose]();
             const delegate = this[DelegatingEventListenerLike_delegate];
-            const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(this[SwitchAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing](delegate), DisposableContainer.onComplete(bind(onSwitchAllConsumerInnerSourceComplete, this)), Disposable.addTo(this));
+            const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(this[SwitchAllConsumer_createDelegatingNonCompleting](delegate), DisposableContainer.onComplete(bind(onSwitchAllConsumerInnerSourceComplete, this)));
             next[EventSourceLike_subscribe](delegatingNotifyOnlyNonCompletingNonDisposing);
             this[SwitchAllConsumer_innerSubscription] =
                 delegatingNotifyOnlyNonCompletingNonDisposing;

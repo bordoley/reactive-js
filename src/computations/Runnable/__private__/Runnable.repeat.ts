@@ -13,9 +13,7 @@ import {
   isFunction,
   isNone,
   newInstance,
-  pipe,
 } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import {
   DisposableLike_dispose,
@@ -43,10 +41,8 @@ class RepeatRunnable<T> implements RunnableLike<T> {
 
     let cnt = 0;
     while (true) {
-      const delegatingSink = pipe(
-        Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
-        Disposable.addTo(sink),
-      );
+      const delegatingSink = Sink.createDelegatingNonCompleting(sink);
+
       source[RunnableLike_eval](delegatingSink);
       cnt++;
 

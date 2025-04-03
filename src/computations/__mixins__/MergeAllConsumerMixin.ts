@@ -59,15 +59,14 @@ const MergeAllConsumerMixin: <
   TConsumer extends ConsumerLike<T>,
   T,
 >() => {
-  const MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing =
-    Symbol(
-      "MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing",
-    );
+  const MergeAllConsumer_createDelegatingNonCompleting = Symbol(
+    "MergeAllConsumer_createDelegatingNonCompleting",
+  );
   const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
   const MergeAllConsumer_isCompleted = Symbol("MergeAllConsumer_isCompleted");
 
   type TProperties = {
-    [MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]: Function1<
+    [MergeAllConsumer_createDelegatingNonCompleting]: Function1<
       TConsumer,
       TConsumer
     >;
@@ -87,9 +86,7 @@ const MergeAllConsumerMixin: <
 
     const sourceDelegate = pipe(
       delegate,
-      mergeAllConsumer[
-        MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing
-      ],
+      mergeAllConsumer[MergeAllConsumer_createDelegatingNonCompleting],
       Disposable.addTo(mergeAllConsumer),
       DisposableContainer.onComplete(() => {
         mergeAllConsumer[MergeAllConsumer_activeCount]--;
@@ -126,10 +123,7 @@ const MergeAllConsumerMixin: <
           capacity?: number;
           concurrency?: number;
         }>,
-        createDelegatingNotifyOnlyNonCompletingNonDisposing: Function1<
-          TConsumer,
-          TConsumer
-        >,
+        createDelegatingNonCompleting: Function1<TConsumer, TConsumer>,
       ): TReturn<TInnerSource, TConsumer, T> {
         init(DelegatingDisposableMixin, this, delegate);
         init(FlowControllerQueueMixin<TInnerSource>(), this, config);
@@ -163,15 +157,13 @@ const MergeAllConsumerMixin: <
           ),
         );
 
-        this[
-          MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing
-        ] = createDelegatingNotifyOnlyNonCompletingNonDisposing;
+        this[MergeAllConsumer_createDelegatingNonCompleting] =
+          createDelegatingNonCompleting;
 
         return this;
       },
       props<TProperties>({
-        [MergeAllConsumer_createDelegatingNotifyOnlyNonCompletingNonDisposing]:
-          none,
+        [MergeAllConsumer_createDelegatingNonCompleting]: none,
         [MergeAllConsumer_isCompleted]: false,
         [MergeAllConsumer_activeCount]: 0,
       }),

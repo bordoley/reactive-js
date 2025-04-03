@@ -12,8 +12,7 @@ import {
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import { newInstance, pipe } from "../../../functions.js";
-import * as Disposable from "../../../utils/Disposable.js";
+import { newInstance } from "../../../functions.js";
 import * as Sink from "../../../utils/__internal__/Sink.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
@@ -50,10 +49,7 @@ const createConcatAllSink: <T>(
         next: RunnableLike<T>,
       ): void {
         const sink = this[DelegatingEventListenerLike_delegate];
-        const delegatingSink = pipe(
-          Sink.createDelegatingNotifyOnlyNonCompletingNonDisposing(sink),
-          Disposable.addTo(sink),
-        );
+        const delegatingSink = Sink.createDelegatingNonCompleting(sink);
 
         next[RunnableLike_eval](sink);
         delegatingSink[DisposableLike_dispose]();

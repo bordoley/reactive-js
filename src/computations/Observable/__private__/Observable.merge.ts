@@ -4,7 +4,7 @@ import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js"
 
 const Observable_merge: Observable.Signature["merge"] =
   /*@__PURE__*/ DeferredEventSource.merge(
-    Observer.createDelegatingNotifyOnlyNonCompletingNonDisposing,
+    Observer.createDelegatingNonCompleting,
   ) as Observable.Signature["merge"];
 
 export default Observable_merge;
