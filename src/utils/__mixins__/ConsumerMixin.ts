@@ -5,9 +5,8 @@ import {
   mix,
   props,
   proto,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Optional, bind, call, none, pipe, returns } from "../../functions.js";
+import { Optional, bind, call, pipe, returns } from "../../functions.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
@@ -27,32 +26,27 @@ import {
   SinkLike_isCompleted,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
-import * as DisposableContainer from "../DisposableContainer.js";
 import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
+import SinkMixin, {
+  SinkMixinLike,
+  SinkMixinLike_delegate,
+  SinkMixinLike_doComplete,
+  SinkMixinLike_doNotify,
+  SinkMixinLike_isCompleted,
+} from "./SinkMixin.js";
 
-export const ConsumerMixinLike_notify = Symbol("ConsumerMixinLike_notify");
-export const ConsumerMixinLike_complete = Symbol("ConsumerMixinLike_complete");
-
-export const ConsumerMixinLike_consumer = Symbol("ConsumerMixinLike_consumer");
-
-export interface ConsumerMixinLike<TConsumer extends ConsumerLike, T> {
-  readonly [ConsumerMixinLike_consumer]: TConsumer;
-
-  [ConsumerMixinLike_notify](next: T): void;
-  [ConsumerMixinLike_complete](): void;
-}
-
-type TReturn<TConsumer extends ConsumerLike, T> = ConsumerMixinLike<
-  TConsumer,
-  T
-> &
+type TReturn<TConsumer extends ConsumerLike, T> = SinkMixinLike<TConsumer, T> &
   Omit<ConsumerLike<T>, keyof DisposableLike>;
 
 type TPrototype<TConsumer extends ConsumerLike, T> = Omit<
-  ConsumerLike<T> & ConsumerMixinLike<TConsumer, T>,
+  ConsumerLike<T> & SinkMixinLike<TConsumer, T>,
   | keyof DisposableLike
   | keyof FlowControllerLike
-  | typeof ConsumerMixinLike_consumer
+  | typeof SinkMixinLike_delegate
+  | typeof SinkLike_isCompleted
+  | typeof SinkMixinLike_doNotify
+  | typeof SinkMixinLike_doComplete
+  | typeof SinkMixinLike_isCompleted
 >;
 
 const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
@@ -66,7 +60,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
   DisposableLike
 > = /*@__PURE__*/ (<TConsumer extends ConsumerLike<T>, T>() => {
   async function drainQueue(this: TThis) {
-    const consumer = this[ConsumerMixinLike_consumer];
+    const consumer = this[SinkMixinLike_delegate];
     const isConsumerReady = consumer[FlowControllerLike_isReady];
     const isDraininig = this[ConsumerMixin_isDraining];
 
@@ -88,34 +82,27 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
 
       this[EnumeratorLike_moveNext]();
       const next = this[EnumeratorLike_current] as T;
-      this[ConsumerMixinLike_notify](next);
+      this[SinkMixinLike_doNotify](next);
 
       await Promise.resolve();
     }
 
     if (this[SinkLike_isCompleted]) {
-      this[ConsumerMixinLike_complete]();
+      this[SinkMixinLike_doComplete]();
     }
     this[ConsumerMixin_isDraining] = false;
   }
 
-  function onConsumerDisposed(this: TProperties) {
-    this[ConsumerMixin_isCompleted] = true;
-  }
-
   const ConsumerMixin_isDraining = Symbol("ConsumerMixin_isDraining");
-  const ConsumerMixin_isCompleted = Symbol("ConsumerMixin_isCompleted");
 
   type TProperties = {
-    [ConsumerMixin_isCompleted]: boolean;
-    [ConsumerMixinLike_consumer]: TConsumer;
     [ConsumerMixin_isDraining]: boolean;
   };
 
   type TThis = TProperties &
     ConsumerLike<T> &
     FlowControllerQueueLike<T> &
-    ConsumerMixinLike<TConsumer, T>;
+    SinkMixinLike<TConsumer, T>;
 
   return returns(
     mix<
@@ -130,7 +117,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
         backpressureStrategy?: BackpressureStrategy;
       }>
     >(
-      include(FlowControllerQueueMixin()),
+      include(FlowControllerQueueMixin(), SinkMixin()),
       function ConsumerMixin(
         this: TProperties & TPrototype<TConsumer, T> & DisposableLike,
         consumer: TConsumer,
@@ -140,7 +127,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
         }>,
       ): TReturn<TConsumer, T> {
         init(FlowControllerQueueMixin<T>(), this, options);
-        this[ConsumerMixinLike_consumer] = consumer;
+        init(SinkMixin<TConsumer, T>(), this, consumer);
 
         this[FlowControllerEnumeratorLike_addOnDataAvailableListener](
           bind(drainQueue, this),
@@ -148,7 +135,6 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
 
         pipe(
           this,
-          DisposableContainer.onDisposed(onConsumerDisposed),
           Disposable.add(
             consumer[FlowControllerLike_addOnReadyListener](
               bind(drainQueue, this),
@@ -159,26 +145,16 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
         return this;
       },
       props<TProperties>({
-        [ConsumerMixin_isCompleted]: false,
-        [ConsumerMixinLike_consumer]: none,
         [ConsumerMixin_isDraining]: false,
       }),
       proto<TPrototype<TConsumer, T>>({
-        get [SinkLike_isCompleted]() {
-          unsafeCast<TProperties>(this);
-          return (
-            this[ConsumerMixin_isCompleted] ||
-            this[ConsumerMixinLike_consumer][SinkLike_isCompleted]
-          );
-        },
-
         [EventListenerLike_notify](this: TThis, next: T) {
           const isCompleted = this[SinkLike_isCompleted];
 
           // Make queueing decisions based upon whether the root non-lifted consumer
           // wants to apply back pressure, as lifted sinks just pass through
           // notifications and never queue.
-          const consumer = this[ConsumerMixinLike_consumer];
+          const consumer = this[SinkMixinLike_delegate];
           const isDelegateReady = consumer[FlowControllerLike_isReady];
           const hasQueuedEvents =
             this[FlowControllerEnumeratorLike_isDataAvailable];
@@ -187,7 +163,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
             !isCompleted && isDelegateReady && !hasQueuedEvents;
 
           if (shouldNotify) {
-            this[ConsumerMixinLike_notify](next);
+            this[SinkMixinLike_doNotify](next);
           } else if (!isCompleted) {
             this[QueueLike_enqueue](next);
           }
@@ -195,7 +171,7 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
 
         [SinkLike_complete](this: TThis) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[ConsumerMixin_isCompleted] = true;
+          this[SinkMixinLike_isCompleted] = true;
 
           const hasQueuedEvents =
             this[FlowControllerEnumeratorLike_isDataAvailable];
@@ -205,18 +181,10 @@ const ConsumerMixin: <TConsumer extends ConsumerLike<T>, T>() => Mixin2<
           }
 
           if (!hasQueuedEvents) {
-            this[ConsumerMixinLike_complete]();
+            this[SinkMixinLike_doComplete]();
           } else {
             call(drainQueue, this);
           }
-        },
-
-        [ConsumerMixinLike_notify](this: TThis, next: T) {
-          this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
-        },
-
-        [ConsumerMixinLike_complete](this: TThis) {
-          this[ConsumerMixinLike_consumer][SinkLike_complete]();
         },
       }),
     ),

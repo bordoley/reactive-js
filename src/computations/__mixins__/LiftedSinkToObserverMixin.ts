@@ -7,13 +7,13 @@ import {
   proto,
 } from "../../__internal__/mixins.js";
 import { Optional, returns } from "../../functions.js";
-import {
-  ConsumerMixinLike_complete,
-  ConsumerMixinLike_notify,
-} from "../../utils/__mixins__/ConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingSchedulerMixin.js";
 import ObserverMixin from "../../utils/__mixins__/ObserverMixin.js";
+import {
+  SinkMixinLike_doComplete,
+  SinkMixinLike_doNotify,
+} from "../../utils/__mixins__/SinkMixin.js";
 import {
   BackpressureStrategy,
   EventListenerLike_notify,
@@ -86,7 +86,7 @@ const LiftedSinkToObserverMixin: <
       },
       props(),
       proto({
-        [ConsumerMixinLike_notify](
+        [SinkMixinLike_doNotify](
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
           next: T,
         ) {
@@ -95,7 +95,7 @@ const LiftedSinkToObserverMixin: <
           ](next);
         },
 
-        [ConsumerMixinLike_complete](
+        [SinkMixinLike_doComplete](
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
         ) {
           this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();

@@ -1,17 +1,16 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
-import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { bind, call, none, pipe, returns } from "../../functions.js";
+import { include, init, mix, props, proto, } from "../../__internal__/mixins.js";
+import { bind, call, pipe, returns } from "../../functions.js";
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
-import * as DisposableContainer from "../DisposableContainer.js";
-import { ConsumerMixinLike_complete, ConsumerMixinLike_consumer, ConsumerMixinLike_notify, } from "./ConsumerMixin.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
+import SinkMixin, { SinkMixinLike_delegate, SinkMixinLike_doComplete, SinkMixinLike_doNotify, SinkMixinLike_isCompleted, } from "./SinkMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
     function* observerSchedulerContinuation() {
         // This is the ultimate downstream consumer of events.
-        const consumer = this[ConsumerMixinLike_consumer];
+        const consumer = this[SinkMixinLike_delegate];
         let isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
         let isDisposed = this[DisposableLike_isDisposed];
         let consumerIsCompleted = consumer[SinkLike_isCompleted];
@@ -22,7 +21,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             !isDisposed) {
             this[EnumeratorLike_moveNext]();
             const next = this[EnumeratorLike_current];
-            this[ConsumerMixinLike_notify](next);
+            this[SinkMixinLike_doNotify](next);
             const shouldYield = this[SchedulerLike_shouldYield];
             isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
             if (shouldYield && isDataAvailable) {
@@ -37,11 +36,11 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         // Only complete when we've exhausted our data. Prevents
         // completing if the loop was exited due to backpressure.
         if (!isDataAvailable && this[SinkLike_isCompleted]) {
-            this[ConsumerMixinLike_complete]();
+            this[SinkMixinLike_doComplete]();
         }
     }
     function scheduleDrainQueue() {
-        const consumer = this[ConsumerMixinLike_consumer];
+        const consumer = this[SinkMixinLike_delegate];
         const isConsumerReady = consumer[FlowControllerLike_isReady];
         const isDrainScheduled = !this[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
         if (isDrainScheduled || !isConsumerReady) {
@@ -49,35 +48,24 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         }
         this[ObserverMixin_schedulerSubscription] = this[SchedulerLike_schedule](bind(observerSchedulerContinuation, this));
     }
-    function onObserverDisposed() {
-        this[ObserverMixin_isCompleted] = true;
-    }
     const ObserverMixin_schedulerSubscription = Symbol("ObserverMixin_schedulerSubscription");
-    const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
-    return returns(mix(include(FlowControllerQueueMixin(), DelegatingSchedulerMixin), function ObserverMixin(consumer, scheduler, options) {
+    return returns(mix(include(FlowControllerQueueMixin(), DelegatingSchedulerMixin, SinkMixin()), function ObserverMixin(consumer, scheduler, options) {
         init(FlowControllerQueueMixin(), this, options);
         init(DelegatingSchedulerMixin, this, scheduler);
-        this[ConsumerMixinLike_consumer] = consumer;
+        init(SinkMixin(), this, consumer);
         this[FlowControllerEnumeratorLike_addOnDataAvailableListener](bind(scheduleDrainQueue, this));
-        pipe(this, DisposableContainer.onDisposed(onObserverDisposed), Disposable.add(consumer[FlowControllerLike_addOnReadyListener](bind(scheduleDrainQueue, this))));
+        pipe(this, Disposable.add(consumer[FlowControllerLike_addOnReadyListener](bind(scheduleDrainQueue, this))));
         return this;
     }, props({
-        [ConsumerMixinLike_consumer]: none,
-        [ObserverMixin_isCompleted]: false,
         [ObserverMixin_schedulerSubscription]: Disposable.disposed,
     }), proto({
-        get [SinkLike_isCompleted]() {
-            unsafeCast(this);
-            return (this[ObserverMixin_isCompleted] ||
-                this[ConsumerMixinLike_consumer][SinkLike_isCompleted]);
-        },
         [EventListenerLike_notify](next) {
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
             const isCompleted = this[SinkLike_isCompleted];
             // Make queueing decisions based upon whether the root non-lifted observer
             // wants to apply back pressure, as lifted observers just pass through
             // notifications and never queue in practice.
-            const consumer = this[ConsumerMixinLike_consumer];
+            const consumer = this[SinkMixinLike_delegate];
             const isDelegateReady = consumer[FlowControllerLike_isReady];
             const hasQueuedEvents = this[FlowControllerEnumeratorLike_isDataAvailable];
             const shouldNotify = inSchedulerContinuation &&
@@ -85,7 +73,7 @@ const ObserverMixin = /*@__PURE__*/ (() => {
                 isDelegateReady &&
                 !hasQueuedEvents;
             if (shouldNotify) {
-                this[ConsumerMixinLike_notify](next);
+                this[SinkMixinLike_doNotify](next);
             }
             else if (!isCompleted) {
                 this[QueueLike_enqueue](next);
@@ -93,24 +81,18 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         },
         [SinkLike_complete]() {
             const isCompleted = this[SinkLike_isCompleted];
-            this[ObserverMixin_isCompleted] = true;
+            this[SinkMixinLike_isCompleted] = true;
             const inSchedulerContinuation = this[SchedulerLike_inContinuation];
             const hasQueuedEvents = this[FlowControllerEnumeratorLike_isDataAvailable];
             if (isCompleted) {
                 return;
             }
             if (inSchedulerContinuation && !hasQueuedEvents) {
-                this[ConsumerMixinLike_complete]();
+                this[SinkMixinLike_doComplete]();
             }
             else {
                 call(scheduleDrainQueue, this);
             }
-        },
-        [ConsumerMixinLike_notify](next) {
-            this[ConsumerMixinLike_consumer][EventListenerLike_notify](next);
-        },
-        [ConsumerMixinLike_complete]() {
-            this[ConsumerMixinLike_consumer][SinkLike_complete]();
         },
     })));
 })();

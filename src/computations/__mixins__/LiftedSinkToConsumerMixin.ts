@@ -8,11 +8,12 @@ import {
   unsafeCast,
 } from "../../__internal__/mixins.js";
 import { Optional, SideEffect1, returns } from "../../functions.js";
-import ConsumerMixin, {
-  ConsumerMixinLike_complete,
-  ConsumerMixinLike_notify,
-} from "../../utils/__mixins__/ConsumerMixin.js";
+import ConsumerMixin from "../../utils/__mixins__/ConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
+  SinkMixinLike_doComplete,
+  SinkMixinLike_doNotify,
+} from "../../utils/__mixins__/SinkMixin.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
@@ -100,7 +101,7 @@ const LiftedSinkToConsumerMixin: <
           ][FlowControllerLike_addOnReadyListener](callback);
         },
 
-        [ConsumerMixinLike_notify](
+        [SinkMixinLike_doNotify](
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
           next: T,
         ) {
@@ -109,7 +110,7 @@ const LiftedSinkToConsumerMixin: <
           ](next);
         },
 
-        [ConsumerMixinLike_complete](
+        [SinkMixinLike_doComplete](
           this: LiftedSinkToEventListenerLike<TSubscription, T>,
         ) {
           this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
