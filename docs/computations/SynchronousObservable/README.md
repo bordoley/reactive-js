@@ -24,6 +24,7 @@
 
 ## Functions
 
+- [broadcast](functions/broadcast.md)
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
 - [combineLatest](functions/combineLatest.md)

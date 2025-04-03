@@ -27,6 +27,9 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
         readonly maxMicroTaskTicks?: number;
     };
 }>, DeferredReactiveComputationModule<SynchronousObservableComputation, {
+    broadcast?: {
+        readonly scheduler?: SchedulerLike;
+    };
     compute?: {
         readonly mode?: "batched" | "combine-latest";
     };
@@ -34,6 +37,7 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
     retry: ScheduledReactiveComputationModule<SynchronousObservableComputation>["retry"];
 }
 export type Signature = SynchronousObservableModule;
+export declare const broadcast: Signature["broadcast"];
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];

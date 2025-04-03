@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Observable from "@reactive-js/core/computations/Observable";
 import * as SynchronousObservable from "@reactive-js/core/computations/SynchronousObservable";
 import { useDisposable, useEventSource } from "@reactive-js/core/react";
 import {
@@ -40,7 +39,6 @@ import {
   PauseableLike_pause,
   EventListenerLike_notify,
 } from "@reactive-js/core/utils";
-import * as Producer from "@reactive-js/core/computations/Producer";
 import { scale } from "@reactive-js/core/math";
 import { AnimationLike_isRunning } from "@reactive-js/core/computations/Streamable";
 import * as Dictionary from "@reactive-js/core/collections/Dictionary";
@@ -183,21 +181,20 @@ const Counter = () => {
 
   const counter = useDisposable(
     pipeLazy(
-      Observable.gen(function* () {
+      SynchronousObservable.gen(function* () {
         let i = counterInitialValue ?? 0;
         while (true) {
           yield i;
           i++;
         }
       }),
-      Observable.forEach<number>(value =>
+      SynchronousObservable.forEach<number>(value =>
         history.replace((uri: WindowLocationURI) => ({
           ...uri,
           query: `v=${value}`,
         })),
       ),
-      Observable.toProducer({ scheduler: ReactScheduler.get() }),
-      Producer.broadcast<number>(),
+      SynchronousObservable.broadcast({ scheduler: ReactScheduler.get() }),
     ),
     [history.replace, counterInitialValue],
   );

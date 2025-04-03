@@ -15,6 +15,7 @@ import {
 import { identityLazy } from "../functions.js";
 import { SchedulerLike } from "../utils.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
+import Observable_broadcast from "./Observable/__private__/Observable.broadcast.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import { Observable_computeDeferred } from "./Observable/__private__/Observable.compute.js";
@@ -109,6 +110,9 @@ export interface ObservableModule
     DeferredReactiveComputationModule<
       ObservableComputation,
       {
+        broadcast?: {
+          scheduler?: SchedulerLike;
+        };
         compute?: {
           readonly mode?: "batched" | "combine-latest";
         };
@@ -125,6 +129,7 @@ export interface ObservableModule
 
 export type Signature = ObservableModule;
 
+export const broadcast: Signature["broadcast"] = Observable_broadcast;
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
 export const combineLatest: Signature["combineLatest"] =

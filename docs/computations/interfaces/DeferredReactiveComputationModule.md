@@ -34,6 +34,26 @@
 
 ## Methods
 
+### broadcast()
+
+> **broadcast**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`PauseableLike`](../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+`object` & `TCreationOptions`\[`"broadcast"`\]
+
+#### Returns
+
+[`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>, [`PauseableLike`](../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../utils/interfaces/DisposableLike.md)\>
+
+***
+
 ### compute()
 
 > **compute**\<`T`\>(`computation`, `options`?): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>

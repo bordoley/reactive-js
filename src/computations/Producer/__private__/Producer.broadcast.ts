@@ -4,11 +4,13 @@ import {
   mixInstanceFactory,
   props,
   proto,
+  unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
-  BroadcasterLike,
   EventSourceLike_subscribe,
   ProducerLike,
+  StoreLike,
+  StoreLike_value,
 } from "../../../computations.js";
 import { SideEffect1, none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -42,8 +44,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   );
 
   type TProperties = {
-    [FlowControllerLike_isReady]: boolean;
-    [EventListernToPauseableConsumer_mode]: BroadcasterLike<boolean>;
+    [EventListernToPauseableConsumer_mode]: StoreLike<boolean>;
   };
 
   const createPauseableConsumer = mixInstanceFactory(
@@ -62,7 +63,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
           | typeof SinkLike_isCompleted
         >,
       listener: EventListenerLike<T>,
-      mode: BroadcasterLike<boolean> & DisposableLike,
+      mode: StoreLike<boolean> & DisposableLike,
     ): ConsumerLike<T> {
       init(DelegatingDisposableMixin, this, listener);
       init(DelegatingEventListenerMixin(), this, listener);
@@ -70,22 +71,19 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
 
       this[EventListernToPauseableConsumer_mode] = mode;
 
-      pipe(
-        mode,
-        Disposable.addTo(this),
-        Broadcaster_addEventHandler(isPaused => {
-          this[FlowControllerLike_isReady] = !isPaused;
-        }),
-        Disposable.addTo(this),
-      );
+      pipe(mode, Disposable.addTo(this));
 
       return this;
     },
     props<TProperties>({
       [EventListernToPauseableConsumer_mode]: none,
-      [FlowControllerLike_isReady]: false,
     }),
     proto({
+      get [FlowControllerLike_isReady]() {
+        unsafeCast<TProperties>(this);
+
+        return !this[EventListernToPauseableConsumer_mode][StoreLike_value];
+      },
       [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike<T>,
         callback: SideEffect1<void>,

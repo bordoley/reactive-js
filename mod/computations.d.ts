@@ -282,8 +282,12 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     fromProducer<T>(): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
 }
 export interface DeferredReactiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
+    broadcast?: Record<string, any>;
     compute?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
+    broadcast<T>(options?: {
+        autoDispose?: boolean;
+    } & TCreationOptions["broadcast"]): Function1<ComputationOf<TComputationType, T>, PauseableLike & BroadcasterLike<T> & DisposableLike>;
     compute<T>(computation: Factory<T>, options?: TCreationOptions["compute"]): ComputationWithSideEffectsOf<TComputationType, T>;
     mergeAll<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;

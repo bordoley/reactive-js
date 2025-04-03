@@ -23,6 +23,9 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delayStart?: boolean;
     };
 }>, DeferredReactiveComputationModule<ObservableComputation, {
+    broadcast?: {
+        scheduler?: SchedulerLike;
+    };
     compute?: {
         readonly mode?: "batched" | "combine-latest";
     };
@@ -31,6 +34,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     subscribeOn<T>(scheduler: SchedulerLike): PureComputationOperator<ObservableComputation, T, T>;
 }
 export type Signature = ObservableModule;
+export declare const broadcast: Signature["broadcast"];
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];

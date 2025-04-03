@@ -752,9 +752,19 @@ export interface ConcurrentReactiveComputationModule<
 export interface DeferredReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
+    broadcast?: Record<string, any>;
     compute?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
+  broadcast<T>(
+    options?: {
+      autoDispose?: boolean;
+    } & TCreationOptions["broadcast"],
+  ): Function1<
+    ComputationOf<TComputationType, T>,
+    PauseableLike & BroadcasterLike<T> & DisposableLike
+  >;
+
   compute<T>(
     computation: Factory<T>,
     options?: TCreationOptions["compute"],

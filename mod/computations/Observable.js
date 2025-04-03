@@ -3,6 +3,7 @@
 import { ComputationTypeLike_baseOfT, } from "../computations.js";
 import { identityLazy } from "../functions.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
+import Observable_broadcast from "./Observable/__private__/Observable.broadcast.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
 import { Observable_computeDeferred } from "./Observable/__private__/Observable.compute.js";
@@ -43,6 +44,7 @@ import Observable_withBackpressure from "./Observable/__private__/Observable.wit
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
+export const broadcast = Observable_broadcast;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;

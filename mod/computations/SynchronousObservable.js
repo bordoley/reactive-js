@@ -39,7 +39,9 @@ import Observable_withBackpressure from "./Observable/__private__/Observable.wit
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
+import SynchronousObservable_broadcast from "./SynchronousObservable/__private__/SynchronousObservable.broadcast.js";
 import SynchronousObservable_toRunnable from "./SynchronousObservable/__private__/SynchronousObservable.toRunnable.js";
+export const broadcast = SynchronousObservable_broadcast;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;

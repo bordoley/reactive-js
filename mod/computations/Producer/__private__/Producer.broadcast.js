@@ -1,7 +1,7 @@
 /// <reference types="./Producer.broadcast.d.ts" />
 
-import { include, init, mixInstanceFactory, props, proto, } from "../../../__internal__/mixins.js";
-import { EventSourceLike_subscribe, } from "../../../computations.js";
+import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../../__internal__/mixins.js";
+import { EventSourceLike_subscribe, StoreLike_value, } from "../../../computations.js";
 import { none, pipe, raise } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -18,14 +18,15 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
         init(DelegatingEventListenerMixin(), this, listener);
         init(DisposeOnCompleteSinkMixin(), this);
         this[EventListernToPauseableConsumer_mode] = mode;
-        pipe(mode, Disposable.addTo(this), Broadcaster_addEventHandler(isPaused => {
-            this[FlowControllerLike_isReady] = !isPaused;
-        }), Disposable.addTo(this));
+        pipe(mode, Disposable.addTo(this));
         return this;
     }, props({
         [EventListernToPauseableConsumer_mode]: none,
-        [FlowControllerLike_isReady]: false,
     }), proto({
+        get [FlowControllerLike_isReady]() {
+            unsafeCast(this);
+            return !this[EventListernToPauseableConsumer_mode][StoreLike_value];
+        },
         [FlowControllerLike_addOnReadyListener](callback) {
             return pipe(this[EventListernToPauseableConsumer_mode], Broadcaster_addEventHandler(isPaused => {
                 if (!isPaused) {

@@ -58,6 +58,7 @@ import Observable_withBackpressure from "./Observable/__private__/Observable.wit
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
+import SynchronousObservable_broadcast from "./SynchronousObservable/__private__/SynchronousObservable.broadcast.js";
 import SynchronousObservable_toRunnable from "./SynchronousObservable/__private__/SynchronousObservable.toRunnable.js";
 
 /**
@@ -108,6 +109,9 @@ export interface SynchronousObservableModule
     DeferredReactiveComputationModule<
       SynchronousObservableComputation,
       {
+        broadcast?: {
+          readonly scheduler?: SchedulerLike;
+        };
         compute?: {
           readonly mode?: "batched" | "combine-latest";
         };
@@ -119,6 +123,8 @@ export interface SynchronousObservableModule
 
 export type Signature = SynchronousObservableModule;
 
+export const broadcast: Signature["broadcast"] =
+  SynchronousObservable_broadcast;
 export const buffer: Signature["buffer"] =
   Observable_buffer as Signature["buffer"];
 export const catchError: Signature["catchError"] =
