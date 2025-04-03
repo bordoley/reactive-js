@@ -57,7 +57,6 @@
     "./computations": "./computations.js",
     "./computations/AsyncIterable": "./computations/AsyncIterable.js",
     "./computations/Broadcaster": "./computations/Broadcaster.js",
-    "./computations/Cache": "./computations/Cache.js",
     "./computations/Computation": "./computations/Computation.js",
     "./computations/EventSource": "./computations/EventSource.js",
     "./computations/Iterable": "./computations/Iterable.js",
@@ -94,7 +93,6 @@
     "./utils/VirtualTimeScheduler": "./utils/VirtualTimeScheduler.js",
 
     "./web": "./web.js",
-    "./web/effects": "./web/effects.js",
     "./web/AnimationFrameScheduler": "./web/AnimationFrameScheduler.js",
     "./web/Element": "./web/Element.js",
     "./web/PostTaskScheduler": "./web/PostTaskScheduler.js",
