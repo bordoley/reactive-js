@@ -12,7 +12,7 @@ import * as SynchronousObservable from "@reactive-js/core/computations/Synchrono
 import * as Computation from "@reactive-js/core/computations/Computation";
 import * as Runnable from "@reactive-js/core/computations/Runnable";
 
-const m = Computation.makeModule<SynchronousObservable.Computation>()(
+const m = Computation.makeModule<SynchronousObservable.Signature>(
   SynchronousObservable,
 );
 
