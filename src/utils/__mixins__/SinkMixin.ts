@@ -73,9 +73,9 @@ const SinkMixin: <TSink extends SinkLike<T>, T>() => Mixin1<
       include(FlowControllerQueueMixin()),
       function SinkMixin(
         this: TProperties & TPrototype<TSink, T> & DisposableLike,
-        sink: TSink,
+        delegate: TSink,
       ): TReturn<TSink, T> {
-        this[SinkMixinLike_delegate] = sink;
+        this[SinkMixinLike_delegate] = delegate;
 
         pipe(this, DisposableContainer.onDisposed(onSinkDisposed));
 

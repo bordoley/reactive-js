@@ -10,11 +10,11 @@ import { LiftedSinkLike_subscription, } from "../__internal__/LiftedSource.js";
 import { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
 import LiftedSinkToSinkMixin from "./LiftedSinkToSinkMixin.js";
 const LiftedSinkToConsumerMixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(DelegatingDisposableMixin, LiftedSinkToSinkMixin(), ConsumerMixin()), function LiftedSinkToConsumerMixin(operator, backPressure) {
-        const delegate = operator[LiftedSinkLike_subscription];
+    return returns(mix(include(DelegatingDisposableMixin, LiftedSinkToSinkMixin(), ConsumerMixin()), function LiftedSinkToConsumerMixin(delegate, backPressure) {
+        const subscription = delegate[LiftedSinkLike_subscription];
         init(DelegatingDisposableMixin, this, delegate);
-        init(LiftedSinkToSinkMixin(), this, operator);
-        init(ConsumerMixin(), this, delegate, backPressure);
+        init(LiftedSinkToSinkMixin(), this, delegate);
+        init(ConsumerMixin(), this, subscription, backPressure);
         return this;
     }, props(), proto({
         get [FlowControllerLike_isReady]() {

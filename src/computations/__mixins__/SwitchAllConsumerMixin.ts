@@ -5,7 +5,6 @@ import {
   mix,
   props,
   proto,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   EventSourceLike,
@@ -15,11 +14,13 @@ import { Function1, bind, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingEventListenerMixin, {
-  DelegatingEventListenerLike,
-  DelegatingEventListenerLike_delegate,
-} from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../../utils/__mixins__/FlowControllerWithoutBackpressureMixin.js";
+import SinkMixin, {
+  SinkMixinLike,
+  SinkMixinLike_delegate,
+  SinkMixinLike_doComplete,
+  SinkMixinLike_isCompleted,
+} from "../../utils/__mixins__/SinkMixin.js";
 import {
   ConsumerLike,
   DisposableLike,
@@ -56,7 +57,6 @@ const SwitchAllConsumerMixin: <
   const SwitchAllConsumer_innerSubscription = Symbol(
     "SwitchAllConsumer_innerSubscription",
   );
-  const SwitchAllConsumer_isCompleted = Symbol("SwitchAllConsumer_isCompleted");
 
   type TProperties = {
     [SwitchAllConsumer_createDelegatingNonCompleting]: Function1<
@@ -64,16 +64,15 @@ const SwitchAllConsumerMixin: <
       TConsumer
     >;
     [SwitchAllConsumer_innerSubscription]: DisposableLike;
-    [SwitchAllConsumer_isCompleted]: boolean;
   };
 
   function onSwitchAllConsumerInnerSourceComplete(
     this: TProperties &
       ConsumerLike<TInnerSource> &
-      DelegatingEventListenerLike<TInnerSource, T, TConsumer>,
+      SinkMixinLike<TConsumer, T>,
   ) {
     if (this[SinkLike_isCompleted]) {
-      this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
+      this[SinkMixinLike_doComplete]();
     }
   }
 
@@ -81,21 +80,21 @@ const SwitchAllConsumerMixin: <
     mix(
       include(
         DelegatingDisposableMixin,
-        DelegatingEventListenerMixin(),
         FlowControllerWithoutBackpressureMixin,
+        SinkMixin(),
       ),
       function SwitchAllConsumerMixin(
         this: Omit<
           TReturn<TInnerSource, TConsumer, T>,
-          keyof FlowControllerLike
+          keyof FlowControllerLike | typeof SinkLike_isCompleted
         > &
           TProperties,
         delegate: TConsumer,
         createDelegatingNonCompleting: Function1<TConsumer, TConsumer>,
       ): TReturn<TInnerSource, TConsumer, T> {
         init(DelegatingDisposableMixin, this, delegate);
-        init(DelegatingEventListenerMixin(), this, delegate);
         init(FlowControllerWithoutBackpressureMixin, this);
+        init(SinkMixin<TConsumer, T>(), this, delegate);
 
         this[SwitchAllConsumer_createDelegatingNonCompleting] =
           createDelegatingNonCompleting;
@@ -105,24 +104,12 @@ const SwitchAllConsumerMixin: <
       props<TProperties>({
         [SwitchAllConsumer_createDelegatingNonCompleting]: none,
         [SwitchAllConsumer_innerSubscription]: Disposable.disposed,
-        [SwitchAllConsumer_isCompleted]: false,
       }),
       proto({
-        get [SinkLike_isCompleted]() {
-          unsafeCast<
-            TProperties &
-              DelegatingEventListenerLike<TInnerSource, T, TConsumer>
-          >(this);
-          return (
-            this[SwitchAllConsumer_isCompleted] ||
-            this[DelegatingEventListenerLike_delegate][SinkLike_isCompleted]
-          );
-        },
-
         [EventListenerLike_notify](
           this: TProperties &
             ConsumerLike<TInnerSource> &
-            DelegatingEventListenerLike<TInnerSource, T, TConsumer>,
+            SinkMixinLike<TConsumer, T>,
           next: TInnerSource,
         ) {
           if (this[SinkLike_isCompleted]) {
@@ -130,7 +117,7 @@ const SwitchAllConsumerMixin: <
           }
           this[SwitchAllConsumer_innerSubscription][DisposableLike_dispose]();
 
-          const delegate = this[DelegatingEventListenerLike_delegate];
+          const delegate = this[SinkMixinLike_delegate];
           const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(
             this[SwitchAllConsumer_createDelegatingNonCompleting](delegate),
             DisposableContainer.onComplete(
@@ -148,17 +135,17 @@ const SwitchAllConsumerMixin: <
         [SinkLike_complete](
           this: TProperties &
             ConsumerLike<TInnerSource> &
-            DelegatingEventListenerLike<TInnerSource, T, TConsumer>,
+            SinkMixinLike<TConsumer, T>,
         ) {
           const isCompleted = this[SinkLike_isCompleted];
-          this[SwitchAllConsumer_isCompleted] = true;
+          this[SinkMixinLike_isCompleted] = true;
           const innerSubscriptionIsDispsoed =
             this[SwitchAllConsumer_innerSubscription][
               DisposableLike_isDisposed
             ];
 
           if (!isCompleted && innerSubscriptionIsDispsoed) {
-            this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
+            this[SinkMixinLike_doComplete]();
           }
         },
       }),

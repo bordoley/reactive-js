@@ -10,14 +10,14 @@ import SinkMixin, { SinkMixinLike_delegate, SinkMixinLike_doComplete, SinkMixinL
 const ObserverMixin = /*@__PURE__*/ (() => {
     function* observerSchedulerContinuation() {
         // This is the ultimate downstream consumer of events.
-        const consumer = this[SinkMixinLike_delegate];
+        const delegate = this[SinkMixinLike_delegate];
         let isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
         let isDisposed = this[DisposableLike_isDisposed];
-        let consumerIsCompleted = consumer[SinkLike_isCompleted];
-        let consumerIsReady = consumer[FlowControllerLike_isReady];
-        while (consumerIsReady &&
+        let delegateIsCompleted = delegate[SinkLike_isCompleted];
+        let delegateIsReady = delegate[FlowControllerLike_isReady];
+        while (delegateIsReady &&
             isDataAvailable &&
-            !consumerIsCompleted &&
+            !delegateIsCompleted &&
             !isDisposed) {
             this[EnumeratorLike_moveNext]();
             const next = this[EnumeratorLike_current];
@@ -30,8 +30,8 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             // Need to reassign after the yield if the caller rescheduled
             isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
             isDisposed = this[DisposableLike_isDisposed];
-            consumerIsCompleted = consumer[SinkLike_isCompleted];
-            consumerIsReady = consumer[FlowControllerLike_isReady];
+            delegateIsCompleted = delegate[SinkLike_isCompleted];
+            delegateIsReady = delegate[FlowControllerLike_isReady];
         }
         // Only complete when we've exhausted our data. Prevents
         // completing if the loop was exited due to backpressure.
@@ -40,10 +40,10 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         }
     }
     function scheduleDrainQueue() {
-        const consumer = this[SinkMixinLike_delegate];
-        const isConsumerReady = consumer[FlowControllerLike_isReady];
+        const delegate = this[SinkMixinLike_delegate];
+        const isDelegateReady = delegate[FlowControllerLike_isReady];
         const isDrainScheduled = !this[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
-        if (isDrainScheduled || !isConsumerReady) {
+        if (isDrainScheduled || !isDelegateReady) {
             return;
         }
         this[ObserverMixin_schedulerSubscription] = this[SchedulerLike_schedule](bind(observerSchedulerContinuation, this));
@@ -65,8 +65,8 @@ const ObserverMixin = /*@__PURE__*/ (() => {
             // Make queueing decisions based upon whether the root non-lifted observer
             // wants to apply back pressure, as lifted observers just pass through
             // notifications and never queue in practice.
-            const consumer = this[SinkMixinLike_delegate];
-            const isDelegateReady = consumer[FlowControllerLike_isReady];
+            const delegate = this[SinkMixinLike_delegate];
+            const isDelegateReady = delegate[FlowControllerLike_isReady];
             const hasQueuedEvents = this[FlowControllerEnumeratorLike_isDataAvailable];
             const shouldNotify = inSchedulerContinuation &&
                 !isCompleted &&

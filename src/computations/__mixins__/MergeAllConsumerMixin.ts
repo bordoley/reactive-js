@@ -6,7 +6,6 @@ import {
   mix,
   props,
   proto,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   EventSourceLike,
@@ -17,11 +16,13 @@ import { clampPositiveNonZeroInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingEventListenerMixin, {
-  DelegatingEventListenerLike,
-  DelegatingEventListenerLike_delegate,
-} from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
+import SinkMixin, {
+  SinkMixinLike,
+  SinkMixinLike_delegate,
+  SinkMixinLike_doComplete,
+  SinkMixinLike_isCompleted,
+} from "../../utils/__mixins__/SinkMixin.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
@@ -63,14 +64,12 @@ const MergeAllConsumerMixin: <
     "MergeAllConsumer_createDelegatingNonCompleting",
   );
   const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
-  const MergeAllConsumer_isCompleted = Symbol("MergeAllConsumer_isCompleted");
 
   type TProperties = {
     [MergeAllConsumer_createDelegatingNonCompleting]: Function1<
       TConsumer,
       TConsumer
     >;
-    [MergeAllConsumer_isCompleted]: boolean;
     [MergeAllConsumer_activeCount]: number;
   };
 
@@ -78,10 +77,10 @@ const MergeAllConsumerMixin: <
     mergeAllConsumer: TProperties &
       FlowControllerQueueLike<TInnerSource> &
       ConsumerLike &
-      DelegatingEventListenerLike<TInnerSource, T, TConsumer>,
+      SinkMixinLike<TConsumer, T>,
     source: TInnerSource,
   ) => {
-    const delegate = mergeAllConsumer[DelegatingEventListenerLike_delegate];
+    const delegate = mergeAllConsumer[SinkMixinLike_delegate];
     mergeAllConsumer[MergeAllConsumer_activeCount]++;
 
     const sourceDelegate = pipe(
@@ -108,13 +107,13 @@ const MergeAllConsumerMixin: <
     mix(
       include(
         DelegatingDisposableMixin,
-        DelegatingEventListenerMixin(),
         FlowControllerQueueMixin(),
+        SinkMixin(),
       ),
       function MergeAllConsumerMixin(
         this: Omit<
           TReturn<TInnerSource, TConsumer, T>,
-          keyof FlowControllerQueueLike
+          keyof FlowControllerQueueLike | typeof SinkLike_isCompleted
         > &
           TProperties,
         delegate: TConsumer,
@@ -127,11 +126,7 @@ const MergeAllConsumerMixin: <
       ): TReturn<TInnerSource, TConsumer, T> {
         init(DelegatingDisposableMixin, this, delegate);
         init(FlowControllerQueueMixin<TInnerSource>(), this, config);
-        init(
-          DelegatingEventListenerMixin<TInnerSource, T, TConsumer>(),
-          this,
-          delegate,
-        );
+        init(SinkMixin<TConsumer, T>(), this, delegate);
 
         const maxConcurrency = clampPositiveNonZeroInteger(
           config?.concurrency ?? MAX_SAFE_INTEGER,
@@ -164,21 +159,9 @@ const MergeAllConsumerMixin: <
       },
       props<TProperties>({
         [MergeAllConsumer_createDelegatingNonCompleting]: none,
-        [MergeAllConsumer_isCompleted]: false,
         [MergeAllConsumer_activeCount]: 0,
       }),
       proto({
-        get [SinkLike_isCompleted]() {
-          unsafeCast<
-            TProperties &
-              DelegatingEventListenerLike<TInnerSource, T, TConsumer>
-          >(this);
-          return (
-            this[MergeAllConsumer_isCompleted] ||
-            this[DelegatingEventListenerLike_delegate][SinkLike_isCompleted]
-          );
-        },
-
         [EventListenerLike_notify](
           this: TProperties &
             ConsumerLike<TInnerSource> &
@@ -191,17 +174,17 @@ const MergeAllConsumerMixin: <
         [SinkLike_complete](
           this: TProperties &
             ConsumerLike<TInnerSource> &
-            DelegatingEventListenerLike<TInnerSource, T, TConsumer>,
+            SinkMixinLike<TConsumer, T>,
         ) {
           const isCompleted = this[SinkLike_isCompleted];
           const activeCount = this[MergeAllConsumer_activeCount];
-          this[MergeAllConsumer_isCompleted] = true;
+          this[SinkMixinLike_isCompleted] = true;
 
           if (isCompleted || activeCount > 0) {
             return;
           }
 
-          this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
+          this[SinkMixinLike_doComplete]();
         },
       }),
     ),

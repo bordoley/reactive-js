@@ -13,8 +13,8 @@ const SinkMixin = /*@__PURE__*/ (() => {
     function onSinkDisposed() {
         this[SinkMixinLike_isCompleted] = true;
     }
-    return returns(mix(include(FlowControllerQueueMixin()), function SinkMixin(sink) {
-        this[SinkMixinLike_delegate] = sink;
+    return returns(mix(include(FlowControllerQueueMixin()), function SinkMixin(delegate) {
+        this[SinkMixinLike_delegate] = delegate;
         pipe(this, DisposableContainer.onDisposed(onSinkDisposed));
         return this;
     }, props({

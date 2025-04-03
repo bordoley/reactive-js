@@ -51,9 +51,9 @@ const LiftedSinkToEventListenerMixin: <
     mix(
       function LiftedSinkToEventListenerMixin(
         this: TProperties & TPrototype<TSubscription, T>,
-        operator: LiftedSinkLike<TSubscription, T>,
+        delegate: LiftedSinkLike<TSubscription, T>,
       ): TReturn<TSubscription, T> {
-        this[LiftedSinkToEventListenerLike_liftedSink] = operator;
+        this[LiftedSinkToEventListenerLike_liftedSink] = delegate;
 
         return this;
       },

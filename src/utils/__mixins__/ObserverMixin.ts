@@ -69,17 +69,17 @@ const ObserverMixin: <TObserver extends ConsumerLike, T>() => Mixin3<
 > = /*@__PURE__*/ (<TObserver extends ConsumerLike, T>() => {
   function* observerSchedulerContinuation(this: TThis) {
     // This is the ultimate downstream consumer of events.
-    const consumer = this[SinkMixinLike_delegate];
+    const delegate = this[SinkMixinLike_delegate];
 
     let isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
     let isDisposed = this[DisposableLike_isDisposed];
-    let consumerIsCompleted = consumer[SinkLike_isCompleted];
-    let consumerIsReady = consumer[FlowControllerLike_isReady];
+    let delegateIsCompleted = delegate[SinkLike_isCompleted];
+    let delegateIsReady = delegate[FlowControllerLike_isReady];
 
     while (
-      consumerIsReady &&
+      delegateIsReady &&
       isDataAvailable &&
-      !consumerIsCompleted &&
+      !delegateIsCompleted &&
       !isDisposed
     ) {
       this[EnumeratorLike_moveNext]();
@@ -95,8 +95,8 @@ const ObserverMixin: <TObserver extends ConsumerLike, T>() => Mixin3<
       // Need to reassign after the yield if the caller rescheduled
       isDataAvailable = this[FlowControllerEnumeratorLike_isDataAvailable];
       isDisposed = this[DisposableLike_isDisposed];
-      consumerIsCompleted = consumer[SinkLike_isCompleted];
-      consumerIsReady = consumer[FlowControllerLike_isReady];
+      delegateIsCompleted = delegate[SinkLike_isCompleted];
+      delegateIsReady = delegate[FlowControllerLike_isReady];
     }
 
     // Only complete when we've exhausted our data. Prevents
@@ -107,12 +107,12 @@ const ObserverMixin: <TObserver extends ConsumerLike, T>() => Mixin3<
   }
 
   function scheduleDrainQueue(this: TThis) {
-    const consumer = this[SinkMixinLike_delegate];
-    const isConsumerReady = consumer[FlowControllerLike_isReady];
+    const delegate = this[SinkMixinLike_delegate];
+    const isDelegateReady = delegate[FlowControllerLike_isReady];
     const isDrainScheduled =
       !this[ObserverMixin_schedulerSubscription][DisposableLike_isDisposed];
 
-    if (isDrainScheduled || !isConsumerReady) {
+    if (isDrainScheduled || !isDelegateReady) {
       return;
     }
 
@@ -193,8 +193,8 @@ const ObserverMixin: <TObserver extends ConsumerLike, T>() => Mixin3<
           // Make queueing decisions based upon whether the root non-lifted observer
           // wants to apply back pressure, as lifted observers just pass through
           // notifications and never queue in practice.
-          const consumer = this[SinkMixinLike_delegate];
-          const isDelegateReady = consumer[FlowControllerLike_isReady];
+          const delegate = this[SinkMixinLike_delegate];
+          const isDelegateReady = delegate[FlowControllerLike_isReady];
           const hasQueuedEvents =
             this[FlowControllerEnumeratorLike_isDataAvailable];
 

@@ -60,25 +60,25 @@ const LiftedSinkToObserverMixin: <
       ),
       function LiftedSinkToObserverMixin(
         this: unknown,
-        operator: LiftedSinkLike<TSubscription, T>,
+        delegate: LiftedSinkLike<TSubscription, T>,
         backPressure: Optional<{
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         }>,
       ): TReturn<TSubscription, T> {
-        const delegate = operator[LiftedSinkLike_subscription];
-        init(DelegatingDisposableMixin, this, delegate);
-        init(DelegatingSchedulerMixin, this, delegate);
+        const subscription = delegate[LiftedSinkLike_subscription];
+        init(DelegatingDisposableMixin, this, subscription);
+        init(DelegatingSchedulerMixin, this, subscription);
         init(
           LiftedSinkToEventListenerMixin<TSubscription, T>(),
           this,
-          operator,
+          delegate,
         );
         init(
           ObserverMixin<TSubscription, T>(),
           this,
-          delegate,
-          delegate,
+          subscription,
+          subscription,
           backPressure,
         );
 

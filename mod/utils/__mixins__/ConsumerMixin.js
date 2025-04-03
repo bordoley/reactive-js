@@ -8,19 +8,19 @@ import FlowControllerQueueMixin from "./FlowControllerQueueMixin.js";
 import SinkMixin, { SinkMixinLike_delegate, SinkMixinLike_doComplete, SinkMixinLike_doNotify, SinkMixinLike_isCompleted, } from "./SinkMixin.js";
 const ConsumerMixin = /*@__PURE__*/ (() => {
     async function drainQueue() {
-        const consumer = this[SinkMixinLike_delegate];
-        const isConsumerReady = consumer[FlowControllerLike_isReady];
+        const delegate = this[SinkMixinLike_delegate];
+        const isConsumerReady = delegate[FlowControllerLike_isReady];
         const isDraininig = this[ConsumerMixin_isDraining];
         if (isDraininig || !isConsumerReady) {
             return;
         }
         this[ConsumerMixin_isDraining] = true;
         while (this[FlowControllerEnumeratorLike_isDataAvailable] &&
-            !consumer[SinkLike_isCompleted] &&
+            !delegate[SinkLike_isCompleted] &&
             !this[DisposableLike_isDisposed]) {
             // Avoid dequeing values if the downstream consumer
             // is applying backpressure.
-            if (!consumer[FlowControllerLike_isReady]) {
+            if (!delegate[FlowControllerLike_isReady]) {
                 break;
             }
             this[EnumeratorLike_moveNext]();
@@ -48,8 +48,8 @@ const ConsumerMixin = /*@__PURE__*/ (() => {
             // Make queueing decisions based upon whether the root non-lifted consumer
             // wants to apply back pressure, as lifted sinks just pass through
             // notifications and never queue.
-            const consumer = this[SinkMixinLike_delegate];
-            const isDelegateReady = consumer[FlowControllerLike_isReady];
+            const delegate = this[SinkMixinLike_delegate];
+            const isDelegateReady = delegate[FlowControllerLike_isReady];
             const hasQueuedEvents = this[FlowControllerEnumeratorLike_isDataAvailable];
             const shouldNotify = !isCompleted && isDelegateReady && !hasQueuedEvents;
             if (shouldNotify) {

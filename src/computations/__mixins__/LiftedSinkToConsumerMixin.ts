@@ -70,16 +70,21 @@ const LiftedSinkToConsumerMixin: <
       ),
       function LiftedSinkToConsumerMixin(
         this: TPrototype<TSubscription, T>,
-        operator: LiftedSinkLike<TSubscription, T>,
+        delegate: LiftedSinkLike<TSubscription, T>,
         backPressure: Optional<{
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         }>,
       ): TReturn<TSubscription, T> {
-        const delegate = operator[LiftedSinkLike_subscription];
+        const subscription = delegate[LiftedSinkLike_subscription];
         init(DelegatingDisposableMixin, this, delegate);
-        init(LiftedSinkToSinkMixin<TSubscription, T>(), this, operator);
-        init(ConsumerMixin<TSubscription, T>(), this, delegate, backPressure);
+        init(LiftedSinkToSinkMixin<TSubscription, T>(), this, delegate);
+        init(
+          ConsumerMixin<TSubscription, T>(),
+          this,
+          subscription,
+          backPressure,
+        );
 
         return this;
       },
