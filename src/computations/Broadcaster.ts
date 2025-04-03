@@ -6,13 +6,11 @@ import {
   ComputationTypeLike_baseOfT,
   ConcurrentReactiveComputationModule,
   ReactiveComputationModule,
-  StoreLike,
 } from "../computations.js";
 import { Function1, SideEffect1, identityLazy } from "../functions.js";
-import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
+import { DisposableLike, EventListenerLike } from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
-import Broadcaster_createPauseable from "./Broadcaster/__private__/Broadcaster.createPauseable.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
 import Broadcaster_encodeUtf8 from "./Broadcaster/__private__/Broadcaster.encodeUtf8.js";
 import Broadcaster_forkMerge from "./Broadcaster/__private__/Broadcaster.forkMerge.js";
@@ -65,13 +63,6 @@ export interface BroadcasterModule
     },
   ): BroadcasterLike<T> & DisposableLike;
 
-  createPauseable<T>(
-    op: Function1<StoreLike<boolean> & DisposableLike, BroadcasterLike<T>>,
-    options?: {
-      readonly autoDispose?: boolean;
-    },
-  ): PauseableLike & BroadcasterLike<T> & DisposableLike;
-
   fromPromise<T>(): Function1<Promise<T>, BroadcasterLike<T>>;
 }
 
@@ -82,8 +73,6 @@ export const addEventHandler: Signature["addEventHandler"] =
 export const combineLatest: Signature["combineLatest"] =
   Broadcaster_combineLatest;
 export const create: Signature["create"] = Broadcaster_create;
-export const createPauseable: Signature["createPauseable"] =
-  Broadcaster_createPauseable;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Broadcaster_distinctUntilChanged;
 export const encodeUtf8: Signature["encodeUtf8"] = Broadcaster_encodeUtf8;

@@ -2,15 +2,37 @@
 
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../../../__internal__/mixins.js";
 import { EventSourceLike_subscribe, StoreLike_value, } from "../../../computations.js";
-import { none, pipe, raise } from "../../../functions.js";
+import { none, pipe, raise, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DisposeOnCompleteSinkMixin from "../../../utils/__mixins__/DisposeOnCompleteSinkMixin.js";
-import { EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_isCompleted, } from "../../../utils.js";
+import { EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SinkLike_isCompleted, } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
-import Broadcaster_createPauseable from "../../Broadcaster/__private__/Broadcaster.createPauseable.js";
+import * as WritableStore from "../../WritableStore.js";
+import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
+const Broadcaster_createPauseable = 
+/*@__PURE__*/ (() => {
+    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()), function PauseableBroadcaster(op, options) {
+        const writableStore = WritableStore.create(true, options);
+        this[PauseableLike_isPaused] = writableStore;
+        const delegate = pipe(writableStore, op);
+        init(DelegatingDisposableMixin, this, writableStore);
+        init(DelegatingBroadcasterMixin(), this, delegate);
+        this[PauseableLike_resume]();
+        return this;
+    }, props({
+        [PauseableLike_isPaused]: none,
+    }), proto({
+        [PauseableLike_pause]() {
+            this[PauseableLike_isPaused][StoreLike_value] = true;
+        },
+        [PauseableLike_resume]() {
+            this[PauseableLike_isPaused][StoreLike_value] = false;
+        },
+    }));
+})();
 const Producer_broadcast = /*@__PURE__*/ (() => {
     const EventListernToPauseableConsumer_mode = Symbol("EventListernToPauseableConsumer_mode");
     const createPauseableConsumer = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), DisposeOnCompleteSinkMixin()), function EventListenerToPauseableConsumer(listener, mode) {

@@ -58,32 +58,6 @@
 
 ***
 
-### createPauseable()
-
-> **createPauseable**\<`T`\>(`op`, `options`?): [`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### op
-
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`StoreLike`](../../interfaces/StoreLike.md)\<`boolean`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md), [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
-
-##### options?
-
-###### autoDispose?
-
-`boolean`
-
-#### Returns
-
-[`PauseableLike`](../../../utils/interfaces/PauseableLike.md) & [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\> & [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)
-
-***
-
 ### fromPromise()
 
 > **fromPromise**\<`T`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Promise`\<`T`\>, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>

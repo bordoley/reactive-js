@@ -21,7 +21,6 @@
 - [addEventHandler](functions/addEventHandler.md)
 - [combineLatest](functions/combineLatest.md)
 - [create](functions/create.md)
-- [createPauseable](functions/createPauseable.md)
 - [distinctUntilChanged](functions/distinctUntilChanged.md)
 - [encodeUtf8](functions/encodeUtf8.md)
 - [forkMerge](functions/forkMerge.md)

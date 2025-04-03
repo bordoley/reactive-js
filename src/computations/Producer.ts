@@ -1,5 +1,4 @@
 import {
-  BroadcasterLike,
   ComputationModule,
   ComputationTypeLike,
   ComputationTypeLike_T,
@@ -12,8 +11,8 @@ import {
   ProducerWithSideEffectsLike,
   ReactiveComputationModule,
 } from "../computations.js";
-import { Function1, identity, identityLazy, returns } from "../functions.js";
-import { ConsumerLike, DisposableLike, PauseableLike } from "../utils.js";
+import { identity, identityLazy, returns } from "../functions.js";
+import { ConsumerLike } from "../utils.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
@@ -80,13 +79,6 @@ export interface ProducerModule
     DeferredComputationModule<ProducerComputation>,
     DeferredReactiveComputationModule<ProducerComputation>,
     ConcurrentReactiveComputationModule<ProducerComputation> {
-  broadcast<T>(options?: {
-    autoDispose?: boolean;
-  }): Function1<
-    ProducerLike<T>,
-    PauseableLike & BroadcasterLike<T> & DisposableLike
-  >;
-
   create<T>(
     f: (consumer: ConsumerLike<T>) => void,
   ): ProducerWithSideEffectsLike<T>;

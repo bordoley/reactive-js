@@ -1,6 +1,6 @@
-import { BroadcasterLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentReactiveComputationModule, ReactiveComputationModule, StoreLike } from "../computations.js";
+import { BroadcasterLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentReactiveComputationModule, ReactiveComputationModule } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike, EventListenerLike, PauseableLike } from "../utils.js";
+import { DisposableLike, EventListenerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -16,16 +16,12 @@ export interface BroadcasterModule extends ComputationModule<BroadcasterComputat
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;
     }): BroadcasterLike<T> & DisposableLike;
-    createPauseable<T>(op: Function1<StoreLike<boolean> & DisposableLike, BroadcasterLike<T>>, options?: {
-        readonly autoDispose?: boolean;
-    }): PauseableLike & BroadcasterLike<T> & DisposableLike;
     fromPromise<T>(): Function1<Promise<T>, BroadcasterLike<T>>;
 }
 export type Signature = BroadcasterModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const combineLatest: Signature["combineLatest"];
 export declare const create: Signature["create"];
-export declare const createPauseable: Signature["createPauseable"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const forkMerge: Signature["forkMerge"];

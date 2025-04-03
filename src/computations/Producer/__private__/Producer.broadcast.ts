@@ -7,12 +7,20 @@ import {
   unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
+  BroadcasterLike,
   EventSourceLike_subscribe,
   ProducerLike,
   StoreLike,
   StoreLike_value,
+  WritableStoreLike,
 } from "../../../computations.js";
-import { SideEffect1, none, pipe, raise } from "../../../functions.js";
+import {
+  Function1,
+  SideEffect1,
+  none,
+  pipe,
+  raise,
+} from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingEventListenerMixin, {
@@ -22,19 +30,79 @@ import DelegatingEventListenerMixin, {
 import DisposeOnCompleteSinkMixin from "../../../utils/__mixins__/DisposeOnCompleteSinkMixin.js";
 import {
   ConsumerLike,
+  DisposableContainerLike,
   DisposableLike,
   EventListenerLike,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
+  PauseableLike,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   SchedulerLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
-import Broadcaster_createPauseable from "../../Broadcaster/__private__/Broadcaster.createPauseable.js";
 import type * as Producer from "../../Producer.js";
+import * as WritableStore from "../../WritableStore.js";
+import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
+
+interface Signature {
+  createPauseable<T>(
+    op: Function1<StoreLike<boolean> & DisposableLike, BroadcasterLike<T>>,
+    options?: {
+      readonly autoDispose?: boolean;
+    },
+  ): PauseableLike & BroadcasterLike<T> & DisposableLike;
+}
+
+const Broadcaster_createPauseable: Signature["createPauseable"] =
+  /*@__PURE__*/ (<T>() => {
+    type TProperties = {
+      [PauseableLike_isPaused]: WritableStoreLike<boolean>;
+    };
+
+    return mixInstanceFactory(
+      include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()),
+      function PauseableBroadcaster(
+        this: Omit<PauseableLike, keyof DisposableContainerLike> & TProperties,
+        op: Function1<
+          BroadcasterLike<boolean> & DisposableLike,
+          BroadcasterLike<T>
+        >,
+        options?: {
+          readonly autoDispose?: boolean;
+        },
+      ): PauseableLike & BroadcasterLike<T> & DisposableLike {
+        const writableStore = WritableStore.create(true, options);
+        this[PauseableLike_isPaused] = writableStore;
+
+        const delegate = pipe(writableStore, op);
+
+        init(DelegatingDisposableMixin, this, writableStore);
+        init(DelegatingBroadcasterMixin<T>(), this, delegate);
+
+        this[PauseableLike_resume]();
+
+        return this;
+      },
+      props<TProperties>({
+        [PauseableLike_isPaused]: none,
+      }),
+      proto({
+        [PauseableLike_pause](this: TProperties) {
+          this[PauseableLike_isPaused][StoreLike_value] = true;
+        },
+
+        [PauseableLike_resume](this: TProperties) {
+          this[PauseableLike_isPaused][StoreLike_value] = false;
+        },
+      }),
+    );
+  })() as Signature["createPauseable"];
 
 const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   T,
