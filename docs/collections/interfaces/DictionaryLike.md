@@ -20,7 +20,7 @@
 
 ### \[DictionaryLike\_keys\]
 
-> `readonly` **\[DictionaryLike\_keys\]**: `Iterable`\<`TKey`\>
+> `readonly` **\[DictionaryLike\_keys\]**: [`PureIterableLike`](../../computations/interfaces/PureIterableLike.md)\<`TKey`\>
 
 ## Methods
 

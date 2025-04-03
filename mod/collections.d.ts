@@ -1,3 +1,4 @@
+import type { PureIterableLike } from "./computations.js";
 import { type Factory, type Function1, type Function2, type Function3, type Optional, type SideEffect1, type SideEffect2, type Tuple2 } from "./functions.js";
 /**
  * @noInheritDoc
@@ -11,7 +12,7 @@ export declare const DictionaryLike_keys: unique symbol;
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, out T = unknown> {
-    readonly [DictionaryLike_keys]: Iterable<TKey>;
+    readonly [DictionaryLike_keys]: PureIterableLike<TKey>;
     [DictionaryLike_get](index: TKey): Optional<T>;
 }
 export declare const Collection_T: unique symbol;
@@ -55,13 +56,13 @@ export interface CollectionModule<C extends CollectionType> {
     empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): CollectionOf<C, T, TKey>;
     /**
      */
-    entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<CollectionOf<C, T, TKey>, Iterable<Tuple2<TKey, T>>>;
+    entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<CollectionOf<C, T, TKey>, PureIterableLike<Tuple2<TKey, T>>>;
     forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(selector: SideEffect2<T, TKey>): SideEffect1<CollectionOf<C, T, TKey>>;
     keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): CollectionOperator<C, T, T, TKey>;
     /**
      *
      */
-    keys<TKey extends KeyOf<C>>(): Function1<CollectionOf<C, unknown, TKey>, Iterable<TKey>>;
+    keys<TKey extends KeyOf<C>>(): Function1<CollectionOf<C, unknown, TKey>, PureIterableLike<TKey>>;
     /**
      * Returns a CollectionOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -86,7 +87,7 @@ export interface CollectionModule<C extends CollectionType> {
     /**
      *
      */
-    values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<CollectionOf<C, T, TKey>, Iterable<T>>;
+    values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<CollectionOf<C, T, TKey>, PureIterableLike<T>>;
 }
 /**
  * @noInheritDoc

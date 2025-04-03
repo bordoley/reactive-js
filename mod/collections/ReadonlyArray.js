@@ -23,4 +23,5 @@ export const reduce = ReadonlyArray_reduce;
 export const slice = ReadonlyArray_slice;
 export const toDictionary = ReadonlyArray_toDictionary;
 export const toReadonlyMap = ReadonlyArray_toReadonlyMap;
+// This is a safe cast undefined flag is equal to true on ComputationLike
 export const values = ReadonlyArray_slice;

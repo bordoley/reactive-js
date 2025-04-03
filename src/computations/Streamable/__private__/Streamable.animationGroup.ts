@@ -20,6 +20,7 @@ import {
   BroadcasterLike,
   ComputationLike_isPure,
   PublisherLike,
+  PureIterableLike,
   PureSynchronousObservableLike,
   StoreLike_value,
   StreamableLike,
@@ -86,7 +87,6 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
             const observables = pipe(
               animationGroup,
               ReadonlyObjectMap.entries(),
-              Iterable.of(),
               Iterable.map(
                 ([key, factory]: Tuple2<
                   string,
@@ -139,7 +139,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
         [AnimationGroup_animations]: none,
       }),
       proto<TPrototype>({
-        get [DictionaryLike_keys](): Iterable<TKey> {
+        get [DictionaryLike_keys](): PureIterableLike<TKey> {
           unsafeCast<TProperties>(this);
           return pipe(
             this[AnimationGroup_animations],

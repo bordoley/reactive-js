@@ -4,6 +4,7 @@ import {
   DictionaryLike_keys,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
+import type { PureIterableLike } from "../../../computations.js";
 import { Optional, newInstance, pipe, returns } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
@@ -11,7 +12,7 @@ import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
   implements DictionaryLike<TKey, T>
 {
-  readonly [DictionaryLike_keys]: Iterable<TKey>;
+  readonly [DictionaryLike_keys]: PureIterableLike<TKey>;
   readonly d: ReadonlyObjectMapLike<TKey, T>;
 
   constructor(delegate: ReadonlyObjectMapLike<TKey, T>) {

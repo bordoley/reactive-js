@@ -6,6 +6,7 @@ import {
   Collection_type,
   KeyOf,
 } from "../collections.js";
+import type { PureIterableLike } from "../computations.js";
 import { Function1, Tuple2 } from "../functions.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__private__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__private__/ReadonlyArray.entries.js";
@@ -40,7 +41,7 @@ export interface ReadonlyArrayModule
     readonly start?: number;
   }): Function1<
     CollectionOf<ReadonlyArrayCollection, T, TKey>,
-    Iterable<Tuple2<TKey, T>>
+    PureIterableLike<Tuple2<TKey, T>>
   >;
 
   fromIterable<T>(): Function1<Iterable<T>, ReadonlyArray<T>>;
@@ -55,7 +56,10 @@ export interface ReadonlyArrayModule
   >(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, Iterable<T>>;
+  }): Function1<
+    CollectionOf<ReadonlyArrayCollection, T, TKey>,
+    PureIterableLike<T>
+  >;
 
   slice<T>(options?: {
     readonly count?: number;
@@ -81,4 +85,6 @@ export const toDictionary: Signature["toDictionary"] =
   ReadonlyArray_toDictionary;
 export const toReadonlyMap: Signature["toReadonlyMap"] =
   ReadonlyArray_toReadonlyMap;
-export const values: Signature["values"] = ReadonlyArray_slice;
+// This is a safe cast undefined flag is equal to true on ComputationLike
+export const values: Signature["values"] =
+  ReadonlyArray_slice as unknown as Signature["values"];

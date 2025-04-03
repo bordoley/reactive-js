@@ -3,6 +3,7 @@ import {
   DictionaryLike_get,
   DictionaryLike_keys,
 } from "../../../collections.js";
+import { PureIterableLike } from "../../../computations.js";
 import {
   Function2,
   Optional,
@@ -28,7 +29,7 @@ class MappingDictionary<T, TKey, TIn> implements DictionaryLike<TKey, T> {
     this[MappingDictionary_selector] = mapper;
   }
 
-  get [DictionaryLike_keys](): Iterable<TKey> {
+  get [DictionaryLike_keys](): PureIterableLike<TKey> {
     return this[MappingDictionary_delegate][DictionaryLike_keys];
   }
 

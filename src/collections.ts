@@ -1,3 +1,4 @@
+import type { PureIterableLike } from "./computations.js";
 import {
   type Factory,
   type Function1,
@@ -26,7 +27,7 @@ export const DictionaryLike_keys = Symbol("DictionaryLike_keys");
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, out T = unknown> {
-  readonly [DictionaryLike_keys]: Iterable<TKey>;
+  readonly [DictionaryLike_keys]: PureIterableLike<TKey>;
 
   [DictionaryLike_get](index: TKey): Optional<T>;
 }
@@ -95,7 +96,7 @@ export interface CollectionModule<C extends CollectionType> {
    */
   entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
     CollectionOf<C, T, TKey>,
-    Iterable<Tuple2<TKey, T>>
+    PureIterableLike<Tuple2<TKey, T>>
   >;
 
   forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(
@@ -111,7 +112,7 @@ export interface CollectionModule<C extends CollectionType> {
    */
   keys<TKey extends KeyOf<C>>(): Function1<
     CollectionOf<C, unknown, TKey>,
-    Iterable<TKey>
+    PureIterableLike<TKey>
   >;
 
   /**
@@ -155,7 +156,7 @@ export interface CollectionModule<C extends CollectionType> {
    */
   values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
     CollectionOf<C, T, TKey>,
-    Iterable<T>
+    PureIterableLike<T>
   >;
 }
 

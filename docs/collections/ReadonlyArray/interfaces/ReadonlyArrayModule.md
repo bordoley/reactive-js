@@ -14,7 +14,7 @@
 
 ### entries()
 
-> **entries**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
+> **entries**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
 
 #### Type Parameters
 
@@ -36,7 +36,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
 
 #### Overrides
 
@@ -86,7 +86,7 @@
 
 ### values()
 
-> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
+> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`T`\>\>
 
 #### Type Parameters
 
@@ -108,7 +108,7 @@
 
 #### Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`T`\>\>
 
 #### Overrides
 

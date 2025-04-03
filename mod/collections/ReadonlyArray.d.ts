@@ -1,4 +1,5 @@
 import { CollectionModule, CollectionOf, CollectionType, Collection_T, Collection_type, KeyOf } from "../collections.js";
+import type { PureIterableLike } from "../computations.js";
 import { Function1, Tuple2 } from "../functions.js";
 /**
  * @noInheritDoc
@@ -16,7 +17,7 @@ export interface ReadonlyArrayModule extends CollectionModule<ReadonlyArrayColle
     entries<T, TKey extends number = number>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, Iterable<Tuple2<TKey, T>>>;
+    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, PureIterableLike<Tuple2<TKey, T>>>;
     fromIterable<T>(): Function1<Iterable<T>, ReadonlyArray<T>>;
     /**
      *
@@ -24,7 +25,7 @@ export interface ReadonlyArrayModule extends CollectionModule<ReadonlyArrayColle
     values<T, TKey extends KeyOf<ReadonlyArrayCollection> = KeyOf<ReadonlyArrayCollection>>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, Iterable<T>>;
+    }): Function1<CollectionOf<ReadonlyArrayCollection, T, TKey>, PureIterableLike<T>>;
     slice<T>(options?: {
         readonly count?: number;
         readonly start?: number;

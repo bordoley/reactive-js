@@ -6,7 +6,7 @@
 
 # Function: values()
 
-> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
+> **values**\<`T`, `TKey`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`T`\>\>
 
 ## Type Parameters
 
@@ -28,4 +28,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], `Iterable`\<`T`, `any`, `any`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<readonly `T`[], [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<`T`\>\>

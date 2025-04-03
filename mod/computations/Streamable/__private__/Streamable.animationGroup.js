@@ -21,7 +21,7 @@ const Streamable_animationGroup =
         const animationIsRunning = WritableStore.create(false);
         this[AnimationLike_isRunning] = animationIsRunning;
         const operator = compose(Observable.map((event) => {
-            const observables = pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.of(), Iterable.map(([key, factory]) => {
+            const observables = pipe(animationGroup, ReadonlyObjectMap.entries(), Iterable.map(([key, factory]) => {
                 const publisher = publishers[key];
                 return pipe(isFunction(factory) ? factory(event) : factory, Observable.forEach(bindMethod(publisher, EventListenerLike_notify)));
             }), ReadonlyArray.fromIterable());

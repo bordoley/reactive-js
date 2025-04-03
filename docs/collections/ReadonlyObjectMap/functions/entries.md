@@ -6,7 +6,7 @@
 
 # Function: entries()
 
-> **entries**\<`T`, `TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `T`\>, `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
+> **entries**\<`T`, `TKey`\>(): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `T`\>, [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>
 
 ## Type Parameters
 
@@ -16,4 +16,4 @@
 
 ## Returns
 
-[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `T`\>, `Iterable`\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>, `any`, `any`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ReadonlyObjectMapLike`](../../type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, `T`\>, [`PureIterableLike`](../../../computations/interfaces/PureIterableLike.md)\<[`Tuple2`](../../../functions/type-aliases/Tuple2.md)\<`TKey`, `T`\>\>\>

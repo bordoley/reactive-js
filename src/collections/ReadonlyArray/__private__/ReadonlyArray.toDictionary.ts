@@ -3,6 +3,7 @@ import {
   DictionaryLike_get,
   DictionaryLike_keys,
 } from "../../../collections.js";
+import { PureIterableLike } from "../../../computations.js";
 import { Optional, newInstance, pipe, returns } from "../../../functions.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 import ReadonlyArray_keys from "./ReadonlyArray.keys.js";
@@ -20,7 +21,7 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
     return this.d[index];
   }
 
-  get [DictionaryLike_keys](): Iterable<TKey> {
+  get [DictionaryLike_keys](): PureIterableLike<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
   }
 }
