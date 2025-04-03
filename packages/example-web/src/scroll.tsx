@@ -3,7 +3,7 @@ import ReactDOMClient from "react-dom/client";
 import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
 import { useEventSource } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
-import { Optional, pipe, pipeSomeLazy } from "@reactive-js/core/functions";
+import { Optional, pipeSome, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { BroadcasterLike } from "@reactive-js/core/computations";
@@ -77,8 +77,7 @@ const ScrollApp = () => {
   const circleAnimtation = useMemo(
     () =>
       spring &&
-      scrollValues &&
-      pipe(
+      pipeSome(
         scrollValues,
         Broadcaster.map(({ y }: ScrollValue) => y.progress),
         Computation.mergeWith(m, spring),

@@ -4,7 +4,6 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { none, partial, pipe, returns } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
@@ -27,7 +26,7 @@ const createDebounceSink = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ThrowIfEmptySink(delegate, durationFunction) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[DebounceSink_durationFunction] = durationFunction;
-        this[DebounceSink_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
+        this[DebounceSink_durationSubscription] = Disposable.disposed;
         return this;
     }, props({
         [DebounceSink_durationSubscription]: none,

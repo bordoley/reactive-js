@@ -4,9 +4,8 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { bind, call, isSome, none, partial, pipe, returns, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
-import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
-import { DisposableLike_isDisposed, EventListenerLike_notify, SerialDisposableLike_current, SinkLike_isCompleted, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, SinkLike_isCompleted, } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import Observable_delay from "../../Observable/__private__/Observable.delay.js";
 import { LiftedSinkLike_subscription, } from "../../__internal__/LiftedSource.js";
@@ -34,17 +33,17 @@ const createThrottleSink = /*@__PURE__*/ (() => {
     }
     const setupDurationSubscription = (thiz, next) => {
         const scheduler = thiz[LiftedSinkLike_subscription];
-        thiz[ThrottleSink_durationSubscription][SerialDisposableLike_current] =
-            pipe(thiz[ThrottleSink_durationFunction](next), EventSource.subscribe({ scheduler }), 
-            // This works because dispose is called in a scheduler
-            // continuation immediately after the sink is completed.
-            DisposableContainer.onComplete(bind(notifyThrottleObserverDelegate, thiz)), Disposable.addTo(thiz));
+        thiz[ThrottleSink_durationSubscription][DisposableLike_dispose]();
+        thiz[ThrottleSink_durationSubscription] = pipe(thiz[ThrottleSink_durationFunction](next), EventSource.subscribe({ scheduler }), 
+        // This works because dispose is called in a scheduler
+        // continuation immediately after the sink is completed.
+        DisposableContainer.onComplete(bind(notifyThrottleObserverDelegate, thiz)), Disposable.addTo(thiz));
     };
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ThrowIfEmptySink(delegate, durationFunction, mode) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[ThrottleSink_durationFunction] = durationFunction;
         this[ThrottleSink_mode] = mode;
-        this[ThrottleSink_durationSubscription] = pipe(SerialDisposable.create(), Disposable.addTo(delegate));
+        this[ThrottleSink_durationSubscription] = Disposable.disposed;
         return this;
     }, props({
         [ThrottleSink_value]: none,
@@ -56,12 +55,12 @@ const createThrottleSink = /*@__PURE__*/ (() => {
         [EventListenerLike_notify](next) {
             this[ThrottleSink_value] = next;
             this[ThrottleSink_hasValue] = true;
-            const durationSubscriptionDisposableIsDisposed = this[ThrottleSink_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
-            if (durationSubscriptionDisposableIsDisposed &&
+            const durationSubscriptionIsDisposed = this[ThrottleSink_durationSubscription][DisposableLike_isDisposed];
+            if (durationSubscriptionIsDisposed &&
                 this[ThrottleSink_mode] !== ThrottleLastMode) {
                 call(notifyThrottleObserverDelegate, this);
             }
-            else if (durationSubscriptionDisposableIsDisposed) {
+            else if (durationSubscriptionIsDisposed) {
                 setupDurationSubscription(this, next);
             }
         },
