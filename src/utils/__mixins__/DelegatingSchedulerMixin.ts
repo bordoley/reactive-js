@@ -59,13 +59,12 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
             DelegatingSchedulerMixin_scheduler
           ] ?? delegate;
 
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const instance = this;
+        const instance = this as unknown as SchedulerLike & TProperties;
         this[DelegatingSchedulerMixin_scheduleCallback] =
           function* DelegatingSchedulerMixinSchedulerCallback(
             this: SchedulerContinuation,
           ) {
-            const enumerator = pipe(this(), Iterator.toEnumerator());
+            const enumerator = pipe(this(instance), Iterator.toEnumerator());
             instance[SchedulerLike_inContinuation] = true;
             while (enumerator[EnumeratorLike_moveNext]()) {
               const delay = enumerator[EnumeratorLike_current] ?? 0;

@@ -1,6 +1,6 @@
 import { Error } from "./__internal__/constants.js";
 import type { StoreLike } from "./computations.js";
-import { Factory, Method1, Optional, SideEffect1 } from "./functions.js";
+import { Function1, Method1, Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
 export interface DisposableContainerLike {
     /**
@@ -129,7 +129,7 @@ export declare const SchedulerLike_now: unique symbol;
 export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_schedule: unique symbol;
 export declare const SchedulerLike_shouldYield: unique symbol;
-export type SchedulerContinuation = Factory<Iterator<Optional<number>>>;
+export type SchedulerContinuation = Function1<SchedulerLike, Iterator<Optional<number>>>;
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.

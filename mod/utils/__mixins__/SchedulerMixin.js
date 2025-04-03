@@ -221,7 +221,7 @@ const SchedulerMixin =
                 return Disposable.disposed;
             }
             const dueTime = this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
-            const continuation = pipe(createQueueContinuation(this, effect(), dueTime), Disposable.addToContainer(this));
+            const continuation = pipe(createQueueContinuation(this, effect(this), dueTime), Disposable.addToContainer(this));
             this[SchedulerMixinLike_schedule](continuation);
             return continuation;
         },

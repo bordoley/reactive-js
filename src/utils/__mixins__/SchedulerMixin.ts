@@ -446,7 +446,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         },
 
         [SchedulerLike_schedule](
-          this: SchedulerMixinLike & DisposableLike,
+          this: SchedulerMixinLike & DisposableLike & SchedulerLike,
           effect: SchedulerContinuationGenerator,
           options?: { readonly delay?: number },
         ): DisposableLike {
@@ -458,7 +458,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
 
           const continuation = pipe(
-            createQueueContinuation(this, effect(), dueTime),
+            createQueueContinuation(this, effect(this), dueTime),
             Disposable.addToContainer(this),
           );
 

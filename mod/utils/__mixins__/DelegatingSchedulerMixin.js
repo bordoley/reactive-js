@@ -14,11 +14,10 @@ const DelegatingSchedulerMixin =
         this[DelegatingSchedulerMixin_delegate] = delegate;
         this[DelegatingSchedulerMixin_scheduler] =
             delegate[DelegatingSchedulerMixin_scheduler] ?? delegate;
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const instance = this;
         this[DelegatingSchedulerMixin_scheduleCallback] =
             function* DelegatingSchedulerMixinSchedulerCallback() {
-                const enumerator = pipe(this(), Iterator.toEnumerator());
+                const enumerator = pipe(this(instance), Iterator.toEnumerator());
                 instance[SchedulerLike_inContinuation] = true;
                 while (enumerator[EnumeratorLike_moveNext]()) {
                     const delay = enumerator[EnumeratorLike_current] ?? 0;
