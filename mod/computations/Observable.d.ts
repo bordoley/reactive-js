@@ -22,7 +22,11 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly delay?: number;
         readonly delayStart?: boolean;
     };
-}>, DeferredReactiveComputationModule<ObservableComputation>, ConcurrentReactiveComputationModule<ObservableComputation>, ScheduledReactiveComputationModule<ObservableComputation> {
+}>, DeferredReactiveComputationModule<ObservableComputation, {
+    compute?: {
+        readonly mode?: "batched" | "combine-latest";
+    };
+}>, ConcurrentReactiveComputationModule<ObservableComputation>, ScheduledReactiveComputationModule<ObservableComputation> {
     subscribeOn<T>(scheduler: SchedulerLike): PureComputationOperator<ObservableComputation, T, T>;
 }
 export type Signature = ObservableModule;

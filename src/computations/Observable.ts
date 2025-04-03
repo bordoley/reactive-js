@@ -106,7 +106,14 @@ export interface ObservableModule
         };
       }
     >,
-    DeferredReactiveComputationModule<ObservableComputation>,
+    DeferredReactiveComputationModule<
+      ObservableComputation,
+      {
+        compute?: {
+          readonly mode?: "batched" | "combine-latest";
+        };
+      }
+    >,
     ConcurrentReactiveComputationModule<ObservableComputation>,
     ScheduledReactiveComputationModule<ObservableComputation> {
   subscribeOn<T>(

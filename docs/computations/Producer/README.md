@@ -22,6 +22,7 @@
 - [buffer](functions/buffer.md)
 - [catchError](functions/catchError.md)
 - [combineLatest](functions/combineLatest.md)
+- [compute](functions/compute.md)
 - [concat](functions/concat.md)
 - [concatAll](functions/concatAll.md)
 - [create](functions/create.md)

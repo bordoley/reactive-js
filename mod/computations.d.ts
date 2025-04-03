@@ -281,7 +281,10 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
     }): <TObservable extends ObservableLike<T>>(iterable: TObservable) => TObservable extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
     fromProducer<T>(): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
 }
-export interface DeferredReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
+export interface DeferredReactiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
+    compute?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    compute<T>(computation: Factory<T>, options?: TCreationOptions["compute"]): ComputationWithSideEffectsOf<TComputationType, T>;
     mergeAll<T>(options?: {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
@@ -319,9 +322,6 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
     }): PureComputationOperator<TComputationType, T, T>;
 }
 export interface ScheduledReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
-    compute<T>(computation: Factory<T>, options?: {
-        readonly mode?: "batched" | "combine-latest";
-    }): ComputationWithSideEffectsOf<TComputationType, T>;
     currentTime: PureComputationOf<TComputationType, number>;
     debounce<T>(duration: number): PureComputationOperator<TComputationType, T, T>;
     delay(duration: number): PureComputationOf<TComputationType, unknown>;

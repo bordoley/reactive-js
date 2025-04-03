@@ -85,13 +85,11 @@ const ScrollApp = () => {
       spring &&
       publishedScrollValues &&
       Broadcaster.merge<number>(
-        spring, 
+        spring,
         pipe(
           publishedScrollValues,
-          Broadcaster.map(
-            ({ y }: ScrollValue) => y.progress,
-          ),
-        )
+          Broadcaster.map(({ y }: ScrollValue) => y.progress),
+        ),
       ),
     [spring],
   );

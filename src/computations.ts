@@ -751,7 +751,15 @@ export interface ConcurrentReactiveComputationModule<
 
 export interface DeferredReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
+  TCreationOptions extends {
+    compute?: Record<string, any>;
+  } = {},
 > extends ComputationModuleLike<TComputationType> {
+  compute<T>(
+    computation: Factory<T>,
+    options?: TCreationOptions["compute"],
+  ): ComputationWithSideEffectsOf<TComputationType, T>;
+
   mergeAll<T>(options?: {
     readonly backpressureStrategy?: BackpressureStrategy;
     readonly capacity?: number;
@@ -824,13 +832,6 @@ export interface DeferredReactiveComputationModule<
 export interface ScheduledReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
 > extends ComputationModuleLike<TComputationType> {
-  compute<T>(
-    computation: Factory<T>,
-    options?: {
-      readonly mode?: "batched" | "combine-latest";
-    },
-  ): ComputationWithSideEffectsOf<TComputationType, T>;
-
   currentTime: PureComputationOf<TComputationType, number>;
 
   debounce<T>(

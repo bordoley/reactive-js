@@ -558,26 +558,6 @@
 
 ***
 
-### \_\_observe()
-
-> **\_\_observe**\<`T`\>(`src`): [`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### src
-
-[`EventSourceLike`](../../../interfaces/EventSourceLike.md)\<`T`\>
-
-#### Returns
-
-[`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
-
-***
-
 ### \_\_state()
 
 > **\_\_state**\<`T`\>(`initialState`, `options`?): [`StreamLike`](../../../interfaces/StreamLike.md)\<[`Updater`](../../../../functions/type-aliases/Updater.md)\<`T`\>, `T`\>
@@ -647,6 +627,26 @@
 #### Returns
 
 [`StreamOf`](../../../type-aliases/StreamOf.md)\<`TStreamable`\>
+
+***
+
+### \_\_subscribe()
+
+> **\_\_subscribe**\<`T`\>(`src`): [`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### src
+
+[`EventSourceLike`](../../../interfaces/EventSourceLike.md)\<`T`\>
+
+#### Returns
+
+[`Optional`](../../../../functions/type-aliases/Optional.md)\<`T`\>
 
 ***
 

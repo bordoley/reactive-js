@@ -26,7 +26,11 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
     toRunnable: {
         readonly maxMicroTaskTicks?: number;
     };
-}>, DeferredReactiveComputationModule<SynchronousObservableComputation>, ScheduledReactiveComputationModule<SynchronousObservableComputation> {
+}>, DeferredReactiveComputationModule<SynchronousObservableComputation, {
+    compute?: {
+        readonly mode?: "batched" | "combine-latest";
+    };
+}>, ScheduledReactiveComputationModule<SynchronousObservableComputation> {
 }
 export type Signature = SynchronousObservableModule;
 export declare const buffer: Signature["buffer"];

@@ -7,6 +7,7 @@ import Observable_toProducer from "./Observable/__private__/Observable.toProduce
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
 import Producer_buffer from "./Producer/__private__/Producer.buffer.js";
 import Producer_catchError from "./Producer/__private__/Producer.catchError.js";
+import Producer_compute from "./Producer/__private__/Producer.compute.js";
 import Producer_concat from "./Producer/__private__/Producer.concat.js";
 import Producer_create from "./Producer/__private__/Producer.create.js";
 import Producer_decodeWithCharset from "./Producer/__private__/Producer.decodeWithCharset.js";
@@ -40,6 +41,7 @@ export const buffer = Producer_buffer;
 export const broadcast = Producer_broadcast;
 export const catchError = Producer_catchError;
 export const combineLatest = Producer_combineLatest;
+export const compute = Producer_compute;
 export const concat = Producer_concat;
 export const concatAll = Producer_concatAll;
 export const create = Producer_create;

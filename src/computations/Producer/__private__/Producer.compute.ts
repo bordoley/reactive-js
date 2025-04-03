@@ -4,12 +4,9 @@ import {
   __DEV__,
 } from "../../../__internal__/constants.js";
 import {
-  ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  ObservableLike,
-  ObservableWithSideEffectsLike,
-  SynchronousObservableWithSideEffectsLike,
+  ProducerLike,
 } from "../../../computations.js";
 import {
   Factory,
@@ -28,30 +25,23 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import {
+  ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
-  ObserverLike,
-  SchedulerLike_schedule,
   SinkLike_complete,
 } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as EventSource from "../../EventSource.js";
-import type * as Observable from "../../Observable.js";
-import type * as SynchronousObservable from "../../SynchronousObservable.js";
+import type * as Producer from "../../Producer.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-import Observable_forEach from "./Observable.forEach.js";
-import { Observable_genPure } from "./Observable.gen.js";
+import Producer_forEach from "./Producer.forEach.js";
+import { Producer_genPure } from "./Producer.gen.js";
 
-export const BatchedComputeMode = "batched";
-export const CombineLatestComputeMode = "combine-latest";
-
-const m = Computation.makeModule<Observable.Signature, "genPure">({
-  genPure: Observable_genPure,
+const m = Computation.makeModule<Producer.Signature, "genPure">({
+  genPure: Producer_genPure,
 });
-
-type ComputeMode = "batched" | "combine-latest";
 
 const Memo = 1;
 const Await = 2;
@@ -74,34 +64,27 @@ const AwaitOrObserveEffect_subscription = Symbol(
   "AwaitOrObserveEffect_subscription",
 );
 const AwaitOrObserveEffect_value = Symbol("AwaitOrObserveEffect_value");
-export const ObservableComputeContext_awaitOrObserve = Symbol(
-  "ObservableComputeContext_awaitOrObserve",
+export const ProducerComputeContext_awaitOrObserve = Symbol(
+  "ProducerComputeContext_awaitOrObserve",
 );
-const ObservableComputeContext_cleanup = Symbol(
-  "ObservableComputeContext_cleanup",
+const ProducerComputeContext_cleanup = Symbol("ProducerComputeContext_cleanup");
+export const ProducerComputeContext_constant = Symbol(
+  "ProducerComputeContext_constant",
 );
-export const ObservableComputeContext_constant = Symbol(
-  "ObservableComputeContext_constant",
+const ProducerComputeContext_effects = Symbol("ProducerComputeContext_effects");
+const ProducerComputeContext_index = Symbol("ProducerComputeContext_index");
+export const ProducerComputeContext_memoOrUse = Symbol(
+  "ProducerComputeContext_memoOrUse",
 );
-const ObservableComputeContext_effects = Symbol(
-  "ObservableComputeContext_effects",
+
+export const ProducerComputeContext_consumer = Symbol(
+  "ProducerComputeContext_consumer",
 );
-const ObservableComputeContext_index = Symbol("ObservableComputeContext_index");
-export const ObservableComputeContext_memoOrUse = Symbol(
-  "ObservableComputeContext_memoOrUse",
+const ProducerComputeContext_runComputation = Symbol(
+  "ProducerComputeContext_runComputation",
 );
-const ObservableComputeContext_mode = Symbol("ObservableComputeContext_mode");
-export const ObservableComputeContext_observableConfig = Symbol(
-  "ObservableComputeContext_observableConfig",
-);
-export const ObservableComputeContext_observer = Symbol(
-  "ObservableComputeContext_observer",
-);
-const ObservableComputeContext_runComputation = Symbol(
-  "ObservableComputeContext_runComputation",
-);
-const ObservableComputeContext_scheduledComputationSubscription = Symbol(
-  "ObservableComputeContext_scheduledComputationSubscription",
+const ProducerComputeContext_scheduledComputationSubscription = Symbol(
+  "ProducerComputeContext_scheduledComputationSubscription",
 );
 const ComputeEffect_type = Symbol("ComputeEffect_type");
 const ConstantEffect_args = Symbol("ConstantEffect_args");
@@ -127,7 +110,7 @@ type UsingEffect = {
 } & MemoOrUsingEffect<DisposableLike>;
 
 type AwaitOrObserveEffect = {
-  [AwaitOrObserveEffect_observable]: ObservableLike;
+  [AwaitOrObserveEffect_observable]: ProducerLike;
   [AwaitOrObserveEffect_subscription]: DisposableLike;
   [AwaitOrObserveEffect_value]: Optional;
   [AwaitOrObserveEffect_hasValue]: boolean;
@@ -155,32 +138,32 @@ type ComputeEffect =
 
 interface ValidateComputeEffect {
   validateComputeEffect(
-    ctx: ObservableComputeContext,
+    ctx: ProducerProducerComputeContext,
     type: typeof Await,
   ): AwaitEffect;
   validateComputeEffect<T>(
-    ctx: ObservableComputeContext,
+    ctx: ProducerProducerComputeContext,
     type: typeof Constant,
   ): ConstantEffect<T>;
   validateComputeEffect(
-    ctx: ObservableComputeContext,
+    ctx: ProducerProducerComputeContext,
     type: typeof Memo,
   ): MemoEffect;
   validateComputeEffect(
-    ctx: ObservableComputeContext,
+    ctx: ProducerProducerComputeContext,
     type: typeof Observe,
   ): ObserveEffect;
   validateComputeEffect(
-    ctx: ObservableComputeContext,
+    ctx: ProducerProducerComputeContext,
     type: typeof Using,
   ): UsingEffect;
 }
 const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
-  ctx: ObservableComputeContext,
+  ctx: ProducerProducerComputeContext,
   type: ComputeEffectType,
 ): ComputeEffect => {
-  const effects = ctx[ObservableComputeContext_effects];
-  const index = ctx[ObservableComputeContext_index];
+  const effects = ctx[ProducerComputeContext_effects];
+  const index = ctx[ProducerComputeContext_index];
   const effect: Optional<ComputeEffect> = effects[index];
   const newEffect: ComputeEffect =
     isSome(effect) && effect[ComputeEffect_type] === type
@@ -213,7 +196,7 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
                 [ConstantEffect_args]: [],
               };
 
-  ctx[ObservableComputeContext_index]++;
+  ctx[ProducerComputeContext_index]++;
 
   if (isSome(effect) && newEffect !== effect) {
     if (
@@ -235,21 +218,16 @@ const arrayStrictEquality = arrayEquality();
 
 const awaiting = /*@__PURE__*/ error();
 
-class ObservableComputeContext {
-  [ObservableComputeContext_index] = 0;
-  readonly [ObservableComputeContext_effects]: ComputeEffect[] = [];
-  readonly [ObservableComputeContext_observableConfig]: {
-    readonly [ComputationLike_isDeferred]?: boolean;
-    readonly [ComputationLike_isSynchronous]?: boolean;
-  };
-  readonly [ObservableComputeContext_observer]: ObserverLike;
+class ProducerProducerComputeContext {
+  [ProducerComputeContext_index] = 0;
+  readonly [ProducerComputeContext_effects]: ComputeEffect[] = [];
+  readonly [ProducerComputeContext_consumer]: ConsumerLike;
 
-  private [ObservableComputeContext_scheduledComputationSubscription]: DisposableLike =
+  private [ProducerComputeContext_scheduledComputationSubscription]: DisposableLike =
     Disposable.disposed;
-  private readonly [ObservableComputeContext_runComputation]: () => void;
-  private readonly [ObservableComputeContext_mode]: ComputeMode;
-  private readonly [ObservableComputeContext_cleanup] = () => {
-    const effects = this[ObservableComputeContext_effects];
+  private readonly [ProducerComputeContext_runComputation]: () => void;
+  private readonly [ProducerComputeContext_cleanup] = () => {
+    const effects = this[ProducerComputeContext_effects];
 
     const hasOutstandingEffects =
       effects.findIndex(
@@ -261,50 +239,29 @@ class ObservableComputeContext {
 
     if (
       !hasOutstandingEffects &&
-      this[ObservableComputeContext_scheduledComputationSubscription][
+      this[ProducerComputeContext_scheduledComputationSubscription][
         DisposableLike_isDisposed
       ]
     ) {
-      this[ObservableComputeContext_observer][SinkLike_complete]();
+      this[ProducerComputeContext_consumer][SinkLike_complete]();
     }
   };
 
-  constructor(
-    observer: ObserverLike,
-    runComputation: () => void,
-    mode: ComputeMode,
-    config: Pick<
-      ObservableLike,
-      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
-    >,
-  ) {
-    this[ObservableComputeContext_observer] = observer;
-    this[ObservableComputeContext_runComputation] = runComputation;
-    this[ObservableComputeContext_mode] = mode;
-    this[ObservableComputeContext_observableConfig] = config;
+  constructor(consumer: ConsumerLike, runComputation: () => void) {
+    this[ProducerComputeContext_consumer] = consumer;
+    this[ProducerComputeContext_runComputation] = runComputation;
   }
 
-  [ObservableComputeContext_awaitOrObserve]<T>(
-    observable: ObservableLike<T>,
+  [ProducerComputeContext_awaitOrObserve]<T>(
+    observable: ProducerLike<T>,
     shouldAwait: boolean,
   ): Optional<T> {
-    if (__DEV__) {
-      raiseIf(
-        (this[ObservableComputeContext_observableConfig][
-          ComputationLike_isSynchronous
-        ] ??
-          true) &&
-          !observable[ComputationLike_isSynchronous],
-        "cannot observe a non-runnable observable in a SynchronousObservable computation",
-      );
-    }
-
     const effect = shouldAwait
       ? validateComputeEffect(this, Await)
       : validateComputeEffect(this, Observe);
 
-    const observer = this[ObservableComputeContext_observer];
-    const runComputation = this[ObservableComputeContext_runComputation];
+    const consumer = this[ProducerComputeContext_consumer];
+    const runComputation = this[ProducerComputeContext_runComputation];
 
     if (effect[AwaitOrObserveEffect_observable] === observable) {
       return effect[AwaitOrObserveEffect_value] as Optional<T>;
@@ -316,39 +273,22 @@ class ObservableComputeContext {
 
       effect[AwaitOrObserveEffect_subscription] = pipe(
         observable,
-        Observable_forEach((next: T) => {
+        Producer_forEach((next: T) => {
           effect[AwaitOrObserveEffect_value] = next;
           effect[AwaitOrObserveEffect_hasValue] = true;
 
-          if (
-            this[ObservableComputeContext_mode] === CombineLatestComputeMode
-          ) {
-            runComputation();
-          } else {
-            const scheduledComputationSubscription =
-              this[ObservableComputeContext_scheduledComputationSubscription];
-
-            this[ObservableComputeContext_scheduledComputationSubscription] =
-              scheduledComputationSubscription[DisposableLike_isDisposed]
-                ? pipe(
-                    observer[SchedulerLike_schedule](function* () {
-                      runComputation();
-                    }),
-                    Disposable.addTo(observer),
-                  )
-                : scheduledComputationSubscription;
-          }
+          runComputation();
         }),
-        EventSource.subscribe({ scheduler: observer }),
-        Disposable.addTo(observer),
-        DisposableContainer.onComplete(this[ObservableComputeContext_cleanup]),
+        EventSource.subscribe(),
+        Disposable.addTo(consumer),
+        DisposableContainer.onComplete(this[ProducerComputeContext_cleanup]),
       );
 
       return shouldAwait ? raiseError(awaiting) : none;
     }
   }
 
-  [ObservableComputeContext_constant]<T>(value: T, ...args: unknown[]): T {
+  [ProducerComputeContext_constant]<T>(value: T, ...args: unknown[]): T {
     const effect = validateComputeEffect<T>(this, Constant);
     if (
       isSome(effect[ConstantEffect_value]) &&
@@ -362,17 +302,17 @@ class ObservableComputeContext {
     }
   }
 
-  [ObservableComputeContext_memoOrUse]<T>(
+  [ProducerComputeContext_memoOrUse]<T>(
     shouldUse: false,
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T;
-  [ObservableComputeContext_memoOrUse]<T extends DisposableLike>(
+  [ProducerComputeContext_memoOrUse]<T extends DisposableLike>(
     shouldUse: true,
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T;
-  [ObservableComputeContext_memoOrUse]<T>(
+  [ProducerComputeContext_memoOrUse]<T>(
     shouldUse: boolean,
     f: (...args: any[]) => T,
     ...args: unknown[]
@@ -401,7 +341,7 @@ class ObservableComputeContext {
       if (shouldUse) {
         pipe(
           value as DisposableLike,
-          Disposable.addTo(this[ObservableComputeContext_observer]),
+          Disposable.addTo(this[ProducerComputeContext_consumer]),
         );
       }
 
@@ -410,9 +350,9 @@ class ObservableComputeContext {
   }
 }
 
-let currentCtx: Optional<ObservableComputeContext> = none;
+let currentCtx: Optional<ProducerProducerComputeContext> = none;
 
-export const assertCurrentContext = (): ObservableComputeContext => {
+export const assertCurrentContext = (): ProducerProducerComputeContext => {
   if (__DEV__) {
     raiseIf(
       isNone(currentCtx),
@@ -420,38 +360,14 @@ export const assertCurrentContext = (): ObservableComputeContext => {
     );
   }
 
-  return currentCtx as ObservableComputeContext;
+  return currentCtx as ProducerProducerComputeContext;
 };
 
-interface Signature {
-  compute<T>(
-    computation: Factory<T>,
-    config: Pick<
-      SynchronousObservableWithSideEffectsLike,
-      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
-    >,
-    options?: { readonly mode?: ComputeMode },
-  ): SynchronousObservableWithSideEffectsLike<T>;
-  compute<T>(
-    computation: Factory<T>,
-    config: Pick<
-      ObservableWithSideEffectsLike,
-      typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
-    >,
-    options?: { readonly mode?: ComputeMode },
-  ): ObservableWithSideEffectsLike<T>;
-}
-
-const Observable_compute: Signature["compute"] = (<T>(
+const Producer_compute: Producer.Signature["compute"] = (<T>(
   computation: Factory<T>,
-  config: Pick<
-    ObservableWithSideEffectsLike,
-    typeof ComputationLike_isPure | typeof ComputationLike_isSynchronous
-  >,
-  { mode = BatchedComputeMode }: { readonly mode?: ComputeMode } = {},
 ) =>
-  DeferredEventSource.create<T, ObserverLike<T>>(
-    (observer: ObserverLike<T>) => {
+  DeferredEventSource.create<T, ConsumerLike<T>>(
+    async (consumer: ConsumerLike<T>) => {
       const runComputation = () => {
         let result: Optional<T> = none;
         let err: Optional<Error> = none;
@@ -462,7 +378,7 @@ const Observable_compute: Signature["compute"] = (<T>(
           // Explicitly reset the count before running the computation
           // for the combine-latest case where runComputation can
           // be invoked recursively on itself.
-          ctx[ObservableComputeContext_index] = 0;
+          ctx[ProducerComputeContext_index] = 0;
           result = computation();
         } catch (e) {
           isAwaiting = e === awaiting;
@@ -471,17 +387,17 @@ const Observable_compute: Signature["compute"] = (<T>(
           }
         }
 
-        const effects = ctx[ObservableComputeContext_effects];
+        const effects = ctx[ProducerComputeContext_effects];
 
-        if (effects[Array_length] > ctx[ObservableComputeContext_index]) {
+        if (effects[Array_length] > ctx[ProducerComputeContext_index]) {
           const effectsLength = effects[Array_length];
 
           for (
-            let i = ctx[ObservableComputeContext_index];
+            let i = ctx[ProducerComputeContext_index];
             i < effectsLength;
             i++
           ) {
-            const effect = ctx[ObservableComputeContext_effects][i];
+            const effect = ctx[ProducerComputeContext_effects][i];
 
             if (
               effect[ComputeEffect_type] === Await ||
@@ -493,10 +409,10 @@ const Observable_compute: Signature["compute"] = (<T>(
             }
           }
         }
-        ctx[ObservableComputeContext_effects][Array_length] =
-          ctx[ObservableComputeContext_index];
+        ctx[ProducerComputeContext_effects][Array_length] =
+          ctx[ProducerComputeContext_index];
         currentCtx = none;
-        ctx[ObservableComputeContext_index] = 0;
+        ctx[ProducerComputeContext_index] = 0;
 
         const effectsLength = effects[Array_length];
 
@@ -528,72 +444,43 @@ const Observable_compute: Signature["compute"] = (<T>(
           }
         }
 
-        const combineLatestModeShouldNotify =
-          mode === CombineLatestComputeMode && allObserveEffectsHaveValues;
+        const combineLatestModeShouldNotify = allObserveEffectsHaveValues;
 
         const hasError = isSome(err);
 
         const shouldNotify =
-          !hasError &&
-          !isAwaiting &&
-          (combineLatestModeShouldNotify || mode === BatchedComputeMode);
+          !hasError && !isAwaiting && combineLatestModeShouldNotify;
 
         const shouldComplete = !hasOutstandingEffects;
 
         if (hasError) {
-          observer[DisposableLike_dispose](err);
+          consumer[DisposableLike_dispose](err);
           return;
         }
 
         if (shouldNotify) {
-          observer[EventListenerLike_notify](result as T);
+          consumer[EventListenerLike_notify](result as T);
         }
 
         if (shouldComplete) {
-          observer[SinkLike_complete]();
+          consumer[SinkLike_complete]();
         }
       };
 
       const ctx = newInstance(
-        ObservableComputeContext,
-        observer,
+        ProducerProducerComputeContext,
+        consumer,
         runComputation,
-        mode,
-        config,
       );
-      pipe(
-        observer[SchedulerLike_schedule](function* () {
-          runComputation();
-        }),
-        Disposable.addTo(observer),
-      );
-    },
-    config,
-  )) as Signature["compute"];
 
-export const Observable_computeDeferred: Observable.Signature["compute"] = <T>(
-  computation: Factory<T>,
-  options: { mode?: "batched" | "combine-latest" } = {},
-) =>
-  Observable_compute<T>(
-    computation,
+      await Promise.resolve();
+
+      runComputation();
+    },
     {
       [ComputationLike_isPure]: false,
       [ComputationLike_isSynchronous]: false,
     },
-    options,
-  );
+  )) as Producer.Signature["compute"];
 
-export const Observable_computeSynchronous: SynchronousObservable.Signature["compute"] =
-  <T>(
-    computation: Factory<T>,
-    options: { mode?: "batched" | "combine-latest" } = {},
-  ) =>
-    Observable_compute(
-      computation,
-      {
-        [ComputationLike_isPure]: false,
-        [ComputationLike_isSynchronous]: true,
-      },
-      options,
-    );
+export default Producer_compute;

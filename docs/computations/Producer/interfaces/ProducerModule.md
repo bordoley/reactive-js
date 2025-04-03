@@ -360,6 +360,34 @@
 
 ***
 
+### compute()
+
+> **compute**\<`T`\>(`computation`, `options`?): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### computation
+
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+`unknown`
+
+#### Returns
+
+[`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+
+#### Inherited from
+
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`compute`](../../interfaces/DeferredReactiveComputationModule.md#compute)
+
+***
+
 ### concat()
 
 #### Call Signature

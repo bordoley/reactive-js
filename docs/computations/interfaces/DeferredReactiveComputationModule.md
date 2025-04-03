@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredReactiveComputationModule
 
-# Interface: DeferredReactiveComputationModule\<TComputationType\>
+# Interface: DeferredReactiveComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -20,6 +20,8 @@
 
 • **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
+• **TCreationOptions** *extends* `object` = \{\}
+
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -31,6 +33,30 @@
 [`ComputationModuleLike`](ComputationModuleLike.md).[`[ComputationModuleLike_computationType]`](ComputationModuleLike.md#computationmodulelike_computationtype)
 
 ## Methods
+
+### compute()
+
+> **compute**\<`T`\>(`computation`, `options`?): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### computation
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
+
+##### options?
+
+`TCreationOptions`\[`"compute"`\]
+
+#### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+***
 
 ### mergeAll()
 

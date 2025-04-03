@@ -8,10 +8,10 @@ import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
 import * as Streamable from "../Streamable.js";
 import * as DeferredEventSource from "../__internal__/DeferredEventSource.js";
-import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.compute.js";
+import { ObservableComputeContext_awaitOrObserve, ObservableComputeContext_constant, ObservableComputeContext_memoOrUse, ObservableComputeContext_observableConfig, ObservableComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.compute.js";
 export const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
-    return ctx[ComputeContext_memoOrUse](false, f, ...args);
+    return ctx[ObservableComputeContext_memoOrUse](false, f, ...args);
 };
 export const __await = (src) => {
     const ctx = assertCurrentContext();
@@ -21,13 +21,13 @@ export const __await = (src) => {
             [ComputationLike_isPure]: src[ComputationLike_isPure],
             [ComputationLike_isSynchronous]: false,
         });
-    return ctx[ComputeContext_awaitOrObserve](observable, true);
+    return ctx[ObservableComputeContext_awaitOrObserve](observable, true);
 };
 export const __constant = (value, ...args) => {
     const ctx = assertCurrentContext();
-    return ctx[ComputeContext_constant](value, ...args);
+    return ctx[ObservableComputeContext_constant](value, ...args);
 };
-export const __observe = (src) => {
+export const __subscribe = (src) => {
     const ctx = assertCurrentContext();
     const observable = Computation.isDeferred(src)
         ? src
@@ -35,7 +35,7 @@ export const __observe = (src) => {
             [ComputationLike_isPure]: src[ComputationLike_isPure],
             [ComputationLike_isSynchronous]: false,
         });
-    return ctx[ComputeContext_awaitOrObserve](observable, false);
+    return ctx[ObservableComputeContext_awaitOrObserve](observable, false);
 };
 const createSynchronousObservableWithSideEffects = (f) => DeferredEventSource.create(f, {
     [ComputationLike_isSynchronous]: true,
@@ -56,23 +56,23 @@ export const __do = /*@__PURE__*/ (() => {
     });
     return (f, ...args) => {
         const ctx = assertCurrentContext();
-        const scheduler = ctx[ComputeContext_observer];
-        const observableConfig = ctx[ComputeContext_observableConfig];
-        const observable = ctx[ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ComputationLike_isSynchronous]
+        const scheduler = ctx[ObservableComputeContext_observer];
+        const observableConfig = ctx[ObservableComputeContext_observableConfig];
+        const observable = ctx[ObservableComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ComputationLike_isSynchronous]
             ? createSynchronousObservableWithSideEffects
             : createDeferredbservableWithSideEffects, f, ...args);
         const schedulerOption = __constant({ scheduler }, scheduler);
-        const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, EventSource.subscribe, schedulerOption);
-        ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
+        const subscribeOnScheduler = ctx[ObservableComputeContext_memoOrUse](false, EventSource.subscribe, schedulerOption);
+        ctx[ObservableComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
     };
 })();
 export const __using = (f, ...args) => {
     const ctx = assertCurrentContext();
-    return ctx[ComputeContext_memoOrUse](true, f, ...args);
+    return ctx[ObservableComputeContext_memoOrUse](true, f, ...args);
 };
 export const __currentScheduler = () => {
     const ctx = assertCurrentContext();
-    return ctx[ComputeContext_observer];
+    return ctx[ObservableComputeContext_observer];
 };
 export const __stream = /*@__PURE__*/ (() => {
     const streamOnSchedulerFactory = (streamable, scheduler, autoDispose, capacity, backpressureStrategy) => streamable[StreamableLike_stream](scheduler, {

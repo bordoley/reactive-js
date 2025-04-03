@@ -1,0 +1,35 @@
+import { EventSourceLike } from "../../computations.js";
+import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../../functions.js";
+import { DisposableLike } from "../../utils.js";
+export interface Signature {
+    __await<T>(producer: EventSourceLike<T>): T;
+    __constant<T>(value: T, ...args: unknown[]): T;
+    __do(fn: SideEffect): void;
+    __do<TA>(fn: SideEffect1<TA>, a: TA): void;
+    __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+    __do<TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
+    __do<TA, TB, TC, TD>(fn: SideEffect4<TA, TB, TC, TD>, a: TA, b: TB, c: TC, d: TD): void;
+    __do<TA, TB, TC, TD, TE>(fn: SideEffect5<TA, TB, TC, TD, TE>, a: TA, b: TB, c: TC, d: TD, e: TE): void;
+    __do<TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
+    __memo<T>(fn: Factory<T>): T;
+    __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
+    __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+    __memo<TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+    __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+    __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+    __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+    __subscribe<T>(src: EventSourceLike<T>): Optional<T>;
+    __using<T extends DisposableLike>(fn: Factory<T>): T;
+    __using<TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+    __using<TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+    __using<TA, TB, TC, T extends DisposableLike>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+    __using<TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+    __using<TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+    __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+}
+export declare const __memo: Signature["__memo"];
+export declare const __await: Signature["__await"];
+export declare const __constant: Signature["__constant"];
+export declare const __subscribe: Signature["__subscribe"];
+export declare const __do: Signature["__do"];
+export declare const __using: Signature["__using"];

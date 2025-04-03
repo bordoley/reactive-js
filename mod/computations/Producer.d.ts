@@ -19,6 +19,7 @@ export declare const buffer: Signature["buffer"];
 export declare const broadcast: Signature["broadcast"];
 export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];
+export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const create: Signature["create"];

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `genPure`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; `toProducer`: \{ `scheduler`: [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md); \}; \}\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `gen`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `toRunnable`: \{ `maxMicroTaskTicks`: `number`; \}; \}\>.[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md), \{ `compute`: \{ `mode`: `"batched"` \| `"combine-latest"`; \}; \}\>.[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md)\<[`SynchronousObservableComputation`](SynchronousObservableComputation.md)\>
 
 ## Properties
 
@@ -374,7 +374,7 @@
 
 #### Inherited from
 
-[`ScheduledReactiveComputationModule`](../../interfaces/ScheduledReactiveComputationModule.md).[`compute`](../../interfaces/ScheduledReactiveComputationModule.md#compute)
+[`DeferredReactiveComputationModule`](../../interfaces/DeferredReactiveComputationModule.md).[`compute`](../../interfaces/DeferredReactiveComputationModule.md#compute)
 
 ***
 

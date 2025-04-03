@@ -21,6 +21,7 @@
 - [computations/Observable](computations/Observable/README.md)
 - [computations/Observable/effects](computations/Observable/effects/README.md)
 - [computations/Producer](computations/Producer/README.md)
+- [computations/Producer/effects](computations/Producer/effects/README.md)
 - [computations/Publisher](computations/Publisher/README.md)
 - [computations/Runnable](computations/Runnable/README.md)
 - [computations/Streamable](computations/Streamable/README.md)

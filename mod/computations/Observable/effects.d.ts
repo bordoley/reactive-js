@@ -19,7 +19,7 @@ export interface Signature {
     __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
     __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
     __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
-    __observe<T>(src: EventSourceLike<T>): Optional<T>;
+    __subscribe<T>(src: EventSourceLike<T>): Optional<T>;
     __state<T>(initialState: () => T, options?: {
         readonly equality?: Optional<Equality<T>>;
         readonly scheduler?: SchedulerLike;
@@ -42,7 +42,7 @@ export interface Signature {
 export declare const __memo: Signature["__memo"];
 export declare const __await: Signature["__await"];
 export declare const __constant: Signature["__constant"];
-export declare const __observe: Signature["__observe"];
+export declare const __subscribe: Signature["__subscribe"];
 export declare const __do: Signature["__do"];
 export declare const __using: Signature["__using"];
 export declare const __currentScheduler: Signature["__currentScheduler"];

@@ -105,7 +105,14 @@ export interface SynchronousObservableModule
         };
       }
     >,
-    DeferredReactiveComputationModule<SynchronousObservableComputation>,
+    DeferredReactiveComputationModule<
+      SynchronousObservableComputation,
+      {
+        compute?: {
+          readonly mode?: "batched" | "combine-latest";
+        };
+      }
+    >,
     ScheduledReactiveComputationModule<SynchronousObservableComputation> {}
 
 export type Signature = SynchronousObservableModule;

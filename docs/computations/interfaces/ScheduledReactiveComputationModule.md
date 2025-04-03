@@ -37,32 +37,6 @@
 
 ## Methods
 
-### compute()
-
-> **compute**\<`T`\>(`computation`, `options`?): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### computation
-
-[`Factory`](../../functions/type-aliases/Factory.md)\<`T`\>
-
-##### options?
-
-###### mode?
-
-`"batched"` \| `"combine-latest"`
-
-#### Returns
-
-[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
-
-***
-
 ### debounce()
 
 > **debounce**\<`T`\>(`duration`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>

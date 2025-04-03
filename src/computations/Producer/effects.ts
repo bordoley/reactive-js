@@ -4,13 +4,9 @@ import {
   EventSourceLike,
   EventSourceLike_subscribe,
   ObservableLike,
-  StreamLike,
-  StreamOf,
-  StreamableLike,
-  StreamableLike_stream,
+  ProducerLike,
 } from "../../computations.js";
 import {
-  Equality,
   Factory,
   Function1,
   Function2,
@@ -26,41 +22,33 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
-  Updater,
   bindMethod,
-  isSome,
   none,
   pipe,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import {
-  BackpressureStrategy,
+  ConsumerLike,
   DisposableLike,
   EventListenerLike_notify,
   ObserverLike,
-  SchedulerLike,
   SchedulerLike_schedule,
   SinkLike_complete,
 } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
-import * as Streamable from "../Streamable.js";
 import * as DeferredEventSource from "../__internal__/DeferredEventSource.js";
 import {
-  ObservableComputeContext_awaitOrObserve,
-  ObservableComputeContext_constant,
-  ObservableComputeContext_memoOrUse,
-  ObservableComputeContext_observableConfig,
-  ObservableComputeContext_observer,
+  ProducerComputeContext_awaitOrObserve,
+  ProducerComputeContext_constant,
+  ProducerComputeContext_memoOrUse,
   assertCurrentContext,
-} from "./__private__/Observable.compute.js";
+} from "./__private__/Producer.compute.js";
 
 export interface Signature {
-  __await<T>(observable: EventSourceLike<T>): T;
+  __await<T>(producer: EventSourceLike<T>): T;
 
   __constant<T>(value: T, ...args: unknown[]): T;
-
-  __currentScheduler(): SchedulerLike;
 
   __do(fn: SideEffect): void;
   __do<TA>(fn: SideEffect1<TA>, a: TA): void;
@@ -122,30 +110,6 @@ export interface Signature {
 
   __subscribe<T>(src: EventSourceLike<T>): Optional<T>;
 
-  __state<T>(
-    initialState: () => T,
-    options?: {
-      readonly equality?: Optional<Equality<T>>;
-      readonly scheduler?: SchedulerLike;
-      readonly capacity?: number;
-    },
-  ): StreamLike<Updater<T>, T>;
-
-  __stream<TStreamable extends StreamableLike>(
-    streamable: TStreamable,
-    {
-      autoDispose,
-      backpressureStrategy,
-      capacity,
-      scheduler,
-    }?: {
-      readonly autoDispose?: boolean;
-      readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    },
-  ): StreamOf<TStreamable>;
-
   __using<T extends DisposableLike>(fn: Factory<T>): T;
   __using<TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
   __using<TA, TB, T extends DisposableLike>(
@@ -190,22 +154,22 @@ export const __memo: Signature["__memo"] = <T>(
   ...args: unknown[]
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx[ObservableComputeContext_memoOrUse](false, f, ...args);
+  return ctx[ProducerComputeContext_memoOrUse](false, f, ...args);
 };
 
 export const __await: Signature["__await"] = <T>(src: EventSourceLike<T>) => {
   const ctx = assertCurrentContext();
 
-  const observable = Computation.isDeferred(src)
-    ? (src as ObservableLike<T>)
-    : DeferredEventSource.create<T, ObserverLike<T>>(
+  const producer = Computation.isDeferred(src)
+    ? (src as ProducerLike<T>)
+    : (DeferredEventSource.create<T, ConsumerLike<T>>(
         bindMethod(src, EventSourceLike_subscribe),
         {
           [ComputationLike_isPure]: src[ComputationLike_isPure],
           [ComputationLike_isSynchronous]: false,
         },
-      );
-  return ctx[ObservableComputeContext_awaitOrObserve](observable, true) as T;
+      ) as ProducerLike<T>);
+  return ctx[ProducerComputeContext_awaitOrObserve](producer, true) as T;
 };
 
 export const __constant: Signature["__constant"] = <T>(
@@ -213,7 +177,7 @@ export const __constant: Signature["__constant"] = <T>(
   ...args: unknown[]
 ) => {
   const ctx = assertCurrentContext();
-  return ctx[ObservableComputeContext_constant](value, ...args);
+  return ctx[ProducerComputeContext_constant](value, ...args);
 };
 
 export const __subscribe: Signature["__subscribe"] = <T>(
@@ -221,34 +185,18 @@ export const __subscribe: Signature["__subscribe"] = <T>(
 ) => {
   const ctx = assertCurrentContext();
 
-  const observable = Computation.isDeferred(src)
-    ? (src as ObservableLike<T>)
-    : DeferredEventSource.create<T, ObserverLike<T>>(
+  const producer = Computation.isDeferred(src)
+    ? (src as ProducerLike<T>)
+    : (DeferredEventSource.create<T, ConsumerLike<T>>(
         bindMethod(src, EventSourceLike_subscribe),
         {
           [ComputationLike_isPure]: src[ComputationLike_isPure],
           [ComputationLike_isSynchronous]: false,
         },
-      );
+      ) as ProducerLike<T>);
 
-  return ctx[ObservableComputeContext_awaitOrObserve](observable, false);
+  return ctx[ProducerComputeContext_awaitOrObserve](producer, false);
 };
-
-const createSynchronousObservableWithSideEffects = <T>(
-  f: (observer: ObserverLike<T>) => void,
-) =>
-  DeferredEventSource.create(f, {
-    [ComputationLike_isSynchronous]: true,
-    [ComputationLike_isPure]: false,
-  });
-
-const createDeferredbservableWithSideEffects = <T>(
-  f: (observer: ObserverLike<T>) => void,
-) =>
-  DeferredEventSource.create(f, {
-    [ComputationLike_isSynchronous]: false,
-    [ComputationLike_isPure]: false,
-  });
 
 export const __do: Signature["__do"] = /*@__PURE__*/ (() => {
   const deferSideEffect = (
@@ -269,29 +217,30 @@ export const __do: Signature["__do"] = /*@__PURE__*/ (() => {
       );
     });
 
+  const createProducerWithSideEffects = <T>(
+    f: (observer: ConsumerLike<T>) => void,
+  ) =>
+    DeferredEventSource.create<T, ConsumerLike<T>>(f, {
+      [ComputationLike_isSynchronous]: false,
+      [ComputationLike_isPure]: false,
+    });
+
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
-    const scheduler = ctx[ObservableComputeContext_observer];
-    const observableConfig = ctx[ObservableComputeContext_observableConfig];
-    const observable = ctx[ObservableComputeContext_memoOrUse](
+    const observable = ctx[ProducerComputeContext_memoOrUse](
       false,
       deferSideEffect,
-      observableConfig[ComputationLike_isSynchronous]
-        ? createSynchronousObservableWithSideEffects
-        : createDeferredbservableWithSideEffects,
+      createProducerWithSideEffects,
       f,
       ...args,
     );
 
-    const schedulerOption = __constant({ scheduler }, scheduler);
-
-    const subscribeOnScheduler = ctx[ObservableComputeContext_memoOrUse](
+    const subscribeOnScheduler = ctx[ProducerComputeContext_memoOrUse](
       false,
       EventSource.subscribe,
-      schedulerOption,
     );
-    ctx[ObservableComputeContext_memoOrUse](
+    ctx[ProducerComputeContext_memoOrUse](
       true,
       subscribeOnScheduler,
       observable,
@@ -304,69 +253,5 @@ export const __using: Signature["__using"] = <T extends DisposableLike>(
   ...args: unknown[]
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx[ObservableComputeContext_memoOrUse](true, f, ...args);
+  return ctx[ProducerComputeContext_memoOrUse](true, f, ...args);
 };
-
-export const __currentScheduler: Signature["__currentScheduler"] = () => {
-  const ctx = assertCurrentContext();
-  return ctx[ObservableComputeContext_observer];
-};
-
-export const __stream: Signature["__stream"] = /*@__PURE__*/ (() => {
-  const streamOnSchedulerFactory = <TStreamable extends StreamableLike>(
-    streamable: TStreamable,
-    scheduler: SchedulerLike,
-    autoDispose: Optional<boolean>,
-    capacity: Optional<number>,
-    backpressureStrategy: Optional<BackpressureStrategy>,
-  ): StreamOf<TStreamable> =>
-    streamable[StreamableLike_stream](scheduler, {
-      autoDispose,
-      backpressureStrategy,
-      capacity,
-    }) as StreamOf<TStreamable>;
-
-  return <TStreamable extends StreamableLike>(
-    streamable: TStreamable,
-    {
-      autoDispose,
-      backpressureStrategy,
-      capacity,
-      scheduler,
-    }: {
-      readonly autoDispose?: boolean;
-      readonly scheduler?: SchedulerLike;
-      readonly backpressureStrategy?: BackpressureStrategy;
-      readonly capacity?: number;
-    } = {},
-  ): StreamOf<TStreamable> => {
-    const currentScheduler = __currentScheduler();
-    return __using(
-      streamOnSchedulerFactory,
-      streamable,
-      scheduler ?? currentScheduler,
-      autoDispose,
-      capacity,
-      backpressureStrategy,
-    );
-  };
-})();
-
-export const __state: Signature["__state"] = /*@__PURE__*/ (() => {
-  const createStateOptions = <T>(equality: Optional<Equality<T>>) =>
-    isSome(equality) ? { equality } : none;
-
-  return <T>(
-    initialState: () => T,
-    options: {
-      readonly equality?: Optional<Equality<T>>;
-      readonly scheduler?: SchedulerLike;
-      readonly capacity?: number;
-    } = {},
-  ): StreamLike<Updater<T>, T> => {
-    const { equality } = options;
-    const optionsMemo = __memo(createStateOptions, equality);
-    const streamable = __memo(Streamable.stateStore, initialState, optionsMemo);
-    return __stream(streamable, options) as StreamLike<Updater<T>, T>;
-  };
-})();
