@@ -194,7 +194,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
               clearImmediate,
             );
 
-      pipe(
+      instance[SerialDisposableLike_current] = pipe(
         disposable,
         Disposable.addTo(instance),
         DisposableContainer.onDisposed(cleanup),

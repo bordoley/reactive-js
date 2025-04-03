@@ -80,7 +80,7 @@ export const create = /*@PURE__*/ (() => {
             const cleanup = delay > 4 || isNone(setImmediate)
                 ? pipeLazy(setTimeout(hostSchedulerContinuation, delay, instance, disposable), clearTimeout)
                 : pipeLazy(setImmediate(hostSchedulerContinuation, instance, disposable), clearImmediate);
-            pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
+            instance[SerialDisposableLike_current] = pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
         }
     };
     function onHostSchedulerDisposed() {
