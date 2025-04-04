@@ -195,11 +195,15 @@ const Counter = () => {
           query: `v=${value}`,
         })),
       ),
-      SynchronousObservable.toProducer<number>({ scheduler: ReactScheduler.get() }),
+      SynchronousObservable.toProducer<number>(),
       Producer.broadcast(),
     ),
     [history.replace, counterInitialValue],
   );
+  /*
+  useEffect( () => { 
+    counter?.[PauseableLike_pause]?.()
+  }, [counter])*/
   const counterValue = useEventSource(counter) ?? counterInitialValue;
 
   return (

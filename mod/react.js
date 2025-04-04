@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { EventSourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "./computations.js";
-import { bindMethod, isFunction, isNone, isSome, none, pipe, raiseError, } from "./functions.js";
+import { isFunction, isNone, isSome, none, pipe, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
 import * as Observer from "./utils/__internal__/Observer.js";
@@ -17,7 +17,9 @@ export const useDisposable = (factory, deps) => {
         }
         pipe(disposable, DisposableContainer.onError(setError));
         setDisposable(disposable);
-        return bindMethod(disposable, DisposableLike_dispose);
+        return () => {
+            disposable[DisposableLike_dispose]();
+        };
     }, [...deps, setDisposable]);
     return isSome(error) ? raiseError(error) : disposable;
 };

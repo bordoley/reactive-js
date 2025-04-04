@@ -77,16 +77,13 @@ const Broadcaster_createPauseable: Signature["createPauseable"] =
           readonly autoDispose?: boolean;
         },
       ): PauseableLike & BroadcasterLike<T> & DisposableLike {
-        const writableStore = WritableStore.create(true, options);
+        const writableStore = WritableStore.create(false, options);
         this[PauseableLike_isPaused] = writableStore;
 
         const delegate = pipe(writableStore, op);
 
         init(DelegatingDisposableMixin, this, writableStore);
         init(DelegatingBroadcasterMixin<T>(), this, delegate);
-
-        this[PauseableLike_resume]();
-
         return this;
       },
       props<TProperties>({
@@ -139,7 +136,7 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
 
       this[EventListernToPauseableConsumer_mode] = mode;
 
-      pipe(mode, Disposable.addTo(this));
+      pipe(mode, Disposable.bindTo(this));
 
       return this;
     },

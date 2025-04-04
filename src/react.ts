@@ -11,7 +11,6 @@ import {
 import {
   Factory,
   Optional,
-  bindMethod,
   isFunction,
   isNone,
   isSome,
@@ -97,7 +96,10 @@ export const useDisposable: Signature["useDisposable"] = <
     pipe(disposable, DisposableContainer.onError(setError));
 
     setDisposable(disposable);
-    return bindMethod(disposable, DisposableLike_dispose);
+
+    return () => {
+      disposable[DisposableLike_dispose]();
+    };
   }, [...deps, setDisposable]);
 
   return isSome(error) ? raiseError(error) : disposable;

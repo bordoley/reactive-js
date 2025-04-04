@@ -15,12 +15,11 @@ import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMi
 const Broadcaster_createPauseable = 
 /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()), function PauseableBroadcaster(op, options) {
-        const writableStore = WritableStore.create(true, options);
+        const writableStore = WritableStore.create(false, options);
         this[PauseableLike_isPaused] = writableStore;
         const delegate = pipe(writableStore, op);
         init(DelegatingDisposableMixin, this, writableStore);
         init(DelegatingBroadcasterMixin(), this, delegate);
-        this[PauseableLike_resume]();
         return this;
     }, props({
         [PauseableLike_isPaused]: none,
@@ -40,7 +39,7 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
         init(DelegatingEventListenerMixin(), this, listener);
         init(DisposeOnCompleteSinkMixin(), this);
         this[EventListernToPauseableConsumer_mode] = mode;
-        pipe(mode, Disposable.addTo(this));
+        pipe(mode, Disposable.bindTo(this));
         return this;
     }, props({
         [EventListernToPauseableConsumer_mode]: none,

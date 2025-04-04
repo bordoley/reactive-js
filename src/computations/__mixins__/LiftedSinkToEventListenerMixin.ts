@@ -6,12 +6,14 @@ import {
   props,
   proto,
 } from "../../__internal__/mixins.js";
-import { none, returns } from "../../functions.js";
+import { bindMethod, none, pipe, returns } from "../../functions.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
   EventListenerLike,
   EventListenerLike_notify,
   SinkLike,
+  SinkLike_complete,
 } from "../../utils.js";
 import { LiftedSinkLike } from "../__internal__/LiftedSource.js";
 
@@ -63,6 +65,13 @@ const LiftedSinkToEventListenerMixin: <
       ): TReturn<TSubscription, T> {
         init(DelegatingDisposableMixin, this, delegate);
         this[LiftedSinkToEventListenerLike_liftedSink] = delegate;
+
+        pipe(
+          this,
+          DisposableContainer.onComplete(
+            bindMethod(delegate, SinkLike_complete),
+          ),
+        );
 
         return this;
       },
