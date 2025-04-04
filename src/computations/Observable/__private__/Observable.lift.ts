@@ -1,8 +1,4 @@
-import {
-  include,
-  init,
-  mixInstanceFactory,
-} from "../../../__internal__/mixins.js";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
@@ -20,30 +16,8 @@ export const liftedSinkToObserver: <T>(
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
   }>,
-) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
-  mixInstanceFactory(
-    include(LiftedSinkToObserverMixin()),
-    function LiftedSinkToObserver(
-      this: unknown,
-      operator: LiftedSinkLike<ObserverLike, unknown>,
-      backPressure: Optional<{
-        capacity?: number;
-        backpressureStrategy?: BackpressureStrategy;
-      }>,
-    ): ObserverLike<T> {
-      init(LiftedSinkToObserverMixin(), this, operator, backPressure);
-
-      return this;
-    },
-  ))();
-
-export const liftedSinkToObserverWithBackPressure =
-  <T>(config: {
-    capacity: number;
-    backpressureStrategy: BackpressureStrategy;
-  }) =>
-  (sink: LiftedSinkLike<ObserverLike, T>) =>
-    liftedSinkToObserver(sink, config);
+) => ObserverLike<T> = /*@__PURE__*/ (() =>
+  createInstanceFactory(LiftedSinkToObserverMixin()))();
 
 const Observable_lift =
   <TIn, TOut>(config?: {

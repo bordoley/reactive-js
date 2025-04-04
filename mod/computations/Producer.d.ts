@@ -48,7 +48,6 @@ export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toProducer: Signature["toProducer"];
-export declare const withBackpressure: Signature["withBackpressure"];
 export declare const withEffect: Signature["withEffect"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];

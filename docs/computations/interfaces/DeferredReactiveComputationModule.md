@@ -315,29 +315,3 @@
 ##### Returns
 
 [`Function1`](../../functions/type-aliases/Function1.md)\<[`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, [`ComputationOf`](../type-aliases/ComputationOf.md)\<`TComputationType`, `T`\>\>, [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>\>
-
-***
-
-### withBackpressure()
-
-> **withBackpressure**\<`T`\>(`config`): [`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>
-
-#### Type Parameters
-
-• **T**
-
-#### Parameters
-
-##### config
-
-###### backpressureStrategy
-
-[`BackpressureStrategy`](../../utils/type-aliases/BackpressureStrategy.md)
-
-###### capacity
-
-`number`
-
-#### Returns
-
-[`PureComputationOperator`](../type-aliases/PureComputationOperator.md)\<`TComputationType`, `T`, `T`\>

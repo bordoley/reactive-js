@@ -323,10 +323,6 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
     switchAll<T>(options: {
         readonly [ComputationLike_isPure]: false;
     }): Function1<ComputationOf<TComputationType, ComputationOf<TComputationType, T>>, ComputationWithSideEffectsOf<TComputationType, T>>;
-    withBackpressure<T>(config: {
-        capacity: number;
-        backpressureStrategy: BackpressureStrategy;
-    }): PureComputationOperator<TComputationType, T, T>;
 }
 export interface ScheduledReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     currentTime: PureComputationOf<TComputationType, number>;

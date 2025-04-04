@@ -1,7 +1,14 @@
-import { Mixin1, mix, props, proto } from "../../__internal__/mixins.js";
-import { none, returns } from "../../functions.js";
 import {
-  DisposableLike,
+  Mixin1,
+  include,
+  init,
+  mix,
+  props,
+  proto,
+} from "../../__internal__/mixins.js";
+import { none, returns } from "../../functions.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import {
   EventListenerLike,
   EventListenerLike_notify,
   SinkLike,
@@ -22,9 +29,9 @@ export interface LiftedSinkToEventListenerLike<
   >;
 }
 
-type TReturn<TSubscription extends SinkLike, T> = Omit<
-  LiftedSinkToEventListenerLike<TSubscription, T>,
-  keyof DisposableLike
+type TReturn<TSubscription extends SinkLike, T> = LiftedSinkToEventListenerLike<
+  TSubscription,
+  T
 >;
 
 type TPrototype<TSubscription extends SinkLike, T> = Pick<
@@ -49,10 +56,12 @@ const LiftedSinkToEventListenerMixin: <
 
   return returns(
     mix(
+      include(DelegatingDisposableMixin),
       function LiftedSinkToEventListenerMixin(
         this: TProperties & TPrototype<TSubscription, T>,
         delegate: LiftedSinkLike<TSubscription, T>,
       ): TReturn<TSubscription, T> {
+        init(DelegatingDisposableMixin, this, delegate);
         this[LiftedSinkToEventListenerLike_liftedSink] = delegate;
 
         return this;

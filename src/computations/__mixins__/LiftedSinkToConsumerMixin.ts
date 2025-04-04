@@ -1,5 +1,5 @@
 import {
-  Mixin2,
+  Mixin1,
   include,
   init,
   mix,
@@ -7,11 +7,8 @@ import {
   proto,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Optional, SideEffect1, returns } from "../../functions.js";
-import ConsumerMixin from "../../utils/__mixins__/ConsumerMixin.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { SideEffect1, returns } from "../../functions.js";
 import {
-  BackpressureStrategy,
   ConsumerLike,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
@@ -20,14 +17,13 @@ import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
 } from "../__internal__/LiftedSource.js";
-import LiftedSinkToEventListenerMixin, {
-  LiftedSinkToEventListenerLike,
-  LiftedSinkToEventListenerLike_liftedSink,
-} from "./LiftedSinkToEventListenerMixin.js";
-import LiftedSinkToSinkMixin from "./LiftedSinkToSinkMixin.js";
+import { LiftedSinkToEventListenerLike_liftedSink } from "./LiftedSinkToEventListenerMixin.js";
+import LiftedSinkToSinkMixin, {
+  LiftedSinkToSinkLike,
+} from "./LiftedSinkToSinkMixin.js";
 
 export interface LiftedSinkToConsumerLike<TSubscription extends ConsumerLike, T>
-  extends LiftedSinkToEventListenerLike<TSubscription, T>,
+  extends LiftedSinkToSinkLike<TSubscription, T>,
     ConsumerLike<T> {}
 
 type TReturn<TSubscription extends ConsumerLike, T> = LiftedSinkToConsumerLike<
@@ -44,44 +40,18 @@ type TPrototype<TSubscription extends ConsumerLike, T> = Pick<
 const LiftedSinkToConsumerMixin: <
   TSubscription extends ConsumerLike,
   T,
->() => Mixin2<
+>() => Mixin1<
   TReturn<TSubscription, T>,
   LiftedSinkLike<TSubscription, T>,
-  Optional<{
-    capacity?: number;
-    backpressureStrategy?: BackpressureStrategy;
-  }>,
   TPrototype<TSubscription, T>
 > = /*@__PURE__*/ (<TSubscription extends ConsumerLike, T>() => {
   return returns(
     mix(
-      include(
-        DelegatingDisposableMixin,
-        LiftedSinkToEventListenerMixin(),
-        ConsumerMixin(),
-        LiftedSinkToSinkMixin(),
-      ),
+      include(LiftedSinkToSinkMixin()),
       function LiftedSinkToConsumerMixin(
         this: TPrototype<TSubscription, T>,
         delegate: LiftedSinkLike<TSubscription, T>,
-        backPressure: Optional<{
-          capacity?: number;
-          backpressureStrategy?: BackpressureStrategy;
-        }>,
       ): TReturn<TSubscription, T> {
-        const subscription = delegate[LiftedSinkLike_subscription];
-        init(DelegatingDisposableMixin, this, delegate);
-        init(
-          LiftedSinkToEventListenerMixin<TSubscription, T>(),
-          this,
-          delegate,
-        );
-        init(
-          ConsumerMixin<TSubscription, T>(),
-          this,
-          subscription,
-          backPressure,
-        );
         init(LiftedSinkToSinkMixin<TSubscription, T>(), this, delegate);
 
         return this;

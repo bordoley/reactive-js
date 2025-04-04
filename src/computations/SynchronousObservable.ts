@@ -54,7 +54,6 @@ import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.
 import Observable_throttle from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
-import Observable_withBackpressure from "./Observable/__private__/Observable.withBackpressure.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
@@ -190,8 +189,6 @@ export const throwIfEmpty: Signature["throwIfEmpty"] =
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const toRunnable: Signature["toRunnable"] =
   SynchronousObservable_toRunnable;
-export const withBackpressure: Signature["withBackpressure"] =
-  Observable_withBackpressure as Signature["withBackpressure"];
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime as Signature["withCurrentTime"];
 export const withEffect: Signature["withEffect"] =

@@ -84,7 +84,6 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const toProducer: Signature["toProducer"];
-export declare const withBackpressure: Signature["withBackpressure"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withEffect: Signature["withEffect"];
 export declare const withLatestFrom: Signature["withLatestFrom"];

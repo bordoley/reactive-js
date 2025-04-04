@@ -6,10 +6,6 @@ export declare const liftedSinkToObserver: <T>(delegate: LiftedSinkLike<Observer
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
 }>) => ObserverLike<T>;
-export declare const liftedSinkToObserverWithBackPressure: <T>(config: {
-    capacity: number;
-    backpressureStrategy: BackpressureStrategy;
-}) => (sink: LiftedSinkLike<ObserverLike, T>) => ObserverLike<unknown>;
 declare const Observable_lift: <TIn, TOut>(config?: {
     [ComputationLike_isPure]?: boolean;
     [ComputationLike_isSynchronous]?: boolean;

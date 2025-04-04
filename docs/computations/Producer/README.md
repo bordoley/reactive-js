@@ -55,7 +55,6 @@
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
 - [toProducer](functions/toProducer.md)
-- [withBackpressure](functions/withBackpressure.md)
 - [withEffect](functions/withEffect.md)
 - [withLatestFrom](functions/withLatestFrom.md)
 - [zipLatest](functions/zipLatest.md)

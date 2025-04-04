@@ -838,11 +838,6 @@ export interface DeferredReactiveComputationModule<
     ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
     ComputationWithSideEffectsOf<TComputationType, T>
   >;
-
-  withBackpressure<T>(config: {
-    capacity: number;
-    backpressureStrategy: BackpressureStrategy;
-  }): PureComputationOperator<TComputationType, T, T>;
 }
 
 export interface ScheduledReactiveComputationModule<

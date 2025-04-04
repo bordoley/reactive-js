@@ -1,18 +1,35 @@
 /// <reference types="./LiftedSinkToSinkMixin.d.ts" />
 
-import { mix, props, proto } from "../../__internal__/mixins.js";
+import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import { SinkMixinLike_doComplete, SinkMixinLike_doNotify, } from "../../utils/__mixins__/SinkMixin.js";
-import { EventListenerLike_notify, SinkLike_complete, } from "../../utils.js";
-import { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
+import { EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import LiftedSinkToEventListenerMixin, { LiftedSinkToEventListenerLike_liftedSink, } from "./LiftedSinkToEventListenerMixin.js";
 const LiftedSinkToSinkMixin = /*@__PURE__*/ (() => {
-    return returns(mix(function LiftedSinkToSinkMixin() {
+    const LiftedSinkToSinkMixin_isCompleted = Symbol("LiftedSinkToSinkMixin_isCompleted");
+    return returns(mix(include(LiftedSinkToEventListenerMixin()), function LiftedSinkToSinkMixin(delegate) {
+        init(LiftedSinkToEventListenerMixin(), this, delegate);
         return this;
-    }, props(), proto({
-        [SinkMixinLike_doNotify](next) {
+    }, props({
+        [LiftedSinkToSinkMixin_isCompleted]: false,
+    }), proto({
+        get [SinkLike_isCompleted]() {
+            unsafeCast(this);
+            return (this[LiftedSinkToSinkMixin_isCompleted] ||
+                this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_isCompleted]);
+        },
+        [EventListenerLike_notify](next) {
+            const isCompleted = this[SinkLike_isCompleted];
+            if (isCompleted) {
+                return;
+            }
             this[LiftedSinkToEventListenerLike_liftedSink][EventListenerLike_notify](next);
         },
-        [SinkMixinLike_doComplete]() {
+        [SinkLike_complete]() {
+            const isCompleted = this[LiftedSinkToSinkMixin_isCompleted];
+            this[LiftedSinkToSinkMixin_isCompleted] = true;
+            if (isCompleted) {
+                return;
+            }
             this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_complete]();
         },
     })));

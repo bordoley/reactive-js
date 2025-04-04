@@ -57,7 +57,6 @@ import Producer_takeLast from "./Producer/__private__/Producer.takeLast.js";
 import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
 import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
 import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
-import Producer_withBackpressure from "./Producer/__private__/Producer.withBackpressure.js";
 import Producer_withEffect from "./Producer/__private__/Producer.withEffect.js";
 import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
 
@@ -130,8 +129,6 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = Producer_throwIfEmpty;
 export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toProducer"];
-export const withBackpressure: Signature["withBackpressure"] =
-  Producer_withBackpressure;
 export const withEffect: Signature["withEffect"] = Producer_withEffect;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Producer_withLatestFrom;
