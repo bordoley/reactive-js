@@ -56,7 +56,7 @@
 
 ### fromObservable()
 
-> **fromObservable**\<`T`\>(`options`?): \<`TObservable`\>(`iterable`) => `TObservable` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> : `TObservable` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationLike`](MulticastComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> : `never`
+> **fromObservable**\<`T`\>(`options`?): \<`TObservable`\>(`observable`) => `TObservable` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> : `TObservable` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationLike`](MulticastComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> : `never`
 
 #### Type Parameters
 
@@ -80,7 +80,7 @@
 
 ##### Parameters
 
-###### iterable
+###### observable
 
 `TObservable`
 
@@ -121,3 +121,37 @@
 ##### Returns
 
 `TProducer` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> : `TProducer` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationLike`](MulticastComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> : `never`
+
+***
+
+### toObservable()
+
+> **toObservable**\<`T`\>(`options`?): \<`TComputationOf`\>(`computation`) => `TComputationOf` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`PureObservableLike`](PureObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\> : `never`
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"toObservable"`\]
+
+#### Returns
+
+`Function`
+
+##### Type Parameters
+
+• **TComputationOf** *extends* [`ComputationLike`](ComputationLike.md) & [`PureComputationLike`](PureComputationLike.md) \| [`ComputationLike`](ComputationLike.md) & [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md)
+
+##### Parameters
+
+###### computation
+
+`TComputationOf`
+
+##### Returns
+
+`TComputationOf` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`PureObservableLike`](PureObservableLike.md)\<`T`\> : `TComputationOf` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md)\<`T`\> : `never`

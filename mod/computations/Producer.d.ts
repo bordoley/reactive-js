@@ -1,5 +1,5 @@
 import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredReactiveComputationModule, ProducerLike, ProducerWithSideEffectsLike, ReactiveComputationModule } from "../computations.js";
-import { ConsumerLike } from "../utils.js";
+import { BackpressureStrategy, ConsumerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -7,7 +7,12 @@ export interface ProducerComputation extends ComputationTypeLike {
     readonly [ComputationTypeLike_baseOfT]?: ProducerLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = ProducerComputation;
-export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ReactiveComputationModule<ProducerComputation>, DeferredComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation> {
+export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ReactiveComputationModule<ProducerComputation>, DeferredComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation, {
+    toObservable?: {
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+    };
+}> {
     create<T>(f: (consumer: ConsumerLike<T>) => void): ProducerWithSideEffectsLike<T>;
 }
 export type Signature = ProducerModule;
@@ -47,6 +52,7 @@ export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toProducer: Signature["toProducer"];
 export declare const withEffect: Signature["withEffect"];
 export declare const withLatestFrom: Signature["withLatestFrom"];

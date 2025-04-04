@@ -20,6 +20,7 @@ import Broadcaster_skipFirst from "./Broadcaster/__private__/Broadcaster.skipFir
 import Broadcaster_takeFirst from "./Broadcaster/__private__/Broadcaster.takeFirst.js";
 import Broadcaster_takeUntil from "./Broadcaster/__private__/Broadcaster.takeUntil.js";
 import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhile.js";
+import Broadcaster_toObservable from "./Broadcaster/__private__/Broadcaster.toObservable.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Broadcaster_withLatestFrom from "./Broadcaster/__private__/Broadcaster.withLatestFrom.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
@@ -43,6 +44,7 @@ export const skipFirst = Broadcaster_skipFirst;
 export const takeFirst = Broadcaster_takeFirst;
 export const takeUntil = Broadcaster_takeUntil;
 export const takeWhile = Broadcaster_takeWhile;
+export const toObservable = Broadcaster_toObservable;
 export const toProducer = Broadcaster_toProducer;
 export const withLatestFrom = Broadcaster_withLatestFrom;
 export const zipLatest = Broadcaster_zipLatest;

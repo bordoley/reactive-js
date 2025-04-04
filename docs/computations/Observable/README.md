@@ -65,6 +65,7 @@
 - [takeWhile](functions/takeWhile.md)
 - [throttle](functions/throttle.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
+- [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
 - [withCurrentTime](functions/withCurrentTime.md)
 - [withEffect](functions/withEffect.md)

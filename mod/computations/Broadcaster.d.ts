@@ -1,6 +1,6 @@
 import { BroadcasterLike, ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentReactiveComputationModule, ReactiveComputationModule } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { DisposableLike, EventListenerLike } from "../utils.js";
+import { BackpressureStrategy, DisposableLike, EventListenerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -11,7 +11,12 @@ export type Computation = BroadcasterComputation;
 /**
  * @noInheritDoc
  */
-export interface BroadcasterModule extends ComputationModule<BroadcasterComputation>, ReactiveComputationModule<BroadcasterComputation>, ConcurrentReactiveComputationModule<BroadcasterComputation> {
+export interface BroadcasterModule extends ComputationModule<BroadcasterComputation>, ReactiveComputationModule<BroadcasterComputation>, ConcurrentReactiveComputationModule<BroadcasterComputation, {
+    toObservable?: {
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+    };
+}> {
     addEventHandler<T>(onNotify: SideEffect1<T>): Function1<BroadcasterLike<T>, DisposableLike>;
     create<T>(setup: SideEffect1<EventListenerLike<T>>, options?: {
         readonly autoDispose?: boolean;
@@ -39,6 +44,7 @@ export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toProducer: Signature["toProducer"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];

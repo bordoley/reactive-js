@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>.[`ReactiveComputationModule`](../../interfaces/ReactiveComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md)\>.[`ConcurrentReactiveComputationModule`](../../interfaces/ConcurrentReactiveComputationModule.md)\<[`BroadcasterComputation`](BroadcasterComputation.md), \{ `toObservable`: \{ `backpressureStrategy`: [`BackpressureStrategy`](../../../utils/type-aliases/BackpressureStrategy.md); `capacity`: `number`; \}; \}\>
 
 ## Methods
 

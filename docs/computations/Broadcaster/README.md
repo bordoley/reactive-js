@@ -38,6 +38,7 @@
 - [takeFirst](functions/takeFirst.md)
 - [takeUntil](functions/takeUntil.md)
 - [takeWhile](functions/takeWhile.md)
+- [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
 - [withLatestFrom](functions/withLatestFrom.md)
 - [zipLatest](functions/zipLatest.md)

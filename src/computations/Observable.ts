@@ -190,6 +190,8 @@ export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
+export const toObservable: Signature["toObservable"] =
+  identityLazy as Signature["toObservable"];
 export const toProducer: Signature["toProducer"] = Observable_toProducer;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;

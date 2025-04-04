@@ -1,7 +1,3 @@
-import { ProducerLike } from "../../../computations.js";
-import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
-declare const Producer_toObservable: <T>(config?: {
-    capacity?: number;
-    backpressureStrategy?: BackpressureStrategy;
-}) => (producer: ProducerLike<T>) => import("../../../computations.js").DeferredEventSourceLike<T, ObserverLike<T>>;
+import type * as Producer from "../../Producer.js";
+declare const Producer_toObservable: Producer.Signature["toObservable"];
 export default Producer_toObservable;

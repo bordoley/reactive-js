@@ -8,7 +8,11 @@ import {
   ReactiveComputationModule,
 } from "../computations.js";
 import { Function1, SideEffect1, identityLazy } from "../functions.js";
-import { DisposableLike, EventListenerLike } from "../utils.js";
+import {
+  BackpressureStrategy,
+  DisposableLike,
+  EventListenerLike,
+} from "../utils.js";
 import Broadcaster_addEventHandler from "./Broadcaster/__private__/Broadcaster.addEventHandler.js";
 import Broadcaster_create from "./Broadcaster/__private__/Broadcaster.create.js";
 import Broadcaster_distinctUntilChanged from "./Broadcaster/__private__/Broadcaster.distinctUntilChanged.js";
@@ -30,6 +34,7 @@ import Broadcaster_skipFirst from "./Broadcaster/__private__/Broadcaster.skipFir
 import Broadcaster_takeFirst from "./Broadcaster/__private__/Broadcaster.takeFirst.js";
 import Broadcaster_takeUntil from "./Broadcaster/__private__/Broadcaster.takeUntil.js";
 import Broadcaster_takeWhile from "./Broadcaster/__private__/Broadcaster.takeWhile.js";
+import Broadcaster_toObservable from "./Broadcaster/__private__/Broadcaster.toObservable.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Broadcaster_withLatestFrom from "./Broadcaster/__private__/Broadcaster.withLatestFrom.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
@@ -51,7 +56,15 @@ export type Computation = BroadcasterComputation;
 export interface BroadcasterModule
   extends ComputationModule<BroadcasterComputation>,
     ReactiveComputationModule<BroadcasterComputation>,
-    ConcurrentReactiveComputationModule<BroadcasterComputation> {
+    ConcurrentReactiveComputationModule<
+      BroadcasterComputation,
+      {
+        toObservable?: {
+          capacity?: number;
+          backpressureStrategy?: BackpressureStrategy;
+        };
+      }
+    > {
   addEventHandler<T>(
     onNotify: SideEffect1<T>,
   ): Function1<BroadcasterLike<T>, DisposableLike>;
@@ -94,6 +107,7 @@ export const skipFirst: Signature["skipFirst"] = Broadcaster_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Broadcaster_takeFirst;
 export const takeUntil: Signature["takeUntil"] = Broadcaster_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Broadcaster_takeWhile;
+export const toObservable: Signature["toObservable"] = Broadcaster_toObservable;
 export const toProducer: Signature["toProducer"] = Broadcaster_toProducer;
 export const withLatestFrom: Signature["withLatestFrom"] =
   Broadcaster_withLatestFrom;

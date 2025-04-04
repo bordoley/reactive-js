@@ -87,6 +87,7 @@ export const takeUntil = Observable_takeUntil;
 export const takeWhile = Observable_takeWhile;
 export const throttle = Observable_throttle;
 export const throwIfEmpty = Observable_throwIfEmpty;
+export const toObservable = identityLazy;
 export const toProducer = Observable_toProducer;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withEffect = Observable_withEffect;

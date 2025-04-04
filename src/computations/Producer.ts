@@ -12,7 +12,7 @@ import {
   ReactiveComputationModule,
 } from "../computations.js";
 import { identity, identityLazy, returns } from "../functions.js";
-import { ConsumerLike } from "../utils.js";
+import { BackpressureStrategy, ConsumerLike } from "../utils.js";
 import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Producer_broadcast from "./Producer/__private__/Producer.broadcast.js";
@@ -57,6 +57,7 @@ import Producer_takeLast from "./Producer/__private__/Producer.takeLast.js";
 import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
 import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
 import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
+import Producer_toObservable from "./Producer/__private__/Producer.toObservable.js";
 import Producer_withEffect from "./Producer/__private__/Producer.withEffect.js";
 import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
 
@@ -77,7 +78,15 @@ export interface ProducerModule
     ReactiveComputationModule<ProducerComputation>,
     DeferredComputationModule<ProducerComputation>,
     DeferredReactiveComputationModule<ProducerComputation>,
-    ConcurrentReactiveComputationModule<ProducerComputation> {
+    ConcurrentReactiveComputationModule<
+      ProducerComputation,
+      {
+        toObservable?: {
+          capacity?: number;
+          backpressureStrategy?: BackpressureStrategy;
+        };
+      }
+    > {
   create<T>(
     f: (consumer: ConsumerLike<T>) => void,
   ): ProducerWithSideEffectsLike<T>;
@@ -126,6 +135,7 @@ export const takeLast: Signature["takeLast"] = Producer_takeLast;
 export const takeUntil: Signature["takeUntil"] = Producer_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Producer_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Producer_throwIfEmpty;
+export const toObservable: Signature["toObservable"] = Producer_toObservable;
 export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
   identity,
 ) as Signature["toProducer"];
