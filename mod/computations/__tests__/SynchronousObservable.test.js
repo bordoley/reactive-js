@@ -216,7 +216,7 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
         yield delay(1);
         x++;
     }
-}), SynchronousObservable.takeFirst({ count: 101 }), SynchronousObservable.throttle(50, { mode: "first" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(SynchronousObservable.genPure(function* counter() {
+}), SynchronousObservable.takeFirst({ count: 101 }), SynchronousObservable.throttle(50, { mode: "first" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 50, 100]))), test("last", pipeLazy(SynchronousObservable.genPure(function* counter() {
     let x = 0;
     yield delay(1);
     while (true) {
@@ -232,7 +232,7 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
         yield delay(1);
         x++;
     }
-}), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(75, { mode: "interval" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
+}), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(75, { mode: "interval" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 75, 149, 150, 199])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
     valuesEquality: arrayEquality(),
 }))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.empty(m), returns(1)), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const env_3 = { stack: [], error: void 0, hasError: false };

@@ -447,7 +447,7 @@ testModule(
         SynchronousObservable.throttle<number>(50, { mode: "first" }),
         SynchronousObservable.toRunnable(),
         Runnable.toReadonlyArray<number>(),
-        expectArrayEquals([0, 49, 99]),
+        expectArrayEquals([0, 50, 100]),
       ),
     ),
     test(
@@ -489,7 +489,7 @@ testModule(
         SynchronousObservable.throttle<number>(75, { mode: "interval" }),
         SynchronousObservable.toRunnable(),
         Runnable.toReadonlyArray<number>(),
-        expectArrayEquals([0, 74, 149, 199]),
+        expectArrayEquals([0, 74, 75, 149, 150, 199]),
       ),
     ),
   ),

@@ -190,14 +190,12 @@ describe("stateStore", test("stateStore", () => {
 }), test("with throttling", () => {
     const env_5 = { stack: [], error: void 0, hasError: false };
     try {
-        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create({
-            maxMicroTaskTicks: 1,
-        }), false);
+        const vts = __addDisposableResource(env_5, VirtualTimeScheduler.create(), false);
         let updateCnt = 0;
         const stream = pipe(Streamable.stateStore(returns(0)), Streamable.syncState(state => pipe([(_) => state], Computation.fromReadonlyArray(ObservableModule)), (_oldState, _newState) => {
             updateCnt++;
             return SynchronousObservable.delay(1);
-        }, { throttleDuration: 40 }), invoke(StreamableLike_stream, vts));
+        }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
         pipe([increment], Computation.fromReadonlyArray(ObservableModule, {
             // Note: due to how vts works its gonna be 2 in practice
             delay: 1,

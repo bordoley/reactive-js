@@ -10,8 +10,6 @@ import {
   Function1,
   Optional,
   bind,
-  call,
-  isSome,
   none,
   partial,
   pipe,
@@ -26,6 +24,7 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   ObserverLike,
+  SchedulerLike_inContinuation,
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
@@ -72,36 +71,30 @@ const createThrottleSink: <T>(
   ) {
     const delegate = this[DelegatingEventListenerLike_delegate];
     const delegateIsCompleted = delegate[SinkLike_isCompleted];
+    const mode = this[ThrottleSink_mode];
 
-    if (this[ThrottleSink_hasValue] && !delegateIsCompleted) {
-      const value = this[ThrottleSink_value] as T;
-      this[ThrottleSink_value] = none;
-      this[ThrottleSink_hasValue] = false;
+    const hasValue = this[ThrottleSink_hasValue];
+    const value = this[ThrottleSink_value] as T;
+    const scheduler = this[LiftedSinkLike_subscription];
 
+    // We only want to notify when the durationSubscription has either completed
+    // itself or was in disposed from DelegatingLiftedSinkLike_onCompleted
+    // otherwise the subscription was probably externally disposed and
+    // don't worry about it.
+    const inContinuation = scheduler[SchedulerLike_inContinuation];
+
+    this[ThrottleSink_value] = none;
+    this[ThrottleSink_hasValue] = false;
+
+    if (
+      inContinuation &&
+      hasValue &&
+      !delegateIsCompleted &&
+      mode !== ThrottleFirstMode
+    ) {
       delegate[EventListenerLike_notify](value);
-
-      setupDurationSubscription(this, value);
     }
   }
-
-  const setupDurationSubscription = (
-    thiz: DelegatingLiftedSinkLike<ObserverLike, T> & TProperties,
-    next: T,
-  ) => {
-    const scheduler = thiz[LiftedSinkLike_subscription];
-    thiz[ThrottleSink_durationSubscription][DisposableLike_dispose]();
-
-    thiz[ThrottleSink_durationSubscription] = pipe(
-      thiz[ThrottleSink_durationFunction](next),
-      EventSource.subscribe({ scheduler }),
-      // This works because dispose is called in a scheduler
-      // continuation immediately after the sink is completed.
-      DisposableContainer.onComplete(
-        bind(notifyThrottleObserverDelegate, thiz),
-      ),
-      Disposable.addTo(thiz),
-    );
-  };
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<ObserverLike, T>()),
@@ -136,38 +129,36 @@ const createThrottleSink: <T>(
         this: TProperties & DelegatingLiftedSinkLike<ObserverLike, T>,
         next: T,
       ) {
-        this[ThrottleSink_value] = next;
-        this[ThrottleSink_hasValue] = true;
-
         const durationSubscriptionIsDisposed =
           this[ThrottleSink_durationSubscription][DisposableLike_isDisposed];
 
-        if (
-          durationSubscriptionIsDisposed &&
-          this[ThrottleSink_mode] !== ThrottleLastMode
-        ) {
-          call(notifyThrottleObserverDelegate, this);
-        } else if (durationSubscriptionIsDisposed) {
-          setupDurationSubscription(this, next);
+        const delegate = this[DelegatingEventListenerLike_delegate];
+        const mode = this[ThrottleSink_mode];
+        const scheduler = this[LiftedSinkLike_subscription];
+
+        if (durationSubscriptionIsDisposed && mode !== ThrottleLastMode) {
+          delegate[EventListenerLike_notify](next);
+        } else {
+          this[ThrottleSink_value] = next;
+          this[ThrottleSink_hasValue] = true;
+        }
+
+        if (durationSubscriptionIsDisposed) {
+          this[ThrottleSink_durationSubscription] = pipe(
+            this[ThrottleSink_durationFunction](next),
+            EventSource.subscribe({ scheduler }),
+            DisposableContainer.onComplete(
+              bind(notifyThrottleObserverDelegate, this),
+            ),
+            Disposable.addTo(this),
+          );
         }
       },
 
       [DelegatingLiftedSinkLike_onCompleted](
         this: TProperties & DelegatingLiftedSinkLike<ObserverLike, T>,
       ) {
-        const delegate = this[DelegatingEventListenerLike_delegate];
-        const delegateIsComplete = delegate[SinkLike_isCompleted];
-        if (
-          this[ThrottleSink_mode] !== ThrottleFirstMode &&
-          this[ThrottleSink_hasValue] &&
-          !delegateIsComplete &&
-          isSome(this[ThrottleSink_value])
-        ) {
-          const value = this[ThrottleSink_value];
-          this[ThrottleSink_value] = none;
-          this[ThrottleSink_hasValue] = false;
-          delegate[EventListenerLike_notify](value);
-        }
+        this[ThrottleSink_durationSubscription][DisposableLike_dispose]();
       },
     }),
   );

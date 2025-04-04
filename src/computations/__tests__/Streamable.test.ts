@@ -183,9 +183,7 @@ testModule(
       pipe(result, expectArrayEquals([-1, 9, 10, 12]));
     }),
     test("with throttling", () => {
-      using vts = VirtualTimeScheduler.create({
-        maxMicroTaskTicks: 1,
-      });
+      using vts = VirtualTimeScheduler.create();
 
       let updateCnt = 0;
 
@@ -201,7 +199,7 @@ testModule(
             updateCnt++;
             return SynchronousObservable.delay(1);
           },
-          { throttleDuration: 40 },
+          { throttleDuration: 20 },
         ),
         invoke(StreamableLike_stream, vts),
       );
