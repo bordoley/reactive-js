@@ -89,7 +89,6 @@
     "./utils/HostScheduler": "./utils/HostScheduler.js",
     "./utils/PauseableScheduler": "./utils/PauseableScheduler.js",
     "./utils/Queue": "./utils/Queue.js",
-    "./utils/SerialDisposable": "./utils/SerialDisposable.js",
     "./utils/VirtualTimeScheduler": "./utils/VirtualTimeScheduler.js",
 
     "./web": "./web.js",

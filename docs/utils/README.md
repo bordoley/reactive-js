@@ -27,7 +27,6 @@
 - [PauseableSchedulerLike](interfaces/PauseableSchedulerLike.md)
 - [QueueLike](interfaces/QueueLike.md)
 - [SchedulerLike](interfaces/SchedulerLike.md)
-- [SerialDisposableLike](interfaces/SerialDisposableLike.md)
 - [SinkLike](interfaces/SinkLike.md)
 - [VirtualTimeSchedulerLike](interfaces/VirtualTimeSchedulerLike.md)
 
@@ -71,7 +70,6 @@
 - [SchedulerLike\_requestYield](variables/SchedulerLike_requestYield.md)
 - [SchedulerLike\_schedule](variables/SchedulerLike_schedule.md)
 - [SchedulerLike\_shouldYield](variables/SchedulerLike_shouldYield.md)
-- [SerialDisposableLike\_current](variables/SerialDisposableLike_current.md)
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isCompleted](variables/SinkLike_isCompleted.md)
 - [ThrowBackpressureStrategy](variables/ThrowBackpressureStrategy.md)

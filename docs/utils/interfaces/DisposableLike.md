@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`SerialDisposableLike`](SerialDisposableLike.md)
 - [`FlowControllerLike`](FlowControllerLike.md)
 - [`EnumeratorLike`](EnumeratorLike.md)
 - [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)

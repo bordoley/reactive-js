@@ -28,5 +28,4 @@ import "./mod/utils/__tests__/HostScheduler.test.js";
 import "./mod/utils/__tests__/Iterator.test.js";
 import "./mod/utils/__tests__/PauseableScheduler.test.js";
 import "./mod/utils/__tests__/Queue.test.js";
-import "./mod/utils/__tests__/SerialDisposable.test.js";
 import "./mod/utils/__tests__/VirtualTimeScheduler.test.js";

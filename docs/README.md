@@ -42,7 +42,6 @@
 - [utils/HostScheduler](utils/HostScheduler/README.md)
 - [utils/PauseableScheduler](utils/PauseableScheduler/README.md)
 - [utils/Queue](utils/Queue/README.md)
-- [utils/SerialDisposable](utils/SerialDisposable/README.md)
 - [utils/VirtualTimeScheduler](utils/VirtualTimeScheduler/README.md)
 - [web](web/README.md)
 - [web/AnimationFrameScheduler](web/AnimationFrameScheduler/README.md)

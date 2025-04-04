@@ -39,13 +39,10 @@ import {
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
-  SerialDisposableLike,
-  SerialDisposableLike_current,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
-import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 
 interface Signature {
   create(): SchedulerLike & DisposableLike;
@@ -64,11 +61,16 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     "MessageChannelScheduler_messageChannel",
   );
 
+  const HostScheduler_nativeSchedulerSubscription = Symbol(
+    "HostScheduler_nativeSchedulerSubscription",
+  );
+
   type TProperties = {
     [SchedulerLike_maxYieldInterval]: number;
     [HostScheduler_hostSchedulerContinuationDueTime]: number;
     [HostScheduler_activeContinuation]: Optional<SchedulerContinuationLike>;
     [HostScheduler_messageChannel]: Optional<MessageChannel>;
+    [HostScheduler_nativeSchedulerSubscription]: DisposableLike;
   };
 
   const peek = (
@@ -92,7 +94,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   const hostSchedulerContinuation = (
     instance: TProperties &
-      SerialDisposableLike &
       SchedulerMixinHostLike &
       SchedulerLike &
       QueueLike<SchedulerContinuationLike>,
@@ -137,14 +138,15 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
   const scheduleOnHost = (
     instance: TProperties &
-      SerialDisposableLike &
       SchedulerMixinHostLike &
       SchedulerLike &
       QueueLike<SchedulerContinuationLike>,
   ) => {
     const now = instance[SchedulerLike_now];
     const hostSchedulerContinuationIsScheduled =
-      !instance[SerialDisposableLike_current][DisposableLike_isDisposed];
+      !instance[HostScheduler_nativeSchedulerSubscription][
+        DisposableLike_isDisposed
+      ];
     const hostSchedulerContinuationDueTime =
       instance[HostScheduler_hostSchedulerContinuationDueTime];
     const nextContinuation = peek(instance);
@@ -194,7 +196,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
               clearImmediate,
             );
 
-      instance[SerialDisposableLike_current] = pipe(
+      instance[HostScheduler_nativeSchedulerSubscription] = pipe(
         disposable,
         Disposable.addTo(instance),
         DisposableContainer.onDisposed(cleanup),
@@ -211,7 +213,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   }
 
   const createHostSchedulerInstance = mixInstanceFactory(
-    include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()),
+    include(SchedulerMixin, QueueMixin()),
     function HostScheduler(
       this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
         Mutable<TProperties>,
@@ -220,7 +222,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       this[SchedulerLike_maxYieldInterval] = maxYieldInterval;
 
       init(SchedulerMixin, this);
-      init(SerialDisposableMixin(), this, Disposable.disposed);
       init(QueueMixin<SchedulerContinuationLike>(), this, {
         comparator: SchedulerContinuation.compare,
       });
@@ -244,6 +245,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       [HostScheduler_hostSchedulerContinuationDueTime]: 0,
       [HostScheduler_activeContinuation]: none,
       [HostScheduler_messageChannel]: none,
+      [HostScheduler_nativeSchedulerSubscription]: Disposable.disposed,
     }),
     {
       get [SchedulerMixinHostLike_shouldYield](): boolean {
@@ -266,7 +268,6 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       },
       [SchedulerMixinHostLike_schedule](
         this: TProperties &
-          SerialDisposableLike &
           SchedulerMixinHostLike &
           SchedulerLike &
           QueueLike<SchedulerContinuationLike>,

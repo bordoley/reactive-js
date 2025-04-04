@@ -12,7 +12,6 @@ export const DisposableLike_dispose =
 })();
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
-export const SerialDisposableLike_current = Symbol("SerialDisposableLike_current");
 export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";

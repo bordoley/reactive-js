@@ -44,14 +44,6 @@ export interface DisposableLike extends DisposableContainerLike, Disposable {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
-export declare const SerialDisposableLike_current: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface SerialDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike {
-    get [SerialDisposableLike_current](): TDisposable;
-    set [SerialDisposableLike_current](v: TDisposable);
-}
 export type BackpressureStrategy = "drop-latest" | "drop-oldest" | "overflow" | "throw";
 export declare const DropLatestBackpressureStrategy: BackpressureStrategy;
 export declare const DropOldestBackpressureStrategy: BackpressureStrategy;

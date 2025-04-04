@@ -6,17 +6,17 @@ import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SerialDisposableLike_current, } from "../utils.js";
+import { CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
-import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_hostScheduler = Symbol("PauseableScheduler_hostScheduler");
     const PauseableScheduler_hostSchedulerContinuationDueTime = Symbol("PauseableScheduler_hostSchedulerContinuationDueTime");
     const PauseableScheduler_pausedTime = Symbol("PauseableScheduler_pausedTime");
     const PauseableScheduler_timeDrift = Symbol("PauseableScheduler_timeDrift");
     const PauseableScheduler_activeContinuation = Symbol("PauseableScheduler_activeContinuation");
+    const PauseableScheduler_hostSchedulerSubscription = Symbol("PauseableScheduler_hostSchedulerSubscription");
     const peek = (instance) => {
         let continuation = none;
         while (true) {
@@ -30,7 +30,7 @@ export const create = /*@PURE__*/ (() => {
     };
     const scheduleOnHost = (instance) => {
         const hostScheduler = instance[PauseableScheduler_hostScheduler];
-        const hostSchedulerContinuationIsScheduled = !instance[SerialDisposableLike_current][DisposableLike_isDisposed];
+        const hostSchedulerContinuationIsScheduled = !instance[PauseableScheduler_hostSchedulerSubscription][DisposableLike_isDisposed];
         const hostSchedulerContinuationDueTime = instance[PauseableScheduler_hostSchedulerContinuationDueTime];
         const nextContinuation = peek(instance);
         const nextContinuationDueTime = nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MAX_VALUE;
@@ -48,7 +48,7 @@ export const create = /*@PURE__*/ (() => {
         const dueTime = nextContinuation[SchedulerContinuationLike_dueTime];
         const delay = clampPositiveInteger(dueTime - now);
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
-        instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](bind(hostSchedulerContinuation, instance), { delay });
+        instance[PauseableScheduler_hostSchedulerSubscription] = hostScheduler[SchedulerLike_schedule](bind(hostSchedulerContinuation, instance), { delay });
     };
     function* hostSchedulerContinuation(scheduler) {
         const isPausedStore = this[PauseableLike_isPaused];
@@ -76,9 +76,8 @@ export const create = /*@PURE__*/ (() => {
             }
         }
     }
-    return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(host) {
+    return mixInstanceFactory(include(SchedulerMixin, QueueMixin()), function PauseableScheduler(host) {
         init(SchedulerMixin, this);
-        init(SerialDisposableMixin(), this, Disposable.disposed);
         init(QueueMixin(), this, {
             comparator: SchedulerContinuation.compare,
         });
@@ -95,6 +94,7 @@ export const create = /*@PURE__*/ (() => {
         [PauseableScheduler_pausedTime]: 0,
         [PauseableScheduler_timeDrift]: 0,
         [PauseableScheduler_activeContinuation]: none,
+        [PauseableScheduler_hostSchedulerSubscription]: Disposable.disposed,
     }), {
         get [SchedulerLike_maxYieldInterval]() {
             unsafeCast(this);
@@ -123,7 +123,7 @@ export const create = /*@PURE__*/ (() => {
         [PauseableLike_pause]() {
             const hostNow = this[PauseableScheduler_hostScheduler][SchedulerLike_now];
             this[PauseableScheduler_pausedTime] = hostNow;
-            this[SerialDisposableLike_current] = Disposable.disposed;
+            this[PauseableScheduler_hostSchedulerSubscription][DisposableLike_dispose]();
             this[PauseableLike_isPaused][StoreLike_value] = true;
         },
         [PauseableLike_resume]() {

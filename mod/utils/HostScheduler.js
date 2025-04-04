@@ -5,15 +5,15 @@ import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__inte
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SerialDisposableLike_current, } from "../utils.js";
+import { CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
-import SerialDisposableMixin from "./__mixins__/SerialDisposableMixin.js";
 export const create = /*@PURE__*/ (() => {
     const HostScheduler_hostSchedulerContinuationDueTime = Symbol("HostScheduler_hostSchedulerContinuationDueTime");
     const HostScheduler_activeContinuation = Symbol("HostScheduler_activeContinuation");
     const HostScheduler_messageChannel = Symbol("MessageChannelScheduler_messageChannel");
+    const HostScheduler_nativeSchedulerSubscription = Symbol("HostScheduler_nativeSchedulerSubscription");
     const peek = (instance) => {
         let continuation = none;
         while (true) {
@@ -55,7 +55,7 @@ export const create = /*@PURE__*/ (() => {
     };
     const scheduleOnHost = (instance) => {
         const now = instance[SchedulerLike_now];
-        const hostSchedulerContinuationIsScheduled = !instance[SerialDisposableLike_current][DisposableLike_isDisposed];
+        const hostSchedulerContinuationIsScheduled = !instance[HostScheduler_nativeSchedulerSubscription][DisposableLike_isDisposed];
         const hostSchedulerContinuationDueTime = instance[HostScheduler_hostSchedulerContinuationDueTime];
         const nextContinuation = peek(instance);
         const nextContinuationDueTime = nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MAX_VALUE;
@@ -80,7 +80,7 @@ export const create = /*@PURE__*/ (() => {
             const cleanup = delay > 4 || isNone(setImmediate)
                 ? pipeLazy(setTimeout(hostSchedulerContinuation, delay, instance, disposable), clearTimeout)
                 : pipeLazy(setImmediate(hostSchedulerContinuation, instance, disposable), clearImmediate);
-            instance[SerialDisposableLike_current] = pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
+            instance[HostScheduler_nativeSchedulerSubscription] = pipe(disposable, Disposable.addTo(instance), DisposableContainer.onDisposed(cleanup));
         }
     };
     function onHostSchedulerDisposed() {
@@ -90,10 +90,9 @@ export const create = /*@PURE__*/ (() => {
             channel.port2.close();
         }
     }
-    const createHostSchedulerInstance = mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function HostScheduler(maxYieldInterval) {
+    const createHostSchedulerInstance = mixInstanceFactory(include(SchedulerMixin, QueueMixin()), function HostScheduler(maxYieldInterval) {
         this[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         init(SchedulerMixin, this);
-        init(SerialDisposableMixin(), this, Disposable.disposed);
         init(QueueMixin(), this, {
             comparator: SchedulerContinuation.compare,
         });
@@ -111,6 +110,7 @@ export const create = /*@PURE__*/ (() => {
         [HostScheduler_hostSchedulerContinuationDueTime]: 0,
         [HostScheduler_activeContinuation]: none,
         [HostScheduler_messageChannel]: none,
+        [HostScheduler_nativeSchedulerSubscription]: Disposable.disposed,
     }), {
         get [SchedulerMixinHostLike_shouldYield]() {
             unsafeCast(this);
