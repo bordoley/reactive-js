@@ -13,8 +13,7 @@ import {
   ScheduledReactiveComputationModule,
 } from "../computations.js";
 import { identityLazy } from "../functions.js";
-import { SchedulerLike } from "../utils.js";
-import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
+import { BackpressureStrategy, SchedulerLike } from "../utils.js";
 import Observable_broadcast from "./Observable/__private__/Observable.broadcast.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -28,6 +27,7 @@ import Observable_distinctUntilChanged from "./Observable/__private__/Observable
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
+import Observable_fromBroadcaster from "./Observable/__private__/Observable.fromBroadcaster.js";
 import {
   Observable_gen,
   Observable_genPure,
@@ -67,6 +67,7 @@ import Observable_toProducer from "./Observable/__private__/Observable.toProduce
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
+import Producer_toObservable from "./Producer/__private__/Producer.toObservable.js";
 
 /**
  * @noInheritDoc
@@ -115,7 +116,19 @@ export interface ObservableModule
         };
       }
     >,
-    ConcurrentReactiveComputationModule<ObservableComputation>,
+    ConcurrentReactiveComputationModule<
+      ObservableComputation,
+      {
+        fromBroadcaster: {
+          capacity?: number;
+          backpressureStrategy?: BackpressureStrategy;
+        };
+        fromProducer: {
+          capacity?: number;
+          backpressureStrategy?: BackpressureStrategy;
+        };
+      }
+    >,
     ScheduledReactiveComputationModule<ObservableComputation> {
   gen: ScheduledReactiveComputationModule<ObservableComputation>["gen"];
   genPure: ScheduledReactiveComputationModule<ObservableComputation>["genPure"];
@@ -148,11 +161,11 @@ export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const fromBroadcaster: Signature["fromBroadcaster"] =
-  Broadcaster_toProducer as Signature["fromBroadcaster"];
+  Observable_fromBroadcaster;
 export const fromObservable: Signature["fromObservable"] =
   /*@__PURE__*/ identityLazy as Signature["fromObservable"];
 export const fromProducer: Signature["fromProducer"] =
-  identityLazy as Signature["fromProducer"];
+  Producer_toObservable as Signature["fromProducer"];
 export const gen: Signature["gen"] = Observable_gen;
 export const genAsync: Signature["genAsync"] = Observable_genAsync;
 export const genPure: Signature["genPure"] = Observable_genPure;

@@ -717,11 +717,14 @@ export interface ReactiveComputationModule<
 
 export interface ConcurrentReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
+  TCreationOptions extends {
+    fromBroadcaster?: Record<string, any>;
+    fromProducer?: Record<string, any>;
+  } = {},
 > extends ComputationModuleLike<TComputationType> {
-  fromBroadcaster<T>(): Function1<
-    BroadcasterLike<T>,
-    PureComputationOf<TComputationType, T>
-  >;
+  fromBroadcaster<T>(
+    options?: TCreationOptions["fromBroadcaster"],
+  ): Function1<BroadcasterLike<T>, PureComputationOf<TComputationType, T>>;
 
   // prettier-ignore
   fromObservable<T>(options?: {
@@ -738,7 +741,9 @@ export interface ConcurrentReactiveComputationModule<
        never;
 
   // prettier-ignore
-  fromProducer<T>(): <TProducer extends ProducerLike<T>>(
+  fromProducer<T>(
+    options?: TCreationOptions["fromProducer"],
+  ): <TProducer extends ProducerLike<T>>(
     iterable: TProducer,
   ) => TProducer extends PureComputationLike ? 
         NewPureInstanceOf<TComputationType, T> : 

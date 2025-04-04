@@ -1,8 +1,19 @@
-import { Mixin1, include, init, mix } from "../../__internal__/mixins.js";
-import { returns } from "../../functions.js";
+import { __DEV__ } from "../../__internal__/constants.js";
+import {
+  Mixin1,
+  include,
+  init,
+  mix,
+  props,
+  proto,
+} from "../../__internal__/mixins.js";
+import { raiseIf, returns } from "../../functions.js";
 import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingSchedulerMixin.js";
-
-import { ObserverLike } from "../../utils.js";
+import {
+  EventListenerLike_notify,
+  ObserverLike,
+  SchedulerLike_inContinuation,
+} from "../../utils.js";
 import {
   LiftedSinkLike,
   LiftedSinkLike_subscription,
@@ -10,6 +21,7 @@ import {
 import LiftedSinkToConsumerMixin, {
   LiftedSinkToConsumerLike,
 } from "./LiftedSinkToConsumerMixin.js";
+import { LiftedSinkToEventListenerLike_liftedSink } from "./LiftedSinkToEventListenerMixin.js";
 
 export interface LiftedSinkToObserverLike<TSubscription extends ObserverLike, T>
   extends LiftedSinkToConsumerLike<TSubscription, T>,
@@ -38,6 +50,25 @@ const LiftedSinkToObserverMixin: <
 
           return this;
         },
+
+        props(),
+        proto({
+          [EventListenerLike_notify](
+            this: LiftedSinkToObserverLike<TSubscription, T>,
+            next: T,
+          ) {
+            if (__DEV__) {
+              raiseIf(
+                !this[SchedulerLike_inContinuation],
+                "Can only notify a lifted observer from within a scheduler continuation",
+              );
+            }
+
+            this[LiftedSinkToEventListenerLike_liftedSink][
+              EventListenerLike_notify
+            ](next);
+          },
+        }),
       ),
     );
   })();

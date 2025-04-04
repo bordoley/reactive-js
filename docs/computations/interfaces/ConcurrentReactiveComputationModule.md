@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentReactiveComputationModule
 
-# Interface: ConcurrentReactiveComputationModule\<TComputationType\>
+# Interface: ConcurrentReactiveComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -20,6 +20,8 @@
 
 • **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
+• **TCreationOptions** *extends* `object` = \{\}
+
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -34,11 +36,17 @@
 
 ### fromBroadcaster()
 
-> **fromBroadcaster**\<`T`\>(): [`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
+> **fromBroadcaster**\<`T`\>(`options`?): [`Function1`](../../functions/type-aliases/Function1.md)\<[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>, [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>\>
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"fromBroadcaster"`\]
 
 #### Returns
 
@@ -84,11 +92,17 @@
 
 ### fromProducer()
 
-> **fromProducer**\<`T`\>(): \<`TProducer`\>(`iterable`) => `TProducer` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> : `TProducer` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationLike`](MulticastComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> : `never`
+> **fromProducer**\<`T`\>(`options`?): \<`TProducer`\>(`iterable`) => `TProducer` *extends* [`PureComputationLike`](PureComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> : `TProducer` *extends* [`ComputationWithSideEffectsLike`](ComputationWithSideEffectsLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\> *extends* [`MulticastComputationLike`](MulticastComputationLike.md) ? [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>\> : [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\> : `never`
 
 #### Type Parameters
 
 • **T**
+
+#### Parameters
+
+##### options?
+
+`TCreationOptions`\[`"fromProducer"`\]
 
 #### Returns
 

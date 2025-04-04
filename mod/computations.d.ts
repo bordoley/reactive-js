@@ -274,12 +274,15 @@ export interface ReactiveComputationModule<TComputationType extends ComputationT
     zipLatest<TA, TB, TC>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>, c: ComputationOf<TComputationType, TC>): ComputationWithSideEffectsOf<TComputationType, Tuple3<TA, TB, TC>>;
     zipLatest<TA, TB, TC, TD>(a: ComputationOf<TComputationType, TA>, b: ComputationOf<TComputationType, TB>, c: ComputationOf<TComputationType, TC>, d: ComputationOf<TComputationType, TD>): ComputationWithSideEffectsOf<TComputationType, Tuple4<TA, TB, TC, TD>>;
 }
-export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
-    fromBroadcaster<T>(): Function1<BroadcasterLike<T>, PureComputationOf<TComputationType, T>>;
+export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
+    fromBroadcaster?: Record<string, any>;
+    fromProducer?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    fromBroadcaster<T>(options?: TCreationOptions["fromBroadcaster"]): Function1<BroadcasterLike<T>, PureComputationOf<TComputationType, T>>;
     fromObservable<T>(options?: {
         scheduler?: SchedulerLike;
     }): <TObservable extends ObservableLike<T>>(iterable: TObservable) => TObservable extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
-    fromProducer<T>(): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
+    fromProducer<T>(options?: TCreationOptions["fromProducer"]): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
 }
 export interface DeferredReactiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
     broadcast?: Record<string, any>;

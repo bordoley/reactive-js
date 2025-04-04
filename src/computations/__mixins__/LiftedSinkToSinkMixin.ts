@@ -9,7 +9,6 @@ import {
 } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
 import {
-  EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -73,20 +72,6 @@ const LiftedSinkToSinkMixin: <TSubscription extends SinkLike, T>() => Mixin1<
             this[LiftedSinkToSinkMixin_isCompleted] ||
             this[LiftedSinkToEventListenerLike_liftedSink][SinkLike_isCompleted]
           );
-        },
-
-        [EventListenerLike_notify](
-          this: LiftedSinkToSinkLike<TSubscription, T> & TProperties,
-          next: T,
-        ) {
-          const isCompleted = this[SinkLike_isCompleted];
-          if (isCompleted) {
-            return;
-          }
-
-          this[LiftedSinkToEventListenerLike_liftedSink][
-            EventListenerLike_notify
-          ](next);
         },
 
         [SinkLike_complete](

@@ -1,5 +1,5 @@
 import { ComputationModule, ComputationTypeLike, ComputationTypeLike_T, ComputationTypeLike_baseOfT, ConcurrentDeferredComputationModule, ConcurrentReactiveComputationModule, DeferredComputationModule, DeferredReactiveComputationModule, ObservableLike, PureComputationOperator, ReactiveComputationModule, ScheduledReactiveComputationModule } from "../computations.js";
-import { SchedulerLike } from "../utils.js";
+import { BackpressureStrategy, SchedulerLike } from "../utils.js";
 /**
  * @noInheritDoc
  */
@@ -27,7 +27,16 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     compute?: {
         readonly mode?: "batched" | "combine-latest";
     };
-}>, ConcurrentReactiveComputationModule<ObservableComputation>, ScheduledReactiveComputationModule<ObservableComputation> {
+}>, ConcurrentReactiveComputationModule<ObservableComputation, {
+    fromBroadcaster: {
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+    };
+    fromProducer: {
+        capacity?: number;
+        backpressureStrategy?: BackpressureStrategy;
+    };
+}>, ScheduledReactiveComputationModule<ObservableComputation> {
     gen: ScheduledReactiveComputationModule<ObservableComputation>["gen"];
     genPure: ScheduledReactiveComputationModule<ObservableComputation>["genPure"];
     retry: ScheduledReactiveComputationModule<ObservableComputation>["retry"];

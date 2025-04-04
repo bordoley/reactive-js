@@ -2,7 +2,6 @@
 
 import { ComputationTypeLike_baseOfT, } from "../computations.js";
 import { identityLazy } from "../functions.js";
-import Broadcaster_toProducer from "./Broadcaster/__private__/Broadcaster.toProducer.js";
 import Observable_broadcast from "./Observable/__private__/Observable.broadcast.js";
 import Observable_buffer from "./Observable/__private__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__private__/Observable.catchError.js";
@@ -16,6 +15,7 @@ import Observable_distinctUntilChanged from "./Observable/__private__/Observable
 import Observable_encodeUtf8 from "./Observable/__private__/Observable.encodeUtf8.js";
 import Observable_forEach from "./Observable/__private__/Observable.forEach.js";
 import Observable_forkMerge from "./Observable/__private__/Observable.forkMerge.js";
+import Observable_fromBroadcaster from "./Observable/__private__/Observable.fromBroadcaster.js";
 import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Observable.gen.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
@@ -43,6 +43,7 @@ import Observable_toProducer from "./Observable/__private__/Observable.toProduce
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_withEffect from "./Observable/__private__/Observble.withEffect.js";
+import Producer_toObservable from "./Producer/__private__/Producer.toObservable.js";
 export const broadcast = Observable_broadcast;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
@@ -58,10 +59,10 @@ export const distinctUntilChanged = Observable_distinctUntilChanged;
 export const encodeUtf8 = Observable_encodeUtf8;
 export const forEach = Observable_forEach;
 export const forkMerge = Observable_forkMerge;
-export const fromBroadcaster = Broadcaster_toProducer;
+export const fromBroadcaster = Observable_fromBroadcaster;
 export const fromObservable = 
 /*@__PURE__*/ identityLazy;
-export const fromProducer = identityLazy;
+export const fromProducer = Producer_toObservable;
 export const gen = Observable_gen;
 export const genAsync = Observable_genAsync;
 export const genPure = Observable_genPure;

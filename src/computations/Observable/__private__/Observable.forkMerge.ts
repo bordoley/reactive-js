@@ -4,10 +4,10 @@ import {
 } from "../../../computations.js";
 import { Function1, compose } from "../../../functions.js";
 import { ObserverLike, SchedulerLike } from "../../../utils.js";
-import Broadcaster_toProducer from "../../Broadcaster/__private__/Broadcaster.toProducer.js";
 import type * as Observable from "../../Observable.js";
 import Producer_broadcast from "../../Producer/__private__/Producer.broadcast.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
+import Observable_fromBroadcaster from "./Observable.fromBroadcaster.js";
 import Observable_merge from "./Observable.merge.js";
 import Observable_toProducer from "./Observable.toProducer.js";
 
@@ -29,7 +29,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
     ObserverLike<TOut>
   >(
     toBroadcaster,
-    Broadcaster_toProducer,
+    Observable_fromBroadcaster,
     Observable_merge,
     ops,
   )) as unknown as Observable.Signature["forkMerge"];
