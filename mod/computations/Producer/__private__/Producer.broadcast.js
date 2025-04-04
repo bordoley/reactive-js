@@ -9,47 +9,34 @@ import DelegatingEventListenerMixin, { DelegatingEventListenerLike_delegate, } f
 import DisposeOnCompleteSinkMixin from "../../../utils/__mixins__/DisposeOnCompleteSinkMixin.js";
 import { EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SinkLike_isCompleted, } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
-import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
+import * as Publisher from "../../Publisher.js";
 import * as WritableStore from "../../WritableStore.js";
 import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
-const Broadcaster_createPauseable = 
-/*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()), function PauseableBroadcaster(op, options) {
-        const writableStore = WritableStore.create(false, options);
-        this[PauseableLike_isPaused] = writableStore;
-        const delegate = pipe(writableStore, op);
-        init(DelegatingDisposableMixin, this, writableStore);
+const Producer_broadcast = /*@__PURE__*/ (() => {
+    const createPauseableConsumerBroadcaster = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), DisposeOnCompleteSinkMixin(), DelegatingBroadcasterMixin()), function EventListenerToPauseableConsumer(options) {
+        const delegate = Publisher.create(options);
+        init(DelegatingDisposableMixin, this, delegate);
+        init(DelegatingEventListenerMixin(), this, delegate);
+        init(DisposeOnCompleteSinkMixin(), this);
         init(DelegatingBroadcasterMixin(), this, delegate);
+        const mode = pipe(WritableStore.create(false), Disposable.bindTo(this));
+        this[PauseableLike_isPaused] = mode;
         return this;
     }, props({
         [PauseableLike_isPaused]: none,
     }), proto({
+        get [FlowControllerLike_isReady]() {
+            unsafeCast(this);
+            return !this[PauseableLike_isPaused][StoreLike_value];
+        },
         [PauseableLike_pause]() {
             this[PauseableLike_isPaused][StoreLike_value] = true;
         },
         [PauseableLike_resume]() {
             this[PauseableLike_isPaused][StoreLike_value] = false;
         },
-    }));
-})();
-const Producer_broadcast = /*@__PURE__*/ (() => {
-    const EventListernToPauseableConsumer_mode = Symbol("EventListernToPauseableConsumer_mode");
-    const createPauseableConsumer = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingEventListenerMixin(), DisposeOnCompleteSinkMixin()), function EventListenerToPauseableConsumer(listener, mode) {
-        init(DelegatingDisposableMixin, this, listener);
-        init(DelegatingEventListenerMixin(), this, listener);
-        init(DisposeOnCompleteSinkMixin(), this);
-        this[EventListernToPauseableConsumer_mode] = mode;
-        pipe(mode, Disposable.bindTo(this));
-        return this;
-    }, props({
-        [EventListernToPauseableConsumer_mode]: none,
-    }), proto({
-        get [FlowControllerLike_isReady]() {
-            unsafeCast(this);
-            return !this[EventListernToPauseableConsumer_mode][StoreLike_value];
-        },
         [FlowControllerLike_addOnReadyListener](callback) {
-            return pipe(this[EventListernToPauseableConsumer_mode], Broadcaster_addEventHandler(isPaused => {
+            return pipe(this[PauseableLike_isPaused], Broadcaster_addEventHandler(isPaused => {
                 if (!isPaused) {
                     callback();
                 }
@@ -66,9 +53,10 @@ const Producer_broadcast = /*@__PURE__*/ (() => {
             delegate[EventListenerLike_notify](next);
         },
     }));
-    return (options) => (producer) => Broadcaster_createPauseable(mode => Broadcaster_create(listener => {
-        const consumer = createPauseableConsumer(listener, mode);
+    return (options) => (producer) => {
+        const consumer = createPauseableConsumerBroadcaster(options);
         producer[EventSourceLike_subscribe](consumer);
-    }), options);
+        return consumer;
+    };
 })();
 export default Producer_broadcast;

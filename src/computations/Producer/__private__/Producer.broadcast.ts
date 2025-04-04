@@ -10,12 +10,11 @@ import {
   BroadcasterLike,
   EventSourceLike_subscribe,
   ProducerLike,
-  StoreLike,
   StoreLike_value,
   WritableStoreLike,
 } from "../../../computations.js";
 import {
-  Function1,
+  Optional,
   SideEffect1,
   none,
   pipe,
@@ -30,9 +29,6 @@ import DelegatingEventListenerMixin, {
 import DisposeOnCompleteSinkMixin from "../../../utils/__mixins__/DisposeOnCompleteSinkMixin.js";
 import {
   ConsumerLike,
-  DisposableContainerLike,
-  DisposableLike,
-  EventListenerLike,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
@@ -40,121 +36,78 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
-  SchedulerLike,
-  SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import Broadcaster_addEventHandler from "../../Broadcaster/__private__/Broadcaster.addEventHandler.js";
-import Broadcaster_create from "../../Broadcaster/__private__/Broadcaster.create.js";
 import type * as Producer from "../../Producer.js";
+import * as Publisher from "../../Publisher.js";
 import * as WritableStore from "../../WritableStore.js";
 import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
-
-interface Signature {
-  createPauseable<T>(
-    op: Function1<StoreLike<boolean> & DisposableLike, BroadcasterLike<T>>,
-    options?: {
-      readonly autoDispose?: boolean;
-    },
-  ): PauseableLike & BroadcasterLike<T> & DisposableLike;
-}
-
-const Broadcaster_createPauseable: Signature["createPauseable"] =
-  /*@__PURE__*/ (<T>() => {
-    type TProperties = {
-      [PauseableLike_isPaused]: WritableStoreLike<boolean>;
-    };
-
-    return mixInstanceFactory(
-      include(DelegatingDisposableMixin, DelegatingBroadcasterMixin()),
-      function PauseableBroadcaster(
-        this: Omit<PauseableLike, keyof DisposableContainerLike> & TProperties,
-        op: Function1<
-          BroadcasterLike<boolean> & DisposableLike,
-          BroadcasterLike<T>
-        >,
-        options?: {
-          readonly autoDispose?: boolean;
-        },
-      ): PauseableLike & BroadcasterLike<T> & DisposableLike {
-        const writableStore = WritableStore.create(false, options);
-        this[PauseableLike_isPaused] = writableStore;
-
-        const delegate = pipe(writableStore, op);
-
-        init(DelegatingDisposableMixin, this, writableStore);
-        init(DelegatingBroadcasterMixin<T>(), this, delegate);
-        return this;
-      },
-      props<TProperties>({
-        [PauseableLike_isPaused]: none,
-      }),
-      proto({
-        [PauseableLike_pause](this: TProperties) {
-          this[PauseableLike_isPaused][StoreLike_value] = true;
-        },
-
-        [PauseableLike_resume](this: TProperties) {
-          this[PauseableLike_isPaused][StoreLike_value] = false;
-        },
-      }),
-    );
-  })() as Signature["createPauseable"];
 
 const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const EventListernToPauseableConsumer_mode = Symbol(
-    "EventListernToPauseableConsumer_mode",
-  );
-
   type TProperties = {
-    [EventListernToPauseableConsumer_mode]: StoreLike<boolean>;
+    [PauseableLike_isPaused]: WritableStoreLike<boolean>;
   };
 
-  const createPauseableConsumer = mixInstanceFactory(
+  type TPrototype = Pick<
+    ConsumerLike<T> & PauseableLike & BroadcasterLike<T>,
+    | typeof FlowControllerLike_isReady
+    | typeof PauseableLike_pause
+    | typeof PauseableLike_resume
+    | typeof FlowControllerLike_addOnReadyListener
+    | typeof EventListenerLike_notify
+  >;
+
+  const createPauseableConsumerBroadcaster = mixInstanceFactory(
     include(
       DelegatingDisposableMixin,
       DelegatingEventListenerMixin(),
       DisposeOnCompleteSinkMixin(),
+      DelegatingBroadcasterMixin(),
     ),
     function EventListenerToPauseableConsumer(
-      this: TProperties &
-        Omit<
-          ConsumerLike<T>,
-          | keyof DisposableLike
-          | keyof SchedulerLike
-          | typeof SinkLike_complete
-          | typeof SinkLike_isCompleted
-        >,
-      listener: EventListenerLike<T>,
-      mode: StoreLike<boolean> & DisposableLike,
-    ): ConsumerLike<T> {
-      init(DelegatingDisposableMixin, this, listener);
-      init(DelegatingEventListenerMixin(), this, listener);
+      this: TProperties & TPrototype,
+      options: Optional<{ readonly autoDispose?: boolean }>,
+    ): ConsumerLike<T> & PauseableLike & BroadcasterLike<T> {
+      const delegate = Publisher.create<T>(options);
+
+      init(DelegatingDisposableMixin, this, delegate);
+      init(DelegatingEventListenerMixin(), this, delegate);
       init(DisposeOnCompleteSinkMixin(), this);
+      init(DelegatingBroadcasterMixin<T>(), this, delegate);
 
-      this[EventListernToPauseableConsumer_mode] = mode;
+      const mode = pipe(WritableStore.create(false), Disposable.bindTo(this));
 
-      pipe(mode, Disposable.bindTo(this));
+      this[PauseableLike_isPaused] = mode;
 
       return this;
     },
     props<TProperties>({
-      [EventListernToPauseableConsumer_mode]: none,
+      [PauseableLike_isPaused]: none,
     }),
-    proto({
+    proto<TPrototype>({
       get [FlowControllerLike_isReady]() {
         unsafeCast<TProperties>(this);
 
-        return !this[EventListernToPauseableConsumer_mode][StoreLike_value];
+        return !this[PauseableLike_isPaused][StoreLike_value];
       },
+
+      [PauseableLike_pause](this: TProperties) {
+        this[PauseableLike_isPaused][StoreLike_value] = true;
+      },
+
+      [PauseableLike_resume](this: TProperties) {
+        this[PauseableLike_isPaused][StoreLike_value] = false;
+      },
+
       [FlowControllerLike_addOnReadyListener](
         this: TProperties & ConsumerLike<T>,
         callback: SideEffect1<void>,
       ) {
         return pipe(
-          this[EventListernToPauseableConsumer_mode],
+          this[PauseableLike_isPaused],
           Broadcaster_addEventHandler(isPaused => {
             if (!isPaused) {
               callback();
@@ -182,15 +135,11 @@ const Producer_broadcast: Producer.Signature["broadcast"] = /*@__PURE__*/ (<
   );
 
   return (options?: { readonly autoDispose?: boolean }) =>
-    (producer: ProducerLike<T>) =>
-      Broadcaster_createPauseable<T>(
-        mode =>
-          Broadcaster_create<T>(listener => {
-            const consumer = createPauseableConsumer(listener, mode);
-            producer[EventSourceLike_subscribe](consumer);
-          }),
-        options,
-      );
+    (producer: ProducerLike<T>) => {
+      const consumer = createPauseableConsumerBroadcaster(options);
+      producer[EventSourceLike_subscribe](consumer);
+      return consumer;
+    };
 })();
 
 export default Producer_broadcast;
