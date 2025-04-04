@@ -50,7 +50,7 @@ export const create = /*@PURE__*/ (() => {
         instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
         instance[SerialDisposableLike_current] = hostScheduler[SchedulerLike_schedule](bind(hostSchedulerContinuation, instance), { delay });
     };
-    function* hostSchedulerContinuation() {
+    function* hostSchedulerContinuation(scheduler) {
         const isPausedStore = this[PauseableLike_isPaused];
         while (!this[DisposableLike_isDisposed] &&
             !isPausedStore[StoreLike_value]) {
@@ -60,7 +60,7 @@ export const create = /*@PURE__*/ (() => {
             }
             const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
             const now = this[SchedulerLike_now];
-            const delay = dueTime - now;
+            const delay = clampPositiveInteger(dueTime - now);
             if (delay > 0) {
                 this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
             }
@@ -71,7 +71,9 @@ export const create = /*@PURE__*/ (() => {
                 continuation?.[SchedulerContinuationLike_run]();
                 this[PauseableScheduler_activeContinuation] = none;
             }
-            yield clampPositiveInteger(delay);
+            if (delay > 0 || scheduler[SchedulerLike_shouldYield]) {
+                yield delay;
+            }
         }
     }
     return mixInstanceFactory(include(SchedulerMixin, SerialDisposableMixin(), QueueMixin()), function PauseableScheduler(host) {

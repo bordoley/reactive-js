@@ -141,6 +141,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       TProperties &
       QueueLike<SchedulerContinuationLike> &
       DisposableLike,
+    scheduler: SchedulerLike,
   ) {
     const isPausedStore = this[PauseableLike_isPaused];
     while (
@@ -155,7 +156,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
       const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
       const now = this[SchedulerLike_now];
-      const delay = dueTime - now;
+      const delay = clampPositiveInteger(dueTime - now);
 
       if (delay > 0) {
         this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
@@ -168,7 +169,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         this[PauseableScheduler_activeContinuation] = none;
       }
 
-      yield clampPositiveInteger(delay);
+      if (delay > 0 || scheduler[SchedulerLike_shouldYield]) {
+        yield delay;
+      }
     }
   }
 
