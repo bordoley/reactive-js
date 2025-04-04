@@ -22,6 +22,8 @@ import {
   OverflowBackpressureStrategy,
   QueueLike_enqueue,
   SchedulerLike,
+  SchedulerLike_maxYieldInterval,
+  SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   SinkLike_complete,
@@ -44,7 +46,6 @@ const genFactory =
       Disposable.addTo(observer),
     );
 
-    // FIXME need backpressure options;
     const queue = pipe(
       FlowControllerQueue.create<T>({
         backpressureStrategy: OverflowBackpressureStrategy,
@@ -54,7 +55,6 @@ const genFactory =
     );
 
     let isCompleted = false;
-
     let dispatchSubscription = Disposable.disposed;
 
     function* dispatchEvents(scheduler: SchedulerLike) {
@@ -101,6 +101,10 @@ const genFactory =
 
     let enumerateIsActive = false;
     const enumerate = async () => {
+      const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
+      const startTime = observer[SchedulerLike_now];
+
+      let elapsedTime = 0;
       let queueIsReady = queue[FlowControllerLike_isReady];
       let observerIsReady = observer[FlowControllerLike_isReady];
       let observerIsCompleted = observer[SinkLike_isCompleted];
@@ -115,6 +119,7 @@ const genFactory =
           queueIsReady &&
           observerIsReady &&
           !observerIsCompleted &&
+          elapsedTime < maxYieldInterval &&
           (await enumerator[AsyncEnumeratorLike_moveNext]())
         ) {
           const value = enumerator[AsyncEnumeratorLike_current];
@@ -122,12 +127,18 @@ const genFactory =
 
           // Reassign because these values may change after
           // hopping the micro task queue
+          elapsedTime = observer[SchedulerLike_now] - startTime;
           queueIsReady = queue[FlowControllerLike_isReady];
           observerIsReady = observer[FlowControllerLike_isReady];
           observerIsCompleted = observer[SinkLike_isCompleted];
         }
 
-        if (queueIsReady && observerIsReady && !observerIsCompleted) {
+        if (
+          queueIsReady &&
+          observerIsReady &&
+          elapsedTime < maxYieldInterval &&
+          !observerIsCompleted
+        ) {
           isCompleted = true;
           scheduleDispatcher();
         }
