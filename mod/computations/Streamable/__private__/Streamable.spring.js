@@ -3,19 +3,17 @@
 import { Array_push } from "../../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, } from "../../../__internal__/mixins.js";
 import { StoreLike_value, StreamableLike_stream, } from "../../../computations.js";
-import { compose, identity, isFunction, isNumber, isReadonlyArray, none, pipe, returns, tuple, } from "../../../functions.js";
+import { isFunction, isNumber, isReadonlyArray, pipe, returns, tuple, } from "../../../functions.js";
 import { scale } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
+import * as Broadcaster from "../../Broadcaster.js";
 import * as Observable from "../../Observable.js";
 import * as Runnable from "../../Runnable.js";
 import * as SynchronousObservable from "../../SynchronousObservable.js";
-import * as WritableStore from "../../WritableStore.js";
-import StreamMixin from "../../__mixins__/StreamMixin.js";
-import { AnimationLike_isRunning } from "./Streamable.animation.js";
+import AnimationStreamMixin from "../../__mixins__/AnimationStreamMixin.js";
 const Streamable_spring = /*@__PURE__*/ (() => {
-    const createSpringStream = mixInstanceFactory(include(StreamMixin(), DelegatingPauseableMixin), function SpringStream(scheduler, springOptions, options) {
-        const operator = compose((identity), Observable.map((updater) => {
+    const createSpringStream = mixInstanceFactory(include(AnimationStreamMixin(), DelegatingPauseableMixin), function SpringStream(scheduler, springOptions, options) {
+        const f = (updater) => {
             const acc = this[StoreLike_value];
             const command = isFunction(updater) ? updater(acc) : updater;
             const springCommandOptions = isNumber(command) || isReadonlyArray(command)
@@ -39,21 +37,14 @@ const Streamable_spring = /*@__PURE__*/ (() => {
                 }
                 return animations;
             }, () => []));
-            return pipe(Observable.concat(...sources), Observable.withEffect(() => {
-                animationIsRunning[StoreLike_value] = true;
-                return () => {
-                    animationIsRunning[StoreLike_value] = false;
-                };
-            }));
-        }), Observable.switchAll(), Observable.forEach(v => {
+            return Observable.concat(...sources);
+        };
+        init(AnimationStreamMixin(), this, f, scheduler, options);
+        pipe(this, Broadcaster.addEventHandler(v => {
             this[StoreLike_value] = v;
         }));
-        init(StreamMixin(), this, operator, scheduler, options);
-        const animationIsRunning = pipe(WritableStore.create(false), Disposable.addTo(this));
-        this[AnimationLike_isRunning] = animationIsRunning;
         return this;
     }, props({
-        [AnimationLike_isRunning]: none,
         [StoreLike_value]: 0,
     }));
     return (springOptions) => ({

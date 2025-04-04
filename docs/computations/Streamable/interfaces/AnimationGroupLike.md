@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`AnimationLike`](AnimationLike.md)\<`TEvent`, `number`\>.[`DictionaryLike`](../../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
+- [`AnimationLike`](AnimationLike.md)\<`TEvent`, `void`\>.[`PauseableLike`](../../../utils/interfaces/PauseableLike.md).[`DictionaryLike`](../../../collections/interfaces/DictionaryLike.md)\<`TKey`, [`BroadcasterLike`](../../interfaces/BroadcasterLike.md)\<`T`\>\>
 
 ## Type Parameters
 

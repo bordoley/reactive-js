@@ -25,6 +25,7 @@ import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DropLatestBackpressureStrategy,
   EventListenerLike_notify,
+  PauseableLike_resume,
   SinkLike_complete,
   SinkLike_isCompleted,
   VirtualTimeSchedulerLike_run,
@@ -57,6 +58,7 @@ testModule(
       );
 
       stream[EventListenerLike_notify](none);
+      stream[PauseableLike_resume]();
 
       vts[VirtualTimeSchedulerLike_run]();
 

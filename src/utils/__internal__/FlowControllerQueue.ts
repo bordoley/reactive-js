@@ -14,7 +14,7 @@ export const create: <T>(options?: {
 }) => FlowControllerQueueLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
     include(DisposableMixin, FlowControllerQueueMixin()),
-    function Queue(
+    function FlowControllerQueue(
       this: unknown,
       options: Optional<{
         backpressureStrategy?: BackpressureStrategy;

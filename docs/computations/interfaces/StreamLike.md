@@ -11,7 +11,7 @@ be consumed.
 
 ## Extends
 
-- [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`TReq`\>.[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>.[`PauseableLike`](../../utils/interfaces/PauseableLike.md)
+- [`ConsumerLike`](../../utils/interfaces/ConsumerLike.md)\<`TReq`\>.[`BroadcasterLike`](BroadcasterLike.md)\<`T`\>
 
 ## Extended by
 
@@ -54,18 +54,6 @@ be consumed.
 
 [`BroadcasterLike`](BroadcasterLike.md).[`[ComputationLike_isSynchronous]`](BroadcasterLike.md#computationlike_issynchronous)
 
-***
-
-### \[PauseableLike\_isPaused\]
-
-> `readonly` **\[PauseableLike\_isPaused\]**: [`StoreLike`](StoreLike.md)\<`boolean`\>
-
-Boolean flag indicating if the PauseableLike is currently paused or not.
-
-#### Inherited from
-
-[`PauseableLike`](../../utils/interfaces/PauseableLike.md).[`[PauseableLike_isPaused]`](../../utils/interfaces/PauseableLike.md#pauseablelike_ispaused)
-
 ## Methods
 
 ### \[EventSourceLike\_subscribe\]()
@@ -85,35 +73,3 @@ Boolean flag indicating if the PauseableLike is currently paused or not.
 #### Inherited from
 
 [`BroadcasterLike`](BroadcasterLike.md).[`[EventSourceLike_subscribe]`](BroadcasterLike.md#eventsourcelike_subscribe)
-
-***
-
-### \[PauseableLike\_pause\]()
-
-> **\[PauseableLike\_pause\]**(): `void`
-
-Imperatively pause the source.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`PauseableLike`](../../utils/interfaces/PauseableLike.md).[`[PauseableLike_pause]`](../../utils/interfaces/PauseableLike.md#pauseablelike_pause)
-
-***
-
-### \[PauseableLike\_resume\]()
-
-> **\[PauseableLike\_resume\]**(): `void`
-
-Imperatively resume the source.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`PauseableLike`](../../utils/interfaces/PauseableLike.md).[`[PauseableLike_resume]`](../../utils/interfaces/PauseableLike.md#pauseablelike_resume)

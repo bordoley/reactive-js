@@ -29,10 +29,7 @@ import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
 import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
-import {
-  BroadcasterLike,
-  StoreLike_value,
-} from "@reactive-js/core/computations";
+import { BroadcasterLike, delay } from "@reactive-js/core/computations";
 import {
   PauseableLike_resume,
   PauseableLike_isPaused,
@@ -186,6 +183,7 @@ const Counter = () => {
         let i = counterInitialValue ?? 0;
         while (true) {
           yield i;
+          yield delay(15);
           i++;
         }
       }),
@@ -200,24 +198,24 @@ const Counter = () => {
     ),
     [history.replace, counterInitialValue],
   );
-  /*
-  useEffect( () => { 
-    counter?.[PauseableLike_pause]?.()
-  }, [counter])*/
+
+  useEffect(() => {
+    counter?.[PauseableLike_pause]?.();
+  }, [counter]);
   const counterValue = useEventSource(counter) ?? counterInitialValue;
+
+  const isPaused = useEventSource(counter?.[PauseableLike_isPaused]);
 
   return (
     <div>
       <button
         onClick={() =>
-          (counter?.[PauseableLike_isPaused]?.[StoreLike_value] ?? true)
+          (isPaused ?? true)
             ? counter?.[PauseableLike_resume]?.()
             : counter?.[PauseableLike_pause]?.()
         }
       >
-        {(counter?.[PauseableLike_isPaused]?.[StoreLike_value] ?? true)
-          ? "Resume Counter"
-          : "Pause Counter"}
+        {(isPaused ?? true) ? "Resume Counter" : "Pause Counter"}
       </button>
       <span>{counterValue}</span>
     </div>

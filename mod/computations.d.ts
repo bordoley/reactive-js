@@ -106,7 +106,7 @@ export interface WritableStoreLike<T = unknown> extends StoreLike<T>, PublisherL
     [StoreLike_value]: T;
 }
 export declare const StreamableLike_stream: unique symbol;
-export interface StreamLike<TReq, out T> extends ConsumerLike<TReq>, BroadcasterLike<T>, PauseableLike {
+export interface StreamLike<TReq, out T> extends ConsumerLike<TReq>, BroadcasterLike<T> {
 }
 export interface StreamableLike<TReq = unknown, out T = unknown, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {

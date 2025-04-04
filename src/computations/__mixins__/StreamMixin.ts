@@ -8,23 +8,17 @@ import { Function1, Optional, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingConsumerMixin from "../../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import DelegatingPauseableMixin from "../../utils/__mixins__/DelegatingPauseableMixin.js";
-import {
-  BackpressureStrategy,
-  DisposableLike,
-  SchedulerLike,
-} from "../../utils.js";
+import { BackpressureStrategy, SchedulerLike } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
 import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
 
 const StreamMixin: <TReq, T>() => Mixin3<
-  StreamLike<TReq, T> & DisposableLike,
+  StreamLike<TReq, T>,
   Function1<PureObservableLike<TReq>, ObservableLike<T>>,
   SchedulerLike,
   Optional<{
     autoDispose?: boolean;
-    replay?: number;
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
   }>
@@ -35,7 +29,6 @@ const StreamMixin: <TReq, T>() => Mixin3<
         DelegatingDisposableMixin,
         DelegatingConsumerMixin(),
         DelegatingBroadcasterMixin<T>(),
-        DelegatingPauseableMixin,
       ),
       function Stream(
         this: unknown,
@@ -46,7 +39,7 @@ const StreamMixin: <TReq, T>() => Mixin3<
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
         },
-      ): StreamLike<TReq, T> & DisposableLike {
+      ): StreamLike<TReq, T> {
         const consumer = ConsumerObservable.create<TReq>(options);
 
         const delegate = pipe(
@@ -62,7 +55,6 @@ const StreamMixin: <TReq, T>() => Mixin3<
         init(DelegatingDisposableMixin, this, consumer);
         init(DelegatingConsumerMixin<TReq>(), this, consumer);
         init(DelegatingBroadcasterMixin<T>(), this, delegate);
-        init(DelegatingPauseableMixin, this, delegate);
 
         return this;
       },

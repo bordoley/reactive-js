@@ -60,7 +60,7 @@ import { StreamableLike_stream } from "../../computations.js";
 import { bindMethod, identity, invoke, none, pipe, pipeSome, returns, } from "../../functions.js";
 import { increment } from "../../math.js";
 import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
-import { DropLatestBackpressureStrategy, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DropLatestBackpressureStrategy, EventListenerLike_notify, PauseableLike_resume, SinkLike_complete, SinkLike_isCompleted, VirtualTimeSchedulerLike_run, } from "../../utils.js";
 import * as Broadcaster from "../Broadcaster.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
@@ -76,6 +76,7 @@ testModule("Streamable", describe("animation", test("integration", () => {
             result = ev;
         }));
         stream[EventListenerLike_notify](none);
+        stream[PauseableLike_resume]();
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectEquals(1));
     }

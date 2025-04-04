@@ -200,8 +200,7 @@ export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
 export interface StreamLike<TReq, out T>
   extends ConsumerLike<TReq>,
-    BroadcasterLike<T>,
-    PauseableLike {}
+    BroadcasterLike<T> {}
 
 export interface StreamableLike<
   TReq = unknown,

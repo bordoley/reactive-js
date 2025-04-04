@@ -16,24 +16,25 @@ import {
   Reducer,
   Updater,
 } from "../functions.js";
-import { SchedulerLike } from "../utils.js";
+import { PauseableLike } from "../utils.js";
 import Streamable_actionReducer from "./Streamable/__private__/Streamable.actionReducer.js";
-import Streamable_animation, {
-  AnimationLike_isRunning as Animation_isRunning,
-} from "./Streamable/__private__/Streamable.animation.js";
+import Streamable_animation from "./Streamable/__private__/Streamable.animation.js";
 import Streamable_animationGroup from "./Streamable/__private__/Streamable.animationGroup.js";
 import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
 import Streamable_spring from "./Streamable/__private__/Streamable.spring.js";
 import Streamable_stateStore from "./Streamable/__private__/Streamable.stateStore.js";
 import Streamable_syncState from "./Streamable/__private__/Streamable.syncState.js";
+import { AnimationLike_isRunning as Animation_isRunning } from "./__mixins__/AnimationStreamMixin.js";
 
 export const AnimationLike_isRunning: typeof Animation_isRunning =
   Animation_isRunning;
 /**
  * @noInheritDoc
  */
-export interface AnimationLike<TEvent, out T> extends StreamLike<TEvent, T> {
+export interface AnimationLike<TEvent, out T>
+  extends StreamLike<TEvent, T>,
+    PauseableLike {
   readonly [AnimationLike_isRunning]: StoreLike<boolean>;
 }
 
@@ -41,7 +42,8 @@ export interface AnimationLike<TEvent, out T> extends StreamLike<TEvent, T> {
  * @noInheritDoc
  */
 export interface AnimationGroupLike<TEvent, TKey extends string, out T>
-  extends AnimationLike<TEvent, number>,
+  extends AnimationLike<TEvent, void>,
+    PauseableLike,
     DictionaryLike<TKey, BroadcasterLike<T>> {}
 
 export type SpringCommand =
@@ -89,16 +91,14 @@ export interface StreamableModule {
       TKey,
       PureSynchronousObservableLike<T>
     >,
-    options?: { readonly animationScheduler?: SchedulerLike },
-  ): StreamableLike<void, number, AnimationGroupLike<void, TKey, T>>;
+  ): StreamableLike<void, void, AnimationGroupLike<void, TKey, T>>;
   animationGroup<T, TKey extends string, TEvent>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       | Function1<TEvent, PureSynchronousObservableLike<T>>
       | PureSynchronousObservableLike<T>
     >,
-    options?: { readonly animationScheduler?: SchedulerLike },
-  ): StreamableLike<TEvent, number, AnimationGroupLike<TEvent, TKey, T>>;
+  ): StreamableLike<TEvent, void, AnimationGroupLike<TEvent, TKey, T>>;
 
   create<TReq, T>(
     op: Function1<PureObservableLike<TReq>, ObservableLike<T>>,

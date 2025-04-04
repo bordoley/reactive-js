@@ -464,6 +464,10 @@ export const concat: Signature["concat"] = <TConsumer extends ConsumerLike>(
       ): void {
         const { [ConcatSource_sources]: sources } = this;
 
+        if (sources.length === 0) {
+          consumer[DisposableLike_dispose]();
+        }
+
         const concatSink = createConcatSink({
           [ConcatSinkCtx_delegate]: consumer,
           [ConcatSinkCtx_sources]: sources,

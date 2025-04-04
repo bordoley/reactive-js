@@ -11,8 +11,12 @@ import {
   pipe,
 } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import { EventListenerLike_notify, ObserverLike } from "../../../utils.js";
-import Broadcaster_toProducer from "../../Broadcaster/__private__/Broadcaster.toProducer.js";
+import {
+  EventListenerLike_notify,
+  ObserverLike,
+  SchedulerLike_schedule,
+} from "../../../utils.js";
+import Broadcaster_toObservable from "../../Broadcaster/__private__/Broadcaster.toObservable.js";
 import Computation_isPure from "../../Computation/__private__/Computation.isPure.js";
 import type * as Observable from "../../Observable.js";
 import * as Publisher from "../../Publisher.js";
@@ -38,8 +42,8 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
 
         const feedbackSource = pipe(
           accFeedbackPublisher,
-          Broadcaster_toProducer<TAcc>(),
-        ) as ObservableLike<TAcc>;
+          Broadcaster_toObservable(),
+        );
 
         pipe(
           source,
@@ -55,7 +59,9 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           invoke(EventSourceLike_subscribe, observer),
         );
 
-        accFeedbackPublisher[EventListenerLike_notify](initialValue());
+        observer[SchedulerLike_schedule](function* () {
+          accFeedbackPublisher[EventListenerLike_notify](initialValue());
+        });
       },
       {
         [ComputationLike_isPure]:

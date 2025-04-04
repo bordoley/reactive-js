@@ -137,6 +137,10 @@ export interface ObservableModule
 
   subscribeOn<T>(
     scheduler: SchedulerLike,
+    options?: {
+      backpressureStrategy?: BackpressureStrategy;
+      capacity?: number;
+  }
   ): PureComputationOperator<ObservableComputation, T, T>;
 }
 

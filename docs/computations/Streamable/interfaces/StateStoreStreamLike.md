@@ -55,18 +55,6 @@ be consumed.
 
 ***
 
-### \[PauseableLike\_isPaused\]
-
-> `readonly` **\[PauseableLike\_isPaused\]**: [`StoreLike`](../../interfaces/StoreLike.md)\<`boolean`\>
-
-Boolean flag indicating if the PauseableLike is currently paused or not.
-
-#### Inherited from
-
-[`StreamLike`](../../interfaces/StreamLike.md).[`[PauseableLike_isPaused]`](../../interfaces/StreamLike.md#pauseablelike_ispaused)
-
-***
-
 ### \[StoreLike\_value\]
 
 > `readonly` **\[StoreLike\_value\]**: `T`
@@ -94,35 +82,3 @@ Boolean flag indicating if the PauseableLike is currently paused or not.
 #### Inherited from
 
 [`StoreLike`](../../interfaces/StoreLike.md).[`[EventSourceLike_subscribe]`](../../interfaces/StoreLike.md#eventsourcelike_subscribe)
-
-***
-
-### \[PauseableLike\_pause\]()
-
-> **\[PauseableLike\_pause\]**(): `void`
-
-Imperatively pause the source.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`StreamLike`](../../interfaces/StreamLike.md).[`[PauseableLike_pause]`](../../interfaces/StreamLike.md#pauseablelike_pause)
-
-***
-
-### \[PauseableLike\_resume\]()
-
-> **\[PauseableLike\_resume\]**(): `void`
-
-Imperatively resume the source.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`StreamLike`](../../interfaces/StreamLike.md).[`[PauseableLike_resume]`](../../interfaces/StreamLike.md#pauseablelike_resume)

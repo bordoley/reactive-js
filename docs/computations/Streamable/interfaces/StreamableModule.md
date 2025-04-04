@@ -86,7 +86,7 @@
 
 #### Call Signature
 
-> **animationGroup**\<`T`, `TKey`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`void`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`\>(`animationGroup`): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `void`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`void`, `TKey`, `T`\>\>
 
 ##### Type Parameters
 
@@ -100,19 +100,13 @@
 
 [`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>
 
-###### options?
-
-###### animationScheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`void`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`void`, `void`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`void`, `TKey`, `T`\>\>
 
 #### Call Signature
 
-> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`, `options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`TEvent`, `TKey`, `T`\>\>
+> **animationGroup**\<`T`, `TKey`, `TEvent`\>(`animationGroup`): [`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `void`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ##### Type Parameters
 
@@ -128,15 +122,9 @@
 
 [`ReadonlyObjectMapLike`](../../../collections/type-aliases/ReadonlyObjectMapLike.md)\<`TKey`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\> \| [`Function1`](../../../functions/type-aliases/Function1.md)\<`TEvent`, [`PureSynchronousObservableLike`](../../interfaces/PureSynchronousObservableLike.md)\<`T`\>\>\>
 
-###### options?
-
-###### animationScheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
-
 ##### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `number`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`TEvent`, `TKey`, `T`\>\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<`TEvent`, `void`, [`AnimationGroupLike`](AnimationGroupLike.md)\<`TEvent`, `TKey`, `T`\>\>
 
 ***
 

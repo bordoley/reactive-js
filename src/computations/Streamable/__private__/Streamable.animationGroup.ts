@@ -18,21 +18,17 @@ import * as Iterable from "../../../computations/Iterable.js";
 import * as Publisher from "../../../computations/Publisher.js";
 import {
   BroadcasterLike,
-  ComputationLike_isPure,
   PublisherLike,
   PureIterableLike,
   PureSynchronousObservableLike,
-  StoreLike_value,
   StreamableLike,
   StreamableLike_stream,
-  WritableStoreLike,
 } from "../../../computations.js";
 import {
   Function1,
   Optional,
   Tuple2,
   bindMethod,
-  compose,
   isFunction,
   none,
   pipe,
@@ -43,18 +39,20 @@ import {
   EventListenerLike_notify,
   SchedulerLike,
 } from "../../../utils.js";
+import * as Computation from "../../Computation.js";
 import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
-import * as WritableStore from "../../WritableStore.js";
-import StreamMixin from "../../__mixins__/StreamMixin.js";
-import { AnimationLike_isRunning } from "./Streamable.animation.js";
+import AnimationStreamMixin from "../../__mixins__/AnimationStreamMixin.js";
 
 const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
   /*@__PURE__*/ (<T, TEvent = unknown, TKey extends string = string>() => {
+    const m = Computation.makeModule<Observable.Signature, "keep">({
+      keep: Observable.keep,
+    });
+
     const AnimationGroup_animations = Symbol("AnimationGroup_animations");
 
     type TProperties = {
-      [AnimationLike_isRunning]: WritableStoreLike<boolean>;
       [AnimationGroup_animations]: ReadonlyObjectMapLike<
         TKey,
         BroadcasterLike<T>
@@ -64,7 +62,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
     type TPrototype = DictionaryLike<TKey, BroadcasterLike<T>>;
 
     const createAnimationGroupStream = mixInstanceFactory(
-      include(StreamMixin()),
+      include(AnimationStreamMixin()),
       function AnimationGroupStream(
         this: TProperties & TPrototype,
         animationGroup: ReadonlyObjectMapLike<
@@ -79,49 +77,33 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
           readonly capacity?: number;
         }>,
       ): Streamable.AnimationGroupLike<TEvent, TKey, T> {
-        const animationIsRunning = WritableStore.create(false);
-        this[AnimationLike_isRunning] = animationIsRunning;
+        const f = (event: TEvent) => {
+          const observables = pipe(
+            animationGroup,
+            ReadonlyObjectMap.entries(),
+            Iterable.map(
+              ([key, factory]: Tuple2<
+                string,
+                | Function1<TEvent, PureSynchronousObservableLike<T>>
+                | PureSynchronousObservableLike<T>
+              >) => {
+                const publisher = publishers[key] as PublisherLike<T>;
+                return pipe(
+                  isFunction(factory) ? factory(event) : factory,
+                  Observable.forEach(
+                    bindMethod(publisher, EventListenerLike_notify),
+                  ),
+                  Computation.ignoreElements(m),
+                );
+              },
+            ),
+            ReadonlyArray.fromIterable(),
+          );
 
-        const operator = compose(
-          Observable.map((event: TEvent) => {
-            const observables = pipe(
-              animationGroup,
-              ReadonlyObjectMap.entries(),
-              Iterable.map(
-                ([key, factory]: Tuple2<
-                  string,
-                  | Function1<TEvent, PureSynchronousObservableLike<T>>
-                  | PureSynchronousObservableLike<T>
-                >) => {
-                  const publisher = publishers[key] as PublisherLike<T>;
-                  return pipe(
-                    isFunction(factory) ? factory(event) : factory,
-                    Observable.forEach(
-                      bindMethod(publisher, EventListenerLike_notify),
-                    ),
-                  );
-                },
-              ),
-              ReadonlyArray.fromIterable(),
-            );
+          return Observable.merge(...observables);
+        };
 
-            return pipe(
-              Observable.merge(...observables),
-              Observable.withCurrentTime(t => t),
-              Observable.withEffect(() => {
-                animationIsRunning[StoreLike_value] = true;
-                return () => {
-                  animationIsRunning[StoreLike_value] = false;
-                };
-              }),
-            );
-          }),
-          Observable.switchAll({
-            [ComputationLike_isPure]: false,
-          }),
-        );
-
-        init(StreamMixin<TEvent, number>(), this, operator, scheduler, options);
+        init(AnimationStreamMixin<TEvent, void>(), this, f, scheduler, options);
 
         const publishers = (this[AnimationGroup_animations] = pipe(
           animationGroup,
@@ -130,12 +112,9 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
           ),
         ));
 
-        pipe(animationIsRunning, Disposable.addTo(this));
-
         return this;
       },
       props<TProperties>({
-        [AnimationLike_isRunning]: none,
         [AnimationGroup_animations]: none,
       }),
       proto<TPrototype>({
@@ -164,7 +143,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
       >,
     ): StreamableLike<
       TEvent,
-      number,
+      void,
       Streamable.AnimationGroupLike<TEvent, TKey, T>
     > => ({
       [StreamableLike_stream]: (scheduler, options) =>

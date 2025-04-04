@@ -6,46 +6,38 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ObservableLike,
   PureSynchronousObservableLike,
   StoreLike_value,
   StreamableLike,
   StreamableLike_stream,
-  WritableStoreLike,
 } from "../../../computations.js";
 import {
   Optional,
   Tuple2,
-  compose,
-  identity,
   isFunction,
   isNumber,
   isReadonlyArray,
-  none,
   pipe,
   returns,
   tuple,
 } from "../../../functions.js";
 import { scale } from "../../../math.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import { BackpressureStrategy, SchedulerLike } from "../../../utils.js";
+import * as Broadcaster from "../../Broadcaster.js";
 import * as Observable from "../../Observable.js";
 import * as Runnable from "../../Runnable.js";
 import type * as Streamable from "../../Streamable.js";
 import * as SynchronousObservable from "../../SynchronousObservable.js";
-import * as WritableStore from "../../WritableStore.js";
-import StreamMixin from "../../__mixins__/StreamMixin.js";
-import { AnimationLike_isRunning } from "./Streamable.animation.js";
+import AnimationStreamMixin from "../../__mixins__/AnimationStreamMixin.js";
 
 const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
   type TProperties = {
-    [AnimationLike_isRunning]: WritableStoreLike<boolean>;
     [StoreLike_value]: number;
   };
 
   const createSpringStream = mixInstanceFactory(
-    include(StreamMixin(), DelegatingPauseableMixin),
+    include(AnimationStreamMixin(), DelegatingPauseableMixin),
     function SpringStream(
       this: TProperties,
       scheduler: SchedulerLike,
@@ -60,92 +52,76 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
         readonly capacity?: number;
       }>,
     ): Streamable.SpringStreamLike {
-      const operator = compose(
-        identity<ObservableLike<Streamable.SpringEvent>>,
-        Observable.map((updater: Streamable.SpringEvent) => {
-          const acc = this[StoreLike_value];
-          const command = isFunction(updater) ? updater(acc) : updater;
-          const springCommandOptions =
-            isNumber(command) || isReadonlyArray(command)
-              ? springOptions
-              : {
-                  stiffness: command.stiffness ?? springOptions?.stiffness,
-                  damping: command.damping ?? springOptions?.damping,
-                  precision: command.precision ?? springOptions?.precision,
-                };
-
-          const startValue =
-            isNumber(command) || isReadonlyArray(command) ? acc : command.from;
-
-          const destinations: readonly number[] = isNumber(command)
-            ? [command]
-            : isReadonlyArray(command)
-              ? command
-              : isNumber(command.to)
-                ? [command.to]
-                : command.to;
-
-          const sources = pipe(
-            destinations,
-            Runnable.fromReadonlyArray(),
-            Runnable.scan<number, Tuple2<number, number>>(
-              ([, prev], v) => tuple(prev, v),
-              returns(tuple(startValue, startValue)),
-            ),
-            Runnable.reduce(
-              (
-                animations: Array<PureSynchronousObservableLike<number>>,
-                [prev, next],
-              ) => {
-                if (prev !== next) {
-                  animations[Array_push](
-                    pipe(
-                      SynchronousObservable.spring(springCommandOptions),
-                      SynchronousObservable.map(scale(prev, next)),
-                    ),
-                  );
-                }
-                return animations;
-              },
-              () => [],
-            ),
-          );
-
-          return pipe(
-            Observable.concat(...sources),
-            Observable.withEffect(() => {
-              animationIsRunning[StoreLike_value] = true;
-              return () => {
-                animationIsRunning[StoreLike_value] = false;
+      const f = (updater: Streamable.SpringEvent) => {
+        const acc = this[StoreLike_value];
+        const command = isFunction(updater) ? updater(acc) : updater;
+        const springCommandOptions =
+          isNumber(command) || isReadonlyArray(command)
+            ? springOptions
+            : {
+                stiffness: command.stiffness ?? springOptions?.stiffness,
+                damping: command.damping ?? springOptions?.damping,
+                precision: command.precision ?? springOptions?.precision,
               };
-            }),
-          );
-        }),
-        Observable.switchAll<number>(),
-        Observable.forEach(v => {
-          this[StoreLike_value] = v;
-        }),
-      );
+
+        const startValue =
+          isNumber(command) || isReadonlyArray(command) ? acc : command.from;
+
+        const destinations: readonly number[] = isNumber(command)
+          ? [command]
+          : isReadonlyArray(command)
+            ? command
+            : isNumber(command.to)
+              ? [command.to]
+              : command.to;
+
+        const sources = pipe(
+          destinations,
+          Runnable.fromReadonlyArray(),
+          Runnable.scan<number, Tuple2<number, number>>(
+            ([, prev], v) => tuple(prev, v),
+            returns(tuple(startValue, startValue)),
+          ),
+          Runnable.reduce(
+            (
+              animations: Array<PureSynchronousObservableLike<number>>,
+              [prev, next],
+            ) => {
+              if (prev !== next) {
+                animations[Array_push](
+                  pipe(
+                    SynchronousObservable.spring(springCommandOptions),
+                    SynchronousObservable.map(scale(prev, next)),
+                  ),
+                );
+              }
+              return animations;
+            },
+            () => [],
+          ),
+        );
+
+        return Observable.concat(...sources);
+      };
 
       init(
-        StreamMixin<Streamable.SpringEvent, number>(),
+        AnimationStreamMixin<Streamable.SpringEvent, number>(),
         this,
-        operator,
+        f,
         scheduler,
         options,
       );
 
-      const animationIsRunning = pipe(
-        WritableStore.create(false),
-        Disposable.addTo(this),
+      pipe(
+        this,
+        Broadcaster.addEventHandler(v => {
+          this[StoreLike_value] = v;
+        }),
       );
-      this[AnimationLike_isRunning] = animationIsRunning;
 
       return this;
     },
-
-    props<TProperties>({
-      [AnimationLike_isRunning]: none,
+    props({
       [StoreLike_value]: 0,
     }),
   );

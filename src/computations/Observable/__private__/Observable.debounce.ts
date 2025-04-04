@@ -58,7 +58,7 @@ const createDebounceSink: <T>(
 
   return mixInstanceFactory(
     include(DelegatingLiftedSinkMixin<ObserverLike, T>()),
-    function ThrowIfEmptySink(
+    function DebounceSink(
       this: Pick<
         DelegatingLiftedSinkLike<ObserverLike, T>,
         typeof EventListenerLike_notify

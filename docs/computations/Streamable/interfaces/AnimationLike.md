@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`StreamLike`](../../interfaces/StreamLike.md)\<`TEvent`, `T`\>
+- [`StreamLike`](../../interfaces/StreamLike.md)\<`TEvent`, `T`\>.[`PauseableLike`](../../../utils/interfaces/PauseableLike.md)
 
 ## Extended by
 
