@@ -8,7 +8,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import { DelegatingEventListenerLike_delegate } from "./DelegatingEventListenerMixin.js";
-import DelegatingNonCompletingNonDisposingMixin from "./DelegatingNonCompletingNonDisposingMixin.js";
+import DelegatingNonCompletingNonDisposingSinkMixin from "./DelegatingNonCompletingNonDisposingSinkMixin.js";
 import { DelegatingSinkLike } from "./DelegatingSinkMixin.js";
 
 type TReturn<
@@ -44,13 +44,17 @@ const DelegatingNonCompletingSinkMixin: <
 >() => {
   return returns(
     mix(
-      include(DelegatingNonCompletingNonDisposingMixin()),
+      include(DelegatingNonCompletingNonDisposingSinkMixin()),
       function DelegatingNonCompletingSinkMixin(
         this: TPrototype<T, TOut, TDelegateSink>,
         delegate: TDelegateSink,
       ): TReturn<T, TOut, TDelegateSink> {
         init(
-          DelegatingNonCompletingNonDisposingMixin<T, TOut, TDelegateSink>(),
+          DelegatingNonCompletingNonDisposingSinkMixin<
+            T,
+            TOut,
+            TDelegateSink
+          >(),
           this,
           delegate,
         );

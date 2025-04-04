@@ -5,10 +5,10 @@ import { bindMethod, pipe, returns } from "../../functions.js";
 import { DisposableLike_dispose, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
-import DelegatingNonCompletingNonDisposingMixin from "./DelegatingNonCompletingNonDisposingMixin.js";
+import DelegatingNonCompletingNonDisposingSinkMixin from "./DelegatingNonCompletingNonDisposingSinkMixin.js";
 const DelegatingCatchErrorSinkMixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(DelegatingNonCompletingNonDisposingMixin()), function DelegatingCatchErrorSinkMixin(delegate) {
-        init(DelegatingNonCompletingNonDisposingMixin(), this, delegate);
+    return returns(mix(include(DelegatingNonCompletingNonDisposingSinkMixin()), function DelegatingCatchErrorSinkMixin(delegate) {
+        init(DelegatingNonCompletingNonDisposingSinkMixin(), this, delegate);
         pipe(this, Disposable.addToContainer(delegate), DisposableContainer.onComplete(bindMethod(delegate, DisposableLike_dispose)));
         return this;
     }));

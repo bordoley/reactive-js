@@ -15,7 +15,7 @@ import DelegatingEventListenerMixin, {
   DelegatingEventListenerLike,
   DelegatingEventListenerLike_delegate,
 } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
-import DelegatingNonCompletingNonDisposingMixin from "../../utils/__mixins__/DelegatingNonCompletingNonDisposingMixin.js";
+import DelegatingNonCompletingNonDisposingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingNonDisposingSinkMixin.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -81,7 +81,7 @@ const LatestEventListenerMixin: () => Mixin2<
     mix(
       include(
         DelegatingEventListenerMixin(),
-        DelegatingNonCompletingNonDisposingMixin(),
+        DelegatingNonCompletingNonDisposingSinkMixin(),
       ),
       function LatestEventListenerMixin(
         this: TPrototype & TProperties,
@@ -93,7 +93,7 @@ const LatestEventListenerMixin: () => Mixin2<
           this,
           delegate,
         );
-        init(DelegatingNonCompletingNonDisposingMixin(), this, delegate);
+        init(DelegatingNonCompletingNonDisposingSinkMixin(), this, delegate);
         pipe(
           this,
           Disposable.addTo(delegate),

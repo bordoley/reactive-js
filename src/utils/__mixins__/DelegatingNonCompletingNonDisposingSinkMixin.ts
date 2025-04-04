@@ -41,7 +41,7 @@ type TPrototype<
   | typeof SinkLike_isCompleted
 >;
 
-const DelegatingNonCompletingNonDisposingMixin: <
+const DelegatingNonCompletingNonDisposingSinkMixin: <
   T,
   TOut = T,
   TDelegateSink extends SinkLike<TOut> = SinkLike<TOut>,
@@ -57,7 +57,7 @@ const DelegatingNonCompletingNonDisposingMixin: <
   return returns(
     mix(
       include(DisposableMixin, DelegatingSinkMixin()),
-      function DelegatingNonCompletingNonDisposingMixin(
+      function DelegatingNonCompletingNonDisposingSinkMixin(
         this: TPrototype<T, TOut, TDelegateSink>,
         delegate: TDelegateSink,
       ): TReturn<T, TOut, TDelegateSink> {
@@ -82,4 +82,4 @@ const DelegatingNonCompletingNonDisposingMixin: <
   );
 })();
 
-export default DelegatingNonCompletingNonDisposingMixin;
+export default DelegatingNonCompletingNonDisposingSinkMixin;

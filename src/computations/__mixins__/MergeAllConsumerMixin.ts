@@ -15,14 +15,10 @@ import { Function1, Optional, none, pipe, returns } from "../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
+import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
+import { DelegatingSinkLike } from "../../utils/__mixins__/DelegatingSinkMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
-import SinkMixin, {
-  SinkMixinLike,
-  SinkMixinLike_delegate,
-  SinkMixinLike_doComplete,
-  SinkMixinLike_isCompleted,
-} from "../../utils/__mixins__/SinkMixin.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
@@ -32,6 +28,7 @@ import {
   FlowControllerEnumeratorLike_addOnDataAvailableListener,
   FlowControllerQueueLike,
   QueueLike_enqueue,
+  SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -77,16 +74,15 @@ const MergeAllConsumerMixin: <
     mergeAllConsumer: TProperties &
       FlowControllerQueueLike<TInnerSource> &
       ConsumerLike &
-      SinkMixinLike<TConsumer, T>,
+      DelegatingSinkLike<TInnerSource, T, TConsumer>,
     source: TInnerSource,
   ) => {
-    const delegate = mergeAllConsumer[SinkMixinLike_delegate];
+    const delegate = mergeAllConsumer[DelegatingEventListenerLike_delegate];
     mergeAllConsumer[MergeAllConsumer_activeCount]++;
 
     const sourceDelegate = pipe(
       delegate,
       mergeAllConsumer[MergeAllConsumer_createDelegatingNonCompleting],
-      Disposable.addTo(mergeAllConsumer),
       DisposableContainer.onComplete(() => {
         mergeAllConsumer[MergeAllConsumer_activeCount]--;
         const activeCount = mergeAllConsumer[MergeAllConsumer_activeCount];
@@ -105,15 +101,11 @@ const MergeAllConsumerMixin: <
 
   return returns(
     mix(
-      include(
-        DelegatingDisposableMixin,
-        FlowControllerQueueMixin(),
-        SinkMixin(),
-      ),
+      include(FlowControllerQueueMixin(), DelegatingNonCompletingSinkMixin()),
       function MergeAllConsumerMixin(
         this: Omit<
           TReturn<TInnerSource, TConsumer, T>,
-          keyof FlowControllerQueueLike | typeof SinkLike_isCompleted
+          keyof FlowControllerQueueLike | keyof SinkLike
         > &
           TProperties,
         delegate: TConsumer,
@@ -124,9 +116,12 @@ const MergeAllConsumerMixin: <
         }>,
         createDelegatingNonCompleting: Function1<TConsumer, TConsumer>,
       ): TReturn<TInnerSource, TConsumer, T> {
-        init(DelegatingDisposableMixin, this, delegate);
         init(FlowControllerQueueMixin<TInnerSource>(), this, config);
-        init(SinkMixin<TConsumer, T>(), this, delegate);
+        init(
+          DelegatingNonCompletingSinkMixin<TInnerSource, T, TConsumer>(),
+          this,
+          delegate,
+        );
 
         const maxConcurrency = clampPositiveNonZeroInteger(
           config?.concurrency ?? MAX_SAFE_INTEGER,
@@ -150,6 +145,13 @@ const MergeAllConsumerMixin: <
               },
             ),
           ),
+          DisposableContainer.onComplete(() => {
+            const activeCount = this[MergeAllConsumer_activeCount];
+
+            if (activeCount <= 0) {
+              delegate[SinkLike_complete]();
+            }
+          }),
         );
 
         this[MergeAllConsumer_createDelegatingNonCompleting] =
@@ -163,28 +165,10 @@ const MergeAllConsumerMixin: <
       }),
       proto({
         [EventListenerLike_notify](
-          this: TProperties &
-            ConsumerLike<TInnerSource> &
-            FlowControllerQueueLike<TInnerSource>,
+          this: FlowControllerQueueLike<TInnerSource>,
           next: TInnerSource,
         ) {
           this[QueueLike_enqueue](next);
-        },
-
-        [SinkLike_complete](
-          this: TProperties &
-            ConsumerLike<TInnerSource> &
-            SinkMixinLike<TConsumer, T>,
-        ) {
-          const isCompleted = this[SinkLike_isCompleted];
-          const activeCount = this[MergeAllConsumer_activeCount];
-          this[SinkMixinLike_isCompleted] = true;
-
-          if (isCompleted || activeCount > 0) {
-            return;
-          }
-
-          this[SinkMixinLike_doComplete]();
         },
       }),
     ),
