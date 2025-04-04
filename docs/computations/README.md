@@ -6,6 +6,10 @@
 
 # computations
 
+## Classes
+
+- [GenYieldDelay](classes/GenYieldDelay.md)
+
 ## Interfaces
 
 - [AsyncIterableLike](interfaces/AsyncIterableLike.md)
@@ -74,6 +78,11 @@
 - [ComputationTypeLike\_baseOfT](variables/ComputationTypeLike_baseOfT.md)
 - [ComputationTypeLike\_T](variables/ComputationTypeLike_T.md)
 - [EventSourceLike\_subscribe](variables/EventSourceLike_subscribe.md)
+- [GenYieldDelay\_delay](variables/GenYieldDelay_delay.md)
 - [RunnableLike\_eval](variables/RunnableLike_eval.md)
 - [StoreLike\_value](variables/StoreLike_value.md)
 - [StreamableLike\_stream](variables/StreamableLike_stream.md)
+
+## Functions
+
+- [delay](functions/delay.md)

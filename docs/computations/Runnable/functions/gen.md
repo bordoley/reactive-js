@@ -6,7 +6,7 @@
 
 # Function: gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **gen**\<`T`\>(`factory`): [`RunnableLike`](../../interfaces/RunnableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ## Type Parameters
 
@@ -17,10 +17,6 @@
 ### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-### options?
-
-`unknown`
 
 ## Returns
 

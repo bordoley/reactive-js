@@ -55,6 +55,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrow, expectToThrowError, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import { delay } from "../../computations.js";
 import { arrayEquality, bindMethod, isSome, newInstance, pipe, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { increment, scale } from "../../math.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
@@ -123,23 +124,25 @@ testModule("SynchronousObservable", ComputationModuleTests(m), DeferredComputati
         while (true) {
             x++;
             yield x;
+            yield delay(2);
         }
-    }, { delay: 2 }));
+    }));
     const v = __await(src);
     if (v % 2 === 0) {
         __memo(increment, 1);
         return __await(src2);
     }
     return v;
-}, { mode: "batched" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(SynchronousObservable.compute(() => {
+}, { mode: "batched" }), SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]))), test("conditional await", pipeLazy(SynchronousObservable.compute(() => {
     const src = __constant(pipe([0, 1, 2, 3, 4, 5], Computation.fromReadonlyArray(m, { delay: 5 })));
     const src2 = __constant(SynchronousObservable.genPure(function* () {
         let x = 100;
         while (true) {
             x++;
             yield x;
+            yield delay(2);
         }
-    }, { delay: 2 }));
+    }));
     const src3 = __constant(pipe([1], Computation.fromReadonlyArray(m, { delay: 1, delayStart: true }), SynchronousObservable.repeat(40)));
     const v = __await(src);
     if (v % 2 === 0) {
@@ -150,7 +153,7 @@ testModule("SynchronousObservable", ComputationModuleTests(m), DeferredComputati
         __await(src3);
         return v;
     }
-}), SynchronousObservable.distinctUntilChanged(), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5])))), describe("keyFrame", test("keyframing from 0 to 10 over a duration of 10 clock clicks", pipeLazy(SynchronousObservable.keyFrame(10), SynchronousObservable.map(scale(0, 10)), SynchronousObservable.toRunnable({
+}), SynchronousObservable.distinctUntilChanged(), SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.toReadonlyArray(), expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5])))), describe("keyFrame", test("keyframing from 0 to 10 over a duration of 10 clock clicks", pipeLazy(SynchronousObservable.keyFrame(10), SynchronousObservable.map(scale(0, 10)), SynchronousObservable.toRunnable({
     maxMicroTaskTicks: 1,
 }), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])))), 
 // Ideally these tests would be part of SequentialReactiveComputationModuleTests
@@ -207,31 +210,28 @@ test("without delay, merge all observables as they are produced", pipeLazy([1, 2
     concurrency: 1,
 }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("spring", testAsync("test with spring", pipeLazyAsync(SynchronousObservable.spring(), SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.last(), expectEquals(1)))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m, { delay: 2 }), SynchronousObservable.takeUntil(pipe([1], Computation.fromReadonlyArray(m, { delay: 3, delayStart: true }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([10, 20])))), describe("throttle", test("first", pipeLazy(SynchronousObservable.genPure(function* counter() {
     let x = 0;
+    yield delay(1);
     while (true) {
         yield x;
+        yield delay(1);
         x++;
     }
-}, {
-    delay: 1,
-    delayStart: true,
 }), SynchronousObservable.takeFirst({ count: 101 }), SynchronousObservable.throttle(50, { mode: "first" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(SynchronousObservable.genPure(function* counter() {
     let x = 0;
+    yield delay(1);
     while (true) {
         yield x;
+        yield delay(1);
         x++;
     }
-}, {
-    delay: 1,
-    delayStart: true,
 }), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(50, { mode: "last" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(SynchronousObservable.genPure(function* counter() {
     let x = 0;
+    yield delay(1);
     while (true) {
         yield x;
+        yield delay(1);
         x++;
     }
-}, {
-    delay: 1,
-    delayStart: true,
 }), SynchronousObservable.takeFirst({ count: 200 }), SynchronousObservable.throttle(75, { mode: "interval" }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(pipe([0, 1, 2, 3], Computation.fromReadonlyArray(m, { delay: 2 }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)], {
     valuesEquality: arrayEquality(),
 }))), test("when latest produces no values", pipeLazy([0], Computation.fromReadonlyArray(m, { delay: 1 }), SynchronousObservable.withLatestFrom(Computation.empty(m), returns(1)), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {

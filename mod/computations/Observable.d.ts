@@ -10,10 +10,6 @@ export type Computation = ObservableComputation;
 export type ThrottleMode = "first" | "last" | "interval";
 export type ComputeMode = "batched" | "combine-latest";
 export interface ObservableModule extends ComputationModule<ObservableComputation, {
-    genPure: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    };
     toProducer: {
         readonly scheduler?: SchedulerLike;
     };
@@ -24,12 +20,7 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     genPureAsync?: {
         bufferSize?: number;
     };
-}>, ReactiveComputationModule<ObservableComputation>, DeferredComputationModule<ObservableComputation, {
-    gen: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    };
-}>, DeferredReactiveComputationModule<ObservableComputation, {
+}>, ReactiveComputationModule<ObservableComputation>, DeferredComputationModule<ObservableComputation>, DeferredReactiveComputationModule<ObservableComputation, {
     broadcast?: {
         scheduler?: SchedulerLike;
     };
@@ -37,6 +28,8 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
         readonly mode?: "batched" | "combine-latest";
     };
 }>, ConcurrentReactiveComputationModule<ObservableComputation>, ScheduledReactiveComputationModule<ObservableComputation> {
+    gen: ScheduledReactiveComputationModule<ObservableComputation>["gen"];
+    genPure: ScheduledReactiveComputationModule<ObservableComputation>["genPure"];
     retry: ScheduledReactiveComputationModule<ObservableComputation>["retry"];
     subscribeOn<T>(scheduler: SchedulerLike): PureComputationOperator<ObservableComputation, T, T>;
 }

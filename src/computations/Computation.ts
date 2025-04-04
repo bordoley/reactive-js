@@ -11,11 +11,13 @@ import {
   ComputationTypeOfModule,
   DeferredComputationModule,
   NewPureInstanceOf,
+  ObservableLike,
   PickComputationModule,
   PureComputationLike,
   PureComputationOf,
   PureComputationOperator,
   ReactiveComputationModule,
+  ScheduledReactiveComputationModule,
 } from "../computations.js";
 import {
   Factory,
@@ -82,6 +84,23 @@ export interface Signature {
   ): PureComputationOperator<TComputationType, T, T>;
 
   fromReadonlyArray<
+    TComputationType extends ComputationTypeLike<ObservableLike>,
+    TComputationModule extends PickComputationModule<
+      ScheduledReactiveComputationModule<TComputationType>,
+      "genPure"
+    >,
+  >(
+    m: TComputationModule,
+    options?: {
+      readonly count?: number;
+      readonly start?: number;
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ): <T>(
+    arr: ReadonlyArray<T>,
+  ) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+  fromReadonlyArray<
     TComputationType extends ComputationTypeLike,
     TComputationModule extends PickComputationModule<
       ComputationModule<TComputationType>,
@@ -92,7 +111,7 @@ export interface Signature {
     options?: {
       readonly count?: number;
       readonly start?: number;
-    } & Parameters<TComputationModule["genPure"]>[1],
+    },
   ): <T>(
     arr: ReadonlyArray<T>,
   ) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
@@ -226,7 +245,7 @@ export const raise: Signature["raise"] = (
   m,
   options?: {
     readonly raise?: Factory<unknown>;
-  } & Parameters<typeof m.genPure>[1],
+  },
   _type?,
 ) =>
   m.genPure(function* RaiseComputation() {

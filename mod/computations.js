@@ -1,5 +1,6 @@
 /// <reference types="./computations.d.ts" />
 
+import { newInstance, } from "./functions.js";
 export const ComputationLike_isPure = Symbol("ComputationLike_isPure");
 export const ComputationLike_isDeferred = Symbol("ComputationLike_isDeferred");
 export const ComputationLike_isSynchronous = Symbol("ComputationLike_isSynchronous");
@@ -10,3 +11,11 @@ export const StreamableLike_stream = Symbol("StreamableLike_stream");
 export const ComputationTypeLike_T = Symbol("ComputationTypeLike_T");
 export const ComputationTypeLike_baseOfT = Symbol("ComputationTypeLike_baseOfT");
 export const ComputationModuleLike_computationType = Symbol("ComputationModuleLike_computationType");
+export const GenYieldDelay_delay = Symbol("GenYieldDelay_delay");
+export class GenYieldDelay {
+    [GenYieldDelay_delay];
+    constructor(delay) {
+        this[GenYieldDelay_delay] = delay;
+    }
+}
+export const delay = (delay) => newInstance(GenYieldDelay, delay);

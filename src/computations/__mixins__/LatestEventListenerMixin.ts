@@ -8,13 +8,21 @@ import {
   proto,
 } from "../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { none, pick, pipe, returns } from "../../functions.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { isSome, none, pick, pipe, returns } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
+import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DelegatingEventListenerMixin, {
   DelegatingEventListenerLike,
   DelegatingEventListenerLike_delegate,
 } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
-import { EventListenerLike, EventListenerLike_notify } from "../../utils.js";
+import DelegatingNonCompletingNonDisposingMixin from "../../utils/__mixins__/DelegatingNonCompletingNonDisposingMixin.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  EventListenerLike,
+  EventListenerLike_notify,
+  SinkLike_complete,
+} from "../../utils.js";
 
 export type LatestEventListenerMode = "combine-latest" | "zip-latest";
 
@@ -28,6 +36,7 @@ export const LatestEventListenerValue_hasValue = Symbol(
 export interface LatestEventListenerValue {
   [LatestEventListenerValue_hasValue]: boolean;
   [LatestEventListenerValue_value]: unknown;
+  readonly [DisposableLike_isDisposed]: boolean;
 }
 
 export const LatestEventListenerContextLike_completedCount = Symbol(
@@ -70,17 +79,38 @@ const LatestEventListenerMixin: () => Mixin2<
 
   return returns(
     mix(
-      include(DelegatingDisposableMixin, DelegatingEventListenerMixin()),
+      include(
+        DelegatingEventListenerMixin(),
+        DelegatingNonCompletingNonDisposingMixin(),
+      ),
       function LatestEventListenerMixin(
         this: TPrototype & TProperties,
         delegate: EventListenerLike<ReadonlyArray<unknown>>,
         context: LatestEventListenerContextLike,
       ): LatestEventListenerLike {
-        init(DelegatingDisposableMixin, this, delegate);
         init(
           DelegatingEventListenerMixin<unknown, ReadonlyArray<unknown>>(),
           this,
           delegate,
+        );
+        init(DelegatingNonCompletingNonDisposingMixin(), this, delegate);
+        pipe(
+          this,
+          Disposable.addTo(delegate),
+          DisposableContainer.onComplete(() => {
+            const latestValues = context[LatestEventListenerContextLike_values];
+            const shouldComplete = latestValues.every(
+              x => x[DisposableLike_isDisposed],
+            );
+
+            const canComplete = isSome((delegate as any)[SinkLike_complete]);
+
+            if (shouldComplete && canComplete) {
+              (delegate as any)[SinkLike_complete]();
+            } else if (shouldComplete) {
+              delegate[DisposableLike_dispose]();
+            }
+          }),
         );
 
         this[LatestEventListener_context] = context;

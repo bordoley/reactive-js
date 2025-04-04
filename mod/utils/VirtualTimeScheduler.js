@@ -42,9 +42,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
                 this[SchedulerLike_now] = max(dueTime, currentTime + 1);
             }
             this[VirtualTimeScheduler_queue] = Queue.createSorted(SchedulerContinuation.compare);
+            this[VirtualTimeScheduler_microTaskTicks] = 0;
             while (queue[EnumeratorLike_moveNext]()) {
                 let continuation = queue[EnumeratorLike_current];
-                if (continuation[SchedulerContinuationLike_dueTime] > currentTime) {
+                if (continuation[SchedulerContinuationLike_dueTime] > currentTime ||
+                    this[VirtualTimeScheduler_microTaskTicks] >=
+                        this[VirtualTimeScheduler_maxMicroTaskTicks]) {
                     // copy the task and all other remaining tasks back to the scheduler queue
                     this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
                     while (queue[EnumeratorLike_moveNext]()) {
@@ -53,12 +56,16 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
                     }
                 }
                 else {
-                    this[VirtualTimeScheduler_microTaskTicks] = 0;
                     continuation[SchedulerContinuationLike_run]();
+                    this[VirtualTimeScheduler_microTaskTicks]++;
                 }
             }
             const queueHeadDueTime = this[VirtualTimeScheduler_queue][CollectionEnumeratorLike_peek]?.[SchedulerContinuationLike_dueTime] ?? MIN_SAFE_INTEGER;
-            this[SchedulerLike_now] = max(queueHeadDueTime, currentTime + 1);
+            const exceededMaxMicroTicks = this[VirtualTimeScheduler_microTaskTicks] >=
+                this[VirtualTimeScheduler_maxMicroTaskTicks];
+            if (queueHeadDueTime > currentTime || exceededMaxMicroTicks) {
+                this[SchedulerLike_now] = max(queueHeadDueTime, currentTime + 1);
+            }
         }
         this[DisposableLike_dispose]();
     },

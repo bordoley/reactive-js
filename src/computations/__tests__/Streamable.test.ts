@@ -201,7 +201,7 @@ testModule(
             updateCnt++;
             return SynchronousObservable.delay(1);
           },
-          { throttleDuration: 20 },
+          { throttleDuration: 40 },
         ),
         invoke(StreamableLike_stream, vts),
       );
@@ -209,6 +209,7 @@ testModule(
       pipe(
         [increment],
         Computation.fromReadonlyArray(ObservableModule, {
+          // Note: due to how vts works its gonna be 2 in practice
           delay: 1,
           delayStart: true,
         }),

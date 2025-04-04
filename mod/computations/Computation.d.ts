@@ -1,4 +1,4 @@
-import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationTypeLike, ComputationTypeOfModule, DeferredComputationModule, NewPureInstanceOf, PickComputationModule, PureComputationLike, PureComputationOf, PureComputationOperator, ReactiveComputationModule } from "../computations.js";
+import { ComputationLike, ComputationLike_isDeferred, ComputationLike_isSynchronous, ComputationModule, ComputationModuleLike, ComputationModuleLike_computationType, ComputationOf, ComputationOperatorWithSideEffects, ComputationTypeLike, ComputationTypeOfModule, DeferredComputationModule, NewPureInstanceOf, ObservableLike, PickComputationModule, PureComputationLike, PureComputationOf, PureComputationOperator, ReactiveComputationModule, ScheduledReactiveComputationModule } from "../computations.js";
 import { Factory, Optional } from "../functions.js";
 export interface Signature {
     areAllPure<TComputationType extends Partial<ComputationLike>>(computations: readonly TComputationType[]): computations is readonly (TComputationType & PureComputationLike)[];
@@ -9,10 +9,16 @@ export interface Signature {
     concatWith<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<DeferredComputationModule<TComputationType>, "concat">, snd: ComputationOf<TComputationType, T>, ...tail: readonly ComputationOf<TComputationType, T>[]): ComputationOperatorWithSideEffects<TComputationType, T, T>;
     empty<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "genPure">, type?: T): NewPureInstanceOf<TComputationType, T>;
     endWith<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<DeferredComputationModule<TComputationType> & ComputationModule<TComputationType>, "concat" | "genPure">, value: T, ...values: readonly T[]): PureComputationOperator<TComputationType, T, T>;
+    fromReadonlyArray<TComputationType extends ComputationTypeLike<ObservableLike>, TComputationModule extends PickComputationModule<ScheduledReactiveComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
+        readonly count?: number;
+        readonly start?: number;
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    }): <T>(arr: ReadonlyArray<T>) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     fromReadonlyArray<TComputationType extends ComputationTypeLike, TComputationModule extends PickComputationModule<ComputationModule<TComputationType>, "genPure">>(m: TComputationModule, options?: {
         readonly count?: number;
         readonly start?: number;
-    } & Parameters<TComputationModule["genPure"]>[1]): <T>(arr: ReadonlyArray<T>) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
+    }): <T>(arr: ReadonlyArray<T>) => NewPureInstanceOf<ComputationTypeOfModule<TComputationModule>, T>;
     ignoreElements<TComputationType extends ComputationTypeLike, T>(m: PickComputationModule<ComputationModule<TComputationType>, "keep">, type?: T): PureComputationOperator<TComputationType, any, T>;
     isDeferred<TComputationType extends Partial<ComputationLike> = Partial<ComputationLike>>(computation: TComputationType): computation is TComputationType & {
         [ComputationLike_isDeferred]: Optional<true>;

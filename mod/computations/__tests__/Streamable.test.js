@@ -197,8 +197,9 @@ describe("stateStore", test("stateStore", () => {
         const stream = pipe(Streamable.stateStore(returns(0)), Streamable.syncState(state => pipe([(_) => state], Computation.fromReadonlyArray(ObservableModule)), (_oldState, _newState) => {
             updateCnt++;
             return SynchronousObservable.delay(1);
-        }, { throttleDuration: 20 }), invoke(StreamableLike_stream, vts));
+        }, { throttleDuration: 40 }), invoke(StreamableLike_stream, vts));
         pipe([increment], Computation.fromReadonlyArray(ObservableModule, {
+            // Note: due to how vts works its gonna be 2 in practice
             delay: 1,
             delayStart: true,
         }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), EventSource.subscribe({ scheduler: vts }));

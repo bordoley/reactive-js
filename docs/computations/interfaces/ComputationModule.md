@@ -72,7 +72,7 @@
 
 ### genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+> **genPure**\<`T`\>(`factory`): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -83,10 +83,6 @@
 ##### factory
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`TCreationOptions`\[`"genPure"`\]
 
 #### Returns
 

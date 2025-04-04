@@ -1,13 +1,12 @@
 /// <reference types="./Observable.gen.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
-import { bindMethod, error, none, pipe, pipeLazy, } from "../../../functions.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, GenYieldDelay, GenYieldDelay_delay, } from "../../../computations.js";
+import { bindMethod, error, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-const genFactory = (factory, options) => (observer) => {
-    const { delay = 0, delayStart = false } = options ?? {};
+const genFactory = (factory) => (observer) => {
     const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(observer));
     let isActive = false;
     function* continue_() {
@@ -22,17 +21,21 @@ const genFactory = (factory, options) => (observer) => {
                 !isCompleted &&
                 enumerator[EnumeratorLike_moveNext]()) {
                 const value = enumerator[EnumeratorLike_current];
-                observer[EventListenerLike_notify](value);
-                isReady = observer[FlowControllerLike_isReady];
-                isCompleted = observer[SinkLike_isCompleted];
-                // Only request a yield if the observer is ready
-                // to accept more notifications, but the scheduler
-                // has requested a yield or we want to intentionally delay
-                const shouldYield = (delay > 0 || observer[SchedulerLike_shouldYield]) &&
-                    isReady &&
-                    !isCompleted;
-                if (shouldYield) {
+                if (value instanceof GenYieldDelay) {
+                    const delay = value[GenYieldDelay_delay];
                     yield delay;
+                }
+                else {
+                    observer[EventListenerLike_notify](value);
+                    isReady = observer[FlowControllerLike_isReady];
+                    isCompleted = observer[SinkLike_isCompleted];
+                    // Only request a yield if the observer is ready
+                    // to accept more notifications, but the scheduler
+                    // has requested a yield or we want to intentionally delay
+                    const shouldYield = isReady && !isCompleted && observer[SchedulerLike_shouldYield];
+                    if (shouldYield) {
+                        yield;
+                    }
                 }
                 isReady = observer[FlowControllerLike_isReady];
                 isCompleted = observer[SinkLike_isCompleted];
@@ -49,13 +52,13 @@ const genFactory = (factory, options) => (observer) => {
         // let the onReadySink reschedule the continuations
     }
     observer[FlowControllerLike_addOnReadyListener](pipeLazy(continue_, bindMethod(observer, SchedulerLike_schedule), Disposable.addTo(observer)));
-    pipe(observer[SchedulerLike_schedule](continue_, delayStart ? options : none), Disposable.addTo(observer));
+    pipe(observer[SchedulerLike_schedule](continue_), Disposable.addTo(observer));
 };
-export const Observable_gen = ((factory, options) => DeferredEventSource.create(genFactory(factory, options), {
+export const Observable_gen = (factory => DeferredEventSource.create(genFactory(factory), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
 }));
-export const Observable_genPure = ((factory, options) => DeferredEventSource.create(genFactory(factory, options), {
+export const Observable_genPure = (factory => DeferredEventSource.create(genFactory(factory), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
 }));

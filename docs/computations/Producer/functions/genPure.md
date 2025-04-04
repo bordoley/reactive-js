@@ -6,7 +6,7 @@
 
 # Function: genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **genPure**\<`T`\>(`factory`): [`ProducerLike`](../../interfaces/ProducerLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Type Parameters
 
@@ -17,10 +17,6 @@
 ### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-### options?
-
-`unknown`
 
 ## Returns
 

@@ -6,7 +6,7 @@
 
 # Function: genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **genPure**\<`T`\>(`factory`): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Type Parameters
 
@@ -16,17 +16,7 @@
 
 ### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-### options?
-
-#### delay?
-
-`number`
-
-#### delayStart?
-
-`boolean`
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`GenYieldDelay`](../../classes/GenYieldDelay.md) \| `T`, `any`, `any`\>\>
 
 ## Returns
 

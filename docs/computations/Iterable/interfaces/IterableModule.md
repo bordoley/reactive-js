@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`IterableComputation`](IterableComputation.md), \{ `toObservable`: \{ `delay`: `number`; `delayStart`: `boolean`; \}; \}\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`SynchronousComputationModule`](../../interfaces/SynchronousComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`IterableComputation`](IterableComputation.md)\>
 
 ## Properties
 
@@ -342,7 +342,7 @@
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **gen**\<`T`\>(`factory`): [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -353,10 +353,6 @@
 ##### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`unknown`
 
 #### Returns
 
@@ -370,7 +366,7 @@
 
 ### genPure()
 
-> **genPure**\<`T`\>(`factory`, `options`?): [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **genPure**\<`T`\>(`factory`): [`IterableLike`](../../interfaces/IterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -381,10 +377,6 @@
 ##### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`unknown`
 
 #### Returns
 
@@ -744,13 +736,7 @@
 
 ##### options?
 
-###### delay?
-
-`number`
-
-###### delayStart?
-
-`boolean`
+`unknown`
 
 #### Returns
 

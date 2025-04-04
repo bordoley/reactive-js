@@ -10,7 +10,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { PureSynchronousObservableLike } from "../../computations.js";
+import { PureSynchronousObservableLike, delay } from "../../computations.js";
 import {
   Optional,
   Tuple2,
@@ -161,16 +161,14 @@ testModule(
               ),
             );
             const src2 = __constant(
-              SynchronousObservable.genPure(
-                function* () {
-                  let x = 100;
-                  while (true) {
-                    x++;
-                    yield x;
-                  }
-                },
-                { delay: 2 },
-              ),
+              SynchronousObservable.genPure(function* () {
+                let x = 100;
+                while (true) {
+                  x++;
+                  yield x;
+                  yield delay(2);
+                }
+              }),
             );
 
             const v = __await(src);
@@ -183,7 +181,7 @@ testModule(
           },
           { mode: "batched" },
         ),
-        SynchronousObservable.toRunnable(),
+        SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }),
         Runnable.toReadonlyArray<number>(),
         expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
@@ -199,16 +197,14 @@ testModule(
             ),
           );
           const src2 = __constant(
-            SynchronousObservable.genPure(
-              function* () {
-                let x = 100;
-                while (true) {
-                  x++;
-                  yield x;
-                }
-              },
-              { delay: 2 },
-            ),
+            SynchronousObservable.genPure(function* () {
+              let x = 100;
+              while (true) {
+                x++;
+                yield x;
+                yield delay(2);
+              }
+            }),
           );
 
           const src3 = __constant(
@@ -230,7 +226,7 @@ testModule(
           }
         }),
         SynchronousObservable.distinctUntilChanged<number>(),
-        SynchronousObservable.toRunnable(),
+        SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }),
         Runnable.toReadonlyArray<number>(),
         expectArrayEquals([101, 102, 1, 101, 102, 3, 101, 102, 5]),
       ),
@@ -436,20 +432,17 @@ testModule(
     test(
       "first",
       pipeLazy(
-        SynchronousObservable.genPure(
-          function* counter() {
-            let x = 0;
+        SynchronousObservable.genPure(function* counter() {
+          let x = 0;
 
-            while (true) {
-              yield x;
-              x++;
-            }
-          },
-          {
-            delay: 1,
-            delayStart: true,
-          },
-        ),
+          yield delay(1);
+
+          while (true) {
+            yield x;
+            yield delay(1);
+            x++;
+          }
+        }),
         SynchronousObservable.takeFirst({ count: 101 }),
         SynchronousObservable.throttle<number>(50, { mode: "first" }),
         SynchronousObservable.toRunnable(),
@@ -460,20 +453,17 @@ testModule(
     test(
       "last",
       pipeLazy(
-        SynchronousObservable.genPure(
-          function* counter() {
-            let x = 0;
+        SynchronousObservable.genPure(function* counter() {
+          let x = 0;
 
-            while (true) {
-              yield x;
-              x++;
-            }
-          },
-          {
-            delay: 1,
-            delayStart: true,
-          },
-        ),
+          yield delay(1);
+
+          while (true) {
+            yield x;
+            yield delay(1);
+            x++;
+          }
+        }),
         SynchronousObservable.takeFirst({ count: 200 }),
         SynchronousObservable.throttle<number>(50, { mode: "last" }),
         SynchronousObservable.toRunnable(),
@@ -484,20 +474,17 @@ testModule(
     test(
       "interval",
       pipeLazy(
-        SynchronousObservable.genPure(
-          function* counter() {
-            let x = 0;
+        SynchronousObservable.genPure(function* counter() {
+          let x = 0;
 
-            while (true) {
-              yield x;
-              x++;
-            }
-          },
-          {
-            delay: 1,
-            delayStart: true,
-          },
-        ),
+          yield delay(1);
+
+          while (true) {
+            yield x;
+            yield delay(1);
+            x++;
+          }
+        }),
         SynchronousObservable.takeFirst({ count: 200 }),
         SynchronousObservable.throttle<number>(75, { mode: "interval" }),
         SynchronousObservable.toRunnable(),

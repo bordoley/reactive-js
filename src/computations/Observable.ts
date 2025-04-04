@@ -86,10 +86,6 @@ export interface ObservableModule
   extends ComputationModule<
       ObservableComputation,
       {
-        genPure: {
-          readonly delay?: number;
-          readonly delayStart?: boolean;
-        };
         toProducer: {
           readonly scheduler?: SchedulerLike;
         };
@@ -107,15 +103,7 @@ export interface ObservableModule
       }
     >,
     ReactiveComputationModule<ObservableComputation>,
-    DeferredComputationModule<
-      ObservableComputation,
-      {
-        gen: {
-          readonly delay?: number;
-          readonly delayStart?: boolean;
-        };
-      }
-    >,
+    DeferredComputationModule<ObservableComputation>,
     DeferredReactiveComputationModule<
       ObservableComputation,
       {
@@ -129,6 +117,9 @@ export interface ObservableModule
     >,
     ConcurrentReactiveComputationModule<ObservableComputation>,
     ScheduledReactiveComputationModule<ObservableComputation> {
+  gen: ScheduledReactiveComputationModule<ObservableComputation>["gen"];
+  genPure: ScheduledReactiveComputationModule<ObservableComputation>["genPure"];
+
   retry: ScheduledReactiveComputationModule<ObservableComputation>["retry"];
 
   subscribeOn<T>(

@@ -88,15 +88,7 @@ export interface IterableModule
   extends ComputationModule<IterableComputation>,
     DeferredComputationModule<IterableComputation>,
     SynchronousComputationModule<IterableComputation>,
-    InteractiveComputationModule<
-      IterableComputation,
-      {
-        toObservable: {
-          delay?: number;
-          delayStart?: boolean;
-        };
-      }
-    > {
+    InteractiveComputationModule<IterableComputation> {
   of<T>(): Function1<Iterable<T>, PureIterableLike<T>>;
 }
 
@@ -806,17 +798,12 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
-export const toObservable: Signature["toObservable"] = ((options?: {
-    delay: number;
-    delayStart: boolean;
-  }) =>
+export const toObservable: Signature["toObservable"] = /*@__PURE__*/ returns(
   (iter: IterableLike) =>
     ComputationM.isPure(iter)
-      ? Observable_genPure(bindMethod(iter, Symbol.iterator), options)
-      : Observable_gen(
-          bindMethod(iter, Symbol.iterator),
-          options,
-        )) as Signature["toObservable"];
+      ? Observable_genPure(bindMethod(iter, Symbol.iterator))
+      : Observable_gen(bindMethod(iter, Symbol.iterator)),
+) as Signature["toObservable"];
 
 export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
   (iterable: IterableLike) =>

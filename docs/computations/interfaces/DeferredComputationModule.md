@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / DeferredComputationModule
 
-# Interface: DeferredComputationModule\<TComputationType, TCreationOptions\>
+# Interface: DeferredComputationModule\<TComputationType\>
 
 ## Extends
 
@@ -22,8 +22,6 @@
 ## Type Parameters
 
 • **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
-
-• **TCreationOptions** *extends* `object` = \{\}
 
 ## Properties
 
@@ -273,7 +271,7 @@
 
 ### gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+> **gen**\<`T`\>(`factory`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -284,10 +282,6 @@
 ##### factory
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-##### options?
-
-`TCreationOptions`\[`"gen"`\]
 
 #### Returns
 

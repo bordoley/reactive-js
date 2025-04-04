@@ -1,12 +1,13 @@
 import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
+  GenYieldDelay,
+  GenYieldDelay_delay,
 } from "../../../computations.js";
 import {
   Factory,
   bindMethod,
   error,
-  none,
   pipe,
   pipeLazy,
 } from "../../../functions.js";
@@ -29,15 +30,8 @@ import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genFactory =
-  <T>(
-    factory: Factory<Iterator<T>>,
-    options?: {
-      delay?: number;
-      delayStart?: boolean;
-    },
-  ) =>
+  <T>(factory: Factory<Iterator<T | GenYieldDelay>>) =>
   (observer: ObserverLike<T>) => {
-    const { delay = 0, delayStart = false } = options ?? {};
     const enumerator = pipe(
       factory(),
       Iterator.toEnumerator(),
@@ -62,21 +56,25 @@ const genFactory =
           enumerator[EnumeratorLike_moveNext]()
         ) {
           const value = enumerator[EnumeratorLike_current];
-          observer[EventListenerLike_notify](value);
+          if (value instanceof GenYieldDelay) {
+            const delay = value[GenYieldDelay_delay];
 
-          isReady = observer[FlowControllerLike_isReady];
-          isCompleted = observer[SinkLike_isCompleted];
-
-          // Only request a yield if the observer is ready
-          // to accept more notifications, but the scheduler
-          // has requested a yield or we want to intentionally delay
-          const shouldYield =
-            (delay > 0 || observer[SchedulerLike_shouldYield]) &&
-            isReady &&
-            !isCompleted;
-
-          if (shouldYield) {
             yield delay;
+          } else {
+            observer[EventListenerLike_notify](value);
+
+            isReady = observer[FlowControllerLike_isReady];
+            isCompleted = observer[SinkLike_isCompleted];
+
+            // Only request a yield if the observer is ready
+            // to accept more notifications, but the scheduler
+            // has requested a yield or we want to intentionally delay
+            const shouldYield =
+              isReady && !isCompleted && observer[SchedulerLike_shouldYield];
+
+            if (shouldYield) {
+              yield;
+            }
           }
 
           isReady = observer[FlowControllerLike_isReady];
@@ -104,25 +102,19 @@ const genFactory =
     );
 
     pipe(
-      observer[SchedulerLike_schedule](continue_, delayStart ? options : none),
+      observer[SchedulerLike_schedule](continue_),
       Disposable.addTo(observer),
     );
   };
 
-export const Observable_gen: Observable.Signature["gen"] = ((
-  factory,
-  options,
-) =>
-  DeferredEventSource.create(genFactory(factory, options), {
+export const Observable_gen: Observable.Signature["gen"] = (factory =>
+  DeferredEventSource.create(genFactory(factory), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   })) as Observable.Signature["gen"];
 
-export const Observable_genPure: Observable.Signature["genPure"] = ((
-  factory,
-  options,
-) =>
-  DeferredEventSource.create(genFactory(factory, options), {
+export const Observable_genPure: Observable.Signature["genPure"] = (factory =>
+  DeferredEventSource.create(genFactory(factory), {
     [ComputationLike_isPure]: true,
     [ComputationLike_isSynchronous]: true,
   })) as Observable.Signature["genPure"];

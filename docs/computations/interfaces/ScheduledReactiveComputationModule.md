@@ -73,6 +73,46 @@
 
 ***
 
+### gen()
+
+> **gen**\<`T`\>(`factory`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`Iterator`\<`T` \| [`GenYieldDelay`](../classes/GenYieldDelay.md), `any`, `any`\>\>
+
+#### Returns
+
+[`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+
+***
+
+### genPure()
+
+> **genPure**\<`T`\>(`factory`): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
+
+#### Parameters
+
+##### factory
+
+[`Factory`](../../functions/type-aliases/Factory.md)\<`Iterator`\<[`GenYieldDelay`](../classes/GenYieldDelay.md) \| `T`, `any`, `any`\>\>
+
+#### Returns
+
+[`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+
+***
+
 ### keyFrame()
 
 > **keyFrame**(`duration`, `options`?): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `number`\>

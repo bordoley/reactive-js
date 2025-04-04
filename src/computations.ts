@@ -10,6 +10,7 @@ import {
   Tuple2,
   Tuple3,
   Tuple4,
+  newInstance,
 } from "./functions.js";
 import {
   BackpressureStrategy,
@@ -331,7 +332,6 @@ export type PickComputationModule<
 export interface ComputationModule<
   TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
-    genPure?: Record<string, any>;
     toProducer?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
@@ -343,7 +343,6 @@ export interface ComputationModule<
 
   genPure<T>(
     factory: Factory<Iterator<T>>,
-    options?: TCreationOptions["genPure"],
   ): NewPureInstanceOf<TComputationType, T>;
 
   keep<T>(
@@ -388,9 +387,6 @@ export interface ComputationModule<
 
 export interface DeferredComputationModule<
   TComputationType extends ComputationTypeLike,
-  TCreationOptions extends {
-    gen?: Record<string, any>;
-  } = {},
 > extends ComputationModuleLike<TComputationType> {
   buffer<T>(options?: {
     count?: number;
@@ -448,7 +444,6 @@ export interface DeferredComputationModule<
 
   gen<T>(
     factory: Factory<Iterator<T>>,
-    options?: TCreationOptions["gen"],
   ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   repeat<T>(
@@ -851,6 +846,14 @@ export interface ScheduledReactiveComputationModule<
 
   delay(duration: number): PureComputationOf<TComputationType, unknown>;
 
+  gen<T>(
+    factory: Factory<Iterator<T | GenYieldDelay>>,
+  ): NewInstanceWithSideEffectsOf<TComputationType, T>;
+
+  genPure<T>(
+    factory: Factory<Iterator<T | GenYieldDelay>>,
+  ): NewPureInstanceOf<TComputationType, T>;
+
   keyFrame(
     duration: number,
     options?: {
@@ -877,3 +880,14 @@ export interface ScheduledReactiveComputationModule<
     selector: Function2<number, TA, TB>,
   ): PureComputationOperator<TComputationType, TA, TB>;
 }
+
+export const GenYieldDelay_delay = Symbol("GenYieldDelay_delay");
+
+export class GenYieldDelay {
+  readonly [GenYieldDelay_delay]: number;
+  constructor(delay: number) {
+    this[GenYieldDelay_delay] = delay;
+  }
+}
+
+export const delay = (delay: number) => newInstance(GenYieldDelay, delay);

@@ -16,13 +16,7 @@
 
 ### options?
 
-#### delay?
-
-`number`
-
-#### delayStart?
-
-`boolean`
+`unknown`
 
 ## Returns
 

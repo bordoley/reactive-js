@@ -151,14 +151,13 @@ export type ComputationTypeOfModule<TModule extends ComputationModuleLike> = Non
 export type ComputationOfModule<TModule extends ComputationModuleLike, T> = ComputationOf<ComputationTypeOfModule<TModule>, T>;
 export type PickComputationModule<TModule extends ComputationModuleLike, K extends keyof TModule> = Pick<TModule, K | typeof ComputationModuleLike_computationType>;
 export interface ComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
-    genPure?: Record<string, any>;
     toProducer?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): PureComputationOperator<TComputationType, T, T>;
     encodeUtf8(): PureComputationOperator<TComputationType, string, Uint8Array>;
-    genPure<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["genPure"]): NewPureInstanceOf<TComputationType, T>;
+    genPure<T>(factory: Factory<Iterator<T>>): NewPureInstanceOf<TComputationType, T>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<TComputationType, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): PureComputationOperator<TComputationType, TA, TB>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureComputationOperator<TComputationType, T, TAcc>;
@@ -174,9 +173,7 @@ export interface ComputationModule<TComputationType extends ComputationTypeLike,
     }): PureComputationOperator<TComputationType, T, T>;
     toProducer<T>(options?: TCreationOptions["toProducer"]): <TComputationOf extends ComputationOf<TComputationType, T>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputationType, T> ? PureProducerLike<T> : TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ? ProducerWithSideEffectsLike<T> : never;
 }
-export interface DeferredComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
-    gen?: Record<string, any>;
-} = {}> extends ComputationModuleLike<TComputationType> {
+export interface DeferredComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     buffer<T>(options?: {
         count?: number;
     }): PureComputationOperator<TComputationType, T, readonly T[]>;
@@ -202,7 +199,7 @@ export interface DeferredComputationModule<TComputationType extends ComputationT
         readonly ignoreBOM?: boolean;
     }): PureComputationOperator<TComputationType, ArrayBuffer, string>;
     forEach<T>(sideEffect: SideEffect1<T>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
-    gen<T>(factory: Factory<Iterator<T>>, options?: TCreationOptions["gen"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    gen<T>(factory: Factory<Iterator<T>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
     repeat<T>(predicate: Predicate<number>): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(count: number): PureComputationOperator<TComputationType, T, T>;
     repeat<T>(): PureComputationOperator<TComputationType, T, T>;
@@ -328,6 +325,8 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
     currentTime: PureComputationOf<TComputationType, number>;
     debounce<T>(duration: number): PureComputationOperator<TComputationType, T, T>;
     delay(duration: number): PureComputationOf<TComputationType, unknown>;
+    gen<T>(factory: Factory<Iterator<T | GenYieldDelay>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    genPure<T>(factory: Factory<Iterator<T | GenYieldDelay>>): NewPureInstanceOf<TComputationType, T>;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureComputationOf<TComputationType, number>;
@@ -342,3 +341,9 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
     }): PureComputationOperator<TComputationType, T, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<TComputationType, TA, TB>;
 }
+export declare const GenYieldDelay_delay: unique symbol;
+export declare class GenYieldDelay {
+    readonly [GenYieldDelay_delay]: number;
+    constructor(delay: number);
+}
+export declare const delay: (delay: number) => GenYieldDelay;

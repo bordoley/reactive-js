@@ -10,19 +10,10 @@ export type Computation = SynchronousObservableComputation;
 export type ThrottleMode = "first" | "last" | "interval";
 export type ComputeMode = "batched" | "combine-latest";
 export interface SynchronousObservableModule extends ComputationModule<SynchronousObservableComputation, {
-    genPure: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    };
     toProducer: {
         readonly scheduler?: SchedulerLike;
     };
-}>, ReactiveComputationModule<SynchronousObservableComputation>, DeferredComputationModule<SynchronousObservableComputation, {
-    gen: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    };
-}>, SynchronousComputationModule<SynchronousObservableComputation, {
+}>, ReactiveComputationModule<SynchronousObservableComputation>, DeferredComputationModule<SynchronousObservableComputation>, SynchronousComputationModule<SynchronousObservableComputation, {
     toRunnable: {
         readonly maxMicroTaskTicks?: number;
     };
@@ -34,6 +25,8 @@ export interface SynchronousObservableModule extends ComputationModule<Synchrono
         readonly mode?: "batched" | "combine-latest";
     };
 }>, ScheduledReactiveComputationModule<SynchronousObservableComputation> {
+    gen: ScheduledReactiveComputationModule<SynchronousObservableComputation>["gen"];
+    genPure: ScheduledReactiveComputationModule<SynchronousObservableComputation>["genPure"];
     retry: ScheduledReactiveComputationModule<SynchronousObservableComputation>["retry"];
 }
 export type Signature = SynchronousObservableModule;

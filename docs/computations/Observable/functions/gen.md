@@ -6,7 +6,7 @@
 
 # Function: gen()
 
-> **gen**\<`T`\>(`factory`, `options`?): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **gen**\<`T`\>(`factory`): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ## Type Parameters
 
@@ -16,17 +16,7 @@
 
 ### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<`T`, `any`, `any`\>\>
-
-### options?
-
-#### delay?
-
-`number`
-
-#### delayStart?
-
-`boolean`
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`GenYieldDelay`](../../classes/GenYieldDelay.md) \| `T`, `any`, `any`\>\>
 
 ## Returns
 

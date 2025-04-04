@@ -7,12 +7,7 @@ export interface IterableComputation extends ComputationTypeLike {
     readonly [ComputationTypeLike_baseOfT]?: IterableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = IterableComputation;
-export interface IterableModule extends ComputationModule<IterableComputation>, DeferredComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation, {
-    toObservable: {
-        delay?: number;
-        delayStart?: boolean;
-    };
-}> {
+export interface IterableModule extends ComputationModule<IterableComputation>, DeferredComputationModule<IterableComputation>, SynchronousComputationModule<IterableComputation>, InteractiveComputationModule<IterableComputation> {
     of<T>(): Function1<Iterable<T>, PureIterableLike<T>>;
 }
 export type Signature = IterableModule;
