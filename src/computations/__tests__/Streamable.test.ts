@@ -219,7 +219,7 @@ testModule(
 
       vts[VirtualTimeSchedulerLike_run]();
 
-      pipe(updateCnt, expectEquals(4));
+      pipe(updateCnt, expectEquals(3));
     }),
   ),
 )();

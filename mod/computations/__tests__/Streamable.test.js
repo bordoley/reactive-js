@@ -203,7 +203,7 @@ describe("stateStore", test("stateStore", () => {
             delayStart: true,
         }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), EventSource.subscribe({ scheduler: vts }));
         vts[VirtualTimeSchedulerLike_run]();
-        pipe(updateCnt, expectEquals(4));
+        pipe(updateCnt, expectEquals(3));
     }
     catch (e_5) {
         env_5.error = e_5;

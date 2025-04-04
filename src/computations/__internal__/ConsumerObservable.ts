@@ -1,50 +1,45 @@
 import {
-  Mutable,
   include,
   init,
   mixInstanceFactory,
   props,
-  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   ComputationLike_isDeferred,
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
   EventSourceLike_subscribe,
-  PublisherLike,
   PureObservableLike,
 } from "../../computations.js";
-import {
-  Optional,
-  SideEffect1,
-  bindMethod,
-  isSome,
-  none,
-  pipe,
-} from "../../functions.js";
+import { Optional, bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import * as Consumer from "../../utils/__internal__/Consumer.js";
-import DelegatingConsumerMixin, {
-  DelegatingConsumerLike,
-} from "../../utils/__mixins__/DelegatingConsumerMixin.js";
-import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
+
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
+import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
 import {
   BackpressureStrategy,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
-  EnumeratorLike,
+  DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControllerEnumeratorLike_addOnDataAvailableListener,
+  FlowControllerEnumeratorLike_isDataAvailable,
   FlowControllerLike_addOnReadyListener,
+  FlowControllerLike_isReady,
+  FlowControllerQueueLike,
   ObserverLike,
+  QueueLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_inContinuation,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
+  SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
-import * as Broadcaster from "../Broadcaster.js";
-import * as Publisher from "../Publisher.js";
 
 export interface ConsumerObservableLike<out T>
   extends PureObservableLike<T>,
@@ -55,44 +50,97 @@ export const create: <T>(config?: {
   capacity?: number;
   backpressureStrategy?: BackpressureStrategy;
 }) => ConsumerObservableLike<T> = (<T>() => {
-  const ConsumerObservable_onReadyPublisher = Symbol(
-    "ConsumerObservable_onReadyPublisher",
+  const ConsumerObservable_observer = Symbol("ConsumerObservable_observer");
+  const ConsumerObservable_schedulerSubscription = Symbol(
+    "ConsumerObservable_schedulerSubscription",
   );
 
   type TProperties = {
-    [ConsumerObservable_onReadyPublisher]: PublisherLike<void>;
+    [ConsumerObservable_observer]: Optional<ObserverLike<T>>;
+    [ConsumerObservable_schedulerSubscription]: DisposableLike;
+    [SinkLike_isCompleted]: boolean;
   };
 
-  type TPrototype = Pick<ConsumerObservableLike<T>, keyof PureObservableLike>;
+  type TPrototype = Pick<ConsumerObservableLike<T>, keyof PureObservableLike> &
+    Pick<
+      SinkLike<T>,
+      typeof SinkLike_complete | typeof EventListenerLike_notify
+    >;
+
+  function* dispatchEvents(
+    this: TProperties & FlowControllerQueueLike<T>,
+    scheduler: SchedulerLike,
+  ) {
+    const observer = this[ConsumerObservable_observer];
+
+    if (isNone(observer)) {
+      return;
+    }
+
+    let observerIsReady = observer[FlowControllerLike_isReady];
+    let observerIsCompleted = observer[SinkLike_isCompleted];
+
+    while (
+      observerIsReady &&
+      !observerIsCompleted &&
+      this[EnumeratorLike_moveNext]()
+    ) {
+      const next = this[EnumeratorLike_current];
+      observer[EventListenerLike_notify](next);
+
+      const shouldYield = scheduler[SchedulerLike_shouldYield];
+      const hasMoreData = this[FlowControllerEnumeratorLike_isDataAvailable];
+      if (shouldYield && hasMoreData) {
+        yield;
+      }
+
+      observerIsReady = observer[FlowControllerLike_isReady];
+      observerIsCompleted = observer[SinkLike_isCompleted];
+    }
+
+    const hasMoreData = this[FlowControllerEnumeratorLike_isDataAvailable];
+    const isCompleted = this[SinkLike_isCompleted];
+    if (!hasMoreData && isCompleted) {
+      observer[SinkLike_complete]();
+    }
+  }
+
+  function scheduleDispatcher(this: TProperties & DisposableLike) {
+    const dispatchSubscription = this[ConsumerObservable_schedulerSubscription];
+    const observer = this[ConsumerObservable_observer];
+
+    if (!dispatchSubscription[DisposableLike_isDisposed] || isNone(observer)) {
+      return;
+    }
+
+    this[ConsumerObservable_schedulerSubscription] = pipe(
+      observer[SchedulerLike_schedule](bind(dispatchEvents, this)),
+      Disposable.addTo(this),
+    );
+  }
 
   return mixInstanceFactory(
-    include(DisposableMixin, DelegatingConsumerMixin()),
+    include(DisposableMixin, FlowControllerQueueMixin()),
     function ConsumerObservable(
-      this: TPrototype & TProperties,
+      this: TProperties & TPrototype,
       config: Optional<{
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
       }>,
     ): ConsumerObservableLike<T> {
       init(DisposableMixin, this);
+      init(FlowControllerQueueMixin<T>(), this, config);
 
-      const queue = pipe(Consumer.create(config), Disposable.addTo(this));
-      init(DelegatingConsumerMixin<T>(), this, queue);
-
-      const onReadyPublisher = pipe(Publisher.create(), Disposable.addTo(this));
-      this[ConsumerObservable_onReadyPublisher] = onReadyPublisher;
-
-      pipe(
-        queue[FlowControllerLike_addOnReadyListener](
-          bindMethod(onReadyPublisher, EventListenerLike_notify),
-        ),
-        Disposable.addTo(this),
+      this[FlowControllerEnumeratorLike_addOnDataAvailableListener](
+        bind(scheduleDispatcher, this),
       );
 
       return this;
     },
     props<TProperties>({
-      [ConsumerObservable_onReadyPublisher]: none,
+      [ConsumerObservable_observer]: none,
+      [SinkLike_isCompleted]: false,
+      [ConsumerObservable_schedulerSubscription]: Disposable.disposed,
     }),
     {
       [ComputationLike_isPure]: true as const,
@@ -100,50 +148,63 @@ export const create: <T>(config?: {
       [ComputationLike_isSynchronous]: false as const,
 
       [EventSourceLike_subscribe](
-        this: ConsumerObservableLike<T> &
-          TProperties &
-          Mutable<DelegatingConsumerLike<T>>,
+        this: TProperties & ConsumerLike<T>,
         observer: ObserverLike<T>,
       ) {
-        const oldDelegate = this[DelegatingEventListenerLike_delegate];
-        this[DelegatingEventListenerLike_delegate] = observer;
-        pipe(this, Disposable.bindTo(observer));
+        const oldDelegate = this[ConsumerObservable_observer];
+        this[ConsumerObservable_observer] = observer;
+        pipe(observer, Disposable.addTo(this));
 
         pipe(
           observer[FlowControllerLike_addOnReadyListener](
-            bindMethod(
-              this[ConsumerObservable_onReadyPublisher],
-              EventListenerLike_notify,
-            ),
+            bind(scheduleDispatcher, this),
           ),
           Disposable.addTo(this),
         );
 
-        if (isSome((oldDelegate as any)[EnumeratorLike_moveNext])) {
-          unsafeCast<EnumeratorLike<T>>(oldDelegate);
+        oldDelegate?.[DisposableLike_dispose]();
 
-          while (oldDelegate[EnumeratorLike_moveNext]()) {
-            const v = oldDelegate[EnumeratorLike_current];
-            observer[EventListenerLike_notify](v);
-          }
-        }
-
-        if (oldDelegate[SinkLike_isCompleted]) {
-          observer[SinkLike_complete]();
-        }
-
-        oldDelegate[DisposableLike_dispose]();
+        call(scheduleDispatcher, this);
       },
 
-      [FlowControllerLike_addOnReadyListener](
-        this: TProperties & DisposableLike,
-        callback: SideEffect1<void>,
+      [EventListenerLike_notify](
+        this: TProperties & FlowControllerQueueLike<T>,
+        next: T,
       ) {
-        return pipe(
-          this[ConsumerObservable_onReadyPublisher],
-          Broadcaster.addEventHandler(callback),
-          Disposable.addTo(this),
-        );
+        const observer = this[ConsumerObservable_observer];
+        const inSchedulerContinuation =
+          observer?.[SchedulerLike_inContinuation] ?? false;
+        const isCompleted = this[SinkLike_isCompleted];
+
+        // Make queueing decisions based upon whether the root non-lifted observer
+        // wants to apply back pressure, as lifted observers just pass through
+        // notifications and never queue in practice.
+        const isObserverReady = observer?.[FlowControllerLike_isReady] ?? false;
+        const hasQueuedEvents =
+          this[FlowControllerEnumeratorLike_isDataAvailable];
+
+        const shouldNotify =
+          inSchedulerContinuation &&
+          !isCompleted &&
+          isObserverReady &&
+          !hasQueuedEvents;
+
+        if (shouldNotify) {
+          observer?.[EventListenerLike_notify](next);
+        } else if (!isCompleted) {
+          this[QueueLike_enqueue](next);
+        }
+      },
+
+      [SinkLike_complete](this: TProperties) {
+        const isCompleted = this[SinkLike_isCompleted];
+        this[SinkLike_isCompleted] = true;
+
+        if (isCompleted) {
+          return;
+        }
+
+        call(scheduleDispatcher, this);
       },
     },
   );

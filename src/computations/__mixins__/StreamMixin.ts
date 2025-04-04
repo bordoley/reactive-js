@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { Mixin3, include, init, mix } from "../../__internal__/mixins.js";
 import {
   ObservableLike,
@@ -6,7 +5,6 @@ import {
   StreamLike,
 } from "../../computations.js";
 import { Function1, Optional, pipe, returns } from "../../functions.js";
-import { clampPositiveInteger } from "../../math.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DelegatingConsumerMixin from "../../utils/__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
@@ -14,11 +12,9 @@ import DelegatingPauseableMixin from "../../utils/__mixins__/DelegatingPauseable
 import {
   BackpressureStrategy,
   DisposableLike,
-  OverflowBackpressureStrategy,
   SchedulerLike,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
-import * as Producer from "../Producer.js";
 import * as ConsumerObservable from "../__internal__/ConsumerObservable.js";
 import DelegatingBroadcasterMixin from "./DelegatingBroadcasterMixin.js";
 
@@ -55,16 +51,9 @@ const StreamMixin: <TReq, T>() => Mixin3<
 
         const delegate = pipe(
           consumer,
-          Observable.withBackpressure({
-            backpressureStrategy:
-              options?.backpressureStrategy ?? OverflowBackpressureStrategy,
-            capacity: clampPositiveInteger(
-              options?.capacity ?? MAX_SAFE_INTEGER,
-            ),
-          }),
           op,
-          Observable.toProducer({ scheduler }),
-          Producer.broadcast<T>({
+          Observable.broadcast({
+            scheduler,
             autoDispose: options?.autoDispose,
           }),
           Disposable.addTo(consumer),
