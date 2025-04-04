@@ -16,7 +16,9 @@
 
 ### options?
 
-`unknown`
+#### bufferSize?
+
+`number`
 
 ## Returns
 

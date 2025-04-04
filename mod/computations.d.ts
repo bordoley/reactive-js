@@ -213,9 +213,12 @@ export interface DeferredComputationModule<TComputationType extends ComputationT
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureComputationOperator<TComputationType, T, T>;
     withEffect<T>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): ComputationOperatorWithSideEffects<TComputationType, T, T>;
 }
-export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
-    genAsync<T>(factory: Factory<AsyncIterator<T>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
-    genPureAsync<T>(factory: Factory<AsyncIterator<T>>): NewPureInstanceOf<TComputationType, T>;
+export interface ConcurrentDeferredComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
+    genAsync?: Record<string, any>;
+    genPureAsync?: Record<string, any>;
+} = {}> extends ComputationModuleLike<TComputationType> {
+    genAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genAsync"]): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    genPureAsync<T>(factory: Factory<AsyncIterator<T>>, options?: TCreationOptions["genPureAsync"]): NewPureInstanceOf<TComputationType, T>;
 }
 export interface SynchronousComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
     toRunnable?: Record<string, any>;

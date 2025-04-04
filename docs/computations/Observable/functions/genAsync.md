@@ -6,7 +6,7 @@
 
 # Function: genAsync()
 
-> **genAsync**\<`T`\>(`factory`): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **genAsync**\<`T`\>(`factory`, `options`?): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 ## Type Parameters
 
@@ -17,6 +17,12 @@
 ### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+### options?
+
+#### bufferSize?
+
+`number`
 
 ## Returns
 

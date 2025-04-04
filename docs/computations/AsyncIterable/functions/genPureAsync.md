@@ -6,7 +6,7 @@
 
 # Function: genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **genPureAsync**\<`T`\>(`factory`, `options`?): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 ## Type Parameters
 
@@ -17,6 +17,10 @@
 ### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+### options?
+
+`unknown`
 
 ## Returns
 

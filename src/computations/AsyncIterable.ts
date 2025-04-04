@@ -78,7 +78,14 @@ export type Computation = AsyncIterableComputation;
 export interface AsyncIterableModule
   extends ComputationModule<AsyncIterableComputation>,
     DeferredComputationModule<AsyncIterableComputation>,
-    InteractiveComputationModule<AsyncIterableComputation>,
+    InteractiveComputationModule<
+      AsyncIterableComputation,
+      {
+        toObservable: {
+          bufferSize?: number;
+        };
+      }
+    >,
     ConcurrentDeferredComputationModule<AsyncIterableComputation> {
   fromAsyncFactory<T>(): Function1<
     (options?: { signal?: AbortSignal }) => Promise<T>,
@@ -922,13 +929,14 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = (<T>(
       factory,
     )) as Signature["throwIfEmpty"];
 
-export const toObservable: Signature["toObservable"] =
-  //  @__PURE__
-  returns((iter: AsyncIterableLike) =>
+export const toObservable: Signature["toObservable"] = (options =>
+  (iter: AsyncIterableLike) =>
     ComputationM.isPure(iter)
-      ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
-      : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)),
-  ) as Signature["toObservable"];
+      ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator), options)
+      : Observable_genAsync(
+          bindMethod(iter, Symbol.asyncIterator),
+          options,
+        )) as Signature["toObservable"];
 
 export const toProducer: Signature["toProducer"] =
   //   @__PURE__

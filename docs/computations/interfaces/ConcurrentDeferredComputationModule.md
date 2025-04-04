@@ -4,7 +4,7 @@
 
 [Reactive-JS](../../README.md) / [computations](../README.md) / ConcurrentDeferredComputationModule
 
-# Interface: ConcurrentDeferredComputationModule\<TComputationType\>
+# Interface: ConcurrentDeferredComputationModule\<TComputationType, TCreationOptions\>
 
 ## Extends
 
@@ -20,6 +20,8 @@
 
 • **TComputationType** *extends* [`ComputationTypeLike`](ComputationTypeLike.md)
 
+• **TCreationOptions** *extends* `object` = \{\}
+
 ## Properties
 
 ### \[ComputationModuleLike\_computationType\]?
@@ -34,7 +36,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
+> **genAsync**\<`T`\>(`factory`, `options`?): [`ComputationWithSideEffectsOf`](../type-aliases/ComputationWithSideEffectsOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -45,6 +47,10 @@
 ##### factory
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`TCreationOptions`\[`"genAsync"`\]
 
 #### Returns
 
@@ -54,7 +60,7 @@
 
 ### genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
+> **genPureAsync**\<`T`\>(`factory`, `options`?): [`NewPureInstanceOf`](../type-aliases/NewPureInstanceOf.md)\<`TComputationType`, `T`\>
 
 #### Type Parameters
 
@@ -65,6 +71,10 @@
 ##### factory
 
 [`Factory`](../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`TCreationOptions`\[`"genPureAsync"`\]
 
 #### Returns
 

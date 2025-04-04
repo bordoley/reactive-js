@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
+- [`ComputationModule`](../../interfaces/ComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`DeferredComputationModule`](../../interfaces/DeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>.[`InteractiveComputationModule`](../../interfaces/InteractiveComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md), \{ `toObservable`: \{ `bufferSize`: `number`; \}; \}\>.[`ConcurrentDeferredComputationModule`](../../interfaces/ConcurrentDeferredComputationModule.md)\<[`AsyncIterableComputation`](AsyncIterableComputation.md)\>
 
 ## Properties
 
@@ -384,7 +384,7 @@
 
 ### genAsync()
 
-> **genAsync**\<`T`\>(`factory`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
+> **genAsync**\<`T`\>(`factory`, `options`?): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`ComputationWithSideEffectsLike`](../../interfaces/ComputationWithSideEffectsLike.md)
 
 #### Type Parameters
 
@@ -395,6 +395,10 @@
 ##### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -436,7 +440,7 @@
 
 ### genPureAsync()
 
-> **genPureAsync**\<`T`\>(`factory`): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **genPureAsync**\<`T`\>(`factory`, `options`?): [`AsyncIterableLike`](../../interfaces/AsyncIterableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Type Parameters
 
@@ -447,6 +451,10 @@
 ##### factory
 
 [`Factory`](../../../functions/type-aliases/Factory.md)\<`AsyncIterator`\<`T`, `any`, `any`\>\>
+
+##### options?
+
+`unknown`
 
 #### Returns
 
@@ -806,7 +814,9 @@
 
 ##### options?
 
-`unknown`
+###### bufferSize?
+
+`number`
 
 #### Returns
 

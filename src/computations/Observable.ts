@@ -96,7 +96,17 @@ export interface ObservableModule
         };
       }
     >,
-    ConcurrentDeferredComputationModule<ObservableComputation>,
+    ConcurrentDeferredComputationModule<
+      ObservableComputation,
+      {
+        genAsync?: {
+          bufferSize?: number;
+        };
+        genPureAsync?: {
+          bufferSize?: number;
+        };
+      }
+    >,
     ReactiveComputationModule<ObservableComputation>,
     DeferredComputationModule<
       ObservableComputation,

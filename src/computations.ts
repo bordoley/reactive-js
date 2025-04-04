@@ -477,13 +477,19 @@ export interface DeferredComputationModule<
 
 export interface ConcurrentDeferredComputationModule<
   TComputationType extends ComputationTypeLike,
+  TCreationOptions extends {
+    genAsync?: Record<string, any>;
+    genPureAsync?: Record<string, any>;
+  } = {},
 > extends ComputationModuleLike<TComputationType> {
   genAsync<T>(
     factory: Factory<AsyncIterator<T>>,
+    options?: TCreationOptions["genAsync"],
   ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   genPureAsync<T>(
     factory: Factory<AsyncIterator<T>>,
+    options?: TCreationOptions["genPureAsync"],
   ): NewPureInstanceOf<TComputationType, T>;
 }
 

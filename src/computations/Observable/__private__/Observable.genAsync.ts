@@ -2,27 +2,28 @@ import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
-import {
-  Factory,
-  Optional,
-  error,
-  none,
-  pipe,
-  pipeLazy,
-} from "../../../functions.js";
+import { Factory, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
+import * as FlowControllerQueue from "../../../utils/__internal__/FlowControllerQueue.js";
 import {
   AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
   DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControllerEnumeratorLike_addOnDataAvailableListener,
+  FlowControllerEnumeratorLike_isDataAvailable,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
+  OverflowBackpressureStrategy,
+  QueueLike_enqueue,
+  SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
@@ -30,127 +31,136 @@ import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genFactory =
-  <T>(factory: Factory<AsyncIterator<T>>) =>
-  (observer: ObserverLike<T>) => {
-    const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
+  <T>(
+    factory: Factory<AsyncIterator<T>>,
+    options?: {
+      bufferSize?: number;
+    },
+  ) =>
+  async (observer: ObserverLike<T>) => {
     const enumerator = pipe(
       factory(),
       AsyncIterator.toAsyncEnumerator(),
       Disposable.addTo(observer),
     );
 
-    let isActive = false;
-    let hasValueToNotify = false;
-    let valueToNotify: Optional<T> = none;
+    // FIXME need backpressure options;
+    const queue = pipe(
+      FlowControllerQueue.create<T>({
+        backpressureStrategy: OverflowBackpressureStrategy,
+        capacity: options?.bufferSize ?? 32,
+      }),
+      Disposable.addTo(observer),
+    );
 
-    const continue_ = async () => {
-      const startTime = observer[SchedulerLike_now];
-      let isReady = observer[FlowControllerLike_isReady];
-      let isCompleted = observer[SinkLike_isCompleted];
-      let shouldYield = false;
+    let isCompleted = false;
 
-      if (isActive || isCompleted) {
+    let dispatchSubscription = Disposable.disposed;
+
+    function* dispatchEvents(scheduler: SchedulerLike) {
+      let observerIsReady = observer[FlowControllerLike_isReady];
+      let observerIsCompleted = observer[SinkLike_isCompleted];
+      while (
+        observerIsReady &&
+        !observerIsCompleted &&
+        queue[EnumeratorLike_moveNext]()
+      ) {
+        const next = queue[EnumeratorLike_current];
+        observer[EventListenerLike_notify](next);
+
+        const shouldYield = scheduler[SchedulerLike_shouldYield];
+        const hasMoreData = queue[FlowControllerEnumeratorLike_isDataAvailable];
+        if (shouldYield && hasMoreData) {
+          yield;
+        }
+
+        observerIsReady = observer[FlowControllerLike_isReady];
+        observerIsCompleted = observer[SinkLike_isCompleted];
+      }
+
+      const hasMoreData = queue[FlowControllerEnumeratorLike_isDataAvailable];
+      if (!hasMoreData && isCompleted) {
+        observer[SinkLike_complete]();
+      }
+    }
+
+    const scheduleDispatcher = () => {
+      if (!dispatchSubscription[DisposableLike_isDisposed]) {
         return;
       }
-      isActive = true;
+
+      dispatchSubscription = pipe(
+        observer[SchedulerLike_schedule](dispatchEvents),
+        Disposable.addTo(observer),
+      );
+    };
+
+    queue[FlowControllerEnumeratorLike_addOnDataAvailableListener](
+      scheduleDispatcher,
+    );
+
+    let enumerateIsActive = false;
+    const enumerate = async () => {
+      let queueIsReady = queue[FlowControllerLike_isReady];
+      let observerIsReady = observer[FlowControllerLike_isReady];
+      let observerIsCompleted = observer[SinkLike_isCompleted];
+
+      if (enumerateIsActive || observerIsCompleted) {
+        return;
+      }
+      enumerateIsActive = true;
 
       try {
-        if (hasValueToNotify && isReady && !isCompleted) {
-          observer[EventListenerLike_notify](valueToNotify as T);
-          isReady = observer[FlowControllerLike_isReady];
-          isCompleted = observer[SinkLike_isCompleted];
-          shouldYield =
-            observer[SchedulerLike_now] - startTime < maxYieldInterval &&
-            isReady &&
-            !isCompleted;
-
-          hasValueToNotify = false;
-          valueToNotify = none;
-        }
-
         while (
-          isReady &&
-          !isCompleted &&
-          !shouldYield &&
+          queueIsReady &&
+          observerIsReady &&
+          !observerIsCompleted &&
           (await enumerator[AsyncEnumeratorLike_moveNext]())
         ) {
+          const value = enumerator[AsyncEnumeratorLike_current];
+          queue[QueueLike_enqueue](value);
+
           // Reassign because these values may change after
           // hopping the micro task queue
-          isReady = observer[FlowControllerLike_isReady];
-          isCompleted = observer[SinkLike_isCompleted];
-
-          const value = enumerator[AsyncEnumeratorLike_current];
-
-          if (!isReady && !isCompleted) {
-            hasValueToNotify = true;
-            valueToNotify = value;
-
-            // In this case we explicitly don't want to reschedule
-            shouldYield = false;
-          } else if (!isCompleted) {
-            observer[EventListenerLike_notify](value);
-            isReady = observer[FlowControllerLike_isReady];
-            isCompleted = observer[SinkLike_isCompleted];
-
-            // Only request a yield if the observer is ready
-            // to accept more notifications, but we are choosing
-            // to yield back to the main scheduler anyway because
-            // we exceeded the yield interval
-            shouldYield =
-              observer[SchedulerLike_now] - startTime < maxYieldInterval &&
-              isReady &&
-              !isCompleted;
-          }
+          queueIsReady = queue[FlowControllerLike_isReady];
+          observerIsReady = observer[FlowControllerLike_isReady];
+          observerIsCompleted = observer[SinkLike_isCompleted];
         }
 
-        if (!shouldYield && !hasValueToNotify && !isCompleted) {
-          observer[SinkLike_complete]();
+        if (queueIsReady && observerIsReady && !observerIsCompleted) {
+          isCompleted = true;
+          scheduleDispatcher();
         }
       } catch (e) {
         observer[DisposableLike_dispose](error(e));
       }
-
-      if (shouldYield) {
-        // We still have more data to produce, but want to
-        // reschedule onto the macro task scheduler to avoid
-        // starving the microtask queue.
-        pipe(
-          observer[SchedulerLike_schedule](function* () {
-            continue_();
-          }),
-          Disposable.addTo(observer),
-        );
-      }
-
-      isActive = false;
+      enumerateIsActive = false;
+      // Return and let the onReadySink reschedule
+      // the continuation
     };
 
-    observer[FlowControllerLike_addOnReadyListener](
-      pipeLazy(
-        observer[SchedulerLike_schedule](function* () {
-          continue_();
-        }),
-        Disposable.addTo(observer),
-      ),
-    );
+    observer[FlowControllerLike_addOnReadyListener](enumerate);
+    queue[FlowControllerLike_addOnReadyListener](enumerate);
 
-    pipe(
-      observer[SchedulerLike_schedule](function* () {
-        continue_();
-      }),
-      Disposable.addTo(observer),
-    );
+    await Promise.resolve();
+
+    enumerate();
   };
 
-export const Observable_genAsync: Observable.Signature["genAsync"] = (factory =>
-  DeferredEventSource.create(genFactory(factory), {
+export const Observable_genAsync: Observable.Signature["genAsync"] = ((
+  factory,
+  options,
+) =>
+  DeferredEventSource.create(genFactory(factory, options), {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: true,
   })) as Observable.Signature["genAsync"];
 
-export const Observable_genPureAsync: Observable.Signature["genPureAsync"] =
-  (factory =>
-    DeferredEventSource.create(genFactory(factory), {
-      [ComputationLike_isPure]: true,
-      [ComputationLike_isSynchronous]: true,
-    })) as Observable.Signature["genPureAsync"];
+export const Observable_genPureAsync: Observable.Signature["genPureAsync"] = ((
+  factory,
+  options,
+) =>
+  DeferredEventSource.create(genFactory(factory, options), {
+    [ComputationLike_isPure]: true,
+    [ComputationLike_isSynchronous]: true,
+  })) as Observable.Signature["genPureAsync"];

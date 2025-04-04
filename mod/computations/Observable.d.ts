@@ -17,7 +17,14 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     toProducer: {
         readonly scheduler?: SchedulerLike;
     };
-}>, ConcurrentDeferredComputationModule<ObservableComputation>, ReactiveComputationModule<ObservableComputation>, DeferredComputationModule<ObservableComputation, {
+}>, ConcurrentDeferredComputationModule<ObservableComputation, {
+    genAsync?: {
+        bufferSize?: number;
+    };
+    genPureAsync?: {
+        bufferSize?: number;
+    };
+}>, ReactiveComputationModule<ObservableComputation>, DeferredComputationModule<ObservableComputation, {
     gen: {
         readonly delay?: number;
         readonly delayStart?: boolean;

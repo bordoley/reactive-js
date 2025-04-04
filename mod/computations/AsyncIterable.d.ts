@@ -4,7 +4,11 @@ export interface AsyncIterableComputation extends ComputationTypeLike {
     readonly [ComputationTypeLike_baseOfT]?: AsyncIterableLike<this[typeof ComputationTypeLike_T]>;
 }
 export type Computation = AsyncIterableComputation;
-export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, DeferredComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
+export interface AsyncIterableModule extends ComputationModule<AsyncIterableComputation>, DeferredComputationModule<AsyncIterableComputation>, InteractiveComputationModule<AsyncIterableComputation, {
+    toObservable: {
+        bufferSize?: number;
+    };
+}>, ConcurrentDeferredComputationModule<AsyncIterableComputation> {
     fromAsyncFactory<T>(): Function1<(options?: {
         signal?: AbortSignal;
     }) => Promise<T>, AsyncIterableWithSideEffectsLike<T>>;

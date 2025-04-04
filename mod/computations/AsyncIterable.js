@@ -598,11 +598,9 @@ class ThrowIfEmptyAsyncIterable {
     }
 }
 export const throwIfEmpty = ((factory) => (iter) => newInstance(ThrowIfEmptyAsyncIterable, iter, factory));
-export const toObservable = 
-//  @__PURE__
-returns((iter) => ComputationM.isPure(iter)
-    ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator))
-    : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator)));
+export const toObservable = (options => (iter) => ComputationM.isPure(iter)
+    ? Observable_genPureAsync(bindMethod(iter, Symbol.asyncIterator), options)
+    : Observable_genAsync(bindMethod(iter, Symbol.asyncIterator), options));
 export const toProducer = 
 //   @__PURE__
 returns((iter) => ComputationM.isPure(iter)
