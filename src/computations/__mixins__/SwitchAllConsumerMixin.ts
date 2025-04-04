@@ -13,14 +13,10 @@ import {
 import { Function1, bind, none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
+import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
+import { DelegatingSinkLike } from "../../utils/__mixins__/DelegatingSinkMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../../utils/__mixins__/FlowControllerWithoutBackpressureMixin.js";
-import SinkMixin, {
-  SinkMixinLike,
-  SinkMixinLike_delegate,
-  SinkMixinLike_doComplete,
-  SinkMixinLike_isCompleted,
-} from "../../utils/__mixins__/SinkMixin.js";
 import {
   ConsumerLike,
   DisposableLike,
@@ -69,35 +65,53 @@ const SwitchAllConsumerMixin: <
   function onSwitchAllConsumerInnerSourceComplete(
     this: TProperties &
       ConsumerLike<TInnerSource> &
-      SinkMixinLike<TConsumer, T>,
+      DelegatingSinkLike<TInnerSource, T, TConsumer>,
   ) {
     if (this[SinkLike_isCompleted]) {
-      this[SinkMixinLike_doComplete]();
+      this[DelegatingEventListenerLike_delegate][SinkLike_complete]();
     }
   }
 
   return returns(
     mix(
       include(
-        DelegatingDisposableMixin,
         FlowControllerWithoutBackpressureMixin,
-        SinkMixin(),
+        DelegatingNonCompletingSinkMixin(),
       ),
       function SwitchAllConsumerMixin(
         this: Omit<
           TReturn<TInnerSource, TConsumer, T>,
-          keyof FlowControllerLike | typeof SinkLike_isCompleted
+          | keyof FlowControllerLike
+          | typeof SinkLike_isCompleted
+          | typeof SinkLike_complete
         > &
           TProperties,
         delegate: TConsumer,
         createDelegatingNonCompleting: Function1<TConsumer, TConsumer>,
       ): TReturn<TInnerSource, TConsumer, T> {
-        init(DelegatingDisposableMixin, this, delegate);
         init(FlowControllerWithoutBackpressureMixin, this);
-        init(SinkMixin<TConsumer, T>(), this, delegate);
+        init(
+          DelegatingNonCompletingSinkMixin<TInnerSource, T, TConsumer>(),
+          this,
+          delegate,
+        );
 
         this[SwitchAllConsumer_createDelegatingNonCompleting] =
           createDelegatingNonCompleting;
+
+        pipe(
+          this,
+          DisposableContainer.onComplete(() => {
+            const innerSubscriptionIsDispsoed =
+              this[SwitchAllConsumer_innerSubscription][
+                DisposableLike_isDisposed
+              ];
+
+            if (innerSubscriptionIsDispsoed) {
+              delegate[SinkLike_complete]();
+            }
+          }),
+        );
 
         return this;
       },
@@ -109,7 +123,7 @@ const SwitchAllConsumerMixin: <
         [EventListenerLike_notify](
           this: TProperties &
             ConsumerLike<TInnerSource> &
-            SinkMixinLike<TConsumer, T>,
+            DelegatingSinkLike<TInnerSource, T, TConsumer>,
           next: TInnerSource,
         ) {
           if (this[SinkLike_isCompleted]) {
@@ -117,7 +131,7 @@ const SwitchAllConsumerMixin: <
           }
           this[SwitchAllConsumer_innerSubscription][DisposableLike_dispose]();
 
-          const delegate = this[SinkMixinLike_delegate];
+          const delegate = this[DelegatingEventListenerLike_delegate];
           const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(
             this[SwitchAllConsumer_createDelegatingNonCompleting](delegate),
             DisposableContainer.onComplete(
@@ -131,22 +145,6 @@ const SwitchAllConsumerMixin: <
 
           this[SwitchAllConsumer_innerSubscription] =
             delegatingNotifyOnlyNonCompletingNonDisposing;
-        },
-        [SinkLike_complete](
-          this: TProperties &
-            ConsumerLike<TInnerSource> &
-            SinkMixinLike<TConsumer, T>,
-        ) {
-          const isCompleted = this[SinkLike_isCompleted];
-          this[SinkMixinLike_isCompleted] = true;
-          const innerSubscriptionIsDispsoed =
-            this[SwitchAllConsumer_innerSubscription][
-              DisposableLike_isDisposed
-            ];
-
-          if (!isCompleted && innerSubscriptionIsDispsoed) {
-            this[SinkMixinLike_doComplete]();
-          }
         },
       }),
     ),
