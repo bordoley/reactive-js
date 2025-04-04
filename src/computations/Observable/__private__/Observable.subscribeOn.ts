@@ -5,7 +5,11 @@ import {
   EventSourceLike_subscribe,
 } from "../../../computations.js";
 import { invoke, pipe } from "../../../functions.js";
-import { BackpressureStrategy, ObserverLike, SchedulerLike } from "../../../utils.js";
+import {
+  BackpressureStrategy,
+  ObserverLike,
+  SchedulerLike,
+} from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as ConsumerObservable from "../../__internal__/ConsumerObservable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
@@ -16,11 +20,11 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
     options?: {
       backpressureStrategy?: BackpressureStrategy;
       capacity?: number;
-  }
+    },
   ) =>
   (observable: ComputationOf<Observable.Computation, T>) =>
     DeferredEventSource.create<T, ObserverLike>(
-      observer =>{
+      observer => {
         const consumer = ConsumerObservable.create(options);
         consumer[EventSourceLike_subscribe](observer);
 

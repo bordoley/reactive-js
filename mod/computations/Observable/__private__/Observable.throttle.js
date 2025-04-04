@@ -41,7 +41,7 @@ const createThrottleSink = /*@__PURE__*/ (() => {
             delegate[EventListenerLike_notify](value);
         }
     }
-    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ThrowIfEmptySink(delegate, durationFunction, mode) {
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ThrottleSink(delegate, durationFunction, mode) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[ThrottleSink_durationFunction] = durationFunction;
         this[ThrottleSink_mode] = mode;

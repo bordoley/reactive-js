@@ -40,7 +40,10 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     gen: ScheduledReactiveComputationModule<ObservableComputation>["gen"];
     genPure: ScheduledReactiveComputationModule<ObservableComputation>["genPure"];
     retry: ScheduledReactiveComputationModule<ObservableComputation>["retry"];
-    subscribeOn<T>(scheduler: SchedulerLike): PureComputationOperator<ObservableComputation, T, T>;
+    subscribeOn<T>(scheduler: SchedulerLike, options?: {
+        backpressureStrategy?: BackpressureStrategy;
+        capacity?: number;
+    }): PureComputationOperator<ObservableComputation, T, T>;
 }
 export type Signature = ObservableModule;
 export declare const broadcast: Signature["broadcast"];

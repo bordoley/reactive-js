@@ -23,7 +23,7 @@ const m = Computation.makeModule({
 const createDebounceSink = /*@__PURE__*/ (() => {
     const DebounceSink_durationSubscription = Symbol("DebounceSink_durationSubscription");
     const DebounceSink_durationFunction = Symbol("DebounceSink_durationFunction");
-    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function ThrowIfEmptySink(delegate, durationFunction) {
+    return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function DebounceSink(delegate, durationFunction) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[DebounceSink_durationFunction] = durationFunction;
         this[DebounceSink_durationSubscription] = Disposable.disposed;

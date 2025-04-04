@@ -140,7 +140,7 @@ export interface ObservableModule
     options?: {
       backpressureStrategy?: BackpressureStrategy;
       capacity?: number;
-  }
+    },
   ): PureComputationOperator<ObservableComputation, T, T>;
 }
 
