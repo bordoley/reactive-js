@@ -104,14 +104,14 @@ export type BackPressureConfig = {
   readonly [BackPressureConfig_capacity]: number;
 };
 
-class BackPressureError extends Error {
+class CapacityExceededError extends Error {
   constructor(readonly capacity: number) {
     super();
   }
 }
 
-export const raiseBackpressureError = (capacity: number) =>
-  raise(newInstance(BackPressureError, capacity));
+export const raiseCapacityExceededError = (capacity: number) =>
+  raise(newInstance(CapacityExceededError, capacity));
 
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol(

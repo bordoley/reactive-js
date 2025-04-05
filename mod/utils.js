@@ -18,14 +18,14 @@ export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
 export const BackPressureConfig_strategy = Symbol("BackPressureConfig_strategy");
 export const BackPressureConfig_capacity = Symbol("BackPressureConfig_capacity");
-class BackPressureError extends Error {
+class CapacityExceededError extends Error {
     capacity;
     constructor(capacity) {
         super();
         this.capacity = capacity;
     }
 }
-export const raiseBackpressureError = (capacity) => raise(newInstance(BackPressureError, capacity));
+export const raiseCapacityExceededError = (capacity) => raise(newInstance(CapacityExceededError, capacity));
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");

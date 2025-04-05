@@ -4,7 +4,7 @@ import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/const
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, ThrowBackpressureStrategy, raiseBackpressureError, } from "../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -217,7 +217,7 @@ const QueueMixin =
             // to avoid unintentionally growing the queue.
             dropOldest && this[EnumeratorLike_moveNext]();
             throwBackpressureError &&
-                raiseBackpressureError(this[BackPressureConfig_capacity]);
+                raiseCapacityExceededError(this[BackPressureConfig_capacity]);
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;

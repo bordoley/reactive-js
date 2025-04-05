@@ -7,7 +7,7 @@ import { bindMethod, none, pipe, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import { DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, raiseBackpressureError, } from "../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, raiseCapacityExceededError, } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 export const toConsumer = /*@__PURE__*/ (() => {
     const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
@@ -58,7 +58,7 @@ export const toConsumer = /*@__PURE__*/ (() => {
             else {
                 // FIXME: Not strictly correct, because bytes doesn't necessarily
                 // map to event counts
-                raiseBackpressureError(writable.writableHighWaterMark);
+                raiseCapacityExceededError(writable.writableHighWaterMark);
             }
         },
         [SinkLike_complete]() {

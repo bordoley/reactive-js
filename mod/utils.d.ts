@@ -60,7 +60,7 @@ export type BackPressureConfig = {
      */
     readonly [BackPressureConfig_capacity]: number;
 };
-export declare const raiseBackpressureError: (capacity: number) => unknown;
+export declare const raiseCapacityExceededError: (capacity: number) => unknown;
 export declare const FlowControllerLike_isReady: unique symbol;
 export declare const FlowControllerLike_addOnReadyListener: unique symbol;
 export interface FlowControllerLike extends DisposableLike {

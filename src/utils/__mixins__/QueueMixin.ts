@@ -36,7 +36,7 @@ import {
   QueueLike,
   QueueLike_enqueue,
   ThrowBackpressureStrategy,
-  raiseBackpressureError,
+  raiseCapacityExceededError,
 } from "../../utils.js";
 
 type TReturn<T> = Omit<QueueLike<T>, keyof DisposableLike>;
@@ -361,7 +361,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             // to avoid unintentionally growing the queue.
             dropOldest && this[EnumeratorLike_moveNext]();
             throwBackpressureError &&
-              raiseBackpressureError(this[BackPressureConfig_capacity]);
+              raiseCapacityExceededError(this[BackPressureConfig_capacity]);
 
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {

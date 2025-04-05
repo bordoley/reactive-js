@@ -78,4 +78,4 @@
 ## Functions
 
 - [delayMs](functions/delayMs.md)
-- [raiseBackpressureError](functions/raiseBackpressureError.md)
+- [raiseCapacityExceededError](functions/raiseCapacityExceededError.md)

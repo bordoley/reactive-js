@@ -31,7 +31,7 @@ import {
   FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  raiseBackpressureError,
+  raiseCapacityExceededError,
 } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 
@@ -138,7 +138,7 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
         } else {
           // FIXME: Not strictly correct, because bytes doesn't necessarily
           // map to event counts
-          raiseBackpressureError(writable.writableHighWaterMark);
+          raiseCapacityExceededError(writable.writableHighWaterMark);
         }
       },
 
