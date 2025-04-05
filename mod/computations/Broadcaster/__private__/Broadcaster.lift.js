@@ -4,7 +4,7 @@ import { include, init, mixInstanceFactory, props, proto, } from "../../../__int
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../../computations.js";
 import { none, pipeUnsafe } from "../../../functions.js";
 import * as EventListener from "../../../utils/__internal__/EventListener.js";
-import { Sink_toLiftedSink } from "../../../utils/__internal__/Sink/__private__/Sink.toLiftedSink.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import { LiftedEventSourceLike_sink, LiftedEventSourceLike_source, } from "../../__internal__/LiftedSource.js";
@@ -31,7 +31,7 @@ const createLiftedBroadcaster = /*@__PURE__*/ (() => {
         [ComputationLike_isSynchronous]: false,
         [EventSourceLike_subscribe](listener) {
             const source = this[LiftedEventSourceLike_source];
-            const destinationOp = pipeUnsafe(listener, EventListener.toSink(), Sink_toLiftedSink(), ...this[LiftedEventSourceLike_sink], sinkToEventListener);
+            const destinationOp = pipeUnsafe(listener, EventListener.toSink(), Sink.toLiftedSink(), ...this[LiftedEventSourceLike_sink], sinkToEventListener);
             source[EventSourceLike_subscribe](destinationOp);
         },
     }));

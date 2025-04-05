@@ -14,7 +14,7 @@ import {
 } from "../../../computations.js";
 import { Function1, none, pipeUnsafe } from "../../../functions.js";
 import * as EventListener from "../../../utils/__internal__/EventListener.js";
-import { Sink_toLiftedSink } from "../../../utils/__internal__/Sink/__private__/Sink.toLiftedSink.js";
+import * as Sink from "../../../utils/__internal__/Sink.js";
 import DelegatingDisposableContainerMixin from "../../../utils/__mixins__/DelegatingDisposableContainerMixin.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -122,7 +122,7 @@ const createLiftedBroadcaster: <TIn, TOut>(
         const destinationOp: EventListenerLike<TIn> = pipeUnsafe(
           listener,
           EventListener.toSink(),
-          Sink_toLiftedSink(),
+          Sink.toLiftedSink(),
           ...this[LiftedEventSourceLike_sink],
           sinkToEventListener,
         );
