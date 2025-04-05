@@ -119,7 +119,6 @@ export const useEventSource: Signature["useEventSource"] = <T>(
   },
 ) => {
   const [state, updateState] = useState<Optional<T>>(none);
-  const [error, updateError] = useState<Optional<Error>>(none);
 
   const source = isFunction(sourceOrFactory)
     ? useMemo(sourceOrFactory, optionsOrDeps as readonly unknown[])
@@ -135,21 +134,19 @@ export const useEventSource: Signature["useEventSource"] = <T>(
   useDisposable(() => {
     const scheduler = ReactScheduler.get(priority);
     const onNext = (v: T) => updateState(_ => v);
-    const observer = pipe(
-      Observer.create(onNext, scheduler),
-      DisposableContainer.onError(updateError),
-    );
+    const observer = Observer.create(onNext, scheduler);
 
     source?.[EventSourceLike_subscribe](observer);
+     
     return observer;
-  }, [source, updateState, updateError, priority]);
+  }, [source, updateState, priority]);
 
   // Special case for StoreLikes to return the current value always if defined.
   const storeCurrentValue = (source as unknown as Optional<StoreLike<T>>)?.[
     StoreLike_value
   ];
 
-  return isSome(error) ? raiseError<T>(error) : (state ?? storeCurrentValue);
+  return (state ?? storeCurrentValue);
 };
 
 export const useStreamable: Signature["useStreamable"] = <
