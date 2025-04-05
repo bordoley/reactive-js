@@ -12,6 +12,7 @@ import {
 } from "../../../computations.js";
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
+import UnscheduledObserverMixin from "../../../utils/__mixins__/UnscheduledObserverMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
@@ -27,7 +28,11 @@ export const createSwitchAllObserver: <
   /*@__PURE__*/
   (<TInnerSource extends EventSourceLike<T, ObserverLike<T>>, T>() =>
     mixInstanceFactory(
-      include(SwitchAllConsumerMixin(), DelegatingSchedulerMixin),
+      include(
+        SwitchAllConsumerMixin(),
+        DelegatingSchedulerMixin,
+        UnscheduledObserverMixin(),
+      ),
       function SwitchAllObserver(
         this: unknown,
         delegate: ObserverLike<T>,
@@ -39,6 +44,7 @@ export const createSwitchAllObserver: <
           Observer.createDelegatingNonCompleting,
         );
         init(DelegatingSchedulerMixin, this, delegate);
+        init(UnscheduledObserverMixin(), this);
 
         return this;
       },

@@ -56,6 +56,7 @@
 - [EventListenerLike\_notify](variables/EventListenerLike_notify.md)
 - [FlowControllerLike\_addOnReadyListener](variables/FlowControllerLike_addOnReadyListener.md)
 - [FlowControllerLike\_isReady](variables/FlowControllerLike_isReady.md)
+- [ObserverLike\_mustNotifyInSchedulerContinuation](variables/ObserverLike_mustNotifyInSchedulerContinuation.md)
 - [OverflowBackpressureStrategy](variables/OverflowBackpressureStrategy.md)
 - [PauseableLike\_isPaused](variables/PauseableLike_isPaused.md)
 - [PauseableLike\_pause](variables/PauseableLike_pause.md)

@@ -12,6 +12,7 @@ import DelegatingSchedulerMixin from "../../utils/__mixins__/DelegatingScheduler
 import {
   EventListenerLike_notify,
   ObserverLike,
+  ObserverLike_mustNotifyInSchedulerContinuation,
   SchedulerLike_inContinuation,
 } from "../../utils.js";
 import {
@@ -37,11 +38,17 @@ const LiftedSinkToObserverMixin: <
   T,
 >() => Mixin1<TReturn<TSubscription, T>, LiftedSinkLike<TSubscription, T>> =
   /*@__PURE__*/ (<TSubscription extends ObserverLike, T>() => {
+    type TPrototype = Pick<
+      ObserverLike<T>,
+      | typeof ObserverLike_mustNotifyInSchedulerContinuation
+      | typeof EventListenerLike_notify
+    >;
+
     return returns(
       mix(
         include(DelegatingSchedulerMixin, LiftedSinkToConsumerMixin()),
         function LiftedSinkToObserverMixin(
-          this: unknown,
+          this: TPrototype,
           delegate: LiftedSinkLike<TSubscription, T>,
         ): TReturn<TSubscription, T> {
           const subscription = delegate[LiftedSinkLike_subscription];
@@ -52,7 +59,8 @@ const LiftedSinkToObserverMixin: <
         },
 
         props(),
-        proto({
+        proto<TPrototype>({
+          [ObserverLike_mustNotifyInSchedulerContinuation]: true,
           [EventListenerLike_notify](
             this: LiftedSinkToObserverLike<TSubscription, T>,
             next: T,

@@ -351,6 +351,9 @@ export interface ConsumerLike<T = unknown>
   extends SinkLike<T>,
     FlowControllerLike {}
 
+export const ObserverLike_mustNotifyInSchedulerContinuation = Symbol(
+  "ObserverLike_mustNotifyInSchedulerContinuation",
+);
 /**
  * A consumer of push-based notifications.
  *
@@ -358,4 +361,8 @@ export interface ConsumerLike<T = unknown>
  */
 export interface ObserverLike<T = unknown>
   extends ConsumerLike<T>,
-    SchedulerLike {}
+    SchedulerLike {
+  // Indicates if the observer requires being notified from within
+  // a continuation on it's scheduler.
+  readonly [ObserverLike_mustNotifyInSchedulerContinuation]: boolean;
+}

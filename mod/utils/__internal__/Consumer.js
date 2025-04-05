@@ -7,14 +7,16 @@ import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.j
 import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
+import UnscheduledObserverMixin from "../__mixins__/UnscheduledObserverMixin.js";
 export const createDelegatingCatchError = /*@__PURE__*/ (() => createInstanceFactory(DelegatingCatchErrorConsumerMixin()))();
 export const createDelegatingNonCompleting = /*@__PURE__*/ (() => createInstanceFactory(DelegatingNonCompletingConsumerMixin()))();
 export const takeLast = /*@__PURE__*/ (() => createInstanceFactory(TakeLastConsumerMixin()))();
 export const toObserver = /*@__PURE__*/ (() => {
-    const createConsumerToObserver = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingConsumerMixin(), DelegatingSchedulerMixin), function ConsumerToObserver(scheduler, consumer) {
+    const createConsumerToObserver = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingConsumerMixin(), DelegatingSchedulerMixin, UnscheduledObserverMixin()), function ConsumerToObserver(scheduler, consumer) {
         init(DelegatingDisposableMixin, this, consumer);
         init(DelegatingConsumerMixin(), this, consumer);
         init(DelegatingSchedulerMixin, this, scheduler);
+        init(UnscheduledObserverMixin(), this);
         return this;
     });
     return (scheduler) => (consumer) => createConsumerToObserver(scheduler, consumer);

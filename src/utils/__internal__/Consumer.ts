@@ -17,6 +17,7 @@ import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.j
 import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
+import UnscheduledObserverMixin from "../__mixins__/UnscheduledObserverMixin.js";
 
 export const createDelegatingCatchError: <T>(
   o: ConsumerLike<T>,
@@ -41,6 +42,7 @@ export const toObserver: <T>(
       DelegatingDisposableMixin,
       DelegatingConsumerMixin(),
       DelegatingSchedulerMixin,
+      UnscheduledObserverMixin(),
     ),
     function ConsumerToObserver(
       this: unknown,
@@ -50,6 +52,7 @@ export const toObserver: <T>(
       init(DelegatingDisposableMixin, this, consumer);
       init(DelegatingConsumerMixin<T>(), this, consumer);
       init(DelegatingSchedulerMixin, this, scheduler);
+      init(UnscheduledObserverMixin(), this);
 
       return this;
     },

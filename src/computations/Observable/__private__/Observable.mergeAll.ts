@@ -14,6 +14,7 @@ import {
 import { Optional } from "../../../functions.js";
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
+import UnscheduledObserverMixin from "../../../utils/__mixins__/UnscheduledObserverMixin.js";
 import {
   BackpressureStrategy,
   ObserverLike,
@@ -38,7 +39,11 @@ export const createMergeAllObserver: <
   /*@__PURE__*/
   (<TInnerSource extends EventSourceLike<T, ObserverLike<T>>, T>() =>
     mixInstanceFactory(
-      include(MergeAllConsumerMixin(), DelegatingSchedulerMixin),
+      include(
+        MergeAllConsumerMixin(),
+        DelegatingSchedulerMixin,
+        UnscheduledObserverMixin(),
+      ),
       function MergeAllObserver(
         this: unknown,
         delegate: ObserverLike<T>,
@@ -56,6 +61,7 @@ export const createMergeAllObserver: <
           Observer.createDelegatingNonCompleting,
         );
         init(DelegatingSchedulerMixin, this, delegate);
+        init(UnscheduledObserverMixin(), this);
 
         return this;
       },

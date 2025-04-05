@@ -15,3 +15,9 @@ A consumer of push-based notifications.
 ## Type Parameters
 
 • **T** = `unknown`
+
+## Properties
+
+### \[ObserverLike\_mustNotifyInSchedulerContinuation\]
+
+> `readonly` **\[ObserverLike\_mustNotifyInSchedulerContinuation\]**: `boolean`

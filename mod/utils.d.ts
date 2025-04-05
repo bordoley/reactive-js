@@ -226,10 +226,12 @@ export interface SinkLike<T = unknown> extends EventListenerLike<T> {
  */
 export interface ConsumerLike<T = unknown> extends SinkLike<T>, FlowControllerLike {
 }
+export declare const ObserverLike_mustNotifyInSchedulerContinuation: unique symbol;
 /**
  * A consumer of push-based notifications.
  *
  * @noInheritDoc
  */
 export interface ObserverLike<T = unknown> extends ConsumerLike<T>, SchedulerLike {
+    readonly [ObserverLike_mustNotifyInSchedulerContinuation]: boolean;
 }

@@ -5,7 +5,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObservableLike } from "../../../computations.js";
 import DelegatingConsumerMixin from "../../../utils/__mixins__/DelegatingConsumerMixin.js";
-import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
+import DelegatingObserverSchedulerMixin from "../../../utils/__mixins__/DelegatingObserverSchedulerMixin.js";
 import { ObserverLike } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
@@ -24,7 +24,7 @@ const createLatestObserver: (
       include(
         DelegatingConsumerMixin(),
         LatestEventListenerMixin(),
-        DelegatingSchedulerMixin,
+        DelegatingObserverSchedulerMixin(),
       ),
       function LatestObserver(
         this: unknown,
@@ -33,7 +33,7 @@ const createLatestObserver: (
       ): ObserverLike & LatestEventListenerLike {
         init(DelegatingConsumerMixin(), this, delegate);
         init(LatestEventListenerMixin(), this, delegate, context);
-        init(DelegatingSchedulerMixin, this, delegate);
+        init(DelegatingObserverSchedulerMixin(), this, delegate);
 
         return this;
       },

@@ -60,3 +60,4 @@ export const PauseableLike_resume = Symbol("PauseableLike_resume");
 export const EventListenerLike_notify = Symbol("EventListenerLike_notify");
 export const SinkLike_complete = Symbol("SinkLike_complete");
 export const SinkLike_isCompleted = Symbol("SinkLike_isCompleted");
+export const ObserverLike_mustNotifyInSchedulerContinuation = Symbol("ObserverLike_mustNotifyInSchedulerContinuation");

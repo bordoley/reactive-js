@@ -12,6 +12,7 @@ import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js"
 import DelegatingSinkMixin from "../__mixins__/DelegatingSinkMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../__mixins__/FlowControllerWithoutBackpressureMixin.js";
 import { ReducerSinkMixin } from "../__mixins__/ReducerSinkMixin.js";
+import UnscheduledObserverMixin from "../__mixins__/UnscheduledObserverMixin.js";
 export const collect = /*@__PURE__*/ (() => mixInstanceFactory(include(CollectorSinkMixin()), function CollectorSink(buffer) {
     init(CollectorSinkMixin(), this, buffer);
     return this;
@@ -42,11 +43,12 @@ export const toLiftedSink = /*@__PURE__*/ (() => {
     })));
 })();
 export const toObserver = /*@__PURE__*/ (() => {
-    const createFromSink = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingSinkMixin(), DelegatingSchedulerMixin, FlowControllerWithoutBackpressureMixin), function SinkToObserver(delegate, scheduler) {
+    const createFromSink = mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingSinkMixin(), DelegatingSchedulerMixin, FlowControllerWithoutBackpressureMixin, UnscheduledObserverMixin()), function SinkToObserver(delegate, scheduler) {
         init(DelegatingDisposableMixin, this, delegate);
         init(DelegatingSinkMixin(), this, delegate);
         init(DelegatingSchedulerMixin, this, scheduler);
         init(FlowControllerWithoutBackpressureMixin, this);
+        init(UnscheduledObserverMixin(), this);
         return this;
     });
     return (scheduler) => (sink) => createFromSink(sink, scheduler);

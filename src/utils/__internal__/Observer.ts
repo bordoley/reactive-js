@@ -14,12 +14,14 @@ import {
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
 import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
 import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
+import DelegatingObserverSchedulerMixin from "../__mixins__/DelegatingObserverSchedulerMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "../__mixins__/DisposeOnCompleteSinkMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../__mixins__/FlowControllerWithoutBackpressureMixin.js";
 import { ReducerSinkMixin } from "../__mixins__/ReducerSinkMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
+import UnscheduledObserverMixin from "../__mixins__/UnscheduledObserverMixin.js";
 
 export const collect: <T>(
   buffer: T[],
@@ -30,6 +32,7 @@ export const collect: <T>(
       CollectorSinkMixin(),
       DelegatingSchedulerMixin,
       FlowControllerWithoutBackpressureMixin,
+      UnscheduledObserverMixin(),
     ),
     function CollectObserver(
       this: unknown,
@@ -39,6 +42,7 @@ export const collect: <T>(
       init(CollectorSinkMixin(), this, buffer);
       init(DelegatingSchedulerMixin, this, scheduler);
       init(FlowControllerWithoutBackpressureMixin, this);
+      init(UnscheduledObserverMixin(), this);
 
       return this;
     },
@@ -59,6 +63,7 @@ export const create: <T>(
       DisposeOnCompleteSinkMixin(),
       DelegatingSchedulerMixin,
       FlowControllerWithoutBackpressureMixin,
+      UnscheduledObserverMixin(),
     ),
     function EventListener(
       this: TProperties,
@@ -69,6 +74,7 @@ export const create: <T>(
       init(DisposeOnCompleteSinkMixin(), this);
       init(DelegatingSchedulerMixin, this, scheduler);
       init(FlowControllerWithoutBackpressureMixin, this);
+      init(UnscheduledObserverMixin(), this);
 
       this[EventListenerLike_notify] = notify;
 
@@ -84,13 +90,16 @@ export const createDelegatingCatchError: <T>(
   o: ObserverLike<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DelegatingCatchErrorConsumerMixin(), DelegatingSchedulerMixin),
+    include(
+      DelegatingCatchErrorConsumerMixin(),
+      DelegatingObserverSchedulerMixin(),
+    ),
     function DelegatingCatchErrorObserver(
       this: unknown,
       delegate: ObserverLike<T>,
     ): ObserverLike<T> {
       init(DelegatingCatchErrorConsumerMixin(), this, delegate);
-      init(DelegatingSchedulerMixin, this, delegate);
+      init(DelegatingObserverSchedulerMixin(), this, delegate);
 
       return this;
     },
@@ -100,13 +109,16 @@ export const createDelegatingNonCompleting: <T>(
   o: ObserverLike<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(DelegatingNonCompletingConsumerMixin(), DelegatingSchedulerMixin),
+    include(
+      DelegatingNonCompletingConsumerMixin(),
+      DelegatingObserverSchedulerMixin(),
+    ),
     function DelegatingNonCompletingObserver(
       this: unknown,
       delegate: ObserverLike<T>,
     ): ObserverLike<T> {
       init(DelegatingNonCompletingConsumerMixin(), this, delegate);
-      init(DelegatingSchedulerMixin, this, delegate);
+      init(DelegatingObserverSchedulerMixin(), this, delegate);
 
       return this;
     },
@@ -122,6 +134,7 @@ export const reducer: <T, TAcc>(
       ReducerSinkMixin(),
       DelegatingSchedulerMixin,
       FlowControllerWithoutBackpressureMixin,
+      UnscheduledObserverMixin(),
     ),
     function CollectObserver(
       this: unknown,
@@ -132,6 +145,7 @@ export const reducer: <T, TAcc>(
       init(ReducerSinkMixin<T, TAcc>(), this, reducer, ref);
       init(DelegatingSchedulerMixin, this, scheduler);
       init(FlowControllerWithoutBackpressureMixin, this);
+      init(UnscheduledObserverMixin(), this);
 
       return this;
     },
@@ -143,7 +157,11 @@ export const takeLast: <T>(
   scheduler: SchedulerLike,
 ) => ObserverLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
   mixInstanceFactory(
-    include(TakeLastConsumerMixin(), DelegatingSchedulerMixin),
+    include(
+      TakeLastConsumerMixin(),
+      DelegatingSchedulerMixin,
+      UnscheduledObserverMixin(),
+    ),
     function TakeLastObserver(
       this: unknown,
       capacity: number,
@@ -151,6 +169,7 @@ export const takeLast: <T>(
     ): ObserverLike<T> & CollectionEnumeratorLike<T> {
       init(TakeLastConsumerMixin<T>(), this, capacity);
       init(DelegatingSchedulerMixin, this, scheduler);
+      init(UnscheduledObserverMixin(), this);
 
       return this;
     },

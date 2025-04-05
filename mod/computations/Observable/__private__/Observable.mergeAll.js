@@ -5,15 +5,17 @@ import { include, init, mixInstanceFactory, } from "../../../__internal__/mixins
 import { ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../../computations.js";
 import * as Observer from "../../../utils/__internal__/Observer.js";
 import DelegatingSchedulerMixin from "../../../utils/__mixins__/DelegatingSchedulerMixin.js";
+import UnscheduledObserverMixin from "../../../utils/__mixins__/UnscheduledObserverMixin.js";
 import { OverflowBackpressureStrategy, } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 import MergeAllConsumerMixin from "../../__mixins__/MergeAllConsumerMixin.js";
 export const createMergeAllObserver = 
 /*@__PURE__*/
-(() => mixInstanceFactory(include(MergeAllConsumerMixin(), DelegatingSchedulerMixin), function MergeAllObserver(delegate, options) {
+(() => mixInstanceFactory(include(MergeAllConsumerMixin(), DelegatingSchedulerMixin, UnscheduledObserverMixin()), function MergeAllObserver(delegate, options) {
     init(MergeAllConsumerMixin(), this, delegate, options, Observer.createDelegatingNonCompleting);
     init(DelegatingSchedulerMixin, this, delegate);
+    init(UnscheduledObserverMixin(), this);
     return this;
 }))();
 export const Observable_mergeAll = ((options) => (obs) => DeferredEventSource.create((observer) => {
