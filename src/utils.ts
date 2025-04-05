@@ -178,8 +178,7 @@ export const ConsumableEnumeratorLike_isDataAvailable = Symbol(
 );
 
 export interface ConsumableEnumeratorLike<T = unknown>
-  extends EnumeratorLike<T>,
-    Iterable<T> {
+  extends EnumeratorLike<T> {
   readonly [ConsumableEnumeratorLike_isDataAvailable]: boolean;
 
   [ConsumableEnumeratorLike_addOnDataAvailableListener](

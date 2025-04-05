@@ -96,7 +96,7 @@ export interface FlowControllerLike {
 }
 export declare const ConsumableEnumeratorLike_addOnDataAvailableListener: unique symbol;
 export declare const ConsumableEnumeratorLike_isDataAvailable: unique symbol;
-export interface ConsumableEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
+export interface ConsumableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
     readonly [ConsumableEnumeratorLike_isDataAvailable]: boolean;
     [ConsumableEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
 }
