@@ -16,14 +16,12 @@ import {
   isSome,
   newInstance,
   none,
-  raiseError,
   returns,
 } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
 import {
   BackPressureConfig_capacity,
   BackPressureConfig_strategy,
-  BackPressureError,
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
@@ -38,6 +36,7 @@ import {
   QueueLike,
   QueueLike_enqueue,
   ThrowBackpressureStrategy,
+  raiseBackpressureError,
 } from "../../utils.js";
 
 type TReturn<T> = Omit<QueueLike<T>, keyof DisposableLike>;
@@ -338,31 +337,31 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             const capacity = this[BackPressureConfig_capacity];
             const applyBackpressure =
               this[CollectionEnumeratorLike_count] >= capacity;
+            const dropLatest =
+              backpressureStrategy === DropLatestBackpressureStrategy &&
+              applyBackpressure;
+            const dropOldest =
+              backpressureStrategy === DropOldestBackpressureStrategy &&
+              applyBackpressure;
+            const throwBackpressureError =
+              backpressureStrategy === ThrowBackpressureStrategy &&
+              applyBackpressure;
 
             if (
-              (backpressureStrategy === DropLatestBackpressureStrategy &&
-                applyBackpressure) ||
+              dropLatest ||
               // Special case the 0 capacity queue so that we don't fall through
               // to pushing an item onto the queue
-              (backpressureStrategy === DropOldestBackpressureStrategy &&
-                capacity === 0) ||
+              (dropOldest && capacity === 0) ||
               isDisposed
             ) {
               return;
-            } else if (
-              backpressureStrategy === DropOldestBackpressureStrategy &&
-              applyBackpressure
-            ) {
-              // We want to pop off the oldest value first, before enqueueing
-              // to avoid unintentionally growing the queue.
-
-              this[EnumeratorLike_moveNext]();
-            } else if (
-              backpressureStrategy === ThrowBackpressureStrategy &&
-              applyBackpressure
-            ) {
-              raiseError(newInstance(BackPressureError, this));
             }
+
+            // We want to pop off the oldest value first, before enqueueing
+            // to avoid unintentionally growing the queue.
+            dropOldest && this[EnumeratorLike_moveNext]();
+            throwBackpressureError &&
+              raiseBackpressureError(this[BackPressureConfig_capacity]);
 
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {

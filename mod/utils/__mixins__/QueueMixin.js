@@ -2,9 +2,9 @@
 
 import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/constants.js";
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
-import { isSome, newInstance, none, raiseError, returns, } from "../../functions.js";
+import { isSome, newInstance, none, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, BackPressureError, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, ThrowBackpressureStrategy, } from "../../utils.js";
+import { BackPressureConfig_capacity, BackPressureConfig_strategy, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, ThrowBackpressureStrategy, raiseBackpressureError, } from "../../utils.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -200,25 +200,24 @@ const QueueMixin =
             const backpressureStrategy = this[BackPressureConfig_strategy];
             const capacity = this[BackPressureConfig_capacity];
             const applyBackpressure = this[CollectionEnumeratorLike_count] >= capacity;
-            if ((backpressureStrategy === DropLatestBackpressureStrategy &&
-                applyBackpressure) ||
+            const dropLatest = backpressureStrategy === DropLatestBackpressureStrategy &&
+                applyBackpressure;
+            const dropOldest = backpressureStrategy === DropOldestBackpressureStrategy &&
+                applyBackpressure;
+            const throwBackpressureError = backpressureStrategy === ThrowBackpressureStrategy &&
+                applyBackpressure;
+            if (dropLatest ||
                 // Special case the 0 capacity queue so that we don't fall through
                 // to pushing an item onto the queue
-                (backpressureStrategy === DropOldestBackpressureStrategy &&
-                    capacity === 0) ||
+                (dropOldest && capacity === 0) ||
                 isDisposed) {
                 return;
             }
-            else if (backpressureStrategy === DropOldestBackpressureStrategy &&
-                applyBackpressure) {
-                // We want to pop off the oldest value first, before enqueueing
-                // to avoid unintentionally growing the queue.
-                this[EnumeratorLike_moveNext]();
-            }
-            else if (backpressureStrategy === ThrowBackpressureStrategy &&
-                applyBackpressure) {
-                raiseError(newInstance(BackPressureError, this));
-            }
+            // We want to pop off the oldest value first, before enqueueing
+            // to avoid unintentionally growing the queue.
+            dropOldest && this[EnumeratorLike_moveNext]();
+            throwBackpressureError &&
+                raiseBackpressureError(this[BackPressureConfig_capacity]);
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;

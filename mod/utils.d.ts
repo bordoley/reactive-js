@@ -1,4 +1,3 @@
-import { Error } from "./__internal__/constants.js";
 import type { StoreLike } from "./computations.js";
 import { Function1, Method1, Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableContainerLike_add: unique symbol;
@@ -61,19 +60,12 @@ export type BackPressureConfig = {
      */
     readonly [BackPressureConfig_capacity]: number;
 };
+export declare const raiseBackpressureError: (capacity: number) => unknown;
 export declare const FlowControllerLike_isReady: unique symbol;
 export declare const FlowControllerLike_addOnReadyListener: unique symbol;
 export interface FlowControllerLike extends DisposableLike {
     readonly [FlowControllerLike_isReady]: boolean;
     [FlowControllerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
-}
-/**
- * @noInheritDoc
- */
-export declare class BackPressureError extends Error implements BackPressureConfig {
-    readonly [BackPressureConfig_capacity]: number;
-    readonly [BackPressureConfig_strategy]: BackpressureStrategy;
-    constructor(consumer: BackPressureConfig);
 }
 export declare const EnumeratorLike_moveNext: unique symbol;
 export declare const EnumeratorLike_current: unique symbol;

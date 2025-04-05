@@ -7,6 +7,7 @@ import {
   SideEffect1,
   isNone,
   newInstance,
+  raise,
 } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
@@ -103,6 +104,25 @@ export type BackPressureConfig = {
   readonly [BackPressureConfig_capacity]: number;
 };
 
+class BackPressureError extends Error implements BackPressureConfig {
+  readonly [BackPressureConfig_capacity]: number;
+  readonly [BackPressureConfig_strategy]: BackpressureStrategy;
+
+  constructor(config: BackPressureConfig) {
+    super();
+    this[BackPressureConfig_capacity] = config[BackPressureConfig_capacity];
+    this[BackPressureConfig_strategy] = config[BackPressureConfig_strategy];
+  }
+}
+
+export const raiseBackpressureError = (capacity: number) =>
+  raise(
+    newInstance(BackPressureError, {
+      [BackPressureConfig_capacity]: capacity,
+      [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
+    }),
+  );
+
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol(
   "FlowControllerLike_addOnReadyListener",
@@ -114,20 +134,6 @@ export interface FlowControllerLike extends DisposableLike {
   [FlowControllerLike_addOnReadyListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
-}
-
-/**
- * @noInheritDoc
- */
-export class BackPressureError extends Error implements BackPressureConfig {
-  readonly [BackPressureConfig_capacity]: number;
-  readonly [BackPressureConfig_strategy]: BackpressureStrategy;
-
-  constructor(consumer: BackPressureConfig) {
-    super();
-    this[BackPressureConfig_capacity] = consumer[BackPressureConfig_capacity];
-    this[BackPressureConfig_strategy] = consumer[BackPressureConfig_strategy];
-  }
 }
 
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");

@@ -15,18 +15,13 @@ import {
   Optional,
   SideEffect1,
   bindMethod,
-  newInstance,
   none,
   pipe,
-  raise,
 } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
-  BackPressureError,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
@@ -36,7 +31,7 @@ import {
   FlowControllerLike_isReady,
   SinkLike_complete,
   SinkLike_isCompleted,
-  ThrowBackpressureStrategy,
+  raiseBackpressureError,
 } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 
@@ -141,14 +136,9 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
         if (this[FlowControllerLike_isReady]) {
           writable.write(Buffer.from(data));
         } else {
-          raise(
-            newInstance(BackPressureError, {
-              [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
-              // FIXME: Not strictly correct, because bytes doesn't necessarily
-              // map to event counts
-              [BackPressureConfig_capacity]: writable.writableHighWaterMark,
-            }),
-          );
+          // FIXME: Not strictly correct, because bytes doesn't necessarily
+          // map to event counts
+          raiseBackpressureError(writable.writableHighWaterMark);
         }
       },
 

@@ -1,7 +1,7 @@
 /// <reference types="./utils.d.ts" />
 
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
-import { isNone, newInstance, } from "./functions.js";
+import { isNone, newInstance, raise, } from "./functions.js";
 export const DisposableContainerLike_add = Symbol("DisposableContainerLike_add");
 export const DisposableLike_dispose = 
 /*@__PURE__*/ (() => {
@@ -18,20 +18,21 @@ export const OverflowBackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy = "throw";
 export const BackPressureConfig_strategy = Symbol("BackPressureConfig_strategy");
 export const BackPressureConfig_capacity = Symbol("BackPressureConfig_capacity");
-export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
-export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
-/**
- * @noInheritDoc
- */
-export class BackPressureError extends Error {
+class BackPressureError extends Error {
     [BackPressureConfig_capacity];
     [BackPressureConfig_strategy];
-    constructor(consumer) {
+    constructor(config) {
         super();
-        this[BackPressureConfig_capacity] = consumer[BackPressureConfig_capacity];
-        this[BackPressureConfig_strategy] = consumer[BackPressureConfig_strategy];
+        this[BackPressureConfig_capacity] = config[BackPressureConfig_capacity];
+        this[BackPressureConfig_strategy] = config[BackPressureConfig_strategy];
     }
 }
+export const raiseBackpressureError = (capacity) => raise(newInstance(BackPressureError, {
+    [BackPressureConfig_capacity]: capacity,
+    [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
+}));
+export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
+export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");

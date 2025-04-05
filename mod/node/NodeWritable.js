@@ -3,11 +3,11 @@
 import { include, init, mixInstanceFactory, props, proto, unsafeCast, } from "../__internal__/mixins.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Publisher from "../computations/Publisher.js";
-import { bindMethod, newInstance, none, pipe, raise, } from "../functions.js";
+import { bindMethod, none, pipe, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import DisposableMixin from "../utils/__mixins__/DisposableMixin.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, BackPressureError, DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, ThrowBackpressureStrategy, } from "../utils.js";
+import { DisposableLike_dispose, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SinkLike_complete, SinkLike_isCompleted, raiseBackpressureError, } from "../utils.js";
 import * as NodeStream from "./NodeStream.js";
 export const toConsumer = /*@__PURE__*/ (() => {
     const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
@@ -56,12 +56,9 @@ export const toConsumer = /*@__PURE__*/ (() => {
                 writable.write(Buffer.from(data));
             }
             else {
-                raise(newInstance(BackPressureError, {
-                    [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
-                    // FIXME: Not strictly correct, because bytes doesn't necessarily
-                    // map to event counts
-                    [BackPressureConfig_capacity]: writable.writableHighWaterMark,
-                }));
+                // FIXME: Not strictly correct, because bytes doesn't necessarily
+                // map to event counts
+                raiseBackpressureError(writable.writableHighWaterMark);
             }
         },
         [SinkLike_complete]() {

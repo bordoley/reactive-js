@@ -8,7 +8,6 @@
 
 ## Classes
 
-- [BackPressureError](classes/BackPressureError.md)
 - [YieldDelay](classes/YieldDelay.md)
 
 ## Interfaces
@@ -79,3 +78,4 @@
 ## Functions
 
 - [delayMs](functions/delayMs.md)
+- [raiseBackpressureError](functions/raiseBackpressureError.md)
