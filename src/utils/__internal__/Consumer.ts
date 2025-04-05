@@ -6,26 +6,17 @@ import {
 } from "../../__internal__/mixins.js";
 import { Function1 } from "../../functions.js";
 import {
-  BackpressureStrategy,
   CollectionEnumeratorLike,
   ConsumerLike,
   ObserverLike,
   SchedulerLike,
 } from "../../utils.js";
-
-import { ConsumerQueueMixin } from "../__mixins__/ConsumerQueueMixin.js";
 import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
 import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
 import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
-
-export const create: <T>(options?: {
-  capacity?: number;
-  backpressureStrategy?: BackpressureStrategy;
-}) => ConsumerLike<T> & CollectionEnumeratorLike<T> = /*@__PURE__*/ (() =>
-  createInstanceFactory(ConsumerQueueMixin()))();
 
 export const createDelegatingCatchError: <T>(
   o: ConsumerLike<T>,
