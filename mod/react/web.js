@@ -9,7 +9,7 @@ import * as Streamable from "../computations/Streamable.js";
 import { StoreLike_value, } from "../computations.js";
 import { isFunction, isNull, none, pipe, pipeSome, pipeSomeLazy, tuple, } from "../functions.js";
 import { useDisposable, useEventSource, useStreamable } from "../react.js";
-import { EventListenerLike_notify } from "../utils.js";
+import { DropOldestBackpressureStrategy, EventListenerLike_notify, } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
@@ -64,7 +64,11 @@ export const useSpring = (options) => {
         stiffness,
         damping,
         precision,
-    }), [stiffness, damping, precision], { scheduler });
+    }), [stiffness, damping, precision], {
+        scheduler,
+        backpressureStrategy: DropOldestBackpressureStrategy,
+        capacity: 1,
+    });
 };
 export const useWindowLocation = () => {
     const windowLocation = useContext(WindowLocationContext);

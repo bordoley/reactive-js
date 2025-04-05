@@ -16,8 +16,9 @@ const Measure = () => {
     useEventSource(spring?.[AnimationLike_isRunning]) ?? false;
 
   useEffect(() => {
-    spring?.[EventListenerLike_notify](state ? boxWidth : 0);
-  }, [boxWidth, state]);
+    !springIsAnimating &&
+      spring?.[EventListenerLike_notify](state ? boxWidth : 0);
+  }, [boxWidth, state, springIsAnimating]);
 
   const width =
     useEventSource(

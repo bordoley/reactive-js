@@ -38,7 +38,10 @@ import {
   tuple,
 } from "../functions.js";
 import { useDisposable, useEventSource, useStreamable } from "../react.js";
-import { EventListenerLike_notify } from "../utils.js";
+import {
+  DropOldestBackpressureStrategy,
+  EventListenerLike_notify,
+} from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
 import {
@@ -254,7 +257,11 @@ export const useSpring: Signature["useSpring"] = (options?: {
         precision,
       }),
     [stiffness, damping, precision],
-    { scheduler },
+    {
+      scheduler,
+      backpressureStrategy: DropOldestBackpressureStrategy,
+      capacity: 1,
+    },
   );
 };
 

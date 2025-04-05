@@ -17,14 +17,16 @@ const Root = () => {
   const spring = useDisposable(
     pipeLazy(
       window,
-      WebElement.eventSource<Window, "mousemove">("mousemove"),
+      WebElement.eventSource<Window, "mousemove">("mousemove", {
+        autoDispose: true,
+      }),
       Broadcaster.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
-      Observable.fromBroadcaster(),
-      Observable.debounce(25),
-      Observable.subscribeOn(DefaultScheduler.get(), {
+      Broadcaster.toObservable({
         backpressureStrategy: DropOldestBackpressureStrategy,
         capacity: 1,
       }),
+      Observable.debounce(25),
+      Observable.subscribeOn(DefaultScheduler.get()),
       Observable.scanMany(
         (prev: Point, next: Point) =>
           pipe(
