@@ -1,13 +1,14 @@
 /// <reference types="./web.d.ts" />
 
-import { createContext, createElement, useCallback, useContext, useEffect, useRef, useState, } from "react";
+import { createContext, createElement, useCallback, useContext, useEffect, useMemo, useRef, useState, } from "react";
 import { nullObject } from "../__internal__/constants.js";
+import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
 import * as Publisher from "../computations/Publisher.js";
 import * as Streamable from "../computations/Streamable.js";
 import { StoreLike_value, } from "../computations.js";
-import { isFunction, isNull, none, pipe, pipeSome, pipeSomeLazy, tuple, } from "../functions.js";
+import { isFunction, isNull, none, pipe, pipeLazy, pipeSome, pipeSomeLazy, tuple, } from "../functions.js";
 import { useDisposable, useEventSource, useStreamable } from "../react.js";
 import { EventListenerLike_notify } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
@@ -44,6 +45,16 @@ export const useAnimationGroup = (animationGroup) => {
         scheduler,
     });
 };
+export const useEvents = ((...events) => {
+    const publisher = useDisposable((Publisher.create), []);
+    const stablePublisherRef = useRef(none);
+    useEffect(() => {
+        stablePublisherRef.current = publisher;
+    }, [publisher]);
+    const eventHandler = useCallback((ev) => stablePublisherRef.current?.[EventListenerLike_notify](ev), []);
+    const props = useMemo(pipeLazy(events, ReadonlyArray.map(name => tuple(name, eventHandler)), ReadonlyObjectMap.fromEntries()), [events, eventHandler]);
+    return [props, publisher];
+});
 export const useMeasure = () => {
     const [container, setContainer] = useState(null);
     const rect = useEventSource(pipeSome(container ?? none, WebElement.measure()));

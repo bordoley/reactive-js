@@ -1,13 +1,23 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
-import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
+import {
+  useAnimate,
+  useEvents,
+  useScroll,
+  useSpring,
+} from "@reactive-js/core/react/web";
 import { useEventSource } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
 import {
+  alwaysFalse,
+  alwaysTrue,
+  compose,
   identity,
   Optional,
+  pipe,
   pipeSome,
   pipeSomeLazy,
+  Tuple2,
 } from "@reactive-js/core/functions";
 import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
 import * as Observable from "@reactive-js/core/computations/Observable";
@@ -15,7 +25,11 @@ import { BroadcasterLike } from "@reactive-js/core/computations";
 import { EventListenerLike_notify } from "@reactive-js/core/utils";
 import * as Computation from "@reactive-js/core/computations/Computation";
 
-const m = Computation.makeModule<Broadcaster.BroadcasterModule, "merge">({
+const m = Computation.makeModule<
+  Broadcaster.BroadcasterModule,
+  "genPure" | "merge"
+>({
+  genPure: Broadcaster.genPure,
   merge: Broadcaster.merge,
 });
 
@@ -51,32 +65,39 @@ const AnimatedCircle = ({
 
 const ScrollApp = () => {
   const spring = useSpring({ precision: 0.1 });
-
   const [containerRef, scrollValues] = useScroll<HTMLDivElement>();
+  const [props, events] = useEvents("onWheel");
 
   useEventSource(
     pipeSomeLazy(
       scrollValues,
       Broadcaster.keep<ScrollValue>(({ done }) => !done),
-      Observable.fromBroadcaster(),
+      Broadcaster.toObservable(),
       Observable.forEach(
         // Cancel any running springs
         () => spring?.[EventListenerLike_notify](identity),
       ),
-      Observable.debounce<ScrollValue>(50),
-      Observable.forEach(({ y }) => {
+      Observable.withLatestFrom(
+        pipe(
+          events ?? Computation.empty(m),
+          Broadcaster.toObservable(),
+          Observable.forkMerge<React.WheelEvent<any>, boolean>(
+            Observable.map(alwaysTrue),
+            compose(Observable.debounce(20), Observable.map(alwaysFalse)),
+          ),
+        ),
+      ),
+      Observable.debounce<Tuple2<ScrollValue, boolean>>(50),
+      Observable.forEach(([{ y }, isWheeling]) => {
         const pos = y.progress;
         const { velocity } = y;
 
-        // FIXME: Need react api to detect if the user is holding down the mouse/touchdown.
-        // and only notify if false.
-
-        if (velocity > 0) {
+        if (velocity > 0 && !isWheeling) {
           spring?.[EventListenerLike_notify]({
             from: pos,
             to: [pos + 0.05, pos],
           });
-        } else if (velocity < 0) {
+        } else if (velocity < 0 && !isWheeling) {
           spring?.[EventListenerLike_notify]({
             from: pos,
             to: [pos - 0.025, pos],
@@ -84,7 +105,7 @@ const ScrollApp = () => {
         }
       }),
     ),
-    [scrollValues],
+    [scrollValues, events],
   );
 
   const circleAnimatation = useMemo(
@@ -100,6 +121,7 @@ const ScrollApp = () => {
 
   return (
     <div
+      {...props}
       ref={containerRef}
       style={{
         height: "100%",

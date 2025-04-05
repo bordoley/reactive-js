@@ -1,13 +1,17 @@
 import {
+  DOMAttributes,
+  SyntheticEvent,
   createContext,
   createElement,
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import { nullObject } from "../__internal__/constants.js";
+import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../collections/ReadonlyObjectMap.js";
 import { ReadonlyObjectMapLike } from "../collections.js";
 import * as Broadcaster from "../computations/Broadcaster.js";
@@ -20,6 +24,7 @@ import {
 import * as Streamable from "../computations/Streamable.js";
 import {
   BroadcasterLike,
+  PublisherLike,
   PureSynchronousObservableLike,
   StoreLike_value,
 } from "../computations.js";
@@ -33,6 +38,7 @@ import {
   isNull,
   none,
   pipe,
+  pipeLazy,
   pipeSome,
   pipeSomeLazy,
   tuple,
@@ -52,6 +58,24 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
+
+type DOMEvents<TElement extends Element> = keyof Omit<
+  DOMAttributes<TElement>,
+  "children" | "dangerouslySetInnerHTML"
+>;
+
+type DOMEventTypeMap<TElement extends Element> = {
+  [EventName in DOMEvents<TElement>]: NonNullable<
+    DOMAttributes<TElement>[EventName]
+  > extends React.EventHandler<infer TEvent>
+    ? TEvent
+    : never;
+};
+
+export type DOMEventTypeOf<
+  TEventName extends DOMEvents<TElement>,
+  TElement extends Element = any,
+> = NonNullable<DOMEventTypeMap<TElement>[TEventName]>;
 
 export interface ReactWebModule {
   WindowLocationProvider(props: {
@@ -92,6 +116,168 @@ export interface ReactWebModule {
       | PureSynchronousObservableLike<T>
     >,
   ): Optional<AnimationGroupLike<TEvent, TKey, T>>;
+
+  useEvents<TEvent extends DOMEvents<any>>(
+    event: TEvent,
+  ): Tuple2<
+    {
+      [event in TEvent]: (ev: SyntheticEvent) => void;
+    },
+    BroadcasterLike<DOMEventTypeOf<TEvent>>
+  >;
+
+  useEvents<TEvent1 extends DOMEvents<any>, TEvent2 extends DOMEvents<any>>(
+    event1: TEvent1,
+    event2: TEvent2,
+  ): Tuple2<
+    {
+      [event in TEvent1 | TEvent2]: (ev: SyntheticEvent) => void;
+    },
+    Optional<BroadcasterLike<DOMEventTypeOf<TEvent1> | DOMEventTypeOf<TEvent2>>>
+  >;
+  useEvents<
+    TEvent1 extends DOMEvents<any>,
+    TEvent2 extends DOMEvents<any>,
+    TEvent3 extends DOMEvents<any>,
+  >(
+    event1: TEvent1,
+    event2: TEvent2,
+    event3: TEvent3,
+  ): Tuple2<
+    {
+      [event in TEvent1 | TEvent2 | TEvent3]: (ev: SyntheticEvent) => void;
+    },
+    Optional<
+      BroadcasterLike<
+        | DOMEventTypeOf<TEvent1>
+        | DOMEventTypeOf<TEvent2>
+        | DOMEventTypeOf<TEvent3>
+      >
+    >
+  >;
+  useEvents<
+    TEvent1 extends DOMEvents<any>,
+    TEvent2 extends DOMEvents<any>,
+    TEvent3 extends DOMEvents<any>,
+    TEvent4 extends DOMEvents<any>,
+  >(
+    event1: TEvent1,
+    event2: TEvent2,
+    event3: TEvent3,
+    event4: TEvent4,
+  ): Tuple2<
+    {
+      [event in TEvent1 | TEvent2 | TEvent3 | TEvent4]: (
+        ev: SyntheticEvent,
+      ) => void;
+    },
+    Optional<
+      BroadcasterLike<
+        | DOMEventTypeOf<TEvent1>
+        | DOMEventTypeOf<TEvent2>
+        | DOMEventTypeOf<TEvent3>
+        | DOMEventTypeOf<TEvent4>
+      >
+    >
+  >;
+  useEvents<
+    TEvent1 extends DOMEvents<any>,
+    TEvent2 extends DOMEvents<any>,
+    TEvent3 extends DOMEvents<any>,
+    TEvent4 extends DOMEvents<any>,
+    TEvent5 extends DOMEvents<any>,
+  >(
+    event1: TEvent1,
+    event2: TEvent2,
+    event3: TEvent3,
+    event4: TEvent4,
+    event5: TEvent5,
+  ): Tuple2<
+    {
+      [event in TEvent1 | TEvent2 | TEvent3 | TEvent4 | TEvent5]: (
+        ev: SyntheticEvent,
+      ) => void;
+    },
+    Optional<
+      BroadcasterLike<
+        | DOMEventTypeOf<TEvent1>
+        | DOMEventTypeOf<TEvent2>
+        | DOMEventTypeOf<TEvent3>
+        | DOMEventTypeOf<TEvent4>
+        | DOMEventTypeOf<TEvent5>
+      >
+    >
+  >;
+  useEvents<
+    TEvent1 extends DOMEvents<any>,
+    TEvent2 extends DOMEvents<any>,
+    TEvent3 extends DOMEvents<any>,
+    TEvent4 extends DOMEvents<any>,
+    TEvent5 extends DOMEvents<any>,
+    TEvent6 extends DOMEvents<any>,
+  >(
+    event1: TEvent1,
+    event2: TEvent2,
+    event3: TEvent3,
+    event4: TEvent4,
+    event5: TEvent5,
+    event6: TEvent6,
+  ): Tuple2<
+    {
+      [event in TEvent1 | TEvent2 | TEvent3 | TEvent4 | TEvent5 | TEvent6]: (
+        ev: SyntheticEvent,
+      ) => void;
+    },
+    Optional<
+      BroadcasterLike<
+        | DOMEventTypeOf<TEvent1>
+        | DOMEventTypeOf<TEvent2>
+        | DOMEventTypeOf<TEvent3>
+        | DOMEventTypeOf<TEvent4>
+        | DOMEventTypeOf<TEvent5>
+        | DOMEventTypeOf<TEvent6>
+      >
+    >
+  >;
+  useEvents<
+    TEvent1 extends DOMEvents<any>,
+    TEvent2 extends DOMEvents<any>,
+    TEvent3 extends DOMEvents<any>,
+    TEvent4 extends DOMEvents<any>,
+    TEvent5 extends DOMEvents<any>,
+    TEvent6 extends DOMEvents<any>,
+    TEvent7 extends DOMEvents<any>,
+  >(
+    event1: TEvent1,
+    event2: TEvent2,
+    event3: TEvent3,
+    event4: TEvent4,
+    event5: TEvent5,
+    event6: TEvent6,
+    event7: TEvent7,
+  ): Tuple2<
+    {
+      [event in
+        | TEvent1
+        | TEvent2
+        | TEvent3
+        | TEvent4
+        | TEvent5
+        | TEvent6
+        | TEvent7]: (ev: SyntheticEvent) => void;
+    },
+    Optional<
+      BroadcasterLike<
+        | DOMEventTypeOf<TEvent1>
+        | DOMEventTypeOf<TEvent2>
+        | DOMEventTypeOf<TEvent3>
+        | DOMEventTypeOf<TEvent4>
+        | DOMEventTypeOf<TEvent5>
+        | DOMEventTypeOf<TEvent6>
+        | DOMEventTypeOf<TEvent7>
+      >
+    >
+  >;
 
   /**
    */
@@ -204,6 +390,35 @@ export const useAnimationGroup: Signature["useAnimationGroup"] = <
     scheduler,
   });
 };
+
+export const useEvents: Signature["useEvents"] = ((
+  ...events: DOMEvents<any>[]
+) => {
+  const publisher = useDisposable(Publisher.create<SyntheticEvent>, []);
+
+  const stablePublisherRef =
+    useRef<Optional<PublisherLike<SyntheticEvent<Element, Event>>>>(none);
+  useEffect(() => {
+    stablePublisherRef.current = publisher;
+  }, [publisher]);
+
+  const eventHandler = useCallback(
+    (ev: SyntheticEvent) =>
+      stablePublisherRef.current?.[EventListenerLike_notify](ev),
+    [],
+  );
+
+  const props = useMemo(
+    pipeLazy(
+      events,
+      ReadonlyArray.map(name => tuple(name, eventHandler)),
+      ReadonlyObjectMap.fromEntries(),
+    ),
+    [events, eventHandler],
+  );
+
+  return [props, publisher];
+}) as unknown as Signature["useEvents"];
 
 export const useMeasure = (): Tuple2<
   React.Ref<HTMLDivElement>,
