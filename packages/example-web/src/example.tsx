@@ -105,16 +105,6 @@ const AnimationGroup = () => {
   return (
     <div>
       <div>
-        {pipeSome(
-          animation,
-          Dictionary.entries(),
-          ReadonlyArray.fromIterable(),
-          ReadonlyArray.map(([key, animation]) => (
-            <AnimatedBox key={key} animation={animation} />
-          )),
-        )}
-      </div>
-      <div>
         <button
           onClick={() => {
             if (isAnimationRunning && isAnimationPaused) {
@@ -132,6 +122,16 @@ const AnimationGroup = () => {
               ? "Resume"
               : "Pause"}
         </button>
+      </div>
+      <div>
+        {pipeSome(
+          animation,
+          Dictionary.entries(),
+          ReadonlyArray.fromIterable(),
+          ReadonlyArray.map(([key, animation]) => (
+            <AnimatedBox key={key} animation={animation} />
+          )),
+        )}
       </div>
     </div>
   );

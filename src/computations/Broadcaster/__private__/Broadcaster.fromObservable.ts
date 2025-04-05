@@ -5,10 +5,10 @@ import Observable_toProducer from "../../Observable/__private__/Observable.toPro
 import Producer_broadcast from "../../Producer/__private__/Producer.broadcast.js";
 
 const Broadcaster_fromObservable: Broadcaster.Signature["fromObservable"] =
-  ((options?: { scheduler?: SchedulerLike }) =>
+  ((options?: { autoDispose?: boolean; scheduler?: SchedulerLike }) =>
     compose(
       Observable_toProducer(options),
-      Producer_broadcast(),
+      Producer_broadcast(options),
     )) as Broadcaster.Signature["fromObservable"];
 
 export default Broadcaster_fromObservable;

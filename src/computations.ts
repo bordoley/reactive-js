@@ -718,6 +718,7 @@ export interface ConcurrentReactiveComputationModule<
   TComputationType extends ComputationTypeLike,
   TCreationOptions extends {
     fromBroadcaster?: Record<string, any>;
+    fromObservable?: Record<string, any>;
     fromProducer?: Record<string, any>;
     toObservable?: Record<string, any>;
   } = {},
@@ -729,7 +730,7 @@ export interface ConcurrentReactiveComputationModule<
   // prettier-ignore
   fromObservable<T>(options?: {
     scheduler?: SchedulerLike;
-  }): <TObservable extends ObservableLike<T>>(
+  } & TCreationOptions["fromObservable"]): <TObservable extends ObservableLike<T>>(
     observable: TObservable,
   ) => TObservable extends PureComputationLike ?
          NewPureInstanceOf<TComputationType, T> :

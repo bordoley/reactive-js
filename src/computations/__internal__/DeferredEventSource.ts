@@ -257,9 +257,10 @@ interface Signature {
     TOut,
     TOutConsumer extends ConsumerLike<TOut>,
   >(
-    toBroadcaster: (
-      consumer: TOutConsumer,
-    ) => Function1<
+    toBroadcaster: (options?: {
+      scheduler?: TOutConsumer;
+      autoDispose?: boolean;
+    }) => Function1<
       DeferredEventSourceLike<TIn, TConsumer>,
       BroadcasterLike<TIn>
     >,
@@ -622,9 +623,10 @@ export const forkMerge: Signature["forkMerge"] = (<
     TOut,
     TOutConsumer extends ConsumerLike<TOut>,
   >(
-    toBroadcaster: (
-      consumer: TOutConsumer,
-    ) => Function1<
+    toBroadcaster: (options?: {
+      autoDispose?: boolean;
+      scheduler?: TOutConsumer;
+    }) => Function1<
       DeferredEventSourceLike<TIn, TConsumer>,
       BroadcasterLike<TIn>
     >,
@@ -665,7 +667,7 @@ export const forkMerge: Signature["forkMerge"] = (<
       (consumer: TOutConsumer) => {
         const broadcastedDeferredSource = pipe(
           source,
-          toBroadcaster(consumer),
+          toBroadcaster({ scheduler: consumer, autoDispose: true }),
           fromBroadcaster(),
         );
 

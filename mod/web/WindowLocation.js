@@ -12,7 +12,7 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { alwaysFalse, bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
-import { DisposableContainerLike_add, DropOldestBackpressureStrategy, EventListenerLike_notify, } from "../utils.js";
+import { DisposableContainerLike_add, EventListenerLike_notify, } from "../utils.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
@@ -50,12 +50,12 @@ const areWindowLocationStatesEqual = ({ uri: a, counter: counterA }, { uri: b, c
 // Intentionally ignore the replace flag.
 (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
     counterA === counterB;
-const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(compose(Observable.throttle(100), Observable.forEach(({ counter, uri }) => {
+const createSyncToHistoryStream = (f, scheduler) => Streamable.create(compose(Observable.throttle(100), Observable.forEach(({ counter, uri }) => {
     const serializableURI = createSerializableWindowLocationURI(uri);
     const { title } = serializableURI;
     document.title = title;
     f({ title, counter }, "", String(serializableURI));
-})))[StreamableLike_stream](scheduler, options);
+})))[StreamableLike_stream](scheduler);
 export const subscribe = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
     const createWindowLocation = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(delegate) {
@@ -104,8 +104,8 @@ export const subscribe = /*@__PURE__*/ (() => {
     let currentWindowLocation = none;
     return (scheduler) => {
         raiseIf(isSome(currentWindowLocation), "Cannot stream more than once");
-        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
-        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 });
+        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler);
+        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler);
         const locationStream = pipe(Streamable.stateStore(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
@@ -136,10 +136,7 @@ export const subscribe = /*@__PURE__*/ (() => {
                 : push
                     ? Observable.forEach(bindMethod(pushState, EventListenerLike_notify))
                     : identity, Observable.keep(alwaysFalse));
-        }), invoke(StreamableLike_stream, scheduler, {
-            capacity: 1,
-            backpressureStrategy: DropOldestBackpressureStrategy,
-        }));
+        }), invoke(StreamableLike_stream, scheduler));
         currentWindowLocation = pipe(createWindowLocation(locationStream), Disposable.add(pushState), Disposable.add(replaceState));
         scheduler[DisposableContainerLike_add](currentWindowLocation);
         return currentWindowLocation;

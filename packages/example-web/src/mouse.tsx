@@ -9,7 +9,6 @@ import * as WebElement from "@reactive-js/core/web/Element";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as DefaultScheduler from "@reactive-js/core/utils/DefaultScheduler";
 import { useDisposable } from "@reactive-js/core/react";
-import { DropOldestBackpressureStrategy } from "@reactive-js/core/utils";
 
 type Point = { x: number; y: number };
 
@@ -21,10 +20,7 @@ const Root = () => {
         autoDispose: true,
       }),
       Broadcaster.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
-      Broadcaster.toObservable({
-        backpressureStrategy: DropOldestBackpressureStrategy,
-        capacity: 1,
-      }),
+      Broadcaster.toObservable(),
       Observable.debounce(25),
       Observable.subscribeOn(DefaultScheduler.get()),
       Observable.scanMany(

@@ -16,9 +16,7 @@
 
 ### options?
 
-#### scheduler?
-
-[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+`object` & `object`
 
 ## Returns
 

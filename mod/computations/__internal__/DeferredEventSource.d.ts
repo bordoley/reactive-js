@@ -75,7 +75,10 @@ interface Signature {
         [ComputationLike_isPure]?: boolean;
         [ComputationLike_isSynchronous]?: boolean;
     }): DeferredEventSourceLike<TOut, TConsumerOut>;
-    forkMerge<TIn, TConsumer extends ConsumerLike<TIn>, TOut, TOutConsumer extends ConsumerLike<TOut>>(toBroadcaster: (consumer: TOutConsumer) => Function1<DeferredEventSourceLike<TIn, TConsumer>, BroadcasterLike<TIn>>, fromBroadcaster: () => Function1<BroadcasterLike<TIn>, DeferredEventSourceLike<TIn, TConsumer>>, merge: (...sources: readonly DeferredEventSourceLike<TOut, TOutConsumer>[]) => DeferredEventSourceLike<TOut, TOutConsumer>, ops: readonly [
+    forkMerge<TIn, TConsumer extends ConsumerLike<TIn>, TOut, TOutConsumer extends ConsumerLike<TOut>>(toBroadcaster: (options?: {
+        scheduler?: TOutConsumer;
+        autoDispose?: boolean;
+    }) => Function1<DeferredEventSourceLike<TIn, TConsumer>, BroadcasterLike<TIn>>, fromBroadcaster: () => Function1<BroadcasterLike<TIn>, DeferredEventSourceLike<TIn, TConsumer>>, merge: (...sources: readonly DeferredEventSourceLike<TOut, TOutConsumer>[]) => DeferredEventSourceLike<TOut, TOutConsumer>, ops: readonly [
         ...Function1<DeferredEventSourceLike<TIn, TConsumer>, DeferredEventSourceLike<TOut, TOutConsumer>>[],
         {
             [ComputationLike_isPure]?: boolean;

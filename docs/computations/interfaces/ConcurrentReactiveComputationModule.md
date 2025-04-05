@@ -66,9 +66,7 @@
 
 ##### options?
 
-###### scheduler?
-
-[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+`object` & `TCreationOptions`\[`"fromObservable"`\]
 
 #### Returns
 

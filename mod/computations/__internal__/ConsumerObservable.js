@@ -6,7 +6,7 @@ import { bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 export const create = (() => {
     const ConsumerObservable_observer = Symbol("ConsumerObservable_observer");
     const ConsumerObservable_schedulerSubscription = Symbol("ConsumerObservable_schedulerSubscription");
@@ -46,7 +46,10 @@ export const create = (() => {
     }
     return mixInstanceFactory(include(DisposableMixin, FlowControllerQueueMixin()), function ConsumerObservable(config) {
         init(DisposableMixin, this);
-        init(FlowControllerQueueMixin(), this, config);
+        init(FlowControllerQueueMixin(), this, {
+            capacity: config?.capacity ?? 1,
+            backpressureStrategy: config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
+        });
         this[FlowControllerEnumeratorLike_addOnDataAvailableListener](bind(scheduleDispatcher, this));
         return this;
     }, props({

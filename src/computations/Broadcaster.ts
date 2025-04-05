@@ -59,6 +59,9 @@ export interface BroadcasterModule
     ConcurrentReactiveComputationModule<
       BroadcasterComputation,
       {
+        fromObservable?: {
+          autoDispose?: boolean;
+        };
         toObservable?: {
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;

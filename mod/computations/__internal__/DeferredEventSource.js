@@ -152,7 +152,7 @@ export const forkMerge = ((toBroadcaster, fromBroadcaster, merge, args) => (sour
     const innerType = maybeConfig ?? {};
     const isPure = Computation_isPure(innerType) && Computation_isPure(source);
     return create((consumer) => {
-        const broadcastedDeferredSource = pipe(source, toBroadcaster(consumer), fromBroadcaster());
+        const broadcastedDeferredSource = pipe(source, toBroadcaster({ scheduler: consumer, autoDispose: true }), fromBroadcaster());
         const merged = pipe(ops, ReadonlyArray.map(op => op(broadcastedDeferredSource)), broadcasters => merge(...broadcasters));
         merged[EventSourceLike_subscribe](consumer);
     }, {

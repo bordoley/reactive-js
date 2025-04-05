@@ -276,13 +276,14 @@ export interface ReactiveComputationModule<TComputationType extends ComputationT
 }
 export interface ConcurrentReactiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
     fromBroadcaster?: Record<string, any>;
+    fromObservable?: Record<string, any>;
     fromProducer?: Record<string, any>;
     toObservable?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     fromBroadcaster<T>(options?: TCreationOptions["fromBroadcaster"]): Function1<BroadcasterLike<T>, PureComputationOf<TComputationType, T>>;
     fromObservable<T>(options?: {
         scheduler?: SchedulerLike;
-    }): <TObservable extends ObservableLike<T>>(observable: TObservable) => TObservable extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
+    } & TCreationOptions["fromObservable"]): <TObservable extends ObservableLike<T>>(observable: TObservable) => TObservable extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TObservable extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
     fromProducer<T>(options?: TCreationOptions["fromProducer"]): <TProducer extends ProducerLike<T>>(iterable: TProducer) => TProducer extends PureComputationLike ? NewPureInstanceOf<TComputationType, T> : TProducer extends ComputationWithSideEffectsLike ? (NewPureInstanceOf<TComputationType, T> extends MulticastComputationLike ? NewPureInstanceOf<TComputationType, T> : NewInstanceWithSideEffectsOf<TComputationType, T>) : never;
     toObservable<T>(options?: TCreationOptions["toObservable"]): <TComputationOf extends ComputationOf<TComputationType, T>>(computation: TComputationOf) => TComputationOf extends PureComputationLike ? PureObservableLike<T> : TComputationOf extends ComputationWithSideEffectsLike ? ObservableWithSideEffectsLike<T> : never;
 }

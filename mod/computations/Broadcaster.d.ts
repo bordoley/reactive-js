@@ -12,6 +12,9 @@ export type Computation = BroadcasterComputation;
  * @noInheritDoc
  */
 export interface BroadcasterModule extends ComputationModule<BroadcasterComputation>, ReactiveComputationModule<BroadcasterComputation>, ConcurrentReactiveComputationModule<BroadcasterComputation, {
+    fromObservable?: {
+        autoDispose?: boolean;
+    };
     toObservable?: {
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;

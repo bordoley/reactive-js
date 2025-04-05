@@ -43,11 +43,9 @@ import {
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
-  BackpressureStrategy,
   DisposableContainerLike,
   DisposableContainerLike_add,
   DisposableLike,
-  DropOldestBackpressureStrategy,
   EventListenerLike,
   EventListenerLike_notify,
   SchedulerLike,
@@ -143,11 +141,6 @@ const areWindowLocationStatesEqual = (
 const createSyncToHistoryStream = (
   f: typeof history.pushState,
   scheduler: SchedulerLike,
-  options: {
-    readonly replay?: number;
-    readonly capacity?: number;
-    readonly backpressureStrategy?: BackpressureStrategy;
-  },
 ) =>
   Streamable.create<TState, TState & { uri: SerializableWindowLocationURI }>(
     compose(
@@ -159,7 +152,7 @@ const createSyncToHistoryStream = (
         f({ title, counter }, "", String(serializableURI));
       }),
     ),
-  )[StreamableLike_stream](scheduler, options);
+  )[StreamableLike_stream](scheduler);
 
 export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const WindowLocation_delegate = Symbol("WindowLocation_delegate");
@@ -271,13 +264,11 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),
       scheduler,
-      { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 },
     );
 
     const pushState = createSyncToHistoryStream(
       bindMethod(history, "pushState"),
       scheduler,
-      { backpressureStrategy: DropOldestBackpressureStrategy, capacity: 1 },
     );
 
     const locationStream = pipe(
@@ -345,10 +336,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           );
         },
       ),
-      invoke(StreamableLike_stream, scheduler, {
-        capacity: 1,
-        backpressureStrategy: DropOldestBackpressureStrategy,
-      }),
+      invoke(StreamableLike_stream, scheduler),
     );
 
     currentWindowLocation = pipe(

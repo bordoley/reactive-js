@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAnimate, useSpring } from "@reactive-js/core/react/web";
 import { Property } from "csstype";
 import { useEventSource } from "@reactive-js/core/react";
@@ -109,7 +109,13 @@ export const Wordle = () => {
     precision: 0.1,
   });
 
+  const prevState = useRef(state);
+
   useEffect(() => {
+    if (prevState.current === state) {
+      return;
+    }
+    prevState.current = state;
     spring?.[EventListenerLike_notify]({ from: 0, to: 180 * items.length });
   }, [spring, state]);
 

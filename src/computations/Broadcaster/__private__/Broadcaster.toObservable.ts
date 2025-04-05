@@ -1,17 +1,23 @@
-import { compose } from "../../../functions.js";
-import { BackpressureStrategy } from "../../../utils.js";
+import {
+  BroadcasterLike,
+  EventSourceLike_subscribe,
+} from "../../../computations.js";
+import { BackpressureStrategy, ObserverLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
-import Producer_toObservable from "../../Producer/__private__/Producer.toObservable.js";
-import Broadcaster_toProducer from "./Broadcaster.toProducer.js";
+import * as ConsumerObservable from "../../__internal__/ConsumerObservable.js";
+import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
-const Broadcaster_toObservable: Broadcaster.Signature["toObservable"] =
-  ((options?: {
+const Broadcaster_toObservable: Broadcaster.Signature["toObservable"] = (<
+    T,
+  >(config?: {
     capacity?: number;
     backpressureStrategy?: BackpressureStrategy;
   }) =>
-    compose(
-      Broadcaster_toProducer(),
-      Producer_toObservable(options),
-    )) as Broadcaster.Signature["toObservable"];
+  (Broadcaster: BroadcasterLike<T>) =>
+    DeferredEventSource.create<T, ObserverLike<T>>(observer => {
+      const consumer = ConsumerObservable.create(config);
+      consumer[EventSourceLike_subscribe](observer);
+      Broadcaster[EventSourceLike_subscribe](consumer);
+    }, Broadcaster)) as Broadcaster.Signature["toObservable"];
 
 export default Broadcaster_toObservable;

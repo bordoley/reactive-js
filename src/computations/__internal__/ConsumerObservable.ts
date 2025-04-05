@@ -22,6 +22,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  DropOldestBackpressureStrategy,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
@@ -129,7 +130,11 @@ export const create: <T>(config?: {
       }>,
     ): ConsumerObservableLike<T> {
       init(DisposableMixin, this);
-      init(FlowControllerQueueMixin<T>(), this, config);
+      init(FlowControllerQueueMixin<T>(), this, {
+        capacity: config?.capacity ?? 1,
+        backpressureStrategy:
+          config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
+      });
 
       this[FlowControllerEnumeratorLike_addOnDataAvailableListener](
         bind(scheduleDispatcher, this),
