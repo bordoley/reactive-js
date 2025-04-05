@@ -6,7 +6,7 @@ import { bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 export const create = (() => {
     const ConsumerObservable_observer = Symbol("ConsumerObservable_observer");
     const ConsumerObservable_schedulerSubscription = Symbol("ConsumerObservable_schedulerSubscription");
@@ -23,14 +23,14 @@ export const create = (() => {
             const next = this[EnumeratorLike_current];
             observer[EventListenerLike_notify](next);
             const shouldYield = scheduler[SchedulerLike_shouldYield];
-            const hasMoreData = this[FlowControllerEnumeratorLike_isDataAvailable];
+            const hasMoreData = this[ConsumableEnumeratorLike_isDataAvailable];
             if (shouldYield && hasMoreData) {
                 yield;
             }
             observerIsReady = observer[FlowControllerLike_isReady];
             observerIsCompleted = observer[SinkLike_isCompleted];
         }
-        const hasMoreData = this[FlowControllerEnumeratorLike_isDataAvailable];
+        const hasMoreData = this[ConsumableEnumeratorLike_isDataAvailable];
         const isCompleted = this[SinkLike_isCompleted];
         if (!hasMoreData && isCompleted) {
             observer[SinkLike_complete]();
@@ -50,7 +50,7 @@ export const create = (() => {
             capacity: config?.capacity ?? 1,
             backpressureStrategy: config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
         });
-        this[FlowControllerEnumeratorLike_addOnDataAvailableListener](bind(scheduleDispatcher, this));
+        this[ConsumableEnumeratorLike_addOnDataAvailableListener](bind(scheduleDispatcher, this));
         return this;
     }, props({
         [ConsumerObservable_observer]: none,
@@ -76,7 +76,7 @@ export const create = (() => {
             // wants to apply back pressure, as lifted observers just pass through
             // notifications and never queue in practice.
             const isObserverReady = observer?.[FlowControllerLike_isReady] ?? false;
-            const hasQueuedEvents = this[FlowControllerEnumeratorLike_isDataAvailable];
+            const hasQueuedEvents = this[ConsumableEnumeratorLike_isDataAvailable];
             const shouldNotify = inSchedulerContinuation &&
                 !isCompleted &&
                 isObserverReady &&

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`QueueLike`](QueueLike.md)\<`T`\>.[`FlowControllerEnumeratorLike`](FlowControllerEnumeratorLike.md)\<`T`\>.[`FlowControllerLike`](FlowControllerLike.md)
+- [`QueueLike`](QueueLike.md)\<`T`\>.[`ConsumableEnumeratorLike`](ConsumableEnumeratorLike.md)\<`T`\>.[`FlowControllerLike`](FlowControllerLike.md)
 
 ## Type Parameters
 

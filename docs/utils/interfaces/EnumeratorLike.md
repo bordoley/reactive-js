@@ -13,7 +13,7 @@
 ## Extended by
 
 - [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)
-- [`FlowControllerEnumeratorLike`](FlowControllerEnumeratorLike.md)
+- [`ConsumableEnumeratorLike`](ConsumableEnumeratorLike.md)
 
 ## Type Parameters
 

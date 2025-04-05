@@ -94,16 +94,16 @@ export interface FlowControllerLike {
     readonly [FlowControllerLike_isReady]: boolean;
     [FlowControllerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
 }
-export declare const FlowControllerEnumeratorLike_addOnDataAvailableListener: unique symbol;
-export declare const FlowControllerEnumeratorLike_isDataAvailable: unique symbol;
-export interface FlowControllerEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
-    readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
-    [FlowControllerEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
+export declare const ConsumableEnumeratorLike_addOnDataAvailableListener: unique symbol;
+export declare const ConsumableEnumeratorLike_isDataAvailable: unique symbol;
+export interface ConsumableEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
+    readonly [ConsumableEnumeratorLike_isDataAvailable]: boolean;
+    [ConsumableEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
 }
 /**
  * @noInheritDoc
  */
-export interface FlowControllerQueueLike<T = unknown> extends QueueLike<T>, FlowControllerEnumeratorLike<T>, FlowControllerLike {
+export interface FlowControllerQueueLike<T = unknown> extends QueueLike<T>, ConsumableEnumeratorLike<T>, FlowControllerLike {
 }
 export declare const SchedulerLike_inContinuation: unique symbol;
 export declare const SchedulerLike_maxYieldInterval: unique symbol;

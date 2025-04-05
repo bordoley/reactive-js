@@ -28,14 +28,14 @@ import {
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
+  ConsumableEnumeratorLike_addOnDataAvailableListener,
+  ConsumableEnumeratorLike_isDataAvailable,
   DisposableLike,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  FlowControllerEnumeratorLike_addOnDataAvailableListener,
-  FlowControllerEnumeratorLike_isDataAvailable,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
@@ -124,7 +124,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           return count < capacity && !isDisposed;
         },
 
-        get [FlowControllerEnumeratorLike_isDataAvailable](): boolean {
+        get [ConsumableEnumeratorLike_isDataAvailable](): boolean {
           unsafeCast<TProperties>(this);
           const count = this[CollectionEnumeratorLike_count];
           return count > 0;
@@ -165,7 +165,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
             ]("data_ready");
         },
 
-        [FlowControllerEnumeratorLike_addOnDataAvailableListener](
+        [ConsumableEnumeratorLike_addOnDataAvailableListener](
           this: TProperties & DisposableLike,
           callback: SideEffect1<void>,
         ) {

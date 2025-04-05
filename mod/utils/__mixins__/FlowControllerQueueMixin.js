@@ -6,7 +6,7 @@ import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadca
 import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { alwaysNone, call, isEqualTo, none, pipe, returns, } from "../../functions.js";
-import { CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_capacity, QueueLike_enqueue, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_capacity, QueueLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
@@ -35,7 +35,7 @@ const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
             const isDisposed = this[DisposableLike_isDisposed];
             return count < capacity && !isDisposed;
         },
-        get [FlowControllerEnumeratorLike_isDataAvailable]() {
+        get [ConsumableEnumeratorLike_isDataAvailable]() {
             unsafeCast(this);
             const count = this[CollectionEnumeratorLike_count];
             return count > 0;
@@ -59,7 +59,7 @@ const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
             shouldNotify &&
                 this[FlowControllerQueueMixin_onReadyPublisher]?.[EventListenerLike_notify]("data_ready");
         },
-        [FlowControllerEnumeratorLike_addOnDataAvailableListener](callback) {
+        [ConsumableEnumeratorLike_addOnDataAvailableListener](callback) {
             const publisher = this[FlowControllerQueueMixin_onReadyPublisher] ??
                 call(createPublisher, this);
             // FIXME: Could memoize

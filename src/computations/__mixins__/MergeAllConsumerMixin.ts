@@ -20,11 +20,11 @@ import { DelegatingSinkLike } from "../../utils/__mixins__/DelegatingSinkMixin.j
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
 import {
   BackpressureStrategy,
+  ConsumableEnumeratorLike_addOnDataAvailableListener,
   ConsumerLike,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  FlowControllerEnumeratorLike_addOnDataAvailableListener,
   FlowControllerQueueLike,
   QueueLike_enqueue,
   SinkLike,
@@ -126,7 +126,7 @@ const MergeAllConsumerMixin: <
           config?.concurrency ?? MAX_SAFE_INTEGER,
         );
 
-        this[FlowControllerEnumeratorLike_addOnDataAvailableListener](() => {
+        this[ConsumableEnumeratorLike_addOnDataAvailableListener](() => {
           const activeCount = this[MergeAllConsumer_activeCount];
 
           if (activeCount >= maxConcurrency) {

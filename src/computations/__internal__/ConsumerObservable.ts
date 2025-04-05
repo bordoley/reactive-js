@@ -18,6 +18,8 @@ import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
 import {
   BackpressureStrategy,
+  ConsumableEnumeratorLike_addOnDataAvailableListener,
+  ConsumableEnumeratorLike_isDataAvailable,
   ConsumerLike,
   DisposableLike,
   DisposableLike_dispose,
@@ -26,8 +28,6 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  FlowControllerEnumeratorLike_addOnDataAvailableListener,
-  FlowControllerEnumeratorLike_isDataAvailable,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
@@ -90,7 +90,7 @@ export const create: <T>(config?: {
       observer[EventListenerLike_notify](next);
 
       const shouldYield = scheduler[SchedulerLike_shouldYield];
-      const hasMoreData = this[FlowControllerEnumeratorLike_isDataAvailable];
+      const hasMoreData = this[ConsumableEnumeratorLike_isDataAvailable];
       if (shouldYield && hasMoreData) {
         yield;
       }
@@ -99,7 +99,7 @@ export const create: <T>(config?: {
       observerIsCompleted = observer[SinkLike_isCompleted];
     }
 
-    const hasMoreData = this[FlowControllerEnumeratorLike_isDataAvailable];
+    const hasMoreData = this[ConsumableEnumeratorLike_isDataAvailable];
     const isCompleted = this[SinkLike_isCompleted];
     if (!hasMoreData && isCompleted) {
       observer[SinkLike_complete]();
@@ -136,7 +136,7 @@ export const create: <T>(config?: {
           config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
       });
 
-      this[FlowControllerEnumeratorLike_addOnDataAvailableListener](
+      this[ConsumableEnumeratorLike_addOnDataAvailableListener](
         bind(scheduleDispatcher, this),
       );
 
@@ -185,8 +185,7 @@ export const create: <T>(config?: {
         // wants to apply back pressure, as lifted observers just pass through
         // notifications and never queue in practice.
         const isObserverReady = observer?.[FlowControllerLike_isReady] ?? false;
-        const hasQueuedEvents =
-          this[FlowControllerEnumeratorLike_isDataAvailable];
+        const hasQueuedEvents = this[ConsumableEnumeratorLike_isDataAvailable];
 
         const shouldNotify =
           inSchedulerContinuation &&

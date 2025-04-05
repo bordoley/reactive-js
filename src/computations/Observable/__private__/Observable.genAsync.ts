@@ -9,13 +9,13 @@ import * as FlowControllerQueue from "../../../utils/__internal__/FlowController
 import {
   AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
+  ConsumableEnumeratorLike_addOnDataAvailableListener,
+  ConsumableEnumeratorLike_isDataAvailable,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  FlowControllerEnumeratorLike_addOnDataAvailableListener,
-  FlowControllerEnumeratorLike_isDataAvailable,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
@@ -69,7 +69,7 @@ const genFactory =
         observer[EventListenerLike_notify](next);
 
         const shouldYield = scheduler[SchedulerLike_shouldYield];
-        const hasMoreData = queue[FlowControllerEnumeratorLike_isDataAvailable];
+        const hasMoreData = queue[ConsumableEnumeratorLike_isDataAvailable];
         if (shouldYield && hasMoreData) {
           yield;
         }
@@ -78,7 +78,7 @@ const genFactory =
         observerIsCompleted = observer[SinkLike_isCompleted];
       }
 
-      const hasMoreData = queue[FlowControllerEnumeratorLike_isDataAvailable];
+      const hasMoreData = queue[ConsumableEnumeratorLike_isDataAvailable];
       if (!hasMoreData && isCompleted) {
         observer[SinkLike_complete]();
       }
@@ -95,7 +95,7 @@ const genFactory =
       );
     };
 
-    queue[FlowControllerEnumeratorLike_addOnDataAvailableListener](
+    queue[ConsumableEnumeratorLike_addOnDataAvailableListener](
       scheduleDispatcher,
     );
 

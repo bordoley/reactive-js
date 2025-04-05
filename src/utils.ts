@@ -170,19 +170,19 @@ export interface FlowControllerLike {
   ): DisposableLike;
 }
 
-export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol(
-  "FlowControllerEnumeratorLike_addOnDataAvailableListener",
+export const ConsumableEnumeratorLike_addOnDataAvailableListener = Symbol(
+  "ConsumableEnumeratorLike_addOnDataAvailableListener",
 );
-export const FlowControllerEnumeratorLike_isDataAvailable = Symbol(
-  "FlowControllerEnumeratorLike_isDataAvailable",
+export const ConsumableEnumeratorLike_isDataAvailable = Symbol(
+  "ConsumableEnumeratorLike_isDataAvailable",
 );
 
-export interface FlowControllerEnumeratorLike<T = unknown>
+export interface ConsumableEnumeratorLike<T = unknown>
   extends EnumeratorLike<T>,
     Iterable<T> {
-  readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
+  readonly [ConsumableEnumeratorLike_isDataAvailable]: boolean;
 
-  [FlowControllerEnumeratorLike_addOnDataAvailableListener](
+  [ConsumableEnumeratorLike_addOnDataAvailableListener](
     callback: SideEffect1<void>,
   ): DisposableLike;
 }
@@ -192,7 +192,7 @@ export interface FlowControllerEnumeratorLike<T = unknown>
  */
 export interface FlowControllerQueueLike<T = unknown>
   extends QueueLike<T>,
-    FlowControllerEnumeratorLike<T>,
+    ConsumableEnumeratorLike<T>,
     FlowControllerLike {}
 
 export const SchedulerLike_inContinuation = Symbol(
