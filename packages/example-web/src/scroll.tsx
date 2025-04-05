@@ -3,7 +3,12 @@ import ReactDOMClient from "react-dom/client";
 import { useAnimate, useScroll, useSpring } from "@reactive-js/core/react/web";
 import { useEventSource } from "@reactive-js/core/react";
 import { ScrollValue } from "@reactive-js/core/web";
-import { Optional, pipeSome, pipeSomeLazy } from "@reactive-js/core/functions";
+import {
+  identity,
+  Optional,
+  pipeSome,
+  pipeSomeLazy,
+} from "@reactive-js/core/functions";
 import * as Broadcaster from "@reactive-js/core/computations/Broadcaster";
 import * as Observable from "@reactive-js/core/computations/Observable";
 import { BroadcasterLike } from "@reactive-js/core/computations";
@@ -52,18 +57,26 @@ const ScrollApp = () => {
   useEventSource(
     pipeSomeLazy(
       scrollValues,
+      Broadcaster.keep<ScrollValue>(({ done }) => !done),
       Observable.fromBroadcaster(),
+      Observable.forEach(
+        // Cancel any running springs
+        () => spring?.[EventListenerLike_notify](identity),
+      ),
       Observable.debounce<ScrollValue>(50),
-      Observable.forEach(({ y, done }) => {
+      Observable.forEach(({ y }) => {
         const pos = y.progress;
         const { velocity } = y;
 
-        if (!done && velocity > 0) {
+        // FIXME: Need react api to detect if the user is holding down the mouse/touchdown.
+        // and only notify if false.
+
+        if (velocity > 0) {
           spring?.[EventListenerLike_notify]({
             from: pos,
             to: [pos + 0.05, pos],
           });
-        } else if (!done && velocity < 0) {
+        } else if (velocity < 0) {
           spring?.[EventListenerLike_notify]({
             from: pos,
             to: [pos - 0.025, pos],
@@ -74,7 +87,7 @@ const ScrollApp = () => {
     [scrollValues],
   );
 
-  const circleAnimtation = useMemo(
+  const circleAnimatation = useMemo(
     () =>
       spring &&
       pipeSome(
@@ -106,7 +119,7 @@ const ScrollApp = () => {
           zIndex: "0",
         }}
       >
-        <AnimatedCircle animation={circleAnimtation} />
+        <AnimatedCircle animation={circleAnimatation} />
       </div>
 
       <div
