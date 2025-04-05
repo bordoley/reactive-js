@@ -8,7 +8,7 @@
 
 ## Extended by
 
-- [`FlowControllerQueueLike`](FlowControllerQueueLike.md)
+- [`FlowControlQueueLike`](FlowControlQueueLike.md)
 - [`ConsumerLike`](ConsumerLike.md)
 
 ## Properties

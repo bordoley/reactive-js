@@ -21,7 +21,7 @@
 - [EnumeratorLike](interfaces/EnumeratorLike.md)
 - [EventListenerLike](interfaces/EventListenerLike.md)
 - [FlowControllerLike](interfaces/FlowControllerLike.md)
-- [FlowControllerQueueLike](interfaces/FlowControllerQueueLike.md)
+- [FlowControlQueueLike](interfaces/FlowControlQueueLike.md)
 - [ObserverLike](interfaces/ObserverLike.md)
 - [PauseableLike](interfaces/PauseableLike.md)
 - [PauseableSchedulerLike](interfaces/PauseableSchedulerLike.md)

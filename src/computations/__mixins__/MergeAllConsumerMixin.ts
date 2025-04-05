@@ -17,7 +17,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
 import { DelegatingSinkLike } from "../../utils/__mixins__/DelegatingSinkMixin.js";
-import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
+import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
 import {
   BackpressureStrategy,
   ConsumableEnumeratorLike_addOnDataAvailableListener,
@@ -25,7 +25,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  FlowControllerQueueLike,
+  FlowControlQueueLike,
   QueueLike_enqueue,
   SinkLike,
   SinkLike_complete,
@@ -71,7 +71,7 @@ const MergeAllConsumerMixin: <
 
   const subscribeToInner = (
     mergeAllConsumer: TProperties &
-      FlowControllerQueueLike<TInnerSource> &
+      FlowControlQueueLike<TInnerSource> &
       ConsumerLike &
       DelegatingSinkLike<TInnerSource, T, TConsumer>,
     source: TInnerSource,
@@ -100,11 +100,11 @@ const MergeAllConsumerMixin: <
 
   return returns(
     mix(
-      include(FlowControllerQueueMixin(), DelegatingNonCompletingSinkMixin()),
+      include(FlowControlQueueMixin(), DelegatingNonCompletingSinkMixin()),
       function MergeAllConsumerMixin(
         this: Omit<
           TReturn<TInnerSource, TConsumer, T>,
-          keyof FlowControllerQueueLike | keyof SinkLike
+          keyof FlowControlQueueLike | keyof SinkLike
         > &
           TProperties,
         delegate: TConsumer,
@@ -115,7 +115,7 @@ const MergeAllConsumerMixin: <
         }>,
         createDelegatingNonCompleting: Function1<TConsumer, TConsumer>,
       ): TReturn<TInnerSource, TConsumer, T> {
-        init(FlowControllerQueueMixin<TInnerSource>(), this, config);
+        init(FlowControlQueueMixin<TInnerSource>(), this, config);
         init(
           DelegatingNonCompletingSinkMixin<TInnerSource, T, TConsumer>(),
           this,
@@ -161,7 +161,7 @@ const MergeAllConsumerMixin: <
       }),
       proto({
         [EventListenerLike_notify](
-          this: FlowControllerQueueLike<TInnerSource>,
+          this: FlowControlQueueLike<TInnerSource>,
           next: TInnerSource,
         ) {
           this[QueueLike_enqueue](next);

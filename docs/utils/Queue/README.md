@@ -10,3 +10,4 @@
 
 - [create](functions/create.md)
 - [createSorted](functions/createSorted.md)
+- [createWithFlowControl](functions/createWithFlowControl.md)

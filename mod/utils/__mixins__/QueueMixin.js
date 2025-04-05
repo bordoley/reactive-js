@@ -55,7 +55,7 @@ const QueueMixin =
         [QueueMixin_values]: none,
         [QueueMixin_comparator]: none,
     }), proto({
-        /*get [FlowControllerQueueLike_tail]() {
+        /*get [FlowControlQueueLike_tail]() {
           unsafeCast<TProperties>(this);
           const head = this[QueueMixin_head];
           const tail = this[QueueMixin_tail];

@@ -12,7 +12,7 @@
 
 ## Extended by
 
-- [`FlowControllerQueueLike`](FlowControllerQueueLike.md)
+- [`FlowControlQueueLike`](FlowControlQueueLike.md)
 
 ## Type Parameters
 

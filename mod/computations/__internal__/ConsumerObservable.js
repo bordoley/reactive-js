@@ -5,7 +5,7 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
+import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
 import { ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 export const create = (() => {
     const ConsumerObservable_observer = Symbol("ConsumerObservable_observer");
@@ -44,9 +44,9 @@ export const create = (() => {
         }
         this[ConsumerObservable_schedulerSubscription] = pipe(observer[SchedulerLike_schedule](bind(dispatchEvents, this)), Disposable.addTo(this));
     }
-    return mixInstanceFactory(include(DisposableMixin, FlowControllerQueueMixin()), function ConsumerObservable(config) {
+    return mixInstanceFactory(include(DisposableMixin, FlowControlQueueMixin()), function ConsumerObservable(config) {
         init(DisposableMixin, this);
-        init(FlowControllerQueueMixin(), this, {
+        init(FlowControlQueueMixin(), this, {
             capacity: config?.capacity ?? 1,
             backpressureStrategy: config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
         });

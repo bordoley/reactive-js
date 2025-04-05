@@ -4,8 +4,8 @@ import {
 } from "../../../computations.js";
 import { Factory, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as Queue from "../../../utils/Queue.js";
 import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
-import * as FlowControllerQueue from "../../../utils/__internal__/FlowControllerQueue.js";
 import {
   AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
@@ -47,7 +47,7 @@ const genFactory =
     );
 
     const queue = pipe(
-      FlowControllerQueue.create<T>({
+      Queue.createWithFlowControl<T>({
         backpressureStrategy: OverflowBackpressureStrategy,
         capacity: options?.bufferSize ?? 32,
       }),

@@ -3,13 +3,13 @@
 import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as Queue from "../../../utils/Queue.js";
 import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
-import * as FlowControllerQueue from "../../../utils/__internal__/FlowControllerQueue.js";
 import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 const genFactory = (factory, options) => async (observer) => {
     const enumerator = pipe(factory(), AsyncIterator.toAsyncEnumerator(), Disposable.addTo(observer));
-    const queue = pipe(FlowControllerQueue.create({
+    const queue = pipe(Queue.createWithFlowControl({
         backpressureStrategy: OverflowBackpressureStrategy,
         capacity: options?.bufferSize ?? 32,
     }), Disposable.addTo(observer));

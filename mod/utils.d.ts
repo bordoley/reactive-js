@@ -103,7 +103,7 @@ export interface ConsumableEnumeratorLike<T = unknown> extends EnumeratorLike<T>
 /**
  * @noInheritDoc
  */
-export interface FlowControllerQueueLike<T = unknown> extends QueueLike<T>, ConsumableEnumeratorLike<T>, FlowControllerLike {
+export interface FlowControlQueueLike<T = unknown> extends QueueLike<T>, ConsumableEnumeratorLike<T>, FlowControllerLike {
 }
 export declare const SchedulerLike_inContinuation: unique symbol;
 export declare const SchedulerLike_maxYieldInterval: unique symbol;

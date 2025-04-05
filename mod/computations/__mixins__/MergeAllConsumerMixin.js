@@ -8,7 +8,7 @@ import { clampPositiveNonZeroInteger } from "../../math.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
-import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
+import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
 import { ConsumableEnumeratorLike_addOnDataAvailableListener, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
     const MergeAllConsumer_createDelegatingNonCompleting = Symbol("MergeAllConsumer_createDelegatingNonCompleting");
@@ -29,8 +29,8 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
         }));
         source[EventSourceLike_subscribe](sourceDelegate);
     };
-    return returns(mix(include(FlowControllerQueueMixin(), DelegatingNonCompletingSinkMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNonCompleting) {
-        init(FlowControllerQueueMixin(), this, config);
+    return returns(mix(include(FlowControlQueueMixin(), DelegatingNonCompletingSinkMixin()), function MergeAllConsumerMixin(delegate, config, createDelegatingNonCompleting) {
+        init(FlowControlQueueMixin(), this, config);
         init(DelegatingNonCompletingSinkMixin(), this, delegate);
         const maxConcurrency = clampPositiveNonZeroInteger(config?.concurrency ?? MAX_SAFE_INTEGER);
         this[ConsumableEnumeratorLike_addOnDataAvailableListener](() => {

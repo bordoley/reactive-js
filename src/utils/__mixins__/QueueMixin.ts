@@ -148,7 +148,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
           [QueueMixin_comparator]: none,
         }),
         proto<TPrototype<T>>({
-          /*get [FlowControllerQueueLike_tail]() {
+          /*get [FlowControlQueueLike_tail]() {
             unsafeCast<TProperties>(this);
             const head = this[QueueMixin_head];
             const tail = this[QueueMixin_tail];

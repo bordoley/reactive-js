@@ -36,9 +36,9 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControlQueueLike,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
-  FlowControllerQueueLike,
   QueueLike,
   QueueLike_backpressureStrategy,
   QueueLike_capacity,
@@ -47,9 +47,9 @@ import {
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 
-type TReturn<T> = Omit<FlowControllerQueueLike<T>, keyof DisposableLike>;
+type TReturn<T> = Omit<FlowControlQueueLike<T>, keyof DisposableLike>;
 type TPrototype<T> = Omit<
-  FlowControllerQueueLike<T>,
+  FlowControlQueueLike<T>,
   | keyof DisposableLike
   | typeof CollectionEnumeratorLike_count
   | typeof EnumeratorLike_current
@@ -66,20 +66,20 @@ type TConfig<T> = Optional<{
   capacity?: number;
 }>;
 
-const FlowControllerQueueMixin: <T>() => Mixin1<
+const FlowControlQueueMixin: <T>() => Mixin1<
   TReturn<T>,
   TConfig<T>,
   TPrototype<T>
 > = /*@__PURE__*/ (<T>() => {
-  const FlowControllerQueueMixin_onReadyPublisher = Symbol(
-    "FlowControllerQueueMixin_onReadyPublisher",
+  const FlowControlQueueMixin_onReadyPublisher = Symbol(
+    "FlowControlQueueMixin_onReadyPublisher",
   );
 
   type TProperties = {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;
     [CollectionEnumeratorLike_count]: number;
-    [FlowControllerQueueMixin_onReadyPublisher]: Optional<
+    [FlowControlQueueMixin_onReadyPublisher]: Optional<
       PublisherLike<"ready" | "data_ready">
     >;
   };
@@ -93,14 +93,14 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
       Publisher.create<"ready" | "data_ready">(),
       Disposable.addTo(this),
     );
-    this[FlowControllerQueueMixin_onReadyPublisher] = publisher;
+    this[FlowControlQueueMixin_onReadyPublisher] = publisher;
     return publisher;
   }
 
   return returns(
     mix(
       include(QueueMixin()),
-      function FlowControllerQueueMixin(
+      function FlowControlQueueMixin(
         this: TPrototype<T> & TProperties,
         config: TConfig<T>,
       ): TReturn<T> {
@@ -112,11 +112,11 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
         [CollectionEnumeratorLike_count]: 0,
-        [FlowControllerQueueMixin_onReadyPublisher]: none,
+        [FlowControlQueueMixin_onReadyPublisher]: none,
       }),
       proto<TPrototype<T>>({
         get [FlowControllerLike_isReady]() {
-          unsafeCast<TProperties & FlowControllerQueueLike<T>>(this);
+          unsafeCast<TProperties & FlowControlQueueLike<T>>(this);
           const count = this[CollectionEnumeratorLike_count];
           const capacity = this[QueueLike_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
@@ -130,13 +130,11 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           return count > 0;
         },
 
-        [EnumeratorLike_moveNext](
-          this: TProperties & FlowControllerQueueLike<T>,
-        ) {
+        [EnumeratorLike_moveNext](this: TProperties & FlowControlQueueLike<T>) {
           const count = this[CollectionEnumeratorLike_count];
           const capacity = this[QueueLike_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
-          const onReadySignal = this[FlowControllerQueueMixin_onReadyPublisher];
+          const onReadySignal = this[FlowControlQueueMixin_onReadyPublisher];
           const shouldNotifyReady =
             count === capacity && capacity > 0 && !isDisposed;
 
@@ -149,7 +147,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
         },
 
         [QueueLike_enqueue](
-          this: TProperties & FlowControllerQueueLike<T> & QueueLike<T>,
+          this: TProperties & FlowControlQueueLike<T> & QueueLike<T>,
           item: T,
         ) {
           const oldCount = this[CollectionEnumeratorLike_count];
@@ -160,7 +158,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           const shouldNotify = oldCount < 1 && newCount >= 1;
 
           shouldNotify &&
-            this[FlowControllerQueueMixin_onReadyPublisher]?.[
+            this[FlowControlQueueMixin_onReadyPublisher]?.[
               EventListenerLike_notify
             ]("data_ready");
         },
@@ -170,7 +168,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           callback: SideEffect1<void>,
         ) {
           const publisher =
-            this[FlowControllerQueueMixin_onReadyPublisher] ??
+            this[FlowControlQueueMixin_onReadyPublisher] ??
             call(createPublisher, this);
 
           // FIXME: Could memoize
@@ -188,7 +186,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           callback: SideEffect1<void>,
         ) {
           const publisher =
-            this[FlowControllerQueueMixin_onReadyPublisher] ??
+            this[FlowControlQueueMixin_onReadyPublisher] ??
             call(createPublisher, this);
 
           // FIXME: Could memoize
@@ -205,4 +203,4 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
   );
 })();
 
-export default FlowControllerQueueMixin;
+export default FlowControlQueueMixin;

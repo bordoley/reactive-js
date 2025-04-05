@@ -15,7 +15,7 @@ import { Optional, bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import FlowControllerQueueMixin from "../../utils/__mixins__/FlowControllerQueueMixin.js";
+import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
 import {
   BackpressureStrategy,
   ConsumableEnumeratorLike_addOnDataAvailableListener,
@@ -28,9 +28,9 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
+  FlowControlQueueLike,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
-  FlowControllerQueueLike,
   ObserverLike,
   QueueLike_enqueue,
   SchedulerLike,
@@ -69,7 +69,7 @@ export const create: <T>(config?: {
     >;
 
   function* dispatchEvents(
-    this: TProperties & FlowControllerQueueLike<T>,
+    this: TProperties & FlowControlQueueLike<T>,
     scheduler: SchedulerLike,
   ) {
     const observer = this[ConsumerObservable_observer];
@@ -121,7 +121,7 @@ export const create: <T>(config?: {
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, FlowControllerQueueMixin()),
+    include(DisposableMixin, FlowControlQueueMixin()),
     function ConsumerObservable(
       this: TProperties & TPrototype,
       config: Optional<{
@@ -130,7 +130,7 @@ export const create: <T>(config?: {
       }>,
     ): ConsumerObservableLike<T> {
       init(DisposableMixin, this);
-      init(FlowControllerQueueMixin<T>(), this, {
+      init(FlowControlQueueMixin<T>(), this, {
         capacity: config?.capacity ?? 1,
         backpressureStrategy:
           config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
@@ -173,7 +173,7 @@ export const create: <T>(config?: {
       },
 
       [EventListenerLike_notify](
-        this: TProperties & FlowControllerQueueLike<T>,
+        this: TProperties & FlowControlQueueLike<T>,
         next: T,
       ) {
         const observer = this[ConsumerObservable_observer];

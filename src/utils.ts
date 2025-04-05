@@ -190,7 +190,7 @@ export interface ConsumableEnumeratorLike<T = unknown>
 /**
  * @noInheritDoc
  */
-export interface FlowControllerQueueLike<T = unknown>
+export interface FlowControlQueueLike<T = unknown>
   extends QueueLike<T>,
     ConsumableEnumeratorLike<T>,
     FlowControllerLike {}
