@@ -13,7 +13,7 @@
 ## Extended by
 
 - [`AnimationGroupLike`](AnimationGroupLike.md)
-- [`SpringStreamLike`](SpringStreamLike.md)
+- [`SpringLike`](SpringLike.md)
 
 ## Type Parameters
 

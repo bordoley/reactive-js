@@ -1,5 +1,5 @@
 import { ReadonlyObjectMapLike } from "../collections.js";
-import { AnimationGroupLike, AnimationLike, SpringStreamLike } from "../computations/Streamable.js";
+import { AnimationGroupLike, AnimationLike, SpringLike } from "../computations/Streamable.js";
 import { BroadcasterLike, PureSynchronousObservableLike } from "../computations.js";
 import { Function1, Optional, SideEffect1, Tuple2, Updater } from "../functions.js";
 import { CSSStyleMapLike, Rect, ScrollValue, WindowLocationLike, WindowLocationURI } from "../web.js";
@@ -23,7 +23,7 @@ export interface ReactWebModule {
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
-    }): Optional<SpringStreamLike>;
+    }): Optional<SpringLike>;
     /**
      */
     useWindowLocation(): {

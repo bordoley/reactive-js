@@ -15,7 +15,7 @@ be consumed.
 
 ## Extended by
 
-- [`SpringStreamLike`](SpringStreamLike.md)
+- [`SpringLike`](SpringLike.md)
 
 ## Type Parameters
 

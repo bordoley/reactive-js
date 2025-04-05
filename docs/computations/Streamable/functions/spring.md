@@ -6,7 +6,7 @@
 
 # Function: spring()
 
-> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringStreamLike`](../interfaces/SpringStreamLike.md)\>
+> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringLike`](../interfaces/SpringLike.md)\>
 
 ## Parameters
 
@@ -26,4 +26,4 @@
 
 ## Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringStreamLike`](../interfaces/SpringStreamLike.md)\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringLike`](../interfaces/SpringLike.md)\>

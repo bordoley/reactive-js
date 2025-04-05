@@ -10,7 +10,7 @@
 
 - [AnimationGroupLike](interfaces/AnimationGroupLike.md)
 - [AnimationLike](interfaces/AnimationLike.md)
-- [SpringStreamLike](interfaces/SpringStreamLike.md)
+- [SpringLike](interfaces/SpringLike.md)
 - [StateStoreStreamLike](interfaces/StateStoreStreamLike.md)
 - [StreamableModule](interfaces/StreamableModule.md)
 

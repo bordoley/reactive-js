@@ -166,7 +166,7 @@
 
 ### spring()
 
-> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringStreamLike`](SpringStreamLike.md)\>
+> **spring**(`options`?): [`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringLike`](SpringLike.md)\>
 
 #### Parameters
 
@@ -186,7 +186,7 @@
 
 #### Returns
 
-[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringStreamLike`](SpringStreamLike.md)\>
+[`StreamableLike`](../../interfaces/StreamableLike.md)\<[`SpringEvent`](../type-aliases/SpringEvent.md), `number`, [`SpringLike`](SpringLike.md)\>
 
 ***
 

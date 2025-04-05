@@ -15,7 +15,7 @@ import * as Publisher from "../computations/Publisher.js";
 import {
   AnimationGroupLike,
   AnimationLike,
-  SpringStreamLike,
+  SpringLike,
 } from "../computations/Streamable.js";
 import * as Streamable from "../computations/Streamable.js";
 import {
@@ -104,7 +104,7 @@ export interface ReactWebModule {
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
-  }): Optional<SpringStreamLike>;
+  }): Optional<SpringLike>;
 
   /**
    */

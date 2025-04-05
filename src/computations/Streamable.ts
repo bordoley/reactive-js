@@ -59,7 +59,7 @@ export type SpringCommand =
 
 export type SpringEvent = SpringCommand | Function1<number, SpringCommand>;
 
-export interface SpringStreamLike
+export interface SpringLike
   extends AnimationLike<SpringEvent, number>,
     StateStoreStreamLike<SpringEvent, number> {}
 
@@ -110,7 +110,7 @@ export interface StreamableModule {
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
-  }): StreamableLike<SpringEvent, number, SpringStreamLike>;
+  }): StreamableLike<SpringEvent, number, SpringLike>;
 
   /**
    * Returns a new `StateStoreLike` instance that stores state which can

@@ -162,7 +162,7 @@ readonly `unknown`[]
 
 ### useSpring()
 
-> **useSpring**(`options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`SpringStreamLike`](../../../computations/Streamable/interfaces/SpringStreamLike.md)\>
+> **useSpring**(`options`?): [`Optional`](../../../functions/type-aliases/Optional.md)\<[`SpringLike`](../../../computations/Streamable/interfaces/SpringLike.md)\>
 
 #### Parameters
 
@@ -182,7 +182,7 @@ readonly `unknown`[]
 
 #### Returns
 
-[`Optional`](../../../functions/type-aliases/Optional.md)\<[`SpringStreamLike`](../../../computations/Streamable/interfaces/SpringStreamLike.md)\>
+[`Optional`](../../../functions/type-aliases/Optional.md)\<[`SpringLike`](../../../computations/Streamable/interfaces/SpringLike.md)\>
 
 ***
 

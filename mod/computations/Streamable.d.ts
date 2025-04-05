@@ -23,7 +23,7 @@ export type SpringCommand = number | ReadonlyArray<number> | {
     readonly precision?: number;
 };
 export type SpringEvent = SpringCommand | Function1<number, SpringCommand>;
-export interface SpringStreamLike extends AnimationLike<SpringEvent, number>, StateStoreStreamLike<SpringEvent, number> {
+export interface SpringLike extends AnimationLike<SpringEvent, number>, StateStoreStreamLike<SpringEvent, number> {
 }
 export interface StateStoreStreamLike<TAction, T> extends StreamLike<TAction, T>, StoreLike<T> {
 }
@@ -44,7 +44,7 @@ export interface StreamableModule {
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
-    }): StreamableLike<SpringEvent, number, SpringStreamLike>;
+    }): StreamableLike<SpringEvent, number, SpringLike>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a

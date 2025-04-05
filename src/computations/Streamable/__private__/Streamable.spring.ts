@@ -51,7 +51,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
         readonly backpressureStrategy?: BackpressureStrategy;
         readonly capacity?: number;
       }>,
-    ): Streamable.SpringStreamLike {
+    ): Streamable.SpringLike {
       const f = (updater: Streamable.SpringEvent) => {
         const acc = this[StoreLike_value];
         const command = isFunction(updater) ? updater(acc) : updater;
@@ -133,7 +133,7 @@ const Streamable_spring: Streamable.Signature["spring"] = /*@__PURE__*/ (() => {
   }): StreamableLike<
     Streamable.SpringEvent,
     number,
-    Streamable.SpringStreamLike
+    Streamable.SpringLike
   > => ({
     [StreamableLike_stream]: (scheduler, options) =>
       createSpringStream(scheduler, springOptions, options),
