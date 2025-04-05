@@ -24,3 +24,4 @@ export declare const increment: (x: number) => number;
  */
 export declare const incrementBy: (incr: number) => Updater<number>;
 export declare const scale: (start: number, end: number) => Updater<number>;
+export declare const sum: (a: number, b: number) => number;

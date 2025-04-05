@@ -1,11 +1,13 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectToThrow,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { pipeLazy, raise } from "../../functions.js";
+import { pipeLazy, raise, returns } from "../../functions.js";
+import { sum } from "../../math.js";
 import * as DefaultScheduler from "../../utils/DefaultScheduler.js";
 import * as HostScheduler from "../../utils/HostScheduler.js";
 import * as Computation from "../Computation.js";
@@ -53,6 +55,18 @@ testModule(
           Runnable.last(),
         ),
         expectToThrow,
+      ),
+    ),
+  ),
+  describe(
+    "reduce",
+    test(
+      "reducing an array",
+      pipeLazy(
+        [1, 2, 3],
+        Runnable.fromReadonlyArray(),
+        Runnable.reduce(sum, returns(0)),
+        expectEquals(6),
       ),
     ),
   ),

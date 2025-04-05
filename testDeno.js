@@ -13,6 +13,7 @@ import "./mod/collections/__tests__/ReadonlyObjectMap.test.js";
 
 import "./mod/computations/__tests__/AsyncIterable.test.js";
 import "./mod/computations/__tests__/Broadcaster.test.js";
+import "./mod/computations/__tests__/EventSource.test.js";
 import "./mod/computations/__tests__/Iterable.test.js";
 import "./mod/computations/__tests__/Observable.test.js";
 import "./mod/computations/__tests__/Producer.test.js";

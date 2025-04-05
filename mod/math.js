@@ -29,3 +29,4 @@ export const scale = (start, end) => {
     const diff = end - start;
     return (v) => start + v * diff;
 };
+export const sum = (a, b) => a + b;

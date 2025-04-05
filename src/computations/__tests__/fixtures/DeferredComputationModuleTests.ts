@@ -162,6 +162,36 @@ const DeferredComputationModuleTests = <
       ),
     ),
     describe(
+      "concatAll",
+      testAsync(
+        "concating inner sources",
+        pipeLazyAsync(
+          [Computation.ofValues(m, 1, 2, 3), Computation.ofValues(m, 4, 5, 6)],
+          Computation.fromReadonlyArray(m),
+          m.concatAll<number>(),
+          m.toProducer(),
+          EventSource.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3, 4, 5, 6]),
+        ),
+      ),
+      testAsync(
+        "only consume partial number of events",
+        pipeLazyAsync(
+          [
+            Computation.ofValues(m, 1, 2, 3),
+            Computation.ofValues(m, 4, 5, 6),
+            Computation.ofValues(m, 7, 8, 9),
+          ],
+          Computation.fromReadonlyArray(m),
+          m.concatAll<number>(),
+          m.takeFirst<number>({ count: 5 }),
+          m.toProducer(),
+          EventSource.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3, 4, 5]),
+        ),
+      ),
+    ),
+    describe(
       "decodeWithCharset",
       testAsync("decoding ascii", async () => {
         const str = "abcdefghijklmnsopqrstuvwxyz";
@@ -315,6 +345,16 @@ const DeferredComputationModuleTests = <
     ),
     describe(
       "retry",
+      testAsync(
+        "when the source doesn't error",
+        pipeLazyAsync(
+          Computation.ofValues(m, 1, 2, 3),
+          m.retry<number>(),
+          m.toProducer(),
+          EventSource.toReadonlyArrayAsync<number>(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
       testAsync(
         "retrys with the default predicate",
         pipeLazyAsync(

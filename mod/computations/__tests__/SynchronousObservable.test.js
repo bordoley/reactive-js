@@ -188,24 +188,7 @@ describe("merge", test("with sources that have the same delays", () => {
     pipe([9, 10], Computation.fromReadonlyArray(m, { delay: 3, delayStart: true })),
 ], Computation.fromReadonlyArray(m), SynchronousObservable.mergeAll({
     concurrency: 2,
-}), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), 
-/*
-testAsync(
-  "without delay, merge all observables as they are produced",
-  async () => {
-    using scheduler = HostScheduler.create();
-    await pipeAsync(
-      [1, 2, 3],
-      SynchronousObservable.fromReadonlyArray(),
-      Computation.flatMap(Observable)<number, number>("mergeAll", x =>
-        pipe([x, x, x], SynchronousObservable.fromReadonlyArray<number>()),
-      ),
-      SynchronousObservable.toReadonlyArrayAsync({ scheduler }),
-      expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
-    );
-  },
-),*/
-test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Computation.fromReadonlyArray(m), SynchronousObservable.map(x => pipe([x, x, x], Computation.fromReadonlyArray(m))), SynchronousObservable.mergeAll({
+}), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Computation.fromReadonlyArray(m), SynchronousObservable.map(x => Computation.ofValues(m, x, x, x)), SynchronousObservable.mergeAll({
     concurrency: 1,
 }), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("spring", testAsync("test with spring", pipeLazyAsync(SynchronousObservable.spring(), SynchronousObservable.toRunnable({ maxMicroTaskTicks: 1 }), Runnable.last(), expectEquals(1)))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([10, 20, 30, 40, 50], Computation.fromReadonlyArray(m, { delay: 2 }), SynchronousObservable.takeUntil(pipe([1], Computation.fromReadonlyArray(m, { delay: 3, delayStart: true }))), SynchronousObservable.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([10, 20])))), describe("throttle", test("first", pipeLazy(SynchronousObservable.genPure(function* counter() {
     let x = 0;

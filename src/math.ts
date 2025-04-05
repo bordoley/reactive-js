@@ -46,3 +46,5 @@ export const scale = (start: number, end: number): Updater<number> => {
   const diff = end - start;
   return (v: number) => start + v * diff;
 };
+
+export const sum = (a: number, b: number): number => a + b;

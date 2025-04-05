@@ -364,30 +364,12 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
       ),
     ),
-    /*
-    testAsync(
-      "without delay, merge all observables as they are produced",
-      async () => {
-        using scheduler = HostScheduler.create();
-        await pipeAsync(
-          [1, 2, 3],
-          SynchronousObservable.fromReadonlyArray(),
-          Computation.flatMap(Observable)<number, number>("mergeAll", x =>
-            pipe([x, x, x], SynchronousObservable.fromReadonlyArray<number>()),
-          ),
-          SynchronousObservable.toReadonlyArrayAsync({ scheduler }),
-          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
-        );
-      },
-    ),*/
     test(
       "without delay, merge all observables as they are produced",
       pipeLazy(
         [1, 2, 3],
         Computation.fromReadonlyArray(m),
-        SynchronousObservable.map(x =>
-          pipe([x, x, x], Computation.fromReadonlyArray(m)),
-        ),
+        SynchronousObservable.map(x => Computation.ofValues(m, x, x, x)),
         SynchronousObservable.mergeAll({
           concurrency: 1,
         }),

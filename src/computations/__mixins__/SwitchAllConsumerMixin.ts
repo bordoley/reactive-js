@@ -126,9 +126,6 @@ const SwitchAllConsumerMixin: <
             DelegatingSinkLike<TInnerSource, T, TConsumer>,
           next: TInnerSource,
         ) {
-          if (this[SinkLike_isCompleted]) {
-            return;
-          }
           this[SwitchAllConsumer_innerSubscription][DisposableLike_dispose]();
 
           const delegate = this[DelegatingEventListenerLike_delegate];

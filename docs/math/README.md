@@ -21,3 +21,4 @@
 - [min](functions/min.md)
 - [random](functions/random.md)
 - [scale](functions/scale.md)
+- [sum](functions/sum.md)

@@ -34,9 +34,6 @@ const SwitchAllConsumerMixin = /*@__PURE__*/ (() => {
         [SwitchAllConsumer_innerSubscription]: Disposable.disposed,
     }), proto({
         [EventListenerLike_notify](next) {
-            if (this[SinkLike_isCompleted]) {
-                return;
-            }
             this[SwitchAllConsumer_innerSubscription][DisposableLike_dispose]();
             const delegate = this[DelegatingEventListenerLike_delegate];
             const delegatingNotifyOnlyNonCompletingNonDisposing = pipe(this[SwitchAllConsumer_createDelegatingNonCompleting](delegate), DisposableContainer.onComplete(bind(onSwitchAllConsumerInnerSourceComplete, this)));

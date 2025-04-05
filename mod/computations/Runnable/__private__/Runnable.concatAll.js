@@ -18,7 +18,7 @@ const createConcatAllSink = (() => {
         [EventListenerLike_notify](next) {
             const sink = this[DelegatingEventListenerLike_delegate];
             const delegatingSink = Sink.createDelegatingNonCompleting(sink);
-            next[RunnableLike_eval](sink);
+            next[RunnableLike_eval](delegatingSink);
             delegatingSink[DisposableLike_dispose]();
         },
     }));
