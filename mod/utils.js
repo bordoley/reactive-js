@@ -19,18 +19,13 @@ export const ThrowBackpressureStrategy = "throw";
 export const BackPressureConfig_strategy = Symbol("BackPressureConfig_strategy");
 export const BackPressureConfig_capacity = Symbol("BackPressureConfig_capacity");
 class BackPressureError extends Error {
-    [BackPressureConfig_capacity];
-    [BackPressureConfig_strategy];
-    constructor(config) {
+    capacity;
+    constructor(capacity) {
         super();
-        this[BackPressureConfig_capacity] = config[BackPressureConfig_capacity];
-        this[BackPressureConfig_strategy] = config[BackPressureConfig_strategy];
+        this.capacity = capacity;
     }
 }
-export const raiseBackpressureError = (capacity) => raise(newInstance(BackPressureError, {
-    [BackPressureConfig_capacity]: capacity,
-    [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
-}));
+export const raiseBackpressureError = (capacity) => raise(newInstance(BackPressureError, capacity));
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");

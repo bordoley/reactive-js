@@ -104,24 +104,14 @@ export type BackPressureConfig = {
   readonly [BackPressureConfig_capacity]: number;
 };
 
-class BackPressureError extends Error implements BackPressureConfig {
-  readonly [BackPressureConfig_capacity]: number;
-  readonly [BackPressureConfig_strategy]: BackpressureStrategy;
-
-  constructor(config: BackPressureConfig) {
+class BackPressureError extends Error {
+  constructor(readonly capacity: number) {
     super();
-    this[BackPressureConfig_capacity] = config[BackPressureConfig_capacity];
-    this[BackPressureConfig_strategy] = config[BackPressureConfig_strategy];
   }
 }
 
 export const raiseBackpressureError = (capacity: number) =>
-  raise(
-    newInstance(BackPressureError, {
-      [BackPressureConfig_capacity]: capacity,
-      [BackPressureConfig_strategy]: ThrowBackpressureStrategy,
-    }),
-  );
+  raise(newInstance(BackPressureError, capacity));
 
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol(
