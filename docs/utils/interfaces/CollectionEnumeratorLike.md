@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`QueueLike`](QueueLike.md)
-- [`FlowControllerEnumeratorLike`](FlowControllerEnumeratorLike.md)
 
 ## Type Parameters
 

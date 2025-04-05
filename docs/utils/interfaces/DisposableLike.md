@@ -12,7 +12,6 @@
 
 ## Extended by
 
-- [`FlowControllerLike`](FlowControllerLike.md)
 - [`EnumeratorLike`](EnumeratorLike.md)
 - [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)

@@ -43,18 +43,6 @@ export interface DisposableLike extends DisposableContainerLike, Disposable {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
-export type BackpressureStrategy = "drop-latest" | "drop-oldest" | "overflow" | "throw";
-export declare const DropLatestBackpressureStrategy: BackpressureStrategy;
-export declare const DropOldestBackpressureStrategy: BackpressureStrategy;
-export declare const OverflowBackpressureStrategy: BackpressureStrategy;
-export declare const ThrowBackpressureStrategy: BackpressureStrategy;
-export declare const raiseCapacityExceededError: (capacity: number) => unknown;
-export declare const FlowControllerLike_isReady: unique symbol;
-export declare const FlowControllerLike_addOnReadyListener: unique symbol;
-export interface FlowControllerLike extends DisposableLike {
-    readonly [FlowControllerLike_isReady]: boolean;
-    [FlowControllerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
-}
 export declare const EnumeratorLike_moveNext: unique symbol;
 export declare const EnumeratorLike_current: unique symbol;
 export declare const EnumeratorLike_hasCurrent: unique symbol;
@@ -77,6 +65,12 @@ export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>
     readonly [CollectionEnumeratorLike_count]: number;
     readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
+export type BackpressureStrategy = "drop-latest" | "drop-oldest" | "overflow" | "throw";
+export declare const DropLatestBackpressureStrategy: BackpressureStrategy;
+export declare const DropOldestBackpressureStrategy: BackpressureStrategy;
+export declare const OverflowBackpressureStrategy: BackpressureStrategy;
+export declare const ThrowBackpressureStrategy: BackpressureStrategy;
+export declare const raiseCapacityExceededError: (capacity: number) => unknown;
 export declare const QueueLike_backpressureStrategy: unique symbol;
 export declare const QueueLike_capacity: unique symbol;
 export declare const QueueLike_enqueue: unique symbol;
@@ -94,9 +88,15 @@ export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
     readonly [QueueLike_capacity]: number;
     [QueueLike_enqueue](v: T): void;
 }
+export declare const FlowControllerLike_isReady: unique symbol;
+export declare const FlowControllerLike_addOnReadyListener: unique symbol;
+export interface FlowControllerLike {
+    readonly [FlowControllerLike_isReady]: boolean;
+    [FlowControllerLike_addOnReadyListener](callback: SideEffect1<void>): DisposableLike;
+}
 export declare const FlowControllerEnumeratorLike_addOnDataAvailableListener: unique symbol;
 export declare const FlowControllerEnumeratorLike_isDataAvailable: unique symbol;
-export interface FlowControllerEnumeratorLike<T = unknown> extends CollectionEnumeratorLike<T>, Iterable<T> {
+export interface FlowControllerEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
     readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
     [FlowControllerEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
 }

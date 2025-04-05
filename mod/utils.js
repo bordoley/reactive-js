@@ -2,6 +2,7 @@
 
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
 import { isNone, newInstance, raise, } from "./functions.js";
+import { clampPositiveInteger } from "./math.js";
 export const DisposableContainerLike_add = Symbol("DisposableContainerLike_add");
 export const DisposableLike_dispose = 
 /*@__PURE__*/ (() => {
@@ -12,6 +13,14 @@ export const DisposableLike_dispose =
 })();
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
+export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
+export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext");
+export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
+export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
+export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
+export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_peek");
 export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
@@ -24,19 +33,11 @@ class CapacityExceededError extends Error {
     }
 }
 export const raiseCapacityExceededError = (capacity) => raise(newInstance(CapacityExceededError, capacity));
-export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
-export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
-export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext");
-export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
-export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
-export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
-export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_peek");
 export const QueueLike_backpressureStrategy = Symbol("QueueLike_backpressureStrategy");
 export const QueueLike_capacity = Symbol("QueueLike_capacity");
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
+export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
+export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol("FlowControllerEnumeratorLike_addOnDataAvailableListener");
 export const FlowControllerEnumeratorLike_isDataAvailable = Symbol("FlowControllerEnumeratorLike_isDataAvailable");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
@@ -51,7 +52,7 @@ export class YieldDelay {
         this.ms = ms;
     }
 }
-export const delayMs = (delay) => newInstance(YieldDelay, delay);
+export const delayMs = (delay) => newInstance(YieldDelay, clampPositiveInteger(delay));
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
 export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
 export const PauseableLike_pause = Symbol("PauseableLike_pause");

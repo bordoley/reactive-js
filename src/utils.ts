@@ -9,6 +9,7 @@ import {
   newInstance,
   raise,
 } from "./functions.js";
+import { clampPositiveInteger } from "./math.js";
 
 export const DisposableContainerLike_add = Symbol(
   "DisposableContainerLike_add",
@@ -72,41 +73,6 @@ export interface DisposableLike extends DisposableContainerLike, Disposable {
   [DisposableLike_dispose](error?: Error): void;
 }
 
-export type BackpressureStrategy =
-  | "drop-latest"
-  | "drop-oldest"
-  | "overflow"
-  | "throw";
-
-export const DropLatestBackpressureStrategy: BackpressureStrategy =
-  "drop-latest";
-export const DropOldestBackpressureStrategy: BackpressureStrategy =
-  "drop-oldest";
-export const OverflowBackpressureStrategy: BackpressureStrategy = "overflow";
-export const ThrowBackpressureStrategy: BackpressureStrategy = "throw";
-
-class CapacityExceededError extends Error {
-  constructor(readonly capacity: number) {
-    super();
-  }
-}
-
-export const raiseCapacityExceededError = (capacity: number) =>
-  raise(newInstance(CapacityExceededError, capacity));
-
-export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
-export const FlowControllerLike_addOnReadyListener = Symbol(
-  "FlowControllerLike_addOnReadyListener",
-);
-
-export interface FlowControllerLike extends DisposableLike {
-  readonly [FlowControllerLike_isReady]: boolean;
-
-  [FlowControllerLike_addOnReadyListener](
-    callback: SideEffect1<void>,
-  ): DisposableLike;
-}
-
 export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
@@ -147,6 +113,28 @@ export interface CollectionEnumeratorLike<T = unknown>
   readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
 
+export type BackpressureStrategy =
+  | "drop-latest"
+  | "drop-oldest"
+  | "overflow"
+  | "throw";
+
+export const DropLatestBackpressureStrategy: BackpressureStrategy =
+  "drop-latest";
+export const DropOldestBackpressureStrategy: BackpressureStrategy =
+  "drop-oldest";
+export const OverflowBackpressureStrategy: BackpressureStrategy = "overflow";
+export const ThrowBackpressureStrategy: BackpressureStrategy = "throw";
+
+class CapacityExceededError extends Error {
+  constructor(readonly capacity: number) {
+    super();
+  }
+}
+
+export const raiseCapacityExceededError = (capacity: number) =>
+  raise(newInstance(CapacityExceededError, capacity));
+
 export const QueueLike_backpressureStrategy = Symbol(
   "QueueLike_backpressureStrategy",
 );
@@ -169,6 +157,19 @@ export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
   [QueueLike_enqueue](v: T): void;
 }
 
+export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
+export const FlowControllerLike_addOnReadyListener = Symbol(
+  "FlowControllerLike_addOnReadyListener",
+);
+
+export interface FlowControllerLike {
+  readonly [FlowControllerLike_isReady]: boolean;
+
+  [FlowControllerLike_addOnReadyListener](
+    callback: SideEffect1<void>,
+  ): DisposableLike;
+}
+
 export const FlowControllerEnumeratorLike_addOnDataAvailableListener = Symbol(
   "FlowControllerEnumeratorLike_addOnDataAvailableListener",
 );
@@ -177,7 +178,7 @@ export const FlowControllerEnumeratorLike_isDataAvailable = Symbol(
 );
 
 export interface FlowControllerEnumeratorLike<T = unknown>
-  extends CollectionEnumeratorLike<T>,
+  extends EnumeratorLike<T>,
     Iterable<T> {
   readonly [FlowControllerEnumeratorLike_isDataAvailable]: boolean;
 
@@ -200,6 +201,7 @@ export const SchedulerLike_inContinuation = Symbol(
 export const SchedulerLike_maxYieldInterval = Symbol(
   "SchedulerLike_maxYieldInterval",
 );
+
 export const SchedulerLike_now = Symbol("SchedulerLike_now");
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
@@ -210,7 +212,7 @@ export class YieldDelay {
 }
 
 export const delayMs = (delay: number): YieldDelay =>
-  newInstance(YieldDelay, delay);
+  newInstance(YieldDelay, clampPositiveInteger(delay));
 
 export type SchedulerContinuation = Function1<
   SchedulerLike,

@@ -82,6 +82,7 @@ const SwitchAllConsumerMixin: <
         this: Omit<
           TReturn<TInnerSource, TConsumer, T>,
           | keyof FlowControllerLike
+          | keyof DisposableLike
           | typeof SinkLike_isCompleted
           | typeof SinkLike_complete
         > &
