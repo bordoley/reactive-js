@@ -137,7 +137,7 @@ export const useEventSource: Signature["useEventSource"] = <T>(
     const observer = Observer.create(onNext, scheduler);
 
     source?.[EventSourceLike_subscribe](observer);
-     
+
     return observer;
   }, [source, updateState, priority]);
 
@@ -146,7 +146,7 @@ export const useEventSource: Signature["useEventSource"] = <T>(
     StoreLike_value
   ];
 
-  return (state ?? storeCurrentValue);
+  return state ?? storeCurrentValue;
 };
 
 export const useStreamable: Signature["useStreamable"] = <

@@ -25,7 +25,6 @@ export const useDisposable = (factory, deps) => {
 };
 export const useEventSource = (sourceOrFactory, optionsOrDeps, optionsOrNone) => {
     const [state, updateState] = useState(none);
-    const [error, updateError] = useState(none);
     const source = isFunction(sourceOrFactory)
         ? useMemo(sourceOrFactory, optionsOrDeps)
         : sourceOrFactory;
@@ -35,13 +34,13 @@ export const useEventSource = (sourceOrFactory, optionsOrDeps, optionsOrNone) =>
     useDisposable(() => {
         const scheduler = ReactScheduler.get(priority);
         const onNext = (v) => updateState(_ => v);
-        const observer = pipe(Observer.create(onNext, scheduler), DisposableContainer.onError(updateError));
+        const observer = Observer.create(onNext, scheduler);
         source?.[EventSourceLike_subscribe](observer);
         return observer;
-    }, [source, updateState, updateError, priority]);
+    }, [source, updateState, priority]);
     // Special case for StoreLikes to return the current value always if defined.
     const storeCurrentValue = source?.[StoreLike_value];
-    return isSome(error) ? raiseError(error) : (state ?? storeCurrentValue);
+    return state ?? storeCurrentValue;
 };
 export const useStreamable = (streamableOrFactory, optionsOrDeps, optionsOrNone) => {
     const streamable = isFunction(streamableOrFactory)

@@ -25,15 +25,15 @@ const Computation_fromReadonlyArray: Computation.Signature["fromReadonlyArray"] 
       },
     ) =>
     <T>(array: readonly T[]) => {
-      const delayTime = options?.delay ?? 0;
-      const delayStart = (options?.delayStart ?? false) && delayTime > 0;
+      const delay = options?.delay ?? 0;
+      const delayStart = (options?.delayStart ?? false) && delay > 0;
 
       return m.genPure<T | YieldDelay>(
         function* ComputationFromReadonlyArray() {
           let [start, count] = parseArrayBounds(array, options);
 
           if (delayStart && count > 0) {
-            yield delayMs(delayTime);
+            yield delayMs(delay);
           }
 
           while (count !== 0) {
@@ -41,8 +41,8 @@ const Computation_fromReadonlyArray: Computation.Signature["fromReadonlyArray"] 
 
             count > 0 ? (start++, count--) : (start--, count++);
 
-            if (delayTime > 0 && count > 0) {
-              yield delayMs(delayTime);
+            if (delay > 0 && count > 0) {
+              yield delayMs(delay);
             }
           }
         },

@@ -60,8 +60,8 @@ export const create = /*@PURE__*/ (() => {
             }
             const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
             const now = this[SchedulerLike_now];
-            const t = clampPositiveInteger(dueTime - now);
-            if (t > 0) {
+            const delay = clampPositiveInteger(dueTime - now);
+            if (delay > 0) {
                 this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
             }
             else {
@@ -71,8 +71,8 @@ export const create = /*@PURE__*/ (() => {
                 continuation?.[SchedulerContinuationLike_run]();
                 this[PauseableScheduler_activeContinuation] = none;
             }
-            if (t > 0 || scheduler[SchedulerLike_shouldYield]) {
-                yield delayMs(t);
+            if (delay > 0 || scheduler[SchedulerLike_shouldYield]) {
+                yield delayMs(delay);
             }
         }
     }
