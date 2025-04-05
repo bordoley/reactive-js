@@ -31,6 +31,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  delayMs,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -159,9 +160,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
       const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
       const now = this[SchedulerLike_now];
-      const delay = clampPositiveInteger(dueTime - now);
+      const t = clampPositiveInteger(dueTime - now);
 
-      if (delay > 0) {
+      if (t > 0) {
         this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
       } else {
         this[EnumeratorLike_moveNext]();
@@ -172,8 +173,8 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         this[PauseableScheduler_activeContinuation] = none;
       }
 
-      if (delay > 0 || scheduler[SchedulerLike_shouldYield]) {
-        yield delay;
+      if (t > 0 || scheduler[SchedulerLike_shouldYield]) {
+        yield delayMs(t);
       }
     }
   }

@@ -29,12 +29,13 @@ import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
 import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
-import { BroadcasterLike, delay } from "@reactive-js/core/computations";
+import { BroadcasterLike } from "@reactive-js/core/computations";
 import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
   EventListenerLike_notify,
+  delayMs,
 } from "@reactive-js/core/utils";
 import { scale } from "@reactive-js/core/math";
 import { AnimationLike_isRunning } from "@reactive-js/core/computations/Streamable";
@@ -183,7 +184,7 @@ const Counter = () => {
         let i = counterInitialValue ?? 0;
         while (true) {
           yield i;
-          yield delay(15);
+          yield delayMs(15);
           i++;
         }
       }),

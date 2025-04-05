@@ -1,7 +1,7 @@
 /// <reference types="./utils.d.ts" />
 
 import { Error, Symbol as GlobalSymbol } from "./__internal__/constants.js";
-import { isNone, } from "./functions.js";
+import { isNone, newInstance, } from "./functions.js";
 export const DisposableContainerLike_add = Symbol("DisposableContainerLike_add");
 export const DisposableLike_dispose = 
 /*@__PURE__*/ (() => {
@@ -49,6 +49,13 @@ export const SchedulerLike_now = Symbol("SchedulerLike_now");
 export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+export class YieldDelay {
+    ms;
+    constructor(ms) {
+        this.ms = ms;
+    }
+}
+export const delayMs = (delay) => newInstance(YieldDelay, delay);
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
 export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
 export const PauseableLike_pause = Symbol("PauseableLike_pause");

@@ -44,7 +44,7 @@
 
 ##### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`GenYieldDelay`](../../classes/GenYieldDelay.md) \| `T`, `any`, `any`\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`YieldDelay`](../../../utils/classes/YieldDelay.md) \| `T`, `any`, `any`\>\>
 
 #### Returns
 
@@ -68,7 +68,7 @@
 
 ##### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`GenYieldDelay`](../../classes/GenYieldDelay.md) \| `T`, `any`, `any`\>\>
+[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`YieldDelay`](../../../utils/classes/YieldDelay.md) \| `T`, `any`, `any`\>\>
 
 #### Returns
 

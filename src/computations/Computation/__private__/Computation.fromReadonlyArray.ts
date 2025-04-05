@@ -2,10 +2,9 @@ import parseArrayBounds from "../../../__internal__/parseArrayBounds.js";
 import {
   ComputationModule,
   ComputationTypeLike,
-  GenYieldDelay,
   PickComputationModule,
-  delay,
 } from "../../../computations.js";
+import { YieldDelay, delayMs } from "../../../utils.js";
 import type * as Computation from "../../Computation.js";
 
 const Computation_fromReadonlyArray: Computation.Signature["fromReadonlyArray"] =
@@ -29,12 +28,12 @@ const Computation_fromReadonlyArray: Computation.Signature["fromReadonlyArray"] 
       const delayTime = options?.delay ?? 0;
       const delayStart = (options?.delayStart ?? false) && delayTime > 0;
 
-      return m.genPure<T | GenYieldDelay>(
+      return m.genPure<T | YieldDelay>(
         function* ComputationFromReadonlyArray() {
           let [start, count] = parseArrayBounds(array, options);
 
           if (delayStart && count > 0) {
-            yield delay(delayTime);
+            yield delayMs(delayTime);
           }
 
           while (count !== 0) {
@@ -43,7 +42,7 @@ const Computation_fromReadonlyArray: Computation.Signature["fromReadonlyArray"] 
             count > 0 ? (start++, count--) : (start--, count++);
 
             if (delayTime > 0 && count > 0) {
-              yield delay(delayTime);
+              yield delayMs(delayTime);
             }
           }
         },

@@ -1,5 +1,5 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
-import { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike } from "./utils.js";
+import { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike, YieldDelay } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
@@ -330,8 +330,8 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
     currentTime: PureComputationOf<TComputationType, number>;
     debounce<T>(duration: number): PureComputationOperator<TComputationType, T, T>;
     delay(duration: number): PureComputationOf<TComputationType, unknown>;
-    gen<T>(factory: Factory<Iterator<T | GenYieldDelay>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
-    genPure<T>(factory: Factory<Iterator<T | GenYieldDelay>>): NewPureInstanceOf<TComputationType, T>;
+    gen<T>(factory: Factory<Iterator<T | YieldDelay>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    genPure<T>(factory: Factory<Iterator<T | YieldDelay>>): NewPureInstanceOf<TComputationType, T>;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureComputationOf<TComputationType, number>;
@@ -346,9 +346,3 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
     }): PureComputationOperator<TComputationType, T, T>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureComputationOperator<TComputationType, TA, TB>;
 }
-export declare const GenYieldDelay_delay: unique symbol;
-export declare class GenYieldDelay {
-    readonly [GenYieldDelay_delay]: number;
-    constructor(delay: number);
-}
-export declare const delay: (delay: number) => GenYieldDelay;

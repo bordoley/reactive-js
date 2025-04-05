@@ -1,8 +1,6 @@
 import {
   ComputationLike_isPure,
   ComputationLike_isSynchronous,
-  GenYieldDelay,
-  GenYieldDelay_delay,
 } from "../../../computations.js";
 import {
   Factory,
@@ -25,12 +23,13 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
+  YieldDelay,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genFactory =
-  <T>(factory: Factory<Iterator<T | GenYieldDelay>>) =>
+  <T>(factory: Factory<Iterator<T | YieldDelay>>) =>
   (observer: ObserverLike<T>) => {
     const enumerator = pipe(
       factory(),
@@ -56,10 +55,8 @@ const genFactory =
           enumerator[EnumeratorLike_moveNext]()
         ) {
           const value = enumerator[EnumeratorLike_current];
-          if (value instanceof GenYieldDelay) {
-            const delay = value[GenYieldDelay_delay];
-
-            yield delay;
+          if (value instanceof YieldDelay) {
+            yield value;
           } else {
             observer[EventListenerLike_notify](value);
 

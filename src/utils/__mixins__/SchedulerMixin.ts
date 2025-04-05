@@ -39,6 +39,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  YieldDelay,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -147,7 +148,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
 
     const createQueueContinuation: (
       scheduler: SchedulerMixinLike,
-      effect: Iterator<Optional<number>>,
+      effect: Iterator<Optional<YieldDelay>>,
       dueTime: number,
     ) => QueueSchedulerContinuationLike = (() => {
       const QueueContinuation_delegate = Symbol("QueueContinuation_delegate");
@@ -158,7 +159,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         [QueueSchedulerContinuationLike_parent]: Optional<QueueSchedulerContinuationLike>;
         [QueueSchedulerContinuationLike_isReschedulingChildren]: boolean;
         [QueueContinuation_scheduler]: SchedulerMixinLike;
-        [QueueContinuation_delegate]: EnumeratorLike<Optional<number>>;
+        [QueueContinuation_delegate]: EnumeratorLike<Optional<YieldDelay>>;
         [SchedulerContinuationLike_dueTime]: number;
         [SchedulerContinuationLike_id]: number;
       };
@@ -236,7 +237,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           > &
             Mutable<TProperties>,
           scheduler: SchedulerMixinLike,
-          delegate: Iterator<Optional<number>>,
+          delegate: Iterator<Optional<YieldDelay>>,
           dueTime: number,
         ): QueueSchedulerContinuationLike {
           const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
@@ -314,10 +315,10 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
 
             const delegate = this[QueueContinuation_delegate];
             if (delegate[EnumeratorLike_moveNext]()) {
-              const delay = delegate[EnumeratorLike_current] ?? 0;
+              const next = delegate[EnumeratorLike_current];
 
               // Reschedule the continuation if yielded
-              if (delay > 0) {
+              if ((next?.ms ?? 0) > 0) {
                 // Bump the taskID so that the yielded with delay continuation is run
                 // at a lower relative priority to other previously scheduled continuations
                 // with the same due time.
@@ -326,7 +327,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
                 ];
 
                 this[SchedulerContinuationLike_dueTime] =
-                  scheduler[SchedulerLike_now] + delay;
+                  scheduler[SchedulerLike_now] + (next?.ms ?? 0);
 
                 rescheduleChildrenOnParentOrScheduler(this);
 

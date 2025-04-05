@@ -1,10 +1,10 @@
 /// <reference types="./Observable.gen.d.ts" />
 
-import { ComputationLike_isPure, ComputationLike_isSynchronous, GenYieldDelay, GenYieldDelay_delay, } from "../../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../../computations.js";
 import { bindMethod, error, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, YieldDelay, } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 const genFactory = (factory) => (observer) => {
     const enumerator = pipe(factory(), Iterator.toEnumerator(), Disposable.addTo(observer));
@@ -21,9 +21,8 @@ const genFactory = (factory) => (observer) => {
                 !isCompleted &&
                 enumerator[EnumeratorLike_moveNext]()) {
                 const value = enumerator[EnumeratorLike_current];
-                if (value instanceof GenYieldDelay) {
-                    const delay = value[GenYieldDelay_delay];
-                    yield delay;
+                if (value instanceof YieldDelay) {
+                    yield value;
                 }
                 else {
                     observer[EventListenerLike_notify](value);

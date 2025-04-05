@@ -20,7 +20,7 @@ const DelegatingSchedulerMixin =
                 const enumerator = pipe(this(instance), Iterator.toEnumerator());
                 instance[SchedulerLike_inContinuation] = true;
                 while (enumerator[EnumeratorLike_moveNext]()) {
-                    const delay = enumerator[EnumeratorLike_current] ?? 0;
+                    const delay = enumerator[EnumeratorLike_current];
                     instance[SchedulerLike_inContinuation] = false;
                     yield delay;
                     instance[SchedulerLike_inContinuation] = true;

@@ -121,7 +121,12 @@ export declare const SchedulerLike_now: unique symbol;
 export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_schedule: unique symbol;
 export declare const SchedulerLike_shouldYield: unique symbol;
-export type SchedulerContinuation = Function1<SchedulerLike, Iterator<Optional<number>>>;
+export declare class YieldDelay {
+    readonly ms: number;
+    constructor(ms: number);
+}
+export declare const delayMs: (delay: number) => YieldDelay;
+export type SchedulerContinuation = Function1<SchedulerLike, Iterator<Optional<YieldDelay>>>;
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.

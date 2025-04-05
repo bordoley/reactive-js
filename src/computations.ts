@@ -10,7 +10,6 @@ import {
   Tuple2,
   Tuple3,
   Tuple4,
-  newInstance,
 } from "./functions.js";
 import {
   BackpressureStrategy,
@@ -22,6 +21,7 @@ import {
   PauseableLike,
   SchedulerLike,
   SinkLike,
+  YieldDelay,
 } from "./utils.js";
 
 export const ComputationLike_isPure = Symbol("ComputationLike_isPure");
@@ -861,11 +861,11 @@ export interface ScheduledReactiveComputationModule<
   delay(duration: number): PureComputationOf<TComputationType, unknown>;
 
   gen<T>(
-    factory: Factory<Iterator<T | GenYieldDelay>>,
+    factory: Factory<Iterator<T | YieldDelay>>,
   ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   genPure<T>(
-    factory: Factory<Iterator<T | GenYieldDelay>>,
+    factory: Factory<Iterator<T | YieldDelay>>,
   ): NewPureInstanceOf<TComputationType, T>;
 
   keyFrame(
@@ -894,14 +894,3 @@ export interface ScheduledReactiveComputationModule<
     selector: Function2<number, TA, TB>,
   ): PureComputationOperator<TComputationType, TA, TB>;
 }
-
-export const GenYieldDelay_delay = Symbol("GenYieldDelay_delay");
-
-export class GenYieldDelay {
-  readonly [GenYieldDelay_delay]: number;
-  constructor(delay: number) {
-    this[GenYieldDelay_delay] = delay;
-  }
-}
-
-export const delay = (delay: number) => newInstance(GenYieldDelay, delay);

@@ -10,7 +10,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { PureSynchronousObservableLike, delay } from "../../computations.js";
+import { PureSynchronousObservableLike } from "../../computations.js";
 import {
   Optional,
   Tuple2,
@@ -33,6 +33,7 @@ import * as VirtualTimeScheduler from "../../utils/VirtualTimeScheduler.js";
 import {
   DisposableLike_error,
   VirtualTimeSchedulerLike_run,
+  delayMs,
 } from "../../utils.js";
 import * as Computation from "../Computation.js";
 import * as EventSource from "../EventSource.js";
@@ -166,7 +167,7 @@ testModule(
                 while (true) {
                   x++;
                   yield x;
-                  yield delay(2);
+                  yield delayMs(2);
                 }
               }),
             );
@@ -202,7 +203,7 @@ testModule(
               while (true) {
                 x++;
                 yield x;
-                yield delay(2);
+                yield delayMs(2);
               }
             }),
           );
@@ -435,11 +436,11 @@ testModule(
         SynchronousObservable.genPure(function* counter() {
           let x = 0;
 
-          yield delay(1);
+          yield delayMs(1);
 
           while (true) {
             yield x;
-            yield delay(1);
+            yield delayMs(1);
             x++;
           }
         }),
@@ -456,11 +457,11 @@ testModule(
         SynchronousObservable.genPure(function* counter() {
           let x = 0;
 
-          yield delay(1);
+          yield delayMs(1);
 
           while (true) {
             yield x;
-            yield delay(1);
+            yield delayMs(1);
             x++;
           }
         }),
@@ -477,11 +478,11 @@ testModule(
         SynchronousObservable.genPure(function* counter() {
           let x = 0;
 
-          yield delay(1);
+          yield delayMs(1);
 
           while (true) {
             yield x;
-            yield delay(1);
+            yield delayMs(1);
             x++;
           }
         }),

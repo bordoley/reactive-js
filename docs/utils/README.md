@@ -9,6 +9,7 @@
 ## Classes
 
 - [BackPressureError](classes/BackPressureError.md)
+- [YieldDelay](classes/YieldDelay.md)
 
 ## Interfaces
 
@@ -74,3 +75,7 @@
 - [SinkLike\_isCompleted](variables/SinkLike_isCompleted.md)
 - [ThrowBackpressureStrategy](variables/ThrowBackpressureStrategy.md)
 - [VirtualTimeSchedulerLike\_run](variables/VirtualTimeSchedulerLike_run.md)
+
+## Functions
+
+- [delayMs](functions/delayMs.md)

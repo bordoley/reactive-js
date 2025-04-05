@@ -137,15 +137,15 @@ const SchedulerMixin =
                 }
                 const delegate = this[QueueContinuation_delegate];
                 if (delegate[EnumeratorLike_moveNext]()) {
-                    const delay = delegate[EnumeratorLike_current] ?? 0;
+                    const next = delegate[EnumeratorLike_current];
                     // Reschedule the continuation if yielded
-                    if (delay > 0) {
+                    if ((next?.ms ?? 0) > 0) {
                         // Bump the taskID so that the yielded with delay continuation is run
                         // at a lower relative priority to other previously scheduled continuations
                         // with the same due time.
                         this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
                         this[SchedulerContinuationLike_dueTime] =
-                            scheduler[SchedulerLike_now] + delay;
+                            scheduler[SchedulerLike_now] + (next?.ms ?? 0);
                         rescheduleChildrenOnParentOrScheduler(this);
                         scheduler[SchedulerMixinLike_schedule](this);
                     }

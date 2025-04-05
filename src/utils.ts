@@ -6,6 +6,7 @@ import {
   Optional,
   SideEffect1,
   isNone,
+  newInstance,
 } from "./functions.js";
 
 export const DisposableContainerLike_add = Symbol(
@@ -215,9 +216,16 @@ export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 
+export class YieldDelay {
+  constructor(readonly ms: number) {}
+}
+
+export const delayMs = (delay: number): YieldDelay =>
+  newInstance(YieldDelay, delay);
+
 export type SchedulerContinuation = Function1<
   SchedulerLike,
-  Iterator<Optional<number>>
+  Iterator<Optional<YieldDelay>>
 >;
 /**
  * Schedulers are the core unit of concurrency, orchestration and
