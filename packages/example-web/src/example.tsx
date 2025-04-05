@@ -184,7 +184,7 @@ const Counter = () => {
         let i = counterInitialValue ?? 0;
         while (true) {
           yield i;
-          yield delayMs(100)
+          yield delayMs(100);
           i++;
         }
       }),

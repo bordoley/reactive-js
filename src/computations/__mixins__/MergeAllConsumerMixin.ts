@@ -13,7 +13,6 @@ import {
 } from "../../computations.js";
 import { Function1, Optional, none, pipe, returns } from "../../functions.js";
 import { clampPositiveNonZeroInteger } from "../../math.js";
-import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
@@ -127,24 +126,21 @@ const MergeAllConsumerMixin: <
           config?.concurrency ?? MAX_SAFE_INTEGER,
         );
 
+        this[FlowControllerEnumeratorLike_addOnDataAvailableListener](() => {
+          const activeCount = this[MergeAllConsumer_activeCount];
+
+          if (activeCount >= maxConcurrency) {
+            return;
+          }
+
+          if (this[EnumeratorLike_moveNext]()) {
+            const next = this[EnumeratorLike_current];
+            subscribeToInner(this, next);
+          }
+        });
+
         pipe(
           this,
-          Disposable.add(
-            this[FlowControllerEnumeratorLike_addOnDataAvailableListener](
-              () => {
-                const activeCount = this[MergeAllConsumer_activeCount];
-
-                if (activeCount >= maxConcurrency) {
-                  return;
-                }
-
-                if (this[EnumeratorLike_moveNext]()) {
-                  const next = this[EnumeratorLike_current];
-                  subscribeToInner(this, next);
-                }
-              },
-            ),
-          ),
           DisposableContainer.onComplete(() => {
             const activeCount = this[MergeAllConsumer_activeCount];
 

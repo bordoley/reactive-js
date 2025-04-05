@@ -521,7 +521,7 @@ class TakeFirstAsyncIterable {
     }
 }
 export const takeFirst = ((options) => (iterable) => newInstance(TakeFirstAsyncIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
-class TakeLasAsyncIterable {
+class TakeLastAsyncIterable {
     s;
     c;
     [ComputationLike_isPure];
@@ -546,7 +546,7 @@ class TakeLasAsyncIterable {
         }
     }
 }
-export const takeLast = ((options) => (iterable) => newInstance(TakeLasAsyncIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
+export const takeLast = ((options) => (iterable) => newInstance(TakeLastAsyncIterable, iterable, clampPositiveInteger(options?.count ?? 1)));
 class TakeWhileAsyncIterable {
     s;
     p;

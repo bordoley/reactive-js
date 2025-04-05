@@ -809,7 +809,7 @@ export const takeFirst: Signature["takeFirst"] = (<T>(options?: {
       clampPositiveInteger(options?.count ?? 1),
     )) as Signature["takeFirst"];
 
-class TakeLasAsyncIterable<T> implements AsyncIterableLike<T> {
+class TakeLastAsyncIterable<T> implements AsyncIterableLike<T> {
   public readonly [ComputationLike_isPure]: Optional<boolean>;
   public readonly [ComputationLike_isDeferred]: true = true as const;
   public readonly [ComputationLike_isSynchronous]: false = false as const;
@@ -844,7 +844,7 @@ export const takeLast: Signature["takeLast"] = (<T>(options?: {
   }) =>
   (iterable: AsyncIterableLike<T>) =>
     newInstance(
-      TakeLasAsyncIterable,
+      TakeLastAsyncIterable,
       iterable,
       clampPositiveInteger(options?.count ?? 1),
     )) as Signature["takeLast"];
