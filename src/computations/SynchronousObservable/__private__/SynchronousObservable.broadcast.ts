@@ -71,6 +71,8 @@ const createPauseableBroadcasterFromSynchronousObservable = /*@__PURE__*/ (<
         Disposable.addTo(this),
       );
 
+      this[PauseableLike_resume]();
+
       return this;
     },
   ))();

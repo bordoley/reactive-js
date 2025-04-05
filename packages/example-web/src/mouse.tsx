@@ -9,6 +9,7 @@ import * as WebElement from "@reactive-js/core/web/Element";
 import * as AnimationFrameScheduler from "@reactive-js/core/web/AnimationFrameScheduler";
 import * as DefaultScheduler from "@reactive-js/core/utils/DefaultScheduler";
 import { useDisposable } from "@reactive-js/core/react";
+import { DropOldestBackpressureStrategy } from "@reactive-js/core/utils";
 
 type Point = { x: number; y: number };
 
@@ -19,8 +20,11 @@ const Root = () => {
       WebElement.eventSource<Window, "mousemove">("mousemove"),
       Broadcaster.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
       Observable.fromBroadcaster(),
-      Observable.subscribeOn(DefaultScheduler.get()),
-      Observable.forEach(x => console.log("animation" + x)),
+      Observable.debounce(25),
+      Observable.subscribeOn(DefaultScheduler.get(), {
+        backpressureStrategy: DropOldestBackpressureStrategy,
+        capacity: 1,
+      }),
       Observable.scanMany(
         (prev: Point, next: Point) =>
           pipe(

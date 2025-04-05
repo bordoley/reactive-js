@@ -7,7 +7,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
-import { EventListenerLike_notify, } from "../../../utils.js";
+import { EventListenerLike_notify, PauseableLike_resume, } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import * as Publisher from "../../Publisher.js";
@@ -20,6 +20,7 @@ const createPauseableBroadcasterFromSynchronousObservable = /*@__PURE__*/ (() =>
     const publisher = pipe(Publisher.create(options), Disposable.addTo(this));
     init(DelegatingBroadcasterMixin(), this, publisher);
     pipe(obs, Observable_forEach(bindMethod(publisher, EventListenerLike_notify)), EventSource.subscribe({ scheduler: pauseableScheduler }), Disposable.addTo(this));
+    this[PauseableLike_resume]();
     return this;
 }))();
 const SynchronousObservable_broadcast = ((options) => (observable) => createPauseableBroadcasterFromSynchronousObservable(observable, options));
