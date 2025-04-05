@@ -184,7 +184,7 @@ const Counter = () => {
         let i = counterInitialValue ?? 0;
         while (true) {
           yield i;
-          yield delayMs(15);
+          yield delayMs(100)
           i++;
         }
       }),
@@ -194,6 +194,7 @@ const Counter = () => {
           query: `v=${value}`,
         })),
       ),
+      SynchronousObservable.throttle(100),
       SynchronousObservable.toProducer<number>(),
       Producer.broadcast(),
     ),
