@@ -9,7 +9,6 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_no
 import * as Computation from "../../Computation.js";
 import * as EventSource from "../../EventSource.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-import Producer_forEach from "./Producer.forEach.js";
 import { Producer_genPure } from "./Producer.gen.js";
 const m = Computation.makeModule({
     genPure: Producer_genPure,
@@ -120,11 +119,11 @@ class ProducerProducerComputeContext {
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_value] = none;
             effect[AwaitOrObserveEffect_hasValue] = false;
-            effect[AwaitOrObserveEffect_subscription] = pipe(observable, Producer_forEach((next) => {
+            effect[AwaitOrObserveEffect_subscription] = pipe(observable, EventSource.subscribe((next) => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
                 runComputation();
-            }), EventSource.subscribe(), Disposable.addTo(consumer), DisposableContainer.onComplete(this[ProducerComputeContext_cleanup]));
+            }), Disposable.addTo(consumer), DisposableContainer.onComplete(this[ProducerComputeContext_cleanup]));
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }

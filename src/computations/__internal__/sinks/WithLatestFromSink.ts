@@ -38,8 +38,8 @@ export const create: <TSubscription extends SinkLike, TOther, TA, TB, T>(
   other: TOther,
   selector: Function2<TA, TB, T>,
   addEventListener: Function2<
-    TSubscription,
     SideEffect1<TB>,
+    Optional<{ scheduler: TSubscription }>,
     Function1<TOther, DisposableLike>
   >,
 ) => LiftedSinkLike<TSubscription, TA> = /*@__PURE__*/ (<
@@ -90,18 +90,18 @@ export const create: <TSubscription extends SinkLike, TOther, TA, TB, T>(
       other: TOther,
       selector: Function2<TA, TB, T>,
       addEventListener: Function2<
-        TSubscription,
         SideEffect1<TB>,
+        Optional<{ scheduler: TSubscription }>,
         Function1<TOther, DisposableLike>
       >,
     ): LiftedSinkLike<TSubscription, TA> {
       init(DelegatingLiftedSinkMixin<TSubscription, TA, T>(), this, delegate);
       this[WithLatestFromSink_selector] = selector;
 
-      const subscription = this[LiftedSinkLike_subscription];
+      const scheduler = this[LiftedSinkLike_subscription];
       this[WithLatestFromSink_otherSubscription] = pipe(
         other,
-        addEventListener(subscription, bind(onOtherNotify, this)),
+        addEventListener(bind(onOtherNotify, this), { scheduler }),
         Disposable.addTo(this),
         DisposableContainer.onComplete(
           bind(onWithLatestFromSinkOtherSubscriptionComplete, this),

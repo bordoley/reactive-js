@@ -3,24 +3,13 @@ import {
   ComputationLike_isSynchronous,
   ObservableLike,
 } from "../../../computations.js";
-import {
-  Function2,
-  SideEffect1,
-  compose,
-  partial,
-  pipe,
-  tuple,
-} from "../../../functions.js";
+import { Function2, partial, pipe, tuple } from "../../../functions.js";
 import { ObserverLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
 import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
-import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-
-const addEventListener = <T>(scheduler: ObserverLike, effect: SideEffect1<T>) =>
-  compose(Observable_forEach(effect), EventSource.subscribe({ scheduler }));
 
 const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   TA,
@@ -32,7 +21,7 @@ const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
 ) =>
   pipe(
     WithLatestFromSink.create<ObserverLike, ObservableLike<TB>, TA, TB, T>,
-    partial(other, selector, addEventListener),
+    partial(other, selector, EventSource.subscribe),
     Observable_lift<TA, T>({
       [ComputationLike_isPure]: Computation.isPure(other),
       [ComputationLike_isSynchronous]: Computation.isSynchronous(other),

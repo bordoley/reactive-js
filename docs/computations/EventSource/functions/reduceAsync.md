@@ -26,7 +26,7 @@
 
 ### options?
 
-#### scheduler
+#### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 

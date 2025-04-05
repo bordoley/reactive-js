@@ -1,11 +1,11 @@
 /// <reference types="./react.d.ts" />
 
 import { useEffect, useMemo, useState } from "react";
-import { EventSourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "./computations.js";
-import { isFunction, isNone, isSome, none, pipe, raiseError, } from "./functions.js";
+import * as EventSource from "./computations/EventSource.js";
+import { StoreLike_value, StreamableLike_stream, } from "./computations.js";
+import { isFunction, isNone, isSome, none, pipe, pipeSome, raiseError, } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
-import * as Observer from "./utils/__internal__/Observer.js";
 import { DisposableLike_dispose, } from "./utils.js";
 export const useDisposable = (factory, deps) => {
     const [disposable, setDisposable] = useState(none);
@@ -34,9 +34,7 @@ export const useEventSource = (sourceOrFactory, optionsOrDeps, optionsOrNone) =>
     useDisposable(() => {
         const scheduler = ReactScheduler.get(priority);
         const onNext = (v) => updateState(_ => v);
-        const observer = Observer.create(onNext, scheduler);
-        source?.[EventSourceLike_subscribe](observer);
-        return observer;
+        return pipeSome(source, EventSource.subscribe(onNext, { scheduler }));
     }, [source, updateState, priority]);
     // Special case for StoreLikes to return the current value always if defined.
     const storeCurrentValue = source?.[StoreLike_value];

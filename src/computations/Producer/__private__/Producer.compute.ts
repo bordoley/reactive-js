@@ -36,7 +36,6 @@ import * as Computation from "../../Computation.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Producer from "../../Producer.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-import Producer_forEach from "./Producer.forEach.js";
 import { Producer_genPure } from "./Producer.gen.js";
 
 const m = Computation.makeModule<Producer.Signature, "genPure">({
@@ -273,13 +272,12 @@ class ProducerProducerComputeContext {
 
       effect[AwaitOrObserveEffect_subscription] = pipe(
         observable,
-        Producer_forEach((next: T) => {
+        EventSource.subscribe((next: T) => {
           effect[AwaitOrObserveEffect_value] = next;
           effect[AwaitOrObserveEffect_hasValue] = true;
 
           runComputation();
         }),
-        EventSource.subscribe(),
         Disposable.addTo(consumer),
         DisposableContainer.onComplete(this[ProducerComputeContext_cleanup]),
       );

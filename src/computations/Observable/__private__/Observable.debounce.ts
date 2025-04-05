@@ -32,7 +32,6 @@ import DelegatingLiftedSinkMixin, {
   DelegatingLiftedSinkLike_onCompleted,
 } from "../../__mixins__/DelegatingLiftedSinkMixin.js";
 import Observable_concat from "./Observable.concat.js";
-import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
@@ -94,16 +93,18 @@ const createDebounceSink: <T>(
           this[DebounceSink_durationFunction](next),
           Computation.endWith(m, none),
           Observable_takeFirst(),
-          Observable_forEach(() => {
-            // Note that if the downstream consumer applies backpressure
-            // this should still mostly work in theory because the
-            // upstream producer should slow down producing values
-            // in that case.
-            this[DelegatingEventListenerLike_delegate][
-              EventListenerLike_notify
-            ](next);
-          }),
-          EventSource.subscribe({ scheduler }),
+          EventSource.subscribe(
+            () => {
+              // Note that if the downstream consumer applies backpressure
+              // this should still mostly work in theory because the
+              // upstream producer should slow down producing values
+              // in that case.
+              this[DelegatingEventListenerLike_delegate][
+                EventListenerLike_notify
+              ](next);
+            },
+            { scheduler },
+          ),
           DisposableContainer.onComplete(() => {
             if (this[SinkLike_isCompleted]) {
               delegate[SinkLike_complete]();

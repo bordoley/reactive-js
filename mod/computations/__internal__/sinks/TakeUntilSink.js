@@ -10,8 +10,8 @@ export const create = /*@__PURE__*/ (() => {
     const TakeUntilSink_notifierSubscription = Symbol("TakeUntilSink_notifierSubscription");
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function TakeUntilSink(delegate, notifier, addEventListener) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
-        const subscription = this[LiftedSinkLike_subscription];
-        this[TakeUntilSink_notifierSubscription] = pipe(notifier, addEventListener(subscription, bindMethod(this, SinkLike_complete)), Disposable.addTo(this));
+        const scheduler = this[LiftedSinkLike_subscription];
+        this[TakeUntilSink_notifierSubscription] = pipe(notifier, addEventListener(bindMethod(this, SinkLike_complete), { scheduler }), Disposable.addTo(this));
         return this;
     }, props({
         [TakeUntilSink_notifierSubscription]: none,

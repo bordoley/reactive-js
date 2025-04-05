@@ -24,7 +24,6 @@ import {
   SchedulerLike,
 } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import * as Publisher from "../../Publisher.js";
 import type * as SynchronousObservable from "../../SynchronousObservable.js";
 import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
@@ -66,8 +65,9 @@ const createPauseableBroadcasterFromSynchronousObservable = /*@__PURE__*/ (<
 
       pipe(
         obs,
-        Observable_forEach(bindMethod(publisher, EventListenerLike_notify)),
-        EventSource.subscribe({ scheduler: pauseableScheduler }),
+        EventSource.subscribe(bindMethod(publisher, EventListenerLike_notify), {
+          scheduler: pauseableScheduler,
+        }),
         Disposable.addTo(this),
       );
 

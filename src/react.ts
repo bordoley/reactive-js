@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import * as EventSource from "./computations/EventSource.js";
 import {
   EventSourceLike,
-  EventSourceLike_subscribe,
   StoreLike,
   StoreLike_value,
   StreamOf,
@@ -16,11 +16,11 @@ import {
   isSome,
   none,
   pipe,
+  pipeSome,
   raiseError,
 } from "./functions.js";
 import * as ReactScheduler from "./react/Scheduler.js";
 import * as DisposableContainer from "./utils/DisposableContainer.js";
-import * as Observer from "./utils/__internal__/Observer.js";
 import {
   BackpressureStrategy,
   DisposableLike,
@@ -134,11 +134,7 @@ export const useEventSource: Signature["useEventSource"] = <T>(
   useDisposable(() => {
     const scheduler = ReactScheduler.get(priority);
     const onNext = (v: T) => updateState(_ => v);
-    const observer = Observer.create(onNext, scheduler);
-
-    source?.[EventSourceLike_subscribe](observer);
-
-    return observer;
+    return pipeSome(source, EventSource.subscribe(onNext, { scheduler }));
   }, [source, updateState, priority]);
 
   // Special case for StoreLikes to return the current value always if defined.

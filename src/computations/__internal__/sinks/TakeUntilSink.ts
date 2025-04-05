@@ -8,6 +8,7 @@ import {
 import {
   Function1,
   Function2,
+  Optional,
   SideEffect,
   bindMethod,
   none,
@@ -33,8 +34,8 @@ export const create: <TSubscription extends SinkLike, T, TNotifier>(
   delegate: LiftedSinkLike<TSubscription, T>,
   notifier: TNotifier,
   addEventListener: Function2<
-    TSubscription,
     SideEffect,
+    Optional<{ scheduler: TSubscription }>,
     Function1<TNotifier, DisposableLike>
   >,
 ) => LiftedSinkLike<TSubscription, T> = /*@__PURE__*/ (<
@@ -61,17 +62,17 @@ export const create: <TSubscription extends SinkLike, T, TNotifier>(
       delegate: LiftedSinkLike<TSubscription, T>,
       notifier: TNotifier,
       addEventListener: Function2<
-        TSubscription,
         SideEffect,
+        Optional<{ scheduler: TSubscription }>,
         Function1<TNotifier, DisposableLike>
       >,
     ): LiftedSinkLike<TSubscription, T> {
       init(DelegatingLiftedSinkMixin<TSubscription, T>(), this, delegate);
 
-      const subscription = this[LiftedSinkLike_subscription];
+      const scheduler = this[LiftedSinkLike_subscription];
       this[TakeUntilSink_notifierSubscription] = pipe(
         notifier,
-        addEventListener(subscription, bindMethod(this, SinkLike_complete)),
+        addEventListener(bindMethod(this, SinkLike_complete), { scheduler }),
         Disposable.addTo(this),
       );
 

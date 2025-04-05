@@ -175,7 +175,9 @@ describe("stateStore", test("stateStore", () => {
         pipe([(x) => x + 2], Computation.fromReadonlyArray(ObservableModule, {
             delay: 5,
             delayStart: true,
-        }), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), EventSource.subscribe({ scheduler: vts }));
+        }), EventSource.subscribe(bindMethod(stream, EventListenerLike_notify), {
+            scheduler: vts,
+        }));
         const result = [];
         pipe(stream, Broadcaster.addEventHandler(bindMethod(result, Array_push)));
         vts[VirtualTimeSchedulerLike_run]();
@@ -201,7 +203,9 @@ describe("stateStore", test("stateStore", () => {
             // Note: due to how vts works its gonna be 2 in practice
             delay: 1,
             delayStart: true,
-        }), Observable.repeat(24), Observable.forEach(bindMethod(stream, EventListenerLike_notify)), EventSource.subscribe({ scheduler: vts }));
+        }), Observable.repeat(24), EventSource.subscribe(bindMethod(stream, EventListenerLike_notify), {
+            scheduler: vts,
+        }));
         vts[VirtualTimeSchedulerLike_run]();
         pipe(updateCnt, expectEquals(3));
     }

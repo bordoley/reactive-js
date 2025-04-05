@@ -41,7 +41,6 @@ import * as EventSource from "../../EventSource.js";
 import type * as Observable from "../../Observable.js";
 import type * as SynchronousObservable from "../../SynchronousObservable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 
 export const BatchedComputeMode = "batched";
@@ -316,30 +315,32 @@ class ObservableComputeContext {
 
       effect[AwaitOrObserveEffect_subscription] = pipe(
         observable,
-        Observable_forEach((next: T) => {
-          effect[AwaitOrObserveEffect_value] = next;
-          effect[AwaitOrObserveEffect_hasValue] = true;
+        EventSource.subscribe(
+          (next: T) => {
+            effect[AwaitOrObserveEffect_value] = next;
+            effect[AwaitOrObserveEffect_hasValue] = true;
 
-          if (
-            this[ObservableComputeContext_mode] === CombineLatestComputeMode
-          ) {
-            runComputation();
-          } else {
-            const scheduledComputationSubscription =
-              this[ObservableComputeContext_scheduledComputationSubscription];
+            if (
+              this[ObservableComputeContext_mode] === CombineLatestComputeMode
+            ) {
+              runComputation();
+            } else {
+              const scheduledComputationSubscription =
+                this[ObservableComputeContext_scheduledComputationSubscription];
 
-            this[ObservableComputeContext_scheduledComputationSubscription] =
-              scheduledComputationSubscription[DisposableLike_isDisposed]
-                ? pipe(
-                    observer[SchedulerLike_schedule](function* () {
-                      runComputation();
-                    }),
-                    Disposable.addTo(observer),
-                  )
-                : scheduledComputationSubscription;
-          }
-        }),
-        EventSource.subscribe({ scheduler: observer }),
+              this[ObservableComputeContext_scheduledComputationSubscription] =
+                scheduledComputationSubscription[DisposableLike_isDisposed]
+                  ? pipe(
+                      observer[SchedulerLike_schedule](function* () {
+                        runComputation();
+                      }),
+                      Disposable.addTo(observer),
+                    )
+                  : scheduledComputationSubscription;
+            }
+          },
+          { scheduler: observer },
+        ),
         Disposable.addTo(observer),
         DisposableContainer.onComplete(this[ObservableComputeContext_cleanup]),
       );

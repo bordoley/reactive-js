@@ -2,7 +2,6 @@ import { ComputationLike_isPure, ProducerLike } from "../../../computations.js";
 import {
   Function2,
   SideEffect1,
-  compose,
   partial,
   pipe,
   tuple,
@@ -12,11 +11,10 @@ import * as Computation from "../../Computation.js";
 import * as EventSource from "../../EventSource.js";
 import type * as Producer from "../../Producer.js";
 import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
-import Producer_forEach from "./Producer.forEach.js";
 import Producer_lift from "./Producer.lift.js";
 
-const addEventListener = <T>(_: ConsumerLike, effect: SideEffect1<T>) =>
-  compose(Producer_forEach(effect), EventSource.subscribe());
+const addEventListener = <T>(effect: SideEffect1<T>) =>
+  EventSource.subscribe(effect);
 
 const Producer_withLatestFrom: Producer.Signature["withLatestFrom"] = (<
   TA,

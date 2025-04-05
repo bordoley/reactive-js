@@ -25,8 +25,8 @@ export const create = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(DelegatingLiftedSinkMixin()), function WithLatestFromSink(delegate, other, selector, addEventListener) {
         init(DelegatingLiftedSinkMixin(), this, delegate);
         this[WithLatestFromSink_selector] = selector;
-        const subscription = this[LiftedSinkLike_subscription];
-        this[WithLatestFromSink_otherSubscription] = pipe(other, addEventListener(subscription, bind(onOtherNotify, this)), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromSinkOtherSubscriptionComplete, this)));
+        const scheduler = this[LiftedSinkLike_subscription];
+        this[WithLatestFromSink_otherSubscription] = pipe(other, addEventListener(bind(onOtherNotify, this), { scheduler }), Disposable.addTo(this), DisposableContainer.onComplete(bind(onWithLatestFromSinkOtherSubscriptionComplete, this)));
         return this;
     }, props({
         [WithLatestFromSink_hasLatest]: false,

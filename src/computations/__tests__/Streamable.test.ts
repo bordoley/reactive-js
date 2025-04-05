@@ -173,8 +173,9 @@ testModule(
           delay: 5,
           delayStart: true,
         }),
-        Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-        EventSource.subscribe({ scheduler: vts }),
+        EventSource.subscribe(bindMethod(stream, EventListenerLike_notify), {
+          scheduler: vts,
+        }),
       );
 
       const result: number[] = [];
@@ -214,8 +215,9 @@ testModule(
           delayStart: true,
         }),
         Observable.repeat(24),
-        Observable.forEach(bindMethod(stream, EventListenerLike_notify)),
-        EventSource.subscribe({ scheduler: vts }),
+        EventSource.subscribe(bindMethod(stream, EventListenerLike_notify), {
+          scheduler: vts,
+        }),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

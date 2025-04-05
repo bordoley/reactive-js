@@ -5,6 +5,10 @@ import {
   Function1,
   Optional,
   Reducer,
+  SideEffect1,
+  isFunction,
+  isSome,
+  none,
 } from "../functions.js";
 import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -17,21 +21,27 @@ import {
 
 export interface Signature {
   lastAsync<T>(options?: {
-    scheduler: SchedulerLike;
+    scheduler?: SchedulerLike;
   }): AsyncFunction1<EventSourceLike<T>, Optional<T>>;
 
   reduceAsync<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-    options?: { scheduler: SchedulerLike },
+    options?: { scheduler?: SchedulerLike },
   ): AsyncFunction1<EventSourceLike<T>, TAcc>;
 
+  subscribe<T>(
+    onNotify: SideEffect1<T>,
+    options?: {
+      scheduler?: SchedulerLike;
+    },
+  ): Function1<EventSourceLike<T>, DisposableLike>;
   subscribe<T>(options?: {
-    scheduler: SchedulerLike;
+    scheduler?: SchedulerLike;
   }): Function1<EventSourceLike<T>, DisposableLike>;
 
   toReadonlyArrayAsync<T>(options?: {
-    scheduler: SchedulerLike;
+    scheduler?: SchedulerLike;
   }): AsyncFunction1<EventSourceLike<T>, ReadonlyArray<T>>;
 }
 
@@ -65,10 +75,20 @@ export const reduceAsync: Signature["reduceAsync"] =
   };
 
 export const subscribe: Signature["subscribe"] =
-  <T>(options?: { scheduler: SchedulerLike }) =>
+  <T>(
+    optionsOrEffect?: SideEffect1<T> | { scheduler?: SchedulerLike },
+    options?: { scheduler?: SchedulerLike },
+  ) =>
   (src: EventSourceLike<T>) => {
-    const scheduler = options?.scheduler ?? DefaultScheduler.get();
-    const observer = Observer.takeLast(0, scheduler);
+    const effect = isFunction(optionsOrEffect) ? optionsOrEffect : none;
+    const scheduler =
+      (isFunction(optionsOrEffect) ? options : optionsOrEffect)?.scheduler ??
+      DefaultScheduler.get();
+
+    const observer = isSome(effect)
+      ? Observer.create(effect, scheduler)
+      : Observer.takeLast(0, scheduler);
+
     src[EventSourceLike_subscribe](observer);
 
     return observer;

@@ -1,6 +1,7 @@
 /// <reference types="./EventSource.d.ts" />
 
 import { EventSourceLike_subscribe } from "../computations.js";
+import { isFunction, isSome, none, } from "../functions.js";
 import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import * as Observer from "../utils/__internal__/Observer.js";
@@ -20,9 +21,13 @@ export const reduceAsync = (reducer, initialValue, options) => async (src) => {
     await DisposableContainer.toPromise(observer);
     return ref[0];
 };
-export const subscribe = (options) => (src) => {
-    const scheduler = options?.scheduler ?? DefaultScheduler.get();
-    const observer = Observer.takeLast(0, scheduler);
+export const subscribe = (optionsOrEffect, options) => (src) => {
+    const effect = isFunction(optionsOrEffect) ? optionsOrEffect : none;
+    const scheduler = (isFunction(optionsOrEffect) ? options : optionsOrEffect)?.scheduler ??
+        DefaultScheduler.get();
+    const observer = isSome(effect)
+        ? Observer.create(effect, scheduler)
+        : Observer.takeLast(0, scheduler);
     src[EventSourceLike_subscribe](observer);
     return observer;
 };

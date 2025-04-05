@@ -9,7 +9,6 @@ import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDispo
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import { EventListenerLike_notify, PauseableLike_resume, } from "../../../utils.js";
 import * as EventSource from "../../EventSource.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import * as Publisher from "../../Publisher.js";
 import DelegatingBroadcasterMixin from "../../__mixins__/DelegatingBroadcasterMixin.js";
 const createPauseableBroadcasterFromSynchronousObservable = /*@__PURE__*/ (() => mixInstanceFactory(include(DelegatingDisposableMixin, DelegatingPauseableMixin, DelegatingBroadcasterMixin()), function PauseableBroadcasterFromSynchronousObservable(obs, options) {
@@ -19,7 +18,9 @@ const createPauseableBroadcasterFromSynchronousObservable = /*@__PURE__*/ (() =>
     init(DelegatingPauseableMixin, this, pauseableScheduler);
     const publisher = pipe(Publisher.create(options), Disposable.addTo(this));
     init(DelegatingBroadcasterMixin(), this, publisher);
-    pipe(obs, Observable_forEach(bindMethod(publisher, EventListenerLike_notify)), EventSource.subscribe({ scheduler: pauseableScheduler }), Disposable.addTo(this));
+    pipe(obs, EventSource.subscribe(bindMethod(publisher, EventListenerLike_notify), {
+        scheduler: pauseableScheduler,
+    }), Disposable.addTo(this));
     this[PauseableLike_resume]();
     return this;
 }))();

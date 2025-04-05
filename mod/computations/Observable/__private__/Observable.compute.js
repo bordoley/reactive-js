@@ -9,7 +9,6 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_no
 import * as Computation from "../../Computation.js";
 import * as EventSource from "../../EventSource.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
-import Observable_forEach from "./Observable.forEach.js";
 import { Observable_genPure } from "./Observable.gen.js";
 export const BatchedComputeMode = "batched";
 export const CombineLatestComputeMode = "combine-latest";
@@ -133,7 +132,7 @@ class ObservableComputeContext {
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_value] = none;
             effect[AwaitOrObserveEffect_hasValue] = false;
-            effect[AwaitOrObserveEffect_subscription] = pipe(observable, Observable_forEach((next) => {
+            effect[AwaitOrObserveEffect_subscription] = pipe(observable, EventSource.subscribe((next) => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
                 if (this[ObservableComputeContext_mode] === CombineLatestComputeMode) {
@@ -148,7 +147,7 @@ class ObservableComputeContext {
                             }), Disposable.addTo(observer))
                             : scheduledComputationSubscription;
                 }
-            }), EventSource.subscribe({ scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ObservableComputeContext_cleanup]));
+            }, { scheduler: observer }), Disposable.addTo(observer), DisposableContainer.onComplete(this[ObservableComputeContext_cleanup]));
             return shouldAwait ? raiseError(awaiting) : none;
         }
     }

@@ -1,19 +1,10 @@
 import { BroadcasterLike } from "../../../computations.js";
-import {
-  Function2,
-  SideEffect1,
-  partial,
-  pipe,
-  tuple,
-} from "../../../functions.js";
-import { EventListenerLike, SinkLike } from "../../../utils.js";
+import { Function2, partial, pipe, tuple } from "../../../functions.js";
+import { SinkLike } from "../../../utils.js";
 import type * as Broadcaster from "../../Broadcaster.js";
 import * as WithLatestFromSink from "../../__internal__/sinks/WithLatestFromSink.js";
 import Broadcaster_addEventHandler from "./Broadcaster.addEventHandler.js";
 import Broadcaster_lift from "./Broadcaster.lift.js";
-
-const addEventListener = <TB>(_: EventListenerLike, effect: SideEffect1<TB>) =>
-  Broadcaster_addEventHandler(effect);
 
 const Broadcaster_withLatestFrom: Broadcaster.Signature["withLatestFrom"] = (<
   TA,
@@ -25,7 +16,7 @@ const Broadcaster_withLatestFrom: Broadcaster.Signature["withLatestFrom"] = (<
 ) =>
   pipe(
     WithLatestFromSink.create<SinkLike, BroadcasterLike<TB>, TA, TB, T>,
-    partial(other, selector, addEventListener),
+    partial(other, selector, Broadcaster_addEventHandler),
     Broadcaster_lift<TA, T>,
   )) as Broadcaster.Signature["withLatestFrom"];
 

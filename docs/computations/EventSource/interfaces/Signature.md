@@ -20,7 +20,7 @@
 
 ##### options?
 
-###### scheduler
+###### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
@@ -52,7 +52,7 @@
 
 ##### options?
 
-###### scheduler
+###### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
@@ -64,21 +64,47 @@
 
 ### subscribe()
 
-> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+#### Call Signature
 
-#### Type Parameters
+> **subscribe**\<`T`\>(`onNotify`, `options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+##### Type Parameters
 
 • **T**
 
-#### Parameters
+##### Parameters
 
-##### options?
+###### onNotify
 
-###### scheduler
+[`SideEffect1`](../../../functions/type-aliases/SideEffect1.md)\<`T`\>
+
+###### options?
+
+###### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
-#### Returns
+##### Returns
+
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+#### Call Signature
+
+> **subscribe**\<`T`\>(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
+
+##### Type Parameters
+
+• **T**
+
+##### Parameters
+
+###### options?
+
+###### scheduler?
+
+[`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
+
+##### Returns
 
 [`Function1`](../../../functions/type-aliases/Function1.md)\<[`EventSourceLike`](../../interfaces/EventSourceLike.md)\<`T`, [`EventListenerLike`](../../../utils/interfaces/EventListenerLike.md)\<`T`\>\>, [`DisposableLike`](../../../utils/interfaces/DisposableLike.md)\>
 
@@ -96,7 +122,7 @@
 
 ##### options?
 
-###### scheduler
+###### scheduler?
 
 [`SchedulerLike`](../../../utils/interfaces/SchedulerLike.md)
 
