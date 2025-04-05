@@ -32,7 +32,6 @@
 
 ## Type Aliases
 
-- [BackPressureConfig](type-aliases/BackPressureConfig.md)
 - [BackpressureStrategy](type-aliases/BackpressureStrategy.md)
 - [SchedulerContinuation](type-aliases/SchedulerContinuation.md)
 
@@ -41,8 +40,6 @@
 - [AsyncEnumeratorLike\_current](variables/AsyncEnumeratorLike_current.md)
 - [AsyncEnumeratorLike\_hasCurrent](variables/AsyncEnumeratorLike_hasCurrent.md)
 - [AsyncEnumeratorLike\_moveNext](variables/AsyncEnumeratorLike_moveNext.md)
-- [BackPressureConfig\_capacity](variables/BackPressureConfig_capacity.md)
-- [BackPressureConfig\_strategy](variables/BackPressureConfig_strategy.md)
 - [CollectionEnumeratorLike\_count](variables/CollectionEnumeratorLike_count.md)
 - [CollectionEnumeratorLike\_peek](variables/CollectionEnumeratorLike_peek.md)
 - [DisposableContainerLike\_add](variables/DisposableContainerLike_add.md)
@@ -63,6 +60,8 @@
 - [PauseableLike\_isPaused](variables/PauseableLike_isPaused.md)
 - [PauseableLike\_pause](variables/PauseableLike_pause.md)
 - [PauseableLike\_resume](variables/PauseableLike_resume.md)
+- [QueueLike\_backpressureStrategy](variables/QueueLike_backpressureStrategy.md)
+- [QueueLike\_capacity](variables/QueueLike_capacity.md)
 - [QueueLike\_enqueue](variables/QueueLike_enqueue.md)
 - [SchedulerLike\_inContinuation](variables/SchedulerLike_inContinuation.md)
 - [SchedulerLike\_maxYieldInterval](variables/SchedulerLike_maxYieldInterval.md)

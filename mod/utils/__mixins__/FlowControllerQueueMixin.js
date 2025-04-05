@@ -6,7 +6,7 @@ import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadca
 import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { alwaysNone, call, isEqualTo, none, pipe, returns, } from "../../functions.js";
-import { BackPressureConfig_capacity, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerEnumeratorLike_addOnDataAvailableListener, FlowControllerEnumeratorLike_isDataAvailable, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_capacity, QueueLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import QueueMixin from "./QueueMixin.js";
 const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
@@ -31,7 +31,7 @@ const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
         get [FlowControllerLike_isReady]() {
             unsafeCast(this);
             const count = this[CollectionEnumeratorLike_count];
-            const capacity = this[BackPressureConfig_capacity];
+            const capacity = this[QueueLike_capacity];
             const isDisposed = this[DisposableLike_isDisposed];
             return count < capacity && !isDisposed;
         },
@@ -42,7 +42,7 @@ const FlowControllerQueueMixin = /*@__PURE__*/ (() => {
         },
         [EnumeratorLike_moveNext]() {
             const count = this[CollectionEnumeratorLike_count];
-            const capacity = this[BackPressureConfig_capacity];
+            const capacity = this[QueueLike_capacity];
             const isDisposed = this[DisposableLike_isDisposed];
             const onReadySignal = this[FlowControllerQueueMixin_onReadyPublisher];
             const shouldNotifyReady = count === capacity && capacity > 0 && !isDisposed;

@@ -48,18 +48,6 @@ export declare const DropLatestBackpressureStrategy: BackpressureStrategy;
 export declare const DropOldestBackpressureStrategy: BackpressureStrategy;
 export declare const OverflowBackpressureStrategy: BackpressureStrategy;
 export declare const ThrowBackpressureStrategy: BackpressureStrategy;
-export declare const BackPressureConfig_strategy: unique symbol;
-export declare const BackPressureConfig_capacity: unique symbol;
-export type BackPressureConfig = {
-    /**
-     * The back pressure strategy utilized by the queue when it is at capacity.
-     */
-    readonly [BackPressureConfig_strategy]: BackpressureStrategy;
-    /**
-     * The number of items the queue is capable of efficiently buffering.
-     */
-    readonly [BackPressureConfig_capacity]: number;
-};
 export declare const raiseCapacityExceededError: (capacity: number) => unknown;
 export declare const FlowControllerLike_isReady: unique symbol;
 export declare const FlowControllerLike_addOnReadyListener: unique symbol;
@@ -89,11 +77,21 @@ export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>
     readonly [CollectionEnumeratorLike_count]: number;
     readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
+export declare const QueueLike_backpressureStrategy: unique symbol;
+export declare const QueueLike_capacity: unique symbol;
 export declare const QueueLike_enqueue: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T>, BackPressureConfig {
+export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+    /**
+     * The back pressure strategy utilized by the queue when it is at capacity.
+     */
+    readonly [QueueLike_backpressureStrategy]: BackpressureStrategy;
+    /**
+     * The number of items the queue is capable of efficiently buffering.
+     */
+    readonly [QueueLike_capacity]: number;
     [QueueLike_enqueue](v: T): void;
 }
 export declare const FlowControllerEnumeratorLike_addOnDataAvailableListener: unique symbol;

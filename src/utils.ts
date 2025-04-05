@@ -85,25 +85,6 @@ export const DropOldestBackpressureStrategy: BackpressureStrategy =
 export const OverflowBackpressureStrategy: BackpressureStrategy = "overflow";
 export const ThrowBackpressureStrategy: BackpressureStrategy = "throw";
 
-export const BackPressureConfig_strategy = Symbol(
-  "BackPressureConfig_strategy",
-);
-export const BackPressureConfig_capacity = Symbol(
-  "BackPressureConfig_capacity",
-);
-
-export type BackPressureConfig = {
-  /**
-   * The back pressure strategy utilized by the queue when it is at capacity.
-   */
-  readonly [BackPressureConfig_strategy]: BackpressureStrategy;
-
-  /**
-   * The number of items the queue is capable of efficiently buffering.
-   */
-  readonly [BackPressureConfig_capacity]: number;
-};
-
 class CapacityExceededError extends Error {
   constructor(readonly capacity: number) {
     super();
@@ -166,13 +147,25 @@ export interface CollectionEnumeratorLike<T = unknown>
   readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
 
+export const QueueLike_backpressureStrategy = Symbol(
+  "QueueLike_backpressureStrategy",
+);
+export const QueueLike_capacity = Symbol("QueueLike_capacity");
+
 export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown>
-  extends CollectionEnumeratorLike<T>,
-    BackPressureConfig {
+export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+  /**
+   * The back pressure strategy utilized by the queue when it is at capacity.
+   */
+  readonly [QueueLike_backpressureStrategy]: BackpressureStrategy;
+
+  /**
+   * The number of items the queue is capable of efficiently buffering.
+   */
+  readonly [QueueLike_capacity]: number;
   [QueueLike_enqueue](v: T): void;
 }
 

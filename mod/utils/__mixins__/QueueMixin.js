@@ -4,7 +4,7 @@ import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/const
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { BackPressureConfig_capacity, BackPressureConfig_strategy, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_enqueue, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_backpressureStrategy, QueueLike_capacity, QueueLike_enqueue, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -39,13 +39,13 @@ const QueueMixin =
     return returns(mix(function QueueMixin(config) {
         this[QueueMixin_comparator] = config?.comparator;
         this[QueueMixin_values] = none;
-        this[BackPressureConfig_strategy] =
+        this[QueueLike_backpressureStrategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-        this[BackPressureConfig_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
+        this[QueueLike_capacity] = clampPositiveInteger(config?.capacity ?? MAX_SAFE_INTEGER);
         return this;
     }, props({
-        [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
-        [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
+        [QueueLike_backpressureStrategy]: OverflowBackpressureStrategy,
+        [QueueLike_capacity]: MAX_SAFE_INTEGER,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
         [CollectionEnumeratorLike_count]: 0,
@@ -197,8 +197,8 @@ const QueueMixin =
         },
         [QueueLike_enqueue](item) {
             const isDisposed = this[DisposableLike_isDisposed];
-            const backpressureStrategy = this[BackPressureConfig_strategy];
-            const capacity = this[BackPressureConfig_capacity];
+            const backpressureStrategy = this[QueueLike_backpressureStrategy];
+            const capacity = this[QueueLike_capacity];
             const applyBackpressure = this[CollectionEnumeratorLike_count] >= capacity;
             const dropLatest = backpressureStrategy === DropLatestBackpressureStrategy &&
                 applyBackpressure;
@@ -217,7 +217,7 @@ const QueueMixin =
             // to avoid unintentionally growing the queue.
             dropOldest && this[EnumeratorLike_moveNext]();
             throwBackpressureError &&
-                raiseCapacityExceededError(this[BackPressureConfig_capacity]);
+                raiseCapacityExceededError(this[QueueLike_capacity]);
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {
                 this[QueueMixin_values] = item;

@@ -20,8 +20,6 @@ import {
 } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
@@ -34,6 +32,8 @@ import {
   EnumeratorLike_moveNext,
   OverflowBackpressureStrategy,
   QueueLike,
+  QueueLike_backpressureStrategy,
+  QueueLike_capacity,
   QueueLike_enqueue,
   ThrowBackpressureStrategy,
   raiseCapacityExceededError,
@@ -46,8 +46,8 @@ type TPrototype<T> = Omit<
   | typeof CollectionEnumeratorLike_count
   | typeof EnumeratorLike_current
   | typeof EnumeratorLike_hasCurrent
-  | typeof BackPressureConfig_strategy
-  | typeof BackPressureConfig_capacity
+  | typeof QueueLike_backpressureStrategy
+  | typeof QueueLike_capacity
 >;
 
 type TConfig<T> = Optional<{
@@ -65,8 +65,8 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
     const QueueMixin_comparator = Symbol("QueueMixin_comparator");
 
     type TProperties = {
-      [BackPressureConfig_strategy]: BackpressureStrategy;
-      [BackPressureConfig_capacity]: number;
+      [QueueLike_backpressureStrategy]: BackpressureStrategy;
+      [QueueLike_capacity]: number;
       [EnumeratorLike_current]: T;
       [EnumeratorLike_hasCurrent]: boolean;
       [CollectionEnumeratorLike_count]: number;
@@ -127,17 +127,17 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
           this[QueueMixin_comparator] = config?.comparator;
           this[QueueMixin_values] = none;
 
-          this[BackPressureConfig_strategy] =
+          this[QueueLike_backpressureStrategy] =
             config?.backpressureStrategy ?? OverflowBackpressureStrategy;
-          this[BackPressureConfig_capacity] = clampPositiveInteger(
+          this[QueueLike_capacity] = clampPositiveInteger(
             config?.capacity ?? MAX_SAFE_INTEGER,
           );
 
           return this;
         },
         props<TProperties>({
-          [BackPressureConfig_strategy]: OverflowBackpressureStrategy,
-          [BackPressureConfig_capacity]: MAX_SAFE_INTEGER,
+          [QueueLike_backpressureStrategy]: OverflowBackpressureStrategy,
+          [QueueLike_capacity]: MAX_SAFE_INTEGER,
           [EnumeratorLike_current]: none,
           [EnumeratorLike_hasCurrent]: false,
           [CollectionEnumeratorLike_count]: 0,
@@ -333,8 +333,8 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
           [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
             const isDisposed = this[DisposableLike_isDisposed];
-            const backpressureStrategy = this[BackPressureConfig_strategy];
-            const capacity = this[BackPressureConfig_capacity];
+            const backpressureStrategy = this[QueueLike_backpressureStrategy];
+            const capacity = this[QueueLike_capacity];
             const applyBackpressure =
               this[CollectionEnumeratorLike_count] >= capacity;
             const dropLatest =
@@ -361,7 +361,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             // to avoid unintentionally growing the queue.
             dropOldest && this[EnumeratorLike_moveNext]();
             throwBackpressureError &&
-              raiseCapacityExceededError(this[BackPressureConfig_capacity]);
+              raiseCapacityExceededError(this[QueueLike_capacity]);
 
             const newCount = ++this[CollectionEnumeratorLike_count];
             if (newCount === 1) {

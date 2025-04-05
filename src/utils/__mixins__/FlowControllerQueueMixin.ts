@@ -25,8 +25,6 @@ import {
   returns,
 } from "../../functions.js";
 import {
-  BackPressureConfig_capacity,
-  BackPressureConfig_strategy,
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
@@ -42,6 +40,8 @@ import {
   FlowControllerLike_isReady,
   FlowControllerQueueLike,
   QueueLike,
+  QueueLike_backpressureStrategy,
+  QueueLike_capacity,
   QueueLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
@@ -54,8 +54,8 @@ type TPrototype<T> = Omit<
   | typeof CollectionEnumeratorLike_count
   | typeof EnumeratorLike_current
   | typeof EnumeratorLike_hasCurrent
-  | typeof BackPressureConfig_capacity
-  | typeof BackPressureConfig_strategy
+  | typeof QueueLike_capacity
+  | typeof QueueLike_backpressureStrategy
   | typeof CollectionEnumeratorLike_peek
   | typeof Symbol.iterator
 >;
@@ -118,7 +118,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
         get [FlowControllerLike_isReady]() {
           unsafeCast<TProperties & FlowControllerQueueLike<T>>(this);
           const count = this[CollectionEnumeratorLike_count];
-          const capacity = this[BackPressureConfig_capacity];
+          const capacity = this[QueueLike_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
 
           return count < capacity && !isDisposed;
@@ -134,7 +134,7 @@ const FlowControllerQueueMixin: <T>() => Mixin1<
           this: TProperties & FlowControllerQueueLike<T>,
         ) {
           const count = this[CollectionEnumeratorLike_count];
-          const capacity = this[BackPressureConfig_capacity];
+          const capacity = this[QueueLike_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
           const onReadySignal = this[FlowControllerQueueMixin_onReadyPublisher];
           const shouldNotifyReady =
