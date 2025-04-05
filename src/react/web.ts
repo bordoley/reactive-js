@@ -123,7 +123,7 @@ export interface ReactWebModule {
     {
       [event in TEvent]: (ev: SyntheticEvent) => void;
     },
-    BroadcasterLike<DOMEventTypeOf<TEvent>>
+    Optional<BroadcasterLike<DOMEventTypeOf<TEvent>>>
   >;
 
   useEvents<TEvent1 extends DOMEvents<any>, TEvent2 extends DOMEvents<any>>(

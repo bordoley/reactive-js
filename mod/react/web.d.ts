@@ -24,7 +24,7 @@ export interface ReactWebModule {
     useAnimationGroup<T, TKey extends string, TEvent>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, PureSynchronousObservableLike<T>> | PureSynchronousObservableLike<T>>): Optional<AnimationGroupLike<TEvent, TKey, T>>;
     useEvents<TEvent extends DOMEvents<any>>(event: TEvent): Tuple2<{
         [event in TEvent]: (ev: SyntheticEvent) => void;
-    }, BroadcasterLike<DOMEventTypeOf<TEvent>>>;
+    }, Optional<BroadcasterLike<DOMEventTypeOf<TEvent>>>>;
     useEvents<TEvent1 extends DOMEvents<any>, TEvent2 extends DOMEvents<any>>(event1: TEvent1, event2: TEvent2): Tuple2<{
         [event in TEvent1 | TEvent2]: (ev: SyntheticEvent) => void;
     }, Optional<BroadcasterLike<DOMEventTypeOf<TEvent1> | DOMEventTypeOf<TEvent2>>>>;
