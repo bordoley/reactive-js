@@ -105,25 +105,31 @@ export interface ConsumableEnumeratorLike<T = unknown> extends EnumeratorLike<T>
  */
 export interface FlowControlQueueLike<T = unknown> extends QueueLike<T>, ConsumableEnumeratorLike<T>, FlowControllerLike {
 }
-export declare const SchedulerLike_inContinuation: unique symbol;
-export declare const SchedulerLike_maxYieldInterval: unique symbol;
-export declare const SchedulerLike_now: unique symbol;
-export declare const SchedulerLike_requestYield: unique symbol;
-export declare const SchedulerLike_schedule: unique symbol;
-export declare const SchedulerLike_shouldYield: unique symbol;
+export declare const ClockLike_now: unique symbol;
+export interface ClockLike {
+    /**
+     * The current time in milliseconds.
+     */
+    readonly [ClockLike_now]: number;
+}
 export declare class YieldDelay {
     readonly ms: number;
     constructor(ms: number);
 }
 export declare const delayMs: (delay: number) => YieldDelay;
 export type SchedulerContinuation = Function1<SchedulerLike, Iterator<Optional<YieldDelay>>>;
+export declare const SchedulerLike_inContinuation: unique symbol;
+export declare const SchedulerLike_maxYieldInterval: unique symbol;
+export declare const SchedulerLike_requestYield: unique symbol;
+export declare const SchedulerLike_schedule: unique symbol;
+export declare const SchedulerLike_shouldYield: unique symbol;
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
  *
  * @noInheritDoc
  */
-export interface SchedulerLike extends DisposableContainerLike {
+export interface SchedulerLike extends DisposableContainerLike, ClockLike {
     /**
      * Boolean flag indicating the scheduler is currently
      * running a continuation.
@@ -134,10 +140,6 @@ export interface SchedulerLike extends DisposableContainerLike {
      * before yielding control back to the underlying system scheduler.
      */
     readonly [SchedulerLike_maxYieldInterval]: number;
-    /**
-     * The current time in milliseconds.
-     */
-    readonly [SchedulerLike_now]: number;
     /**
      * Boolean flag indicating whether a running continuation
      * should yield control back to the scheduler.

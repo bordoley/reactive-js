@@ -7,7 +7,7 @@ import { bindMethod, newInstance, none, pipe } from "../functions.js";
 import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
 import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { SchedulerLike_now } from "../utils.js";
+import { ClockLike_now } from "../utils.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     const ReactScheduler_priority = Symbol("ReactScheduler_priority");
     return mixInstanceFactory(include(SchedulerMixin), function ReactPriorityScheduler(priority) {
@@ -17,14 +17,14 @@ const createReactScheduler = /*@__PURE__*/ (() => {
     }, props({
         [ReactScheduler_priority]: 3,
     }), {
-        get [SchedulerLike_now]() {
+        get [ClockLike_now]() {
             return unstable_now();
         },
         get [SchedulerMixinHostLike_shouldYield]() {
             return unstable_shouldYield();
         },
         [SchedulerMixinHostLike_schedule](continuation) {
-            const now = this[SchedulerLike_now];
+            const now = this[ClockLike_now];
             const dueTime = continuation[SchedulerContinuationLike_dueTime];
             const delay = dueTime - now;
             unstable_scheduleCallback(this[ReactScheduler_priority], bindMethod(continuation, SchedulerContinuationLike_run), delay > 0 ? { delay } : none);

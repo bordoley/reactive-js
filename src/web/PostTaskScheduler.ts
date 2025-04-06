@@ -21,10 +21,10 @@ import SchedulerMixin, {
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
+  ClockLike_now,
   DisposableLike,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
 } from "../utils.js";
 
 declare var globalThis: {
@@ -63,8 +63,7 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
   return mixInstanceFactory(
     include(SchedulerMixin),
     function PostTaskScheduler(
-      this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
-        TProperties,
+      this: Omit<SchedulerMixinHostLike, typeof ClockLike_now> & TProperties,
       priority: "user-blocking" | "user-visible" | "background",
     ): SchedulerLike & DisposableLike {
       init(SchedulerMixin, this);
@@ -83,7 +82,7 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
         this: SchedulerLike & SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
-        const now = this[SchedulerLike_now];
+        const now = this[ClockLike_now];
         const dueTime = continuation[SchedulerContinuationLike_dueTime];
         const delay = dueTime - now;
 

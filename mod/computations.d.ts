@@ -1,5 +1,5 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Tuple2, Tuple3, Tuple4 } from "./functions.js";
-import { BackpressureStrategy, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike, YieldDelay } from "./utils.js";
+import { BackpressureStrategy, ClockLike, ConsumerLike, DisposableContainerLike, DisposableLike, EventListenerLike, ObserverLike, PauseableLike, SchedulerLike, SinkLike, YieldDelay } from "./utils.js";
 export declare const ComputationLike_isPure: unique symbol;
 export declare const ComputationLike_isDeferred: unique symbol;
 export declare const ComputationLike_isSynchronous: unique symbol;
@@ -331,8 +331,8 @@ export interface ScheduledReactiveComputationModule<TComputationType extends Com
     currentTime: PureComputationOf<TComputationType, number>;
     debounce<T>(duration: number): PureComputationOperator<TComputationType, T, T>;
     delay(duration: number): PureComputationOf<TComputationType, unknown>;
-    gen<T>(factory: Factory<Iterator<T | YieldDelay>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
-    genPure<T>(factory: Factory<Iterator<T | YieldDelay>>): NewPureInstanceOf<TComputationType, T>;
+    gen<T>(factory: Function1<ClockLike, Iterator<T | YieldDelay>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
+    genPure<T>(factory: Function1<ClockLike, Iterator<T | YieldDelay>>): NewPureInstanceOf<TComputationType, T>;
     keyFrame(duration: number, options?: {
         readonly easing?: Function1<number, number>;
     }): PureComputationOf<TComputationType, number>;

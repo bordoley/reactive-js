@@ -5,7 +5,7 @@ import { Map, Map_delete, Map_get, Map_set, } from "../__internal__/constants.js
 import { include, init, mixInstanceFactory, props, } from "../__internal__/mixins.js";
 import { bindMethod, ignore, newInstance, pipe } from "../functions.js";
 import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js";
+import { ClockLike_now, SchedulerLike_maxYieldInterval, } from "../utils.js";
 const createPostTaskScheduler = /*@__PURE__*/ (() => {
     const postTaskScheduler = globalThis.scheduler;
     const PostTaskScheduler_priority = Symbol("PostTaskScheduler_priority");
@@ -19,7 +19,7 @@ const createPostTaskScheduler = /*@__PURE__*/ (() => {
         [SchedulerLike_maxYieldInterval]: 5,
         [SchedulerMixinHostLike_shouldYield]: false,
         [SchedulerMixinHostLike_schedule](continuation) {
-            const now = this[SchedulerLike_now];
+            const now = this[ClockLike_now];
             const dueTime = continuation[SchedulerContinuationLike_dueTime];
             const delay = dueTime - now;
             const signal = pipe(continuation, DisposableContainer.toAbortSignal);

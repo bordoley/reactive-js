@@ -2,7 +2,7 @@
 
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, none, pipe } from "../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ClockLike_now, EnumeratorLike_current, EnumeratorLike_moveNext, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as Iterator from "../__internal__/Iterator.js";
 const DelegatingSchedulerMixin = 
@@ -39,9 +39,9 @@ const DelegatingSchedulerMixin =
             unsafeCast(this);
             return this[DelegatingSchedulerMixin_scheduler][SchedulerLike_maxYieldInterval];
         },
-        get [SchedulerLike_now]() {
+        get [ClockLike_now]() {
             unsafeCast(this);
-            return this[DelegatingSchedulerMixin_scheduler][SchedulerLike_now];
+            return this[DelegatingSchedulerMixin_scheduler][ClockLike_now];
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);

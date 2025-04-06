@@ -12,6 +12,7 @@ import { StoreLike_value, WritableStoreLike } from "../computations.js";
 import { Optional, bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import {
+  ClockLike_now,
   CollectionEnumeratorLike_peek,
   DisposableContainerLike_add,
   DisposableLike,
@@ -28,7 +29,6 @@ import {
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   delayMs,
@@ -159,7 +159,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       }
 
       const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
-      const now = this[SchedulerLike_now];
+      const now = this[ClockLike_now];
       const delay = clampPositiveInteger(dueTime - now);
 
       if (delay > 0) {
@@ -197,7 +197,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
       this[PauseableScheduler_hostScheduler] = host;
 
-      this[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
+      this[PauseableScheduler_pausedTime] = host[ClockLike_now];
       this[PauseableScheduler_timeDrift] = 0;
 
       this[PauseableLike_isPaused] = WritableStore.create(true);
@@ -223,10 +223,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         ];
       },
 
-      get [SchedulerLike_now](): number {
+      get [ClockLike_now](): number {
         unsafeCast<TProperties>(this);
-        const hostNow =
-          this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+        const hostNow = this[PauseableScheduler_hostScheduler][ClockLike_now];
         const isPaused = this[PauseableLike_isPaused][StoreLike_value];
         const pausedTime =
           this[PauseableScheduler_pausedTime] -
@@ -243,7 +242,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
             QueueLike<SchedulerContinuationLike>
         >(this);
 
-        const now = this[SchedulerLike_now];
+        const now = this[ClockLike_now];
         const nextContinuation = peek(this);
 
         const yieldToNextContinuation =
@@ -258,8 +257,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         );
       },
       [PauseableLike_pause](this: TProperties & SchedulerMixinHostLike) {
-        const hostNow =
-          this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+        const hostNow = this[PauseableScheduler_hostScheduler][ClockLike_now];
         this[PauseableScheduler_pausedTime] = hostNow;
         this[PauseableScheduler_hostSchedulerSubscription][
           DisposableLike_dispose
@@ -272,8 +270,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           SchedulerLike &
           QueueLike<SchedulerContinuationLike>,
       ) {
-        const hostNow =
-          this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+        const hostNow = this[PauseableScheduler_hostScheduler][ClockLike_now];
         this[PauseableScheduler_timeDrift] +=
           hostNow - this[PauseableScheduler_pausedTime];
         this[PauseableLike_isPaused][StoreLike_value] = false;

@@ -21,6 +21,7 @@ import {
 } from "../../functions.js";
 import { abs, floor } from "../../math.js";
 import {
+  ClockLike_now,
   CollectionEnumeratorLike_count,
   DisposableContainerLike,
   DisposableLike,
@@ -35,7 +36,6 @@ import {
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
@@ -183,7 +183,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           parent[QueueLike_enqueue](continuation);
         } else {
           continuation[SchedulerContinuationLike_dueTime] =
-            scheduler[SchedulerLike_now];
+            scheduler[ClockLike_now];
           scheduler[SchedulerMixinLike_schedule](continuation);
         }
       };
@@ -244,8 +244,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           init(QueueMixin<QueueSchedulerContinuationLike>(), this, none);
 
           this[QueueContinuation_delegate] = delegateEnumerator;
-          this[SchedulerContinuationLike_dueTime] =
-            scheduler[SchedulerLike_now];
+          this[SchedulerContinuationLike_dueTime] = scheduler[ClockLike_now];
 
           this[SchedulerContinuationLike_id] = ++scheduler[
             SchedulerMixinLike_taskIDCounter
@@ -290,7 +289,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             // parent continuation is active.
             if (isNone(oldCurrentContinuation)) {
               scheduler[SchedulerMixinLike_startTime] =
-                scheduler[SchedulerLike_now];
+                scheduler[ClockLike_now];
               scheduler[SchedulerMixinLike_yieldRequested] = false;
             }
 
@@ -326,7 +325,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
                 ];
 
                 this[SchedulerContinuationLike_dueTime] =
-                  scheduler[SchedulerLike_now] + (next?.ms ?? 0);
+                  scheduler[ClockLike_now] + (next?.ms ?? 0);
 
                 rescheduleChildrenOnParentOrScheduler(this);
 
@@ -365,7 +364,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
       proto<Omit<SchedulerLike, keyof DisposableContainerLike>>({
         [SchedulerLike_maxYieldInterval]: 5,
 
-        get [SchedulerLike_now]() {
+        get [ClockLike_now]() {
           return CurrentTime.now();
         },
 
@@ -393,7 +392,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           const isDisposed = this[DisposableLike_isDisposed];
           const yieldRequested = this[SchedulerMixinLike_yieldRequested];
           const exceededMaxYieldInterval =
-            this[SchedulerLike_now] >
+            this[ClockLike_now] >
             this[SchedulerMixinLike_startTime] +
               this[SchedulerLike_maxYieldInterval];
           const currentContinuationHasScheduledChildren =
@@ -423,7 +422,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           const activeContinuation =
             this[SchedulerMixinLike_currentContinuation];
 
-          const now = this[SchedulerLike_now];
+          const now = this[ClockLike_now];
           const dueTime = continuation[SchedulerContinuationLike_dueTime];
 
           if (

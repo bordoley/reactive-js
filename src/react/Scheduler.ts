@@ -27,7 +27,7 @@ import SchedulerMixin, {
   SchedulerMixinHostLike_schedule,
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
-import { DisposableLike, SchedulerLike, SchedulerLike_now } from "../utils.js";
+import { ClockLike_now, DisposableLike, SchedulerLike } from "../utils.js";
 
 interface ReactSchedulerModule {
   get(priority?: 1 | 2 | 3 | 4 | 5): SchedulerLike;
@@ -56,7 +56,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
       [ReactScheduler_priority]: 3,
     }),
     {
-      get [SchedulerLike_now](): number {
+      get [ClockLike_now](): number {
         return unstable_now();
       },
 
@@ -68,7 +68,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         this: SchedulerLike & SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
-        const now = this[SchedulerLike_now];
+        const now = this[ClockLike_now];
         const dueTime = continuation[SchedulerContinuationLike_dueTime];
         const delay = dueTime - now;
 

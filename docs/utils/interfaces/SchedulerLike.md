@@ -11,7 +11,7 @@ cooperative multi-tasking.
 
 ## Extends
 
-- [`DisposableContainerLike`](DisposableContainerLike.md)
+- [`DisposableContainerLike`](DisposableContainerLike.md).[`ClockLike`](ClockLike.md)
 
 ## Extended by
 
@@ -36,14 +36,6 @@ running a continuation.
 
 The max number of milliseconds the scheduler will run
 before yielding control back to the underlying system scheduler.
-
-***
-
-### \[SchedulerLike\_now\]
-
-> `readonly` **\[SchedulerLike\_now\]**: `number`
-
-The current time in milliseconds.
 
 ***
 

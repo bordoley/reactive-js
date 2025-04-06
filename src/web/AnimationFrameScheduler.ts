@@ -19,6 +19,7 @@ import SchedulerMixin, {
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
+  ClockLike_now,
   CollectionEnumeratorLike_count,
   DisposableLike,
   EnumeratorLike_current,
@@ -27,7 +28,6 @@ import {
   QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   delayMs,
@@ -105,8 +105,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const createAnimationFrameScheduler = mixInstanceFactory(
     include(SchedulerMixin),
     function AnimationFrameScheduler(
-      this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
-        TProperties,
+      this: Omit<SchedulerMixinHostLike, typeof ClockLike_now> & TProperties,
     ): SchedulerLike & DisposableLike {
       init(SchedulerMixin, this);
 
@@ -128,7 +127,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
         this: SchedulerLike & SchedulerMixinHostLike & TProperties,
         continuation: SchedulerContinuationLike,
       ) {
-        const now = this[SchedulerLike_now];
+        const now = this[ClockLike_now];
         const dueTime = continuation[SchedulerContinuationLike_dueTime];
         const delay = dueTime - now;
 

@@ -3,7 +3,7 @@ import {
   ComputationLike_isSynchronous,
 } from "../../../computations.js";
 import {
-  Factory,
+  Function1,
   bindMethod,
   error,
   pipe,
@@ -19,6 +19,7 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
+  SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   SinkLike_complete,
@@ -29,10 +30,10 @@ import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genFactory =
-  <T>(factory: Factory<Iterator<T | YieldDelay>>) =>
+  <T>(factory: Function1<SchedulerLike, Iterator<T | YieldDelay>>) =>
   (observer: ObserverLike<T>) => {
     const enumerator = pipe(
-      factory(),
+      factory(observer),
       Iterator.toEnumerator(),
       Disposable.addTo(observer),
     );

@@ -6,7 +6,7 @@ import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -58,7 +58,7 @@ export const create = /*@PURE__*/ (() => {
                 break;
             }
             const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
-            const now = this[SchedulerLike_now];
+            const now = this[ClockLike_now];
             const delay = clampPositiveInteger(dueTime - now);
             if (delay > 0) {
                 this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
@@ -81,7 +81,7 @@ export const create = /*@PURE__*/ (() => {
             comparator: SchedulerContinuation.compare,
         });
         this[PauseableScheduler_hostScheduler] = host;
-        this[PauseableScheduler_pausedTime] = host[SchedulerLike_now];
+        this[PauseableScheduler_pausedTime] = host[ClockLike_now];
         this[PauseableScheduler_timeDrift] = 0;
         this[PauseableLike_isPaused] = WritableStore.create(true);
         host[DisposableContainerLike_add](this);
@@ -99,9 +99,9 @@ export const create = /*@PURE__*/ (() => {
             unsafeCast(this);
             return this[PauseableScheduler_hostScheduler][SchedulerLike_maxYieldInterval];
         },
-        get [SchedulerLike_now]() {
+        get [ClockLike_now]() {
             unsafeCast(this);
-            const hostNow = this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+            const hostNow = this[PauseableScheduler_hostScheduler][ClockLike_now];
             const isPaused = this[PauseableLike_isPaused][StoreLike_value];
             const pausedTime = this[PauseableScheduler_pausedTime] -
                 this[PauseableScheduler_timeDrift];
@@ -110,7 +110,7 @@ export const create = /*@PURE__*/ (() => {
         },
         get [SchedulerMixinHostLike_shouldYield]() {
             unsafeCast(this);
-            const now = this[SchedulerLike_now];
+            const now = this[ClockLike_now];
             const nextContinuation = peek(this);
             const yieldToNextContinuation = isSome(nextContinuation) &&
                 this[PauseableScheduler_activeContinuation] !== nextContinuation &&
@@ -120,13 +120,13 @@ export const create = /*@PURE__*/ (() => {
                 this[PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
         [PauseableLike_pause]() {
-            const hostNow = this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+            const hostNow = this[PauseableScheduler_hostScheduler][ClockLike_now];
             this[PauseableScheduler_pausedTime] = hostNow;
             this[PauseableScheduler_hostSchedulerSubscription][DisposableLike_dispose]();
             this[PauseableLike_isPaused][StoreLike_value] = true;
         },
         [PauseableLike_resume]() {
-            const hostNow = this[PauseableScheduler_hostScheduler][SchedulerLike_now];
+            const hostNow = this[PauseableScheduler_hostScheduler][ClockLike_now];
             this[PauseableScheduler_timeDrift] +=
                 hostNow - this[PauseableScheduler_pausedTime];
             this[PauseableLike_isPaused][StoreLike_value] = false;

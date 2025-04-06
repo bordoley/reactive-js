@@ -9,6 +9,7 @@ import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
 import {
   AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
+  ClockLike_now,
   ConsumableEnumeratorLike_addOnDataAvailableListener,
   ConsumableEnumeratorLike_isDataAvailable,
   DisposableLike_dispose,
@@ -23,7 +24,6 @@ import {
   QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   SinkLike_complete,
@@ -102,7 +102,7 @@ const genFactory =
     let enumerateIsActive = false;
     const enumerate = async () => {
       const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
-      const startTime = observer[SchedulerLike_now];
+      const startTime = observer[ClockLike_now];
 
       let elapsedTime = 0;
       let queueIsReady = queue[FlowControllerLike_isReady];
@@ -127,7 +127,7 @@ const genFactory =
 
           // Reassign because these values may change after
           // hopping the micro task queue
-          elapsedTime = observer[SchedulerLike_now] - startTime;
+          elapsedTime = observer[ClockLike_now] - startTime;
           queueIsReady = queue[FlowControllerLike_isReady];
           observerIsReady = observer[FlowControllerLike_isReady];
           observerIsCompleted = observer[SinkLike_isCompleted];

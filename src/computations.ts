@@ -13,6 +13,7 @@ import {
 } from "./functions.js";
 import {
   BackpressureStrategy,
+  ClockLike,
   ConsumerLike,
   DisposableContainerLike,
   DisposableLike,
@@ -862,11 +863,11 @@ export interface ScheduledReactiveComputationModule<
   delay(duration: number): PureComputationOf<TComputationType, unknown>;
 
   gen<T>(
-    factory: Factory<Iterator<T | YieldDelay>>,
+    factory: Function1<ClockLike, Iterator<T | YieldDelay>>,
   ): NewInstanceWithSideEffectsOf<TComputationType, T>;
 
   genPure<T>(
-    factory: Factory<Iterator<T | YieldDelay>>,
+    factory: Function1<ClockLike, Iterator<T | YieldDelay>>,
   ): NewPureInstanceOf<TComputationType, T>;
 
   keyFrame(

@@ -7,6 +7,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { bind, none, pipe } from "../../functions.js";
 import {
+  ClockLike_now,
   DisposableContainerLike,
   DisposableLike,
   EnumeratorLike_current,
@@ -15,7 +16,6 @@ import {
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
@@ -94,9 +94,9 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
           ];
         },
 
-        get [SchedulerLike_now]() {
+        get [ClockLike_now]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingSchedulerMixin_scheduler][SchedulerLike_now];
+          return this[DelegatingSchedulerMixin_scheduler][ClockLike_now];
         },
 
         get [SchedulerLike_shouldYield]() {

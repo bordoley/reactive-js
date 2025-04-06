@@ -16,7 +16,7 @@
 
 ### factory
 
-[`Factory`](../../../functions/type-aliases/Factory.md)\<`Iterator`\<[`YieldDelay`](../../../utils/classes/YieldDelay.md) \| `T`, `any`, `any`\>\>
+[`Function1`](../../../functions/type-aliases/Function1.md)\<[`ClockLike`](../../../utils/interfaces/ClockLike.md), `Iterator`\<[`YieldDelay`](../../../utils/classes/YieldDelay.md) \| `T`, `any`, `any`\>\>
 
 ## Returns
 

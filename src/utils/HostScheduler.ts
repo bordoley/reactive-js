@@ -27,6 +27,7 @@ import SchedulerMixin, {
   SchedulerMixinHostLike_shouldYield,
 } from "../utils/__mixins__/SchedulerMixin.js";
 import {
+  ClockLike_now,
   CollectionEnumeratorLike_peek,
   DisposableLike,
   DisposableLike_dispose,
@@ -38,7 +39,6 @@ import {
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
@@ -101,7 +101,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   ) => {
     immmediateOrTimerDisposable[DisposableLike_dispose]();
 
-    const startTime = instance[SchedulerLike_now];
+    const startTime = instance[ClockLike_now];
 
     while (!instance[DisposableLike_isDisposed]) {
       const nextContinuationToRun = peek(instance);
@@ -111,7 +111,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       }
 
       const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
-      const now = instance[SchedulerLike_now];
+      const now = instance[ClockLike_now];
       const delay = dueTime - now;
 
       if (delay > 0) {
@@ -126,7 +126,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       continuation?.[SchedulerContinuationLike_run]();
       instance[HostScheduler_activeContinuation] = none;
 
-      const elapsed = instance[SchedulerLike_now] - startTime;
+      const elapsed = instance[ClockLike_now] - startTime;
       const shouldYield = elapsed > instance[SchedulerLike_maxYieldInterval];
 
       if (shouldYield) {
@@ -142,7 +142,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       SchedulerLike &
       QueueLike<SchedulerContinuationLike>,
   ) => {
-    const now = instance[SchedulerLike_now];
+    const now = instance[ClockLike_now];
     const hostSchedulerContinuationIsScheduled =
       !instance[HostScheduler_nativeSchedulerSubscription][
         DisposableLike_isDisposed
@@ -215,7 +215,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
   const createHostSchedulerInstance = mixInstanceFactory(
     include(SchedulerMixin, QueueMixin()),
     function HostScheduler(
-      this: Omit<SchedulerMixinHostLike, typeof SchedulerLike_now> &
+      this: Omit<SchedulerMixinHostLike, typeof ClockLike_now> &
         Mutable<TProperties>,
       maxYieldInterval: number,
     ): SchedulerLike & DisposableLike {
@@ -256,7 +256,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
             QueueLike<SchedulerContinuationLike>
         >(this);
 
-        const now = this[SchedulerLike_now];
+        const now = this[ClockLike_now];
         const nextContinuation = peek(this);
 
         const yieldToNextContinuation =

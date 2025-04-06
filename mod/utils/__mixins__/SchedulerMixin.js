@@ -5,7 +5,7 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import * as Iterator from "../__internal__/Iterator.js";
@@ -53,7 +53,7 @@ const SchedulerMixin =
             }
             else {
                 continuation[SchedulerContinuationLike_dueTime] =
-                    scheduler[SchedulerLike_now];
+                    scheduler[ClockLike_now];
                 scheduler[SchedulerMixinLike_schedule](continuation);
             }
         };
@@ -91,8 +91,7 @@ const SchedulerMixin =
             init(DelegatingDisposableMixin, this, delegateEnumerator);
             init(QueueMixin(), this, none);
             this[QueueContinuation_delegate] = delegateEnumerator;
-            this[SchedulerContinuationLike_dueTime] =
-                scheduler[SchedulerLike_now];
+            this[SchedulerContinuationLike_dueTime] = scheduler[ClockLike_now];
             this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
             this[QueueContinuation_scheduler] = scheduler;
             pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
@@ -119,7 +118,7 @@ const SchedulerMixin =
                 // parent continuation is active.
                 if (isNone(oldCurrentContinuation)) {
                     scheduler[SchedulerMixinLike_startTime] =
-                        scheduler[SchedulerLike_now];
+                        scheduler[ClockLike_now];
                     scheduler[SchedulerMixinLike_yieldRequested] = false;
                 }
                 // Run any inner continuations first.
@@ -146,7 +145,7 @@ const SchedulerMixin =
                         // with the same due time.
                         this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
                         this[SchedulerContinuationLike_dueTime] =
-                            scheduler[SchedulerLike_now] + (next?.ms ?? 0);
+                            scheduler[ClockLike_now] + (next?.ms ?? 0);
                         rescheduleChildrenOnParentOrScheduler(this);
                         scheduler[SchedulerMixinLike_schedule](this);
                     }
@@ -169,7 +168,7 @@ const SchedulerMixin =
         [SchedulerMixinLike_taskIDCounter]: 0,
     }), proto({
         [SchedulerLike_maxYieldInterval]: 5,
-        get [SchedulerLike_now]() {
+        get [ClockLike_now]() {
             return CurrentTime.now();
         },
         get [SchedulerLike_inContinuation]() {
@@ -185,7 +184,7 @@ const SchedulerMixin =
             }
             const isDisposed = this[DisposableLike_isDisposed];
             const yieldRequested = this[SchedulerMixinLike_yieldRequested];
-            const exceededMaxYieldInterval = this[SchedulerLike_now] >
+            const exceededMaxYieldInterval = this[ClockLike_now] >
                 this[SchedulerMixinLike_startTime] +
                     this[SchedulerLike_maxYieldInterval];
             const currentContinuationHasScheduledChildren = this[SchedulerMixinLike_currentContinuation][CollectionEnumeratorLike_count] > 0;
@@ -200,7 +199,7 @@ const SchedulerMixin =
         },
         [SchedulerMixinLike_schedule](continuation) {
             const activeContinuation = this[SchedulerMixinLike_currentContinuation];
-            const now = this[SchedulerLike_now];
+            const now = this[ClockLike_now];
             const dueTime = continuation[SchedulerContinuationLike_dueTime];
             if (dueTime > now ||
                 isNone(activeContinuation) ||

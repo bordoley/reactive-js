@@ -194,17 +194,14 @@ export interface FlowControlQueueLike<T = unknown>
     ConsumableEnumeratorLike<T>,
     FlowControllerLike {}
 
-export const SchedulerLike_inContinuation = Symbol(
-  "SchedulerLike_inContinuation",
-);
-export const SchedulerLike_maxYieldInterval = Symbol(
-  "SchedulerLike_maxYieldInterval",
-);
+export const ClockLike_now = Symbol("ClockLike_now");
 
-export const SchedulerLike_now = Symbol("SchedulerLike_now");
-export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
-export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
-export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+export interface ClockLike {
+  /**
+   * The current time in milliseconds.
+   */
+  readonly [ClockLike_now]: number;
+}
 
 export class YieldDelay {
   constructor(readonly ms: number) {}
@@ -217,13 +214,24 @@ export type SchedulerContinuation = Function1<
   SchedulerLike,
   Iterator<Optional<YieldDelay>>
 >;
+
+export const SchedulerLike_inContinuation = Symbol(
+  "SchedulerLike_inContinuation",
+);
+export const SchedulerLike_maxYieldInterval = Symbol(
+  "SchedulerLike_maxYieldInterval",
+);
+export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
+export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
  *
  * @noInheritDoc
  */
-export interface SchedulerLike extends DisposableContainerLike {
+export interface SchedulerLike extends DisposableContainerLike, ClockLike {
   /**
    * Boolean flag indicating the scheduler is currently
    * running a continuation.
@@ -235,11 +243,6 @@ export interface SchedulerLike extends DisposableContainerLike {
    * before yielding control back to the underlying system scheduler.
    */
   readonly [SchedulerLike_maxYieldInterval]: number;
-
-  /**
-   * The current time in milliseconds.
-   */
-  readonly [SchedulerLike_now]: number;
 
   /**
    * Boolean flag indicating whether a running continuation

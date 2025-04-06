@@ -40,12 +40,7 @@ export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 export const ConsumableEnumeratorLike_addOnDataAvailableListener = Symbol("ConsumableEnumeratorLike_addOnDataAvailableListener");
 export const ConsumableEnumeratorLike_isDataAvailable = Symbol("ConsumableEnumeratorLike_isDataAvailable");
-export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
-export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");
-export const SchedulerLike_now = Symbol("SchedulerLike_now");
-export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
-export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
-export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
+export const ClockLike_now = Symbol("ClockLike_now");
 export class YieldDelay {
     ms;
     constructor(ms) {
@@ -53,6 +48,11 @@ export class YieldDelay {
     }
 }
 export const delayMs = (delay) => newInstance(YieldDelay, clampPositiveInteger(delay));
+export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
+export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");
+export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
+export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
+export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
 export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
 export const PauseableLike_pause = Symbol("PauseableLike_pause");

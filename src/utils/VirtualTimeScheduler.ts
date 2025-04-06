@@ -12,6 +12,7 @@ import {
 import { Optional, none } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
 import {
+  ClockLike_now,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
   DisposableLike,
@@ -22,7 +23,6 @@ import {
   QueueLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../utils.js";
@@ -53,7 +53,7 @@ const VirtualTimeScheduler_microTaskTicks = Symbol(
 const VirtualTimeScheduler_queue = Symbol("VirtualTimeScheduler_queue");
 
 type TProperties = {
-  [SchedulerLike_now]: number;
+  [ClockLike_now]: number;
   [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
   [VirtualTimeScheduler_queue]: QueueLike<SchedulerContinuationLike>;
@@ -81,7 +81,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
       return this;
     },
     props<TProperties>({
-      [SchedulerLike_now]: 0,
+      [ClockLike_now]: 0,
       [VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,
       [VirtualTimeScheduler_microTaskTicks]: 0,
       [VirtualTimeScheduler_queue]: none,
@@ -107,7 +107,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[CollectionEnumeratorLike_count] > 0)
         ) {
-          const currentTime = this[SchedulerLike_now];
+          const currentTime = this[ClockLike_now];
           const firstContinuation = queue[CollectionEnumeratorLike_peek];
           const firstContinuationDueTime =
             firstContinuation?.[SchedulerContinuationLike_dueTime] ??
@@ -115,7 +115,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           if (firstContinuationDueTime > currentTime) {
             // Fast forward time to avoid unnecessary loops
             const dueTime = firstContinuationDueTime;
-            this[SchedulerLike_now] = max(dueTime, currentTime + 1);
+            this[ClockLike_now] = max(dueTime, currentTime + 1);
           }
 
           this[VirtualTimeScheduler_queue] = Queue.createSorted(
@@ -154,7 +154,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             this[VirtualTimeScheduler_maxMicroTaskTicks];
 
           if (queueHeadDueTime > currentTime || exceededMaxMicroTicks) {
-            this[SchedulerLike_now] = max(queueHeadDueTime, currentTime + 1);
+            this[ClockLike_now] = max(queueHeadDueTime, currentTime + 1);
           }
         }
 

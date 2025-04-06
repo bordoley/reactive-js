@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__inte
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -27,14 +27,14 @@ export const create = /*@PURE__*/ (() => {
     };
     const hostSchedulerContinuation = (instance, immmediateOrTimerDisposable) => {
         immmediateOrTimerDisposable[DisposableLike_dispose]();
-        const startTime = instance[SchedulerLike_now];
+        const startTime = instance[ClockLike_now];
         while (!instance[DisposableLike_isDisposed]) {
             const nextContinuationToRun = peek(instance);
             if (isNone(nextContinuationToRun)) {
                 break;
             }
             const dueTime = nextContinuationToRun[SchedulerContinuationLike_dueTime];
-            const now = instance[SchedulerLike_now];
+            const now = instance[ClockLike_now];
             const delay = dueTime - now;
             if (delay > 0) {
                 scheduleOnHost(instance);
@@ -45,7 +45,7 @@ export const create = /*@PURE__*/ (() => {
             instance[HostScheduler_activeContinuation] = continuation;
             continuation?.[SchedulerContinuationLike_run]();
             instance[HostScheduler_activeContinuation] = none;
-            const elapsed = instance[SchedulerLike_now] - startTime;
+            const elapsed = instance[ClockLike_now] - startTime;
             const shouldYield = elapsed > instance[SchedulerLike_maxYieldInterval];
             if (shouldYield) {
                 scheduleOnHost(instance);
@@ -54,7 +54,7 @@ export const create = /*@PURE__*/ (() => {
         }
     };
     const scheduleOnHost = (instance) => {
-        const now = instance[SchedulerLike_now];
+        const now = instance[ClockLike_now];
         const hostSchedulerContinuationIsScheduled = !instance[HostScheduler_nativeSchedulerSubscription][DisposableLike_isDisposed];
         const hostSchedulerContinuationDueTime = instance[HostScheduler_hostSchedulerContinuationDueTime];
         const nextContinuation = peek(instance);
@@ -114,7 +114,7 @@ export const create = /*@PURE__*/ (() => {
     }), {
         get [SchedulerMixinHostLike_shouldYield]() {
             unsafeCast(this);
-            const now = this[SchedulerLike_now];
+            const now = this[ClockLike_now];
             const nextContinuation = peek(this);
             const yieldToNextContinuation = isSome(nextContinuation) &&
                 this[HostScheduler_activeContinuation] !== nextContinuation &&

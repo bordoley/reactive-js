@@ -13,6 +13,7 @@
 ## Interfaces
 
 - [AsyncEnumeratorLike](interfaces/AsyncEnumeratorLike.md)
+- [ClockLike](interfaces/ClockLike.md)
 - [CollectionEnumeratorLike](interfaces/CollectionEnumeratorLike.md)
 - [ConsumableEnumeratorLike](interfaces/ConsumableEnumeratorLike.md)
 - [ConsumerLike](interfaces/ConsumerLike.md)
@@ -40,6 +41,7 @@
 - [AsyncEnumeratorLike\_current](variables/AsyncEnumeratorLike_current.md)
 - [AsyncEnumeratorLike\_hasCurrent](variables/AsyncEnumeratorLike_hasCurrent.md)
 - [AsyncEnumeratorLike\_moveNext](variables/AsyncEnumeratorLike_moveNext.md)
+- [ClockLike\_now](variables/ClockLike_now.md)
 - [CollectionEnumeratorLike\_count](variables/CollectionEnumeratorLike_count.md)
 - [CollectionEnumeratorLike\_peek](variables/CollectionEnumeratorLike_peek.md)
 - [ConsumableEnumeratorLike\_addOnDataAvailableListener](variables/ConsumableEnumeratorLike_addOnDataAvailableListener.md)
@@ -66,7 +68,6 @@
 - [QueueLike\_enqueue](variables/QueueLike_enqueue.md)
 - [SchedulerLike\_inContinuation](variables/SchedulerLike_inContinuation.md)
 - [SchedulerLike\_maxYieldInterval](variables/SchedulerLike_maxYieldInterval.md)
-- [SchedulerLike\_now](variables/SchedulerLike_now.md)
 - [SchedulerLike\_requestYield](variables/SchedulerLike_requestYield.md)
 - [SchedulerLike\_schedule](variables/SchedulerLike_schedule.md)
 - [SchedulerLike\_shouldYield](variables/SchedulerLike_shouldYield.md)

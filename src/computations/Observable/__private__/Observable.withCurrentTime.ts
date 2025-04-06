@@ -8,9 +8,9 @@ import {
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import { DelegatingEventListenerLike_delegate } from "../../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import {
+  ClockLike_now,
   EventListenerLike_notify,
   ObserverLike,
-  SchedulerLike_now,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import {
@@ -58,8 +58,7 @@ const createWithCurrentTimeOperator: <TA, TB>(
         this: TProperties & DelegatingLiftedSinkLike<ObserverLike, TA, TB>,
         next: TA,
       ) {
-        const currentTime =
-          this[LiftedSinkLike_subscription][SchedulerLike_now];
+        const currentTime = this[LiftedSinkLike_subscription][ClockLike_now];
         const mapped = this[WithCurrentTimeOperator_selector](
           currentTime,
           next,

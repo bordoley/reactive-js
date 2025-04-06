@@ -6,10 +6,10 @@ import {
 } from "../../__internal__/testing.js";
 import { pipe } from "../../functions.js";
 import {
+  ClockLike_now,
   DisposableLike_dispose,
   PauseableLike_pause,
   PauseableLike_resume,
-  SchedulerLike_now,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
   delayMs,
@@ -82,12 +82,12 @@ testModule(
 
     pauseableScheduler[SchedulerLike_schedule](function* () {
       yield delayMs(3);
-      result[Array_push](pauseableScheduler[SchedulerLike_now]);
+      result[Array_push](pauseableScheduler[ClockLike_now]);
     });
 
     pauseableScheduler[SchedulerLike_schedule](function* () {
       yield delayMs(5);
-      result[Array_push](pauseableScheduler[SchedulerLike_now]);
+      result[Array_push](pauseableScheduler[ClockLike_now]);
     });
 
     pauseableScheduler[PauseableLike_resume]();
