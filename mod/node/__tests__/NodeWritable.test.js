@@ -74,7 +74,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
             callback();
         },
     });
-    const consumer = pipe(writable, NodeWritable.toConsumer({ autoDispose: true }));
+    const consumer = pipe(writable, NodeWritable.toConsumer());
     pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(EventSourceLike_subscribe, consumer));
     await DisposableContainer.toPromise(consumer);
     pipe(writable.destroyed, expectFalse("expected writable not to be destroyed"));
@@ -89,7 +89,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
             callback(err);
         },
     });
-    const consumer = pipe(writable, NodeWritable.toConsumer({ autoDispose: true }));
+    const consumer = pipe(writable, NodeWritable.toConsumer());
     pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(EventSourceLike_subscribe, consumer));
     await pipe(consumer, DisposableContainer.toPromise, expectPromiseToThrow);
     pipe(writable.destroyed, expectEquals(true));
@@ -107,7 +107,7 @@ testModule("NodeWritable", describe("toConsumer", testAsync("writing to writable
             },
         });
         const compressionPipeline = pipeline(zlib.createGzip(), zlib.createGunzip(), writable, Disposable.toErrorHandler(scheduler));
-        const consumer = pipe(compressionPipeline, NodeWritable.toConsumer({ autoDispose: true }));
+        const consumer = pipe(compressionPipeline, NodeWritable.toConsumer());
         pipe(["abc", "defg"], Computation.fromReadonlyArray(ProducerModule), Producer.encodeUtf8(), invoke(EventSourceLike_subscribe, consumer));
         await DisposableContainer.toPromise(consumer);
         pipe(writable.destroyed, expectEquals(true));

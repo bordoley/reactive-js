@@ -36,10 +36,7 @@ testModule(
         },
       });
 
-      const consumer = pipe(
-        writable,
-        NodeWritable.toConsumer({ autoDispose: true }),
-      );
+      const consumer = pipe(writable, NodeWritable.toConsumer());
 
       pipe(
         ["abc", "defg"],
@@ -68,10 +65,7 @@ testModule(
         },
       });
 
-      const consumer = pipe(
-        writable,
-        NodeWritable.toConsumer({ autoDispose: true }),
-      );
+      const consumer = pipe(writable, NodeWritable.toConsumer());
 
       pipe(
         ["abc", "defg"],
@@ -104,10 +98,7 @@ testModule(
         Disposable.toErrorHandler(scheduler),
       );
 
-      const consumer = pipe(
-        compressionPipeline,
-        NodeWritable.toConsumer({ autoDispose: true }),
-      );
+      const consumer = pipe(compressionPipeline, NodeWritable.toConsumer());
 
       pipe(
         ["abc", "defg"],

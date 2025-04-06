@@ -12,11 +12,11 @@ import * as Publisher from "../computations/Publisher.js";
 import { PublisherLike } from "../computations.js";
 import {
   Function1,
-  Optional,
   SideEffect1,
   bindMethod,
   none,
   pipe,
+  returns,
 } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
@@ -36,22 +36,18 @@ import {
 import * as NodeStream from "./NodeStream.js";
 
 interface NodeWritable {
-  toConsumer(options?: {
-    autoDispose?: boolean;
-  }): Function1<Writable, ConsumerLike<Uint8Array>>;
+  toConsumer(): Function1<Writable, ConsumerLike<Uint8Array>>;
 }
 
 type Signature = NodeWritable;
 
 export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
-  const WritableConsumer_autoDispose = Symbol("WritableConsumer_autoDispose");
   const WritableConsumer_writable = Symbol("WritableConsumer_writable");
   const WritableConsumer_onReadyPublisher = Symbol(
     "WritableConsumer_onReadyPublisher",
   );
 
   type TProperties = {
-    [WritableConsumer_autoDispose]: boolean;
     [WritableConsumer_writable]: Writable;
     [SinkLike_isCompleted]: boolean;
     [WritableConsumer_onReadyPublisher]: PublisherLike<void>;
@@ -62,20 +58,12 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
     function WritableConsumer(
       this: Omit<ConsumerLike<Uint8Array>, keyof DisposableLike> & TProperties,
       writable: Writable,
-      options: Optional<{ autoDispose?: boolean }>,
     ): ConsumerLike<Uint8Array> {
       init(DisposableMixin, this);
 
       this[WritableConsumer_writable] = writable;
-      this[WritableConsumer_autoDispose] = options?.autoDispose ?? false;
 
-      writable.on("finish", () => {
-        this[SinkLike_isCompleted] = true;
-
-        if (this[WritableConsumer_autoDispose]) {
-          this[DisposableLike_dispose]();
-        }
-      });
+      writable.on("finish", bindMethod(this, DisposableLike_dispose));
 
       pipe(
         this,
@@ -86,7 +74,6 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
       return this;
     },
     props<TProperties>({
-      [WritableConsumer_autoDispose]: false,
       [WritableConsumer_writable]: none,
       [SinkLike_isCompleted]: false,
       [WritableConsumer_onReadyPublisher]: none,
@@ -158,5 +145,5 @@ export const toConsumer: Signature["toConsumer"] = /*@__PURE__*/ (() => {
     }),
   );
 
-  return options => writable => createNodeWritableConsumer(writable, options);
+  return returns(createNodeWritableConsumer);
 })();

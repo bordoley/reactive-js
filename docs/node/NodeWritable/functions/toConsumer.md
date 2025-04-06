@@ -6,15 +6,7 @@
 
 # Function: toConsumer()
 
-> **toConsumer**(`options`?): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Writable`, [`ConsumerLike`](../../../utils/interfaces/ConsumerLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>\>
-
-## Parameters
-
-### options?
-
-#### autoDispose?
-
-`boolean`
+> **toConsumer**(): [`Function1`](../../../functions/type-aliases/Function1.md)\<`Writable`, [`ConsumerLike`](../../../utils/interfaces/ConsumerLike.md)\<`Uint8Array`\<`ArrayBufferLike`\>\>\>
 
 ## Returns
 
