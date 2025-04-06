@@ -8,4 +8,4 @@
 
 ## Functions
 
-- [subscribe](functions/subscribe.md)
+- [get](functions/get.md)

@@ -39,6 +39,7 @@ import {
   pipe,
   returns,
 } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import {
@@ -58,7 +59,6 @@ import {
   WindowLocationURI,
 } from "../web.js";
 import * as Element from "./Element.js";
-import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 
 interface WebWindowLocationModule {
   get(): WindowLocationLike & DisposableLike;

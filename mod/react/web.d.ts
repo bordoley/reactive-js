@@ -3,7 +3,7 @@ import { ReadonlyObjectMapLike } from "../collections.js";
 import { AnimationGroupLike, AnimationLike, SpringLike } from "../computations/Streamable.js";
 import { BroadcasterLike, PureSynchronousObservableLike } from "../computations.js";
 import { Function1, Optional, SideEffect1, Tuple2, Updater } from "../functions.js";
-import { CSSStyleMapLike, Rect, ScrollValue, WindowLocationLike, WindowLocationURI } from "../web.js";
+import { CSSStyleMapLike, Rect, ScrollValue, WindowLocationURI } from "../web.js";
 type DOMEvents<TElement extends Element> = keyof Omit<DOMAttributes<TElement>, "children" | "dangerouslySetInnerHTML">;
 type DOMEventTypeMap<TElement extends Element> = {
     [EventName in DOMEvents<TElement>]: NonNullable<DOMAttributes<TElement>[EventName]> extends React.EventHandler<infer TEvent> ? TEvent : never;
@@ -11,7 +11,6 @@ type DOMEventTypeMap<TElement extends Element> = {
 export type DOMEventTypeOf<TEventName extends DOMEvents<TElement>, TElement extends Element = any> = NonNullable<DOMEventTypeMap<TElement>[TEventName]>;
 export interface ReactWebModule {
     WindowLocationProvider(props: {
-        windowLocation: WindowLocationLike;
         children: React.ReactNode;
     }): React.ReactNode;
     /**

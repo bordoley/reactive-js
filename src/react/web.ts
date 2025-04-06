@@ -47,6 +47,7 @@ import { useDisposable, useEventSource, useStreamable } from "../react.js";
 import { EventListenerLike_notify } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
+import * as WindowLocation from "../web/WindowLocation.js";
 import {
   CSSStyleMapLike,
   Rect,
@@ -58,7 +59,6 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
-import * as WindowLocation from "../web/WindowLocation.js";
 
 type DOMEvents<TElement extends Element> = keyof Omit<
   DOMAttributes<TElement>,
@@ -79,9 +79,7 @@ export type DOMEventTypeOf<
 > = NonNullable<DOMEventTypeMap<TElement>[TEventName]>;
 
 export interface ReactWebModule {
-  WindowLocationProvider(props: {
-    children: React.ReactNode;
-  }): React.ReactNode;
+  WindowLocationProvider(props: { children: React.ReactNode }): React.ReactNode;
 
   /**
    */

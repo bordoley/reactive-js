@@ -488,10 +488,6 @@ readonly `unknown`[]
 
 `ReactNode`
 
-###### windowLocation
-
-[`WindowLocationLike`](../../../web/interfaces/WindowLocationLike.md)
-
 #### Returns
 
 `ReactNode`

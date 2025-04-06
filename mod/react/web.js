@@ -13,10 +13,11 @@ import { useDisposable, useEventSource, useStreamable } from "../react.js";
 import { EventListenerLike_notify } from "../utils.js";
 import * as AnimationFrameScheduler from "../web/AnimationFrameScheduler.js";
 import * as WebElement from "../web/Element.js";
+import * as WindowLocation from "../web/WindowLocation.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 const WindowLocationContext = /*@__PURE__*/ createContext(none);
-export const WindowLocationProvider = ({ windowLocation, children, }) => createElement(WindowLocationContext.Provider, {
-    value: windowLocation,
+export const WindowLocationProvider = ({ children, }) => createElement(WindowLocationContext.Provider, {
+    value: WindowLocation.get(),
 }, children);
 export const useAnimate = (animation, selector, deps) => {
     const ref = useRef(nullObject);

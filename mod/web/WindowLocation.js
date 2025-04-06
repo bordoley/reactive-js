@@ -9,7 +9,8 @@ import * as Observable from "../computations/Observable.js";
 import * as Streamable from "../computations/Streamable.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, StoreLike_value, StreamableLike_stream, } from "../computations.js";
-import { alwaysFalse, bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseIf, returns, } from "../functions.js";
+import { alwaysFalse, bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, returns, } from "../functions.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import DelegatingDisposableMixin from "../utils/__mixins__/DelegatingDisposableMixin.js";
 import { DisposableContainerLike_add, EventListenerLike_notify, } from "../utils.js";
@@ -56,7 +57,7 @@ const createSyncToHistoryStream = (f, scheduler) => Streamable.create(compose(Ob
     document.title = title;
     f({ title, counter }, "", String(serializableURI));
 })))[StreamableLike_stream](scheduler);
-export const subscribe = /*@__PURE__*/ (() => {
+export const get = /*@__PURE__*/ (() => {
     const WindowLocation_delegate = Symbol("WindowLocation_delegate");
     const createWindowLocation = mixInstanceFactory(include(DelegatingDisposableMixin), function WindowLocationStream(delegate) {
         init(DelegatingDisposableMixin, this, delegate);
@@ -102,8 +103,11 @@ export const subscribe = /*@__PURE__*/ (() => {
         },
     }));
     let currentWindowLocation = none;
-    return (scheduler) => {
-        raiseIf(isSome(currentWindowLocation), "Cannot stream more than once");
+    return () => {
+        if (isSome(currentWindowLocation)) {
+            return currentWindowLocation;
+        }
+        const scheduler = DefaultScheduler.get();
         const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler);
         const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler);
         const locationStream = pipe(Streamable.stateStore(() => ({
