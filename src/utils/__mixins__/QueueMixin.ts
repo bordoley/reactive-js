@@ -307,30 +307,6 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             return true;
           },
 
-          *[Symbol.iterator](this: QueueLike<T> & TProperties): Iterator<T> {
-            const values = this[QueueMixin_values];
-            const count = this[CollectionEnumeratorLike_count];
-
-            if (count === 1) {
-              yield values as T;
-            } else if (count > 1) {
-              unsafeCast<Array<Optional<T>>>(values);
-              const valuesLength = values[Array_length];
-              const head = this[QueueMixin_head];
-              const tail = this[QueueMixin_tail];
-
-              const headCount = head <= tail ? tail : valuesLength;
-              for (let i = head; i < headCount; i++) {
-                yield values[i] as T;
-              }
-
-              const tailCount = head <= tail ? 0 : tail;
-              for (let i = 0; i < tailCount; i++) {
-                yield values[i] as T;
-              }
-            }
-          },
-
           [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
             const isDisposed = this[DisposableLike_isDisposed];
             const backpressureStrategy = this[QueueLike_backpressureStrategy];

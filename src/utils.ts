@@ -107,8 +107,7 @@ export const CollectionEnumeratorLike_peek = Symbol(
   "CollectionEnumeratorLike_peek",
 );
 export interface CollectionEnumeratorLike<T = unknown>
-  extends EnumeratorLike<T>,
-    Iterable<T> {
+  extends EnumeratorLike<T> {
   readonly [CollectionEnumeratorLike_count]: number;
   readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }

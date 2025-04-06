@@ -100,7 +100,8 @@ testModule("Queue", test("enqueue", () => {
         queue[QueueLike_enqueue](i);
     }
     let prev = 9;
-    for (const v of queue) {
+    while (queue[EnumeratorLike_moveNext]()) {
+        const v = queue[EnumeratorLike_current];
         pipe(v, expectEquals(prev + 1));
         prev = v;
     }

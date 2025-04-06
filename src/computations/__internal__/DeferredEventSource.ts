@@ -40,10 +40,13 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
 import {
+  CollectionEnumeratorLike,
   ConsumerLike,
   DisposableContainerLike_add,
   DisposableLike,
   DisposableLike_dispose,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../utils.js";
@@ -318,7 +321,10 @@ interface Signature {
     genPure: (
       factory: Factory<Iterator<T>>,
     ) => DeferredEventSourceLike<T, TConsumer>,
-    takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>,
+    takeLast: (
+      count: number,
+      consumer: TConsumer,
+    ) => TConsumer & CollectionEnumeratorLike<T>,
     options?: { readonly count?: number },
   ): Function1<
     DeferredEventSourceLike<T, TConsumer>,
@@ -869,7 +875,10 @@ export const takeLast: Signature["takeLast"] =
     genPure: (
       factory: Factory<Iterator<T>>,
     ) => DeferredEventSourceLike<T, TConsumer>,
-    takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>,
+    takeLast: (
+      count: number,
+      consumer: TConsumer,
+    ) => TConsumer & CollectionEnumeratorLike<T>,
     options?: { readonly count?: number },
   ) =>
   (obs: DeferredEventSourceLike<T, TConsumer>) =>
@@ -879,11 +888,13 @@ export const takeLast: Signature["takeLast"] =
       const takeLastSink = pipe(
         takeLast(count, consumer),
         Disposable.addTo(consumer),
-        DisposableContainer.onComplete(() =>
-          genPure(bindMethod(takeLastSink, Symbol.iterator))[
-            EventSourceLike_subscribe
-          ](consumer),
-        ),
+        DisposableContainer.onComplete(() => {
+          genPure(function* TakeLast() {
+            while (takeLastSink[EnumeratorLike_moveNext]()) {
+              yield takeLastSink[EnumeratorLike_current];
+            }
+          })[EventSourceLike_subscribe](consumer);
+        }),
       );
 
       pipe(obs, invoke(EventSourceLike_subscribe, takeLastSink));

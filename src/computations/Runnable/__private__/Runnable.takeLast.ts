@@ -5,17 +5,15 @@ import {
   RunnableLike,
   RunnableLike_eval,
 } from "../../../computations.js";
-import {
-  Optional,
-  bindMethod,
-  invoke,
-  newInstance,
-  pipe,
-} from "../../../functions.js";
+import { Optional, invoke, newInstance, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
-import { SinkLike } from "../../../utils.js";
+import {
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
+  SinkLike,
+} from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import { Runnable_genPure } from "./Runnable.gen.js";
 
@@ -39,7 +37,11 @@ class TakeLastRunnable<T> implements RunnableLike<T> {
       Disposable.addTo(sink),
       DisposableContainer.onComplete(() =>
         pipe(
-          Runnable_genPure(bindMethod(takeLastSink, Symbol.iterator)),
+          Runnable_genPure(function* TakeLast() {
+            while (takeLastSink[EnumeratorLike_moveNext]()) {
+              yield takeLastSink[EnumeratorLike_current];
+            }
+          }),
           invoke(RunnableLike_eval, sink),
         ),
       ),

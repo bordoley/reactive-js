@@ -61,7 +61,7 @@ export interface AsyncEnumeratorLike<T = unknown> extends DisposableLike {
 }
 export declare const CollectionEnumeratorLike_count: unique symbol;
 export declare const CollectionEnumeratorLike_peek: unique symbol;
-export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>, Iterable<T> {
+export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
     readonly [CollectionEnumeratorLike_count]: number;
     readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }

@@ -1,6 +1,6 @@
 import { BroadcasterLike, ComputationLike_isPure, ComputationLike_isSynchronous, DeferredEventSourceLike } from "../../computations.js";
 import { Factory, Function1, Function2, Optional, Predicate, SideEffect1 } from "../../functions.js";
-import { ConsumerLike, DisposableLike } from "../../utils.js";
+import { CollectionEnumeratorLike, ConsumerLike, DisposableLike } from "../../utils.js";
 import { LatestEventListenerContextLike, LatestEventListenerLike, LatestEventListenerMode } from "../__mixins__/LatestEventListenerMixin.js";
 import { LiftedSinkLike } from "./LiftedSource.js";
 interface Signature {
@@ -87,7 +87,7 @@ interface Signature {
     latest<TConsumer extends ConsumerLike<ReadonlyArray<unknown>>, TSource extends DeferredEventSourceLike<unknown, TSourceConsumer>, TSourceConsumer extends ConsumerLike<unknown> & LatestEventListenerLike<unknown>>(sources: readonly TSource[], mode: LatestEventListenerMode, createLatestEventListener: Function2<TConsumer, LatestEventListenerContextLike, TSourceConsumer>): DeferredEventSourceLike<ReadonlyArray<unknown>, TConsumer>;
     merge<TConsumer extends ConsumerLike>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>): <T>(...sources: readonly DeferredEventSourceLike<T, TConsumer>[]) => DeferredEventSourceLike<T, TConsumer>;
     repeat<TConsumer extends ConsumerLike<T>, T>(createDelegatingNonCompletingConsumer: Function1<TConsumer, TConsumer>, predicate: Optional<Predicate<number> | number>): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
-    takeLast<TConsumer extends ConsumerLike<T>, T>(genPure: (factory: Factory<Iterator<T>>) => DeferredEventSourceLike<T, TConsumer>, takeLast: (count: number, consumer: TConsumer) => TConsumer & Iterable<T>, options?: {
+    takeLast<TConsumer extends ConsumerLike<T>, T>(genPure: (factory: Factory<Iterator<T>>) => DeferredEventSourceLike<T, TConsumer>, takeLast: (count: number, consumer: TConsumer) => TConsumer & CollectionEnumeratorLike<T>, options?: {
         readonly count?: number;
     }): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer>>;
     withEffect<T, TConsumer extends ConsumerLike<T>>(effect: () => void | DisposableLike | SideEffect1<Optional<Error>>): Function1<DeferredEventSourceLike<T, TConsumer>, DeferredEventSourceLike<T, TConsumer> & {

@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EnumeratorLike`](EnumeratorLike.md)\<`T`\>.`Iterable`\<`T`\>
+- [`EnumeratorLike`](EnumeratorLike.md)\<`T`\>
 
 ## Extended by
 
