@@ -172,7 +172,11 @@ export const bind = /*@__PURE__*/ (() => {
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
-export const returns = (v) => () => v;
+// prettier-ignore
+export const returns = ((v) => v === true ? alwaysTrue :
+    v === false ? alwaysFalse :
+        isObject(v) && !isFunction ? makeReturnsObject(v) :
+            () => v);
 export const memoize = (makeFunction) => {
     const cache = newInstance(WeakMap);
     return (m) => cache.get(m) ??
@@ -182,6 +186,7 @@ export const memoize = (makeFunction) => {
             return f;
         })();
 };
+const makeReturnsObject = /*@__PURE__*/ memoize(o => () => o);
 /**
  * An alias for undefined.
  */

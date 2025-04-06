@@ -1608,10 +1608,13 @@ export const bind: Signature["bind"] = /*@__PURE__*/ (() => {
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
+// prettier-ignore
 export const returns: Signature["returns"] =
-  <T>(v: T) =>
-  () =>
-    v;
+  ((v: unknown) => 
+    v === true ? alwaysTrue :
+    v === false ? alwaysFalse :
+    isObject(v) && !isFunction ? makeReturnsObject(v) :
+    () => v) as Signature["returns"];
 
 export const memoize = <TObj extends object, TMemoized>(
   makeFunction: Function1<TObj, TMemoized>,
@@ -1626,6 +1629,8 @@ export const memoize = <TObj extends object, TMemoized>(
       return f;
     })();
 };
+
+const makeReturnsObject = /*@__PURE__*/ memoize(o => () => o);
 
 /**
  * An alias for undefined.
