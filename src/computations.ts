@@ -75,7 +75,6 @@ export interface AsyncIterableLike<T = unknown>
   extends AsyncIterable<T>,
     ComputationLike {
   readonly [ComputationLike_isDeferred]: Optional<true>;
-  readonly [ComputationLike_isSynchronous]: false;
 }
 
 export interface PureAsyncIterableLike<T = unknown>
@@ -119,29 +118,31 @@ export interface DeferredEventSourceLike<
   T = unknown,
   TConsumer extends ConsumerLike<T> = ConsumerLike<T>,
 > extends EventSourceLike<T, TConsumer> {
-  [ComputationLike_isDeferred]: true;
+  [ComputationLike_isDeferred]: Optional<true>;
 }
 
 export interface ProducerLike<out T = unknown>
   extends DeferredEventSourceLike<T, ConsumerLike<T>>,
     ComputationLike {
-  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]: Optional<true>;
   readonly [ComputationLike_isSynchronous]: false;
 }
 
 export interface PureProducerLike<out T = unknown> extends ProducerLike<T> {
   readonly [ComputationLike_isPure]: Optional<true>;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
 export interface ProducerWithSideEffectsLike<out T = unknown>
   extends ProducerLike<T> {
   readonly [ComputationLike_isPure]: false;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
 export interface ObservableLike<out T = unknown>
   extends DeferredEventSourceLike<T, ObserverLike<T>>,
     ComputationLike {
-  readonly [ComputationLike_isDeferred]: true;
+  readonly [ComputationLike_isDeferred]: Optional<true>;
 }
 
 export interface PureObservableLike<out T = unknown> extends ObservableLike<T> {
@@ -860,7 +861,7 @@ export interface ScheduledReactiveComputationModule<
     duration: number,
   ): PureComputationOperator<TComputationType, T, T>;
 
-  delay(duration: number): PureComputationOf<TComputationType, unknown>;
+  delay<T>(duration: number): PureComputationOf<TComputationType, T>;
 
   gen<T>(
     factory: Function1<ClockLike, Iterator<T | YieldDelay>>,

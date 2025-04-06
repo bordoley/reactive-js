@@ -43,8 +43,8 @@
 
 ### \[ComputationLike\_isSynchronous\]
 
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
-#### Overrides
+#### Inherited from
 
 [`ComputationLike`](ComputationLike.md).[`[ComputationLike_isSynchronous]`](ComputationLike.md#computationlike_issynchronous)

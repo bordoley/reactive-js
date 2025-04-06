@@ -12,6 +12,7 @@ import * as Streamable from "../../computations/Streamable.js";
 import * as SynchronousObservable from "../../computations/SynchronousObservable.js";
 import { StreamableLike_stream } from "../../computations.js";
 import {
+  Updater,
   bindMethod,
   identity,
   invoke,
@@ -158,7 +159,7 @@ testModule(
                 delay: 1,
                 delayStart: true,
               }),
-              Observable.map(x => (_: number) => x),
+              Observable.map((x: number) => (_: number) => x),
               Observable.takeFirst({ count: 2 }),
             ),
           (_oldState, _newState) =>
@@ -200,7 +201,7 @@ testModule(
             ),
           (_oldState, _newState) => {
             updateCnt++;
-            return SynchronousObservable.delay(1);
+            return SynchronousObservable.delay<Updater<number>>(1);
           },
           { throttleDuration: 20 },
         ),

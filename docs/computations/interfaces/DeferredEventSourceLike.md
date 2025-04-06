@@ -25,7 +25,7 @@
 
 ### \[ComputationLike\_isDeferred\]
 
-> **\[ComputationLike\_isDeferred\]**: `true`
+> **\[ComputationLike\_isDeferred\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Overrides
 

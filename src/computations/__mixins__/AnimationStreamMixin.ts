@@ -72,7 +72,7 @@ const AnimationStreamMixin: <TEvent, T>() => Mixin3<
             pipe(
               f(event),
               Observable.subscribeOn(pauseableScheduler),
-              Observable.withEffect(() => {
+              Observable.withEffect<T>(() => {
                 animationIsRunning[StoreLike_value] = true;
                 return () => {
                   animationIsRunning[StoreLike_value] = false;

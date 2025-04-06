@@ -34,7 +34,6 @@ export interface IterableWithSideEffectsLike<T = unknown> extends IterableLike<T
 }
 export interface AsyncIterableLike<T = unknown> extends AsyncIterable<T>, ComputationLike {
     readonly [ComputationLike_isDeferred]: Optional<true>;
-    readonly [ComputationLike_isSynchronous]: false;
 }
 export interface PureAsyncIterableLike<T = unknown> extends AsyncIterableLike<T> {
     readonly [ComputationLike_isPure]: Optional<true>;
@@ -59,20 +58,22 @@ export interface EventSourceLike<out T = unknown, TEventListener extends EventLi
     [EventSourceLike_subscribe](EventListener: TEventListener): void;
 }
 export interface DeferredEventSourceLike<T = unknown, TConsumer extends ConsumerLike<T> = ConsumerLike<T>> extends EventSourceLike<T, TConsumer> {
-    [ComputationLike_isDeferred]: true;
+    [ComputationLike_isDeferred]: Optional<true>;
 }
 export interface ProducerLike<out T = unknown> extends DeferredEventSourceLike<T, ConsumerLike<T>>, ComputationLike {
-    readonly [ComputationLike_isDeferred]: true;
+    readonly [ComputationLike_isDeferred]: Optional<true>;
     readonly [ComputationLike_isSynchronous]: false;
 }
 export interface PureProducerLike<out T = unknown> extends ProducerLike<T> {
     readonly [ComputationLike_isPure]: Optional<true>;
+    readonly [ComputationLike_isSynchronous]: false;
 }
 export interface ProducerWithSideEffectsLike<out T = unknown> extends ProducerLike<T> {
     readonly [ComputationLike_isPure]: false;
+    readonly [ComputationLike_isSynchronous]: false;
 }
 export interface ObservableLike<out T = unknown> extends DeferredEventSourceLike<T, ObserverLike<T>>, ComputationLike {
-    readonly [ComputationLike_isDeferred]: true;
+    readonly [ComputationLike_isDeferred]: Optional<true>;
 }
 export interface PureObservableLike<out T = unknown> extends ObservableLike<T> {
     readonly [ComputationLike_isPure]: Optional<true>;
@@ -330,7 +331,7 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
 export interface ScheduledReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     currentTime: PureComputationOf<TComputationType, number>;
     debounce<T>(duration: number): PureComputationOperator<TComputationType, T, T>;
-    delay(duration: number): PureComputationOf<TComputationType, unknown>;
+    delay<T>(duration: number): PureComputationOf<TComputationType, T>;
     gen<T>(factory: Function1<ClockLike, Iterator<T | YieldDelay>>): NewInstanceWithSideEffectsOf<TComputationType, T>;
     genPure<T>(factory: Function1<ClockLike, Iterator<T | YieldDelay>>): NewPureInstanceOf<TComputationType, T>;
     keyFrame(duration: number, options?: {

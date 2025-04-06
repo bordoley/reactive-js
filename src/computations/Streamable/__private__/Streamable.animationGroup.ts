@@ -93,7 +93,7 @@ const Streamable_animationGroup: Streamable.Signature["animationGroup"] =
                   Observable.forEach(
                     bindMethod(publisher, EventListenerLike_notify),
                   ),
-                  Computation.ignoreElements(m),
+                  Computation.ignoreElements<Observable.Computation, void>(m),
                 );
               },
             ),

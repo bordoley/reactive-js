@@ -316,18 +316,18 @@ testModule(
             pipe([1, 2, 3], Computation.fromReadonlyArray(m, { delay: 1 })),
             SynchronousObservable.concat(
               SynchronousObservable.delay(3),
-              Computation.empty(m),
+              Computation.empty(m, 0),
               pipe([4, 5, 6], Computation.fromReadonlyArray(m, { delay: 1 })),
             ),
             m.merge<number>(
               SynchronousObservable.concat(
                 SynchronousObservable.delay(6),
-                Computation.empty(m),
+                Computation.empty(m, 0),
                 pipe([7, 8, 9], Computation.fromReadonlyArray(m, { delay: 1 })),
               ),
               SynchronousObservable.concat(
                 SynchronousObservable.delay(9),
-                Computation.empty(m),
+                Computation.empty(m, 0),
                 pipe(
                   [10, 11, 12],
                   Computation.fromReadonlyArray(m, { delay: 1 }),
@@ -369,7 +369,9 @@ testModule(
       pipeLazy(
         [1, 2, 3],
         Computation.fromReadonlyArray(m),
-        SynchronousObservable.map(x => Computation.ofValues(m, x, x, x)),
+        SynchronousObservable.map((x: number) =>
+          Computation.ofValues(m, x, x, x),
+        ),
         SynchronousObservable.mergeAll({
           concurrency: 1,
         }),
@@ -426,7 +428,7 @@ testModule(
             x++;
           }
         }),
-        SynchronousObservable.takeFirst({ count: 101 }),
+        SynchronousObservable.takeFirst<number>({ count: 101 }),
         SynchronousObservable.throttle<number>(50, { mode: "first" }),
         SynchronousObservable.toRunnable(),
         Runnable.toReadonlyArray<number>(),
@@ -447,7 +449,7 @@ testModule(
             x++;
           }
         }),
-        SynchronousObservable.takeFirst({ count: 200 }),
+        SynchronousObservable.takeFirst<number>({ count: 200 }),
         SynchronousObservable.throttle<number>(50, { mode: "last" }),
         SynchronousObservable.toRunnable(),
         Runnable.toReadonlyArray<number>(),
@@ -468,7 +470,7 @@ testModule(
             x++;
           }
         }),
-        SynchronousObservable.takeFirst({ count: 200 }),
+        SynchronousObservable.takeFirst<number>({ count: 200 }),
         SynchronousObservable.throttle<number>(75, { mode: "interval" }),
         SynchronousObservable.toRunnable(),
         Runnable.toReadonlyArray<number>(),

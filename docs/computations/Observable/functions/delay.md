@@ -6,7 +6,11 @@
 
 # Function: delay()
 
-> **delay**(`duration`): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **delay**\<`T`\>(`duration`): [`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+## Type Parameters
+
+• **T**
 
 ## Parameters
 
@@ -16,4 +20,4 @@
 
 ## Returns
 
-[`ObservableLike`](../../interfaces/ObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`ObservableLike`](../../interfaces/ObservableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)

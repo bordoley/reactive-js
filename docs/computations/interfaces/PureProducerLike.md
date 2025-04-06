@@ -18,7 +18,7 @@
 
 ### \[ComputationLike\_isDeferred\]
 
-> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 
@@ -40,7 +40,7 @@
 
 > `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
 
-#### Inherited from
+#### Overrides
 
 [`ProducerLike`](ProducerLike.md).[`[ComputationLike_isSynchronous]`](ProducerLike.md#computationlike_issynchronous)
 

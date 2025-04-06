@@ -7,8 +7,8 @@ import {
 import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
-const Observable_delay: Observable.Signature["delay"] = (delay: number) =>
-  DeferredEventSource.create<unknown, ObserverLike>((observer: ObserverLike) =>
+const Observable_delay: Observable.Signature["delay"] = <T>(delay: number) =>
+  DeferredEventSource.create<T, ObserverLike<T>>((observer: ObserverLike<T>) =>
     observer[SchedulerLike_schedule](function* () {
       yield delayMs(delay);
       observer[SinkLike_complete]();

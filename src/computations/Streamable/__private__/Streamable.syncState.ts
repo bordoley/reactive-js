@@ -33,9 +33,9 @@ const Streamable_syncState: Streamable.Signature["syncState"] =
       pipe(
         stream,
         Observable.fromBroadcaster<T>(),
-        Observable.forkMerge<T, T>(
+        Observable.forkMerge<T, Updater<T>>(
           compose(
-            Observable.takeFirst(),
+            Observable.takeFirst<T>(),
             Observable.map(onInit),
             Observable.concatAll({
               [ComputationLike_isPure]: false,

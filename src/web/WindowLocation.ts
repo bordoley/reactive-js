@@ -306,7 +306,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
               return { counter, replace: true, uri };
             }),
             Observable.fromBroadcaster(),
-            Computation.mergeWith(
+            Computation.mergeWith<Observable.Computation, TState>(
               ObservableModule,
               Computation.ofValues(ObservableModule, {
                 counter: 0,

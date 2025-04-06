@@ -59,7 +59,11 @@
 
 ### delay()
 
-> **delay**(`duration`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `unknown`\>
+> **delay**\<`T`\>(`duration`): [`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
+
+#### Type Parameters
+
+• **T**
 
 #### Parameters
 
@@ -69,7 +73,7 @@
 
 #### Returns
 
-[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `unknown`\>
+[`PureComputationOf`](../type-aliases/PureComputationOf.md)\<`TComputationType`, `T`\>
 
 ***
 

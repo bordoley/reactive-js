@@ -22,7 +22,7 @@
 
 ### \[ComputationLike\_isDeferred\]
 
-> `readonly` **\[ComputationLike\_isDeferred\]**: `true`
+> `readonly` **\[ComputationLike\_isDeferred\]**: [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
 
 #### Inherited from
 

@@ -646,7 +646,11 @@
 
 ### delay()
 
-> **delay**(`duration`): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+> **delay**\<`T`\>(`duration`): [`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+
+#### Type Parameters
+
+• **T**
 
 #### Parameters
 
@@ -656,7 +660,7 @@
 
 #### Returns
 
-[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`unknown`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
+[`SynchronousObservableLike`](../../interfaces/SynchronousObservableLike.md)\<`T`\> & [`PureComputationLike`](../../interfaces/PureComputationLike.md)
 
 #### Inherited from
 
