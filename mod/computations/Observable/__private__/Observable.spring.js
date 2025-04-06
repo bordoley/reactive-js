@@ -1,30 +1,35 @@
 /// <reference types="./Observable.spring.d.ts" />
 
-import { MAX_VALUE } from "../../../__internal__/constants.js";
-import { isNotEqualTo, pipe, returns } from "../../../functions.js";
-import { abs, clamp, min } from "../../../math.js";
-import Observable_currentTime from "./Observable.currentTime.js";
-import Observable_map from "./Observable.map.js";
-import Observable_scan from "./Observable.scan.js";
-import Observable_takeWhile from "./Observable.takeWhile.js";
+import { abs, clamp } from "../../../math.js";
+import { ClockLike_now } from "../../../utils.js";
+import { Observable_genPure } from "./Observable.gen.js";
 const Observable_spring = ((options) => {
     const stiffness = clamp(0, options?.stiffness ?? 0.15, 1);
     const damping = clamp(0, options?.damping ?? 0.8, 1);
     const precision = clamp(0, options?.precision ?? 0.01, 1);
-    return pipe(Observable_currentTime, Observable_scan(({ lastTime, last, value }, now) => {
-        lastTime = min(now, lastTime);
-        const delta = 1 - value;
-        const elapseTime = now - lastTime;
-        const dt = (elapseTime * 60) / 1000;
-        const velocity = (value - last) / (dt || 1 / 60);
-        const spring = stiffness * delta;
-        const damper = damping * velocity;
-        const acceleration = spring - damper;
-        const d = (velocity + acceleration) * dt;
-        const newValue = abs(d) < precision && abs(delta) < precision ? 1 : value + d;
-        return { lastTime: now, last: value, value: newValue };
-    }, returns({ lastTime: MAX_VALUE, last: 0, value: 0 })), Observable_map(x => x.value), Observable_takeWhile(isNotEqualTo(1), {
-        inclusive: true,
-    }));
+    return Observable_genPure(function* spring(clock) {
+        let prevValue = 0;
+        let currentValue = 0;
+        let prevTime = clock[ClockLike_now];
+        while (true) {
+            const delta = 1 - currentValue;
+            const now = clock[ClockLike_now];
+            const elapseTime = now - prevTime;
+            prevTime = now;
+            const dt = (elapseTime * 60) / 1000;
+            const velocity = (currentValue - prevValue) / (dt || 1 / 60);
+            const spring = stiffness * delta;
+            const damper = damping * velocity;
+            const acceleration = spring - damper;
+            const d = (velocity + acceleration) * dt;
+            prevValue = currentValue;
+            currentValue = currentValue + d;
+            yield currentValue;
+            if (abs(d) < precision && abs(delta) < precision) {
+                yield 1;
+                break;
+            }
+        }
+    });
 });
 export default Observable_spring;

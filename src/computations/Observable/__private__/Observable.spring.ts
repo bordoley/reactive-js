@@ -1,17 +1,7 @@
-import { MAX_VALUE } from "../../../__internal__/constants.js";
-import { isNotEqualTo, pipe, returns } from "../../../functions.js";
-import { abs, clamp, min } from "../../../math.js";
+import { abs, clamp } from "../../../math.js";
+import { ClockLike_now } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_currentTime from "./Observable.currentTime.js";
-import Observable_map from "./Observable.map.js";
-import Observable_scan from "./Observable.scan.js";
-import Observable_takeWhile from "./Observable.takeWhile.js";
-
-type SpringState = {
-  lastTime: number;
-  last: number;
-  value: number;
-};
+import { Observable_genPure } from "./Observable.gen.js";
 
 const Observable_spring: Observable.Signature["spring"] = ((options?: {
   readonly stiffness?: number;
@@ -22,34 +12,36 @@ const Observable_spring: Observable.Signature["spring"] = ((options?: {
   const damping = clamp(0, options?.damping ?? 0.8, 1);
   const precision = clamp(0, options?.precision ?? 0.01, 1);
 
-  return pipe(
-    Observable_currentTime,
-    Observable_scan<number, SpringState>(
-      ({ lastTime, last, value }, now) => {
-        lastTime = min(now, lastTime);
+  return Observable_genPure(function* spring(clock) {
+    let prevValue = 0;
+    let currentValue = 0;
+    let prevTime = clock[ClockLike_now];
 
-        const delta = 1 - value;
-        const elapseTime = now - lastTime;
-        const dt = (elapseTime * 60) / 1000;
-        const velocity = (value - last) / (dt || 1 / 60);
+    while (true) {
+      const delta = 1 - currentValue;
+      const now = clock[ClockLike_now];
+      const elapseTime = now - prevTime;
+      prevTime = now;
 
-        const spring = stiffness * delta;
-        const damper = damping * velocity;
-        const acceleration = spring - damper;
-        const d = (velocity + acceleration) * dt;
+      const dt = (elapseTime * 60) / 1000;
+      const velocity = (currentValue - prevValue) / (dt || 1 / 60);
 
-        const newValue =
-          abs(d) < precision && abs(delta) < precision ? 1 : value + d;
+      const spring = stiffness * delta;
+      const damper = damping * velocity;
+      const acceleration = spring - damper;
+      const d = (velocity + acceleration) * dt;
 
-        return { lastTime: now, last: value, value: newValue };
-      },
-      returns({ lastTime: MAX_VALUE, last: 0, value: 0 }),
-    ),
-    Observable_map<SpringState, number>(x => x.value),
-    Observable_takeWhile<number>(isNotEqualTo(1), {
-      inclusive: true,
-    }),
-  );
+      prevValue = currentValue;
+      currentValue = currentValue + d;
+
+      yield currentValue;
+
+      if (abs(d) < precision && abs(delta) < precision) {
+        yield 1;
+        break;
+      }
+    }
+  });
 }) as Observable.Signature["spring"];
 
 export default Observable_spring;
