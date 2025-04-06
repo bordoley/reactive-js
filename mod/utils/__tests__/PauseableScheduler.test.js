@@ -55,7 +55,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { pipe } from "../../functions.js";
-import { DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, delayMs, } from "../../utils.js";
 import * as PauseableScheduler from "../PauseableScheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("PauseableScheduler", test("pausing the scheduler from a continuation", () => {
@@ -123,11 +123,13 @@ testModule("PauseableScheduler", test("pausing the scheduler from a continuation
         const pauseableScheduler = __addDisposableResource(env_3, PauseableScheduler.create(vts), false);
         let result = [];
         pauseableScheduler[SchedulerLike_schedule](function* () {
+            yield delayMs(3);
             result[Array_push](pauseableScheduler[SchedulerLike_now]);
-        }, { delay: 3 });
+        });
         pauseableScheduler[SchedulerLike_schedule](function* () {
+            yield delayMs(5);
             result[Array_push](pauseableScheduler[SchedulerLike_now]);
-        }, { delay: 5 });
+        });
         pauseableScheduler[PauseableLike_resume]();
         vts[VirtualTimeSchedulerLike_run]();
         pipe(result, expectArrayEquals([3, 5]));

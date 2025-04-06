@@ -12,6 +12,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
+  delayMs,
 } from "../../utils.js";
 import * as PauseableScheduler from "../PauseableScheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -79,19 +80,15 @@ testModule(
 
     let result: number[] = [];
 
-    pauseableScheduler[SchedulerLike_schedule](
-      function* () {
-        result[Array_push](pauseableScheduler[SchedulerLike_now]);
-      },
-      { delay: 3 },
-    );
+    pauseableScheduler[SchedulerLike_schedule](function* () {
+      yield delayMs(3);
+      result[Array_push](pauseableScheduler[SchedulerLike_now]);
+    });
 
-    pauseableScheduler[SchedulerLike_schedule](
-      function* () {
-        result[Array_push](pauseableScheduler[SchedulerLike_now]);
-      },
-      { delay: 5 },
-    );
+    pauseableScheduler[SchedulerLike_schedule](function* () {
+      yield delayMs(5);
+      result[Array_push](pauseableScheduler[SchedulerLike_now]);
+    });
 
     pauseableScheduler[PauseableLike_resume]();
     vts[VirtualTimeSchedulerLike_run]();

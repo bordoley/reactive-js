@@ -55,7 +55,7 @@ var __disposeResources = (this && this.__disposeResources) || (function (Suppres
 import { Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { pipe, raise } from "../../functions.js";
-import { DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_requestYield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../utils.js";
+import { DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_requestYield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, delayMs, } from "../../utils.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations", () => {
     const env_1 = { stack: [], error: void 0, hasError: false };
@@ -259,11 +259,13 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
         }), false);
         let count = 0;
         vts[SchedulerLike_schedule](function* () {
+            yield delayMs(1);
             count++;
-        }, { delay: 1 });
+        });
         vts[SchedulerLike_schedule](function* () {
+            yield delayMs(1);
             count++;
-        }, { delay: 1 });
+        });
         vts[VirtualTimeSchedulerLike_run]();
         pipe(count, expectEquals(2));
     }

@@ -152,12 +152,7 @@ export interface SchedulerLike extends DisposableContainerLike {
      * @param continuation - The continuation to run on the scheduler.
      * @param options
      */
-    [SchedulerLike_schedule](continuation: SchedulerContinuation, options?: {
-        /**
-         * The amount of time in ms to delay execution of the continuation.
-         */
-        readonly delay?: number;
-    }): DisposableLike;
+    [SchedulerLike_schedule](continuation: SchedulerContinuation): DisposableLike;
 }
 export declare const VirtualTimeSchedulerLike_run: unique symbol;
 /**

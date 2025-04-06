@@ -4,7 +4,7 @@ import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
-import { abs, clampPositiveInteger, floor } from "../../math.js";
+import { abs, floor } from "../../math.js";
 import { CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -86,12 +86,13 @@ const SchedulerMixin =
             this[QueueContinuation_scheduler] =
                 none;
         }
-        return mixInstanceFactory(include(DelegatingDisposableMixin, QueueMixin()), function QueueContinuation(scheduler, delegate, dueTime) {
+        return mixInstanceFactory(include(DelegatingDisposableMixin, QueueMixin()), function QueueContinuation(scheduler, delegate) {
             const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
             init(DelegatingDisposableMixin, this, delegateEnumerator);
             init(QueueMixin(), this, none);
             this[QueueContinuation_delegate] = delegateEnumerator;
-            this[SchedulerContinuationLike_dueTime] = dueTime;
+            this[SchedulerContinuationLike_dueTime] =
+                scheduler[SchedulerLike_now];
             this[SchedulerContinuationLike_id] = ++scheduler[SchedulerMixinLike_taskIDCounter];
             this[QueueContinuation_scheduler] = scheduler;
             pipe(this, DisposableContainer.onDisposed(onContinuationDisposed));
@@ -216,12 +217,11 @@ const SchedulerMixin =
                 activeContinuation[QueueLike_enqueue](continuation);
             }
         },
-        [SchedulerLike_schedule](effect, options) {
+        [SchedulerLike_schedule](effect) {
             if (this[DisposableLike_isDisposed]) {
                 return Disposable.disposed;
             }
-            const dueTime = this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
-            const continuation = pipe(createQueueContinuation(this, effect(this), dueTime), Disposable.addToContainer(this));
+            const continuation = pipe(createQueueContinuation(this, effect(this)), Disposable.addToContainer(this));
             this[SchedulerMixinLike_schedule](continuation);
             return continuation;
         },

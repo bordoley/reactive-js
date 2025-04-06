@@ -70,7 +70,7 @@ Request the scheduler to yield the current continuation.
 
 ### \[SchedulerLike\_schedule\]()
 
-> **\[SchedulerLike\_schedule\]**(`continuation`, `options`?): [`DisposableLike`](DisposableLike.md)
+> **\[SchedulerLike\_schedule\]**(`continuation`): [`DisposableLike`](DisposableLike.md)
 
 Schedule a continuation on the Scheduler.
 
@@ -81,14 +81,6 @@ Schedule a continuation on the Scheduler.
 [`SchedulerContinuation`](../type-aliases/SchedulerContinuation.md)
 
 The continuation to run on the scheduler.
-
-##### options?
-
-###### delay?
-
-`number`
-
-The amount of time in ms to delay execution of the continuation.
 
 #### Returns
 

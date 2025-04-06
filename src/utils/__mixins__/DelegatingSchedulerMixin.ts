@@ -115,9 +115,6 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
         [SchedulerLike_schedule](
           this: TProperties & SchedulerLike & DisposableLike,
           continuation: SchedulerContinuation,
-          options?: {
-            readonly delay?: number;
-          },
         ): DisposableLike {
           return pipe(
             this[DelegatingSchedulerMixin_delegate][SchedulerLike_schedule](
@@ -125,7 +122,6 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
                 this[DelegatingSchedulerMixin_scheduleCallback],
                 continuation,
               ),
-              options,
             ),
             Disposable.addToContainer(this),
           );

@@ -50,8 +50,8 @@ const DelegatingSchedulerMixin =
         [SchedulerLike_requestYield]() {
             this[DelegatingSchedulerMixin_scheduler][SchedulerLike_requestYield]();
         },
-        [SchedulerLike_schedule](continuation, options) {
-            return pipe(this[DelegatingSchedulerMixin_delegate][SchedulerLike_schedule](bind(this[DelegatingSchedulerMixin_scheduleCallback], continuation), options), Disposable.addToContainer(this));
+        [SchedulerLike_schedule](continuation) {
+            return pipe(this[DelegatingSchedulerMixin_delegate][SchedulerLike_schedule](bind(this[DelegatingSchedulerMixin_scheduleCallback], continuation)), Disposable.addToContainer(this));
         },
     }));
 })();

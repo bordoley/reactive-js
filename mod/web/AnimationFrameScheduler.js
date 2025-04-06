@@ -8,7 +8,7 @@ import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
 import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../utils.js";
+import { CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
@@ -73,8 +73,9 @@ export const get = /*@__PURE__*/ (() => {
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
                 const self = this;
                 const subscription = DefaultScheduler.get()[SchedulerLike_schedule](function* () {
+                    yield delayMs(delay);
                     self[SchedulerMixinHostLike_schedule](continuation);
-                }, { delay });
+                });
                 pipe(subscription, Disposable.addTo(continuation));
             }
             else {

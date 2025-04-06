@@ -1,4 +1,4 @@
-import { MAX_VALUE } from "../__internal__/constants.js";
+import { MIN_VALUE } from "../__internal__/constants.js";
 import {
   Mutable,
   include,
@@ -112,7 +112,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       instance[PauseableScheduler_hostSchedulerContinuationDueTime];
     const nextContinuation = peek(instance);
     const nextContinuationDueTime =
-      nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MAX_VALUE;
+      nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MIN_VALUE;
     const inContinuation = instance[SchedulerLike_inContinuation];
     const isPaused = instance[PauseableLike_isPaused][StoreLike_value];
     const hostContinuationAlreadyScheduled =
@@ -128,15 +128,15 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       return;
     }
 
-    const now = instance[SchedulerLike_now];
-    const dueTime = nextContinuation[SchedulerContinuationLike_dueTime];
-    const delay = clampPositiveInteger(dueTime - now);
+    instance[PauseableScheduler_hostSchedulerSubscription][
+      DisposableLike_dispose
+    ]();
 
-    instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
-
+    instance[PauseableScheduler_hostSchedulerContinuationDueTime] =
+      nextContinuationDueTime;
     instance[PauseableScheduler_hostSchedulerSubscription] = hostScheduler[
       SchedulerLike_schedule
-    ](bind(hostSchedulerContinuation, instance), { delay });
+    ](bind(hostSchedulerContinuation, instance));
   };
 
   function* hostSchedulerContinuation(

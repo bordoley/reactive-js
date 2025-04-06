@@ -19,7 +19,7 @@ import {
   pipe,
   raiseIf,
 } from "../../functions.js";
-import { abs, clampPositiveInteger, floor } from "../../math.js";
+import { abs, floor } from "../../math.js";
 import {
   CollectionEnumeratorLike_count,
   DisposableContainerLike,
@@ -149,7 +149,6 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
     const createQueueContinuation: (
       scheduler: SchedulerMixinLike,
       effect: Iterator<Optional<YieldDelay>>,
-      dueTime: number,
     ) => QueueSchedulerContinuationLike = (() => {
       const QueueContinuation_delegate = Symbol("QueueContinuation_delegate");
 
@@ -238,7 +237,6 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             Mutable<TProperties>,
           scheduler: SchedulerMixinLike,
           delegate: Iterator<Optional<YieldDelay>>,
-          dueTime: number,
         ): QueueSchedulerContinuationLike {
           const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
 
@@ -246,7 +244,8 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           init(QueueMixin<QueueSchedulerContinuationLike>(), this, none);
 
           this[QueueContinuation_delegate] = delegateEnumerator;
-          this[SchedulerContinuationLike_dueTime] = dueTime;
+          this[SchedulerContinuationLike_dueTime] =
+            scheduler[SchedulerLike_now];
 
           this[SchedulerContinuationLike_id] = ++scheduler[
             SchedulerMixinLike_taskIDCounter
@@ -449,17 +448,13 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         [SchedulerLike_schedule](
           this: SchedulerMixinLike & DisposableLike & SchedulerLike,
           effect: SchedulerContinuationGenerator,
-          options?: { readonly delay?: number },
         ): DisposableLike {
           if (this[DisposableLike_isDisposed]) {
             return Disposable.disposed;
           }
 
-          const dueTime =
-            this[SchedulerLike_now] + clampPositiveInteger(options?.delay ?? 0);
-
           const continuation = pipe(
-            createQueueContinuation(this, effect(this), dueTime),
+            createQueueContinuation(this, effect(this)),
             Disposable.addToContainer(this),
           );
 

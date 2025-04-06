@@ -1,6 +1,6 @@
 /// <reference types="./PauseableScheduler.d.ts" />
 
-import { MAX_VALUE } from "../__internal__/constants.js";
+import { MIN_VALUE } from "../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
@@ -33,7 +33,7 @@ export const create = /*@PURE__*/ (() => {
         const hostSchedulerContinuationIsScheduled = !instance[PauseableScheduler_hostSchedulerSubscription][DisposableLike_isDisposed];
         const hostSchedulerContinuationDueTime = instance[PauseableScheduler_hostSchedulerContinuationDueTime];
         const nextContinuation = peek(instance);
-        const nextContinuationDueTime = nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MAX_VALUE;
+        const nextContinuationDueTime = nextContinuation?.[SchedulerContinuationLike_dueTime] ?? MIN_VALUE;
         const inContinuation = instance[SchedulerLike_inContinuation];
         const isPaused = instance[PauseableLike_isPaused][StoreLike_value];
         const hostContinuationAlreadyScheduled = hostSchedulerContinuationIsScheduled &&
@@ -44,11 +44,10 @@ export const create = /*@PURE__*/ (() => {
             isPaused) {
             return;
         }
-        const now = instance[SchedulerLike_now];
-        const dueTime = nextContinuation[SchedulerContinuationLike_dueTime];
-        const delay = clampPositiveInteger(dueTime - now);
-        instance[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
-        instance[PauseableScheduler_hostSchedulerSubscription] = hostScheduler[SchedulerLike_schedule](bind(hostSchedulerContinuation, instance), { delay });
+        instance[PauseableScheduler_hostSchedulerSubscription][DisposableLike_dispose]();
+        instance[PauseableScheduler_hostSchedulerContinuationDueTime] =
+            nextContinuationDueTime;
+        instance[PauseableScheduler_hostSchedulerSubscription] = hostScheduler[SchedulerLike_schedule](bind(hostSchedulerContinuation, instance));
     };
     function* hostSchedulerContinuation(scheduler) {
         const isPausedStore = this[PauseableLike_isPaused];

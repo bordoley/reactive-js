@@ -30,6 +30,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  delayMs,
 } from "../utils.js";
 
 interface Signature {
@@ -138,9 +139,9 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
           const self = this;
           const subscription = DefaultScheduler.get()[SchedulerLike_schedule](
             function* () {
+              yield delayMs(delay);
               self[SchedulerMixinHostLike_schedule](continuation);
             },
-            { delay },
           );
 
           pipe(subscription, Disposable.addTo(continuation));

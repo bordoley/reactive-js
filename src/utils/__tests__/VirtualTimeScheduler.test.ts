@@ -15,6 +15,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
+  delayMs,
 } from "../../utils.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
@@ -195,19 +196,15 @@ testModule(
     });
 
     let count = 0;
-    vts[SchedulerLike_schedule](
-      function* () {
-        count++;
-      },
-      { delay: 1 },
-    );
+    vts[SchedulerLike_schedule](function* () {
+      yield delayMs(1);
+      count++;
+    });
 
-    vts[SchedulerLike_schedule](
-      function* () {
-        count++;
-      },
-      { delay: 1 },
-    );
+    vts[SchedulerLike_schedule](function* () {
+      yield delayMs(1);
+      count++;
+    });
 
     vts[VirtualTimeSchedulerLike_run]();
 
