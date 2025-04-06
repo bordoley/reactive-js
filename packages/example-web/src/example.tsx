@@ -40,7 +40,6 @@ import { scale } from "@reactive-js/core/math";
 import { AnimationLike_isRunning } from "@reactive-js/core/computations/Streamable";
 import * as Dictionary from "@reactive-js/core/collections/Dictionary";
 import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
-import * as Producer from "@reactive-js/core/computations/Producer";
 
 const AnimatedBox = ({
   animation,
@@ -194,8 +193,7 @@ const Counter = () => {
         })),
       ),
       SynchronousObservable.throttle(100),
-      SynchronousObservable.toProducer<number>(),
-      Producer.broadcast(),
+      SynchronousObservable.broadcast<number>(),
     ),
     [history.replace, counterInitialValue],
   );
