@@ -58,6 +58,7 @@ import {
   WindowLocationLike_replace,
   WindowLocationURI,
 } from "../web.js";
+import * as WindowLocation from "../web/WindowLocation.js";
 
 type DOMEvents<TElement extends Element> = keyof Omit<
   DOMAttributes<TElement>,
@@ -79,7 +80,6 @@ export type DOMEventTypeOf<
 
 export interface ReactWebModule {
   WindowLocationProvider(props: {
-    windowLocation: WindowLocationLike;
     children: React.ReactNode;
   }): React.ReactNode;
 
@@ -310,16 +310,14 @@ const WindowLocationContext = /*@__PURE__*/ createContext<WindowLocationLike>(
 );
 
 export const WindowLocationProvider: Signature["WindowLocationProvider"] = ({
-  windowLocation,
   children,
 }: {
-  windowLocation: WindowLocationLike;
   children: React.ReactNode;
 }) =>
   createElement(
     WindowLocationContext.Provider,
     {
-      value: windowLocation,
+      value: WindowLocation.get(),
     },
     children,
   );

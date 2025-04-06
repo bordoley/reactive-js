@@ -37,7 +37,6 @@ import {
   newInstance,
   none,
   pipe,
-  raiseIf,
   returns,
 } from "../functions.js";
 import * as Disposable from "../utils/Disposable.js";
@@ -59,9 +58,10 @@ import {
   WindowLocationURI,
 } from "../web.js";
 import * as Element from "./Element.js";
+import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 
 interface WebWindowLocationModule {
-  subscribe(scheduler: SchedulerLike): WindowLocationLike & DisposableLike;
+  get(): WindowLocationLike & DisposableLike;
 }
 
 interface SerializableWindowLocationURI extends WindowLocationURI {
@@ -154,7 +154,7 @@ const createSyncToHistoryStream = (
     ),
   )[StreamableLike_stream](scheduler);
 
-export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
+export const get: Signature["get"] = /*@__PURE__*/ (() => {
   const WindowLocation_delegate = Symbol("WindowLocation_delegate");
 
   type TProperties = {
@@ -258,8 +258,12 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   let currentWindowLocation: Optional<WindowLocationLike & DisposableLike> =
     none;
 
-  return (scheduler: SchedulerLike): WindowLocationLike & DisposableLike => {
-    raiseIf(isSome(currentWindowLocation), "Cannot stream more than once");
+  return (): WindowLocationLike & DisposableLike => {
+    if (isSome(currentWindowLocation)) {
+      return currentWindowLocation;
+    }
+
+    const scheduler = DefaultScheduler.get();
 
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),

@@ -27,8 +27,7 @@ import {
 } from "@reactive-js/core/computations/Observable/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
-import * as WindowLocation from "@reactive-js/core/web/WindowLocation";
-import * as ReactScheduler from "@reactive-js/core/react/Scheduler";
+import "@reactive-js/core/react/Scheduler";
 import { BroadcasterLike } from "@reactive-js/core/computations";
 import {
   PauseableLike_resume,
@@ -337,7 +336,6 @@ const RxComponent = createComponent(
 );*/
 
 // Subscribe to the window location using react's normal priority scheduler.
-const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
 /*
@@ -356,7 +354,7 @@ ReactDOMClient.createRoot(rootElement as any).render(
 );*/
 
 ReactDOMClient.createRoot(rootElement as any).render(
-  <WindowLocationProvider windowLocation={windowLocation}>
+  <WindowLocationProvider>
     <History />
     <Counter />
     <AnimationGroup />
