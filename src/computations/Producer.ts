@@ -57,6 +57,7 @@ import Producer_takeLast from "./Producer/__private__/Producer.takeLast.js";
 import Producer_takeUntil from "./Producer/__private__/Producer.takeUntil.js";
 import Producer_takeWhile from "./Producer/__private__/Producer.takeWhile.js";
 import Producer_throwIfEmpty from "./Producer/__private__/Producer.throwIfEmpty.js";
+import Producer_toAsyncIterable from "./Producer/__private__/Producer.toAsyncIterable.js";
 import Producer_toObservable from "./Producer/__private__/Producer.toObservable.js";
 import Producer_withEffect from "./Producer/__private__/Producer.withEffect.js";
 import Producer_withLatestFrom from "./Producer/__private__/Producer.withLatestFrom.js";
@@ -81,6 +82,9 @@ export interface ProducerModule
     ConcurrentReactiveComputationModule<
       ProducerComputation,
       {
+        options?: {
+          bufferSize?: number;
+        };
         toObservable?: {
           capacity?: number;
           backpressureStrategy?: BackpressureStrategy;
@@ -135,6 +139,8 @@ export const takeLast: Signature["takeLast"] = Producer_takeLast;
 export const takeUntil: Signature["takeUntil"] = Producer_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Producer_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Producer_throwIfEmpty;
+export const toAsyncIterable: Signature["toAsyncIterable"] =
+  Producer_toAsyncIterable;
 export const toObservable: Signature["toObservable"] = Producer_toObservable;
 export const toProducer: Signature["toProducer"] = /*@__PURE__*/ returns(
   identity,

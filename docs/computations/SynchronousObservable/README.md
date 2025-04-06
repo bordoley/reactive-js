@@ -59,6 +59,7 @@
 - [takeWhile](functions/takeWhile.md)
 - [throttle](functions/throttle.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
+- [toAsyncIterable](functions/toAsyncIterable.md)
 - [toProducer](functions/toProducer.md)
 - [toRunnable](functions/toRunnable.md)
 - [withCurrentTime](functions/withCurrentTime.md)

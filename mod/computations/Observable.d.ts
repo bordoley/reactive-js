@@ -27,6 +27,9 @@ export interface ObservableModule extends ComputationModule<ObservableComputatio
     compute?: {
         readonly mode?: "batched" | "combine-latest";
     };
+    toAsyncIterable?: {
+        scheduler?: SchedulerLike;
+    };
 }>, ConcurrentReactiveComputationModule<ObservableComputation, {
     fromBroadcaster: {
         capacity?: number;
@@ -88,6 +91,7 @@ export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
+export declare const toAsyncIterable: Signature["toAsyncIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toProducer: Signature["toProducer"];
 export declare const withCurrentTime: Signature["withCurrentTime"];

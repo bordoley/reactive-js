@@ -8,6 +8,9 @@ export interface ProducerComputation extends ComputationTypeLike {
 }
 export type Computation = ProducerComputation;
 export interface ProducerModule extends ComputationModule<ProducerComputation>, ConcurrentDeferredComputationModule<ProducerComputation>, ReactiveComputationModule<ProducerComputation>, DeferredComputationModule<ProducerComputation>, DeferredReactiveComputationModule<ProducerComputation>, ConcurrentReactiveComputationModule<ProducerComputation, {
+    options?: {
+        bufferSize?: number;
+    };
     toObservable?: {
         capacity?: number;
         backpressureStrategy?: BackpressureStrategy;
@@ -52,6 +55,7 @@ export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
+export declare const toAsyncIterable: Signature["toAsyncIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toProducer: Signature["toProducer"];
 export declare const withEffect: Signature["withEffect"];

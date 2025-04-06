@@ -34,6 +34,7 @@ export interface IterableWithSideEffectsLike<T = unknown> extends IterableLike<T
 }
 export interface AsyncIterableLike<T = unknown> extends AsyncIterable<T>, ComputationLike {
     readonly [ComputationLike_isDeferred]: Optional<true>;
+    readonly [ComputationLike_isSynchronous]: false;
 }
 export interface PureAsyncIterableLike<T = unknown> extends AsyncIterableLike<T> {
     readonly [ComputationLike_isPure]: Optional<true>;
@@ -291,6 +292,7 @@ export interface ConcurrentReactiveComputationModule<TComputationType extends Co
 export interface DeferredReactiveComputationModule<TComputationType extends ComputationTypeLike, TCreationOptions extends {
     broadcast?: Record<string, any>;
     compute?: Record<string, any>;
+    toAsyncIterable?: Record<string, any>;
 } = {}> extends ComputationModuleLike<TComputationType> {
     broadcast<T>(options?: {
         autoDispose?: boolean;
@@ -327,6 +329,7 @@ export interface DeferredReactiveComputationModule<TComputationType extends Comp
     switchAll<T>(options: {
         readonly [ComputationLike_isPure]: false;
     }): Function1<ComputationOf<TComputationType, ComputationOf<TComputationType, T>>, ComputationWithSideEffectsOf<TComputationType, T>>;
+    toAsyncIterable<T>(options?: TCreationOptions["toAsyncIterable"]): <TComputationOf extends ComputationOf<TComputationType, T>>(computation: TComputationOf) => TComputationOf extends PureComputationOf<TComputationType, T> ? PureAsyncIterableLike<T> : TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ? AsyncIterableWithSideEffectsLike<T> : never;
 }
 export interface ScheduledReactiveComputationModule<TComputationType extends ComputationTypeLike> extends ComputationModuleLike<TComputationType> {
     currentTime: PureComputationOf<TComputationType, number>;

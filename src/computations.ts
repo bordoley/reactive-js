@@ -75,6 +75,7 @@ export interface AsyncIterableLike<T = unknown>
   extends AsyncIterable<T>,
     ComputationLike {
   readonly [ComputationLike_isDeferred]: Optional<true>;
+  readonly [ComputationLike_isSynchronous]: false;
 }
 
 export interface PureAsyncIterableLike<T = unknown>
@@ -772,6 +773,7 @@ export interface DeferredReactiveComputationModule<
   TCreationOptions extends {
     broadcast?: Record<string, any>;
     compute?: Record<string, any>;
+    toAsyncIterable?: Record<string, any>;
   } = {},
 > extends ComputationModuleLike<TComputationType> {
   broadcast<T>(
@@ -850,6 +852,17 @@ export interface DeferredReactiveComputationModule<
     ComputationOf<TComputationType, ComputationOf<TComputationType, T>>,
     ComputationWithSideEffectsOf<TComputationType, T>
   >;
+
+  // prettier-ignore
+  toAsyncIterable<T>(
+    options?: TCreationOptions["toAsyncIterable"],
+  ): <TComputationOf extends ComputationOf<TComputationType, T>>(
+    computation: TComputationOf,
+  ) =>  TComputationOf extends PureComputationOf<TComputationType, T> ? 
+          PureAsyncIterableLike<T> :
+        TComputationOf extends ComputationWithSideEffectsOf<TComputationType, T> ?
+          AsyncIterableWithSideEffectsLike<T> : 
+        never;
 }
 
 export interface ScheduledReactiveComputationModule<

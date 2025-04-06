@@ -54,6 +54,7 @@
 - [takeUntil](functions/takeUntil.md)
 - [takeWhile](functions/takeWhile.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
+- [toAsyncIterable](functions/toAsyncIterable.md)
 - [toObservable](functions/toObservable.md)
 - [toProducer](functions/toProducer.md)
 - [withEffect](functions/withEffect.md)

@@ -63,6 +63,7 @@ import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.
 import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
 import Observable_throttle from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
+import Observable_toAsyncIterable from "./Observable/__private__/Observable.toAsyncIterable.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
@@ -113,6 +114,9 @@ export interface ObservableModule
         };
         compute?: {
           readonly mode?: "batched" | "combine-latest";
+        };
+        toAsyncIterable?: {
+          scheduler?: SchedulerLike;
         };
       }
     >,
@@ -194,6 +198,8 @@ export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
+export const toAsyncIterable: Signature["toAsyncIterable"] =
+  Observable_toAsyncIterable;
 export const toObservable: Signature["toObservable"] =
   identityLazy as Signature["toObservable"];
 export const toProducer: Signature["toProducer"] = Observable_toProducer;

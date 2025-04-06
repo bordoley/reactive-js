@@ -4,91 +4,132 @@ import {
   ProducerWithSideEffectsLike,
   PureProducerLike,
 } from "../../../computations.js";
-import { Factory, Optional, error, none, pipe } from "../../../functions.js";
+import { Factory, error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as Queue from "../../../utils/Queue.js";
 import {
   AsyncEnumeratorLike,
   AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
+  ConsumableEnumeratorLike_addOnDataAvailableListener,
+  ConsumableEnumeratorLike_isDataAvailable,
   ConsumerLike,
   DisposableLike_dispose,
+  EnumeratorLike_current,
+  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
+  OverflowBackpressureStrategy,
+  QueueLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
 const genOnSubscribe =
-  <T>(factory: Factory<AsyncEnumeratorLike<T>>) =>
+  <T>(
+    factory: Factory<AsyncEnumeratorLike<T>>,
+    options?: {
+      bufferSize?: number;
+    },
+  ) =>
   async (consumer: ConsumerLike<T>) => {
     const enumerator = pipe(factory(), Disposable.addTo(consumer));
 
-    let isActive = false;
-    let hasValueToNotify = false;
-    let valueToNotify: Optional<T> = none;
+    const queue = pipe(
+      Queue.createWithFlowControl<T>({
+        backpressureStrategy: OverflowBackpressureStrategy,
+        capacity: options?.bufferSize ?? 32,
+      }),
+      Disposable.addTo(consumer),
+    );
 
-    const continue_ = async () => {
-      let isReady = consumer[FlowControllerLike_isReady];
-      let isCompleted = consumer[SinkLike_isCompleted];
+    let isCompleted = false;
 
-      if (isActive || isCompleted) {
+    let dispatcherIsActive = false;
+    const dispatchEvents = async () => {
+      let consumerIsReady = consumer[FlowControllerLike_isReady];
+      let consumerIsCompleted = consumer[SinkLike_isCompleted];
+
+      if (dispatcherIsActive) {
         return;
       }
-      isActive = true;
+      dispatcherIsActive = true;
+
+      await Promise.resolve();
 
       try {
-        if (hasValueToNotify && isReady && !isCompleted) {
-          consumer[EventListenerLike_notify](valueToNotify as T);
-          isReady = consumer[FlowControllerLike_isReady];
-          isCompleted = consumer[SinkLike_isCompleted];
-
-          hasValueToNotify = false;
-          valueToNotify = none;
-        }
-
         while (
-          isReady &&
-          !isCompleted &&
-          (await enumerator[AsyncEnumeratorLike_moveNext]())
+          consumerIsReady &&
+          !consumerIsCompleted &&
+          queue[EnumeratorLike_moveNext]()
         ) {
-          // Reassign because these values may change after
-          // hopping the micro task queue
-          isReady = consumer[FlowControllerLike_isReady];
-          isCompleted = consumer[SinkLike_isCompleted];
+          const next = queue[EnumeratorLike_current];
+          consumer[EventListenerLike_notify](next);
+          await Promise.resolve();
 
-          const value = enumerator[AsyncEnumeratorLike_current];
-
-          if (!isReady && !isCompleted) {
-            hasValueToNotify = true;
-            valueToNotify = value;
-          } else if (!isCompleted) {
-            consumer[EventListenerLike_notify](value);
-            isReady = consumer[FlowControllerLike_isReady];
-            isCompleted = consumer[SinkLike_isCompleted];
-          }
+          consumerIsReady = consumer[FlowControllerLike_isReady];
+          consumerIsCompleted = consumer[SinkLike_isCompleted];
         }
 
-        if (!hasValueToNotify && !isCompleted) {
+        const hasMoreData = queue[ConsumableEnumeratorLike_isDataAvailable];
+        if (!hasMoreData && isCompleted) {
           consumer[SinkLike_complete]();
         }
       } catch (e) {
         consumer[DisposableLike_dispose](error(e));
       }
-      isActive = false;
+
+      dispatcherIsActive = false;
+    };
+
+    queue[ConsumableEnumeratorLike_addOnDataAvailableListener](dispatchEvents);
+
+    let enumerateIsActive = false;
+    const enumerate = async () => {
+      let queueIsReady = queue[FlowControllerLike_isReady];
+      let consumerIsReady = consumer[FlowControllerLike_isReady];
+      let consumerIsCompleted = consumer[SinkLike_isCompleted];
+
+      if (enumerateIsActive || consumerIsCompleted) {
+        return;
+      }
+      enumerateIsActive = true;
+
+      try {
+        while (
+          queueIsReady &&
+          consumerIsReady &&
+          !consumerIsCompleted &&
+          (await enumerator[AsyncEnumeratorLike_moveNext]())
+        ) {
+          const value = enumerator[AsyncEnumeratorLike_current];
+          queue[QueueLike_enqueue](value);
+
+          queueIsReady = queue[FlowControllerLike_isReady];
+          consumerIsReady = consumer[FlowControllerLike_isReady];
+          consumerIsCompleted = consumer[SinkLike_isCompleted];
+        }
+
+        if (queueIsReady && consumerIsReady && !consumerIsCompleted) {
+          isCompleted = true;
+          dispatchEvents();
+        }
+      } catch (e) {
+        consumer[DisposableLike_dispose](error(e));
+      }
+      enumerateIsActive = false;
       // Return and let the onReadySink reschedule
       // the continuation
     };
 
-    consumer[FlowControllerLike_addOnReadyListener](async () => {
-      await Promise.resolve();
-      continue_;
-    });
+    consumer[FlowControllerLike_addOnReadyListener](enumerate);
+    queue[FlowControllerLike_addOnReadyListener](enumerate);
 
     await Promise.resolve();
 
-    continue_();
+    enumerate();
   };
 
 export const Producer_genAsyncEnumerator = <T>(

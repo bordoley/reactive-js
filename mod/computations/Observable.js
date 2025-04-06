@@ -39,6 +39,7 @@ import Observable_takeUntil from "./Observable/__private__/Observable.takeUntil.
 import Observable_takeWhile from "./Observable/__private__/Observable.takeWhile.js";
 import Observable_throttle from "./Observable/__private__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__private__/Observable.throwIfEmpty.js";
+import Observable_toAsyncIterable from "./Observable/__private__/Observable.toAsyncIterable.js";
 import Observable_toProducer from "./Observable/__private__/Observable.toProducer.js";
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
@@ -87,6 +88,7 @@ export const takeUntil = Observable_takeUntil;
 export const takeWhile = Observable_takeWhile;
 export const throttle = Observable_throttle;
 export const throwIfEmpty = Observable_throwIfEmpty;
+export const toAsyncIterable = Observable_toAsyncIterable;
 export const toObservable = identityLazy;
 export const toProducer = Observable_toProducer;
 export const withCurrentTime = Observable_withCurrentTime;

@@ -38,7 +38,7 @@
 
 ### \[ComputationLike\_isSynchronous\]
 
-> `readonly` **\[ComputationLike\_isSynchronous\]**: `false` \| [`Optional`](../../functions/type-aliases/Optional.md)\<`true`\>
+> `readonly` **\[ComputationLike\_isSynchronous\]**: `false`
 
 #### Inherited from
 
