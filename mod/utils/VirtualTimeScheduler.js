@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, } from "../__internal__/constants.j
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { none } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
-import { ClockLike_now, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, VirtualTimeSchedulerLike_run, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, VirtualTimeSchedulerLike_run, } from "../utils.js";
 import * as Queue from "./Queue.js";
 import * as CurrentScheduler from "./__internal__/CurrentScheduler.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -51,10 +51,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
                     this[VirtualTimeScheduler_microTaskTicks] >=
                         this[VirtualTimeScheduler_maxMicroTaskTicks]) {
                     // copy the task and all other remaining tasks back to the scheduler queue
-                    this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
+                    this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
                     while (queue[EnumeratorLike_moveNext]()) {
                         continuation = queue[EnumeratorLike_current];
-                        this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
+                        this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
                     }
                 }
                 else {
@@ -73,7 +73,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
         this[DisposableLike_dispose]();
     },
     [SchedulerMixinHostLike_schedule](continuation) {
-        this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
+        this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
     },
 }))();
 export const create = (options = {}) => {

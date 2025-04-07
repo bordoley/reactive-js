@@ -15,7 +15,7 @@ import {
   EventListenerLike_notify,
   FlowControlQueueLike,
   ObserverLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerLike,
 } from "../../utils.js";
 import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
@@ -65,7 +65,7 @@ export const createWithFlowControl: <T>(options?: {
     props(),
     proto({
       [EventListenerLike_notify](this: FlowControlQueueLike<T>, next: T) {
-        this[QueueLike_enqueue](next);
+        this[QueueableLike_enqueue](next);
       },
     }),
   ))();

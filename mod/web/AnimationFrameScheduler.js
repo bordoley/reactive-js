@@ -8,7 +8,7 @@ import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
 import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { ClockLike_now, CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
@@ -39,7 +39,7 @@ export const get = /*@__PURE__*/ (() => {
             // onto the original queue.
             while (newWorkQueue[EnumeratorLike_moveNext]()) {
                 const continuation = newWorkQueue[EnumeratorLike_current];
-                workQueue[QueueLike_enqueue](continuation);
+                workQueue[QueueableLike_enqueue](continuation);
             }
             animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
         }
@@ -79,7 +79,7 @@ export const get = /*@__PURE__*/ (() => {
                 pipe(subscription, Disposable.addTo(continuation));
             }
             else {
-                this[AnimationFrameScheduler_rafQueue][QueueLike_enqueue](continuation);
+                this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](continuation);
                 if (!this[AnimationFrameScheduler_rafIsRunning]) {
                     this[AnimationFrameScheduler_rafIsRunning] = true;
                     raf(rafCallback);

@@ -25,7 +25,7 @@ import {
   PauseableLike_resume,
   PauseableSchedulerLike,
   QueueLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -283,7 +283,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           QueueLike<SchedulerContinuationLike>,
         continuation: SchedulerContinuationLike,
       ) {
-        this[QueueLike_enqueue](continuation);
+        this[QueueableLike_enqueue](continuation);
 
         scheduleOnHost(this);
       },

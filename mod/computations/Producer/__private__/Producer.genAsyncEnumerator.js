@@ -4,7 +4,7 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../..
 import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
-import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, QueueableLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 const genOnSubscribe = (factory, options) => async (consumer) => {
     const enumerator = pipe(factory(), Disposable.addTo(consumer));
@@ -58,7 +58,7 @@ const genOnSubscribe = (factory, options) => async (consumer) => {
                 !consumerIsCompleted &&
                 (await enumerator[AsyncEnumeratorLike_moveNext]())) {
                 const value = enumerator[AsyncEnumeratorLike_current];
-                queue[QueueLike_enqueue](value);
+                queue[QueueableLike_enqueue](value);
                 queueIsReady = queue[FlowControllerLike_isReady];
                 consumerIsReady = consumer[FlowControllerLike_isReady];
                 consumerIsCompleted = consumer[SinkLike_isCompleted];

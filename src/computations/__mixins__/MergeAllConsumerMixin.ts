@@ -26,7 +26,7 @@ import {
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControlQueueLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -164,7 +164,7 @@ const MergeAllConsumerMixin: <
           this: FlowControlQueueLike<TInnerSource>,
           next: TInnerSource,
         ) {
-          this[QueueLike_enqueue](next);
+          this[QueueableLike_enqueue](next);
         },
       }),
     ),

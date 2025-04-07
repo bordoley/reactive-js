@@ -112,6 +112,12 @@ export interface CollectionEnumeratorLike<T = unknown>
   readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
 
+export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
+
+export interface QueueableLike<T> {
+  [QueueableLike_enqueue](v: T): void;
+}
+
 export type BackpressureStrategy =
   | "drop-latest"
   | "drop-oldest"
@@ -139,11 +145,12 @@ export const QueueLike_backpressureStrategy = Symbol(
 );
 export const QueueLike_capacity = Symbol("QueueLike_capacity");
 
-export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+export interface QueueLike<T = unknown>
+  extends QueueableLike<T>,
+    CollectionEnumeratorLike<T> {
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
@@ -153,7 +160,6 @@ export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
    * The number of items the queue is capable of efficiently buffering.
    */
   readonly [QueueLike_capacity]: number;
-  [QueueLike_enqueue](v: T): void;
 }
 
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
@@ -177,7 +183,7 @@ export const ConsumableEnumeratorLike_isDataAvailable = Symbol(
 );
 
 export interface ConsumableEnumeratorLike<T = unknown>
-  extends EnumeratorLike<T> {
+  extends AsyncEnumeratorLike<T> {
   readonly [ConsumableEnumeratorLike_isDataAvailable]: boolean;
 
   [ConsumableEnumeratorLike_addOnDataAvailableListener](

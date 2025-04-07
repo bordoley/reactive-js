@@ -5,7 +5,7 @@ import { error, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
-import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, ClockLike_now, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, QueueLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_moveNext, ClockLike_now, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, OverflowBackpressureStrategy, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 const genFactory = (factory, options) => async (observer) => {
     const enumerator = pipe(factory(), AsyncIterator.toAsyncEnumerator(), Disposable.addTo(observer));
@@ -62,7 +62,7 @@ const genFactory = (factory, options) => async (observer) => {
                 elapsedTime < maxYieldInterval &&
                 (await enumerator[AsyncEnumeratorLike_moveNext]())) {
                 const value = enumerator[AsyncEnumeratorLike_current];
-                queue[QueueLike_enqueue](value);
+                queue[QueueableLike_enqueue](value);
                 // Reassign because these values may change after
                 // hopping the micro task queue
                 elapsedTime = observer[ClockLike_now] - startTime;

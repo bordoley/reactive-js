@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EnumeratorLike`](EnumeratorLike.md)\<`T`\>
+- [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)\<`T`\>
 
 ## Extended by
 
@@ -19,6 +19,26 @@
 • **T** = `unknown`
 
 ## Properties
+
+### \[AsyncEnumeratorLike\_current\]
+
+> `readonly` **\[AsyncEnumeratorLike\_current\]**: `T`
+
+#### Inherited from
+
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[AsyncEnumeratorLike_current]`](AsyncEnumeratorLike.md#asyncenumeratorlike_current)
+
+***
+
+### \[AsyncEnumeratorLike\_hasCurrent\]
+
+> `readonly` **\[AsyncEnumeratorLike\_hasCurrent\]**: `boolean`
+
+#### Inherited from
+
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[AsyncEnumeratorLike_hasCurrent]`](AsyncEnumeratorLike.md#asyncenumeratorlike_hascurrent)
+
+***
 
 ### \[ConsumableEnumeratorLike\_isDataAvailable\]
 
@@ -34,7 +54,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[DisposableLike_error]`](EnumeratorLike.md#disposablelike_error)
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[DisposableLike_error]`](AsyncEnumeratorLike.md#disposablelike_error)
 
 ***
 
@@ -46,29 +66,23 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[DisposableLike_isDisposed]`](EnumeratorLike.md#disposablelike_isdisposed)
-
-***
-
-### \[EnumeratorLike\_current\]
-
-> `readonly` **\[EnumeratorLike\_current\]**: `T`
-
-#### Inherited from
-
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_current]`](EnumeratorLike.md#enumeratorlike_current)
-
-***
-
-### \[EnumeratorLike\_hasCurrent\]
-
-> `readonly` **\[EnumeratorLike\_hasCurrent\]**: `boolean`
-
-#### Inherited from
-
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_hasCurrent]`](EnumeratorLike.md#enumeratorlike_hascurrent)
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[DisposableLike_isDisposed]`](AsyncEnumeratorLike.md#disposablelike_isdisposed)
 
 ## Methods
+
+### \[AsyncEnumeratorLike\_moveNext\]()
+
+> **\[AsyncEnumeratorLike\_moveNext\]**(): `Promise`\<`boolean`\>
+
+#### Returns
+
+`Promise`\<`boolean`\>
+
+#### Inherited from
+
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[AsyncEnumeratorLike_moveNext]`](AsyncEnumeratorLike.md#asyncenumeratorlike_movenext)
+
+***
 
 ### \[ConsumableEnumeratorLike\_addOnDataAvailableListener\]()
 
@@ -106,18 +120,4 @@ An optional error that signals the resource is being disposed due to an error.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[dispose]`](EnumeratorLike.md#dispose)
-
-***
-
-### \[EnumeratorLike\_moveNext\]()
-
-> **\[EnumeratorLike\_moveNext\]**(): `boolean`
-
-#### Returns
-
-`boolean`
-
-#### Inherited from
-
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_moveNext]`](EnumeratorLike.md#enumeratorlike_movenext)
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[dispose]`](AsyncEnumeratorLike.md#dispose)

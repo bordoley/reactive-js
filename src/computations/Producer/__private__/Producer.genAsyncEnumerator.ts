@@ -21,7 +21,7 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   OverflowBackpressureStrategy,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
 } from "../../../utils.js";
@@ -105,7 +105,7 @@ const genOnSubscribe =
           (await enumerator[AsyncEnumeratorLike_moveNext]())
         ) {
           const value = enumerator[AsyncEnumeratorLike_current];
-          queue[QueueLike_enqueue](value);
+          queue[QueueableLike_enqueue](value);
 
           queueIsReady = queue[FlowControllerLike_isReady];
           consumerIsReady = consumer[FlowControllerLike_isReady];

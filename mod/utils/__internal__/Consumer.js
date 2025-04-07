@@ -1,7 +1,7 @@
 /// <reference types="./Consumer.d.ts" />
 
 import { createInstanceFactory, include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
-import { EventListenerLike_notify, QueueLike_enqueue, } from "../../utils.js";
+import { EventListenerLike_notify, QueueableLike_enqueue, } from "../../utils.js";
 import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
 import DelegatingConsumerMixin from "../__mixins__/DelegatingConsumerMixin.js";
 import DelegatingDisposableMixin from "../__mixins__/DelegatingDisposableMixin.js";
@@ -21,7 +21,7 @@ export const createWithFlowControl = /*@__PURE__*/ (() => mixInstanceFactory(inc
     return this;
 }, props(), proto({
     [EventListenerLike_notify](next) {
-        this[QueueLike_enqueue](next);
+        this[QueueableLike_enqueue](next);
     },
 })))();
 export const takeLast = /*@__PURE__*/ (() => createInstanceFactory(TakeLastConsumerMixin()))();

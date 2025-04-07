@@ -26,12 +26,12 @@ const DeferredReactiveComputationModuleTests = <
       testAsync(
         "converting to an async iterable and back to a producer to iterate the data",
         pipeLazyAsync(
-          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          [1, 2, 3, 4, 5, 6, 7, 8],
           Computation.fromReadonlyArray(m),
           m.toAsyncIterable<number>(),
           AsyncIterable.toProducer<number>(),
           EventSource.toReadonlyArrayAsync(),
-          expectArrayEquals<number>([1, 2, 2, 2, 2, 3, 3, 3, 4]),
+          expectArrayEquals<number>([1, 2, 3, 4, 5, 6, 7, 8]),
         ),
       ),
     ),

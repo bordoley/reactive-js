@@ -21,6 +21,7 @@ export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current")
 export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
 export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
 export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_peek");
+export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
 export const DropLatestBackpressureStrategy = "drop-latest";
 export const DropOldestBackpressureStrategy = "drop-oldest";
 export const OverflowBackpressureStrategy = "overflow";
@@ -35,7 +36,6 @@ class CapacityExceededError extends Error {
 export const raiseCapacityExceededError = (capacity) => raise(newInstance(CapacityExceededError, capacity));
 export const QueueLike_backpressureStrategy = Symbol("QueueLike_backpressureStrategy");
 export const QueueLike_capacity = Symbol("QueueLike_capacity");
-export const QueueLike_enqueue = Symbol("QueueLike_enqueue");
 export const FlowControllerLike_isReady = Symbol("FlowControllerLike_isReady");
 export const FlowControllerLike_addOnReadyListener = Symbol("FlowControllerLike_addOnReadyListener");
 export const ConsumableEnumeratorLike_addOnDataAvailableListener = Symbol("ConsumableEnumeratorLike_addOnDataAvailableListener");

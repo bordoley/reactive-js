@@ -56,7 +56,7 @@ import {
   DropOldestBackpressureStrategy,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
@@ -830,7 +830,7 @@ class TakeLastAsyncIterable<T> implements AsyncIterableLike<T> {
     });
 
     for await (const v of src) {
-      queue[QueueLike_enqueue](v);
+      queue[QueueableLike_enqueue](v);
     }
 
     while (queue[EnumeratorLike_moveNext]()) {

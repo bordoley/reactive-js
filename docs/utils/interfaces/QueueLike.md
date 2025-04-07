@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>
+- [`QueueableLike`](QueueableLike.md)\<`T`\>.[`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)\<`T`\>
 
 ## Extended by
 
@@ -33,19 +33,3 @@ The back pressure strategy utilized by the queue when it is at capacity.
 > `readonly` **\[QueueLike\_capacity\]**: `number`
 
 The number of items the queue is capable of efficiently buffering.
-
-## Methods
-
-### \[QueueLike\_enqueue\]()
-
-> **\[QueueLike\_enqueue\]**(`v`): `void`
-
-#### Parameters
-
-##### v
-
-`T`
-
-#### Returns
-
-`void`

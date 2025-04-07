@@ -10,6 +10,10 @@
 
 - [`DisposableLike`](DisposableLike.md)
 
+## Extended by
+
+- [`ConsumableEnumeratorLike`](ConsumableEnumeratorLike.md)
+
 ## Type Parameters
 
 • **T** = `unknown`

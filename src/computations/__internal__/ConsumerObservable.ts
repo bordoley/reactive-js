@@ -32,7 +32,7 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   ObserverLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_schedule,
@@ -196,7 +196,7 @@ export const create: <T>(config?: {
         if (shouldNotify) {
           observer?.[EventListenerLike_notify](next);
         } else if (!isCompleted) {
-          this[QueueLike_enqueue](next);
+          this[QueueableLike_enqueue](next);
         }
       },
 

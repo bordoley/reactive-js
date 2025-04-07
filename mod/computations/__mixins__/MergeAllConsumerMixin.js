@@ -9,7 +9,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
 import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
-import { ConsumableEnumeratorLike_addOnDataAvailableListener, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ConsumableEnumeratorLike_addOnDataAvailableListener, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueableLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
 const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
     const MergeAllConsumer_createDelegatingNonCompleting = Symbol("MergeAllConsumer_createDelegatingNonCompleting");
     const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
@@ -57,7 +57,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
         [MergeAllConsumer_activeCount]: 0,
     }), proto({
         [EventListenerLike_notify](next) {
-            this[QueueLike_enqueue](next);
+            this[QueueableLike_enqueue](next);
         },
     })));
 })();

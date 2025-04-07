@@ -4,7 +4,7 @@ import { Array_length, Array_push } from "../../__internal__/constants.js";
 import { expectArrayEquals, expectEquals, expectFalse, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, none, pipe } from "../../functions.js";
 import { floor, random } from "../../math.js";
-import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, } from "../../utils.js";
 import * as Queue from "../Queue.js";
 const createSorted = /*@__PURE__*/ (() => {
     const comparator = (a, b) => a - b;
@@ -30,13 +30,13 @@ const makeShuffledArray = (n) => {
 testModule("Queue", test("enqueue", () => {
     const queue = Queue.create();
     for (let i = 0; i < 127; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
     }
     for (let i = 0; i < 62; i++) {
         queue[EnumeratorLike_moveNext]();
     }
     for (let i = 128; i < 255; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
     }
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(192));
 }), test("push/pull/count", () => {
@@ -44,7 +44,7 @@ testModule("Queue", test("enqueue", () => {
     pipe(queue[CollectionEnumeratorLike_peek], expectEquals(none));
     pipe(queue[EnumeratorLike_moveNext](), expectFalse());
     for (let i = 0; i < 8; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
         pipe(queue[CollectionEnumeratorLike_peek], expectEquals(0));
     }
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(8));
@@ -55,7 +55,7 @@ testModule("Queue", test("enqueue", () => {
     pipe((queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]), expectEquals(2));
     pipe(queue[CollectionEnumeratorLike_peek], expectEquals(3));
     for (let i = 8; i < 16; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
         pipe(queue[CollectionEnumeratorLike_peek], expectEquals(3));
     }
     pipe((queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]), expectEquals(3));
@@ -65,7 +65,7 @@ testModule("Queue", test("enqueue", () => {
     pipe((queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]), expectEquals(5));
     pipe(queue[CollectionEnumeratorLike_peek], expectEquals(6));
     for (let i = 16; i < 32; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
         pipe(queue[CollectionEnumeratorLike_peek], expectEquals(6));
     }
     for (let i = 0; i < 20; i++) {
@@ -75,14 +75,14 @@ testModule("Queue", test("enqueue", () => {
 }), test("shrink", () => {
     const queue = Queue.create();
     for (let i = 0; i < 300; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
     }
     for (let i = 0; i < 50; i++) {
         queue[EnumeratorLike_moveNext]();
     }
     pipe(queue[CollectionEnumeratorLike_peek], expectEquals(50));
     for (let i = 300; i < 500; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
     }
     for (let i = 0; i < 200; i++) {
         queue[EnumeratorLike_moveNext]();
@@ -91,13 +91,13 @@ testModule("Queue", test("enqueue", () => {
 }), test("iterator", () => {
     const queue = Queue.create();
     for (let i = 0; i < 31; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
     }
     for (let i = 0; i < 10; i++) {
         queue[EnumeratorLike_moveNext]();
     }
     for (let i = 31; i < 40; i++) {
-        queue[QueueLike_enqueue](i);
+        queue[QueueableLike_enqueue](i);
     }
     let prev = 9;
     while (queue[EnumeratorLike_moveNext]()) {
@@ -109,7 +109,7 @@ testModule("Queue", test("enqueue", () => {
     const queue = createSorted();
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray[Array_length]; i++) {
-        queue[QueueLike_enqueue](shuffledArray[i]);
+        queue[QueueableLike_enqueue](shuffledArray[i]);
     }
     const acc = [];
     while (queue[CollectionEnumeratorLike_count] > 0) {
@@ -120,15 +120,15 @@ testModule("Queue", test("enqueue", () => {
 }), test("enqueueing after dispose does nothing", () => {
     const queue = Queue.create();
     queue[DisposableLike_dispose]();
-    queue[QueueLike_enqueue](0);
-    queue[QueueLike_enqueue](1);
-    queue[QueueLike_enqueue](2);
+    queue[QueueableLike_enqueue](0);
+    queue[QueueableLike_enqueue](1);
+    queue[QueueableLike_enqueue](2);
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(0));
 }), test("enumerating after dispose", () => {
     const queue = Queue.create();
-    queue[QueueLike_enqueue](0);
-    queue[QueueLike_enqueue](1);
-    queue[QueueLike_enqueue](2);
+    queue[QueueableLike_enqueue](0);
+    queue[QueueableLike_enqueue](1);
+    queue[QueueableLike_enqueue](2);
     queue[DisposableLike_dispose]();
     for (let i = 0; i < 3; i++) {
         pipe(queue[EnumeratorLike_moveNext](), expectTrue("expected enumerator to have value"));

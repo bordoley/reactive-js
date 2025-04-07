@@ -25,7 +25,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_schedule,
@@ -86,7 +86,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
       // onto the original queue.
       while (newWorkQueue[EnumeratorLike_moveNext]()) {
         const continuation = newWorkQueue[EnumeratorLike_current];
-        workQueue[QueueLike_enqueue](continuation);
+        workQueue[QueueableLike_enqueue](continuation);
       }
       animationFrameScheduler[AnimationFrameScheduler_rafQueue] = workQueue;
     }
@@ -145,7 +145,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
 
           pipe(subscription, Disposable.addTo(continuation));
         } else {
-          this[AnimationFrameScheduler_rafQueue][QueueLike_enqueue](
+          this[AnimationFrameScheduler_rafQueue][QueueableLike_enqueue](
             continuation,
           );
 

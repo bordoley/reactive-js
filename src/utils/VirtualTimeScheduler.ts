@@ -20,7 +20,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   VirtualTimeSchedulerLike,
@@ -138,10 +138,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             ) {
               // copy the task and all other remaining tasks back to the scheduler queue
 
-              this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
+              this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
+                continuation,
+              );
               while (queue[EnumeratorLike_moveNext]()) {
                 continuation = queue[EnumeratorLike_current];
-                this[VirtualTimeScheduler_queue][QueueLike_enqueue](
+                this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
                   continuation,
                 );
               }
@@ -171,7 +173,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         this: TProperties & SchedulerLike,
         continuation: SchedulerContinuationLike,
       ) {
-        this[VirtualTimeScheduler_queue][QueueLike_enqueue](continuation);
+        this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
       },
     },
   ))();

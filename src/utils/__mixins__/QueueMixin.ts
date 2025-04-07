@@ -34,7 +34,7 @@ import {
   QueueLike,
   QueueLike_backpressureStrategy,
   QueueLike_capacity,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   ThrowBackpressureStrategy,
   raiseCapacityExceededError,
 } from "../../utils.js";
@@ -307,7 +307,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
             return true;
           },
 
-          [QueueLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
+          [QueueableLike_enqueue](this: TProperties & QueueLike<T>, item: T) {
             const isDisposed = this[DisposableLike_isDisposed];
             const backpressureStrategy = this[QueueLike_backpressureStrategy];
             const capacity = this[QueueLike_capacity];

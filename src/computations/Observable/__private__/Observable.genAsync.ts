@@ -21,7 +21,7 @@ import {
   FlowControllerLike_isReady,
   ObserverLike,
   OverflowBackpressureStrategy,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_schedule,
@@ -123,7 +123,7 @@ const genFactory =
           (await enumerator[AsyncEnumeratorLike_moveNext]())
         ) {
           const value = enumerator[AsyncEnumeratorLike_current];
-          queue[QueueLike_enqueue](value);
+          queue[QueueableLike_enqueue](value);
 
           // Reassign because these values may change after
           // hopping the micro task queue

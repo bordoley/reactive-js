@@ -31,7 +31,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   QueueLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SchedulerContinuation as SchedulerContinuationGenerator,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -181,7 +181,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         const parent = findNearestNonDisposedParent(continuation);
 
         if (isSome(parent)) {
-          parent[QueueLike_enqueue](continuation);
+          parent[QueueableLike_enqueue](continuation);
         } else {
           continuation[SchedulerContinuationLike_dueTime] =
             scheduler[ClockLike_now];
@@ -202,7 +202,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           if (head[DisposableLike_isDisposed]) {
             // continue
           } else if (isSome(parent)) {
-            parent[QueueLike_enqueue](head);
+            parent[QueueableLike_enqueue](head);
           } else {
             scheduler[SchedulerMixinLike_schedule](head);
           }
@@ -446,7 +446,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           ) {
             this[SchedulerMixinHostLike_schedule](continuation);
           } else {
-            activeContinuation[QueueLike_enqueue](continuation);
+            activeContinuation[QueueableLike_enqueue](continuation);
           }
         },
 

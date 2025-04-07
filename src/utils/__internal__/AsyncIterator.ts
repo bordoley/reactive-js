@@ -14,6 +14,7 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
@@ -26,8 +27,19 @@ import {
 } from "../../utils.js";
 
 interface Signature {
+  fromAsyncEnumerator<T>(): Function1<AsyncEnumeratorLike<T>, AsyncIterator<T>>;
   toAsyncEnumerator<T>(): Function1<AsyncIterator<T>, AsyncEnumeratorLike<T>>;
 }
+
+export const fromAsyncEnumerator: Signature["fromAsyncEnumerator"] =
+  /*@__PURE__*/ returns((enumerator: AsyncEnumeratorLike) =>
+    (async function* () {
+      while (await enumerator[AsyncEnumeratorLike_moveNext]()) {
+        yield enumerator[AsyncEnumeratorLike_current];
+      }
+      Disposable.raiseIfDisposedWithError(enumerator);
+    })(),
+  ) as Signature["fromAsyncEnumerator"];
 
 export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
   /*@__PURE__*/ (<T>() => {

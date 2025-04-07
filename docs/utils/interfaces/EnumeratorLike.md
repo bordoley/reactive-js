@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)
-- [`ConsumableEnumeratorLike`](ConsumableEnumeratorLike.md)
 
 ## Type Parameters
 

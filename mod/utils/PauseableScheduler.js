@@ -6,7 +6,7 @@ import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -133,7 +133,7 @@ export const create = /*@PURE__*/ (() => {
             scheduleOnHost(this);
         },
         [SchedulerMixinHostLike_schedule](continuation) {
-            this[QueueLike_enqueue](continuation);
+            this[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },
     });

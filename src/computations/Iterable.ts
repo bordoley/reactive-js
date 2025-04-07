@@ -58,7 +58,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
   EventListenerLike_notify,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
@@ -699,7 +699,7 @@ class TakeLastIterable<T> {
     });
 
     for (const v of src) {
-      queue[QueueLike_enqueue](v);
+      queue[QueueableLike_enqueue](v);
     }
 
     while (queue[EnumeratorLike_moveNext]()) {

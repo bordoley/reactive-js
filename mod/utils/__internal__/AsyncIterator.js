@@ -2,9 +2,17 @@
 
 import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
 import { error, isSome, none, pipe, returns, } from "../../functions.js";
+import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_hasCurrent, AsyncEnumeratorLike_moveNext, DisposableLike_dispose, } from "../../utils.js";
+export const fromAsyncEnumerator = 
+/*@__PURE__*/ returns((enumerator) => (async function* () {
+    while (await enumerator[AsyncEnumeratorLike_moveNext]()) {
+        yield enumerator[AsyncEnumeratorLike_current];
+    }
+    Disposable.raiseIfDisposedWithError(enumerator);
+})());
 export const toAsyncEnumerator = 
 /*@__PURE__*/ (() => {
     const AsyncIteratorAsyncEnumerator_asyncIterator = Symbol("IteratorAsyncEnumerator_iterator");

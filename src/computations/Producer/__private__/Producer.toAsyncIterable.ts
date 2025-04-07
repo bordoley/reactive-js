@@ -7,7 +7,7 @@ import {
   ProducerLike,
 } from "../../../computations.js";
 import { Optional, newInstance, pipe, returns } from "../../../functions.js";
-import * as ConsumableEnumerator from "../../../utils/__internal__/ConsumableEnumerator.js";
+import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import { ThrowBackpressureStrategy } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
@@ -30,7 +30,7 @@ class ProducerToAsyncIterable<T> implements AsyncIterableLike<T> {
 
     this.p[EventSourceLike_subscribe](consumer);
 
-    return pipe(consumer, ConsumableEnumerator.toAsyncIterator());
+    return pipe(consumer, AsyncIterator.fromAsyncEnumerator());
   }
 }
 

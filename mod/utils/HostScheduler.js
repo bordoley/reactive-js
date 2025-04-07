@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__inte
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -122,7 +122,7 @@ export const create = /*@PURE__*/ (() => {
             return yieldToNextContinuation;
         },
         [SchedulerMixinHostLike_schedule](continuation) {
-            this[QueueLike_enqueue](continuation);
+            this[QueueableLike_enqueue](continuation);
             scheduleOnHost(this);
         },
     });

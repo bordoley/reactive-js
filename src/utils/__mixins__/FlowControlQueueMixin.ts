@@ -18,6 +18,7 @@ import {
   Optional,
   SideEffect1,
   alwaysNone,
+  bind,
   call,
   isEqualTo,
   none,
@@ -25,12 +26,16 @@ import {
   returns,
 } from "../../functions.js";
 import {
+  AsyncEnumeratorLike_current,
+  AsyncEnumeratorLike_hasCurrent,
+  AsyncEnumeratorLike_moveNext,
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
   CollectionEnumeratorLike_peek,
   ConsumableEnumeratorLike_addOnDataAvailableListener,
   ConsumableEnumeratorLike_isDataAvailable,
   DisposableLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -42,9 +47,10 @@ import {
   QueueLike,
   QueueLike_backpressureStrategy,
   QueueLike_capacity,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
 
 type TReturn<T> = Omit<FlowControlQueueLike<T>, keyof DisposableLike>;
@@ -97,6 +103,32 @@ const FlowControlQueueMixin: <T>() => Mixin1<
     return publisher;
   }
 
+  function asyncEnumeratorMoveNext<T>(
+    this: FlowControlQueueLike<T>,
+    resolve: (value: boolean) => void,
+    reject: (reason?: any) => void,
+  ) {
+    if (this[EnumeratorLike_moveNext]()) {
+      resolve(true);
+      return;
+    }
+
+    const disposable = pipe(
+      Disposable.create(),
+      Disposable.add(
+        this[ConsumableEnumeratorLike_addOnDataAvailableListener](async () => {
+          disposable[DisposableLike_dispose]();
+        }),
+      ),
+      DisposableContainer.onError(reject),
+      DisposableContainer.onComplete(() => {
+        const hasNext = this[EnumeratorLike_moveNext]();
+        resolve(hasNext);
+      }),
+      Disposable.addTo(this),
+    );
+  }
+
   return returns(
     mix(
       include(QueueMixin()),
@@ -130,6 +162,20 @@ const FlowControlQueueMixin: <T>() => Mixin1<
           return count > 0;
         },
 
+        get [AsyncEnumeratorLike_current]() {
+          unsafeCast<TProperties>(this);
+          return this[EnumeratorLike_current];
+        },
+
+        get [AsyncEnumeratorLike_hasCurrent]() {
+          unsafeCast<TProperties>(this);
+          return this[EnumeratorLike_hasCurrent];
+        },
+
+        [AsyncEnumeratorLike_moveNext](this: TProperties) {
+          return new Promise(bind(asyncEnumeratorMoveNext, this));
+        },
+
         [EnumeratorLike_moveNext](this: TProperties & FlowControlQueueLike<T>) {
           const count = this[CollectionEnumeratorLike_count];
           const capacity = this[QueueLike_capacity];
@@ -146,13 +192,13 @@ const FlowControlQueueMixin: <T>() => Mixin1<
           return result;
         },
 
-        [QueueLike_enqueue](
+        [QueueableLike_enqueue](
           this: TProperties & FlowControlQueueLike<T> & QueueLike<T>,
           item: T,
         ) {
           const oldCount = this[CollectionEnumeratorLike_count];
 
-          super_(QueueMixin(), this, QueueLike_enqueue, item);
+          super_(QueueMixin(), this, QueueableLike_enqueue, item);
 
           const newCount = this[CollectionEnumeratorLike_count];
           const shouldNotify = oldCount < 1 && newCount >= 1;

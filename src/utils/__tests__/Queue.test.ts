@@ -15,7 +15,7 @@ import {
   DisposableLike_dispose,
   EnumeratorLike_current,
   EnumeratorLike_moveNext,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Queue from "../Queue.js";
 
@@ -53,7 +53,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 127; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
     }
 
     for (let i = 0; i < 62; i++) {
@@ -61,7 +61,7 @@ testModule(
     }
 
     for (let i = 128; i < 255; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
     }
 
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(192));
@@ -76,7 +76,7 @@ testModule(
     pipe(queue[EnumeratorLike_moveNext](), expectFalse());
 
     for (let i = 0; i < 8; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
       pipe(
         queue[CollectionEnumeratorLike_peek],
         expectEquals<Optional<number>>(0),
@@ -113,7 +113,7 @@ testModule(
     );
 
     for (let i = 8; i < 16; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
       pipe(
         queue[CollectionEnumeratorLike_peek],
         expectEquals(3 as Optional<number>),
@@ -148,7 +148,7 @@ testModule(
     );
 
     for (let i = 16; i < 32; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
       pipe(
         queue[CollectionEnumeratorLike_peek],
         expectEquals(6 as Optional<number>),
@@ -168,7 +168,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 300; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
     }
 
     for (let i = 0; i < 50; i++) {
@@ -181,7 +181,7 @@ testModule(
     );
 
     for (let i = 300; i < 500; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
     }
 
     for (let i = 0; i < 200; i++) {
@@ -197,7 +197,7 @@ testModule(
     const queue = Queue.create<number>();
 
     for (let i = 0; i < 31; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
     }
 
     for (let i = 0; i < 10; i++) {
@@ -205,7 +205,7 @@ testModule(
     }
 
     for (let i = 31; i < 40; i++) {
-      queue[QueueLike_enqueue](i);
+      queue[QueueableLike_enqueue](i);
     }
 
     let prev = 9;
@@ -219,7 +219,7 @@ testModule(
     const queue = createSorted();
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray[Array_length]; i++) {
-      queue[QueueLike_enqueue](shuffledArray[i]);
+      queue[QueueableLike_enqueue](shuffledArray[i]);
     }
 
     const acc: number[] = [];
@@ -233,17 +233,17 @@ testModule(
   test("enqueueing after dispose does nothing", () => {
     const queue = Queue.create();
     queue[DisposableLike_dispose]();
-    queue[QueueLike_enqueue](0);
-    queue[QueueLike_enqueue](1);
-    queue[QueueLike_enqueue](2);
+    queue[QueueableLike_enqueue](0);
+    queue[QueueableLike_enqueue](1);
+    queue[QueueableLike_enqueue](2);
 
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(0));
   }),
   test("enumerating after dispose", () => {
     const queue = Queue.create<number>();
-    queue[QueueLike_enqueue](0);
-    queue[QueueLike_enqueue](1);
-    queue[QueueLike_enqueue](2);
+    queue[QueueableLike_enqueue](0);
+    queue[QueueableLike_enqueue](1);
+    queue[QueueableLike_enqueue](2);
 
     queue[DisposableLike_dispose]();
 

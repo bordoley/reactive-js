@@ -2,7 +2,7 @@
 
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../../computations.js";
 import { newInstance, pipe, returns } from "../../../functions.js";
-import * as ConsumableEnumerator from "../../../utils/__internal__/ConsumableEnumerator.js";
+import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import { ThrowBackpressureStrategy } from "../../../utils.js";
 class ProducerToAsyncIterable {
@@ -20,7 +20,7 @@ class ProducerToAsyncIterable {
             capacity: 1,
         });
         this.p[EventSourceLike_subscribe](consumer);
-        return pipe(consumer, ConsumableEnumerator.toAsyncIterator());
+        return pipe(consumer, AsyncIterator.fromAsyncEnumerator());
     }
 }
 const Producer_toAsyncIterable = 

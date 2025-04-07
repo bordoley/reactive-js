@@ -65,6 +65,10 @@ export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T>
     readonly [CollectionEnumeratorLike_count]: number;
     readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }
+export declare const QueueableLike_enqueue: unique symbol;
+export interface QueueableLike<T> {
+    [QueueableLike_enqueue](v: T): void;
+}
 export type BackpressureStrategy = "drop-latest" | "drop-oldest" | "overflow" | "throw";
 export declare const DropLatestBackpressureStrategy: BackpressureStrategy;
 export declare const DropOldestBackpressureStrategy: BackpressureStrategy;
@@ -73,11 +77,10 @@ export declare const ThrowBackpressureStrategy: BackpressureStrategy;
 export declare const raiseCapacityExceededError: (capacity: number) => unknown;
 export declare const QueueLike_backpressureStrategy: unique symbol;
 export declare const QueueLike_capacity: unique symbol;
-export declare const QueueLike_enqueue: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
+export interface QueueLike<T = unknown> extends QueueableLike<T>, CollectionEnumeratorLike<T> {
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
@@ -86,7 +89,6 @@ export interface QueueLike<T = unknown> extends CollectionEnumeratorLike<T> {
      * The number of items the queue is capable of efficiently buffering.
      */
     readonly [QueueLike_capacity]: number;
-    [QueueLike_enqueue](v: T): void;
 }
 export declare const FlowControllerLike_isReady: unique symbol;
 export declare const FlowControllerLike_addOnReadyListener: unique symbol;
@@ -96,7 +98,7 @@ export interface FlowControllerLike {
 }
 export declare const ConsumableEnumeratorLike_addOnDataAvailableListener: unique symbol;
 export declare const ConsumableEnumeratorLike_isDataAvailable: unique symbol;
-export interface ConsumableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
+export interface ConsumableEnumeratorLike<T = unknown> extends AsyncEnumeratorLike<T> {
     readonly [ConsumableEnumeratorLike_isDataAvailable]: boolean;
     [ConsumableEnumeratorLike_addOnDataAvailableListener](callback: SideEffect1<void>): DisposableLike;
 }

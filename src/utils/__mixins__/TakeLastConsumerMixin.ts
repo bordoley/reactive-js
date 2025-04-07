@@ -18,7 +18,7 @@ import {
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
   QueueLike,
-  QueueLike_enqueue,
+  QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
@@ -60,7 +60,7 @@ const TakeLastConsumerMixin: <T>() => Mixin1<
 
         [EventListenerLike_notify](this: QueueLike<T>, item: T) {
           if (!this[DisposableLike_isDisposed]) {
-            this[QueueLike_enqueue](item);
+            this[QueueableLike_enqueue](item);
           }
         },
 

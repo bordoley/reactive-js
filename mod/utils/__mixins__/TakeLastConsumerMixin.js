@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { returns } from "../../functions.js";
-import { DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_enqueue, } from "../../utils.js";
+import { DisposableLike_isDisposed, DropOldestBackpressureStrategy, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "./DisposeOnCompleteSinkMixin.js";
@@ -23,7 +23,7 @@ const TakeLastConsumerMixin = /*@__PURE__*/ (() => {
         },
         [EventListenerLike_notify](item) {
             if (!this[DisposableLike_isDisposed]) {
-                this[QueueLike_enqueue](item);
+                this[QueueableLike_enqueue](item);
             }
         },
         [FlowControllerLike_addOnReadyListener]() {

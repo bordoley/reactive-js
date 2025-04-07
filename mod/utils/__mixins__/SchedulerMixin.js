@@ -5,7 +5,7 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, floor } from "../../math.js";
-import { ClockLike_now, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import * as CurrentScheduler from "../__internal__/CurrentScheduler.js";
@@ -50,7 +50,7 @@ const SchedulerMixin =
             const scheduler = continuation[QueueContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
-                parent[QueueLike_enqueue](continuation);
+                parent[QueueableLike_enqueue](continuation);
             }
             else {
                 continuation[SchedulerContinuationLike_dueTime] =
@@ -69,7 +69,7 @@ const SchedulerMixin =
                     // continue
                 }
                 else if (isSome(parent)) {
-                    parent[QueueLike_enqueue](head);
+                    parent[QueueableLike_enqueue](head);
                 }
                 else {
                     scheduler[SchedulerMixinLike_schedule](head);
@@ -217,7 +217,7 @@ const SchedulerMixin =
                 this[SchedulerMixinHostLike_schedule](continuation);
             }
             else {
-                activeContinuation[QueueLike_enqueue](continuation);
+                activeContinuation[QueueableLike_enqueue](continuation);
             }
         },
         [SchedulerLike_schedule](effect) {

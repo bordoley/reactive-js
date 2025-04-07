@@ -7,7 +7,7 @@ import { clampPositiveInteger, clampPositiveNonZeroInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
@@ -539,7 +539,7 @@ class TakeLastAsyncIterable {
             capacity,
         });
         for await (const v of src) {
-            queue[QueueLike_enqueue](v);
+            queue[QueueableLike_enqueue](v);
         }
         while (queue[EnumeratorLike_moveNext]()) {
             yield queue[EnumeratorLike_current];

@@ -4,7 +4,7 @@ import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/const
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_backpressureStrategy, QueueLike_capacity, QueueLike_enqueue, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_backpressureStrategy, QueueLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -174,7 +174,7 @@ const QueueMixin =
             this[EnumeratorLike_hasCurrent] = true;
             return true;
         },
-        [QueueLike_enqueue](item) {
+        [QueueableLike_enqueue](item) {
             const isDisposed = this[DisposableLike_isDisposed];
             const backpressureStrategy = this[QueueLike_backpressureStrategy];
             const capacity = this[QueueLike_capacity];
