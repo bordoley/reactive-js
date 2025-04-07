@@ -52,6 +52,28 @@
 
 ## Methods
 
+### \[asyncIterator\]()
+
+> **\[asyncIterator\]**(`options`?): `AsyncIterator`\<`T`\>
+
+#### Parameters
+
+##### options?
+
+###### scheduler?
+
+[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+
+#### Returns
+
+`AsyncIterator`\<`T`\>
+
+#### Inherited from
+
+[`DeferredEventSourceLike`](DeferredEventSourceLike.md).[`[asyncIterator]`](DeferredEventSourceLike.md#asynciterator)
+
+***
+
 ### \[EventSourceLike\_subscribe\]()
 
 > **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`

@@ -14,7 +14,7 @@ const Producer_takeUntil: Producer.Signature["takeUntil"] = (<T>(
   pipe(
     TakeUntilSink.create<ConsumerLike, T, ProducerLike>,
     partial(notifier, addEventListener),
-    Producer_lift(),
+    Producer_lift<T, T>(),
   )) as Producer.Signature["takeUntil"];
 
 export default Producer_takeUntil;

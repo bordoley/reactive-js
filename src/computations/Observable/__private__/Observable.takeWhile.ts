@@ -11,7 +11,7 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = (<T>(
   pipe(
     TakeWhileSink.create<ObserverLike, T>,
     partial(predicate, options),
-    Observable_lift(),
+    Observable_lift<T, T>(),
   )) as Observable.Signature["takeWhile"];
 
 export default Observable_takeWhile;

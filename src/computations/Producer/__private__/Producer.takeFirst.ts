@@ -10,7 +10,7 @@ const Producer_takeFirst: Producer.Signature["takeFirst"] = (<T>(options?: {
   pipe(
     TakeFirstSink.create<ConsumerLike, T>,
     partial(options?.count),
-    Producer_lift(),
+    Producer_lift<T, T>(),
   )) as Producer.Signature["takeFirst"];
 
 export default Producer_takeFirst;

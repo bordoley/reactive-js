@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EventSourceLike`](EventSourceLike.md)\<`T`, `TConsumer`\>
+- [`EventSourceLike`](EventSourceLike.md)\<`T`, `TConsumer`\>.`AsyncIterable`\<`T`\>
 
 ## Extended by
 
@@ -52,6 +52,28 @@
 [`EventSourceLike`](EventSourceLike.md).[`[ComputationLike_isSynchronous]`](EventSourceLike.md#computationlike_issynchronous)
 
 ## Methods
+
+### \[asyncIterator\]()
+
+> **\[asyncIterator\]**(`options`?): `AsyncIterator`\<`T`\>
+
+#### Parameters
+
+##### options?
+
+###### scheduler?
+
+[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+
+#### Returns
+
+`AsyncIterator`\<`T`\>
+
+#### Overrides
+
+`AsyncIterable.[asyncIterator]`
+
+***
 
 ### \[EventSourceLike\_subscribe\]()
 

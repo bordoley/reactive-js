@@ -80,7 +80,7 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = (<
   pipe(
     createWithCurrentTimeOperator<TA, TB>,
     partial(selector),
-    Observable_lift(),
+    Observable_lift<TA, TB>(),
   )) as Observable.Signature["withCurrentTime"];
 
 export default Observable_withCurrentTime;

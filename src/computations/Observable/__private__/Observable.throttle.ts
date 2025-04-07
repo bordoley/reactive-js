@@ -175,7 +175,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (<T>(
   return pipe(
     createThrottleSink<T>,
     partial(durationObservable, mode),
-    Observable_lift(),
+    Observable_lift<T, T>(),
   );
 }) as Observable.Signature["throttle"];
 

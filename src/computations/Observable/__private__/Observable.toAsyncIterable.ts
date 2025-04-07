@@ -7,7 +7,7 @@ const Observable_toAsyncIterable: Observable.Signature["toAsyncIterable"] =
   (options =>
     compose(
       Observable_toProducer(options),
-      Producer_toAsyncIterable(),
+      Producer_toAsyncIterable<unknown>(),
     )) as Observable.Signature["toAsyncIterable"];
 
 export default Observable_toAsyncIterable;

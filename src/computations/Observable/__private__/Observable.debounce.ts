@@ -91,7 +91,7 @@ const createDebounceSink: <T>(
 
         this[DebounceSink_durationSubscription] = pipe(
           this[DebounceSink_durationFunction](next),
-          Computation.endWith(m, none),
+          Computation.endWith(m, none as unknown),
           Observable_takeFirst(),
           EventSource.subscribe(
             () => {
@@ -136,7 +136,7 @@ const Observable_debounce: Observable.Signature["debounce"] = (<T>(
   return pipe(
     createDebounceSink<T>,
     partial(durationObservable),
-    Observable_lift(),
+    Observable_lift<T, T>(),
   );
 }) as Observable.Signature["debounce"];
 

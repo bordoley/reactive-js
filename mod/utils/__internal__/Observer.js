@@ -1,8 +1,8 @@
 /// <reference types="./Observer.d.ts" />
 
-import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
+import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
 import { none } from "../../functions.js";
-import { EventListenerLike_notify, } from "../../utils.js";
+import { EventListenerLike_notify, QueueableLike_enqueue, } from "../../utils.js";
 import { CollectorSinkMixin } from "../__mixins__/CollectorSinkMixin.js";
 import DelegatingCatchErrorConsumerMixin from "../__mixins__/DelegatingCatchErrorConsumerMixin.js";
 import DelegatingNonCompletingConsumerMixin from "../__mixins__/DelegatingNonCompletingConsumerMixin.js";
@@ -10,6 +10,7 @@ import DelegatingObserverSchedulerMixin from "../__mixins__/DelegatingObserverSc
 import DelegatingSchedulerMixin from "../__mixins__/DelegatingSchedulerMixin.js";
 import DisposableMixin from "../__mixins__/DisposableMixin.js";
 import DisposeOnCompleteSinkMixin from "../__mixins__/DisposeOnCompleteSinkMixin.js";
+import FlowControlQueueMixin from "../__mixins__/FlowControlQueueMixin.js";
 import FlowControllerWithoutBackpressureMixin from "../__mixins__/FlowControllerWithoutBackpressureMixin.js";
 import { ReducerSinkMixin } from "../__mixins__/ReducerSinkMixin.js";
 import TakeLastConsumerMixin from "../__mixins__/TakeLastConsumerMixin.js";
@@ -46,6 +47,18 @@ export const createDelegatingNonCompleting = /*@__PURE__*/ (() => mixInstanceFac
     init(DelegatingObserverSchedulerMixin(), this, delegate);
     return this;
 }))();
+export const createWithFlowControl = /*@__PURE__*/ (() => mixInstanceFactory(include(DisposableMixin, FlowControlQueueMixin(), DisposeOnCompleteSinkMixin(), DelegatingSchedulerMixin, UnscheduledObserverMixin()), function FlowControlQueue(scheduler, options) {
+    init(DisposableMixin, this);
+    init(FlowControlQueueMixin(), this, options);
+    init(DisposeOnCompleteSinkMixin(), this);
+    init(DelegatingSchedulerMixin, this, scheduler);
+    init(UnscheduledObserverMixin(), this);
+    return this;
+}, props(), proto({
+    [EventListenerLike_notify](next) {
+        this[QueueableLike_enqueue](next);
+    },
+})))();
 export const reducer = /*@__PURE__*/ (() => {
     return mixInstanceFactory(include(ReducerSinkMixin(), DelegatingSchedulerMixin, FlowControllerWithoutBackpressureMixin, UnscheduledObserverMixin()), function CollectObserver(reducer, ref, scheduler) {
         init(ReducerSinkMixin(), this, reducer, ref);

@@ -38,7 +38,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
 
         const feedbackSource = pipe(
           accFeedbackPublisher,
-          Broadcaster_toObservable(),
+          Broadcaster_toObservable<TAcc>(),
         );
 
         pipe(
@@ -46,7 +46,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] = (<T, TAcc>(
           Observable_withLatestFrom(feedbackSource, (next: T, acc: TAcc) =>
             scanner(acc, next),
           ),
-          Observable_switchAll({
+          Observable_switchAll<TAcc>({
             [ComputationLike_isPure]: false,
           }),
           Observable_forEach(

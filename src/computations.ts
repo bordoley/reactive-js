@@ -118,8 +118,13 @@ export interface EventSourceLike<
 export interface DeferredEventSourceLike<
   T = unknown,
   TConsumer extends ConsumerLike<T> = ConsumerLike<T>,
-> extends EventSourceLike<T, TConsumer> {
+> extends EventSourceLike<T, TConsumer>,
+    AsyncIterable<T> {
   [ComputationLike_isDeferred]: Optional<true>;
+
+  [Symbol.asyncIterator](options?: {
+    scheduler?: SchedulerLike;
+  }): AsyncIterator<T>;
 }
 
 export interface ProducerLike<out T = unknown>

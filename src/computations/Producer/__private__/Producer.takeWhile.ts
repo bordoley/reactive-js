@@ -11,7 +11,7 @@ const Producer_takeWhile: Producer.Signature["takeWhile"] = (<T>(
   pipe(
     TakeWhileSink.create<ConsumerLike, T>,
     partial(predicate, options),
-    Producer_lift(),
+    Producer_lift<T, T>(),
   )) as Producer.Signature["takeWhile"];
 
 export default Producer_takeWhile;

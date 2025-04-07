@@ -4,7 +4,7 @@ import { Array_length } from "../../__internal__/constants.js";
 import { include, init, mixInstanceFactory, props, proto, } from "../../__internal__/mixins.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../computations.js";
-import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, newInstance, none, pipe, pipeUnsafe, } from "../../functions.js";
+import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome, none, pipe, pipeUnsafe, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
@@ -13,9 +13,9 @@ import Computation_areAllPure from "../Computation/__private__/Computation.areAl
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
 import Computation_isSynchronous from "../Computation/__private__/Computation.isSynchronous.js";
+import DeferredEventSourceBaseMixin from "../__mixins__/DeferredEventSourceBaseMixin.js";
 import LatestSourceMixin from "../__mixins__/LatestSourceMixin.js";
 import { LiftedEventSourceLike_sink, LiftedEventSourceLike_source, } from "./LiftedSource.js";
-const CreateSource_effect = Symbol("CreateSource_effect");
 export const catchError = (createDelegatingCatchErrorConsumer, errorHandler, options) => (source) => create(consumer => {
     const onErrorSink = pipe(createDelegatingCatchErrorConsumer(consumer), DisposableContainer.onError(err => {
         let action = none;
@@ -36,7 +36,7 @@ export const catchError = (createDelegatingCatchErrorConsumer, errorHandler, opt
 }, {
     [ComputationLike_isPure]: options?.[ComputationLike_isPure],
 });
-export const concat = (createDelegatingNonCompletingConsumer) => {
+export const concat = ((createDelegatingNonCompletingConsumer) => {
     const ConcatSinkCtx_delegate = Symbol("ConcatSinkCtx_delegate");
     const ConcatSinkCtx_sources = Symbol("ConcatSinkCtx_sources");
     const ConcatSinkCtx_nextIndex = Symbol("ConcatSinkCtx_nextIndex");
@@ -64,7 +64,8 @@ export const concat = (createDelegatingNonCompletingConsumer) => {
             ? flattenSources(observable[ConcatSource_sources])
             : observable)
         : sources;
-    const createConcatSource = mixInstanceFactory(function ConcatSource(sources) {
+    const createConcatSource = mixInstanceFactory(include(DeferredEventSourceBaseMixin()), function ConcatSource(sources) {
+        init(DeferredEventSourceBaseMixin(), this);
         this[ComputationLike_isPure] = Computation_areAllPure(sources);
         this[ComputationLike_isSynchronous] =
             Computation_areAllSynchronous(sources);
@@ -93,31 +94,35 @@ export const concat = (createDelegatingNonCompletingConsumer) => {
         const length = sources[Array_length];
         return length === 1 ? sources[0] : createConcatSource(sources);
     };
-};
-class CreateSource {
-    [ComputationLike_isDeferred] = true;
-    [ComputationLike_isPure];
-    [ComputationLike_isSynchronous];
-    [CreateSource_effect];
-    constructor(effect, config) {
-        this[CreateSource_effect] = effect;
+});
+export const create = /*@__PURE__*/ (() => {
+    const CreateDeferredEventSource_effect = Symbol("CreateDeferredEventSource_effect");
+    return mixInstanceFactory(include(DeferredEventSourceBaseMixin()), function CreateDeferredEventSource(effect, config) {
+        init(DeferredEventSourceBaseMixin(), this);
+        this[CreateDeferredEventSource_effect] = effect;
         this[ComputationLike_isPure] = config?.[ComputationLike_isPure];
         this[ComputationLike_isSynchronous] =
             config?.[ComputationLike_isSynchronous];
-    }
-    [EventSourceLike_subscribe](listener) {
-        try {
-            this[CreateSource_effect](listener);
-        }
-        catch (e) {
-            listener[DisposableLike_dispose](error(e));
-        }
-    }
-}
-export const create = ((effect, options) => newInstance((CreateSource), effect, options));
+        return this;
+    }, props({
+        [CreateDeferredEventSource_effect]: none,
+        [ComputationLike_isPure]: false,
+        [ComputationLike_isSynchronous]: false,
+    }), proto({
+        [EventSourceLike_subscribe](consumer) {
+            try {
+                this[CreateDeferredEventSource_effect](consumer);
+            }
+            catch (e) {
+                consumer[DisposableLike_dispose](error(e));
+            }
+        },
+    }));
+})();
 export const createLifted = /*@__PURE__*/ (() => {
     const LiftedSource_liftedSinkToConsumer = Symbol("LiftedSource_liftedSinkToConsumer");
-    return mixInstanceFactory(function LiftedObservable(source, op, liftedSinkToConsumer, config) {
+    return mixInstanceFactory(include(DeferredEventSourceBaseMixin()), function LiftedObservable(source, op, liftedSinkToConsumer, config) {
+        init(DeferredEventSourceBaseMixin(), this);
         const liftedSource = source[LiftedEventSourceLike_source] ?? source;
         const ops = [op, ...(source[LiftedEventSourceLike_sink] ?? [])];
         this[LiftedEventSourceLike_source] = liftedSource;
@@ -161,8 +166,9 @@ export const forkMerge = ((toBroadcaster, fromBroadcaster, merge, args) => (sour
     });
 });
 export const latest = /*@__PURE__*/ (() => {
-    return mixInstanceFactory(include(LatestSourceMixin()), function DeferredLatestSource(sources, mode, createLatestEventListener) {
+    return mixInstanceFactory(include(LatestSourceMixin(), DeferredEventSourceBaseMixin()), function DeferredLatestSource(sources, mode, createLatestEventListener) {
         init(LatestSourceMixin(), this, sources, mode, createLatestEventListener);
+        init(DeferredEventSourceBaseMixin(), this);
         this[ComputationLike_isPure] = Computation_areAllPure(sources);
         this[ComputationLike_isSynchronous] =
             Computation_areAllSynchronous(sources);
@@ -182,7 +188,8 @@ export const merge = (createDelegatingNonCompletingConsumer) => {
             ? flattenSources(observable[MergeSource_sources])
             : observable)
         : sources;
-    const createMergeSource = mixInstanceFactory(function ConcatSource(sources) {
+    const createMergeSource = mixInstanceFactory(include(DeferredEventSourceBaseMixin()), function ConcatSource(sources) {
+        init(DeferredEventSourceBaseMixin(), this);
         this[ComputationLike_isPure] = Computation_areAllPure(sources);
         this[ComputationLike_isSynchronous] =
             Computation_areAllSynchronous(sources);

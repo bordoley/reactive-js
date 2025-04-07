@@ -41,6 +41,7 @@ import {
   SinkLike_isCompleted,
   SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
+import DeferredEventSourceBaseMixin from "../__mixins__/DeferredEventSourceBaseMixin.js";
 
 export interface ConsumerObservableLike<out T>
   extends PureObservableLike<T>,
@@ -62,7 +63,14 @@ export const create: <T>(config?: {
     [SinkLike_isCompleted]: boolean;
   };
 
-  type TPrototype = Pick<ConsumerObservableLike<T>, keyof PureObservableLike> &
+  type TPrototype = Omit<
+    ConsumerObservableLike<T>,
+    | keyof DisposableLike
+    | typeof Symbol.asyncIterator
+    | typeof ComputationLike_isDeferred
+    | typeof FlowControllerLike_isReady
+    | typeof FlowControllerLike_addOnReadyListener
+  > &
     Pick<
       SinkLike<T>,
       typeof SinkLike_complete | typeof EventListenerLike_notify
@@ -121,7 +129,11 @@ export const create: <T>(config?: {
   }
 
   return mixInstanceFactory(
-    include(DisposableMixin, FlowControlQueueMixin()),
+    include(
+      DisposableMixin,
+      FlowControlQueueMixin(),
+      DeferredEventSourceBaseMixin(),
+    ),
     function ConsumerObservable(
       this: TProperties & TPrototype,
       config: Optional<{
@@ -135,6 +147,7 @@ export const create: <T>(config?: {
         backpressureStrategy:
           config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
       });
+      init(DeferredEventSourceBaseMixin<T, ObserverLike<T>>(), this);
 
       this[ConsumableEnumeratorLike_addOnDataAvailableListener](
         bind(scheduleDispatcher, this),
@@ -149,7 +162,6 @@ export const create: <T>(config?: {
     }),
     {
       [ComputationLike_isPure]: true as const,
-      [ComputationLike_isDeferred]: true as const,
       [ComputationLike_isSynchronous]: false as const,
 
       [EventSourceLike_subscribe](

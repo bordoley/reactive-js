@@ -58,8 +58,11 @@ export declare const EventSourceLike_subscribe: unique symbol;
 export interface EventSourceLike<out T = unknown, TEventListener extends EventListenerLike<T> = EventListenerLike<T>> extends ComputationLike {
     [EventSourceLike_subscribe](EventListener: TEventListener): void;
 }
-export interface DeferredEventSourceLike<T = unknown, TConsumer extends ConsumerLike<T> = ConsumerLike<T>> extends EventSourceLike<T, TConsumer> {
+export interface DeferredEventSourceLike<T = unknown, TConsumer extends ConsumerLike<T> = ConsumerLike<T>> extends EventSourceLike<T, TConsumer>, AsyncIterable<T> {
     [ComputationLike_isDeferred]: Optional<true>;
+    [Symbol.asyncIterator](options?: {
+        scheduler?: SchedulerLike;
+    }): AsyncIterator<T>;
 }
 export interface ProducerLike<out T = unknown> extends DeferredEventSourceLike<T, ConsumerLike<T>>, ComputationLike {
     readonly [ComputationLike_isDeferred]: Optional<true>;

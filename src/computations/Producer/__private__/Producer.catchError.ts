@@ -1,6 +1,7 @@
 import { ComputationLike_isPure, ProducerLike } from "../../../computations.js";
 import { Function1, SideEffect1 } from "../../../functions.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
+import { ConsumerLike } from "../../../utils.js";
 import type * as Producer from "../../Producer.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
@@ -10,7 +11,7 @@ const Producer_catchError: Producer.Signature["catchError"] = (<T>(
     [ComputationLike_isPure]?: boolean;
   },
 ) =>
-  DeferredEventSource.catchError(
+  DeferredEventSource.catchError<T, ProducerLike<T>, ConsumerLike<T>>(
     Consumer.createDelegatingCatchError<T>,
     errorHandler,
     options,

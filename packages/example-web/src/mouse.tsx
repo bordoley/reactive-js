@@ -19,10 +19,10 @@ const Root = () => {
       WebElement.eventSource<Window, "mousemove">("mousemove", {
         autoDispose: true,
       }),
-      Broadcaster.map((ev: MouseEvent) => ({ x: ev.clientX, y: ev.clientY })),
-      Broadcaster.toObservable(),
-      Observable.debounce(25),
-      Observable.subscribeOn(DefaultScheduler.get()),
+      Broadcaster.map((ev: MouseEvent): Point => ({ x: ev.clientX, y: ev.clientY })),
+      Broadcaster.toObservable<Point>(),
+      Observable.debounce<Point>(25),
+      Observable.subscribeOn<Point>(DefaultScheduler.get()),
       Observable.scanMany(
         (prev: Point, next: Point) =>
           pipe(

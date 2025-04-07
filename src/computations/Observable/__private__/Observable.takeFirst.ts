@@ -10,7 +10,7 @@ const Observable_takeFirst: Observable.Signature["takeFirst"] = (<T>(options?: {
   pipe(
     TakeFirstSink.create<ObserverLike, T>,
     partial(options?.count),
-    Observable_lift(),
+    Observable_lift<T, T>(),
   )) as Observable.Signature["takeFirst"];
 
 export default Observable_takeFirst;

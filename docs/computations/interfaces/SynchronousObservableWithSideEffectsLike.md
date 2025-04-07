@@ -46,6 +46,28 @@
 
 ## Methods
 
+### \[asyncIterator\]()
+
+> **\[asyncIterator\]**(`options`?): `AsyncIterator`\<`T`\>
+
+#### Parameters
+
+##### options?
+
+###### scheduler?
+
+[`SchedulerLike`](../../utils/interfaces/SchedulerLike.md)
+
+#### Returns
+
+`AsyncIterator`\<`T`\>
+
+#### Inherited from
+
+[`ObservableWithSideEffectsLike`](ObservableWithSideEffectsLike.md).[`[asyncIterator]`](ObservableWithSideEffectsLike.md#asynciterator)
+
+***
+
 ### \[EventSourceLike\_subscribe\]()
 
 > **\[EventSourceLike\_subscribe\]**(`EventListener`): `void`

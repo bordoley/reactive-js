@@ -12,7 +12,7 @@ const Observable_takeUntil: Observable.Signature["takeUntil"] = (<T>(
   pipe(
     TakeUntilSink.create<ObserverLike, T, ObservableLike>,
     partial(notifier, EventSource.subscribe),
-    Observable_lift(),
+    Observable_lift<T, T>(),
   )) as Observable.Signature["takeUntil"];
 
 export default Observable_takeUntil;

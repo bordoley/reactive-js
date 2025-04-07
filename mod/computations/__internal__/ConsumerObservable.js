@@ -1,12 +1,13 @@
 /// <reference types="./ConsumerObservable.d.ts" />
 
 import { include, init, mixInstanceFactory, props, } from "../../__internal__/mixins.js";
-import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../computations.js";
+import { ComputationLike_isPure, ComputationLike_isSynchronous, EventSourceLike_subscribe, } from "../../computations.js";
 import { bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
 import { ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, } from "../../utils.js";
+import DeferredEventSourceBaseMixin from "../__mixins__/DeferredEventSourceBaseMixin.js";
 export const create = (() => {
     const ConsumerObservable_observer = Symbol("ConsumerObservable_observer");
     const ConsumerObservable_schedulerSubscription = Symbol("ConsumerObservable_schedulerSubscription");
@@ -44,12 +45,13 @@ export const create = (() => {
         }
         this[ConsumerObservable_schedulerSubscription] = pipe(observer[SchedulerLike_schedule](bind(dispatchEvents, this)), Disposable.addTo(this));
     }
-    return mixInstanceFactory(include(DisposableMixin, FlowControlQueueMixin()), function ConsumerObservable(config) {
+    return mixInstanceFactory(include(DisposableMixin, FlowControlQueueMixin(), DeferredEventSourceBaseMixin()), function ConsumerObservable(config) {
         init(DisposableMixin, this);
         init(FlowControlQueueMixin(), this, {
             capacity: config?.capacity ?? 1,
             backpressureStrategy: config?.backpressureStrategy ?? DropOldestBackpressureStrategy,
         });
+        init(DeferredEventSourceBaseMixin(), this);
         this[ConsumableEnumeratorLike_addOnDataAvailableListener](bind(scheduleDispatcher, this));
         return this;
     }, props({
@@ -58,7 +60,6 @@ export const create = (() => {
         [ConsumerObservable_schedulerSubscription]: Disposable.disposed,
     }), {
         [ComputationLike_isPure]: true,
-        [ComputationLike_isDeferred]: true,
         [ComputationLike_isSynchronous]: false,
         [EventSourceLike_subscribe](observer) {
             const oldDelegate = this[ConsumerObservable_observer];

@@ -10,7 +10,7 @@ import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js"
 const Producer_create: Producer.Signature["create"] = <T>(
   f: SideEffect1<ConsumerLike<T>>,
 ) =>
-  DeferredEventSource.create(f, {
+  DeferredEventSource.create<T, ConsumerLike<T>>(f, {
     [ComputationLike_isPure]: false,
     [ComputationLike_isSynchronous]: false,
   });
