@@ -27,6 +27,7 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../utils.js";
 import * as Queue from "./Queue.js";
+import * as CurrentScheduler from "./__internal__/CurrentScheduler.js";
 import SchedulerMixin, {
   SchedulerContinuation,
   SchedulerContinuationLike,
@@ -100,9 +101,14 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         );
       },
       [VirtualTimeSchedulerLike_run](
-        this: TProperties & SchedulerMixinHostLike & DisposableLike,
+        this: TProperties &
+          SchedulerMixinHostLike &
+          DisposableLike &
+          SchedulerLike,
       ) {
         let queue: Optional<QueueLike<SchedulerContinuationLike>> = none;
+
+        const oldScheduler = CurrentScheduler.set(this);
         while (
           ((queue = this[VirtualTimeScheduler_queue]),
           queue[CollectionEnumeratorLike_count] > 0)
@@ -157,6 +163,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             this[ClockLike_now] = max(queueHeadDueTime, currentTime + 1);
           }
         }
+        CurrentScheduler.set(oldScheduler);
 
         this[DisposableLike_dispose]();
       },

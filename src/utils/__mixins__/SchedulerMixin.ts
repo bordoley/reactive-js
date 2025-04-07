@@ -43,6 +43,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
+import * as CurrentScheduler from "../__internal__/CurrentScheduler.js";
 import * as Iterator from "../__internal__/Iterator.js";
 import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
 import DisposableMixin from "./DisposableMixin.js";
@@ -312,7 +313,12 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             }
 
             const delegate = this[QueueContinuation_delegate];
-            if (delegate[EnumeratorLike_moveNext]()) {
+
+            const oldScheduler = CurrentScheduler.set(scheduler);
+            const hasNext = delegate[EnumeratorLike_moveNext]();
+            CurrentScheduler.set(oldScheduler);
+
+            if (hasNext) {
               const next = delegate[EnumeratorLike_current];
 
               // Reschedule the continuation if yielded

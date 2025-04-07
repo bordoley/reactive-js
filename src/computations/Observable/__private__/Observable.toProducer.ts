@@ -5,8 +5,8 @@ import {
   ObservableLike,
 } from "../../../computations.js";
 import { bindMethod, compose } from "../../../functions.js";
-import * as DefaultScheduler from "../../../utils/DefaultScheduler.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
+import * as CurrentScheduler from "../../../utils/__internal__/CurrentScheduler.js";
 import { SchedulerLike } from "../../../utils.js";
 import * as Computation from "../../Computation.js";
 import type * as Observable from "../../Observable.js";
@@ -18,7 +18,7 @@ const Observable_toProducer: Observable.Signature["toProducer"] = ((options?: {
   (observable: ObservableLike) =>
     DeferredEventSource.create(
       compose(
-        Consumer.toObserver(options?.scheduler ?? DefaultScheduler.get()),
+        Consumer.toObserver(options?.scheduler ?? CurrentScheduler.get()),
         bindMethod(observable, EventSourceLike_subscribe),
       ),
       {

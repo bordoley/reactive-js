@@ -10,8 +10,8 @@ import {
   isSome,
   none,
 } from "../functions.js";
-import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as DisposableContainer from "../utils/DisposableContainer.js";
+import * as CurrentScheduler from "../utils/__internal__/CurrentScheduler.js";
 import * as Observer from "../utils/__internal__/Observer.js";
 import {
   CollectionEnumeratorLike_peek,
@@ -48,7 +48,7 @@ export interface Signature {
 export const lastAsync: Signature["lastAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
   async (src: EventSourceLike<T>) => {
-    const scheduler = options?.scheduler ?? DefaultScheduler.get();
+    const scheduler = options?.scheduler ?? CurrentScheduler.get();
     const observer = Observer.takeLast<T>(1, scheduler);
 
     src[EventSourceLike_subscribe](observer);
@@ -64,7 +64,7 @@ export const reduceAsync: Signature["reduceAsync"] =
     options?: { scheduler: SchedulerLike },
   ) =>
   async (src: EventSourceLike<T>) => {
-    const scheduler = options?.scheduler ?? DefaultScheduler.get();
+    const scheduler = options?.scheduler ?? CurrentScheduler.get();
     const ref: [TAcc] = [initialValue()];
     const observer = Observer.reducer(reducer, ref, scheduler);
 
@@ -83,7 +83,7 @@ export const subscribe: Signature["subscribe"] =
     const effect = isFunction(optionsOrEffect) ? optionsOrEffect : none;
     const scheduler =
       (isFunction(optionsOrEffect) ? options : optionsOrEffect)?.scheduler ??
-      DefaultScheduler.get();
+      CurrentScheduler.get();
 
     const observer = isSome(effect)
       ? Observer.create(effect, scheduler)
@@ -97,7 +97,7 @@ export const subscribe: Signature["subscribe"] =
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   <T>(options?: { scheduler: SchedulerLike }) =>
   async (src: EventSourceLike<T>) => {
-    const scheduler = options?.scheduler ?? DefaultScheduler.get();
+    const scheduler = options?.scheduler ?? CurrentScheduler.get();
     const buffer: T[] = [];
     const observer = Observer.collect<T>(buffer, scheduler);
     src[EventSourceLike_subscribe](observer);

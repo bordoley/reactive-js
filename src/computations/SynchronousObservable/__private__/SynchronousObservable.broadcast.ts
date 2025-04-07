@@ -9,9 +9,9 @@ import {
   SynchronousObservableLike,
 } from "../../../computations.js";
 import { Optional, bindMethod, pipe } from "../../../functions.js";
-import * as DefaultScheduler from "../../../utils/DefaultScheduler.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as PauseableScheduler from "../../../utils/PauseableScheduler.js";
+import * as CurrentScheduler from "../../../utils/__internal__/CurrentScheduler.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingPauseableMixin from "../../../utils/__mixins__/DelegatingPauseableMixin.js";
 import {
@@ -50,7 +50,7 @@ const createPauseableBroadcasterFromSynchronousObservable = /*@__PURE__*/ (<
         scheduler?: SchedulerLike;
       }>,
     ): PauseableLike & BroadcasterLike<T> & DisposableLike {
-      const scheduler = options?.scheduler ?? DefaultScheduler.get();
+      const scheduler = options?.scheduler ?? CurrentScheduler.get();
       const pauseableScheduler = PauseableScheduler.create(scheduler);
 
       init(DelegatingDisposableMixin, this, pauseableScheduler);

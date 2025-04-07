@@ -6,6 +6,7 @@ import { none } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
 import { ClockLike_now, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, QueueLike_enqueue, SchedulerLike_maxYieldInterval, VirtualTimeSchedulerLike_run, } from "../utils.js";
 import * as Queue from "./Queue.js";
+import * as CurrentScheduler from "./__internal__/CurrentScheduler.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
 const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
@@ -30,6 +31,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
     },
     [VirtualTimeSchedulerLike_run]() {
         let queue = none;
+        const oldScheduler = CurrentScheduler.set(this);
         while (((queue = this[VirtualTimeScheduler_queue]),
             queue[CollectionEnumeratorLike_count] > 0)) {
             const currentTime = this[ClockLike_now];
@@ -67,6 +69,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
                 this[ClockLike_now] = max(queueHeadDueTime, currentTime + 1);
             }
         }
+        CurrentScheduler.set(oldScheduler);
         this[DisposableLike_dispose]();
     },
     [SchedulerMixinHostLike_schedule](continuation) {
