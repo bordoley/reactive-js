@@ -5,7 +5,7 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { include, init, mix, mixInstanceFactory, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import { abs, floor } from "../../math.js";
-import { ClockLike_now, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, DisposableLike_isDisposed, EnumeratorLike_current, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SyncEnumeratorLike_moveNext, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import * as CurrentScheduler from "../__internal__/CurrentScheduler.js";
@@ -63,7 +63,7 @@ const SchedulerMixin =
                 true;
             const scheduler = continuation[QueueContinuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
-            while (continuation[EnumeratorLike_moveNext]()) {
+            while (continuation[SyncEnumeratorLike_moveNext]()) {
                 const head = continuation[EnumeratorLike_current];
                 if (head[DisposableLike_isDisposed]) {
                     // continue
@@ -88,7 +88,7 @@ const SchedulerMixin =
                 none;
         }
         return mixInstanceFactory(include(DelegatingDisposableMixin, QueueMixin()), function QueueContinuation(scheduler, delegate) {
-            const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
+            const delegateEnumerator = pipe(delegate, Iterator.toSyncEnumerator());
             init(DelegatingDisposableMixin, this, delegateEnumerator);
             init(QueueMixin(), this, none);
             this[QueueContinuation_delegate] = delegateEnumerator;
@@ -123,7 +123,7 @@ const SchedulerMixin =
                     scheduler[SchedulerMixinLike_yieldRequested] = false;
                 }
                 // Run any inner continuations first.
-                while (this[EnumeratorLike_moveNext]()) {
+                while (this[SyncEnumeratorLike_moveNext]()) {
                     const head = this[EnumeratorLike_current];
                     head[QueueSchedulerContinuationLike_parent] = this;
                     head[SchedulerContinuationLike_run]();
@@ -138,7 +138,7 @@ const SchedulerMixin =
                 }
                 const delegate = this[QueueContinuation_delegate];
                 const oldScheduler = CurrentScheduler.set(scheduler);
-                const hasNext = delegate[EnumeratorLike_moveNext]();
+                const hasNext = delegate[SyncEnumeratorLike_moveNext]();
                 CurrentScheduler.set(oldScheduler);
                 if (hasNext) {
                     const next = delegate[EnumeratorLike_current];

@@ -2,7 +2,7 @@
 
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { bind, none, pipe } from "../../functions.js";
-import { ClockLike_now, EnumeratorLike_current, EnumeratorLike_moveNext, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../utils.js";
+import { ClockLike_now, EnumeratorLike_current, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SyncEnumeratorLike_moveNext, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as Iterator from "../__internal__/Iterator.js";
 const DelegatingSchedulerMixin = 
@@ -17,9 +17,9 @@ const DelegatingSchedulerMixin =
         const instance = this;
         this[DelegatingSchedulerMixin_scheduleCallback] =
             function* DelegatingSchedulerMixinSchedulerCallback() {
-                const enumerator = pipe(this(instance), Iterator.toEnumerator());
+                const enumerator = pipe(this(instance), Iterator.toSyncEnumerator());
                 instance[SchedulerLike_inContinuation] = true;
-                while (enumerator[EnumeratorLike_moveNext]()) {
+                while (enumerator[SyncEnumeratorLike_moveNext]()) {
                     const delay = enumerator[EnumeratorLike_current];
                     instance[SchedulerLike_inContinuation] = false;
                     yield delay;

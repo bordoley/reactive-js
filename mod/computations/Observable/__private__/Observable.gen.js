@@ -4,10 +4,10 @@ import { ComputationLike_isPure, ComputationLike_isSynchronous, } from "../../..
 import { bindMethod, error, pipe, pipeLazy, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, YieldDelay, } from "../../../utils.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, YieldDelay, } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 const genFactory = (factory) => (observer) => {
-    const enumerator = pipe(factory(observer), Iterator.toEnumerator(), Disposable.addTo(observer));
+    const enumerator = pipe(factory(observer), Iterator.toSyncEnumerator(), Disposable.addTo(observer));
     let isActive = false;
     function* continue_() {
         if (isActive) {
@@ -19,7 +19,7 @@ const genFactory = (factory) => (observer) => {
         try {
             while (isReady &&
                 !isCompleted &&
-                enumerator[EnumeratorLike_moveNext]()) {
+                enumerator[SyncEnumeratorLike_moveNext]()) {
                 const value = enumerator[EnumeratorLike_current];
                 if (value instanceof YieldDelay) {
                     yield value;

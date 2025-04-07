@@ -55,8 +55,8 @@ import {
   DisposableLike_dispose,
   DropOldestBackpressureStrategy,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   QueueableLike_enqueue,
+  SyncEnumeratorLike_moveNext,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
@@ -450,9 +450,9 @@ class GenAsyncIterable<T> implements AsyncIterableWithSideEffectsLike<T> {
   constructor(readonly f: Factory<Iterator<T>>) {}
 
   async *[Symbol.asyncIterator](): AsyncIterator<T, any, any> {
-    const enumerator = pipe(this.f(), Iterator.toEnumerator<T>());
+    const enumerator = pipe(this.f(), Iterator.toSyncEnumerator<T>());
 
-    while (enumerator[EnumeratorLike_moveNext]()) {
+    while (enumerator[SyncEnumeratorLike_moveNext]()) {
       yield Promise.resolve(enumerator[EnumeratorLike_current]);
     }
     Disposable.raiseIfDisposedWithError(enumerator);
@@ -486,9 +486,9 @@ class GenPureAsyncIterable<T> implements PureAsyncIterableLike<T> {
   constructor(readonly f: Factory<Iterator<T>>) {}
 
   async *[Symbol.asyncIterator]() {
-    const enumerator = pipe(this.f(), Iterator.toEnumerator<T>());
+    const enumerator = pipe(this.f(), Iterator.toSyncEnumerator<T>());
 
-    while (enumerator[EnumeratorLike_moveNext]()) {
+    while (enumerator[SyncEnumeratorLike_moveNext]()) {
       yield Promise.resolve(enumerator[EnumeratorLike_current]);
     }
     Disposable.raiseIfDisposedWithError(enumerator);
@@ -833,7 +833,7 @@ class TakeLastAsyncIterable<T> implements AsyncIterableLike<T> {
       queue[QueueableLike_enqueue](v);
     }
 
-    while (queue[EnumeratorLike_moveNext]()) {
+    while (queue[SyncEnumeratorLike_moveNext]()) {
       yield queue[EnumeratorLike_current];
     }
   }

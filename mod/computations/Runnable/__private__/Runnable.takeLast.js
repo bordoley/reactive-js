@@ -5,7 +5,7 @@ import { invoke, newInstance, pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
-import { EnumeratorLike_current, EnumeratorLike_moveNext, } from "../../../utils.js";
+import { EnumeratorLike_current, SyncEnumeratorLike_moveNext, } from "../../../utils.js";
 import { Runnable_genPure } from "./Runnable.gen.js";
 class TakeLastRunnable {
     s;
@@ -21,7 +21,7 @@ class TakeLastRunnable {
     [RunnableLike_eval](sink) {
         const count = this.c;
         const takeLastSink = pipe(Consumer.takeLast(count), Disposable.addTo(sink), DisposableContainer.onComplete(() => pipe(Runnable_genPure(function* TakeLast() {
-            while (takeLastSink[EnumeratorLike_moveNext]()) {
+            while (takeLastSink[SyncEnumeratorLike_moveNext]()) {
                 yield takeLastSink[EnumeratorLike_current];
             }
         }), invoke(RunnableLike_eval, sink))));

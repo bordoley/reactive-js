@@ -29,12 +29,12 @@ import {
   DropOldestBackpressureStrategy,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  EnumeratorLike_moveNext,
   OverflowBackpressureStrategy,
   QueueLike,
   QueueLike_backpressureStrategy,
   QueueLike_capacity,
   QueueableLike_enqueue,
+  SyncEnumeratorLike_moveNext,
   ThrowBackpressureStrategy,
   raiseCapacityExceededError,
 } from "../../utils.js";
@@ -170,7 +170,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
                 : (values as T[])[head];
           },
 
-          [EnumeratorLike_moveNext](this: TProperties & QueueLike<T>) {
+          [SyncEnumeratorLike_moveNext](this: TProperties & QueueLike<T>) {
             const count = this[CollectionEnumeratorLike_count];
             const values = this[QueueMixin_values];
 
@@ -335,7 +335,7 @@ const QueueMixin: <T>() => Mixin1<TReturn<T>, TConfig<T>, TPrototype<T>> =
 
             // We want to pop off the oldest value first, before enqueueing
             // to avoid unintentionally growing the queue.
-            dropOldest && this[EnumeratorLike_moveNext]();
+            dropOldest && this[SyncEnumeratorLike_moveNext]();
             throwBackpressureError &&
               raiseCapacityExceededError(this[QueueLike_capacity]);
 

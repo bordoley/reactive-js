@@ -12,7 +12,8 @@
 
 ## Extended by
 
-- [`CollectionEnumeratorLike`](CollectionEnumeratorLike.md)
+- [`SyncEnumeratorLike`](SyncEnumeratorLike.md)
+- [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)
 
 ## Type Parameters
 
@@ -77,13 +78,3 @@ An optional error that signals the resource is being disposed due to an error.
 #### Inherited from
 
 [`DisposableLike`](DisposableLike.md).[`[dispose]`](DisposableLike.md#dispose)
-
-***
-
-### \[EnumeratorLike\_moveNext\]()
-
-> **\[EnumeratorLike\_moveNext\]**(): `boolean`
-
-#### Returns
-
-`boolean`

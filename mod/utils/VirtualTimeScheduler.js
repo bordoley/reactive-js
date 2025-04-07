@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, } from "../__internal__/constants.j
 import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__internal__/mixins.js";
 import { none } from "../functions.js";
 import { clampPositiveNonZeroInteger, max } from "../math.js";
-import { ClockLike_now, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, VirtualTimeSchedulerLike_run, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_dispose, EnumeratorLike_current, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SyncEnumeratorLike_moveNext, VirtualTimeSchedulerLike_run, } from "../utils.js";
 import * as Queue from "./Queue.js";
 import * as CurrentScheduler from "./__internal__/CurrentScheduler.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -45,14 +45,14 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => mixInstanceFacto
             }
             this[VirtualTimeScheduler_queue] = Queue.createSorted(SchedulerContinuation.compare);
             this[VirtualTimeScheduler_microTaskTicks] = 0;
-            while (queue[EnumeratorLike_moveNext]()) {
+            while (queue[SyncEnumeratorLike_moveNext]()) {
                 let continuation = queue[EnumeratorLike_current];
                 if (continuation[SchedulerContinuationLike_dueTime] > currentTime ||
                     this[VirtualTimeScheduler_microTaskTicks] >=
                         this[VirtualTimeScheduler_maxMicroTaskTicks]) {
                     // copy the task and all other remaining tasks back to the scheduler queue
                     this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
-                    while (queue[EnumeratorLike_moveNext]()) {
+                    while (queue[SyncEnumeratorLike_moveNext]()) {
                         continuation = queue[EnumeratorLike_current];
                         this[VirtualTimeScheduler_queue][QueueableLike_enqueue](continuation);
                     }

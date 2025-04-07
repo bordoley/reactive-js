@@ -20,26 +20,6 @@
 
 ## Properties
 
-### \[AsyncEnumeratorLike\_current\]
-
-> `readonly` **\[AsyncEnumeratorLike\_current\]**: `T`
-
-#### Inherited from
-
-[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[AsyncEnumeratorLike_current]`](AsyncEnumeratorLike.md#asyncenumeratorlike_current)
-
-***
-
-### \[AsyncEnumeratorLike\_hasCurrent\]
-
-> `readonly` **\[AsyncEnumeratorLike\_hasCurrent\]**: `boolean`
-
-#### Inherited from
-
-[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[AsyncEnumeratorLike_hasCurrent]`](AsyncEnumeratorLike.md#asyncenumeratorlike_hascurrent)
-
-***
-
 ### \[ConsumableEnumeratorLike\_isDataAvailable\]
 
 > `readonly` **\[ConsumableEnumeratorLike\_isDataAvailable\]**: `boolean`
@@ -67,6 +47,26 @@ The error the `Disposable` was disposed with if disposed.
 #### Inherited from
 
 [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[DisposableLike_isDisposed]`](AsyncEnumeratorLike.md#disposablelike_isdisposed)
+
+***
+
+### \[EnumeratorLike\_current\]
+
+> `readonly` **\[EnumeratorLike\_current\]**: `T`
+
+#### Inherited from
+
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[EnumeratorLike_current]`](AsyncEnumeratorLike.md#enumeratorlike_current)
+
+***
+
+### \[EnumeratorLike\_hasCurrent\]
+
+> `readonly` **\[EnumeratorLike\_hasCurrent\]**: `boolean`
+
+#### Inherited from
+
+[`AsyncEnumeratorLike`](AsyncEnumeratorLike.md).[`[EnumeratorLike_hasCurrent]`](AsyncEnumeratorLike.md#enumeratorlike_hascurrent)
 
 ## Methods
 

@@ -11,8 +11,8 @@ import * as DisposableContainer from "../../../utils/DisposableContainer.js";
 import * as Consumer from "../../../utils/__internal__/Consumer.js";
 import {
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   SinkLike,
+  SyncEnumeratorLike_moveNext,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 import { Runnable_genPure } from "./Runnable.gen.js";
@@ -38,7 +38,7 @@ class TakeLastRunnable<T> implements RunnableLike<T> {
       DisposableContainer.onComplete(() =>
         pipe(
           Runnable_genPure(function* TakeLast() {
-            while (takeLastSink[EnumeratorLike_moveNext]()) {
+            while (takeLastSink[SyncEnumeratorLike_moveNext]()) {
               yield takeLastSink[EnumeratorLike_current];
             }
           }),

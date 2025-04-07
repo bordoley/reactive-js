@@ -26,8 +26,6 @@ import {
   returns,
 } from "../../functions.js";
 import {
-  AsyncEnumeratorLike_current,
-  AsyncEnumeratorLike_hasCurrent,
   AsyncEnumeratorLike_moveNext,
   BackpressureStrategy,
   CollectionEnumeratorLike_count,
@@ -39,7 +37,6 @@ import {
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControlQueueLike,
   FlowControllerLike_addOnReadyListener,
@@ -48,6 +45,7 @@ import {
   QueueLike_backpressureStrategy,
   QueueLike_capacity,
   QueueableLike_enqueue,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
@@ -108,7 +106,7 @@ const FlowControlQueueMixin: <T>() => Mixin1<
     resolve: (value: boolean) => void,
     reject: (reason?: any) => void,
   ) {
-    if (this[EnumeratorLike_moveNext]()) {
+    if (this[SyncEnumeratorLike_moveNext]()) {
       resolve(true);
       return;
     }
@@ -122,7 +120,7 @@ const FlowControlQueueMixin: <T>() => Mixin1<
       ),
       DisposableContainer.onError(reject),
       DisposableContainer.onComplete(() => {
-        const hasNext = this[EnumeratorLike_moveNext]();
+        const hasNext = this[SyncEnumeratorLike_moveNext]();
         resolve(hasNext);
       }),
       Disposable.addTo(this),
@@ -162,21 +160,13 @@ const FlowControlQueueMixin: <T>() => Mixin1<
           return count > 0;
         },
 
-        get [AsyncEnumeratorLike_current]() {
-          unsafeCast<TProperties>(this);
-          return this[EnumeratorLike_current];
-        },
-
-        get [AsyncEnumeratorLike_hasCurrent]() {
-          unsafeCast<TProperties>(this);
-          return this[EnumeratorLike_hasCurrent];
-        },
-
         [AsyncEnumeratorLike_moveNext](this: TProperties) {
           return new Promise(bind(asyncEnumeratorMoveNext, this));
         },
 
-        [EnumeratorLike_moveNext](this: TProperties & FlowControlQueueLike<T>) {
+        [SyncEnumeratorLike_moveNext](
+          this: TProperties & FlowControlQueueLike<T>,
+        ) {
           const count = this[CollectionEnumeratorLike_count];
           const capacity = this[QueueLike_capacity];
           const isDisposed = this[DisposableLike_isDisposed];
@@ -184,7 +174,11 @@ const FlowControlQueueMixin: <T>() => Mixin1<
           const shouldNotifyReady =
             count === capacity && capacity > 0 && !isDisposed;
 
-          const result = super_(QueueMixin(), this, EnumeratorLike_moveNext);
+          const result = super_(
+            QueueMixin(),
+            this,
+            SyncEnumeratorLike_moveNext,
+          );
 
           shouldNotifyReady &&
             onReadySignal?.[EventListenerLike_notify]("ready");

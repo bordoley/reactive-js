@@ -5,11 +5,11 @@ import { error, isSome, none, pipe, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_hasCurrent, AsyncEnumeratorLike_moveNext, DisposableLike_dispose, } from "../../utils.js";
+import { AsyncEnumeratorLike_moveNext, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, } from "../../utils.js";
 export const fromAsyncEnumerator = 
 /*@__PURE__*/ returns((enumerator) => (async function* () {
     while (await enumerator[AsyncEnumeratorLike_moveNext]()) {
-        yield enumerator[AsyncEnumeratorLike_current];
+        yield enumerator[EnumeratorLike_current];
     }
     Disposable.raiseIfDisposedWithError(enumerator);
 })());
@@ -18,8 +18,8 @@ export const toAsyncEnumerator =
     const AsyncIteratorAsyncEnumerator_asyncIterator = Symbol("IteratorAsyncEnumerator_iterator");
     async function onAsyncIteratorEnumeratorDisposed(e) {
         const iterator = this[AsyncIteratorAsyncEnumerator_asyncIterator];
-        this[AsyncEnumeratorLike_hasCurrent] = false;
-        this[AsyncEnumeratorLike_current] = none;
+        this[EnumeratorLike_hasCurrent] = false;
+        this[EnumeratorLike_current] = none;
         if (isSome(e)) {
             try {
                 await (iterator.throw?.(e) ?? Promise.resolve());
@@ -42,19 +42,19 @@ export const toAsyncEnumerator =
         return this;
     }, props({
         [AsyncIteratorAsyncEnumerator_asyncIterator]: none,
-        [AsyncEnumeratorLike_current]: none,
-        [AsyncEnumeratorLike_hasCurrent]: false,
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
     }), proto({
         async [AsyncEnumeratorLike_moveNext]() {
-            this[AsyncEnumeratorLike_current] = none;
-            this[AsyncEnumeratorLike_hasCurrent] = false;
+            this[EnumeratorLike_current] = none;
+            this[EnumeratorLike_hasCurrent] = false;
             const iterator = this[AsyncIteratorAsyncEnumerator_asyncIterator];
             let hasCurrent = false;
             try {
                 const result = await iterator.next();
                 hasCurrent = !result.done;
-                this[AsyncEnumeratorLike_current] = result.value;
-                this[AsyncEnumeratorLike_hasCurrent] = hasCurrent;
+                this[EnumeratorLike_current] = result.value;
+                this[EnumeratorLike_hasCurrent] = hasCurrent;
             }
             catch (e) {
                 this[DisposableLike_dispose](error(e));

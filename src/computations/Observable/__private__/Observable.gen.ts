@@ -14,7 +14,6 @@ import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import {
   DisposableLike_dispose,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
@@ -24,6 +23,7 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
   YieldDelay,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
@@ -34,7 +34,7 @@ const genFactory =
   (observer: ObserverLike<T>) => {
     const enumerator = pipe(
       factory(observer),
-      Iterator.toEnumerator(),
+      Iterator.toSyncEnumerator(),
       Disposable.addTo(observer),
     );
 
@@ -53,7 +53,7 @@ const genFactory =
         while (
           isReady &&
           !isCompleted &&
-          enumerator[EnumeratorLike_moveNext]()
+          enumerator[SyncEnumeratorLike_moveNext]()
         ) {
           const value = enumerator[EnumeratorLike_current];
           if (value instanceof YieldDelay) {

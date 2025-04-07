@@ -11,15 +11,13 @@ import {
 } from "../../__internal__/testing.js";
 import { invoke, newInstance, pipe, raise } from "../../functions.js";
 import {
-  AsyncEnumeratorLike_current,
-  AsyncEnumeratorLike_hasCurrent,
   AsyncEnumeratorLike_moveNext,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  EnumeratorLike_moveNext,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 import * as Iterator from "../__internal__/Iterator.js";
 
@@ -37,9 +35,9 @@ testModule(
       for (let i = 0; i < 3; i++) {
         await enumerator[AsyncEnumeratorLike_moveNext]();
         expectTrue("the enumerator should have a value")(
-          enumerator[AsyncEnumeratorLike_hasCurrent],
+          enumerator[EnumeratorLike_hasCurrent],
         );
-        expectEquals(i)(enumerator[AsyncEnumeratorLike_current]);
+        expectEquals(i)(enumerator[EnumeratorLike_current]);
       }
     }),
     testAsync("disposes the enumerator when nothing is left", async () => {
@@ -55,7 +53,7 @@ testModule(
         enumerator[DisposableLike_isDisposed],
       );
       expectFalse("The enumerator does not have current")(
-        enumerator[AsyncEnumeratorLike_hasCurrent],
+        enumerator[EnumeratorLike_hasCurrent],
       );
     }),
     testAsync("when the iterator throws an exception", async () => {
@@ -139,12 +137,12 @@ testModule(
       const enumerator = pipe(
         [0, 1, 2],
         invoke(Symbol.iterator),
-        Iterator.toEnumerator<number>(),
+        Iterator.toSyncEnumerator<number>(),
       );
 
       for (let i = 0; i < 3; i++) {
         expectTrue("the enumerator should have a value")(
-          enumerator[EnumeratorLike_moveNext](),
+          enumerator[SyncEnumeratorLike_moveNext](),
         );
         expectEquals(i)(enumerator[EnumeratorLike_current]);
       }
@@ -153,10 +151,10 @@ testModule(
       const enumerator = pipe(
         [1, 2, 3],
         invoke(Symbol.iterator),
-        Iterator.toEnumerator<number>(),
+        Iterator.toSyncEnumerator<number>(),
       );
 
-      while (enumerator[EnumeratorLike_moveNext]()) {}
+      while (enumerator[SyncEnumeratorLike_moveNext]()) {}
 
       expectTrue("The enumerator is disposed")(
         enumerator[DisposableLike_isDisposed],
@@ -170,10 +168,10 @@ testModule(
         (function* () {
           raise(newInstance(Error));
         })(),
-        Iterator.toEnumerator(),
+        Iterator.toSyncEnumerator(),
       );
 
-      enumerator[EnumeratorLike_moveNext]();
+      enumerator[SyncEnumeratorLike_moveNext]();
 
       expectTrue("The enumerator is disposed")(
         enumerator[DisposableLike_isDisposed],
@@ -185,10 +183,10 @@ testModule(
         (function* () {
           raise(newInstance(Error));
         })(),
-        Iterator.toEnumerator(),
+        Iterator.toSyncEnumerator(),
       );
 
-      enumerator[EnumeratorLike_moveNext]();
+      enumerator[SyncEnumeratorLike_moveNext]();
 
       expectTrue("The enumerator is disposed")(
         enumerator[DisposableLike_isDisposed],
@@ -204,10 +202,10 @@ testModule(
             raise(newInstance(Error));
           }
         })(),
-        Iterator.toEnumerator(),
+        Iterator.toSyncEnumerator(),
       );
 
-      enumerator[EnumeratorLike_moveNext]();
+      enumerator[SyncEnumeratorLike_moveNext]();
 
       expectTrue("The enumerator is disposed")(
         enumerator[DisposableLike_isDisposed],
@@ -223,7 +221,7 @@ testModule(
             raise(newInstance(Error));
           }
         })(),
-        Iterator.toEnumerator(),
+        Iterator.toSyncEnumerator(),
       );
 
       enumerator[DisposableLike_dispose]();

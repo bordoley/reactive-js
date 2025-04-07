@@ -8,7 +8,7 @@ import * as DefaultScheduler from "../utils/DefaultScheduler.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
 import SchedulerMixin, { SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { ClockLike_now, CollectionEnumeratorLike_count, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_count, EnumeratorLike_current, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, SyncEnumeratorLike_moveNext, delayMs, } from "../utils.js";
 export const get = /*@__PURE__*/ (() => {
     const raf = globalObject.requestAnimationFrame;
     raiseIfNone(raf, "requestAnimationFrame is not defined in the current environment");
@@ -20,7 +20,7 @@ export const get = /*@__PURE__*/ (() => {
         const workQueue = animationFrameScheduler[AnimationFrameScheduler_rafQueue];
         animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
         let continuation = none;
-        while (workQueue[EnumeratorLike_moveNext]()) {
+        while (workQueue[SyncEnumeratorLike_moveNext]()) {
             continuation = workQueue[EnumeratorLike_current];
             continuation[SchedulerContinuationLike_run]();
             const elapsedTime = CurrentTime.now() - startTime;
@@ -37,7 +37,7 @@ export const get = /*@__PURE__*/ (() => {
         else if (continuationsCount > 0) {
             // Merge the job queues copying the newly enqueued jobs
             // onto the original queue.
-            while (newWorkQueue[EnumeratorLike_moveNext]()) {
+            while (newWorkQueue[SyncEnumeratorLike_moveNext]()) {
                 const continuation = newWorkQueue[EnumeratorLike_current];
                 workQueue[QueueableLike_enqueue](continuation);
             }

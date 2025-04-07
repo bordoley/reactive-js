@@ -13,12 +13,10 @@ export const DisposableLike_dispose =
 })();
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
-export const EnumeratorLike_moveNext = Symbol("EnumeratorLike_moveNext");
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
 export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+export const SyncEnumeratorLike_moveNext = Symbol("SyncEnumeratorLike_moveNext");
 export const AsyncEnumeratorLike_moveNext = Symbol("AsyncEnumeratorLike_moveNext");
-export const AsyncEnumeratorLike_current = Symbol("AsyncEnumeratorLike_current");
-export const AsyncEnumeratorLike_hasCurrent = Symbol("AsyncEnumeratorLike_hasCurrent");
 export const CollectionEnumeratorLike_count = Symbol("CollectionEnumeratorLike_count");
 export const CollectionEnumeratorLike_peek = Symbol("CollectionEnumeratorLike_peek");
 export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");

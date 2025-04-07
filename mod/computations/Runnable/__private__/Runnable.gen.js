@@ -4,7 +4,7 @@ import { ComputationLike_isDeferred, ComputationLike_isPure, ComputationLike_isS
 import { error, newInstance, pipe, } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Iterator from "../../../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, } from "../../../utils.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EventListenerLike_notify, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, } from "../../../utils.js";
 class GenRunnable {
     f;
     [ComputationLike_isPure];
@@ -15,10 +15,10 @@ class GenRunnable {
         this[ComputationLike_isPure] = config?.[ComputationLike_isPure];
     }
     [RunnableLike_eval](sink) {
-        const enumerator = pipe(this.f(), Iterator.toEnumerator(), Disposable.addTo(sink));
+        const enumerator = pipe(this.f(), Iterator.toSyncEnumerator(), Disposable.addTo(sink));
         let isCompleted = sink[SinkLike_isCompleted];
         try {
-            while (!isCompleted && enumerator[EnumeratorLike_moveNext]()) {
+            while (!isCompleted && enumerator[SyncEnumeratorLike_moveNext]()) {
                 const value = enumerator[EnumeratorLike_current];
                 sink[EventListenerLike_notify](value);
                 isCompleted = sink[SinkLike_isCompleted];

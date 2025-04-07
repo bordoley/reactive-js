@@ -9,7 +9,7 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import { DelegatingEventListenerLike_delegate } from "../../utils/__mixins__/DelegatingEventListenerMixin.js";
 import DelegatingNonCompletingSinkMixin from "../../utils/__mixins__/DelegatingNonCompletingSinkMixin.js";
 import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
-import { ConsumableEnumeratorLike_addOnDataAvailableListener, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueableLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ConsumableEnumeratorLike_addOnDataAvailableListener, EnumeratorLike_current, EventListenerLike_notify, QueueableLike_enqueue, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, } from "../../utils.js";
 const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
     const MergeAllConsumer_createDelegatingNonCompleting = Symbol("MergeAllConsumer_createDelegatingNonCompleting");
     const MergeAllConsumer_activeCount = Symbol("MergeAllConsumer_activeCount");
@@ -19,7 +19,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
         const sourceDelegate = pipe(delegate, mergeAllConsumer[MergeAllConsumer_createDelegatingNonCompleting], DisposableContainer.onComplete(() => {
             mergeAllConsumer[MergeAllConsumer_activeCount]--;
             const activeCount = mergeAllConsumer[MergeAllConsumer_activeCount];
-            if (mergeAllConsumer[EnumeratorLike_moveNext]()) {
+            if (mergeAllConsumer[SyncEnumeratorLike_moveNext]()) {
                 const next = mergeAllConsumer[EnumeratorLike_current];
                 subscribeToInner(mergeAllConsumer, next);
             }
@@ -38,7 +38,7 @@ const MergeAllConsumerMixin = /*@__PURE__*/ (() => {
             if (activeCount >= maxConcurrency) {
                 return;
             }
-            if (this[EnumeratorLike_moveNext]()) {
+            if (this[SyncEnumeratorLike_moveNext]()) {
                 const next = this[EnumeratorLike_current];
                 subscribeToInner(this, next);
             }

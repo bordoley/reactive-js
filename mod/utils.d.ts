@@ -43,25 +43,23 @@ export interface DisposableLike extends DisposableContainerLike, Disposable {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
-export declare const EnumeratorLike_moveNext: unique symbol;
 export declare const EnumeratorLike_current: unique symbol;
 export declare const EnumeratorLike_hasCurrent: unique symbol;
 export interface EnumeratorLike<T = unknown> extends DisposableLike {
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
-    [EnumeratorLike_moveNext](): boolean;
+}
+export declare const SyncEnumeratorLike_moveNext: unique symbol;
+export interface SyncEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
+    [SyncEnumeratorLike_moveNext](): boolean;
 }
 export declare const AsyncEnumeratorLike_moveNext: unique symbol;
-export declare const AsyncEnumeratorLike_current: unique symbol;
-export declare const AsyncEnumeratorLike_hasCurrent: unique symbol;
-export interface AsyncEnumeratorLike<T = unknown> extends DisposableLike {
-    readonly [AsyncEnumeratorLike_current]: T;
-    readonly [AsyncEnumeratorLike_hasCurrent]: boolean;
+export interface AsyncEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
     [AsyncEnumeratorLike_moveNext](): Promise<boolean>;
 }
 export declare const CollectionEnumeratorLike_count: unique symbol;
 export declare const CollectionEnumeratorLike_peek: unique symbol;
-export interface CollectionEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
+export interface CollectionEnumeratorLike<T = unknown> extends SyncEnumeratorLike<T> {
     readonly [CollectionEnumeratorLike_count]: number;
     readonly [CollectionEnumeratorLike_peek]: Optional<T>;
 }

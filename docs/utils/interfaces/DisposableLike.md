@@ -13,7 +13,6 @@
 ## Extended by
 
 - [`EnumeratorLike`](EnumeratorLike.md)
-- [`AsyncEnumeratorLike`](AsyncEnumeratorLike.md)
 - [`VirtualTimeSchedulerLike`](VirtualTimeSchedulerLike.md)
 - [`EventListenerLike`](EventListenerLike.md)
 

@@ -6,7 +6,7 @@ import * as WritableStore from "../computations/WritableStore.js";
 import { StoreLike_value } from "../computations.js";
 import { bind, isNone, isSome, none } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
-import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, delayMs, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableContainerLike_add, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_schedule, SchedulerLike_shouldYield, SyncEnumeratorLike_moveNext, delayMs, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "./__mixins__/SchedulerMixin.js";
@@ -24,7 +24,7 @@ export const create = /*@PURE__*/ (() => {
             if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
                 break;
             }
-            instance[EnumeratorLike_moveNext]();
+            instance[SyncEnumeratorLike_moveNext]();
         }
         return continuation;
     };
@@ -64,7 +64,7 @@ export const create = /*@PURE__*/ (() => {
                 this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
             }
             else {
-                this[EnumeratorLike_moveNext]();
+                this[SyncEnumeratorLike_moveNext]();
                 const continuation = this[EnumeratorLike_current];
                 this[PauseableScheduler_activeContinuation] = continuation;
                 continuation?.[SchedulerContinuationLike_run]();

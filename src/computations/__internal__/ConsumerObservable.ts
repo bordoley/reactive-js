@@ -26,7 +26,6 @@ import {
   DisposableLike_isDisposed,
   DropOldestBackpressureStrategy,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControlQueueLike,
   FlowControllerLike_addOnReadyListener,
@@ -40,6 +39,7 @@ import {
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 
 export interface ConsumerObservableLike<out T>
@@ -84,7 +84,7 @@ export const create: <T>(config?: {
     while (
       observerIsReady &&
       !observerIsCompleted &&
-      this[EnumeratorLike_moveNext]()
+      this[SyncEnumeratorLike_moveNext]()
     ) {
       const next = this[EnumeratorLike_current];
       observer[EventListenerLike_notify](next);

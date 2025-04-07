@@ -27,9 +27,7 @@ import {
   DisposableLike,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  EnumeratorLike,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   QueueLike,
   QueueableLike_enqueue,
   SchedulerContinuation as SchedulerContinuationGenerator,
@@ -39,6 +37,8 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SyncEnumeratorLike,
+  SyncEnumeratorLike_moveNext,
   YieldDelay,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
@@ -159,7 +159,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         [QueueSchedulerContinuationLike_parent]: Optional<QueueSchedulerContinuationLike>;
         [QueueSchedulerContinuationLike_isReschedulingChildren]: boolean;
         [QueueContinuation_scheduler]: SchedulerMixinLike;
-        [QueueContinuation_delegate]: EnumeratorLike<Optional<YieldDelay>>;
+        [QueueContinuation_delegate]: SyncEnumeratorLike<Optional<YieldDelay>>;
         [SchedulerContinuationLike_dueTime]: number;
         [SchedulerContinuationLike_id]: number;
       };
@@ -197,7 +197,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
         const scheduler = continuation[QueueContinuation_scheduler];
         const parent = findNearestNonDisposedParent(continuation);
 
-        while (continuation[EnumeratorLike_moveNext]()) {
+        while (continuation[SyncEnumeratorLike_moveNext]()) {
           const head = continuation[EnumeratorLike_current];
           if (head[DisposableLike_isDisposed]) {
             // continue
@@ -239,7 +239,10 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
           scheduler: SchedulerMixinLike,
           delegate: Iterator<Optional<YieldDelay>>,
         ): QueueSchedulerContinuationLike {
-          const delegateEnumerator = pipe(delegate, Iterator.toEnumerator());
+          const delegateEnumerator = pipe(
+            delegate,
+            Iterator.toSyncEnumerator(),
+          );
 
           init(DelegatingDisposableMixin, this, delegateEnumerator);
           init(QueueMixin<QueueSchedulerContinuationLike>(), this, none);
@@ -295,7 +298,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             }
 
             // Run any inner continuations first.
-            while (this[EnumeratorLike_moveNext]()) {
+            while (this[SyncEnumeratorLike_moveNext]()) {
               const head = this[EnumeratorLike_current];
               head[QueueSchedulerContinuationLike_parent] = this;
               head[SchedulerContinuationLike_run]();
@@ -315,7 +318,7 @@ const SchedulerMixin: Mixin<TReturn, TPrototype, SchedulerMixinHostLike> =
             const delegate = this[QueueContinuation_delegate];
 
             const oldScheduler = CurrentScheduler.set(scheduler);
-            const hasNext = delegate[EnumeratorLike_moveNext]();
+            const hasNext = delegate[SyncEnumeratorLike_moveNext]();
             CurrentScheduler.set(oldScheduler);
 
             if (hasNext) {

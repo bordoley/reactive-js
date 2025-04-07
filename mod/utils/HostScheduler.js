@@ -5,7 +5,7 @@ import { include, init, mixInstanceFactory, props, unsafeCast, } from "../__inte
 import { isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../functions.js";
 import { clampPositiveInteger } from "../math.js";
 import SchedulerMixin, { SchedulerContinuation, SchedulerContinuationLike_dueTime, SchedulerContinuationLike_run, SchedulerMixinHostLike_schedule, SchedulerMixinHostLike_shouldYield, } from "../utils/__mixins__/SchedulerMixin.js";
-import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, } from "../utils.js";
+import { ClockLike_now, CollectionEnumeratorLike_peek, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SyncEnumeratorLike_moveNext, } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
 import QueueMixin from "./__mixins__/QueueMixin.js";
@@ -21,7 +21,7 @@ export const create = /*@PURE__*/ (() => {
             if (isNone(continuation) || !continuation[DisposableLike_isDisposed]) {
                 break;
             }
-            instance[EnumeratorLike_moveNext]();
+            instance[SyncEnumeratorLike_moveNext]();
         }
         return continuation;
     };
@@ -40,7 +40,7 @@ export const create = /*@PURE__*/ (() => {
                 scheduleOnHost(instance);
                 break;
             }
-            instance[EnumeratorLike_moveNext]();
+            instance[SyncEnumeratorLike_moveNext]();
             const continuation = instance[EnumeratorLike_current];
             instance[HostScheduler_activeContinuation] = continuation;
             continuation?.[SchedulerContinuationLike_run]();

@@ -18,20 +18,18 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   AsyncEnumeratorLike,
-  AsyncEnumeratorLike_current,
-  AsyncEnumeratorLike_hasCurrent,
   AsyncEnumeratorLike_moveNext,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  EnumeratorLike_moveNext,
+  SyncEnumeratorLike,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 
 interface Signature {
   toAsyncEnumerator<T>(): Function1<Iterator<T>, AsyncEnumeratorLike<T>>;
-  toEnumerator<T>(): Function1<Iterator<T>, EnumeratorLike<T>>;
+  toSyncEnumerator<T>(): Function1<Iterator<T>, SyncEnumeratorLike<T>>;
 }
 
 export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
@@ -42,8 +40,8 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
 
     type TProperties = {
       [IteratorAsyncEnumerator_iterator]: Iterator<T>;
-      [AsyncEnumeratorLike_current]: T;
-      [AsyncEnumeratorLike_hasCurrent]: boolean;
+      [EnumeratorLike_current]: T;
+      [EnumeratorLike_hasCurrent]: boolean;
     };
 
     type TPrototype = Pick<
@@ -56,8 +54,8 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
       e: Optional<Error>,
     ) {
       const iterator = this[IteratorAsyncEnumerator_iterator];
-      this[AsyncEnumeratorLike_hasCurrent] = false;
-      this[AsyncEnumeratorLike_current] = none as T;
+      this[EnumeratorLike_hasCurrent] = false;
+      this[EnumeratorLike_current] = none as T;
 
       try {
         isSome(e) && iterator.throw?.(e);
@@ -92,15 +90,15 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
         },
         props<TProperties>({
           [IteratorAsyncEnumerator_iterator]: none,
-          [AsyncEnumeratorLike_current]: none,
-          [AsyncEnumeratorLike_hasCurrent]: false,
+          [EnumeratorLike_current]: none,
+          [EnumeratorLike_hasCurrent]: false,
         }),
         proto({
           async [AsyncEnumeratorLike_moveNext](
-            this: TProperties & EnumeratorLike<T>,
+            this: TProperties & SyncEnumeratorLike<T>,
           ): Promise<boolean> {
-            this[AsyncEnumeratorLike_current] = none as T;
-            this[AsyncEnumeratorLike_hasCurrent] = false;
+            this[EnumeratorLike_current] = none as T;
+            this[EnumeratorLike_hasCurrent] = false;
 
             const iterator = this[IteratorAsyncEnumerator_iterator];
             let hasCurrent = false;
@@ -109,8 +107,8 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
               const result = iterator.next();
 
               hasCurrent = !result.done;
-              this[AsyncEnumeratorLike_current] = result.value;
-              this[AsyncEnumeratorLike_hasCurrent] = hasCurrent;
+              this[EnumeratorLike_current] = result.value;
+              this[EnumeratorLike_hasCurrent] = hasCurrent;
             } catch (e) {
               this[DisposableLike_dispose](error(e));
             }
@@ -124,7 +122,9 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
     );
   })();
 
-export const toEnumerator: Signature["toEnumerator"] = /*@__PURE__*/ (<T>() => {
+export const toSyncEnumerator: Signature["toSyncEnumerator"] = /*@__PURE__*/ (<
+  T,
+>() => {
   const IteratorEnumerator_iterator = Symbol("IteratorEnumerator_iterator");
 
   type TProperties = {
@@ -133,7 +133,10 @@ export const toEnumerator: Signature["toEnumerator"] = /*@__PURE__*/ (<T>() => {
     [EnumeratorLike_hasCurrent]: boolean;
   };
 
-  type TPrototype = Pick<EnumeratorLike<T>, typeof EnumeratorLike_moveNext>;
+  type TPrototype = Pick<
+    SyncEnumeratorLike<T>,
+    typeof SyncEnumeratorLike_moveNext
+  >;
 
   function onIteratorEnumeratorDisposed(this: TProperties, e: Optional<Error>) {
     const iterator = this[IteratorEnumerator_iterator];
@@ -159,7 +162,7 @@ export const toEnumerator: Signature["toEnumerator"] = /*@__PURE__*/ (<T>() => {
       function IteratorEnumerator(
         this: TProperties & TPrototype,
         iter: Iterator<T>,
-      ): EnumeratorLike<T> {
+      ): SyncEnumeratorLike<T> {
         init(DisposableMixin, this);
 
         pipe(
@@ -177,8 +180,8 @@ export const toEnumerator: Signature["toEnumerator"] = /*@__PURE__*/ (<T>() => {
         [EnumeratorLike_hasCurrent]: false,
       }),
       proto({
-        [EnumeratorLike_moveNext](
-          this: TProperties & EnumeratorLike<T>,
+        [SyncEnumeratorLike_moveNext](
+          this: TProperties & SyncEnumeratorLike<T>,
         ): boolean {
           const iterator = this[IteratorEnumerator_iterator];
           let hasCurrent = false;

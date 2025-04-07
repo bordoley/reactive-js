@@ -7,7 +7,6 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import * as AsyncIterator from "../../../utils/__internal__/AsyncIterator.js";
 import {
-  AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
   ClockLike_now,
   ConsumableEnumeratorLike_addOnDataAvailableListener,
@@ -15,7 +14,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
@@ -28,6 +26,7 @@ import {
   SchedulerLike_shouldYield,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
@@ -63,7 +62,7 @@ const genFactory =
       while (
         observerIsReady &&
         !observerIsCompleted &&
-        queue[EnumeratorLike_moveNext]()
+        queue[SyncEnumeratorLike_moveNext]()
       ) {
         const next = queue[EnumeratorLike_current];
         observer[EventListenerLike_notify](next);
@@ -122,7 +121,7 @@ const genFactory =
           elapsedTime < maxYieldInterval &&
           (await enumerator[AsyncEnumeratorLike_moveNext]())
         ) {
-          const value = enumerator[AsyncEnumeratorLike_current];
+          const value = enumerator[EnumeratorLike_current];
           queue[QueueableLike_enqueue](value);
 
           // Reassign because these values may change after

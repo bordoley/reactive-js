@@ -6,7 +6,7 @@ import { bind, call, isNone, none, pipe } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import FlowControlQueueMixin from "../../utils/__mixins__/FlowControlQueueMixin.js";
-import { ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, DropOldestBackpressureStrategy, EnumeratorLike_current, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_schedule, SchedulerLike_shouldYield, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, } from "../../utils.js";
 export const create = (() => {
     const ConsumerObservable_observer = Symbol("ConsumerObservable_observer");
     const ConsumerObservable_schedulerSubscription = Symbol("ConsumerObservable_schedulerSubscription");
@@ -19,7 +19,7 @@ export const create = (() => {
         let observerIsCompleted = observer[SinkLike_isCompleted];
         while (observerIsReady &&
             !observerIsCompleted &&
-            this[EnumeratorLike_moveNext]()) {
+            this[SyncEnumeratorLike_moveNext]()) {
             const next = this[EnumeratorLike_current];
             observer[EventListenerLike_notify](next);
             const shouldYield = scheduler[SchedulerLike_shouldYield];

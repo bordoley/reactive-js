@@ -46,9 +46,9 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
@@ -890,7 +890,7 @@ export const takeLast: Signature["takeLast"] =
         Disposable.addTo(consumer),
         DisposableContainer.onComplete(() => {
           genPure(function* TakeLast() {
-            while (takeLastSink[EnumeratorLike_moveNext]()) {
+            while (takeLastSink[SyncEnumeratorLike_moveNext]()) {
               yield takeLastSink[EnumeratorLike_current];
             }
           })[EventSourceLike_subscribe](consumer);

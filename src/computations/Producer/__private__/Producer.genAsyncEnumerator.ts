@@ -9,14 +9,12 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as Queue from "../../../utils/Queue.js";
 import {
   AsyncEnumeratorLike,
-  AsyncEnumeratorLike_current,
   AsyncEnumeratorLike_moveNext,
   ConsumableEnumeratorLike_addOnDataAvailableListener,
   ConsumableEnumeratorLike_isDataAvailable,
   ConsumerLike,
   DisposableLike_dispose,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControllerLike_addOnReadyListener,
   FlowControllerLike_isReady,
@@ -24,6 +22,7 @@ import {
   QueueableLike_enqueue,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../../../utils.js";
 import * as DeferredEventSource from "../../__internal__/DeferredEventSource.js";
 
@@ -63,7 +62,7 @@ const genOnSubscribe =
         while (
           consumerIsReady &&
           !consumerIsCompleted &&
-          queue[EnumeratorLike_moveNext]()
+          queue[SyncEnumeratorLike_moveNext]()
         ) {
           const next = queue[EnumeratorLike_current];
           consumer[EventListenerLike_notify](next);
@@ -104,7 +103,7 @@ const genOnSubscribe =
           !consumerIsCompleted &&
           (await enumerator[AsyncEnumeratorLike_moveNext]())
         ) {
-          const value = enumerator[AsyncEnumeratorLike_current];
+          const value = enumerator[EnumeratorLike_current];
           queue[QueueableLike_enqueue](value);
 
           queueIsReady = queue[FlowControllerLike_isReady];

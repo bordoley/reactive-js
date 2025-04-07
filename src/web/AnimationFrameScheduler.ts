@@ -23,13 +23,13 @@ import {
   CollectionEnumeratorLike_count,
   DisposableLike,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   QueueLike,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SyncEnumeratorLike_moveNext,
   delayMs,
 } from "../utils.js";
 
@@ -64,7 +64,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     animationFrameScheduler[AnimationFrameScheduler_rafQueue] = Queue.create();
 
     let continuation: Optional<SchedulerContinuationLike> = none;
-    while (workQueue[EnumeratorLike_moveNext]()) {
+    while (workQueue[SyncEnumeratorLike_moveNext]()) {
       continuation = workQueue[EnumeratorLike_current];
       continuation[SchedulerContinuationLike_run]();
 
@@ -84,7 +84,7 @@ export const get: Signature["get"] = /*@__PURE__*/ (() => {
     } else if (continuationsCount > 0) {
       // Merge the job queues copying the newly enqueued jobs
       // onto the original queue.
-      while (newWorkQueue[EnumeratorLike_moveNext]()) {
+      while (newWorkQueue[SyncEnumeratorLike_moveNext]()) {
         const continuation = newWorkQueue[EnumeratorLike_current];
         workQueue[QueueableLike_enqueue](continuation);
       }

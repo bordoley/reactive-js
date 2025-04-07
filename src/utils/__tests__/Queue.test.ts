@@ -14,8 +14,8 @@ import {
   CollectionEnumeratorLike_peek,
   DisposableLike_dispose,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   QueueableLike_enqueue,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 import * as Queue from "../Queue.js";
 
@@ -57,7 +57,7 @@ testModule(
     }
 
     for (let i = 0; i < 62; i++) {
-      queue[EnumeratorLike_moveNext]();
+      queue[SyncEnumeratorLike_moveNext]();
     }
 
     for (let i = 128; i < 255; i++) {
@@ -73,7 +73,7 @@ testModule(
       queue[CollectionEnumeratorLike_peek],
       expectEquals(none as Optional<number>),
     );
-    pipe(queue[EnumeratorLike_moveNext](), expectFalse());
+    pipe(queue[SyncEnumeratorLike_moveNext](), expectFalse());
 
     for (let i = 0; i < 8; i++) {
       queue[QueueableLike_enqueue](i);
@@ -86,7 +86,7 @@ testModule(
     pipe(queue[CollectionEnumeratorLike_count], expectEquals(8));
 
     pipe(
-      (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
+      (queue[SyncEnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(0 as Optional<number>),
     );
     pipe(
@@ -95,7 +95,7 @@ testModule(
     );
 
     pipe(
-      (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
+      (queue[SyncEnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(1 as Optional<number>),
     );
     pipe(
@@ -104,7 +104,7 @@ testModule(
     );
 
     pipe(
-      (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
+      (queue[SyncEnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(2 as Optional<number>),
     );
     pipe(
@@ -121,7 +121,7 @@ testModule(
     }
 
     pipe(
-      (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
+      (queue[SyncEnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(3 as Optional<number>),
     );
     pipe(
@@ -130,7 +130,7 @@ testModule(
     );
 
     pipe(
-      (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
+      (queue[SyncEnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(4 as Optional<number>),
     );
     pipe(
@@ -139,7 +139,7 @@ testModule(
     );
 
     pipe(
-      (queue[EnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
+      (queue[SyncEnumeratorLike_moveNext](), queue[EnumeratorLike_current]),
       expectEquals(5 as Optional<number>),
     );
     pipe(
@@ -156,7 +156,7 @@ testModule(
     }
 
     for (let i = 0; i < 20; i++) {
-      queue[EnumeratorLike_moveNext]();
+      queue[SyncEnumeratorLike_moveNext]();
     }
 
     pipe(
@@ -172,7 +172,7 @@ testModule(
     }
 
     for (let i = 0; i < 50; i++) {
-      queue[EnumeratorLike_moveNext]();
+      queue[SyncEnumeratorLike_moveNext]();
     }
 
     pipe(
@@ -185,7 +185,7 @@ testModule(
     }
 
     for (let i = 0; i < 200; i++) {
-      queue[EnumeratorLike_moveNext]();
+      queue[SyncEnumeratorLike_moveNext]();
     }
 
     pipe(
@@ -201,7 +201,7 @@ testModule(
     }
 
     for (let i = 0; i < 10; i++) {
-      queue[EnumeratorLike_moveNext]();
+      queue[SyncEnumeratorLike_moveNext]();
     }
 
     for (let i = 31; i < 40; i++) {
@@ -209,7 +209,7 @@ testModule(
     }
 
     let prev = 9;
-    while (queue[EnumeratorLike_moveNext]()) {
+    while (queue[SyncEnumeratorLike_moveNext]()) {
       const v = queue[EnumeratorLike_current];
       pipe(v, expectEquals(prev + 1));
       prev = v;
@@ -224,7 +224,7 @@ testModule(
 
     const acc: number[] = [];
     while (queue[CollectionEnumeratorLike_count] > 0) {
-      queue[EnumeratorLike_moveNext]();
+      queue[SyncEnumeratorLike_moveNext]();
       acc[Array_push](queue[EnumeratorLike_current] as number);
     }
 
@@ -249,14 +249,14 @@ testModule(
 
     for (let i = 0; i < 3; i++) {
       pipe(
-        queue[EnumeratorLike_moveNext](),
+        queue[SyncEnumeratorLike_moveNext](),
         expectTrue("expected enumerator to have value"),
       );
       pipe(queue[EnumeratorLike_current], expectEquals(i));
     }
 
     pipe(
-      queue[EnumeratorLike_moveNext](),
+      queue[SyncEnumeratorLike_moveNext](),
       expectFalse("expected enumerator to been consumed"),
     );
   }),

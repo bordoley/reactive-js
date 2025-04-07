@@ -19,11 +19,11 @@ import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import {
   AsyncEnumeratorLike,
-  AsyncEnumeratorLike_current,
-  AsyncEnumeratorLike_hasCurrent,
   AsyncEnumeratorLike_moveNext,
   DisposableLike_dispose,
   EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
 } from "../../utils.js";
 
 interface Signature {
@@ -35,7 +35,7 @@ export const fromAsyncEnumerator: Signature["fromAsyncEnumerator"] =
   /*@__PURE__*/ returns((enumerator: AsyncEnumeratorLike) =>
     (async function* () {
       while (await enumerator[AsyncEnumeratorLike_moveNext]()) {
-        yield enumerator[AsyncEnumeratorLike_current];
+        yield enumerator[EnumeratorLike_current];
       }
       Disposable.raiseIfDisposedWithError(enumerator);
     })(),
@@ -49,8 +49,8 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
 
     type TProperties = {
       [AsyncIteratorAsyncEnumerator_asyncIterator]: AsyncIterator<T>;
-      [AsyncEnumeratorLike_current]: T;
-      [AsyncEnumeratorLike_hasCurrent]: boolean;
+      [EnumeratorLike_current]: T;
+      [EnumeratorLike_hasCurrent]: boolean;
     };
 
     type TPrototype = Pick<
@@ -63,8 +63,8 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
       e: Optional<Error>,
     ) {
       const iterator = this[AsyncIteratorAsyncEnumerator_asyncIterator];
-      this[AsyncEnumeratorLike_hasCurrent] = false;
-      this[AsyncEnumeratorLike_current] = none as T;
+      this[EnumeratorLike_hasCurrent] = false;
+      this[EnumeratorLike_current] = none as T;
 
       if (isSome(e)) {
         try {
@@ -101,15 +101,15 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
         },
         props<TProperties>({
           [AsyncIteratorAsyncEnumerator_asyncIterator]: none,
-          [AsyncEnumeratorLike_current]: none,
-          [AsyncEnumeratorLike_hasCurrent]: false,
+          [EnumeratorLike_current]: none,
+          [EnumeratorLike_hasCurrent]: false,
         }),
         proto({
           async [AsyncEnumeratorLike_moveNext](
             this: TProperties & EnumeratorLike<T>,
           ): Promise<boolean> {
-            this[AsyncEnumeratorLike_current] = none as T;
-            this[AsyncEnumeratorLike_hasCurrent] = false;
+            this[EnumeratorLike_current] = none as T;
+            this[EnumeratorLike_hasCurrent] = false;
 
             const iterator = this[AsyncIteratorAsyncEnumerator_asyncIterator];
             let hasCurrent = false;
@@ -117,8 +117,8 @@ export const toAsyncEnumerator: Signature["toAsyncEnumerator"] =
               const result = await iterator.next();
 
               hasCurrent = !result.done;
-              this[AsyncEnumeratorLike_current] = result.value;
-              this[AsyncEnumeratorLike_hasCurrent] = hasCurrent;
+              this[EnumeratorLike_current] = result.value;
+              this[EnumeratorLike_hasCurrent] = hasCurrent;
             } catch (e) {
               this[DisposableLike_dispose](error(e));
             }

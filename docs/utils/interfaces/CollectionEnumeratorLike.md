@@ -8,7 +8,7 @@
 
 ## Extends
 
-- [`EnumeratorLike`](EnumeratorLike.md)\<`T`\>
+- [`SyncEnumeratorLike`](SyncEnumeratorLike.md)\<`T`\>
 
 ## Extended by
 
@@ -40,7 +40,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[DisposableLike_error]`](EnumeratorLike.md#disposablelike_error)
+[`SyncEnumeratorLike`](SyncEnumeratorLike.md).[`[DisposableLike_error]`](SyncEnumeratorLike.md#disposablelike_error)
 
 ***
 
@@ -52,7 +52,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[DisposableLike_isDisposed]`](EnumeratorLike.md#disposablelike_isdisposed)
+[`SyncEnumeratorLike`](SyncEnumeratorLike.md).[`[DisposableLike_isDisposed]`](SyncEnumeratorLike.md#disposablelike_isdisposed)
 
 ***
 
@@ -62,7 +62,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_current]`](EnumeratorLike.md#enumeratorlike_current)
+[`SyncEnumeratorLike`](SyncEnumeratorLike.md).[`[EnumeratorLike_current]`](SyncEnumeratorLike.md#enumeratorlike_current)
 
 ***
 
@@ -72,7 +72,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_hasCurrent]`](EnumeratorLike.md#enumeratorlike_hascurrent)
+[`SyncEnumeratorLike`](SyncEnumeratorLike.md).[`[EnumeratorLike_hasCurrent]`](SyncEnumeratorLike.md#enumeratorlike_hascurrent)
 
 ## Methods
 
@@ -96,13 +96,13 @@ An optional error that signals the resource is being disposed due to an error.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[dispose]`](EnumeratorLike.md#dispose)
+[`SyncEnumeratorLike`](SyncEnumeratorLike.md).[`[dispose]`](SyncEnumeratorLike.md#dispose)
 
 ***
 
-### \[EnumeratorLike\_moveNext\]()
+### \[SyncEnumeratorLike\_moveNext\]()
 
-> **\[EnumeratorLike\_moveNext\]**(): `boolean`
+> **\[SyncEnumeratorLike\_moveNext\]**(): `boolean`
 
 #### Returns
 
@@ -110,4 +110,4 @@ An optional error that signals the resource is being disposed due to an error.
 
 #### Inherited from
 
-[`EnumeratorLike`](EnumeratorLike.md).[`[EnumeratorLike_moveNext]`](EnumeratorLike.md#enumeratorlike_movenext)
+[`SyncEnumeratorLike`](SyncEnumeratorLike.md).[`[SyncEnumeratorLike_moveNext]`](SyncEnumeratorLike.md#syncenumeratorlike_movenext)

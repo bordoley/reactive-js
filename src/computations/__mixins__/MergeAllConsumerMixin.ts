@@ -23,13 +23,13 @@ import {
   ConsumableEnumeratorLike_addOnDataAvailableListener,
   ConsumerLike,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   FlowControlQueueLike,
   QueueableLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 
 type TReturn<
@@ -86,7 +86,7 @@ const MergeAllConsumerMixin: <
         mergeAllConsumer[MergeAllConsumer_activeCount]--;
         const activeCount = mergeAllConsumer[MergeAllConsumer_activeCount];
 
-        if (mergeAllConsumer[EnumeratorLike_moveNext]()) {
+        if (mergeAllConsumer[SyncEnumeratorLike_moveNext]()) {
           const next = mergeAllConsumer[EnumeratorLike_current];
           subscribeToInner(mergeAllConsumer, next);
         } else if (activeCount <= 0 && mergeAllConsumer[SinkLike_isCompleted]) {
@@ -133,7 +133,7 @@ const MergeAllConsumerMixin: <
             return;
           }
 
-          if (this[EnumeratorLike_moveNext]()) {
+          if (this[SyncEnumeratorLike_moveNext]()) {
             const next = this[EnumeratorLike_current];
             subscribeToInner(this, next);
           }

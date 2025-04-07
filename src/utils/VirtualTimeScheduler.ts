@@ -18,11 +18,11 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   QueueLike,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
+  SyncEnumeratorLike_moveNext,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../utils.js";
@@ -129,7 +129,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           );
 
           this[VirtualTimeScheduler_microTaskTicks] = 0;
-          while (queue[EnumeratorLike_moveNext]()) {
+          while (queue[SyncEnumeratorLike_moveNext]()) {
             let continuation = queue[EnumeratorLike_current];
             if (
               continuation[SchedulerContinuationLike_dueTime] > currentTime ||
@@ -141,7 +141,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
               this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
                 continuation,
               );
-              while (queue[EnumeratorLike_moveNext]()) {
+              while (queue[SyncEnumeratorLike_moveNext]()) {
                 continuation = queue[EnumeratorLike_current];
                 this[VirtualTimeScheduler_queue][QueueableLike_enqueue](
                   continuation,

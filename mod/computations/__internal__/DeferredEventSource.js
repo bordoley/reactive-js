@@ -8,7 +8,7 @@ import { alwaysTrue, bind, bindMethod, error, invoke, isFunction, isNone, isSome
 import * as Disposable from "../../utils/Disposable.js";
 import * as DisposableContainer from "../../utils/DisposableContainer.js";
 import * as Sink from "../../utils/__internal__/Sink.js";
-import { DisposableContainerLike_add, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_moveNext, SinkLike_complete, SinkLike_isCompleted, } from "../../utils.js";
+import { DisposableContainerLike_add, DisposableLike_dispose, EnumeratorLike_current, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, } from "../../utils.js";
 import Computation_areAllPure from "../Computation/__private__/Computation.areAllPure.js";
 import Computation_areAllSynchronous from "../Computation/__private__/Computation.areAllSynchronous.js";
 import Computation_isPure from "../Computation/__private__/Computation.isPure.js";
@@ -246,7 +246,7 @@ export const takeLast = (genPure, takeLast, options) => (obs) => create(consumer
     const count = options?.count ?? 1;
     const takeLastSink = pipe(takeLast(count, consumer), Disposable.addTo(consumer), DisposableContainer.onComplete(() => {
         genPure(function* TakeLast() {
-            while (takeLastSink[EnumeratorLike_moveNext]()) {
+            while (takeLastSink[SyncEnumeratorLike_moveNext]()) {
                 yield takeLastSink[EnumeratorLike_current];
             }
         })[EventSourceLike_subscribe](consumer);

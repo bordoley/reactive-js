@@ -17,11 +17,11 @@ import * as Iterator from "../../../utils/__internal__/Iterator.js";
 import {
   DisposableLike_dispose,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../../../utils.js";
 import type * as Runnable from "../../Runnable.js";
 
@@ -42,14 +42,14 @@ class GenRunnable<T> implements RunnableLike<T> {
   [RunnableLike_eval](sink: SinkLike<T>): void {
     const enumerator = pipe(
       this.f(),
-      Iterator.toEnumerator(),
+      Iterator.toSyncEnumerator(),
       Disposable.addTo(sink),
     );
 
     let isCompleted = sink[SinkLike_isCompleted];
 
     try {
-      while (!isCompleted && enumerator[EnumeratorLike_moveNext]()) {
+      while (!isCompleted && enumerator[SyncEnumeratorLike_moveNext]()) {
         const value = enumerator[EnumeratorLike_current];
         sink[EventListenerLike_notify](value);
 

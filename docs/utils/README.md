@@ -30,6 +30,7 @@
 - [QueueLike](interfaces/QueueLike.md)
 - [SchedulerLike](interfaces/SchedulerLike.md)
 - [SinkLike](interfaces/SinkLike.md)
+- [SyncEnumeratorLike](interfaces/SyncEnumeratorLike.md)
 - [VirtualTimeSchedulerLike](interfaces/VirtualTimeSchedulerLike.md)
 
 ## Type Aliases
@@ -39,8 +40,6 @@
 
 ## Variables
 
-- [AsyncEnumeratorLike\_current](variables/AsyncEnumeratorLike_current.md)
-- [AsyncEnumeratorLike\_hasCurrent](variables/AsyncEnumeratorLike_hasCurrent.md)
 - [AsyncEnumeratorLike\_moveNext](variables/AsyncEnumeratorLike_moveNext.md)
 - [ClockLike\_now](variables/ClockLike_now.md)
 - [CollectionEnumeratorLike\_count](variables/CollectionEnumeratorLike_count.md)
@@ -55,7 +54,6 @@
 - [DropOldestBackpressureStrategy](variables/DropOldestBackpressureStrategy.md)
 - [EnumeratorLike\_current](variables/EnumeratorLike_current.md)
 - [EnumeratorLike\_hasCurrent](variables/EnumeratorLike_hasCurrent.md)
-- [EnumeratorLike\_moveNext](variables/EnumeratorLike_moveNext.md)
 - [EventListenerLike\_notify](variables/EventListenerLike_notify.md)
 - [FlowControllerLike\_addOnReadyListener](variables/FlowControllerLike_addOnReadyListener.md)
 - [FlowControllerLike\_isReady](variables/FlowControllerLike_isReady.md)
@@ -74,6 +72,7 @@
 - [SchedulerLike\_shouldYield](variables/SchedulerLike_shouldYield.md)
 - [SinkLike\_complete](variables/SinkLike_complete.md)
 - [SinkLike\_isCompleted](variables/SinkLike_isCompleted.md)
+- [SyncEnumeratorLike\_moveNext](variables/SyncEnumeratorLike_moveNext.md)
 - [ThrowBackpressureStrategy](variables/ThrowBackpressureStrategy.md)
 - [VirtualTimeSchedulerLike\_run](variables/VirtualTimeSchedulerLike_run.md)
 

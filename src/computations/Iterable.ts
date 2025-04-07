@@ -56,12 +56,12 @@ import {
   DisposableLike_dispose,
   DropOldestBackpressureStrategy,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   EventListenerLike_notify,
   QueueableLike_enqueue,
   SinkLike,
   SinkLike_complete,
   SinkLike_isCompleted,
+  SyncEnumeratorLike_moveNext,
 } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import {
@@ -702,7 +702,7 @@ class TakeLastIterable<T> {
       queue[QueueableLike_enqueue](v);
     }
 
-    while (queue[EnumeratorLike_moveNext]()) {
+    while (queue[SyncEnumeratorLike_moveNext]()) {
       yield queue[EnumeratorLike_current];
     }
   }

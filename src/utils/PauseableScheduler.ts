@@ -19,7 +19,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -31,6 +30,7 @@ import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SyncEnumeratorLike_moveNext,
   delayMs,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
@@ -90,7 +90,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         break;
       }
 
-      instance[EnumeratorLike_moveNext]();
+      instance[SyncEnumeratorLike_moveNext]();
     }
 
     return continuation;
@@ -165,7 +165,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
       if (delay > 0) {
         this[PauseableScheduler_hostSchedulerContinuationDueTime] = dueTime;
       } else {
-        this[EnumeratorLike_moveNext]();
+        this[SyncEnumeratorLike_moveNext]();
         const continuation = this[EnumeratorLike_current];
 
         this[PauseableScheduler_activeContinuation] = continuation;

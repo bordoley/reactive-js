@@ -7,7 +7,7 @@ import { clampPositiveInteger, clampPositiveNonZeroInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
 import * as Iterator from "../utils/__internal__/Iterator.js";
-import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, QueueableLike_enqueue, } from "../utils.js";
+import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, QueueableLike_enqueue, SyncEnumeratorLike_moveNext, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_genAsync, Observable_genPureAsync, } from "./Observable/__private__/Observable.genAsync.js";
 import { Producer_genAsync, Producer_genPureAsync, } from "./Producer/__private__/Producer.genAsync.js";
@@ -255,8 +255,8 @@ class GenAsyncIterable {
         this.f = f;
     }
     async *[Symbol.asyncIterator]() {
-        const enumerator = pipe(this.f(), Iterator.toEnumerator());
-        while (enumerator[EnumeratorLike_moveNext]()) {
+        const enumerator = pipe(this.f(), Iterator.toSyncEnumerator());
+        while (enumerator[SyncEnumeratorLike_moveNext]()) {
             yield Promise.resolve(enumerator[EnumeratorLike_current]);
         }
         Disposable.raiseIfDisposedWithError(enumerator);
@@ -285,8 +285,8 @@ class GenPureAsyncIterable {
         this.f = f;
     }
     async *[Symbol.asyncIterator]() {
-        const enumerator = pipe(this.f(), Iterator.toEnumerator());
-        while (enumerator[EnumeratorLike_moveNext]()) {
+        const enumerator = pipe(this.f(), Iterator.toSyncEnumerator());
+        while (enumerator[SyncEnumeratorLike_moveNext]()) {
             yield Promise.resolve(enumerator[EnumeratorLike_current]);
         }
         Disposable.raiseIfDisposedWithError(enumerator);
@@ -541,7 +541,7 @@ class TakeLastAsyncIterable {
         for await (const v of src) {
             queue[QueueableLike_enqueue](v);
         }
-        while (queue[EnumeratorLike_moveNext]()) {
+        while (queue[SyncEnumeratorLike_moveNext]()) {
             yield queue[EnumeratorLike_current];
         }
     }

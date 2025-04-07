@@ -4,7 +4,7 @@ import { Array, Array_length, MAX_SAFE_INTEGER, } from "../../__internal__/const
 import { mix, props, proto, unsafeCast, } from "../../__internal__/mixins.js";
 import { isSome, newInstance, none, returns, } from "../../functions.js";
 import { clampPositiveInteger, floor } from "../../math.js";
-import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, OverflowBackpressureStrategy, QueueLike_backpressureStrategy, QueueLike_capacity, QueueableLike_enqueue, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
+import { CollectionEnumeratorLike_count, CollectionEnumeratorLike_peek, DisposableLike_isDisposed, DropLatestBackpressureStrategy, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_hasCurrent, OverflowBackpressureStrategy, QueueLike_backpressureStrategy, QueueLike_capacity, QueueableLike_enqueue, SyncEnumeratorLike_moveNext, ThrowBackpressureStrategy, raiseCapacityExceededError, } from "../../utils.js";
 const QueueMixin = 
 /*@__PURE__*/ (() => {
     const QueueMixin_capacityMask = Symbol("QueueMixin_capacityMask");
@@ -75,7 +75,7 @@ const QueueMixin =
                     ? values
                     : values[head];
         },
-        [EnumeratorLike_moveNext]() {
+        [SyncEnumeratorLike_moveNext]() {
             const count = this[CollectionEnumeratorLike_count];
             const values = this[QueueMixin_values];
             if (count < 1) {
@@ -194,7 +194,7 @@ const QueueMixin =
             }
             // We want to pop off the oldest value first, before enqueueing
             // to avoid unintentionally growing the queue.
-            dropOldest && this[EnumeratorLike_moveNext]();
+            dropOldest && this[SyncEnumeratorLike_moveNext]();
             throwBackpressureError &&
                 raiseCapacityExceededError(this[QueueLike_capacity]);
             const newCount = ++this[CollectionEnumeratorLike_count];

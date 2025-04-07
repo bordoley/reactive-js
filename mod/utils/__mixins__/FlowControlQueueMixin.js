@@ -6,7 +6,7 @@ import Broadcaster_keep from "../../computations/Broadcaster/__private__/Broadca
 import Broadcaster_map from "../../computations/Broadcaster/__private__/Broadcaster.map.js";
 import * as Publisher from "../../computations/Publisher.js";
 import { alwaysNone, bind, call, isEqualTo, none, pipe, returns, } from "../../functions.js";
-import { AsyncEnumeratorLike_current, AsyncEnumeratorLike_hasCurrent, AsyncEnumeratorLike_moveNext, CollectionEnumeratorLike_count, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_moveNext, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import { AsyncEnumeratorLike_moveNext, CollectionEnumeratorLike_count, ConsumableEnumeratorLike_addOnDataAvailableListener, ConsumableEnumeratorLike_isDataAvailable, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EventListenerLike_notify, FlowControllerLike_addOnReadyListener, FlowControllerLike_isReady, QueueLike_capacity, QueueableLike_enqueue, SyncEnumeratorLike_moveNext, } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as DisposableContainer from "../DisposableContainer.js";
 import QueueMixin from "./QueueMixin.js";
@@ -21,14 +21,14 @@ const FlowControlQueueMixin = /*@__PURE__*/ (() => {
         return publisher;
     }
     function asyncEnumeratorMoveNext(resolve, reject) {
-        if (this[EnumeratorLike_moveNext]()) {
+        if (this[SyncEnumeratorLike_moveNext]()) {
             resolve(true);
             return;
         }
         const disposable = pipe(Disposable.create(), Disposable.add(this[ConsumableEnumeratorLike_addOnDataAvailableListener](async () => {
             disposable[DisposableLike_dispose]();
         })), DisposableContainer.onError(reject), DisposableContainer.onComplete(() => {
-            const hasNext = this[EnumeratorLike_moveNext]();
+            const hasNext = this[SyncEnumeratorLike_moveNext]();
             resolve(hasNext);
         }), Disposable.addTo(this));
     }
@@ -53,24 +53,16 @@ const FlowControlQueueMixin = /*@__PURE__*/ (() => {
             const count = this[CollectionEnumeratorLike_count];
             return count > 0;
         },
-        get [AsyncEnumeratorLike_current]() {
-            unsafeCast(this);
-            return this[EnumeratorLike_current];
-        },
-        get [AsyncEnumeratorLike_hasCurrent]() {
-            unsafeCast(this);
-            return this[EnumeratorLike_hasCurrent];
-        },
         [AsyncEnumeratorLike_moveNext]() {
             return new Promise(bind(asyncEnumeratorMoveNext, this));
         },
-        [EnumeratorLike_moveNext]() {
+        [SyncEnumeratorLike_moveNext]() {
             const count = this[CollectionEnumeratorLike_count];
             const capacity = this[QueueLike_capacity];
             const isDisposed = this[DisposableLike_isDisposed];
             const onReadySignal = this[FlowControlQueueMixin_onReadyPublisher];
             const shouldNotifyReady = count === capacity && capacity > 0 && !isDisposed;
-            const result = super_(QueueMixin(), this, EnumeratorLike_moveNext);
+            const result = super_(QueueMixin(), this, SyncEnumeratorLike_moveNext);
             shouldNotifyReady &&
                 onReadySignal?.[EventListenerLike_notify]("ready");
             return result;

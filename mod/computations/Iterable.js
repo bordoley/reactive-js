@@ -6,7 +6,7 @@ import { alwaysTrue, bindMethod, error, identityLazy, invoke, isFunction, isNone
 import { clampPositiveInteger, clampPositiveNonZeroInteger } from "../math.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as Queue from "../utils/Queue.js";
-import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, EnumeratorLike_moveNext, EventListenerLike_notify, QueueableLike_enqueue, SinkLike_complete, SinkLike_isCompleted, } from "../utils.js";
+import { DisposableLike_dispose, DropOldestBackpressureStrategy, EnumeratorLike_current, EventListenerLike_notify, QueueableLike_enqueue, SinkLike_complete, SinkLike_isCompleted, SyncEnumeratorLike_moveNext, } from "../utils.js";
 import * as ComputationM from "./Computation.js";
 import { Observable_gen, Observable_genPure, } from "./Observable/__private__/Observable.gen.js";
 import { Producer_gen, Producer_genPure, } from "./Producer/__private__/Producer.gen.js";
@@ -435,7 +435,7 @@ class TakeLastIterable {
         for (const v of src) {
             queue[QueueableLike_enqueue](v);
         }
-        while (queue[EnumeratorLike_moveNext]()) {
+        while (queue[SyncEnumeratorLike_moveNext]()) {
             yield queue[EnumeratorLike_current];
         }
     }

@@ -33,12 +33,12 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   QueueLike,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
+  SyncEnumeratorLike_moveNext,
 } from "../utils.js";
 import * as Disposable from "./Disposable.js";
 import * as DisposableContainer from "./DisposableContainer.js";
@@ -86,7 +86,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         break;
       }
 
-      instance[EnumeratorLike_moveNext]();
+      instance[SyncEnumeratorLike_moveNext]();
     }
 
     return continuation;
@@ -119,7 +119,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         break;
       }
 
-      instance[EnumeratorLike_moveNext]();
+      instance[SyncEnumeratorLike_moveNext]();
       const continuation = instance[EnumeratorLike_current];
 
       instance[HostScheduler_activeContinuation] = continuation;

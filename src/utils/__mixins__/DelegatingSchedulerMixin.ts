@@ -11,7 +11,6 @@ import {
   DisposableContainerLike,
   DisposableLike,
   EnumeratorLike_current,
-  EnumeratorLike_moveNext,
   SchedulerContinuation,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -19,6 +18,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SyncEnumeratorLike_moveNext,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
 import * as Iterator from "../__internal__/Iterator.js";
@@ -64,9 +64,12 @@ const DelegatingSchedulerMixin: Mixin1<TReturn, TPrototype> =
           function* DelegatingSchedulerMixinSchedulerCallback(
             this: SchedulerContinuation,
           ) {
-            const enumerator = pipe(this(instance), Iterator.toEnumerator());
+            const enumerator = pipe(
+              this(instance),
+              Iterator.toSyncEnumerator(),
+            );
             instance[SchedulerLike_inContinuation] = true;
-            while (enumerator[EnumeratorLike_moveNext]()) {
+            while (enumerator[SyncEnumeratorLike_moveNext]()) {
               const delay = enumerator[EnumeratorLike_current];
 
               instance[SchedulerLike_inContinuation] = false;
